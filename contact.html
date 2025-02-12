@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>松本一樹 / itsuki matumoto - Contact</title>
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <h1 class="logo">松本一樹  -Itsuki Matumoto-</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="live.html">Live</a></li>
+          <li><a href="youtube.html">YouTube</a></li>
+          <li><a href="discography.html">Discography</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact">
+      <div class="container">
+        <h2>Contact</h2>
+        <p>以下のフォームに必要事項をご入力の上、送信してください。</p>
+        <!-- Formspree 利用。action 属性の URL は、Formspree 登録後発行のエンドポイントに変更してください -->
+        <form action="https://formspree.io/f/your_form_id" method="POST">
+          <label for="name">name:</label>
+          <input type="text" id="name" name="name" placeholder="例）Itsuki Matsumoto" required>
+          
+          <label for="email">mail:</label>
+          <input type="email" id="email" name="_replyto" placeholder="例）example@mail.com" required>
+          
+          <label for="message">message:</label>
+          <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+          
+          <button type="submit"><h3>submit</h3></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 松本一樹 / itsuki matumoto. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

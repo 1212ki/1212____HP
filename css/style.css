@@ -1,0 +1,321 @@
+/* ----- 基本リセット＆ボディ設定 ----- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 背景は少しグレーがかったおしゃれなホワイト */
+  background-color: #f8f8f8;
+  color: #333;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* ----- コンテナ ----- */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* ----- ヘッダー・ナビゲーション ----- */
+header {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 30px 0;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* .terracotta クラス：テラコッタアクセント用 */
+.terracotta {
+  color: #BF674D;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 25px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #BF674D;
+}
+
+/* ----- ヒーローセクション ----- */
+.hero {
+  background: url('../images/hero.jpg') center/cover no-repeat;
+  position: relative;
+  padding: 140px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
+.hero h2,
+.hero p {
+  position: relative;
+  z-index: 1;
+}
+
+/* ----- セクション見出し ----- */
+section h2 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #BF674D;
+  display: inline-block;
+}
+
+section {
+  margin-bottom: 60px;
+}
+
+/* ----- ライブイベント用スタイル ----- */
+.live-events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.live-event {
+  flex: 1 1 calc(33.333% - 30px);
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.live-event img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.live-info .live-date {
+  font-weight: bold;
+  color: #333;
+}
+
+.live-info .live-venue {
+  font-style: italic;
+  color: #BF674D;
+}
+
+.live-info .live-description {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* ----- ディスコグラフィ用スタイル ----- */
+.discography-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.discography-item {
+  flex: 1 1 calc(33.333% - 30px);
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.discography-item img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.discography-info .album-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.discography-info .album-release {
+  color: #BF674D;
+  font-style: italic;
+}
+
+.discography-info .album-description {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* ----- YouTubeページ用スタイル ----- */
+.youtube-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.channel-link {
+  color: #BF674D;
+  font-size: 0.7em;
+  text-decoration: none;
+  border-bottom: 1px dotted #BF674D;
+  transition: color 0.3s ease;
+}
+
+.channel-link:hover {
+  color: #333;
+}
+
+.video-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* ----- Contactページ用スタイル ----- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+form label {
+  font-weight: bold;
+}
+
+form input,
+form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+form button {
+  background-color: #BF674D;
+  color: #333;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+form button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+/* ----- ボタン風リンク（Ticket, Channel 共通） ----- */
+.application-link {
+  display: inline-block;
+  /* 非活性状態：HP背景に馴染むグレー系のグラデーション背景 */
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
+  border: 2px solid #dcdcdc;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 疑似クラスでテキスト色を固定 */
+.application-link:link,
+.application-link:visited {
+  color: #333;
+}
+
+.application-link:hover {
+  /* 活性状態：背景が標準テラコッタ、かつテキストもテラコッタに */
+  background-color: #BF674D;
+  border-color: #BF674D;
+  color: #BF674D;
+  /* テキストが背景と同化しないように、薄いホワイトのテキストシャドウを追加 */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* ----- LIVE/Channel案内セクション ----- */
+.live-application,
+.channel-application {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.live-application h3,
+.channel-application h3 {
+  font-size: 1.2em;
+  color: #333;
+  margin: 0;
+}
+
+/* ----- フッター ----- */
+footer {
+  background-color: #fff;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  padding: 25px 0;
+  font-size: 0.9em;
+  margin-top: 60px;
+}
+
+/* ----- レスポンシブ対応 ----- */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+  }
+  nav ul {
+    flex-direction: column;
+  }
+  nav ul li {
+    margin: 10px 0;
+  }
+  .live-event, .discography-item {
+    flex: 1 1 100%;
+  }
+}
