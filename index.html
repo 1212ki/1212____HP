@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
-  <!-- レスポンシブ対応 -->
+  <!-- ビューポート設定：スマートフォンでも正しく表示 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>松本一樹 / itsuki matumoto - Home</title>
-  <!-- 必要に応じて手書き風フォントを読み込み -->
+  <title>松本一樹 -Itsuki Matumoto- : Home</title>
+  <!-- 手書き風フォント「Indie Flower」の読み込み -->
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
-  <!-- 共通スタイルシート -->
+  <!-- 共通スタイルシートの読み込み -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <!-- ヘッダー：サイト全体のナビゲーション -->
+  <!-- ヘッダー：サイトタイトルとナビゲーション -->
   <header>
     <div class="container header-container">
-      <!-- ロゴ（アーティスト名） -->
-      <h1 class="logo">松本一樹  -Itsuki Matumoto-</h1>
+      <!-- サイトタイトル。 "I" の部分は .terracotta クラスでテラコッタ色 -->
+      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
       <!-- ナビゲーションメニュー -->
       <nav>
         <ul>
-          <!-- リンク先や順序は必要に応じて変更 -->
           <li><a href="index.html">Home</a></li>
           <li><a href="profile.html">Profile</a></li>
           <li><a href="live.html">Live</a></li>
@@ -31,24 +32,66 @@
     </div>
   </header>
 
-  <!-- メインコンテンツ -->
   <main>
-    <!-- ヒーローセクション：背景画像とキャッチコピー -->
+    <!-- ヒーローセクション：元の画像の色通り表示 -->
     <section class="hero">
+      <!-- ヒーロー画像 -->
+      <img src="images/hero.jpg" alt="Hero Image" class="hero-image">
+    </section>
+
+    <!-- イントロセクション：ウェルカムメッセージ -->
+    <section class="intro">
       <div class="container">
-        <h2>Welcome to the Official Site</h2>
-        <p>latest information,live,discography,and cantacts</p>
-        <!-- ※テキストや背景画像は必要に応じて編集してください -->
+        <!-- 手書き風ロゴ（ここではテキスト表示） -->
+        <div class="hero-logo">Welcome to the Official Site</div>
+        <p>松本一樹 / itsuki matumoto の最新情報、ライブ、ディスコグラフィーなどをご覧ください。</p>
       </div>
     </section>
-    <!-- 追加セクション（ニュース、更新情報など）をここに配置可能 -->
+
+    <!-- ニュースセクション -->
+    <section class="news">
+      <div class="container">
+        <!-- セクションタイトルは共通クラス .section-title -->
+        <h2 class="section-title">News</h2>
+        <div class="news-items">
+          <!-- ニュース記事の例 -->
+          <article class="news-item">
+            <!-- 左側：ニュース記事用画像 -->
+            <div class="news-image">
+              <!-- 画像ファイル（news1.jpg 等）※実際の画像パスに変更してください -->
+              <img src="images/news1.png" alt="News Image 1">
+            </div>
+            <!-- 右側：テキストコンテンツ -->
+            <div class="news-content">
+              <!-- ヘッダー部：日付や会場情報 -->
+              <div class="news-header">
+                <p class="news-date">2025/2/28(Fri.) Digital Release </p>
+              </div>
+              <!-- 本文部：タイトル、参加者、料金情報など -->
+              <div class="news-body">
+                <p class="news-title">New Single "lens"</p>
+                <p class="news-price">¥0 degital only<br>
+
+              </div>
+              <!-- フッター部：リンクボタン -->
+              <div class="news-footer">
+                <a href="https://soundcloud.com/itsu-654374168/lens-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+                  class="ticket-link application-link" target="_blank">▶▷listen to...</a>
+              </div>
+            </div>
+          </article>
+          <!-- 必要に応じて追加 -->
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- フッター -->
+  <!-- フッター：コピーライト表示 -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 松本一樹 / itsuki matumoto. All rights reserved.</p>
+      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
 </body>
+
 </html>

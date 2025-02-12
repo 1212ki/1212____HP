@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <!-- レスポンシブ対応 -->
+  <!-- ビューポート設定 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>松本一樹 -Itsuki Matumoto- : Live</title>
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
@@ -11,10 +11,10 @@
 </head>
 
 <body>
-  <!-- ヘッダー（共通） -->
+  <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <h1 class="logo">松本一樹 -Itsuki Matumoto-</h1>
+      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -29,47 +29,48 @@
   </header>
 
   <main>
-    <!-- ライブ申し込みフォーム案内セクション -->
+    <!-- Ticketリンクセクション -->
     <section class="live-application">
       <div class="container">
         <h3>
-          <a href="https://example.com/live-application" class="application-link" target="_blank">Ticket</a>
+          <!-- Ticketリンクボタン（実際の申し込みフォームURLに変更） -->
+          <a href="https://example.com/live-application" class="application-link" target="_blank">▶▷Ticket</a>
         </h3>
       </div>
     </section>
-    
-    
 
-
-
-    <!-- LIVE ページのメインセクション -->
+    <!-- ライブ情報セクション -->
     <section class="live">
       <div class="container">
-        <h2>Live</h2>
+        <!-- セクションタイトル -->
+        <h2 class="section-title">Live</h2>
         <p>最新のライブ情報とフライヤー画像を掲載しています。</p>
         <div class="live-events">
+          <!-- ライブイベントブロック 1 -->
           <div class="live-event">
             <img src="images/flyer1.jpg" alt="ライブフライヤー 1">
             <div class="live-info">
-              <p class="live-date">2025.02.20</p>
-              <p class="live-venue">渋谷 CLUB QUATTRO</p>
-              <p class="live-description">最新ライブの詳細情報。ここに説明を追加します。</p>
+              <p class="live-date">2025.01.31</p>
+              <p class="live-venue">下北沢 DY Cube</p>
+              <p class="live-description">※公演終了</p>
             </div>
           </div>
+          <!-- ライブイベントブロック 2 -->
           <div class="live-event">
             <img src="images/flyer2.jpg" alt="ライブフライヤー 2">
             <div class="live-info">
-              <p class="live-date">2025.03.15</p>
-              <p class="live-venue">下北沢 SPREAD</p>
-              <p class="live-description">次回ライブ情報の詳細を記載してください。</p>
+              <p class="live-date">2025.03.13</p>
+              <p class="live-venue">下北沢 近道</p>
+              <p class="live-description">Band set</p>
             </div>
           </div>
-          <!-- 必要に応じて、さらにライブイベントブロックを追加 -->
+          <!-- 必要に応じてイベントブロックを追加 -->
         </div>
       </div>
     </section>
   </main>
 
+  <!-- フッター -->
   <footer>
     <div class="container">
       <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>

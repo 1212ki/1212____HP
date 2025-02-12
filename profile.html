@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
+  <!-- ビューポート設定 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>松本一樹 / itsuki matumoto - Profile</title>
+  <title>松本一樹 -Itsuki Matumoto- : Profile</title>
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+  <!-- 共通スタイルシート -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+  <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <h1 class="logo">松本一樹  -Itsuki Matumoto-</h1>
+      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -25,22 +30,38 @@
   </header>
 
   <main>
+    <!-- プロフィールセクション -->
     <section class="profile">
       <div class="container">
-        <h2>Profile</h2>
-        <!-- プロフィール内容。ダミーテキストを実際の情報に更新してください。 -->
+        <!-- アーティストフォト：四角形、最大幅150px、画面サイズに合わせ自動縮小＆中央配置 -->
+        <img src="images/artist.jpg" alt="Artist Photo" class="artist-photo">
+
+        <!-- セクションタイトル（共通スタイル .section-title でテラコッタ下線付き） -->
+        <h2 class="section-title">Profile</h2>
+
+        <!-- シンプルな自己紹介文 -->
         <p>
-          ここにプロフィールの説明文を入れてください。<br>
-          （例）Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula, nunc at dictum interdum, purus orci faucibus leo, eu ultricies lorem lectus ut nulla.
+          松本一樹 -itsuki matsumoto-<br>
+          IndieRock/Acoustic<br>
+          2023年よりDIY音源の販売・Acousticを中心としたライブを中心に活動中...。<br></p>
         </p>
+
+        <!-- SNSリンクボタン -->
+        <div class="profile-links" style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
+          <a href="https://www.x.com/1212____ki" class="application-link" target="_blank">X</a>
+          <a href="https://www.instagram.com/1212____ki" class="application-link" target="_blank">Instagram</a>
+          <a href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank">YouTube</a>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- フッター -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 松本一樹 / itsuki matumoto. All rights reserved.</p>
+      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
 </body>
+
 </html>

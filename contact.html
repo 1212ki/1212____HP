@@ -2,15 +2,17 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <!-- ビューポート設定 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>松本一樹 / itsuki matumoto - Contact</title>
+  <title>松本一樹 -Itsuki Matumoto- : Contact</title>
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <h1 class="logo">松本一樹  -Itsuki Matumoto-</h1>
+      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -23,32 +25,37 @@
       </nav>
     </div>
   </header>
-
+  
   <main>
+    <!-- お問い合わせセクション -->
     <section class="contact">
       <div class="container">
-        <h2>Contact</h2>
-        <p>以下のフォームに必要事項をご入力の上、送信してください。</p>
-        <!-- Formspree 利用。action 属性の URL は、Formspree 登録後発行のエンドポイントに変更してください -->
-        <form action="https://formspree.io/f/your_form_id" method="POST">
-          <label for="name">name:</label>
-          <input type="text" id="name" name="name" placeholder="例）Itsuki Matsumoto" required>
+        <!-- セクションタイトル -->
+        <h2 class="section-title">Contact</h2>
+        <p>
+          お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。<br>
+        </p>
+        <!-- Formspreeを利用。action属性は発行されたエンドポイントに変更 -->
+        <form action="https://formspree.io/f/xqaeddgj" method="POST">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="例）松本 一樹" required>
           
-          <label for="email">mail:</label>
+          <label for="email">Mail:</label>
           <input type="email" id="email" name="_replyto" placeholder="例）example@mail.com" required>
           
-          <label for="message">message:</label>
+          <label for="message">Message:</label>
           <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
           
-          <button type="submit"><h3>submit</h3></button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     </section>
   </main>
-
+  
+  <!-- フッター -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 松本一樹 / itsuki matumoto. All rights reserved.</p>
+      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
 </body>

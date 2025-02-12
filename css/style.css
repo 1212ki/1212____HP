@@ -1,20 +1,22 @@
 /* ----- 基本リセット＆ボディ設定 ----- */
+/* すべての要素の余白とパディングをリセット */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* bodyタグの基本設定：フォント、背景色、文字色など */
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 背景は少しグレーがかったおしゃれなホワイト */
-  background-color: #f8f8f8;
-  color: #333;
+  background-color: #f8f8f8; /* 少しグレーがかったホワイト背景 */
+  color: #333;             /* 基本の文字色（ダークグレー） */
   line-height: 1.6;
   letter-spacing: 0.5px;
 }
 
 /* ----- コンテナ ----- */
+/* コンテンツを中央に配置し、最大幅と余白を設定 */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -23,18 +25,21 @@ body {
 }
 
 /* ----- ヘッダー・ナビゲーション ----- */
+/* ヘッダーの背景、下線、パディング */
 header {
   background-color: #fff;
   border-bottom: 1px solid #e0e0e0;
   padding: 30px 0;
 }
 
+/* ヘッダー内のレイアウト：タイトルとメニューを横並びに */
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* サイトタイトル（ロゴ）のスタイル */
 .logo {
   font-size: 2em;
   font-weight: bold;
@@ -46,6 +51,7 @@ header {
   color: #BF674D;
 }
 
+/* ナビゲーションメニュー */
 nav ul {
   list-style: none;
   display: flex;
@@ -55,6 +61,7 @@ nav ul li {
   margin-right: 25px;
 }
 
+/* ナビゲーションリンクの基本スタイル */
 nav ul li a {
   text-decoration: none;
   color: #333;
@@ -66,33 +73,48 @@ nav ul li a:hover {
 }
 
 /* ----- ヒーローセクション ----- */
+/* ヒーローセクションは画像のみを表示（元の画像の色通り） */
 .hero {
-  background: url('../images/hero.jpg') center/cover no-repeat;
-  position: relative;
-  padding: 140px 0;
   text-align: center;
-  color: #fff;
+  margin-bottom: 20px;
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 0;
+.hero-image {
+  width: 100%;  /* 画面幅いっぱいに表示 */
+  height: auto;
+  display: block;
 }
 
-.hero h2,
-.hero p {
-  position: relative;
-  z-index: 1;
+/* ----- イントロセクション ----- */
+/* ヒーロー画像下のイントロダクション：ウェルカムメッセージ */
+.intro {
+  padding: 40px 0;
+  text-align: center;
 }
 
-/* ----- セクション見出し ----- */
-section h2 {
+.hero-logo {
+  /* 手書き風フォントは必要に応じて利用（ここではコメントアウト） */
+  /* font-family: 'Indie Flower', cursive; */
+  font-size: 2.5em;  /* 大きめに表示 */
+  color: #BF674D;    /* テラコッタアクセント */
+  margin-bottom: 10px;
+}
+
+.intro h2 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.intro p {
+  font-size: 1.1em;
+  color: #555;
+}
+
+/* ----- セクションタイトル（共通） ----- */
+/* すべてのセクションタイトルに適用。News, Profile, Live, YouTube, Discography, Contact など */
+.section-title {
+  text-align: center;
   font-size: 2em;
   color: #333;
   margin-bottom: 20px;
@@ -101,8 +123,112 @@ section h2 {
   display: inline-block;
 }
 
-section {
-  margin-bottom: 60px;
+/* ----- ニュースセクション ----- */
+/* ニュースセクション全体 */
+.news {
+  padding: 40px 0;
+  background-color: #fff;
+}
+
+.news h2 {
+  /* セクションタイトルは .section-title で統一 */
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #BF674D;
+  display: inline-block;
+}
+
+/* ニュースアイテムの配置 */
+.news-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* 各ニュース記事：画像を文字の左に配置 */
+.news-item {
+  display: flex;           /* 横並び */
+  align-items: center;      /* 垂直中央揃え */
+  gap: 20px;               /* 画像とテキストの間の余白 */
+  flex: 1 1 calc(50% - 30px); /* PCでは2列、スマホでは1列に調整 */
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* ニュース記事左側の画像 */
+.news-image {
+  flex: 0 0 120px;  /* 固定幅 */
+}
+
+.news-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* ニュース記事右側のテキストコンテンツ */
+.news-content {
+  flex: 1;
+}
+
+/* ニュースヘッダー部 */
+.news-header {
+  margin-bottom: 10px;
+}
+
+.news-date {
+  font-size: 1em;
+  font-weight: bold;
+  color: #333;
+}
+
+.news-info {
+  font-size: 0.9em;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* ニュース本文部 */
+.news-body {
+  margin-bottom: 10px;
+}
+
+.news-title {
+  font-size: 1.4em;
+  color: #BF674D;
+  margin-bottom: 5px;
+}
+
+.news-participants {
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.news-price {
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* ニュースフッター部 */
+.news-footer {
+  text-align: right;
+}
+
+/* ----- プロフィールページ用追加スタイル ----- */
+/* アーティストフォト：四角形、最大幅150px、画面に合わせて縮小、中央配置 */
+.artist-photo {
+  max-width: 700px;
+  width: 100%;
+  display: block;
+  margin: 0 auto 20px auto;
 }
 
 /* ----- ライブイベント用スタイル ----- */
@@ -114,7 +240,7 @@ section {
 }
 
 .live-event {
-  flex: 1 1 calc(33.333% - 30px);
+  flex: 1 1 calc(33.333% - 30px);  /* 3列レイアウト */
   background-color: #fff;
   border: 1px solid #e0e0e0;
   padding: 20px;
@@ -151,10 +277,11 @@ section {
   flex-wrap: wrap;
   gap: 30px;
   margin-top: 30px;
+  justify-content: center;  /* 全体を中央寄せ */
 }
 
 .discography-item {
-  flex: 1 1 calc(33.333% - 30px);
+  flex: 1 1 calc(33.333% - 30px);  /* 3列レイアウト */
   background-color: #fff;
   border: 1px solid #e0e0e0;
   padding: 20px;
@@ -183,6 +310,7 @@ section {
   font-size: 0.9em;
   color: #555;
   margin-top: 10px;
+  /*text-align: left;   曲名などのテキストは左揃え */
 }
 
 /* ----- YouTubeページ用スタイル ----- */
@@ -247,7 +375,6 @@ form button:hover {
 /* ----- ボタン風リンク（Ticket, Channel 共通） ----- */
 .application-link {
   display: inline-block;
-  /* 非活性状態：HP背景に馴染むグレー系のグラデーション背景 */
   background: linear-gradient(135deg, #ffffff, #f7f7f7);
   border: 2px solid #dcdcdc;
   padding: 12px 24px;
@@ -257,20 +384,15 @@ form button:hover {
   text-decoration: none;
   transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-/* 疑似クラスでテキスト色を固定 */
 .application-link:link,
 .application-link:visited {
   color: #333;
 }
-
 .application-link:hover {
-  /* 活性状態：背景が標準テラコッタ、かつテキストもテラコッタに */
   background-color: #BF674D;
   border-color: #BF674D;
   color: #BF674D;
-  /* テキストが背景と同化しないように、薄いホワイトのテキストシャドウを追加 */
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
@@ -286,7 +408,6 @@ form button:hover {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 .live-application h3,
 .channel-application h3 {
   font-size: 1.2em;
@@ -315,7 +436,7 @@ footer {
   nav ul li {
     margin: 10px 0;
   }
-  .live-event, .discography-item {
+  .live-event, .discography-item, .news-item {
     flex: 1 1 100%;
   }
 }
