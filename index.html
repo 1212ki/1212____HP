@@ -2,25 +2,18 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <!-- ビューポート設定：スマホでも正しく表示 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>松本一樹 -ItsukiMatsumoto- : Home</title>
-  <!-- 手書き風フォント「Indie Flower」の読み込み -->
-  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
-  <!-- 共通スタイルシート -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- ヘッダー：サイトタイトルとナビゲーション -->
+  <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <!-- タイトル部分を .pc-only と .sp-only に分けて表示/非表示を切り替え -->
       <h1 class="logo">
         松本一樹
-        <!-- PC用タイトル（1行表示） -->
         <span class="pc-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
-        <!-- スマホ用タイトル（改行表示） -->
-        <h2><span class="sp-only"><br>-<span class="terracotta">i</span>tsuki matsumoto-</span></h2>
+        <span class="sp-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
       </h1>
       
       <nav>
@@ -37,18 +30,18 @@
   </header>
   
   <main>
-    <!-- ヒーローセクション：元の画像の色通り表示 -->
+    <!-- ヒーローセクション -->
     <section class="hero">
       <div class="hero-container">
         <img src="images/hero.jpg" alt="Hero Image" class="hero-image">
       </div>
     </section>
     
-    <!-- イントロセクション：ウェルカムメッセージ -->
+    <!-- イントロセクション -->
     <section class="intro">
       <div class="container">
         <div class="hero-logo">Welcome to the Official Site</div>
-        <p>News,discogrtaphy,live,etc...</p>
+        <p>News, Discography, Live, etc...</p>
       </div>
     </section>
     
@@ -58,44 +51,34 @@
         <h2 class="section-title">News</h2>
         <div class="news-items">
           <article class="news-item">
-            <!-- 左側：ニュース記事用画像 -->
             <div class="news-image">
-              <!-- 画像ファイル（news1.jpg 等）※実際の画像パスに変更してください -->
               <img src="images/news1.png" alt="News Image 1">
             </div>
-            <!-- 右側：テキストコンテンツ -->
             <div class="news-content">
-              <!-- ヘッダー部：日付や会場情報 -->
               <div class="news-header">
-                <p class="news-date">2025/2/28(Fri.) Digital Release </p>
+                <p class="news-date">2025/2/28(Fri.) Digital Release</p>
               </div>
-              <!-- 本文部：タイトル、参加者、料金情報など -->
               <div class="news-body">
                 <p class="news-title">New Single "lens"</p>
-                <p class="news-price">¥0 degital only<br>
-
+                <p class="news-price">¥0 digital only</p>
               </div>
-              <!-- フッター部：リンクボタン -->
               <div class="news-footer">
                 <a href="https://soundcloud.com/itsu-654374168/lens-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-                  class="ticket-link application-link" target="_blank">▶▷listen to...</a>
+                  class="application-link" target="_blank">▷listen to...</a>
               </div>
             </div>
           </article>
-          <!-- 他のニュース記事を必要に応じて追加 -->
         </div>
       </div>
     </section>
   </main>
   
-  <!-- フッター -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 松本一樹 -ItsukiMatsumoto-. All rights reserved.</p>
+      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
   
-  <!-- JavaScript専用ファイル -->
   <script src="js/script.js"></script>
 </body>
 </html>
