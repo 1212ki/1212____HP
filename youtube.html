@@ -12,7 +12,14 @@
   <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
+      <!-- タイトル部分を .pc-only と .sp-only に分けて表示/非表示を切り替え -->
+      <h1 class="logo">
+        松本一樹
+        <!-- PC用タイトル（1行表示） -->
+        <span class="pc-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
+        <!-- スマホ用タイトル（改行表示） -->
+        <h2><span class="sp-only"><br>-<span class="terracotta">i</span>tsuki matsumoto-</span></h2>
+      </h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -31,8 +38,7 @@
     <section class="channel-application">
       <div class="container">
         <h3>
-          <!-- Channelリンクボタン（実際のチャンネルURLに変更） -->
-          <a href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank">▶▷Channel</a>
+          <a href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank">Channel</a>
         </h3>
       </div>
     </section>
@@ -40,9 +46,8 @@
     <!-- YouTube動画セクション -->
     <section class="youtube">
       <div class="container">
-        <!-- セクションタイトル -->
         <h2 class="section-title">YouTube</h2>
-        <p>MusicVideo&LiveMovie。</p>
+        <p>MusicVideo,LiveMovie,etc...</p>
         <div class="video-container">
           <iframe width="560" height="315" src="https://www.youtube.com/embed/UembkfsXzJ4?si=O-6AFDRPHiYc02Yk"
             title="YouTube video player" frameborder="0"
@@ -71,5 +76,7 @@
       <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
+  
+  <script src="js/script.js"></script>
 </body>
 </html>

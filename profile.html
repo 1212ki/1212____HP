@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>松本一樹 -Itsuki Matumoto- : Profile</title>
   <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
-  <!-- 共通スタイルシート -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -15,7 +14,14 @@
   <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
+      <!-- タイトル部分を .pc-only と .sp-only に分けて表示/非表示を切り替え -->
+      <h1 class="logo">
+        松本一樹
+        <!-- PC用タイトル（1行表示） -->
+        <span class="pc-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
+        <!-- スマホ用タイトル（改行表示） -->
+        <h2><span class="sp-only"><br>-<span class="terracotta">i</span>tsuki matsumoto-</span></h2>
+      </h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -33,20 +39,13 @@
     <!-- プロフィールセクション -->
     <section class="profile">
       <div class="container">
-        <!-- アーティストフォト：四角形、最大幅150px、画面サイズに合わせ自動縮小＆中央配置 -->
         <img src="images/artist.jpg" alt="Artist Photo" class="artist-photo">
-
-        <!-- セクションタイトル（共通スタイル .section-title でテラコッタ下線付き） -->
         <h2 class="section-title">Profile</h2>
-
-        <!-- シンプルな自己紹介文 -->
         <p>
-          松本一樹 -itsuki matsumoto-<br>
+          松本一樹 -itsukimatsumoto-<br>
           IndieRock/Acoustic<br>
-          2023年よりDIY音源の販売・Acousticを中心としたライブを中心に活動中...。<br></p>
+          2023年よりDIY音源の販売・Acousticを中心としたライブを中心に活動中...。
         </p>
-
-        <!-- SNSリンクボタン -->
         <div class="profile-links" style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
           <a href="https://www.x.com/1212____ki" class="application-link" target="_blank">X</a>
           <a href="https://www.instagram.com/1212____ki" class="application-link" target="_blank">Instagram</a>
@@ -56,12 +55,13 @@
     </section>
   </main>
 
-  <!-- フッター -->
   <footer>
     <div class="container">
       <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
+
+  <script src="js/script.js"></script>
 </body>
 
 </html>

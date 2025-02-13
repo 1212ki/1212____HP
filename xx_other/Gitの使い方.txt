@@ -4,3 +4,7 @@ https://www.notion.so/Git-198208c0c9c580f3a3d9ee3c8e567301
 
 GitHub
 https://github.com/1212ki/1212____HP
+
+
+cd /d "ディレクトリ先"　でディレクトリにアクセスする。
+cd /d "D:\OneDrive\ドキュメント\メモ\99_PC,プログラムメモ\99_AI関連\MusicHomePage_by_itsukimatsumoto"

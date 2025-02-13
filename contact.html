@@ -12,7 +12,14 @@
   <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
+      <!-- タイトル部分を .pc-only と .sp-only に分けて表示/非表示を切り替え -->
+      <h1 class="logo">
+        松本一樹
+        <!-- PC用タイトル（1行表示） -->
+        <span class="pc-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
+        <!-- スマホ用タイトル（改行表示） -->
+        <h2><span class="sp-only"><br>-<span class="terracotta">i</span>tsuki matsumoto-</span></h2>
+      </h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -30,33 +37,33 @@
     <!-- お問い合わせセクション -->
     <section class="contact">
       <div class="container">
-        <!-- セクションタイトル -->
         <h2 class="section-title">Contact</h2>
         <p>
           お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。<br>
         </p>
-        <!-- Formspreeを利用。action属性は発行されたエンドポイントに変更 -->
-        <form action="https://formspree.io/f/xqaeddgj" method="POST">
-          <label for="name">Name</label>
+         <!-- Formspreeを利用。action属性は発行されたエンドポイントに変更 -->
+         <form action="https://formspree.io/f/xqaeddgj" method="POST">
+          <label for="name">name:</label>
           <input type="text" id="name" name="name" placeholder="例）松本 一樹" required>
           
-          <label for="email">Mail:</label>
+          <label for="email">mail:</label>
           <input type="email" id="email" name="_replyto" placeholder="例）example@mail.com" required>
           
-          <label for="message">Message:</label>
+          <label for="message">message:</label>
           <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
           
-          <button type="submit"><h2>Submit<h2></button>
+          <button type="submit"><h2>Submit</h2></button>
         </form>
       </div>
     </section>
   </main>
   
-  <!-- フッター -->
   <footer>
     <div class="container">
       <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
+  
+  <script src="js/script.js"></script>
 </body>
 </html>

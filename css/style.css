@@ -1,22 +1,19 @@
 /* ----- 基本リセット＆ボディ設定 ----- */
-/* すべての要素の余白とパディングをリセット */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* bodyタグの基本設定：フォント、背景色、文字色など */
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f8f8f8; /* 少しグレーがかったホワイト背景 */
-  color: #333;             /* 基本の文字色（ダークグレー） */
+  background-color: #f8f8f8;
+  color: #333;
   line-height: 1.6;
   letter-spacing: 0.5px;
 }
 
 /* ----- コンテナ ----- */
-/* コンテンツを中央に配置し、最大幅と余白を設定 */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -25,33 +22,31 @@ body {
 }
 
 /* ----- ヘッダー・ナビゲーション ----- */
-/* ヘッダーの背景、下線、パディング */
 header {
   background-color: #fff;
   border-bottom: 1px solid #e0e0e0;
   padding: 30px 0;
 }
 
-/* ヘッダー内のレイアウト：タイトルとメニューを横並びに */
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* サイトタイトル（ロゴ）のスタイル */
+/* タイトル部分の余白をなくすために margin: 0; を追加 */
 .logo {
   font-size: 2em;
   font-weight: bold;
   color: #333;
+  margin: 0;        /* ここで h1 のデフォルトマージンをリセット */
+  text-align: left; /* PC時は左寄せ */
 }
 
-/* .terracotta クラス：テラコッタアクセント用 */
 .terracotta {
   color: #BF674D;
 }
 
-/* ナビゲーションメニュー */
 nav ul {
   list-style: none;
   display: flex;
@@ -61,42 +56,107 @@ nav ul li {
   margin-right: 25px;
 }
 
-/* ナビゲーションリンクの基本スタイル */
 nav ul li a {
   text-decoration: none;
   color: #333;
   transition: color 0.3s ease;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a.active {
   color: #BF674D;
 }
 
+/* PC用・スマホ用のタイトル表示切り替え */
+.pc-only {
+  display: inline; /* PC時に表示 */
+}
+.sp-only {
+  display: none;   /* PC時は非表示 */
+  margin: 0;       /* 不要な余白をなくす */
+  line-height: 1;  /* 行間を詰め、隙間ができにくくする */
+}
+
 /* ----- ヒーローセクション ----- */
-/* ヒーローセクションは画像のみを表示（元の画像の色通り） */
 .hero {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.hero-image {
-  width: 100%;  /* 画面幅いっぱいに表示 */
+.hero-container {
+  width: 100%;
   height: auto;
-  display: block;
+  overflow: visible;
+  position: relative;
+  text-align: center;
+}
+
+.hero-image {
+  position: static;
+  width: 100%;
+  height: auto;
+  display: inline-block;
+  margin: 0 auto 20px auto;
+}
+
+/* スマホ向け（768px以下） */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+  }
+  nav ul {
+    flex-direction: column;
+  }
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  .pc-only {
+    display: none;    /* スマホ時はPC用タイトルを非表示 */
+  }
+  /* スマホ版タイトルをブロック表示＆中央寄せ */
+  .sp-only {
+    display: block;
+    margin: 0;
+    line-height: 1;   /* 行間を小さくして隙間を詰める */
+    text-align: center;
+  }
+  /* スマホ時はタイトル全体を中央寄せ */
+  .logo {
+    text-align: center;
+  }
+
+  .live-event, .discography-item, .news-item {
+    flex: 1 1 100%;
+  }
+
+  .hero-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    min-width: 600px;
+    max-width: 1200px;
+    height: auto;
+  }
 }
 
 /* ----- イントロセクション ----- */
-/* ヒーロー画像下のイントロダクション：ウェルカムメッセージ */
 .intro {
   padding: 40px 0;
   text-align: center;
 }
 
 .hero-logo {
-  /* 手書き風フォントは必要に応じて利用（ここではコメントアウト） */
-  /* font-family: 'Indie Flower', cursive; */
-  font-size: 2.5em;  /* 大きめに表示 */
-  color: #BF674D;    /* テラコッタアクセント */
+  font-size: 1.7em;
+  color: #BF674D;
   margin-bottom: 10px;
 }
 
@@ -112,7 +172,6 @@ nav ul li a:hover {
 }
 
 /* ----- セクションタイトル（共通） ----- */
-/* すべてのセクションタイトルに適用。News, Profile, Live, YouTube, Discography, Contact など */
 .section-title {
   text-align: center;
   font-size: 2em;
@@ -124,14 +183,12 @@ nav ul li a:hover {
 }
 
 /* ----- ニュースセクション ----- */
-/* ニュースセクション全体 */
 .news {
   padding: 40px 0;
   background-color: #fff;
 }
 
 .news h2 {
-  /* セクションタイトルは .section-title で統一 */
   text-align: center;
   font-size: 2em;
   color: #333;
@@ -141,7 +198,6 @@ nav ul li a:hover {
   display: inline-block;
 }
 
-/* ニュースアイテムの配置 */
 .news-items {
   display: flex;
   flex-wrap: wrap;
@@ -149,12 +205,11 @@ nav ul li a:hover {
   margin-top: 30px;
 }
 
-/* 各ニュース記事：画像を文字の左に配置 */
 .news-item {
-  display: flex;           /* 横並び */
-  align-items: center;      /* 垂直中央揃え */
-  gap: 20px;               /* 画像とテキストの間の余白 */
-  flex: 1 1 calc(50% - 30px); /* PCでは2列、スマホでは1列に調整 */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1 1 calc(50% - 30px);
   background-color: #f7f7f7;
   border: 1px solid #e0e0e0;
   padding: 20px;
@@ -162,9 +217,8 @@ nav ul li a:hover {
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* ニュース記事左側の画像 */
 .news-image {
-  flex: 0 0 120px;  /* 固定幅 */
+  flex: 0 0 120px;
 }
 
 .news-image img {
@@ -173,12 +227,10 @@ nav ul li a:hover {
   border-radius: 4px;
 }
 
-/* ニュース記事右側のテキストコンテンツ */
 .news-content {
   flex: 1;
 }
 
-/* ニュースヘッダー部 */
 .news-header {
   margin-bottom: 10px;
 }
@@ -195,7 +247,6 @@ nav ul li a:hover {
   line-height: 1.4;
 }
 
-/* ニュース本文部 */
 .news-body {
   margin-bottom: 10px;
 }
@@ -217,15 +268,13 @@ nav ul li a:hover {
   color: #555;
 }
 
-/* ニュースフッター部 */
 .news-footer {
   text-align: right;
 }
 
 /* ----- プロフィールページ用追加スタイル ----- */
-/* アーティストフォト：四角形、最大幅150px、画面に合わせて縮小、中央配置 */
 .artist-photo {
-  max-width: 700px;
+  max-width: 750px;
   width: 100%;
   display: block;
   margin: 0 auto 20px auto;
@@ -240,7 +289,7 @@ nav ul li a:hover {
 }
 
 .live-event {
-  flex: 1 1 calc(33.333% - 30px);  /* 3列レイアウト */
+  flex: 1 1 calc(33.333% - 30px);
   background-color: #fff;
   border: 1px solid #e0e0e0;
   padding: 20px;
@@ -277,11 +326,11 @@ nav ul li a:hover {
   flex-wrap: wrap;
   gap: 30px;
   margin-top: 30px;
-  justify-content: center;  /* 全体を中央寄せ */
+  justify-content: center;
 }
 
 .discography-item {
-  flex: 1 1 calc(33.333% - 30px);  /* 3列レイアウト */
+  flex: 1 1 calc(33.333% - 30px);
   background-color: #fff;
   border: 1px solid #e0e0e0;
   padding: 20px;
@@ -310,7 +359,7 @@ nav ul li a:hover {
   font-size: 0.9em;
   color: #555;
   margin-top: 10px;
-  /*text-align: left;   曲名などのテキストは左揃え */
+  text-align: left;
 }
 
 /* ----- YouTubeページ用スタイル ----- */
@@ -384,10 +433,12 @@ form button:hover {
   text-decoration: none;
   transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .application-link:link,
 .application-link:visited {
   color: #333;
 }
+
 .application-link:hover {
   background-color: #BF674D;
   border-color: #BF674D;
@@ -408,6 +459,7 @@ form button:hover {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .live-application h3,
 .channel-application h3 {
   font-size: 1.2em;
@@ -426,17 +478,16 @@ footer {
 }
 
 /* ----- レスポンシブ対応 ----- */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-  }
-  nav ul {
-    flex-direction: column;
-  }
-  nav ul li {
-    margin: 10px 0;
-  }
-  .live-event, .discography-item, .news-item {
-    flex: 1 1 100%;
-  }
+/* （上部の @media (max-width: 768px){} でタイトル表示切り替え済み） */
+
+/* ----- Doodle Overlay（ドゥードゥルエフェクト用） ----- */
+.doodle-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 1;
 }

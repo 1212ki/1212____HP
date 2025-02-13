@@ -12,7 +12,14 @@
   <!-- ヘッダー -->
   <header>
     <div class="container header-container">
-      <h1 class="logo">松本一樹 -<span class="terracotta">I</span>tsuki Matumoto-</h1>
+      <!-- タイトル部分を .pc-only と .sp-only に分けて表示/非表示を切り替え -->
+      <h1 class="logo">
+        松本一樹
+        <!-- PC用タイトル（1行表示） -->
+        <span class="pc-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
+        <!-- スマホ用タイトル（改行表示） -->
+        <h2><span class="sp-only"><br>-<span class="terracotta">i</span>tsuki matsumoto-</span></h2>
+      </h1>
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -30,7 +37,6 @@
     <!-- ディスコグラフィセクション -->
     <section class="discography">
       <div class="container">
-        <!-- セクションタイトル -->
         <h2 class="section-title">Discography</h2>
         <p></p>
         <div class="discography-items">
@@ -72,5 +78,7 @@
       <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
+  
+  <script src="js/script.js"></script>
 </body>
 </html>
