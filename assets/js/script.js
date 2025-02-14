@@ -1,14 +1,22 @@
 document.addEventListener("DOMContentLoaded", function(){
   // 現在のURLパスを取得し、ナビゲーションリンクに active クラスを付与
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname;  // 例: "/", "/profile/", "/live/" など
   const navLinks = document.querySelectorAll("nav ul li a");
+
   navLinks.forEach(function(link) {
-    if (currentPath.indexOf(link.getAttribute("href")) !== -1) {
+    const linkPath = link.getAttribute("href");  // 例: "/", "/profile/", ...
+
+    // Homeリンクは "/" に完全一致する場合のみ active
+    if (linkPath === "/" && currentPath === "/") {
+      link.classList.add("active");
+    }
+    // Home以外のリンクは、URLパスに含まれていれば active
+    else if (linkPath !== "/" && currentPath.indexOf(linkPath) === 0) {
       link.classList.add("active");
     }
   });
 
-  // ----- インタラクティブ・ドゥードゥルエフェクト ----- //
+  // ----- インタラクティブ・ドゥードゥルエフェクト (以下は変更なし) ----- //
   const logo = document.querySelector(".logo");
   if (logo) {
     logo.addEventListener("click", function() {
