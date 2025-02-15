@@ -1,22 +1,39 @@
 document.addEventListener("DOMContentLoaded", function(){
-  // 現在のURLパスを取得し、ナビゲーションリンクに active クラスを付与
-  const currentPath = window.location.pathname;  // 例: "/", "/profile/", "/live/" など
+  const currentPath = window.location.pathname;  // 例: "/contact/index.html"
   const navLinks = document.querySelectorAll("nav ul li a");
 
   navLinks.forEach(function(link) {
-    const linkPath = link.getAttribute("href");  // 例: "/", "/profile/", ...
+    // 例: link.getAttribute("href") => "../contact/"
+    const linkHref = link.getAttribute("href");
 
-    // Homeリンクは "/" に完全一致する場合のみ active
-    if (linkPath === "/" && currentPath === "/") {
-      link.classList.add("active");
-    }
-    // Home以外のリンクは、URLパスに含まれていれば active
-    else if (linkPath !== "/" && currentPath.indexOf(linkPath) === 0) {
+    // 1. 相対パス -> 絶対URL に変換
+    const absoluteURL = new URL(linkHref, window.location.href);
+    // 例: absoluteURL.pathname => "/contact/"
+
+    let linkPath = absoluteURL.pathname;
+
+    // 2. もし "/contact/index.html" と "/contact/" のように微妙に違う場合に備えて
+    //    "index.html" を除去し、末尾の "/" を揃えるなどの調整
+    const normalize = (path) => {
+      // index.html を除去
+      path = path.replace(/index\.html$/, "");
+      // 末尾に "/" がなければ足す（ルートの場合を除く）
+      if (path !== "/" && !path.endsWith("/")) {
+        path += "/";
+      }
+      return path;
+    };
+
+    const normCurrent = normalize(currentPath);
+    const normLink = normalize(linkPath);
+
+    // 3. 比較して一致すれば active クラスを付与
+    if (normCurrent === normLink) {
       link.classList.add("active");
     }
   });
 
-  // ----- インタラクティブ・ドゥードゥルエフェクト (以下は変更なし) ----- //
+  // ドゥードゥルエフェクトはそのまま
   const logo = document.querySelector(".logo");
   if (logo) {
     logo.addEventListener("click", function() {
@@ -24,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function(){
       overlay.className = "doodle-overlay";
       overlay.innerHTML = `<canvas id="doodleCanvas"></canvas>`;
       document.body.appendChild(overlay);
-      
+
       const canvas = document.getElementById("doodleCanvas");
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -55,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function(){
           setTimeout(() => overlay.remove(), 500);
         }
       }
-      
       requestAnimationFrame(drawDoodle);
     });
   }
