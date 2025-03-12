@@ -291,18 +291,31 @@ nav ul li a.active {
   flex-wrap: wrap;
   gap: 30px;
   margin-top: 30px;
-  justify-content: center;
+  justify-content: flex-start;  /* Live と同じ左寄せに */
 }
 
 .discography-item {
-  flex: 1 1 calc(33.333% - 30px);
+  flex: 1 1 280px;    /* Live と同様、基準幅280px */
+  max-width: 320px;   /* 上限320px */
   background-color: #fff;
   border: 1px solid #e0e0e0;
   padding: 20px;
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  /* 幅はflexで管理するため width: auto; */
+  width: auto;
 }
+
+/* モバイル用（768px以下）：1カラムに */
+@media (max-width: 768px) {
+  .discography-item {
+    flex: none;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
 
 .discography-item img {
   max-width: 100%;
