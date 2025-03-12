@@ -150,7 +150,7 @@ nav ul li a.active {
 
 .news-items {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;  /* ここを追加：縦並びに変更 */
   gap: 30px;
   margin-top: 30px;
 }
@@ -159,13 +159,14 @@ nav ul li a.active {
   display: flex;
   align-items: center;
   gap: 20px;
-  flex: 1 1 calc(50% - 30px);
+  width: 100%;             /* 横並び用のflexプロパティを廃止し、100%幅に */
   background-color: #f7f7f7;
   border: 1px solid #e0e0e0;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+
 
 .news-image {
   flex: 0 0 120px;
@@ -231,532 +232,35 @@ nav ul li a.active {
 }
 
 /* ----- Live Events ----- */
+/* ----- Live Events Container ----- */
 .live-events {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;     /* 子要素を折り返す */
   gap: 30px;
   margin-top: 30px;
+  justify-content: flex-start; /* 左寄せ */
 }
 
+/* ----- Live Event Item ----- */
 .live-event {
-  flex: 1 1 calc(33.333% - 30px);
+  /* まずはベースとなる大きさを指定 */
+  flex: 1 1 280px;    /* 例: 幅280pxを基準に伸縮 */
+  max-width: 320px;   /* 例: 大きくなりすぎないよう上限を設定 */
   background-color: #fff;
   border: 1px solid #e0e0e0;
   padding: 20px;
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  /* 高さは自動でOK。画像は .live-event img { max-width: 100%; } で対応 */
 }
 
-.live-event img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 15px;
-}
-
-.live-info .live-date {
-  font-weight: bold;
-  color: #333;
-}
-
-.live-info .live-venue {
-  font-style: italic;
-  color: #BF674D;
-}
-
-.live-info .live-description {
-  font-size: 0.9em;
-  color: #555;
-  margin-top: 10px;
-}
-
-/* ----- Discography ----- */
-.discography-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin-top: 30px;
-  justify-content: center;
-}
-
-.discography-item {
-  flex: 1 1 calc(33.333% - 30px);
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.discography-item img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 15px;
-}
-
-.discography-info .album-title {
-  font-weight: bold;
-  color: #333;
-}
-
-.discography-info .album-release {
-  color: #BF674D;
-  font-style: italic;
-}
-
-.discography-info .album-description {
-  font-size: 0.9em;
-  color: #555;
-  margin-top: 10px;
-}
-
-/* ----- YouTube Page ----- */
-.youtube-heading {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.channel-link {
-  color: #BF674D;
-  font-size: 0.7em;
-  text-decoration: none;
-  border-bottom: 1px dotted #BF674D;
-  transition: color 0.3s ease;
-}
-
-.channel-link:hover {
-  color: #333;
-}
-
-.video-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-  height: 0;
-  margin-top: 20px;
-  overflow: hidden;
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-/* ----- Contact Page ----- */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-form label {
-  font-weight: bold;
-}
-
-form input,
-form textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
-}
-
-form button {
-  background-color: #BF674D;
-  color: #333;
-  border: none;
-  padding: 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-form button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-}
-
-/* ----- Button-like Link ----- */
-.application-link {
-  display: inline-block;
-  background: linear-gradient(135deg, #ffffff, #f7f7f7);
-  border: 2px solid #dcdcdc;
-  padding: 12px 24px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  font-weight: bold;
-  text-decoration: none;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.application-link:link,
-.application-link:visited {
-  color: #333;
-}
-
-.application-link:hover {
-  background-color: #BF674D;
-  border-color: #BF674D;
-  color: #BF674D;
-  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-/* ----- Live/Channel Application Sections ----- */
-.live-application,
-.channel-application {
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  padding: 15px;
-  margin-bottom: 30px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* ----- Footer ----- */
-footer {
-  background-color: #fff;
-  border-top: 1px solid #e0e0e0;
-  text-align: center;
-  padding: 25px 0;
-  font-size: 0.9em;
-  margin-top: 60px;
-}
-
-/* ============================= */
-/*    MEDIA QUERIES FOR MOBILE   */
-/* ============================= */
-
+/* 768px以下では1カラムにしたい場合 */
 @media (max-width: 768px) {
-  /* Header / Nav */
-  .header-container {
-    flex-direction: column;
-  }
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-  }
-  nav ul li {
-    margin: 10px 0;
-  }
-  .pc-only {
-    display: none;
-  }
-  .sp-only {
-    display: block;
-    text-align: center;
-  }
-  .logo {
-    text-align: center;
-  }
-  /* Hero for Mobile */
-  .hero-container {
-    height: 200px;
-    overflow: hidden;
-    position: relative;
-  }
-  .hero-image {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
-    min-width: 600px;
-    max-width: 1200px;
-    height: auto;
-  }
-
-  /* Live: Stack vertically */
-  .live-events {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 30px;
-  }
   .live-event {
-    flex: none;
-    width: 100%;
-    margin: 0 auto;
+    flex: 1 1 100%;
+    max-width: none;
   }
-  .live-event img {
-    width: 100%;
-    height: auto;
-  }
-
-  /* Discography: Stack vertically */
-  .discography-items {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 30px;
-  }
-  .discography-item {
-    flex: none;
-    width: 100%;
-    margin: 0 auto;
-  }
-  .discography-item img {
-    width: 100%;
-    height: auto;
-  }
-}
-/* ----- Basic Reset & Body Settings ----- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f8f8f8;
-  color: #333;
-  line-height: 1.6;
-  letter-spacing: 0.5px;
-}
-
-/* ----- Container ----- */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 0;
-}
-
-/* ----- Header & Navigation ----- */
-header {
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 30px 0;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 2em;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-  text-align: left;
-}
-
-.terracotta {
-  color: #BF674D;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-}
-
-nav ul li {
-  margin-right: 25px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-nav ul li a:hover,
-nav ul li a.active {
-  color: #BF674D;
-}
-
-/* PC & Mobile title visibility */
-.pc-only {
-  display: inline;
-}
-.sp-only {
-  display: none;
-  margin: 0;
-  line-height: 1;
-}
-
-/* ----- Hero Section ----- */
-.hero {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.hero-container {
-  width: 100%;
-  height: auto;
-  overflow: visible;
-  position: relative;
-  text-align: center;
-}
-
-.hero-image {
-  position: static;
-  width: 100%;
-  height: auto;
-  display: inline-block;
-  margin: 0 auto 20px auto;
-}
-
-/* ----- Intro Section ----- */
-.intro {
-  padding: 40px 0;
-  text-align: center;
-}
-
-.hero-logo {
-  font-size: 1.7em;
-  color: #BF674D;
-  margin-bottom: 10px;
-}
-
-.intro h2 {
-  font-size: 2em;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.intro p {
-  font-size: 1.1em;
-  color: #555;
-}
-
-/* ----- Section Title ----- */
-.section-title {
-  text-align: center;
-  font-size: 2em;
-  color: #333;
-  margin-bottom: 20px;
-  padding-bottom: 5px;
-  border-bottom: 2px solid #BF674D;
-  display: inline-block;
-}
-
-/* ----- News Section ----- */
-.news {
-  padding: 40px 0;
-  background-color: #fff;
-}
-
-.news h2 {
-  text-align: center;
-  font-size: 2em;
-  color: #333;
-  margin-bottom: 20px;
-  padding-bottom: 5px;
-  border-bottom: 2px solid #BF674D;
-  display: inline-block;
-}
-
-.news-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin-top: 30px;
-}
-
-.news-item {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex: 1 1 calc(50% - 30px);
-  background-color: #f7f7f7;
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.news-image {
-  flex: 0 0 120px;
-}
-
-.news-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-.news-content {
-  flex: 1;
-}
-
-.news-header {
-  margin-bottom: 10px;
-}
-
-.news-date {
-  font-size: 1em;
-  font-weight: bold;
-  color: #333;
-}
-
-.news-info {
-  font-size: 0.9em;
-  color: #555;
-  line-height: 1.4;
-}
-
-.news-body {
-  margin-bottom: 10px;
-}
-
-.news-title {
-  font-size: 1.4em;
-  color: #BF674D;
-  margin-bottom: 5px;
-}
-
-.news-participants {
-  font-size: 1em;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.news-price {
-  font-size: 0.9em;
-  color: #555;
-}
-
-.news-footer {
-  text-align: right;
-}
-
-/* ----- Profile Page Additional Styles ----- */
-.artist-photo {
-  max-width: 750px;
-  width: 100%;
-  display: block;
-  margin: 0 auto 20px auto;
-}
-
-/* ----- Live Events ----- */
-.live-events {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin-top: 30px;
-}
-
-.live-event {
-  flex: 1 1 calc(33.333% - 30px);
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .live-event img {
