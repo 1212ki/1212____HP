@@ -11,6 +11,7 @@ body {
   color: #333;
   line-height: 1.6;
   letter-spacing: 0.5px;
+  overflow-x: hidden;
 }
 
 /* ----- Container ----- */
@@ -23,9 +24,20 @@ body {
 
 /* ----- Header & Navigation ----- */
 header {
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(224, 224, 224, 0.5);
   padding: 30px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+header.header-scrolled {
+  padding: 15px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .header-container {
@@ -40,10 +52,45 @@ header {
   color: #333;
   margin: 0;
   text-align: left;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.logo::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #BF674D, transparent);
+  transition: width 0.4s ease;
+}
+
+.logo:hover::after {
+  width: 100%;
+}
+
+/* Logo pulse animation when clicked */
+.logo-pulse {
+  animation: logoPulse 0.6s ease-out;
+}
+
+@keyframes logoPulse {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); text-shadow: 0 0 20px rgba(191, 103, 77, 0.5); }
+  50% { transform: scale(0.95); }
+  75% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .terracotta {
   color: #BF674D;
+  position: relative;
 }
 
 nav ul {
@@ -58,7 +105,26 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: #333;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 5px 0;
+}
+
+nav ul li a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #BF674D;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+nav ul li a:hover::before,
+nav ul li a.active::before {
+  width: 100%;
 }
 
 nav ul li a:hover,
@@ -77,10 +143,79 @@ nav ul li a.active {
   line-height: 1;
 }
 
+/* ----- Particle Effect ----- */
+.particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  color: #BF674D;
+  animation: particleFly 1.2s ease-out forwards;
+  text-shadow: 0 0 10px rgba(191, 103, 77, 0.5);
+}
+
+@keyframes particleFly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--endX), var(--endY)) rotate(var(--rotation)) scale(0);
+  }
+}
+
+/* ----- Ripple Effect ----- */
+.ripple-effect {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid #BF674D;
+  transform: translate(-50%, -50%);
+  animation: rippleExpand 1s ease-out forwards;
+}
+
+@keyframes rippleExpand {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+  }
+  100% {
+    width: 400px;
+    height: 400px;
+    opacity: 0;
+  }
+}
+
+/* ----- Fade In Animation ----- */
+.fade-in-element {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger effect for news items */
+.news-item:nth-child(1) { transition-delay: 0s; }
+.news-item:nth-child(2) { transition-delay: 0.1s; }
+.news-item:nth-child(3) { transition-delay: 0.2s; }
+.news-item:nth-child(4) { transition-delay: 0.3s; }
+.news-item:nth-child(5) { transition-delay: 0.4s; }
+.news-item:nth-child(6) { transition-delay: 0.5s; }
+
 /* ----- Hero Section ----- */
 .hero {
   text-align: center;
   margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-container {
@@ -97,18 +232,36 @@ nav ul li a.active {
   height: auto;
   display: inline-block;
   margin: 0 auto 20px auto;
+  transition: transform 0.5s ease;
+}
+
+.hero:hover .hero-image {
+  transform: scale(1.02);
 }
 
 /* ----- Intro Section ----- */
 .intro {
   padding: 40px 0;
   text-align: center;
+  position: relative;
 }
 
 .hero-logo {
   font-size: 1.7em;
   color: #BF674D;
   margin-bottom: 10px;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .intro h2 {
@@ -120,6 +273,7 @@ nav ul li a.active {
 .intro p {
   font-size: 1.1em;
   color: #555;
+  animation: fadeInUp 1s ease 0.2s both;
 }
 
 /* ----- Section Title ----- */
@@ -131,6 +285,24 @@ nav ul li a.active {
   padding-bottom: 5px;
   border-bottom: 2px solid #BF674D;
   display: inline-block;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #BF674D, #d4896f, #BF674D);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* ----- News Section ----- */
@@ -152,7 +324,6 @@ nav ul li a.active {
 .news-items {
   display: flex;
   flex-direction: column;
-  /* ここを追加：縦並びに変更 */
   gap: 30px;
   margin-top: 30px;
 }
@@ -162,23 +333,52 @@ nav ul li a.active {
   align-items: center;
   gap: 20px;
   width: 100%;
-  /* 横並び用のflexプロパティを廃止し、100%幅に */
-  background-color: #f7f7f7;
+  background: linear-gradient(145deg, #ffffff, #f7f7f7);
   border: 1px solid #e0e0e0;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.news-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(191, 103, 77, 0.05), transparent);
+  transition: left 0.5s ease;
+}
+
+.news-item:hover::before {
+  left: 100%;
+}
+
+.news-item:hover {
+  box-shadow: 0 10px 30px rgba(191, 103, 77, 0.15);
+  border-color: rgba(191, 103, 77, 0.3);
 }
 
 
 .news-image {
   flex: 0 0 120px;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .news-image img {
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: 8px;
+  transition: transform 0.4s ease;
+}
+
+.news-item:hover .news-image img {
+  transform: scale(1.1);
 }
 
 .news-content {
@@ -193,6 +393,26 @@ nav ul li a.active {
   font-size: 1em;
   font-weight: bold;
   color: #333;
+  position: relative;
+  display: inline-block;
+}
+
+.news-date::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #BF674D;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+  50% { transform: translateY(-50%) scale(1.2); opacity: 0.7; }
 }
 
 .news-info {
@@ -209,6 +429,11 @@ nav ul li a.active {
   font-size: 1.4em;
   color: #BF674D;
   margin-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+.news-item:hover .news-title {
+  color: #a35640;
 }
 
 .news-participants {
@@ -232,40 +457,70 @@ nav ul li a.active {
   width: 100%;
   display: block;
   margin: 0 auto 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.artist-photo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
 }
 
 /* ----- Live Events ----- */
-/* ----- Live Events Container ----- */
 .live-events {
   display: flex;
   flex-wrap: wrap;
-  /* 子要素を折り返す */
   gap: 30px;
   margin-top: 30px;
   justify-content: flex-start;
-  /* 左寄せ */
 }
 
-/* ----- Live Event Item ----- */
 .live-event {
-  /* まずはベースとなる大きさを指定 */
   flex: 1 1 280px;
-  /* 例: 幅280pxを基準に伸縮 */
   max-width: 320px;
-  /* 例: 大きくなりすぎないよう上限を設定 */
-  background-color: #fff;
+  background: linear-gradient(145deg, #ffffff, #f9f9f9);
   border: 1px solid #e0e0e0;
   padding: 20px;
   text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* 高さは自動でOK。画像は .live-event img { max-width: 100%; } で対応 */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.live-event::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #BF674D, #d4896f);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.live-event:hover::after {
+  transform: scaleX(1);
+}
+
+.live-event:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(191, 103, 77, 0.15);
 }
 
 .live-event img {
   max-width: 100%;
   height: auto;
   margin-bottom: 15px;
+  border-radius: 8px;
+  transition: transform 0.4s ease;
+}
+
+.live-event:hover img {
+  transform: scale(1.03);
 }
 
 .live-info .live-date {
@@ -291,29 +546,54 @@ nav ul li a.active {
   gap: 30px;
   margin-top: 30px;
   justify-content: flex-start;
-  /* Live と同じ左寄せに */
 }
 
 .discography-item {
   flex: 1 1 280px;
-  /* Live と同様、基準幅280px */
   max-width: 320px;
-  /* 上限320px */
-  background-color: #fff;
+  background: linear-gradient(145deg, #ffffff, #f9f9f9);
   border: 1px solid #e0e0e0;
   padding: 20px;
   text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* 幅はflexで管理するため width: auto; */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   width: auto;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+.discography-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(191, 103, 77, 0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.discography-item:hover::before {
+  opacity: 1;
+}
+
+.discography-item:hover {
+  transform: translateY(-8px) rotate(1deg);
+  box-shadow: 0 15px 35px rgba(191, 103, 77, 0.15);
+}
 
 .discography-item img {
   max-width: 100%;
   height: auto;
   margin-bottom: 15px;
+  border-radius: 8px;
+  transition: transform 0.4s ease;
+}
+
+.discography-item:hover img {
+  transform: scale(1.05) rotate(-1deg);
 }
 
 .discography-info .album-title {
@@ -344,21 +624,23 @@ nav ul li a.active {
   font-size: 0.7em;
   text-decoration: none;
   border-bottom: 1px dotted #BF674D;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .channel-link:hover {
   color: #333;
+  border-bottom-color: #333;
 }
 
 .video-container {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%;
-  /* 16:9 Aspect Ratio */
   height: 0;
   margin-top: 20px;
   overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .video-container iframe {
@@ -384,25 +666,58 @@ form label {
 
 form input,
 form textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 1em;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+}
+
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #BF674D;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(191, 103, 77, 0.1);
 }
 
 form button {
-  background-color: #BF674D;
-  color: #333;
+  background: linear-gradient(135deg, #BF674D, #d4896f);
+  color: #fff;
   border: none;
-  padding: 12px;
-  border-radius: 4px;
+  padding: 15px 30px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-weight: bold;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+form button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+form button:hover::before {
+  left: 100%;
 }
 
 form button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(191, 103, 77, 0.3);
+}
+
+form button:active {
+  transform: translateY(0);
 }
 
 /* ----- Button-like Link ----- */
@@ -412,10 +727,27 @@ form button:hover {
   border: 2px solid #dcdcdc;
   padding: 12px 24px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   font-weight: bold;
   text-decoration: none;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.application-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(191, 103, 77, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.application-link:hover::before {
+  left: 100%;
 }
 
 .application-link:link,
@@ -424,34 +756,50 @@ form button:hover {
 }
 
 .application-link:hover {
-  background-color: #BF674D;
+  background: linear-gradient(135deg, #BF674D, #d4896f);
   border-color: #BF674D;
-  color: #BF674D;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  color: #fff;
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 25px rgba(191, 103, 77, 0.25);
 }
 
 /* ----- Live/Channel Application Sections ----- */
 .live-application,
 .channel-application {
-  background-color: #fff;
+  background: linear-gradient(145deg, #ffffff, #f9f9f9);
   border: 1px solid #e0e0e0;
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 30px;
   text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.live-application:hover,
+.channel-application:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* ----- Footer ----- */
 footer {
-  background-color: #fff;
+  background: linear-gradient(135deg, #fff, #f9f9f9);
   border-top: 1px solid #e0e0e0;
   text-align: center;
-  padding: 25px 0;
+  padding: 30px 0;
   font-size: 0.9em;
   margin-top: 60px;
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #BF674D, transparent);
 }
 
 /* ============================= */
@@ -542,35 +890,28 @@ footer {
     height: auto;
   }
 
-
-
-
-  /* Profileページのリンクボタンをスマートフォンで縦並びにする */
-  .profile-links {
-    flex-direction: column;
-    /* ボタンを縦方向に並べる */
-    align-items: center;
-    /* ボタンを中央揃えにする */
-    gap: 10px;
-    /* ボタン間の隙間を調整 (任意) */
+  /* Disable 3D card effect on mobile */
+  .news-item {
+    transform: none !important;
   }
 
-  /* Profileページ内の各リンクボタンの幅などを調整 */
+  /* Profile page links */
+  .profile-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
   .profile-links .application-link {
     width: 80%;
-    /* ボタンの幅を親要素の80%に設定 */
     max-width: 300px;
-    /* ボタンの最大幅を指定 (広がりすぎ防止) */
     text-align: center;
-    /* ボタン内のテキストを中央揃えにする */
     margin-left: auto;
-    /* ボタン自体を中央に配置 */
     margin-right: auto;
-    /* ボタン自体を中央に配置 */
   }
 }
 
-/* ----- Doodle Overlay ----- */
+/* ----- Doodle Overlay (Legacy) ----- */
 .doodle-overlay {
   position: fixed;
   top: 0;
@@ -579,4 +920,33 @@ footer {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
+}
+
+/* ----- Selection Color ----- */
+::selection {
+  background-color: rgba(191, 103, 77, 0.3);
+  color: #333;
+}
+
+/* ----- Smooth Scroll ----- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ----- Custom Scrollbar ----- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #BF674D, #d4896f);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a35640;
 }

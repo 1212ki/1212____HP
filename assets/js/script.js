@@ -1,23 +1,14 @@
 document.addEventListener("DOMContentLoaded", function(){
-  const currentPath = window.location.pathname;  // 例: "/contact/index.html"
+  const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll("nav ul li a");
 
   navLinks.forEach(function(link) {
-    // 例: link.getAttribute("href") => "../contact/"
     const linkHref = link.getAttribute("href");
-
-    // 1. 相対パス -> 絶対URL に変換
     const absoluteURL = new URL(linkHref, window.location.href);
-    // 例: absoluteURL.pathname => "/contact/"
-
     let linkPath = absoluteURL.pathname;
 
-    // 2. もし "/contact/index.html" と "/contact/" のように微妙に違う場合に備えて
-    //    "index.html" を除去し、末尾の "/" を揃えるなどの調整
     const normalize = (path) => {
-      // index.html を除去
       path = path.replace(/index\.html$/, "");
-      // 末尾に "/" がなければ足す（ルートの場合を除く）
       if (path !== "/" && !path.endsWith("/")) {
         path += "/";
       }
@@ -27,52 +18,138 @@ document.addEventListener("DOMContentLoaded", function(){
     const normCurrent = normalize(currentPath);
     const normLink = normalize(linkPath);
 
-    // 3. 比較して一致すれば active クラスを付与
     if (normCurrent === normLink) {
       link.classList.add("active");
     }
   });
 
-  // ドゥードゥルエフェクトはそのまま
+  // ========== タイトルクリック時のパーティクルエフェクト ==========
   const logo = document.querySelector(".logo");
   if (logo) {
-    logo.addEventListener("click", function() {
-      const overlay = document.createElement("div");
-      overlay.className = "doodle-overlay";
-      overlay.innerHTML = `<canvas id="doodleCanvas"></canvas>`;
-      document.body.appendChild(overlay);
+    logo.style.cursor = "pointer";
 
-      const canvas = document.getElementById("doodleCanvas");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      const ctx = canvas.getContext("2d");
+    logo.addEventListener("click", function(e) {
+      const rect = logo.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
 
-      let startTime = null;
-      function drawDoodle(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const progress = timestamp - startTime;
-        
-        ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        for (let i = 0; i < 5; i++) {
-          ctx.beginPath();
-          ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
-          ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-          ctx.strokeStyle = "rgba(191,103,77,0.7)";
-          ctx.lineWidth = Math.random() * 3 + 1;
-          ctx.stroke();
-        }
-        
-        if (progress < 1500) {
-          requestAnimationFrame(drawDoodle);
-        } else {
-          overlay.style.transition = "opacity 0.5s ease-out";
-          overlay.style.opacity = "0";
-          setTimeout(() => overlay.remove(), 500);
-        }
+      // 波紋エフェクト
+      createRipple(centerX, centerY);
+
+      // パーティクルエフェクト（音符・星・キラキラ）
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          createParticle(centerX, centerY);
+        }, i * 20);
       }
-      requestAnimationFrame(drawDoodle);
+
+      // タイトル自体のアニメーション
+      logo.classList.add("logo-pulse");
+      setTimeout(() => logo.classList.remove("logo-pulse"), 600);
     });
   }
+
+  function createRipple(x, y) {
+    const ripple = document.createElement("div");
+    ripple.className = "ripple-effect";
+    ripple.style.left = x + "px";
+    ripple.style.top = y + "px";
+    document.body.appendChild(ripple);
+
+    setTimeout(() => ripple.remove(), 1000);
+  }
+
+  function createParticle(x, y) {
+    const particle = document.createElement("div");
+    particle.className = "particle";
+
+    // ランダムな種類（音符、星、キラキラ）
+    const types = ["♪", "♫", "✦", "✧", "◆", "●"];
+    particle.textContent = types[Math.floor(Math.random() * types.length)];
+
+    // ランダムな方向と距離
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 80 + Math.random() * 120;
+    const endX = Math.cos(angle) * distance;
+    const endY = Math.sin(angle) * distance;
+
+    particle.style.left = x + "px";
+    particle.style.top = y + "px";
+    particle.style.setProperty("--endX", endX + "px");
+    particle.style.setProperty("--endY", endY + "px");
+    particle.style.setProperty("--rotation", (Math.random() * 720 - 360) + "deg");
+    particle.style.fontSize = (12 + Math.random() * 16) + "px";
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 1200);
+  }
+
+  // ========== スクロール時のフェードインアニメーション ==========
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fade-in-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // ニュースアイテムと各セクションにフェードイン適用
+  document.querySelectorAll(".news-item, .live-event, .discography-item, .section-title").forEach(el => {
+    el.classList.add("fade-in-element");
+    observer.observe(el);
+  });
+
+  // ========== ナビゲーションのスムーズスクロール ==========
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+
+  // ========== ヘッダーのスクロール時変化 ==========
+  const header = document.querySelector("header");
+  let lastScroll = 0;
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 100) {
+      header.classList.add("header-scrolled");
+    } else {
+      header.classList.remove("header-scrolled");
+    }
+
+    lastScroll = currentScroll;
+  });
+
+  // ========== ニュースカードのマウストラッキング（3D効果） ==========
+  document.querySelectorAll(".news-item").forEach(card => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = (y - centerY) / 20;
+      const rotateY = (centerX - x) / 20;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) translateZ(0)";
+    });
+  });
 });
