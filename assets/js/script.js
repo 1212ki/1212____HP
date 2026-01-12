@@ -142,10 +142,12 @@ document.addEventListener("DOMContentLoaded", function(){
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const rotateX = (y - centerY) / 20;
-      const rotateY = (centerX - x) / 20;
+      const tiltDivisor = 60;
+      const maxTilt = 4;
+      const rotateX = Math.max(-maxTilt, Math.min(maxTilt, (y - centerY) / tiltDivisor));
+      const rotateY = Math.max(-maxTilt, Math.min(maxTilt, (centerX - x) / tiltDivisor));
 
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(4px)`;
     });
 
     card.addEventListener("mouseleave", () => {
