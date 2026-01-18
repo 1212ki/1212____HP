@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(){
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll("nav ul li a");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   navLinks.forEach(function(link) {
     const linkHref = link.getAttribute("href");
@@ -42,34 +44,30 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 768 && header.classList.contains("nav-open")) {
+      if (window.innerWidth > 820 && header.classList.contains("nav-open")) {
         header.classList.remove("nav-open");
         navToggle.setAttribute("aria-expanded", "false");
       }
     });
   }
 
-  // ========== タイトルクリック時のパーティクルエフェクト ==========
   const logo = document.querySelector(".logo");
-  if (logo) {
+  if (logo && !reduceMotion) {
     logo.style.cursor = "pointer";
 
-    logo.addEventListener("click", function(e) {
+    logo.addEventListener("click", function() {
       const rect = logo.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-      // 波紋エフェクト
       createRipple(centerX, centerY);
 
-      // パーティクルエフェクト（音符・星・キラキラ）
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 26; i++) {
         setTimeout(() => {
           createParticle(centerX, centerY);
-        }, i * 20);
+        }, i * 18);
       }
 
-      // タイトル自体のアニメーション
       logo.classList.add("logo-pulse");
       setTimeout(() => logo.classList.remove("logo-pulse"), 600);
     });
@@ -89,11 +87,9 @@ document.addEventListener("DOMContentLoaded", function(){
     const particle = document.createElement("div");
     particle.className = "particle";
 
-    // ランダムな種類（音符、星、キラキラ）
     const types = ["♪", "♫", "✦", "✧", "◆", "●"];
     particle.textContent = types[Math.floor(Math.random() * types.length)];
 
-    // ランダムな方向と距離
     const angle = Math.random() * Math.PI * 2;
     const distance = 80 + Math.random() * 120;
     const endX = Math.cos(angle) * distance;
@@ -111,28 +107,32 @@ document.addEventListener("DOMContentLoaded", function(){
     setTimeout(() => particle.remove(), 1200);
   }
 
-  // ========== スクロール時のフェードインアニメーション ==========
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  };
+  const fadeTargets = document.querySelectorAll(
+    ".news-item, .live-event, .discography-item, .section-title, .hero-copy, .hero-media, .artist-photo, .video-container, .intro, .live-application, .channel-application"
+  );
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("fade-in-visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
+  fadeTargets.forEach(el => el.classList.add("fade-in-element"));
 
-  // ニュースアイテムと各セクションにフェードイン適用
-  document.querySelectorAll(".news-item, .live-event, .discography-item, .section-title").forEach(el => {
-    el.classList.add("fade-in-element");
-    observer.observe(el);
-  });
+  if (reduceMotion) {
+    fadeTargets.forEach(el => el.classList.add("fade-in-visible"));
+  } else {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
 
-  // ========== ナビゲーションのスムーズスクロール ==========
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fade-in-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    fadeTargets.forEach(el => observer.observe(el));
+  }
+
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener("click", function(e) {
       e.preventDefault();
@@ -143,42 +143,37 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
 
-  // ========== ヘッダーのスクロール時変化 ==========
-  let lastScroll = 0;
-
   if (header) {
     window.addEventListener("scroll", () => {
       const currentScroll = window.pageYOffset;
-
       if (currentScroll > 100) {
         header.classList.add("header-scrolled");
       } else {
         header.classList.remove("header-scrolled");
       }
-
-      lastScroll = currentScroll;
     });
   }
 
-  // ========== ニュースカードのマウストラッキング（3D効果） ==========
-  document.querySelectorAll(".news-item").forEach(card => {
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+  if (supportsHover && !reduceMotion) {
+    document.querySelectorAll(".news-item").forEach(card => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
 
-      const tiltDivisor = 60;
-      const maxTilt = 4;
-      const rotateX = Math.max(-maxTilt, Math.min(maxTilt, (y - centerY) / tiltDivisor));
-      const rotateY = Math.max(-maxTilt, Math.min(maxTilt, (centerX - x) / tiltDivisor));
+        const tiltDivisor = 70;
+        const maxTilt = 4;
+        const rotateX = Math.max(-maxTilt, Math.min(maxTilt, (y - centerY) / tiltDivisor));
+        const rotateY = Math.max(-maxTilt, Math.min(maxTilt, (centerX - x) / tiltDivisor));
 
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(4px)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(6px)`;
+      });
+
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) translateZ(0)";
+      });
     });
-
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) translateZ(0)";
-    });
-  });
+  }
 });
