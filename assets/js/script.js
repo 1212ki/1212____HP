@@ -23,6 +23,32 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   });
 
+  const header = document.querySelector("header");
+  const navToggle = document.querySelector(".nav-toggle");
+
+  if (navToggle && header) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = header.classList.toggle("nav-open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    document.querySelectorAll("nav a").forEach((link) => {
+      link.addEventListener("click", () => {
+        if (header.classList.contains("nav-open")) {
+          header.classList.remove("nav-open");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768 && header.classList.contains("nav-open")) {
+        header.classList.remove("nav-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   // ========== タイトルクリック時のパーティクルエフェクト ==========
   const logo = document.querySelector(".logo");
   if (logo) {
@@ -118,20 +144,21 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 
   // ========== ヘッダーのスクロール時変化 ==========
-  const header = document.querySelector("header");
   let lastScroll = 0;
 
-  window.addEventListener("scroll", () => {
-    const currentScroll = window.pageYOffset;
+  if (header) {
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.pageYOffset;
 
-    if (currentScroll > 100) {
-      header.classList.add("header-scrolled");
-    } else {
-      header.classList.remove("header-scrolled");
-    }
+      if (currentScroll > 100) {
+        header.classList.add("header-scrolled");
+      } else {
+        header.classList.remove("header-scrolled");
+      }
 
-    lastScroll = currentScroll;
-  });
+      lastScroll = currentScroll;
+    });
+  }
 
   // ========== ニュースカードのマウストラッキング（3D効果） ==========
   document.querySelectorAll(".news-item").forEach(card => {

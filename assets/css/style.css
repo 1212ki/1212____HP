@@ -132,6 +132,58 @@ nav ul li a.active {
   color: #BF674D;
 }
 
+/* ----- Mobile Nav Toggle ----- */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(224, 224, 224, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 0.85em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-toggle:hover {
+  border-color: #BF674D;
+  color: #BF674D;
+}
+
+.nav-toggle-icon {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-toggle-icon span {
+  width: 18px;
+  height: 2px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+header.nav-open .nav-toggle-icon span {
+  background-color: #BF674D;
+}
+
+header.nav-open .nav-toggle-icon span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+header.nav-open .nav-toggle-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+header.nav-open .nav-toggle-icon span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
 /* PC & Mobile title visibility */
 .pc-only {
   display: inline;
@@ -809,17 +861,55 @@ footer::before {
 @media (max-width: 768px) {
 
   /* Header / Nav */
+  header {
+    padding: 14px 0;
+  }
+
+  header.header-scrolled {
+    padding: 8px 0;
+  }
+
   .header-container {
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  nav {
+    width: 100%;
+    order: 3;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
+  }
+
+  header.nav-open nav {
+    max-height: 360px;
+    opacity: 1;
+    pointer-events: auto;
+    border-top: 1px solid rgba(224, 224, 224, 0.7);
+    padding-top: 6px;
   }
 
   nav ul {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 6px 6px;
   }
 
   nav ul li {
-    margin: 10px 0;
+    margin: 0;
+  }
+
+  nav ul li a {
+    font-size: 1em;
+    padding: 6px 0;
   }
 
   .pc-only {
@@ -833,6 +923,7 @@ footer::before {
 
   .logo {
     text-align: center;
+    font-size: 1.4em;
   }
 
   /* Hero for Mobile */
