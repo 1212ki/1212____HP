@@ -5,10 +5,11 @@
   let ticketFieldConfig = {
     showQuantity: true,
     showMessage: true,
-    submitLabel: "購入へ",
-    labelQuantity: "Quantity",
-    labelMessage: "Message (optional)",
+    submitLabel: "予約する",
+    labelQuantity: "枚数",
+    labelMessage: "備考",
   };
+  let siteDataVersion = "";
 
   function $(id) {
     return document.getElementById(id);
@@ -24,12 +25,23 @@
       .replace(/'/g, "&#039;");
   }
 
+  function renderSiteFooter(site) {
+    const footer = document.getElementById("site-footer");
+    if (!footer) return;
+    const data = site && typeof site === "object" ? site : {};
+    const text = String(data.footerText || "").trim();
+    footer.textContent = text || "";
+  }
+
   async function fetchSiteData() {
     const endpoint = apiBase ? `${apiBase}/api/public/site-data` : "/api/public/site-data";
     const res = await fetch(endpoint, { cache: "no-store" });
     if (!res.ok) throw new Error("failed to load site data");
     const payload = await res.json();
-    return payload.data || payload;
+    const data = payload && typeof payload === "object" && "data" in payload ? payload.data : payload;
+    const meta = payload && typeof payload === "object" && payload.meta ? payload.meta : {};
+    siteDataVersion = meta && meta.updatedAt ? String(meta.updatedAt) : "";
+    return data;
   }
 
   function parseQuery() {
@@ -57,6 +69,14 @@
     if (/^https?:\/\//.test(value) || value.startsWith("/")) return value;
     if (value.startsWith("../") || value.startsWith("./")) return value;
     return `../${value.replace(/^\/+/, "")}`;
+  }
+
+  function withCacheBust(url) {
+    const value = String(url || "").trim();
+    const v = String(siteDataVersion || "").trim();
+    if (!value || !v) return value;
+    const sep = value.includes("?") ? "&" : "?";
+    return `${value}${sep}v=${encodeURIComponent(v)}`;
   }
 
   function renderTicketCopy(ticket) {
@@ -109,9 +129,9 @@
     ticketFieldConfig = {
       showQuantity,
       showMessage,
-      submitLabel: submitLabel || "購入へ",
-      labelQuantity: qLabel || "Quantity",
-      labelMessage: mLabel || "Message (optional)",
+      submitLabel: submitLabel || "予約する",
+      labelQuantity: qLabel || "枚数",
+      labelMessage: mLabel || "備考",
     };
 
     return ticketFieldConfig;
@@ -129,7 +149,7 @@
       return;
     }
 
-    const imageSrc = resolveAssetPath(live.image || "");
+    const imageSrc = withCacheBust(resolveAssetPath(live.image || ""));
     const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
     const detailHref = live.link ? escapeHtml(live.link) : "";
 
@@ -140,7 +160,7 @@
           <div style="flex: 1; min-width: 220px;">
             <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(`${live.date || ""} ${live.venue || ""}`.trim())}</div>
             ${safeDesc ? `<div style="margin-top: 8px; color: var(--ink-muted); line-height: 1.7;">${safeDesc}</div>` : ""}
-            ${detailHref ? `<div style="margin-top: 12px;"><a href="${detailHref}" class="application-link" target="_blank" rel="noopener">▷Details</a></div>` : ""}
+            ${detailHref ? `<div style="margin-top: 12px;"><a href="${detailHref}" class="application-link" target="_blank" rel="noopener">▷詳細</a></div>` : ""}
           </div>
         </div>
       </div>
@@ -153,7 +173,7 @@
       .map((opt) => {
         const disabled = opt.isPast ? "disabled" : "";
         const selected = opt.id === selectedId ? "selected" : "";
-        return `<option value="${escapeHtml(opt.id)}" ${selected} ${disabled}>${escapeHtml(opt.label)}${opt.isPast ? " (past)" : ""}</option>`;
+        return `<option value="${escapeHtml(opt.id)}" ${selected} ${disabled}>${escapeHtml(opt.label)}${opt.isPast ? " (終了)" : ""}</option>`;
       })
       .join("");
   }
@@ -192,20 +212,10 @@
 
   function setConfirmStage(stage) {
     const lead = $("ticketConfirmLead");
-    const primary = $("ticketConfirmPrimaryBtn");
-    const back = $("ticketConfirmBackBtn");
-    if (!primary || !back) return;
-
-    if (stage === 2) {
-      if (lead) lead.textContent = "最終確認です。問題なければ予約します。";
-      primary.textContent = "予約します";
-      back.textContent = "戻る";
-      return;
-    }
-
-    if (lead) lead.textContent = "入力内容を確認してください。";
-    primary.textContent = "購入します";
-    back.textContent = "戻る";
+    if (!lead) return;
+    if (stage === "sending") lead.textContent = "予約を送信しています。";
+    if (stage === "success") lead.textContent = "予約しました。";
+    if (stage === "error") lead.textContent = "送信に失敗しました。";
   }
 
   function openConfirmModal() {
@@ -238,9 +248,9 @@
     const message = String(payload.message || "").trim();
 
     const rows = [
-      ["Live", liveText || String(payload.liveId || "")],
-      ["Name", String(payload.name || "")],
-      ["Email", String(payload.email || "")],
+      ["ライブ", liveText || String(payload.liveId || "")],
+      ["名前", String(payload.name || "")],
+      ["e-mail", String(payload.email || "")],
       ...(ticketFieldConfig.showQuantity ? [[ticketFieldConfig.labelQuantity, String(payload.quantity || "1")]] : []),
       ...(ticketFieldConfig.showMessage ? [[ticketFieldConfig.labelMessage, message ? message : "-"]] : []),
     ];
@@ -280,6 +290,7 @@
 
     try {
       const siteData = await fetchSiteData();
+      renderSiteFooter(siteData.site || {});
       renderTicketCopy(siteData.ticket || {});
       renderTicketFields(siteData.ticket || {});
       const options = buildLiveOptions(siteData).filter((o) => !o.isPast);
@@ -357,98 +368,49 @@
       if (e.key === "Escape") closeConfirmModal();
     });
 
-    let pendingFormData = null;
-    let stage = 1;
-    let isSubmitting = false;
-
-    function setBusy(busy) {
-      if (!submitBtn) return;
-      submitBtn.disabled = busy;
-      submitBtn.textContent = busy ? "..." : ticketFieldConfig.submitLabel;
-    }
-
-    function setPrimaryBusy(busy) {
-      const primary = $("ticketConfirmPrimaryBtn");
-      const back = $("ticketConfirmBackBtn");
-      if (primary) primary.disabled = busy;
-      if (back) back.disabled = busy;
-      if (!primary) return;
-      if (!busy) {
-        primary.textContent = stage === 2 ? "予約します" : "購入します";
-        return;
-      }
-      primary.textContent = stage === 2 ? "予約中..." : "確認中...";
-    }
-
-    const backBtn = $("ticketConfirmBackBtn");
-    const primaryBtn = $("ticketConfirmPrimaryBtn");
-
-    if (backBtn) {
-      backBtn.addEventListener("click", () => {
-        if (isSubmitting) return;
-        if (stage === 2) {
-          stage = 1;
-          setConfirmStage(stage);
-          setConfirmError("");
-          return;
-        }
-        closeConfirmModal();
-      });
-    }
-
-    if (primaryBtn) {
-      primaryBtn.addEventListener("click", async () => {
-        if (!pendingFormData || isSubmitting) return;
-        setConfirmError("");
-
-        if (stage === 1) {
-          stage = 2;
-          setConfirmStage(stage);
-          return;
-        }
-
-        // stage 2: actually submit reservation
-        isSubmitting = true;
-        setPrimaryBusy(true);
-        try {
-          if (dryRun) {
-            const select = $("liveId");
-            const label = safeGetText(select);
-            redirectToComplete({
-              id: `DRYRUN-${Date.now()}`,
-              liveDate: label || "",
-              liveVenue: "",
-            });
-            return;
-          }
-
-          const res = await submitReservation(pendingFormData);
-          const r = res.reservation || {};
-          try {
-            localStorage.removeItem(STORAGE_KEY);
-          } catch (_e) {}
-          redirectToComplete(r);
-        } catch (e) {
-          setConfirmError(`予約に失敗しました: ${e.message}`);
-        } finally {
-          isSubmitting = false;
-          setPrimaryBusy(false);
-        }
-      });
-    }
+  function setBusy(busy) {
+    if (!submitBtn) return;
+    submitBtn.disabled = busy;
+    submitBtn.textContent = busy ? "..." : ticketFieldConfig.submitLabel;
+  }
 
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
       setBusy(true);
       try {
         const fd = new FormData(ev.target);
-        pendingFormData = fd;
-        stage = 1;
-        setConfirmStage(stage);
+        setConfirmStage("sending");
+        const title = $("ticketConfirmTitle");
+        if (title) title.textContent = "送信中...";
         renderConfirmSummary(fd);
         openConfirmModal();
+
+        setConfirmError("");
+
+        if (dryRun) {
+          if (title) title.textContent = "予約しました。";
+          setConfirmStage("success");
+          // keep the summary as-is (no extra confirmation step)
+          ev.target.reset();
+          return;
+        }
+
+        const res = await submitReservation(fd);
+        const r = res.reservation || {};
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch (_e) {}
+
+        if (title) title.textContent = "予約しました。";
+        setConfirmStage("success");
+        // Keep the pre-submit summary (no second click UX).
+
+        ev.target.reset();
       } catch (e) {
-        setResult(`処理に失敗しました: ${escapeHtml(e.message)}`, "error");
+        const title = $("ticketConfirmTitle");
+        if (title) title.textContent = "送信失敗";
+        setConfirmStage("error");
+        setConfirmError(`予約に失敗しました: ${e.message}`);
       } finally {
         setBusy(false);
       }

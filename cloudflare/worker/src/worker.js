@@ -3,28 +3,32 @@ const DEFAULT_SITE_DATA = {
   live: { ticketLink: "", upcoming: [], past: [] },
   discography: { digital: [], demo: [] },
   profile: { image: "", text: "", links: [] },
-  youtube: { channelUrl: "", musicVideos: [], liveMovies: [], demos: [] },
+  youtube: { channelUrl: "https://www.youtube.com/@1212____ki", musicVideos: [], liveMovies: [], demos: [] },
   site: {
-    heroImage: "",
-    links: { bandcamp: "", youtube: "", x: "" },
-    footerText: "",
+    heroImage: "assets/images/hero.jpg",
+    links: {
+      bandcamp: "https://1212ki.bandcamp.com/",
+      youtube: "https://www.youtube.com/@1212____ki",
+      x: "https://www.x.com/1212____ki",
+    },
+    footerText: "© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.",
   },
   ticket: {
-    introText: "",
-    noticeText: "",
-    completeText: "",
+    introText: "ライブを選択して、必要事項を入力してください。",
+    noticeText: "送信後、こちらからの自動返信はありません（受付の記録のみ）。",
+    completeText: "予約しました。こちらからの自動返信はありません（受付の記録のみ）。",
     fields: {
       showQuantity: true,
       showMessage: true,
-      labelQuantity: "",
-      labelMessage: "",
-      placeholderMessage: "",
-      submitLabel: "",
+      labelQuantity: "枚数",
+      labelMessage: "備考",
+      placeholderMessage: "例: 取り置き名義が別の場合など",
+      submitLabel: "予約する",
     },
   },
   contact: {
-    introText: "",
-    formAction: "",
+    introText: "お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。",
+    formAction: "https://formspree.io/f/xqaeddgj",
   },
 };
 
@@ -59,34 +63,34 @@ function normalizeSiteData(input) {
   data.profile.links = Array.isArray(data.profile.links) ? data.profile.links : [];
 
   data.youtube = data.youtube && typeof data.youtube === "object" ? data.youtube : base.youtube;
-  data.youtube.channelUrl = data.youtube.channelUrl || "";
+  data.youtube.channelUrl = data.youtube.channelUrl || base.youtube.channelUrl;
   data.youtube.musicVideos = Array.isArray(data.youtube.musicVideos) ? data.youtube.musicVideos : [];
   data.youtube.liveMovies = Array.isArray(data.youtube.liveMovies) ? data.youtube.liveMovies : [];
   data.youtube.demos = Array.isArray(data.youtube.demos) ? data.youtube.demos : [];
 
   data.site = data.site && typeof data.site === "object" ? data.site : base.site;
-  data.site.heroImage = data.site.heroImage || "";
+  data.site.heroImage = data.site.heroImage || base.site.heroImage;
   data.site.links = data.site.links && typeof data.site.links === "object" ? data.site.links : base.site.links;
-  data.site.links.bandcamp = data.site.links.bandcamp || "";
-  data.site.links.youtube = data.site.links.youtube || "";
-  data.site.links.x = data.site.links.x || "";
-  data.site.footerText = data.site.footerText || "";
+  data.site.links.bandcamp = data.site.links.bandcamp || base.site.links.bandcamp;
+  data.site.links.youtube = data.site.links.youtube || base.site.links.youtube;
+  data.site.links.x = data.site.links.x || base.site.links.x;
+  data.site.footerText = data.site.footerText || base.site.footerText;
 
   data.ticket = data.ticket && typeof data.ticket === "object" ? data.ticket : base.ticket;
-  data.ticket.introText = data.ticket.introText || "";
-  data.ticket.noticeText = data.ticket.noticeText || "";
-  data.ticket.completeText = data.ticket.completeText || "";
+  data.ticket.introText = data.ticket.introText || base.ticket.introText;
+  data.ticket.noticeText = data.ticket.noticeText || base.ticket.noticeText;
+  data.ticket.completeText = data.ticket.completeText || base.ticket.completeText;
   data.ticket.fields = data.ticket.fields && typeof data.ticket.fields === "object" ? data.ticket.fields : base.ticket.fields;
   data.ticket.fields.showQuantity = data.ticket.fields.showQuantity !== false;
   data.ticket.fields.showMessage = data.ticket.fields.showMessage !== false;
-  data.ticket.fields.labelQuantity = data.ticket.fields.labelQuantity || "";
-  data.ticket.fields.labelMessage = data.ticket.fields.labelMessage || "";
-  data.ticket.fields.placeholderMessage = data.ticket.fields.placeholderMessage || "";
-  data.ticket.fields.submitLabel = data.ticket.fields.submitLabel || "";
+  data.ticket.fields.labelQuantity = data.ticket.fields.labelQuantity || base.ticket.fields.labelQuantity;
+  data.ticket.fields.labelMessage = data.ticket.fields.labelMessage || base.ticket.fields.labelMessage;
+  data.ticket.fields.placeholderMessage = data.ticket.fields.placeholderMessage || base.ticket.fields.placeholderMessage;
+  data.ticket.fields.submitLabel = data.ticket.fields.submitLabel || base.ticket.fields.submitLabel;
 
   data.contact = data.contact && typeof data.contact === "object" ? data.contact : base.contact;
-  data.contact.introText = data.contact.introText || "";
-  data.contact.formAction = data.contact.formAction || "";
+  data.contact.introText = data.contact.introText || base.contact.introText;
+  data.contact.formAction = data.contact.formAction || base.contact.formAction;
   return data;
 }
 

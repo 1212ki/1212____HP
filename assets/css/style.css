@@ -5,14 +5,14 @@
   --font-display: var(--text-heading-1-font-family, "Zen Kaku Gothic New");
   --font-body: var(--text-body-font-family, "Zen Kaku Gothic New");
   --font-mono: "Courier New", Courier, monospace;
-  /* Base is monochrome; terracotta is the only accent hue. */
+  /* Base is monochrome; only one accent hue is allowed. */
   --ink: var(--color-text, #1a1a1a);
   --ink-muted: var(--color-subtext, #666666);
   --paper: var(--color-background, #ffffff);
   --paper-deep: var(--color-gray-100, #f5f5f5);
   --surface: rgba(255, 255, 255, 0.86);
-  --accent: var(--color-primary, #BF674D);
-  --accent-soft: rgba(191, 103, 77, 0.15);
+  --accent: var(--color-primary, #BF554D);
+  --accent-soft: rgba(191, 85, 77, 0.15);
   --line: rgba(0, 0, 0, 0.12);
   --shadow-soft: var(--shadow-card, 0 12px 30px rgba(0, 0, 0, 0.12));
   --shadow-strong: var(--shadow-floating, 0 30px 70px rgba(0, 0, 0, 0.2));
@@ -36,7 +36,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-body-font-size, 16px);
   background:
-    radial-gradient(1200px circle at 12% 10%, rgba(191, 103, 77, 0.14), transparent 55%),
+    radial-gradient(1200px circle at 12% 10%, rgba(191, 85, 77, 0.14), transparent 55%),
     radial-gradient(900px circle at 88% 16%, rgba(0, 0, 0, 0.08), transparent 50%),
     linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 55%, var(--paper-deep) 100%);
   color: var(--ink);
@@ -172,12 +172,13 @@ header.header-scrolled {
 
 @keyframes logoPulse {
   0% { transform: scale(1); }
-  25% { transform: scale(1.08); text-shadow: 0 0 20px rgba(191, 103, 77, 0.4); }
+  25% { transform: scale(1.08); text-shadow: 0 0 20px rgba(191, 85, 77, 0.4); }
   50% { transform: scale(0.97); }
   75% { transform: scale(1.04); }
   100% { transform: scale(1); }
 }
 
+.accent,
 .terracotta {
   color: var(--accent);
 }
@@ -203,7 +204,7 @@ nav ul li a {
 nav ul li a:hover,
 nav ul li a.active {
   background: var(--accent-soft);
-  border-color: rgba(191, 103, 77, 0.4);
+  border-color: rgba(191, 85, 77, 0.4);
   color: var(--accent);
 }
 
@@ -298,8 +299,8 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   content: "";
   position: absolute;
   inset: 10px 0;
-  border-top: 1px solid rgba(191, 103, 77, 0.22);
-  border-bottom: 1px solid rgba(191, 103, 77, 0.22);
+  border-top: 1px solid rgba(191, 85, 77, 0.22);
+  border-bottom: 1px solid rgba(191, 85, 77, 0.22);
   pointer-events: none;
   z-index: 2;
 }
@@ -371,7 +372,7 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
 
 .hero-actions .cta:hover {
   background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(191, 103, 77, 0.45);
+  border-color: rgba(191, 85, 77, 0.45);
 }
 
 .hero-actions .cta.primary {
@@ -382,7 +383,7 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
 
 .hero-actions .cta:hover .cta-icon {
   background: var(--accent);
-  border-color: rgba(191, 103, 77, 0.55);
+  border-color: rgba(191, 85, 77, 0.55);
   color: var(--paper);
 }
 
@@ -491,7 +492,7 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(191, 103, 77, 0.08), transparent);
+  background: linear-gradient(120deg, transparent, rgba(191, 85, 77, 0.08), transparent);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -503,7 +504,7 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
 .news-item:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-soft);
-  border-color: rgba(191, 103, 77, 0.28);
+  border-color: rgba(191, 85, 77, 0.28);
 }
 
 .news-image {
@@ -547,7 +548,7 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   height: 8px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(191, 103, 77, 0.15);
+  box-shadow: 0 0 0 4px rgba(191, 85, 77, 0.15);
 }
 
 .news-title {
@@ -760,7 +761,7 @@ form select:focus,
 form textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(191, 103, 77, 0.12);
+  box-shadow: 0 0 0 4px rgba(191, 85, 77, 0.12);
 }
 
 form button {
@@ -779,7 +780,7 @@ form button {
 
 form button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(191, 103, 77, 0.25);
+  box-shadow: 0 12px 25px rgba(191, 85, 77, 0.25);
   background: var(--accent);
 }
 
@@ -892,8 +893,8 @@ form button:hover {
   margin-top: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(191, 103, 77, 0.35);
-  background: rgba(191, 103, 77, 0.12);
+  border: 1px solid rgba(191, 85, 77, 0.35);
+  background: rgba(191, 85, 77, 0.12);
   color: var(--ink);
 }
 
@@ -924,7 +925,7 @@ form button:hover {
 .ticket-modal-btn.primary {
   background: var(--accent);
   color: var(--paper);
-  border-color: rgba(191, 103, 77, 0.35);
+  border-color: rgba(191, 85, 77, 0.35);
 }
 
 .ticket-modal-btn.ghost:hover,
@@ -959,7 +960,7 @@ form button:hover {
 
 .application-link:hover {
   background: var(--accent-soft);
-  border-color: rgba(191, 103, 77, 0.4);
+  border-color: rgba(191, 85, 77, 0.4);
   color: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
@@ -997,7 +998,7 @@ footer p {
   z-index: 10000;
   color: var(--accent);
   animation: particleFly 1.2s ease-out forwards;
-  text-shadow: 0 0 10px rgba(191, 103, 77, 0.5);
+  text-shadow: 0 0 10px rgba(191, 85, 77, 0.5);
 }
 
 @keyframes particleFly {
@@ -1057,7 +1058,7 @@ footer p {
 
 /* Selection color */
 ::selection {
-  background-color: rgba(191, 103, 77, 0.25);
+  background-color: rgba(191, 85, 77, 0.25);
   color: var(--ink);
 }
 
@@ -1071,7 +1072,7 @@ footer p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--accent), rgba(191, 103, 77, 0.72));
+  background: linear-gradient(180deg, var(--accent), rgba(191, 85, 77, 0.72));
   border-radius: 4px;
 }
 

@@ -5,6 +5,14 @@
     return parts.length === 0 || (parts.length === 1 && parts[0] === "index.html");
   }
 
+  function withCacheBust(url, version) {
+    const value = String(url || "").trim();
+    const v = String(version || "").trim();
+    if (!value || !v) return value;
+    const sep = value.includes("?") ? "&" : "?";
+    return `${value}${sep}v=${encodeURIComponent(v)}`;
+  }
+
   function resolveAssetPath(raw) {
     if (!raw) return "";
     const value = String(raw).trim();
@@ -15,6 +23,11 @@
     return `${prefix}${value.replace(/^\/+/, "")}`;
   }
 
+  function resolveImageSrc(raw, version) {
+    const url = resolveAssetPath(raw);
+    return withCacheBust(url, version);
+  }
+
   async function fetchSiteData() {
     const base = (window.SITE_API_BASE || "").replace(/\/+$/, "");
     const endpoint = base ? `${base}/api/public/site-data` : "/api/public/site-data";
@@ -22,7 +35,9 @@
       const response = await fetch(endpoint, { cache: "no-store" });
       if (!response.ok) return null;
       const payload = await response.json();
-      return payload.data || payload;
+      const data = payload && typeof payload === "object" && "data" in payload ? payload.data : payload;
+      const meta = payload && typeof payload === "object" && payload.meta ? payload.meta : {};
+      return { data, meta };
     } catch (_error) {
       return null;
     }
@@ -38,7 +53,7 @@
       .replace(/'/g, "&#039;");
   }
 
-  function renderSite(site) {
+  function renderSite(site, version) {
     const heroImg = document.getElementById("home-hero-image");
     const linkBandcamp = document.getElementById("home-link-bandcamp");
     const linkYouTube = document.getElementById("home-link-youtube");
@@ -49,8 +64,14 @@
     const links = data.links && typeof data.links === "object" ? data.links : {};
 
     if (heroImg) {
-      const src = resolveAssetPath(data.heroImage || "");
-      if (src) heroImg.src = src;
+      const src = resolveImageSrc(data.heroImage || "", version);
+      if (src) {
+        heroImg.src = src;
+        heroImg.style.display = "";
+      } else {
+        heroImg.removeAttribute("src");
+        heroImg.style.display = "none";
+      }
     }
 
     if (linkBandcamp && links.bandcamp) linkBandcamp.href = String(links.bandcamp);
@@ -59,7 +80,7 @@
 
     if (footer) {
       const text = String(data.footerText || "").trim();
-      if (text) footer.textContent = text;
+      footer.textContent = text || "";
     }
   }
 
@@ -72,18 +93,19 @@
     const introText = String(data.introText || "").trim();
     const formAction = String(data.formAction || "").trim();
 
-    if (intro && introText) intro.textContent = introText;
+    if (intro) intro.textContent = introText || "";
     if (form && formAction) form.setAttribute("action", formAction);
   }
 
-  function renderNews(news) {
+  function renderNews(news, version) {
     const container = document.getElementById("news-items");
     if (!container || !Array.isArray(news)) return;
+    container.innerHTML = "";
     const list = news.slice(0, 12);
     if (list.length === 0) return;
     container.innerHTML = list
       .map((item) => {
-        const image = escapeHtml(resolveAssetPath(item.image || ""));
+        const image = escapeHtml(resolveImageSrc(item.image || "", version));
         const link = escapeHtml(item.link || "#");
         const linkText = escapeHtml(item.linkText || "view...");
         return `
@@ -109,13 +131,16 @@
       .join("");
   }
 
-  function renderLiveEvents(container, events) {
+  function renderLiveEvents(container, events, version) {
     if (!container || !Array.isArray(events)) return;
+    container.innerHTML = "";
+    if (events.length === 0) return;
     container.innerHTML = events
       .map((item) => {
-        const image = escapeHtml(resolveAssetPath(item.image || ""));
+        const image = escapeHtml(resolveImageSrc(item.image || "", version));
         const safeDesc = escapeHtml((item.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
-        const reserveHref = `../ticket/?liveId=${encodeURIComponent(item.id || "")}`;
+        const prefix = isRootPage() ? "" : "../";
+        const reserveHref = `${prefix}ticket/?liveId=${encodeURIComponent(item.id || "")}`;
         const detailHref = item.link ? escapeHtml(item.link) : "";
         return `
           <div class="live-event">
@@ -125,8 +150,8 @@
               <p class="live-venue">${escapeHtml(item.venue || "")}</p>
               <p class="live-description">${safeDesc}</p>
               <div class="live-actions" style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <a href="${reserveHref}" class="application-link">▷Reserve</a>
-                ${detailHref ? `<a href="${detailHref}" class="application-link" target="_blank" rel="noopener">▷Details</a>` : ""}
+                <a href="${reserveHref}" class="application-link">▷予約</a>
+                ${detailHref ? `<a href="${detailHref}" class="application-link" target="_blank" rel="noopener">▷詳細</a>` : ""}
               </div>
             </div>
           </div>
@@ -135,7 +160,7 @@
       .join("");
   }
 
-  function renderLive(data) {
+  function renderLive(data, version) {
     if (!data || !data.live) return;
     const ticket = document.getElementById("ticket-link-anchor");
     // Keep the page-local default (../ticket/) to avoid external double-maintenance.
@@ -143,11 +168,17 @@
     if (ticket && data.live.ticketLink && /^\/(?!\/)/.test(String(data.live.ticketLink))) {
       ticket.href = data.live.ticketLink;
     }
-    renderLiveEvents(document.getElementById("live-upcoming-events"), data.live.upcoming || []);
-    renderLiveEvents(document.getElementById("live-past-events"), data.live.past || []);
+    renderLiveEvents(document.getElementById("live-upcoming-events"), data.live.upcoming || [], version);
+    renderLiveEvents(document.getElementById("live-past-events"), data.live.past || [], version);
+
+    const pastHeading = document.getElementById("live-past-heading");
+    if (pastHeading) {
+      const hasPast = Array.isArray(data.live.past) && data.live.past.length > 0;
+      pastHeading.style.display = hasPast ? "" : "none";
+    }
   }
 
-  function renderDiscography(discography) {
+  function renderDiscography(discography, version) {
     const digital = document.getElementById("disc-digital-items");
     const demo = document.getElementById("disc-demo-items");
     if (!digital && !demo) return;
@@ -156,10 +187,11 @@
     function renderList(container, items) {
       if (!container) return;
       const list = Array.isArray(items) ? items : [];
+      container.innerHTML = "";
       if (list.length === 0) return;
       container.innerHTML = list
         .map((item) => {
-          const image = escapeHtml(resolveAssetPath(item.image || ""));
+          const image = escapeHtml(resolveImageSrc(item.image || "", version));
           const link = escapeHtml(item.link || "#");
           const title = escapeHtml(item.title || "");
           const release = escapeHtml(item.releaseDate || "");
@@ -184,7 +216,7 @@
     renderList(demo, data.demo);
   }
 
-  function renderProfile(profile) {
+  function renderProfile(profile, version) {
     const img = document.getElementById("profile-image");
     const text = document.getElementById("profile-text");
     const links = document.getElementById("profile-links");
@@ -193,19 +225,29 @@
     const data = profile && typeof profile === "object" ? profile : {};
 
     if (img) {
-      const src = resolveAssetPath(data.image || "");
+      img.style.display = "none";
+      img.removeAttribute("src");
+
+      const src = resolveImageSrc(data.image || "", version);
       if (src) {
+        img.onload = () => {
+          img.style.display = "";
+        };
+        img.onerror = () => {
+          img.style.display = "none";
+        };
         img.src = src;
       }
     }
 
     if (text) {
       const safe = escapeHtml(String(data.text || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
-      if (safe) text.innerHTML = safe;
+      text.innerHTML = safe || "";
     }
 
     if (links) {
       const list = Array.isArray(data.links) ? data.links : [];
+      links.innerHTML = "";
       if (list.length === 0) return;
       links.innerHTML = list
         .map((l) => {
@@ -228,6 +270,8 @@
       channel.href = channelUrl;
     }
     if (!container) return;
+
+    container.innerHTML = "";
 
     const music = Array.isArray(data.musicVideos) ? data.musicVideos : [];
     const lives = Array.isArray(data.liveMovies) ? data.liveMovies : [];
@@ -257,14 +301,7 @@
       return `<h2>${escapeHtml(title)}</h2><br>${blocks}<br><br>`;
     }
 
-    const html = [
-      '<h2 class="section-title">YouTube</h2>',
-      '<p>Music Video, Live Movie, etc...</p>',
-      '<br>',
-      renderSection("Music Video", music),
-      renderSection("Live Movie", lives),
-      renderSection("Demo", demos),
-    ]
+    const html = [renderSection("music video", music), renderSection("live movie", lives), renderSection("demo", demos)]
       .filter(Boolean)
       .join("");
 
@@ -272,14 +309,16 @@
   }
 
   async function boot() {
-    const siteData = await fetchSiteData();
-    if (!siteData) return;
-    renderSite(siteData.site || {});
+    const payload = await fetchSiteData();
+    if (!payload) return;
+    const siteData = payload.data || {};
+    const version = payload.meta && payload.meta.updatedAt ? payload.meta.updatedAt : "";
+    renderSite(siteData.site || {}, version);
     renderContact(siteData.contact || {});
-    renderNews(siteData.news || []);
-    renderLive(siteData);
-    renderDiscography(siteData.discography || {});
-    renderProfile(siteData.profile || {});
+    renderNews(siteData.news || [], version);
+    renderLive(siteData, version);
+    renderDiscography(siteData.discography || {}, version);
+    renderProfile(siteData.profile || {}, version);
     renderYouTube(siteData.youtube || {});
   }
 

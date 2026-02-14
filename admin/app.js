@@ -5,28 +5,32 @@ const DEFAULT_SITE_DATA = {
   live: { ticketLink: '', upcoming: [], past: [] },
   discography: { digital: [], demo: [] },
   profile: { image: '', text: '', links: [] },
-  youtube: { channelUrl: '', musicVideos: [], liveMovies: [], demos: [] },
+  youtube: { channelUrl: 'https://www.youtube.com/@1212____ki', musicVideos: [], liveMovies: [], demos: [] },
   site: {
-    heroImage: '',
-    links: { bandcamp: '', youtube: '', x: '' },
-    footerText: ''
+    heroImage: 'assets/images/hero.jpg',
+    links: {
+      bandcamp: 'https://1212ki.bandcamp.com/',
+      youtube: 'https://www.youtube.com/@1212____ki',
+      x: 'https://www.x.com/1212____ki'
+    },
+    footerText: '© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.'
   },
   ticket: {
-    introText: '',
-    noticeText: '',
-    completeText: '',
+    introText: 'ライブを選択して、必要事項を入力してください。',
+    noticeText: '送信後、こちらからの自動返信はありません（受付の記録のみ）。',
+    completeText: '予約しました。こちらからの自動返信はありません（受付の記録のみ）。',
     fields: {
       showQuantity: true,
       showMessage: true,
-      labelQuantity: '',
-      labelMessage: '',
-      placeholderMessage: '',
-      submitLabel: ''
+      labelQuantity: '枚数',
+      labelMessage: '備考',
+      placeholderMessage: '例: 取り置き名義が別の場合など',
+      submitLabel: '予約する'
     }
   },
   contact: {
-    introText: '',
-    formAction: ''
+    introText: 'お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。',
+    formAction: 'https://formspree.io/f/xqaeddgj'
   }
 };
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>松本一樹 -Itsuki Matumoto- : Ticket</title>
+  <title>松本一樹 -itsuki matsumoto- : ticket</title>
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -40,7 +40,7 @@
   <main>
     <section class="contact">
       <div class="container">
-        <h2 class="section-title">Ticket Reservation</h2>
+        <h2 class="section-title">ticket</h2>
         <p id="ticket-intro" style="margin-top: 12px; color: var(--ink-muted);">
           ライブを選択して、必要事項を入力してください。
         </p>
@@ -52,34 +52,34 @@
 
         <form id="ticket-form">
           <div id="ticket-field-live">
-            <label id="ticket-label-live" for="liveId">Live</label>
+            <label id="ticket-label-live" for="liveId">ライブ</label>
             <select id="liveId" name="liveId" required></select>
           </div>
 
           <div id="ticket-field-name">
-            <label id="ticket-label-name" for="name">Name</label>
+            <label id="ticket-label-name" for="name">名前</label>
             <input id="name" name="name" type="text" autocomplete="name" required>
           </div>
 
           <div id="ticket-field-email">
-            <label id="ticket-label-email" for="email">Email</label>
+            <label id="ticket-label-email" for="email">e-mail</label>
             <input id="email" name="email" type="email" autocomplete="email" required>
           </div>
 
           <div id="ticket-field-quantity">
-            <label id="ticket-label-quantity" for="quantity">Quantity</label>
+            <label id="ticket-label-quantity" for="quantity">枚数</label>
             <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
           </div>
 
           <div id="ticket-field-message">
-            <label id="ticket-label-message" for="message">Message (optional)</label>
+            <label id="ticket-label-message" for="message">備考</label>
             <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>
           </div>
 
           <!-- Honeypot -->
           <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">
 
-          <button type="submit" id="submitBtn">購入へ</button>
+          <button type="submit" id="submitBtn">予約する</button>
         </form>
 
         <div id="ticket-result" style="margin-top: 18px;"></div>
@@ -89,24 +89,24 @@
     <div class="ticket-modal-overlay" id="ticketConfirmOverlay" aria-hidden="true"></div>
     <div class="ticket-modal" id="ticketConfirmModal" role="dialog" aria-modal="true" aria-labelledby="ticketConfirmTitle" aria-hidden="true">
       <div class="ticket-modal-header">
-        <h3 id="ticketConfirmTitle" class="ticket-modal-title">確認</h3>
+        <h3 id="ticketConfirmTitle" class="ticket-modal-title">送信中...</h3>
         <button type="button" class="ticket-modal-close" id="ticketConfirmCloseBtn" aria-label="Close">×</button>
       </div>
       <div class="ticket-modal-body">
-        <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">入力内容を確認してください。</p>
+        <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">予約を送信しています。</p>
         <div class="ticket-confirm-summary" id="ticketConfirmSummary"></div>
         <div id="ticketConfirmError" class="ticket-confirm-error" style="display:none;"></div>
       </div>
       <div class="ticket-modal-footer">
-        <button type="button" class="ticket-modal-btn ghost" id="ticketConfirmBackBtn">戻る</button>
-        <button type="button" class="ticket-modal-btn primary" id="ticketConfirmPrimaryBtn">購入します</button>
+        <a class="ticket-modal-btn ghost" id="ticketModalBackLink" href="./">もう一度</a>
+        <a class="ticket-modal-btn primary" id="ticketModalHomeLink" href="../">home</a>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
+      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
     </div>
   </footer>
 

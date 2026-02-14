@@ -21,6 +21,14 @@
     };
   }
 
+  function renderSiteFooter(site) {
+    const footer = document.getElementById("site-footer");
+    if (!footer) return;
+    const data = site && typeof site === "object" ? site : {};
+    const text = String(data.footerText || "").trim();
+    footer.textContent = text || "";
+  }
+
   async function fetchSiteData() {
     const endpoint = apiBase ? `${apiBase}/api/public/site-data` : "/api/public/site-data";
     try {
@@ -46,6 +54,7 @@
 
   fetchSiteData().then((siteData) => {
     if (!siteData || !msgEl) return;
+    renderSiteFooter(siteData.site || {});
     const t = siteData.ticket && typeof siteData.ticket === "object" ? siteData.ticket : {};
     const complete = String(t.completeText || "").trim();
     if (complete) msgEl.textContent = complete;
