@@ -952,7 +952,8 @@ async function postLiveToX(liveId, options = {}) {
     };
     showToast('Xへ投稿しました', 'success');
   } catch (error) {
-    showToast(`X投稿失敗: ${error.message}`, 'error');
+    const label = options.dryRun ? 'Xテスト失敗' : 'X投稿失敗';
+    showToast(`${label}: ${error.message}`, 'error');
   } finally {
     postingLiveIds.delete(liveId);
     renderLive();
