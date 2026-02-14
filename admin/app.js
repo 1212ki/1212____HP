@@ -4,7 +4,22 @@ const DEFAULT_SITE_DATA = {
   news: [],
   live: { ticketLink: '', upcoming: [], past: [] },
   discography: { digital: [], demo: [] },
-  profile: { image: '', text: '', links: [] }
+  profile: { image: '', text: '', links: [] },
+  youtube: { channelUrl: '', musicVideos: [], liveMovies: [], demos: [] },
+  site: {
+    heroImage: '',
+    links: { bandcamp: '', youtube: '', x: '' },
+    footerText: ''
+  },
+  ticket: {
+    introText: '',
+    noticeText: '',
+    completeText: ''
+  },
+  contact: {
+    introText: '',
+    formAction: ''
+  }
 };
 
 const ADMIN_CONFIG = window.ADMIN_CONFIG || {};
@@ -24,6 +39,8 @@ let postingLiveIds = new Set();
 
 // 新規追加した画像を保存（{filename: base64data}）
 let pendingImages = {};
+// APIモードの画像アップロード中ガード
+let activeImageUploads = new Set();
 
 // 初期化
 document.addEventListener('DOMContentLoaded', async () => {
@@ -84,6 +101,29 @@ function normalizeSiteData(input) {
   normalized.profile.image = normalized.profile.image || '';
   normalized.profile.text = normalized.profile.text || '';
   normalized.profile.links = Array.isArray(normalized.profile.links) ? normalized.profile.links : [];
+
+  normalized.youtube = normalized.youtube && typeof normalized.youtube === 'object' ? normalized.youtube : base.youtube;
+  normalized.youtube.channelUrl = normalized.youtube.channelUrl || '';
+  normalized.youtube.musicVideos = Array.isArray(normalized.youtube.musicVideos) ? normalized.youtube.musicVideos : [];
+  normalized.youtube.liveMovies = Array.isArray(normalized.youtube.liveMovies) ? normalized.youtube.liveMovies : [];
+  normalized.youtube.demos = Array.isArray(normalized.youtube.demos) ? normalized.youtube.demos : [];
+
+  normalized.site = normalized.site && typeof normalized.site === 'object' ? normalized.site : base.site;
+  normalized.site.heroImage = normalized.site.heroImage || '';
+  normalized.site.links = normalized.site.links && typeof normalized.site.links === 'object' ? normalized.site.links : base.site.links;
+  normalized.site.links.bandcamp = normalized.site.links.bandcamp || '';
+  normalized.site.links.youtube = normalized.site.links.youtube || '';
+  normalized.site.links.x = normalized.site.links.x || '';
+  normalized.site.footerText = normalized.site.footerText || '';
+
+  normalized.ticket = normalized.ticket && typeof normalized.ticket === 'object' ? normalized.ticket : base.ticket;
+  normalized.ticket.introText = normalized.ticket.introText || '';
+  normalized.ticket.noticeText = normalized.ticket.noticeText || '';
+  normalized.ticket.completeText = normalized.ticket.completeText || '';
+
+  normalized.contact = normalized.contact && typeof normalized.contact === 'object' ? normalized.contact : base.contact;
+  normalized.contact.introText = normalized.contact.introText || '';
+  normalized.contact.formAction = normalized.contact.formAction || '';
   return normalized;
 }
 
@@ -93,6 +133,23 @@ function getErrorMessage(payload, fallback) {
   if (payload.error) return payload.error;
   if (payload.message) return payload.message;
   return fallback;
+}
+
+function setImagePathForInputId(inputId, value) {
+  if (inputId === 'profile-image') {
+    siteData.profile.image = value || '';
+    return;
+  }
+  if (inputId === 'site-hero-image') {
+    siteData.site.heroImage = value || '';
+    return;
+  }
+}
+
+function ensureNoActiveImageUploads() {
+  if (activeImageUploads.size === 0) return true;
+  showToast('画像アップロード中です。完了してから保存してください', 'error');
+  return false;
 }
 
 async function ensureAdminToken() {
@@ -178,26 +235,26 @@ async function loadTickets() {
 function renderTicketRow(r) {
   const status = r.status || 'unknown';
   const statusLabel = status === 'pending' ? '未対応' : status === 'handled' ? '対応済み' : status === 'cancelled' ? 'キャンセル' : status;
-  const badgeColor = status === 'pending' ? 'var(--danger)' : status === 'handled' ? 'var(--success)' : 'var(--gray-500)';
+  const statusClass = status === 'pending' ? 'is-pending' : status === 'handled' ? 'is-handled' : status === 'cancelled' ? 'is-cancelled' : '';
   const title = `${r.liveDate || ''} ${r.liveVenue || ''}`.trim();
   const meta = `${r.name || ''} / ${r.quantity || 1}枚 / ${r.email || ''}`.trim();
-  const msg = r.message ? `<div class="meta" style="margin-top:6px; white-space:pre-wrap;">${escapeHtml(r.message)}</div>` : '';
+  const msg = r.message ? `<div class="meta ticket-message">${escapeHtml(r.message)}</div>` : '';
   const actions = status === 'pending'
     ? `<button class="x-test-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','handled')">対応済み</button>
        <button class="x-post-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','cancelled')">キャンセル</button>`
     : `<button class="x-test-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','pending')">未対応に戻す</button>`;
 
   return `
-    <div class="item-card" style="cursor: default;">
+    <div class="item-card ticket-row">
       <div class="info">
-        <div class="title">${escapeHtml(title || r.liveId || '')}</div>
+        <div class="ticket-top">
+          <div class="title">${escapeHtml(title || r.liveId || '')}</div>
+          <span class="status-badge ${statusClass}">${escapeHtml(statusLabel)}</span>
+        </div>
         <div class="meta">${escapeHtml(meta)}</div>
         ${msg}
-        <div class="meta" style="margin-top:6px;">${escapeHtml(r.createdAt || '')}</div>
-      </div>
-      <div class="actions" style="flex-direction: column; align-items: flex-end;">
-        <span style="font-size:0.75em; font-weight:bold; color:${badgeColor};">${escapeHtml(statusLabel)}</span>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+        <div class="meta mt-2">${escapeHtml(r.createdAt || '')}</div>
+        <div class="ticket-actions">
           ${actions}
         </div>
       </div>
@@ -291,11 +348,182 @@ function setupTabs() {
 
 // 全描画
 function renderAll() {
+  renderSiteSettings();
+  renderTicketSettings();
   renderNews();
   renderLive();
   renderTicketsUi();
+  renderYouTube();
   renderDiscography();
   renderProfile();
+}
+
+function renderSiteSettings() {
+  const heroForm = document.getElementById('site-hero-image-form');
+  if (heroForm) {
+    heroForm.innerHTML = getImageFormHtml(siteData.site.heroImage || '', 'site-hero-image');
+    const previewContainer = document.getElementById('site-hero-image-preview-container');
+    if (previewContainer) {
+      previewContainer.onclick = () => document.getElementById('site-hero-image-file')?.click();
+    }
+  }
+
+  const bandcamp = document.getElementById('site-link-bandcamp');
+  const youtube = document.getElementById('site-link-youtube');
+  const x = document.getElementById('site-link-x');
+  const footer = document.getElementById('site-footer-text');
+  const contactIntro = document.getElementById('contact-intro-text');
+  const contactAction = document.getElementById('contact-form-action');
+
+  if (bandcamp) {
+    bandcamp.value = siteData.site.links.bandcamp || '';
+    bandcamp.onchange = () => {
+      siteData.site.links.bandcamp = bandcamp.value;
+      markChanged();
+    };
+  }
+  if (youtube) {
+    youtube.value = siteData.site.links.youtube || '';
+    youtube.onchange = () => {
+      siteData.site.links.youtube = youtube.value;
+      markChanged();
+    };
+  }
+  if (x) {
+    x.value = siteData.site.links.x || '';
+    x.onchange = () => {
+      siteData.site.links.x = x.value;
+      markChanged();
+    };
+  }
+  if (footer) {
+    footer.value = siteData.site.footerText || '';
+    footer.onchange = () => {
+      siteData.site.footerText = footer.value;
+      markChanged();
+    };
+  }
+
+  if (contactIntro) {
+    contactIntro.value = siteData.contact.introText || '';
+    contactIntro.onchange = () => {
+      siteData.contact.introText = contactIntro.value;
+      markChanged();
+    };
+  }
+  if (contactAction) {
+    contactAction.value = siteData.contact.formAction || '';
+    contactAction.onchange = () => {
+      siteData.contact.formAction = contactAction.value;
+      markChanged();
+    };
+  }
+}
+
+function renderTicketSettings() {
+  const intro = document.getElementById('ticket-intro-text');
+  const notice = document.getElementById('ticket-notice-text');
+  const complete = document.getElementById('ticket-complete-text');
+
+  if (intro) {
+    intro.value = siteData.ticket.introText || '';
+    intro.onchange = () => {
+      siteData.ticket.introText = intro.value;
+      markChanged();
+    };
+  }
+  if (notice) {
+    notice.value = siteData.ticket.noticeText || '';
+    notice.onchange = () => {
+      siteData.ticket.noticeText = notice.value;
+      markChanged();
+    };
+  }
+  if (complete) {
+    complete.value = siteData.ticket.completeText || '';
+    complete.onchange = () => {
+      siteData.ticket.completeText = complete.value;
+      markChanged();
+    };
+  }
+}
+
+function getYouTubeVideoId(input) {
+  const raw = String(input || '').trim();
+  if (!raw) return '';
+  // Accept raw id (11 chars), watch URL, share URL, or embed URL.
+  if (/^[a-zA-Z0-9_-]{11}$/.test(raw)) return raw;
+  try {
+    const url = new URL(raw);
+    if (url.hostname.endsWith('youtu.be')) {
+      const id = url.pathname.replace(/^\/+/, '').slice(0, 64);
+      return /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : '';
+    }
+    if (url.hostname.includes('youtube.com')) {
+      const v = url.searchParams.get('v');
+      if (v && /^[a-zA-Z0-9_-]{11}$/.test(v)) return v;
+      const m = url.pathname.match(/\/embed\/([a-zA-Z0-9_-]{11})/);
+      if (m) return m[1];
+    }
+  } catch (_e) {}
+  return '';
+}
+
+function getYouTubeThumbUrl(id) {
+  const safe = String(id || '').trim();
+  if (!safe) return '';
+  return `https://img.youtube.com/vi/${encodeURIComponent(safe)}/hqdefault.jpg`;
+}
+
+function renderYouTubeList(listEl, items, category) {
+  if (!listEl) return;
+  if (!Array.isArray(items) || items.length === 0) {
+    listEl.innerHTML = '<div class="empty-state"><p>アイテムがありません</p></div>';
+    return;
+  }
+  listEl.innerHTML = items.map(item => {
+    const vid = item.youtubeId || '';
+    const thumb = getYouTubeThumbUrl(vid);
+    const title = item.title || vid || '(no title)';
+    const meta = vid ? `ID: ${vid}` : '';
+    return `
+      <div class="item-card" onclick="editYouTubeVideo('${escapeHtml(item.id)}', '${escapeHtml(category)}')">
+        ${thumb ? `<img class="thumbnail" src="${escapeHtml(thumb)}" alt="" onerror="this.style.display='none'">` : ''}
+        <div class="info">
+          <div class="title">${escapeHtml(title)}</div>
+          <div class="meta">${escapeHtml(meta)}</div>
+        </div>
+        <span class="arrow">›</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderYouTube() {
+  const channelInput = document.getElementById('youtube-channel-url');
+  if (channelInput) {
+    channelInput.value = siteData.youtube.channelUrl || '';
+    channelInput.onchange = () => {
+      siteData.youtube.channelUrl = channelInput.value;
+      markChanged();
+    };
+  }
+
+  renderYouTubeList(
+    document.getElementById('youtube-musicVideos-list'),
+    siteData.youtube.musicVideos,
+    'musicVideos'
+  );
+  renderYouTubeList(
+    document.getElementById('youtube-liveMovies-list'),
+    siteData.youtube.liveMovies,
+    'liveMovies'
+  );
+  renderYouTubeList(
+    document.getElementById('youtube-demos-list'),
+    siteData.youtube.demos,
+    'demos'
+  );
 }
 
 function renderTicketsUi() {
@@ -384,11 +612,22 @@ function renderNews() {
 // Live描画
 function renderLive() {
   const ticketInput = document.getElementById('ticket-link');
+  const openBtn = document.getElementById('openTicketLinkBtn');
   ticketInput.value = siteData.live.ticketLink || '';
   ticketInput.onchange = () => {
     siteData.live.ticketLink = ticketInput.value;
     markChanged();
   };
+  if (openBtn) {
+    openBtn.onclick = () => {
+      const url = String(ticketInput.value || '').trim();
+      if (!url) {
+        showToast('チケット予約リンクが未設定です', 'error');
+        return;
+      }
+      window.open(url, '_blank', 'noopener');
+    };
+  }
 
   const upcomingList = document.getElementById('live-upcoming-list');
   const pastList = document.getElementById('live-past-list');
@@ -496,6 +735,62 @@ function addProfileLink() {
   markChanged();
 }
 
+function addYouTubeVideo(category) {
+  isNewItem = true;
+  currentEditType = `youtube-${category}`;
+  currentEditId = 'yt-' + Date.now();
+
+  showModal('YouTube追加', `
+    <div class="form-group">
+      <label>カテゴリ</label>
+      <select id="edit-category" class="select">
+        <option value="musicVideos" ${category === 'musicVideos' ? 'selected' : ''}>Music Video</option>
+        <option value="liveMovies" ${category === 'liveMovies' ? 'selected' : ''}>Live Movie</option>
+        <option value="demos" ${category === 'demos' ? 'selected' : ''}>Demo</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>タイトル</label>
+      <input type="text" id="edit-title" class="text-input" placeholder="例: - 月を待って -">
+    </div>
+    <div class="form-group">
+      <label>YouTube URL / ID</label>
+      <input type="text" id="edit-youtube" class="text-input" placeholder="https://youtu.be/... または 11文字のID">
+    </div>
+  `);
+  document.getElementById('delete-btn').style.display = 'none';
+}
+
+function editYouTubeVideo(id, category) {
+  const list = siteData.youtube[category] || [];
+  const item = list.find(v => v.id === id);
+  if (!item) return;
+
+  isNewItem = false;
+  currentEditType = `youtube-${category}`;
+  currentEditId = id;
+
+  showModal('YouTube編集', `
+    <div class="form-group">
+      <label>カテゴリ</label>
+      <select id="edit-category" class="select">
+        <option value="musicVideos" ${category === 'musicVideos' ? 'selected' : ''}>Music Video</option>
+        <option value="liveMovies" ${category === 'liveMovies' ? 'selected' : ''}>Live Movie</option>
+        <option value="demos" ${category === 'demos' ? 'selected' : ''}>Demo</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>タイトル</label>
+      <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title || '')}">
+    </div>
+    <div class="form-group">
+      <label>YouTube URL / ID</label>
+      <input type="text" id="edit-youtube" class="text-input" value="${escapeHtml(item.youtubeId || '')}">
+    </div>
+  `);
+  document.getElementById('delete-btn').style.display = 'block';
+}
+
 // プロフィールリンク削除
 function deleteProfileLink(index) {
   siteData.profile.links.splice(index, 1);
@@ -557,27 +852,27 @@ function handleImageSelect(input, inputId) {
       document.getElementById(inputId).value = imagePath;
       if (pathEl) pathEl.textContent = `パス: ${imagePath}`;
 
-      if (inputId === 'profile-image') {
-        siteData.profile.image = imagePath;
-      }
+      setImagePathForInputId(inputId, imagePath);
 
       markChanged();
       return;
     }
 
     // API運用: Cloudflare(R2)へアップロードしてURLを保存
+    activeImageUploads.add(inputId);
     uploadImageToApi(file)
       .then((result) => {
         document.getElementById(inputId).value = result.url;
         if (pathEl) pathEl.textContent = `URL: ${result.url}`;
-        if (inputId === 'profile-image') {
-          siteData.profile.image = result.url;
-        }
+        setImagePathForInputId(inputId, result.url);
         markChanged();
       })
       .catch((err) => {
         if (pathEl) pathEl.textContent = '';
         showToast(`画像アップロード失敗: ${err.message}`, 'error');
+      })
+      .finally(() => {
+        activeImageUploads.delete(inputId);
       });
 
     // クリアボタンを追加（なければ）
@@ -621,8 +916,8 @@ function clearImage(inputId) {
   const clearBtn = container.parentElement.querySelector('.btn-image-clear');
   if (clearBtn) clearBtn.remove();
 
-  if (inputId === 'profile-image') {
-    siteData.profile.image = '';
+  setImagePathForInputId(inputId, '');
+  if (inputId === 'profile-image' || inputId === 'site-hero-image') {
     markChanged();
   }
 }
@@ -866,14 +1161,19 @@ function closeModal() {
 // モーダル保存
 async function saveModal() {
   let liveAction = null;
+  let ok = true;
+  if (!ensureNoActiveImageUploads()) return;
   if (currentEditType === 'news') {
     saveNewsItem();
   } else if (currentEditType.startsWith('live')) {
     liveAction = saveLiveItem();
+  } else if (currentEditType.startsWith('youtube')) {
+    ok = saveYouTubeItem();
   } else if (currentEditType.startsWith('discography')) {
     saveDiscographyItem();
   }
 
+  if (!ok) return;
   closeModal();
   markChanged();
 
@@ -887,6 +1187,33 @@ async function saveModal() {
       await postLiveToX(liveAction.liveId, { skipUnsavedCheck: true });
     }
   }
+}
+
+function saveYouTubeItem() {
+  const newCategory = document.getElementById('edit-category').value;
+  const input = document.getElementById('edit-youtube').value;
+  const youtubeId = getYouTubeVideoId(input);
+  if (!youtubeId) {
+    showToast('YouTube URL / ID が不正です（IDは11文字）', 'error');
+    return false;
+  }
+  const item = {
+    id: currentEditId,
+    title: document.getElementById('edit-title').value,
+    youtubeId
+  };
+
+  const originalCategory = currentEditType.split('-')[1];
+  const originalList = siteData.youtube[originalCategory] || [];
+  const originalIndex = originalList.findIndex(v => v.id === currentEditId);
+  if (originalIndex !== -1) {
+    originalList.splice(originalIndex, 1);
+  }
+
+  if (!siteData.youtube[newCategory]) siteData.youtube[newCategory] = [];
+  siteData.youtube[newCategory].unshift(item);
+  renderYouTube();
+  return true;
 }
 
 // News保存
@@ -988,6 +1315,12 @@ function deleteItem() {
       siteData.live.past = siteData.live.past.filter(l => l.id !== currentEditId);
     }
     renderLive();
+  } else if (currentEditType.startsWith('youtube')) {
+    const category = currentEditType.split('-')[1];
+    if (siteData.youtube[category]) {
+      siteData.youtube[category] = siteData.youtube[category].filter(v => v.id !== currentEditId);
+    }
+    renderYouTube();
   } else if (currentEditType.startsWith('discography')) {
     const category = currentEditType.split('-')[1];
     if (category === 'digital') {
@@ -1038,6 +1371,7 @@ async function saveToApi() {
 // データ保存
 async function saveData(options = {}) {
   if (isSaving) return false;
+  if (!ensureNoActiveImageUploads()) return false;
   isSaving = true;
   const { silent = false } = options;
   const pendingCount = Object.keys(pendingImages).length;

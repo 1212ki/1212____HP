@@ -783,6 +783,163 @@ form button:hover {
   background: var(--accent);
 }
 
+/* Ticket confirmation modal */
+.ticket-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+  z-index: 5000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.ticket-modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ticket-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-50% + 12px));
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(86vh, 720px);
+  overflow: auto;
+  z-index: 5001;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ticket-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+
+.ticket-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.ticket-modal-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ticket-modal-close {
+  border: 1px solid var(--line);
+  background: transparent;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--ink-muted);
+}
+
+.ticket-modal-body {
+  padding: 16px 18px;
+}
+
+.ticket-confirm-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.ticket-confirm-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.ticket-confirm-k {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.ticket-confirm-v {
+  color: var(--ink);
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.ticket-confirm-error {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(191, 103, 77, 0.35);
+  background: rgba(191, 103, 77, 0.12);
+  color: var(--ink);
+}
+
+.ticket-modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 14px 18px 18px;
+  border-top: 1px solid var(--line);
+  position: sticky;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.ticket-modal-btn {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.ticket-modal-btn.primary {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: rgba(191, 103, 77, 0.35);
+}
+
+.ticket-modal-btn.ghost:hover,
+.ticket-modal-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+  .ticket-confirm-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
 /* Button-like link */
 .application-link {
   display: inline-flex;

@@ -49,13 +49,13 @@
   <!-- 画像を「帯（バナー）」として扱う -->
   <div class="hero-band" aria-label="Hero image">
     <div class="container hero-band-inner">
-      <img src="assets/images/hero.jpg" alt="Hero Image" class="hero-band-image">
+      <img id="home-hero-image" src="assets/images/hero.jpg" alt="Hero Image" class="hero-band-image">
     </div>
   </div>
 
   <!-- ボタンはボタンとして（元の意図に寄せる） -->
   <div class="container hero-actions" aria-label="External links">
-    <a href="https://1212ki.bandcamp.com/" class="cta primary" target="_blank" rel="noopener">
+    <a id="home-link-bandcamp" href="https://1212ki.bandcamp.com/" class="cta primary" target="_blank" rel="noopener">
       <span class="cta-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
           <path d="M9.2 6h10.8L14.8 18H4L9.2 6Z"></path>
@@ -63,7 +63,7 @@
       </span>
       <span class="cta-label">Bandcamp</span>
     </a>
-    <a href="https://www.youtube.com/@1212____ki" class="cta ghost" target="_blank" rel="noopener">
+    <a id="home-link-youtube" href="https://www.youtube.com/@1212____ki" class="cta ghost" target="_blank" rel="noopener">
       <span class="cta-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
           <path d="M21 8.2c0-1.2-1-2.2-2.2-2.2H5.2C4 6 3 7 3 8.2v7.6C3 17 4 18 5.2 18h13.6c1.2 0 2.2-1 2.2-2.2V8.2ZM10 16V8l7 4-7 4Z"></path>
@@ -71,7 +71,7 @@
       </span>
       <span class="cta-label">YouTube</span>
     </a>
-    <a href="https://www.x.com/1212____ki" class="cta ghost" target="_blank" rel="noopener">
+    <a id="home-link-x" href="https://www.x.com/1212____ki" class="cta ghost" target="_blank" rel="noopener">
       <span class="cta-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
           <path d="M18.4 3H21l-5.7 6.6L22 21h-6.2l-4.2-5.5L6.8 21H3l6.1-7.1L2.7 3H9l3.8 5L18.4 3ZM17 19h1.4L8.1 5H6.6l10.4 14Z"></path>
@@ -202,7 +202,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
+      <p id="site-footer">&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
 

@@ -21,12 +21,62 @@
 
     <!-- タブナビ -->
     <nav class="tab-nav">
+      <button class="tab-btn" data-tab="site">Site</button>
       <button class="tab-btn active" data-tab="news">News</button>
       <button class="tab-btn" data-tab="live">Live</button>
       <button class="tab-btn" data-tab="tickets">Tickets</button>
+      <button class="tab-btn" data-tab="youtube">YouTube</button>
       <button class="tab-btn" data-tab="discography">Disco</button>
       <button class="tab-btn" data-tab="profile">Profile</button>
     </nav>
+
+    <!-- Siteタブ -->
+    <section class="tab-content" id="site-tab">
+      <div class="section-header">
+        <h2>Site</h2>
+      </div>
+
+      <div class="subsection">
+        <h3>Home Hero</h3>
+        <div id="site-hero-image-form"></div>
+      </div>
+
+      <div class="subsection">
+        <h3>Home Links</h3>
+        <div class="form-group">
+          <label>Bandcamp</label>
+          <input type="url" id="site-link-bandcamp" class="text-input" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>YouTube</label>
+          <input type="url" id="site-link-youtube" class="text-input" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>X</label>
+          <input type="url" id="site-link-x" class="text-input" placeholder="https://...">
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>Footer</h3>
+        <div class="form-group">
+          <label>フッター文言（空なら既定のまま）</label>
+          <input type="text" id="site-footer-text" class="text-input" placeholder="&copy; ...">
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>Contact</h3>
+        <div class="form-group">
+          <label>導入文</label>
+          <textarea id="contact-intro-text" class="textarea" rows="3" placeholder="お問い合わせは..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Form Action（Formspree URL）</label>
+          <input type="url" id="contact-form-action" class="text-input" placeholder="https://formspree.io/f/...">
+        </div>
+      </div>
+    </section>
 
     <!-- Newsタブ -->
     <section class="tab-content active" id="news-tab">
@@ -45,7 +95,11 @@
       </div>
       <div class="subsection">
         <h3>チケット予約リンク</h3>
-        <input type="url" id="ticket-link" class="text-input" placeholder="チケットリンクURL">
+        <div class="field-row">
+          <input type="url" id="ticket-link" class="text-input" placeholder="チケットリンクURL" inputmode="url" autocomplete="url">
+          <button type="button" class="btn btn-secondary btn-compact" id="openTicketLinkBtn">開く</button>
+        </div>
+        <p class="field-hint">Ticketページの予約ボタンに反映されます。</p>
       </div>
       <div class="subsection">
         <h3>開催予定</h3>
@@ -63,9 +117,24 @@
         <h2>Tickets</h2>
         <button class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
       </div>
+      <div class="subsection">
+        <h3>Ticket Page（表示文言）</h3>
+        <div class="form-group">
+          <label>導入文（空なら既定のまま）</label>
+          <textarea id="ticket-intro-text" class="textarea" rows="2" placeholder="ライブを選択して..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>注意文（空なら既定のまま）</label>
+          <textarea id="ticket-notice-text" class="textarea" rows="2" placeholder="送信後..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>完了文（空なら既定のまま）</label>
+          <textarea id="ticket-complete-text" class="textarea" rows="2" placeholder="予約しました..."></textarea>
+        </div>
+      </div>
       <div class="form-group">
         <label>フィルタ</label>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <div class="filters">
           <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
           <select id="tickets-status-filter" class="select" onchange="loadTickets()">
             <option value="">全ステータス</option>
@@ -76,6 +145,37 @@
         </div>
       </div>
       <div class="items-list" id="tickets-list"></div>
+    </section>
+
+    <!-- YouTubeタブ -->
+    <section class="tab-content" id="youtube-tab">
+      <div class="section-header">
+        <h2>YouTube</h2>
+        <button class="add-btn" onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+      </div>
+
+      <div class="subsection">
+        <h3>Channel URL</h3>
+        <input type="url" id="youtube-channel-url" class="text-input" placeholder="https://www.youtube.com/@...">
+      </div>
+
+      <div class="subsection">
+        <h3>Music Video</h3>
+        <div class="items-list" id="youtube-musicVideos-list"></div>
+        <button class="add-btn small" onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+      </div>
+
+      <div class="subsection">
+        <h3>Live Movie</h3>
+        <div class="items-list" id="youtube-liveMovies-list"></div>
+        <button class="add-btn small" onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+      </div>
+
+      <div class="subsection">
+        <h3>Demo</h3>
+        <div class="items-list" id="youtube-demos-list"></div>
+        <button class="add-btn small" onclick="addYouTubeVideo('demos')">+ 追加</button>
+      </div>
     </section>
 
     <!-- Discographyタブ -->

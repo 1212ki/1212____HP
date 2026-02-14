@@ -3,6 +3,21 @@ const DEFAULT_SITE_DATA = {
   live: { ticketLink: "", upcoming: [], past: [] },
   discography: { digital: [], demo: [] },
   profile: { image: "", text: "", links: [] },
+  youtube: { channelUrl: "", musicVideos: [], liveMovies: [], demos: [] },
+  site: {
+    heroImage: "",
+    links: { bandcamp: "", youtube: "", x: "" },
+    footerText: "",
+  },
+  ticket: {
+    introText: "",
+    noticeText: "",
+    completeText: "",
+  },
+  contact: {
+    introText: "",
+    formAction: "",
+  },
 };
 
 function nowIso() {
@@ -34,6 +49,29 @@ function normalizeSiteData(input) {
   data.profile.image = data.profile.image || "";
   data.profile.text = data.profile.text || "";
   data.profile.links = Array.isArray(data.profile.links) ? data.profile.links : [];
+
+  data.youtube = data.youtube && typeof data.youtube === "object" ? data.youtube : base.youtube;
+  data.youtube.channelUrl = data.youtube.channelUrl || "";
+  data.youtube.musicVideos = Array.isArray(data.youtube.musicVideos) ? data.youtube.musicVideos : [];
+  data.youtube.liveMovies = Array.isArray(data.youtube.liveMovies) ? data.youtube.liveMovies : [];
+  data.youtube.demos = Array.isArray(data.youtube.demos) ? data.youtube.demos : [];
+
+  data.site = data.site && typeof data.site === "object" ? data.site : base.site;
+  data.site.heroImage = data.site.heroImage || "";
+  data.site.links = data.site.links && typeof data.site.links === "object" ? data.site.links : base.site.links;
+  data.site.links.bandcamp = data.site.links.bandcamp || "";
+  data.site.links.youtube = data.site.links.youtube || "";
+  data.site.links.x = data.site.links.x || "";
+  data.site.footerText = data.site.footerText || "";
+
+  data.ticket = data.ticket && typeof data.ticket === "object" ? data.ticket : base.ticket;
+  data.ticket.introText = data.ticket.introText || "";
+  data.ticket.noticeText = data.ticket.noticeText || "";
+  data.ticket.completeText = data.ticket.completeText || "";
+
+  data.contact = data.contact && typeof data.contact === "object" ? data.contact : base.contact;
+  data.contact.introText = data.contact.introText || "";
+  data.contact.formAction = data.contact.formAction || "";
   return data;
 }
 
@@ -68,6 +106,9 @@ function jsonResponse(body, request, env, status = 200) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "Pragma": "no-cache",
       ...createCorsHeaders(request, env),
     },
   });
@@ -136,20 +177,26 @@ async function serveImage(request, env, key) {
   return new Response(obj.body, { status: 200, headers });
 }
 
-async function getSiteData(env) {
-  const row = await env.DB.prepare("SELECT data FROM site_data WHERE id = 1").first();
+async function getSiteDataRow(env) {
+  const row = await env.DB.prepare("SELECT data, updated_at FROM site_data WHERE id = 1").first();
   if (!row || !row.data) {
     const fallback = normalizeSiteData(DEFAULT_SITE_DATA);
+    const updatedAt = nowIso();
     await env.DB.prepare(
       "INSERT OR REPLACE INTO site_data (id, data, updated_at) VALUES (1, ?, ?)"
-    ).bind(JSON.stringify(fallback), nowIso()).run();
-    return fallback;
+    ).bind(JSON.stringify(fallback), updatedAt).run();
+    return { data: fallback, updatedAt };
   }
   try {
-    return normalizeSiteData(JSON.parse(row.data));
+    return { data: normalizeSiteData(JSON.parse(row.data)), updatedAt: row.updated_at || "" };
   } catch (_error) {
-    return normalizeSiteData(DEFAULT_SITE_DATA);
+    return { data: normalizeSiteData(DEFAULT_SITE_DATA), updatedAt: row.updated_at || "" };
   }
+}
+
+async function getSiteData(env) {
+  const { data } = await getSiteDataRow(env);
+  return data;
 }
 
 async function saveSiteData(env, data) {
@@ -554,8 +601,8 @@ async function handleRequest(request, env) {
   }
 
   if (path === "/api/public/site-data" && request.method === "GET") {
-    const data = await getSiteData(env);
-    return jsonResponse({ data }, request, env);
+    const row = await getSiteDataRow(env);
+    return jsonResponse({ data: row.data, meta: { updatedAt: row.updatedAt } }, request, env);
   }
 
   if (path === "/api/public/ticket-reservations" && request.method === "POST") {
@@ -579,8 +626,8 @@ async function handleRequest(request, env) {
     if (!isAdminAuthorized(request, env)) {
       return jsonResponse({ error: "unauthorized" }, request, env, 401);
     }
-    const data = await getSiteData(env);
-    return jsonResponse({ data }, request, env);
+    const row = await getSiteDataRow(env);
+    return jsonResponse({ data: row.data, meta: { updatedAt: row.updatedAt } }, request, env);
   }
 
   if (path === "/api/admin/site-data" && request.method === "PUT") {

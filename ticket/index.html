@@ -41,9 +41,14 @@
     <section class="contact">
       <div class="container">
         <h2 class="section-title">Ticket Reservation</h2>
-        <p style="margin-top: 12px; color: var(--ink-muted);">
-          ライブを選択して、必要事項を入力してください。送信後、こちらからの自動返信はありません（受付の記録のみ）。
+        <p id="ticket-intro" style="margin-top: 12px; color: var(--ink-muted);">
+          ライブを選択して、必要事項を入力してください。
         </p>
+        <p id="ticket-notice" style="margin-top: 8px; color: var(--ink-muted);">
+          送信後、こちらからの自動返信はありません（受付の記録のみ）。
+        </p>
+
+        <div id="ticket-live-preview" style="margin-top: 18px;"></div>
 
         <form id="ticket-form">
           <label for="liveId">Live</label>
@@ -64,12 +69,29 @@
           <!-- Honeypot -->
           <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">
 
-          <button type="submit" id="submitBtn">Send</button>
+          <button type="submit" id="submitBtn">購入へ</button>
         </form>
 
         <div id="ticket-result" style="margin-top: 18px;"></div>
       </div>
     </section>
+
+    <div class="ticket-modal-overlay" id="ticketConfirmOverlay" aria-hidden="true"></div>
+    <div class="ticket-modal" id="ticketConfirmModal" role="dialog" aria-modal="true" aria-labelledby="ticketConfirmTitle" aria-hidden="true">
+      <div class="ticket-modal-header">
+        <h3 id="ticketConfirmTitle" class="ticket-modal-title">確認</h3>
+        <button type="button" class="ticket-modal-close" id="ticketConfirmCloseBtn" aria-label="Close">×</button>
+      </div>
+      <div class="ticket-modal-body">
+        <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">入力内容を確認してください。</p>
+        <div class="ticket-confirm-summary" id="ticketConfirmSummary"></div>
+        <div id="ticketConfirmError" class="ticket-confirm-error" style="display:none;"></div>
+      </div>
+      <div class="ticket-modal-footer">
+        <button type="button" class="ticket-modal-btn ghost" id="ticketConfirmBackBtn">戻る</button>
+        <button type="button" class="ticket-modal-btn primary" id="ticketConfirmPrimaryBtn">購入します</button>
+      </div>
+    </div>
   </main>
 
   <footer>

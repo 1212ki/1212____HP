@@ -46,8 +46,8 @@
     <section class="contact">
       <div class="container">
         <h2 class="section-title">Contact</h2>
-        <p>お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。</p>
-         <form action="https://formspree.io/f/xqaeddgj" method="POST">
+        <p id="contact-intro">お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。</p>
+         <form id="contact-form" action="https://formspree.io/f/xqaeddgj" method="POST">
           <label for="name">name:</label>
           <input type="text" id="name" name="name" placeholder="例）松本 一樹" required>
           
@@ -65,10 +65,12 @@
   
   <footer>
     <div class="container">
-      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
+      <p id="site-footer">&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
     </div>
   </footer>
   
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/site-content.js"></script>
   <script src="../assets/js/script.js"></script>
 </body>
 </html>
