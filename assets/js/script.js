@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", function(){
     const normCurrent = normalize(currentPath);
     const normLink = normalize(linkPath);
 
-    if (normCurrent === normLink) {
+    // Mark as active on exact match, or when the current path is a child route
+    // (e.g. /ticket/complete/ should highlight /ticket/).
+    if (normCurrent === normLink || (normLink !== "/" && normCurrent.startsWith(normLink))) {
       link.classList.add("active");
     }
   });
@@ -108,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   const fadeTargets = document.querySelectorAll(
-    ".news-item, .live-event, .discography-item, .section-title, .hero-copy, .hero-media, .artist-photo, .video-container, .intro, .live-application, .channel-application"
+    ".news-item, .live-event, .discography-item, .section-title, .hero-band, .artist-photo, .video-container, .intro, .live-application, .channel-application"
   );
 
   fadeTargets.forEach(el => el.classList.add("fade-in-element"));
@@ -154,26 +156,5 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   }
 
-  if (supportsHover && !reduceMotion) {
-    document.querySelectorAll(".news-item").forEach(card => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const tiltDivisor = 70;
-        const maxTilt = 4;
-        const rotateX = Math.max(-maxTilt, Math.min(maxTilt, (y - centerY) / tiltDivisor));
-        const rotateY = Math.max(-maxTilt, Math.min(maxTilt, (centerX - x) / tiltDivisor));
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(6px)`;
-      });
-
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) translateZ(0)";
-      });
-    });
-  }
+  // Intentionally no 3D tilt: keep cards calm and editorial.
 });

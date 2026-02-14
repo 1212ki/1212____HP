@@ -73,6 +73,16 @@
     el.style.color = kind === "error" ? "crimson" : "inherit";
   }
 
+  function redirectToComplete(reservation) {
+    if (!reservation) return false;
+    const url = new URL("./complete/", window.location.href);
+    if (reservation.id) url.searchParams.set("rid", reservation.id);
+    if (reservation.liveDate) url.searchParams.set("date", reservation.liveDate);
+    if (reservation.liveVenue) url.searchParams.set("venue", reservation.liveVenue);
+    window.location.assign(url.toString());
+    return true;
+  }
+
   async function boot() {
     const query = parseQuery();
     try {
@@ -96,14 +106,31 @@
       $("submitBtn").disabled = true;
       $("submitBtn").textContent = "Sending...";
       try {
+        const url = new URL(window.location.href);
+        const dryRun = url.searchParams.get("dryRun") === "1";
+
+        if (dryRun) {
+          const select = $("liveId");
+          const label = select && select.selectedIndex >= 0 ? select.options[select.selectedIndex].textContent : "";
+          redirectToComplete({
+            id: `DRYRUN-${Date.now()}`,
+            liveDate: label || "",
+            liveVenue: "",
+          });
+          return;
+        }
+
         const fd = new FormData(ev.target);
         const res = await submitReservation(fd);
         const r = res.reservation || {};
-        setResult(
-          `送信しました。<br>受付ID: <code>${escapeHtml(r.id || "")}</code><br>${escapeHtml(r.liveDate || "")} ${escapeHtml(r.liveVenue || "")}`,
-          "ok"
-        );
-        ev.target.reset();
+        // Prefer a dedicated confirmation view.
+        if (!redirectToComplete(r)) {
+          setResult(
+            `送信しました。<br>受付ID: <code>${escapeHtml(r.id || "")}</code><br>${escapeHtml(r.liveDate || "")} ${escapeHtml(r.liveVenue || "")}`,
+            "ok"
+          );
+          ev.target.reset();
+        }
       } catch (e) {
         setResult(`送信に失敗しました: ${escapeHtml(e.message)}`, "error");
       } finally {
@@ -115,4 +142,3 @@
 
   boot();
 })();
-

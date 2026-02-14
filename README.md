@@ -21,7 +21,6 @@
 ### Features
 - スティッキーヘッダー（スクロール追従）
 - パーティクル＆波紋エフェクト（タイトルクリック時）
-- 3Dチルトカード（ニュースセクション）
 - スクロールフェードインアニメーション
 - レスポンシブ対応（PC / スマートフォン）
 
@@ -62,16 +61,26 @@
 
 ## Local Development
 
+### 推奨（Windows / PowerShell）
+
+```powershell
+cd tools/1212____HP
+pwsh -File .\\serve.ps1 start
+```
+
+ブラウザで `http://127.0.0.1:8888/` を開きます。
+
+停止:
+
+```powershell
+pwsh -File .\\serve.ps1 stop
+```
+
+### 代替（任意の環境）
+
 ```bash
-# リポジトリをクローン
-git clone https://github.com/1212ki/1212____HP.git
-cd 1212____HP
-
-# ローカルサーバーを起動
-python3 -m http.server 8888
-
-# ブラウザで確認
-open http://localhost:8888
+cd tools/1212____HP
+python -m http.server 8888 --bind 127.0.0.1
 ```
 
 ## Links
