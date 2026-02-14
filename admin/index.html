@@ -131,6 +131,35 @@
           <label>完了文（空なら既定のまま）</label>
           <textarea id="ticket-complete-text" class="textarea" rows="2" placeholder="予約しました..."></textarea>
         </div>
+        <div class="subsection">
+          <h3>Ticket Page（表示項目）</h3>
+          <div class="checkbox-group">
+            <input type="checkbox" id="ticket-field-quantity">
+            <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+          </div>
+          <div class="form-group">
+            <label>Quantity ラベル（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-label-quantity" class="text-input" placeholder="Quantity">
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="ticket-field-message">
+            <label for="ticket-field-message">Message（任意）を表示</label>
+          </div>
+          <div class="form-group">
+            <label>Message ラベル（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-label-message" class="text-input" placeholder="Message (optional)">
+          </div>
+          <div class="form-group">
+            <label>Message プレースホルダ（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-placeholder-message" class="text-input" placeholder="例: 取り置き名義が別の場合など">
+          </div>
+
+          <div class="form-group">
+            <label>送信ボタン文言（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-submit-label" class="text-input" placeholder="購入へ">
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label>フィルタ</label>

@@ -51,20 +51,30 @@
         <div id="ticket-live-preview" style="margin-top: 18px;"></div>
 
         <form id="ticket-form">
-          <label for="liveId">Live</label>
-          <select id="liveId" name="liveId" required></select>
+          <div id="ticket-field-live">
+            <label id="ticket-label-live" for="liveId">Live</label>
+            <select id="liveId" name="liveId" required></select>
+          </div>
 
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" autocomplete="name" required>
+          <div id="ticket-field-name">
+            <label id="ticket-label-name" for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
 
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
+          <div id="ticket-field-email">
+            <label id="ticket-label-email" for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
 
-          <label for="quantity">Quantity</label>
-          <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
+          <div id="ticket-field-quantity">
+            <label id="ticket-label-quantity" for="quantity">Quantity</label>
+            <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
+          </div>
 
-          <label for="message">Message (optional)</label>
-          <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>
+          <div id="ticket-field-message">
+            <label id="ticket-label-message" for="message">Message (optional)</label>
+            <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>
+          </div>
 
           <!-- Honeypot -->
           <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">

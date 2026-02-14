@@ -14,7 +14,15 @@ const DEFAULT_SITE_DATA = {
   ticket: {
     introText: '',
     noticeText: '',
-    completeText: ''
+    completeText: '',
+    fields: {
+      showQuantity: true,
+      showMessage: true,
+      labelQuantity: '',
+      labelMessage: '',
+      placeholderMessage: '',
+      submitLabel: ''
+    }
   },
   contact: {
     introText: '',
@@ -120,6 +128,15 @@ function normalizeSiteData(input) {
   normalized.ticket.introText = normalized.ticket.introText || '';
   normalized.ticket.noticeText = normalized.ticket.noticeText || '';
   normalized.ticket.completeText = normalized.ticket.completeText || '';
+  normalized.ticket.fields = normalized.ticket.fields && typeof normalized.ticket.fields === 'object'
+    ? normalized.ticket.fields
+    : base.ticket.fields;
+  normalized.ticket.fields.showQuantity = normalized.ticket.fields.showQuantity !== false;
+  normalized.ticket.fields.showMessage = normalized.ticket.fields.showMessage !== false;
+  normalized.ticket.fields.labelQuantity = normalized.ticket.fields.labelQuantity || '';
+  normalized.ticket.fields.labelMessage = normalized.ticket.fields.labelMessage || '';
+  normalized.ticket.fields.placeholderMessage = normalized.ticket.fields.placeholderMessage || '';
+  normalized.ticket.fields.submitLabel = normalized.ticket.fields.submitLabel || '';
 
   normalized.contact = normalized.contact && typeof normalized.contact === 'object' ? normalized.contact : base.contact;
   normalized.contact.introText = normalized.contact.introText || '';
@@ -424,6 +441,12 @@ function renderTicketSettings() {
   const intro = document.getElementById('ticket-intro-text');
   const notice = document.getElementById('ticket-notice-text');
   const complete = document.getElementById('ticket-complete-text');
+  const showQuantity = document.getElementById('ticket-field-quantity');
+  const showMessage = document.getElementById('ticket-field-message');
+  const labelQuantity = document.getElementById('ticket-field-label-quantity');
+  const labelMessage = document.getElementById('ticket-field-label-message');
+  const placeholderMessage = document.getElementById('ticket-field-placeholder-message');
+  const submitLabel = document.getElementById('ticket-field-submit-label');
 
   if (intro) {
     intro.value = siteData.ticket.introText || '';
@@ -443,6 +466,49 @@ function renderTicketSettings() {
     complete.value = siteData.ticket.completeText || '';
     complete.onchange = () => {
       siteData.ticket.completeText = complete.value;
+      markChanged();
+    };
+  }
+
+  if (showQuantity) {
+    showQuantity.checked = Boolean(siteData.ticket.fields.showQuantity);
+    showQuantity.onchange = () => {
+      siteData.ticket.fields.showQuantity = Boolean(showQuantity.checked);
+      markChanged();
+    };
+  }
+  if (showMessage) {
+    showMessage.checked = Boolean(siteData.ticket.fields.showMessage);
+    showMessage.onchange = () => {
+      siteData.ticket.fields.showMessage = Boolean(showMessage.checked);
+      markChanged();
+    };
+  }
+  if (labelQuantity) {
+    labelQuantity.value = siteData.ticket.fields.labelQuantity || '';
+    labelQuantity.onchange = () => {
+      siteData.ticket.fields.labelQuantity = labelQuantity.value;
+      markChanged();
+    };
+  }
+  if (labelMessage) {
+    labelMessage.value = siteData.ticket.fields.labelMessage || '';
+    labelMessage.onchange = () => {
+      siteData.ticket.fields.labelMessage = labelMessage.value;
+      markChanged();
+    };
+  }
+  if (placeholderMessage) {
+    placeholderMessage.value = siteData.ticket.fields.placeholderMessage || '';
+    placeholderMessage.onchange = () => {
+      siteData.ticket.fields.placeholderMessage = placeholderMessage.value;
+      markChanged();
+    };
+  }
+  if (submitLabel) {
+    submitLabel.value = siteData.ticket.fields.submitLabel || '';
+    submitLabel.onchange = () => {
+      siteData.ticket.fields.submitLabel = submitLabel.value;
       markChanged();
     };
   }

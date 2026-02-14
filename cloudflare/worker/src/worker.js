@@ -13,6 +13,14 @@ const DEFAULT_SITE_DATA = {
     introText: "",
     noticeText: "",
     completeText: "",
+    fields: {
+      showQuantity: true,
+      showMessage: true,
+      labelQuantity: "",
+      labelMessage: "",
+      placeholderMessage: "",
+      submitLabel: "",
+    },
   },
   contact: {
     introText: "",
@@ -68,6 +76,13 @@ function normalizeSiteData(input) {
   data.ticket.introText = data.ticket.introText || "";
   data.ticket.noticeText = data.ticket.noticeText || "";
   data.ticket.completeText = data.ticket.completeText || "";
+  data.ticket.fields = data.ticket.fields && typeof data.ticket.fields === "object" ? data.ticket.fields : base.ticket.fields;
+  data.ticket.fields.showQuantity = data.ticket.fields.showQuantity !== false;
+  data.ticket.fields.showMessage = data.ticket.fields.showMessage !== false;
+  data.ticket.fields.labelQuantity = data.ticket.fields.labelQuantity || "";
+  data.ticket.fields.labelMessage = data.ticket.fields.labelMessage || "";
+  data.ticket.fields.placeholderMessage = data.ticket.fields.placeholderMessage || "";
+  data.ticket.fields.submitLabel = data.ticket.fields.submitLabel || "";
 
   data.contact = data.contact && typeof data.contact === "object" ? data.contact : base.contact;
   data.contact.introText = data.contact.introText || "";

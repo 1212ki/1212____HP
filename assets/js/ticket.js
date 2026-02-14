@@ -2,6 +2,13 @@
   const base = (window.SITE_API_BASE || "").replace(/\/+$/, "");
   const apiBase = base || "";
   const STORAGE_KEY = "1212hp_ticket_draft_v1";
+  let ticketFieldConfig = {
+    showQuantity: true,
+    showMessage: true,
+    submitLabel: "購入へ",
+    labelQuantity: "Quantity",
+    labelMessage: "Message (optional)",
+  };
 
   function $(id) {
     return document.getElementById(id);
@@ -60,6 +67,54 @@
     const notice = String(data.noticeText || "").trim();
     if (introEl && intro) introEl.textContent = intro;
     if (noticeEl && notice) noticeEl.textContent = notice;
+  }
+
+  function renderTicketFields(ticket) {
+    const data = ticket && typeof ticket === "object" ? ticket : {};
+    const fields = data.fields && typeof data.fields === "object" ? data.fields : {};
+
+    const showQuantity = fields.showQuantity !== false;
+    const showMessage = fields.showMessage !== false;
+
+    const quantityWrap = $("ticket-field-quantity");
+    const messageWrap = $("ticket-field-message");
+    if (quantityWrap) quantityWrap.style.display = showQuantity ? "" : "none";
+    if (messageWrap) messageWrap.style.display = showMessage ? "" : "none";
+
+    const qLabel = String(fields.labelQuantity || "").trim();
+    const mLabel = String(fields.labelMessage || "").trim();
+    const mPlaceholder = String(fields.placeholderMessage || "").trim();
+    const submitLabel = String(fields.submitLabel || "").trim();
+
+    const qLabelEl = $("ticket-label-quantity");
+    const mLabelEl = $("ticket-label-message");
+    const msgEl = $("message");
+    const submitBtn = $("submitBtn");
+    const quantityEl = $("quantity");
+
+    if (qLabelEl && qLabel) qLabelEl.textContent = qLabel;
+    if (mLabelEl && mLabel) mLabelEl.textContent = mLabel;
+    if (msgEl && mPlaceholder) msgEl.setAttribute("placeholder", mPlaceholder);
+    if (submitBtn && submitLabel) submitBtn.textContent = submitLabel;
+
+    // Keep form validity sane when fields are hidden.
+    if (quantityEl) {
+      quantityEl.required = showQuantity;
+      if (!showQuantity) quantityEl.value = "1";
+    }
+    if (msgEl && !showMessage) {
+      msgEl.value = "";
+    }
+
+    ticketFieldConfig = {
+      showQuantity,
+      showMessage,
+      submitLabel: submitLabel || "購入へ",
+      labelQuantity: qLabel || "Quantity",
+      labelMessage: mLabel || "Message (optional)",
+    };
+
+    return ticketFieldConfig;
   }
 
   function renderSelectedLivePreview(siteData, liveId) {
@@ -186,8 +241,8 @@
       ["Live", liveText || String(payload.liveId || "")],
       ["Name", String(payload.name || "")],
       ["Email", String(payload.email || "")],
-      ["Quantity", String(payload.quantity || "1")],
-      ["Message", message ? message : "-"],
+      ...(ticketFieldConfig.showQuantity ? [[ticketFieldConfig.labelQuantity, String(payload.quantity || "1")]] : []),
+      ...(ticketFieldConfig.showMessage ? [[ticketFieldConfig.labelMessage, message ? message : "-"]] : []),
     ];
 
     summary.innerHTML = rows
@@ -226,6 +281,7 @@
     try {
       const siteData = await fetchSiteData();
       renderTicketCopy(siteData.ticket || {});
+      renderTicketFields(siteData.ticket || {});
       const options = buildLiveOptions(siteData).filter((o) => !o.isPast);
       if (options.length === 0) {
         renderSelect([{ id: "", label: "開催予定のライブがありません", isPast: false }], "");
@@ -308,7 +364,7 @@
     function setBusy(busy) {
       if (!submitBtn) return;
       submitBtn.disabled = busy;
-      submitBtn.textContent = busy ? "..." : "購入へ";
+      submitBtn.textContent = busy ? "..." : ticketFieldConfig.submitLabel;
     }
 
     function setPrimaryBusy(busy) {
