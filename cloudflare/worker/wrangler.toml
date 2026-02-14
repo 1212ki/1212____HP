@@ -1,0 +1,17 @@
+name = "itsuki-homepage-api"
+main = "src/worker.js"
+compatibility_date = "2026-02-14"
+account_id = "576337a7cfcbf54c39da846d70be5665"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "itsuki-homepage"
+# `wrangler d1 create itsuki-homepage` で取得したIDに置換
+database_id = "94a2ae9c-4bfc-4dc5-880e-e4712243f81c"
+
+[vars]
+# 管理画面ドメイン、公開サイトドメインをカンマ区切りで指定
+ALLOWED_ORIGINS = "https://1212hp.com,https://admin.1212hp.com"
+# Cloudflare Accessで守る場合は true にして ADMIN_TOKEN を空でも可
+BYPASS_ADMIN_TOKEN = "false"
+X_DEFAULT_HASHTAGS = "#松本一樹 #ライブ"

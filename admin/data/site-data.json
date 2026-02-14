@@ -1,0 +1,137 @@
+{
+  "news": [
+    {
+      "id": "news-1",
+      "date": "2025/5/27(Tue.)",
+      "title": "Bandcamp公式サイト開設",
+      "description": "手売りで販売中の各種音源について、Bandcampでのデジタル販売を開始しました。",
+      "image": "assets/images/news_bandcamp.jpg",
+      "link": "https://1212ki.bandcamp.com/",
+      "linkText": "listen to..."
+    },
+    {
+      "id": "news-2",
+      "date": "2025/5/5(Mon.) 20:00 out!",
+      "title": "\"月を待って\" Music Video",
+      "description": "5/5のリリースに合わせ、\"月を待って\"のMVを公開します。",
+      "image": "assets/images/MV_tukiwomatte.jpg",
+      "link": "https://youtu.be/JaPin67uO7A?si=ZHqQ2rKd_a4hlRGb",
+      "linkText": "view..."
+    },
+    {
+      "id": "news-3",
+      "date": "2025/5/5(Mon.) Digital Release",
+      "title": "2st.Single \"月を待って\"",
+      "description": "デジタル限定。各種サブスクにて聴けます。",
+      "image": "assets/images/ArtWork_tukiwomatte.png",
+      "link": "https://linkco.re/PnCB7YY3",
+      "linkText": "listen to..."
+    },
+    {
+      "id": "news-4",
+      "date": "2025/3/11",
+      "title": "noteマガジン『備忘ログ』を開設しました。",
+      "description": "思いついたときに日常エッセイ的な文章を投稿しています。2,3分で読める分量なのでお気軽にどうぞ。",
+      "image": "assets/images/note.png",
+      "link": "https://note.com/1212_4939/m/m466c3962969c",
+      "linkText": "view..."
+    },
+    {
+      "id": "news-5",
+      "date": "2025/3/12(Sat.) 18:00 out!",
+      "title": "\"lens\" Music Video",
+      "description": "3/1にリリースした\"lens\"について、MVを公開しました。",
+      "image": "assets/images/MV_lens.jpg",
+      "link": "https://youtu.be/gMNngWO5m1k",
+      "linkText": "view..."
+    },
+    {
+      "id": "news-6",
+      "date": "2025/3/1(Sat.) Digital Release",
+      "title": "1st.Single \"lens\"",
+      "description": "デジタル限定。各種サブスクにて聴けます。",
+      "image": "assets/images/Single_lens.png",
+      "link": "https://linkco.re/T3syGHG3",
+      "linkText": "listen to..."
+    }
+  ],
+  "live": {
+    "ticketLink": "https://ssl.form-mailer.jp/fms/fedbfeba822981?fbclid=PAZXh0bgNhZW0CMTEAAabtrTNg4Kyc1707ecdtbp3zT3yq141F4vOadX5mKGAFyAdeMgBuQ6C9xdI_aem_AUdhPhjCQOjYvH_5TXRqKXwZO9EnHJFIZj4pa62rWL5HwB3gnZsvoHRMDd9Ge5duD2W-hR0QjmrVrLh30PCROBLw",
+    "upcoming": [
+      {
+        "id": "live-1",
+        "date": "2025.06.01",
+        "venue": "下北沢DY CUBE",
+        "description": "open/start TBA\nadv&door ¥2400(+1d) ※配信¥2000",
+        "image": "assets/images/flyer_20250601.jpg",
+        "link": "https://ssl.form-mailer.jp/fms/fedbfeba822981?fbclid=PAZXh0bgNhZW0CMTEAAabtrTNg4Kyc1707ecdtbp3zT3yq141F4vOadX5mKGAFyAdeMgBuQ6C9xdI_aem_AUdhPhjCQOjYvH_5TXRqKXwZO9EnHJFIZj4pa62rWL5HwB3gnZsvoHRMDd9Ge5duD2W-hR0QjmrVrLh30PCROBLw"
+      }
+    ],
+    "past": [
+      {
+        "id": "live-2",
+        "date": "2025.04.02",
+        "venue": "八王子 MatchVox",
+        "description": "open/start TBA\nadv/door ¥2500/¥2700 (+1d)",
+        "image": "assets/images/flyer_20250402.jpg",
+        "link": "https://www.instagram.com/p/DHA8SfgT53a/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
+      },
+      {
+        "id": "live-3",
+        "date": "2025.03.13",
+        "venue": "下北沢 近道",
+        "description": "Band set",
+        "image": "assets/images/flyer2.jpg",
+        "link": "https://ssl.form-mailer.jp/fms/fedbfeba822981"
+      }
+    ]
+  },
+  "discography": {
+    "digital": [
+      {
+        "id": "disc-1",
+        "title": "2nd.Single \"月を待って\"",
+        "releaseDate": "2025.05.05",
+        "description": "",
+        "image": "assets/images/ArtWork_tukiwomatte.png",
+        "link": "https://linkco.re/PnCB7YY3?lang=ja"
+      },
+      {
+        "id": "disc-2",
+        "title": "1st.Single \"lens\"",
+        "releaseDate": "2025.03.01",
+        "description": "",
+        "image": "assets/images/Single_lens.png",
+        "link": "https://linkco.re/T3syGHG3"
+      }
+    ],
+    "demo": [
+      {
+        "id": "disc-3",
+        "title": "1st Demo \"Marbles.ep\"",
+        "releaseDate": "2023.04.01",
+        "description": "1. マーブル\n2. lens\n3. 毎日\n4. コントレイル",
+        "image": "assets/images/album1.jpg",
+        "link": "https://1212ki.bandcamp.com/album/marbles-demo"
+      },
+      {
+        "id": "disc-4",
+        "title": "2nd Demo \"月を待って/Pastime\"",
+        "releaseDate": "2024.03.15",
+        "description": "1. 月を待って\n2. Pastime",
+        "image": "assets/images/album2.png",
+        "link": "https://1212ki.bandcamp.com/"
+      }
+    ]
+  },
+  "profile": {
+    "image": "assets/images/artist2.JPG",
+    "text": "松本一樹 -itsukimatsumoto-\nindie rock / acoustic\n東京都内を中心に活動するシンガーソングライター。\n2023年より宅録での楽曲制作を中心に音楽活動を開始。\n弾き語り/バンドセットの２形態でのライブ活動を継続中。\n\n～リリース～\n・2025年3月:Single『lens』\n・2025年5月:Single『月を待って』",
+    "links": [
+      {"name": "X", "url": "https://www.x.com/1212____ki"},
+      {"name": "Instagram", "url": "https://www.instagram.com/1212____ki"},
+      {"name": "YouTube", "url": "https://www.youtube.com/@1212____ki"},
+      {"name": "note", "url": "https://note.com/1212_4939/m/m466c3962969c"}
+    ]
+  }
+}
