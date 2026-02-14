@@ -1,0 +1,221 @@
+{
+  "global": {
+    "color": {
+      "background": {
+        "value": "#FFFFFF",
+        "type": "color"
+      },
+      "surface": {
+        "value": "#FFFFFF",
+        "type": "color"
+      },
+      "text": {
+        "value": "#1A1A1A",
+        "type": "color"
+      },
+      "subtext": {
+        "value": "#666666",
+        "type": "color"
+      },
+      "border": {
+        "value": "#E6E6E6",
+        "type": "color"
+      },
+      "primary": {
+        "value": "#BF674D",
+        "type": "color"
+      },
+      "accent": {
+        "value": "#BF674D",
+        "type": "color"
+      },
+      "mono": {
+        "0": {
+          "value": "#000000",
+          "type": "color"
+        },
+        "100": {
+          "value": "#FFFFFF",
+          "type": "color"
+        }
+      },
+      "gray": {
+        "100": {
+          "value": "#F5F5F5",
+          "type": "color"
+        },
+        "200": {
+          "value": "#E6E6E6",
+          "type": "color"
+        },
+        "300": {
+          "value": "#CCCCCC",
+          "type": "color"
+        },
+        "500": {
+          "value": "#666666",
+          "type": "color"
+        },
+        "700": {
+          "value": "#333333",
+          "type": "color"
+        },
+        "900": {
+          "value": "#1A1A1A",
+          "type": "color"
+        }
+      }
+    },
+    "typography": {
+      "heading-1": {
+        "value": {
+          "fontFamily": "Zen Kaku Gothic New",
+          "fontWeight": 500,
+          "fontSize": 28,
+          "lineHeight": 42,
+          "letterSpacing": 0,
+          "paragraphSpacing": 0,
+          "textDecoration": "none",
+          "textCase": "none"
+        },
+        "type": "typography"
+      },
+      "heading-2": {
+        "value": {
+          "fontFamily": "Zen Kaku Gothic New",
+          "fontWeight": 500,
+          "fontSize": 20,
+          "lineHeight": 30,
+          "letterSpacing": 0,
+          "paragraphSpacing": 0,
+          "textDecoration": "none",
+          "textCase": "none"
+        },
+        "type": "typography"
+      },
+      "body-lg": {
+        "value": {
+          "fontFamily": "Zen Kaku Gothic New",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 30,
+          "letterSpacing": 0,
+          "paragraphSpacing": 0,
+          "textDecoration": "none",
+          "textCase": "none"
+        },
+        "type": "typography"
+      },
+      "body": {
+        "value": {
+          "fontFamily": "Zen Kaku Gothic New",
+          "fontWeight": 400,
+          "fontSize": 16,
+          "lineHeight": 26,
+          "letterSpacing": 0,
+          "paragraphSpacing": 0,
+          "textDecoration": "none",
+          "textCase": "none"
+        },
+        "type": "typography"
+      },
+      "body-sm": {
+        "value": {
+          "fontFamily": "Zen Kaku Gothic New",
+          "fontWeight": 400,
+          "fontSize": 14,
+          "lineHeight": 22,
+          "letterSpacing": 0,
+          "paragraphSpacing": 0,
+          "textDecoration": "none",
+          "textCase": "none"
+        },
+        "type": "typography"
+      }
+    },
+    "radius": {
+      "card": {
+        "value": 16,
+        "type": "dimension"
+      },
+      "button": {
+        "value": 12,
+        "type": "dimension"
+      },
+      "chip": {
+        "value": 999,
+        "type": "dimension"
+      }
+    },
+    "spacing": {
+      "4": {
+        "value": 4,
+        "type": "dimension"
+      },
+      "8": {
+        "value": 8,
+        "type": "dimension"
+      },
+      "12": {
+        "value": 12,
+        "type": "dimension"
+      },
+      "16": {
+        "value": 16,
+        "type": "dimension"
+      },
+      "20": {
+        "value": 20,
+        "type": "dimension"
+      },
+      "24": {
+        "value": 24,
+        "type": "dimension"
+      },
+      "32": {
+        "value": 32,
+        "type": "dimension"
+      },
+      "48": {
+        "value": 48,
+        "type": "dimension"
+      },
+      "64": {
+        "value": 64,
+        "type": "dimension"
+      },
+      "80": {
+        "value": 80,
+        "type": "dimension"
+      }
+    },
+    "shadow": {
+      "card": {
+        "value": [
+          {
+            "x": 0,
+            "y": 12,
+            "blur": 30,
+            "spread": 0,
+            "color": "rgba(0, 0, 0, 0.12)",
+            "type": "dropShadow"
+          }
+        ],
+        "type": "boxShadow"
+      },
+      "floating": {
+        "value": [
+          {
+            "x": 0,
+            "y": 30,
+            "blur": 70,
+            "spread": 0,
+            "color": "rgba(0, 0, 0, 0.2)",
+            "type": "dropShadow"
+          }
+        ],
+        "type": "boxShadow"
+      }
+    }
+  }
+}

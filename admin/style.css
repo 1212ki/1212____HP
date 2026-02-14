@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap");
+
 /* ----- Reset & Base ----- */
 * {
   box-sizing: border-box;
@@ -6,19 +8,17 @@
 }
 
 :root {
-  --primary: #BF674D;
-  --primary-light: #d4896f;
-  --primary-dark: #a35640;
-  --bg: #f8f8f8;
-  --white: #ffffff;
-  --gray-100: #f7f7f7;
-  --gray-200: #e0e0e0;
-  --gray-300: #ccc;
-  --gray-500: #888;
-  --gray-700: #555;
-  --gray-900: #333;
-  --danger: #dc3545;
-  --success: #28a745;
+  /* Prefer 1212 Design System tokens (../assets/css/1212-music.tokens.css) */
+  --primary: var(--color-primary, #BF674D);
+  --primary-soft: rgba(191, 103, 77, 0.12);
+  --bg: var(--color-gray-100, #fafafa);
+  --white: var(--color-surface, #ffffff);
+  --gray-100: var(--color-gray-100, #f5f5f5);
+  --gray-200: var(--color-border, #e6e6e6);
+  --gray-300: var(--color-gray-300, #cccccc);
+  --gray-500: var(--color-subtext, #666666);
+  --gray-700: var(--color-gray-700, #333333);
+  --gray-900: var(--color-text, #1a1a1a);
   --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
   --radius: 12px;
@@ -26,7 +26,7 @@
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--text-body-font-family, "Zen Kaku Gothic New"), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   background-color: var(--bg);
   color: var(--gray-900);
   line-height: 1.6;
@@ -65,7 +65,7 @@ body {
 }
 
 .save-btn {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: var(--primary);
   color: var(--white);
   border: none;
   padding: 10px 20px;
@@ -76,32 +76,33 @@ body {
   transition: all 0.3s ease;
 }
 
+.save-btn:hover {
+  filter: brightness(0.96);
+}
+
 .save-btn:active {
   transform: scale(0.95);
 }
 
 .save-btn.saved {
-  background: var(--success);
+  background: var(--gray-900);
 }
 
 .connection-banner {
   padding: 10px 20px;
   font-size: 0.82em;
-  background: #fff8e8;
-  color: #886000;
-  border-bottom: 1px solid #f0ddad;
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .connection-banner.is-api {
-  background: #ebf8ef;
-  color: #1d6f3d;
-  border-bottom-color: #b8e2c8;
+  border-left: 4px solid var(--primary);
 }
 
 .connection-banner.is-error {
-  background: #fdecec;
-  color: #8f1d2c;
-  border-bottom-color: #f2b5be;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
 }
 
 /* ----- Tab Navigation ----- */
@@ -302,9 +303,9 @@ body {
 }
 
 .x-test-btn {
-  border: 1px solid #b9cde8;
-  background: #f3f8ff;
-  color: #355b86;
+  border: 1px dashed var(--gray-300);
+  background: var(--gray-100);
+  color: var(--gray-700);
   border-radius: 999px;
   padding: 6px 12px;
   font-size: 0.75em;
@@ -313,8 +314,8 @@ body {
 }
 
 .x-test-btn:hover {
-  border-color: #739fce;
-  color: #224b79;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .x-post-btn:hover {
@@ -323,9 +324,9 @@ body {
 }
 
 .x-post-btn.is-posted {
-  background: #ebf8ef;
-  border-color: #9dd9b5;
-  color: #1d6f3d;
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .x-post-btn.is-busy {
@@ -340,7 +341,7 @@ body {
 
 .x-link {
   font-size: 0.72em;
-  color: var(--primary-dark);
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -425,7 +426,7 @@ body {
 .link-item .delete-link-btn {
   background: none;
   border: none;
-  color: var(--danger);
+  color: var(--primary);
   font-size: 1.2em;
   padding: 8px;
   cursor: pointer;
@@ -521,7 +522,7 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: var(--primary);
   color: var(--white);
 }
 
@@ -531,7 +532,7 @@ body {
 }
 
 .btn-danger {
-  background: var(--danger);
+  background: var(--gray-900);
   color: var(--white);
 }
 
@@ -560,11 +561,11 @@ body {
 }
 
 .toast.success {
-  background: var(--success);
+  border-left: 4px solid var(--primary);
 }
 
 .toast.error {
-  background: var(--danger);
+  border-left: 4px solid var(--primary);
 }
 
 /* ----- Drag Handle ----- */
@@ -686,8 +687,8 @@ body {
 
 .btn-image-clear {
   background: var(--white);
-  border: 2px solid var(--danger);
-  color: var(--danger);
+  border: 2px solid var(--gray-300);
+  color: var(--gray-700);
   padding: 10px 20px;
   border-radius: var(--radius-sm);
   font-weight: bold;
@@ -697,7 +698,7 @@ body {
 }
 
 .btn-image-clear:active {
-  background: var(--danger);
+  background: var(--gray-900);
   color: var(--white);
 }
 

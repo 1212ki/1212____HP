@@ -11,8 +11,12 @@
 ## Design
 
 ### Main Color
-- **Terracotta（テラコッタ）**: `#BF674D`
-- 温かみのあるアースカラーをメインに、シンプルで洗練されたデザイン
+- **Accent（テラコッタ）**: `#BF674D`
+- ベースは **黒/白/グレー（モノクロ）**、アクセントのみテラコッタを最小限で使用
+
+### Design Rules
+- デザインルール（配色/タイポ/余白/コンポーネント）: `DESIGN_RULES.md`
+- 音楽活動用トークン（1212 Design System由来）: `assets/css/1212-music.tokens.css`
 
 ### Features
 - スティッキーヘッダー（スクロール追従）
