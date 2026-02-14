@@ -69,6 +69,24 @@ function jsonResponse(body, request, env, status = 200) {
   });
 }
 
+function sanitizeFilename(name) {
+  const base = String(name || "image")
+    .trim()
+    .replace(/[/\\\\?%*:|"<>]/g, "_")
+    .replace(/\s+/g, "_")
+    .slice(0, 80);
+  return base || "image";
+}
+
+function guessExtFromContentType(contentType) {
+  const ct = String(contentType || "").toLowerCase();
+  if (ct.includes("image/jpeg")) return "jpg";
+  if (ct.includes("image/png")) return "png";
+  if (ct.includes("image/webp")) return "webp";
+  if (ct.includes("image/gif")) return "gif";
+  return "bin";
+}
+
 function isAdminAuthorized(request, env) {
   const bypass = String(env.BYPASS_ADMIN_TOKEN || "false").toLowerCase() === "true";
   if (bypass) return true;
@@ -79,6 +97,28 @@ function isAdminAuthorized(request, env) {
   const bearer = auth.startsWith("Bearer ") ? auth.slice(7) : "";
   const token = bearer || request.headers.get("X-Admin-Token") || "";
   return token === expected;
+}
+
+async function serveImage(request, env, key) {
+  if (!env.IMAGES) {
+    return new Response("image storage not configured", { status: 500 });
+  }
+  const safeKey = String(key || "").replace(/^\/+/, "");
+  if (!safeKey || safeKey.includes("..")) {
+    return new Response("bad key", { status: 400 });
+  }
+  const obj = await env.IMAGES.get(safeKey);
+  if (!obj) return new Response("not found", { status: 404 });
+
+  const headers = new Headers();
+  const contentType = obj.httpMetadata?.contentType || "application/octet-stream";
+  headers.set("Content-Type", contentType);
+  headers.set("Cache-Control", "public, max-age=31536000, immutable");
+  headers.set("ETag", obj.etag);
+  // Allow images to be embedded anywhere.
+  headers.set("Access-Control-Allow-Origin", "*");
+
+  return new Response(obj.body, { status: 200, headers });
 }
 
 async function getSiteData(env) {
@@ -321,6 +361,11 @@ async function handleRequest(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
 
+  const imageMatch = path.match(/^\/images\/(.+)$/);
+  if (imageMatch && request.method === "GET") {
+    return serveImage(request, env, decodeURIComponent(imageMatch[1]));
+  }
+
   if (path === "/api/public/site-data" && request.method === "GET") {
     const data = await getSiteData(env);
     return jsonResponse({ data }, request, env);
@@ -362,6 +407,48 @@ async function handleRequest(request, env) {
         );
     const result = await stmt.all();
     return jsonResponse({ posts: result.results || [] }, request, env);
+  }
+
+  if (path === "/api/admin/upload-image" && request.method === "POST") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    if (!env.IMAGES) {
+      return jsonResponse({ error: "image storage not configured" }, request, env, 500);
+    }
+
+    const form = await request.formData().catch(() => null);
+    if (!form) return jsonResponse({ error: "invalid form" }, request, env, 400);
+
+    const file = form.get("file");
+    if (!file || typeof file !== "object" || typeof file.arrayBuffer !== "function") {
+      return jsonResponse({ error: "file is required" }, request, env, 400);
+    }
+
+    const contentType = file.type || "application/octet-stream";
+    if (!String(contentType).toLowerCase().startsWith("image/")) {
+      return jsonResponse({ error: "only image/* is allowed" }, request, env, 400);
+    }
+
+    const size = Number(file.size || 0);
+    const maxBytes = 5 * 1024 * 1024;
+    if (size <= 0 || size > maxBytes) {
+      return jsonResponse({ error: "file too large (max 5MB)" }, request, env, 400);
+    }
+
+    const original = sanitizeFilename(file.name || "");
+    const ext = guessExtFromContentType(contentType);
+    const nonce = makeNonce(12);
+    const yyyyMmDd = nowIso().slice(0, 10).replace(/-/g, "");
+    const key = `uploads/${yyyyMmDd}/${nonce}_${original}.${ext}`;
+
+    const bytes = await file.arrayBuffer();
+    await env.IMAGES.put(key, bytes, {
+      httpMetadata: { contentType },
+    });
+
+    const publicUrl = `${url.origin}/images/${encodeURIComponent(key)}`;
+    return jsonResponse({ ok: true, key, url: publicUrl }, request, env);
   }
 
   const livePostMatch = path.match(/^\/api\/admin\/live\/([^/]+)\/post-x$/);

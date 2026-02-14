@@ -6,6 +6,7 @@
 ## 2. 事前準備
 - Cloudflareアカウント
 - X開発者アカウント（Consumer Key/Secret, Access Token/Secret）
+- 画像アップロード運用をする場合: Cloudflare R2（バケット作成）
 
 ## 3. 使うリソース
 - Workers: `itsuki-homepage-api`
@@ -32,6 +33,11 @@ pwsh ./setup.ps1
 - D1作成（未作成時）
 - `schema.sql` 適用
 - `wrangler.toml` の `database_id` 反映
+
+R2（画像アップロード）:
+- `itsuki-homepage-images` バケットを作成
+- `wrangler.toml` に `[[r2_buckets]] binding="IMAGES"` があることを確認
+- もしCLIで作れない場合はCloudflareダッシュボードでR2を有効化してバケット作成する
 
 ## 7. Secret設定
 

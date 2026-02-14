@@ -115,7 +115,8 @@ async function adminFetch(path, options = {}) {
   if (adminToken) {
     headers.set('Authorization', `Bearer ${adminToken}`);
   }
-  if (options.body && !headers.has('Content-Type')) {
+  // Let the browser set Content-Type for FormData.
+  if (options.body && !headers.has('Content-Type') && typeof options.body === 'string') {
     headers.set('Content-Type', 'application/json');
   }
   return fetch(url, { ...options, headers });
@@ -333,15 +334,16 @@ function renderDiscography() {
 
 // Profile描画
 function renderProfile() {
-  const profileImage = document.getElementById('profile-image');
+  const profileImageForm = document.getElementById('profile-image-form');
   const profileText = document.getElementById('profile-text');
-  profileImage.value = siteData.profile.image || '';
+  if (profileImageForm) {
+    profileImageForm.innerHTML = getImageFormHtml(siteData.profile.image || '', 'profile-image');
+    const previewContainer = document.getElementById('profile-image-preview-container');
+    if (previewContainer) {
+      previewContainer.onclick = () => document.getElementById('profile-image-file')?.click();
+    }
+  }
   profileText.value = siteData.profile.text || '';
-
-  profileImage.onchange = () => {
-    siteData.profile.image = profileImage.value;
-    markChanged();
-  };
 
   profileText.onchange = () => {
     siteData.profile.text = profileText.value;
@@ -418,30 +420,55 @@ function handleImageSelect(input, inputId) {
   const file = input.files[0];
   if (!file) return;
 
-  // ファイル名を生成（日付＋元のファイル名）
-  const ext = file.name.split('.').pop().toLowerCase();
-  const baseName = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_');
-  const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const filename = `${baseName}_${timestamp}.${ext}`;
-  const imagePath = `assets/images/${filename}`;
+  const pathEl = document.getElementById(`${inputId}-path`);
+  if (pathEl) pathEl.textContent = IS_API_MODE ? 'アップロード中...' : '';
 
   // FileReaderでBase64に変換
   const reader = new FileReader();
   reader.onload = function(e) {
     const base64 = e.target.result;
 
-    // pendingImagesに保存
-    pendingImages[filename] = base64;
-
-    // hiddenフィールドにパスを設定
-    document.getElementById(inputId).value = imagePath;
-
     // プレビュー更新
     const container = document.getElementById(`${inputId}-preview-container`);
     container.innerHTML = `<img class="image-preview-large" id="${inputId}-preview" src="${base64}" alt="">`;
 
-    // パス表示更新
-    document.getElementById(`${inputId}-path`).textContent = `パス: ${imagePath}`;
+    if (!IS_API_MODE) {
+      // ローカルJSON運用: ファイル名を生成（日付＋元のファイル名）
+      const ext = file.name.split('.').pop().toLowerCase();
+      const baseName = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const filename = `${baseName}_${timestamp}.${ext}`;
+      const imagePath = `assets/images/${filename}`;
+
+      // pendingImagesに保存（ダウンロード用）
+      pendingImages[filename] = base64;
+
+      // hiddenフィールドにパスを設定
+      document.getElementById(inputId).value = imagePath;
+      if (pathEl) pathEl.textContent = `パス: ${imagePath}`;
+
+      if (inputId === 'profile-image') {
+        siteData.profile.image = imagePath;
+      }
+
+      markChanged();
+      return;
+    }
+
+    // API運用: Cloudflare(R2)へアップロードしてURLを保存
+    uploadImageToApi(file)
+      .then((result) => {
+        document.getElementById(inputId).value = result.url;
+        if (pathEl) pathEl.textContent = `URL: ${result.url}`;
+        if (inputId === 'profile-image') {
+          siteData.profile.image = result.url;
+        }
+        markChanged();
+      })
+      .catch((err) => {
+        if (pathEl) pathEl.textContent = '';
+        showToast(`画像アップロード失敗: ${err.message}`, 'error');
+      });
 
     // クリアボタンを追加（なければ）
     const actionsDiv = container.parentElement.querySelector('.image-actions');
@@ -453,10 +480,24 @@ function handleImageSelect(input, inputId) {
       clearBtn.onclick = () => clearImage(inputId);
       actionsDiv.appendChild(clearBtn);
     }
-
-    markChanged();
   };
   reader.readAsDataURL(file);
+}
+
+async function uploadImageToApi(file) {
+  if (!IS_API_MODE) throw new Error('APIモードではありません');
+  const form = new FormData();
+  form.append('file', file, file.name || 'image');
+  const response = await adminFetch('/api/admin/upload-image', {
+    method: 'POST',
+    body: form
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(getErrorMessage(payload, '画像アップロードに失敗しました'));
+  }
+  if (!payload.url) throw new Error('画像URLが取得できませんでした');
+  return payload;
 }
 
 // 画像クリア
@@ -469,6 +510,11 @@ function clearImage(inputId) {
   // クリアボタンを削除
   const clearBtn = container.parentElement.querySelector('.btn-image-clear');
   if (clearBtn) clearBtn.remove();
+
+  if (inputId === 'profile-image') {
+    siteData.profile.image = '';
+    markChanged();
+  }
 }
 
 // News追加

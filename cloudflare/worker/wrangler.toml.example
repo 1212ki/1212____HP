@@ -7,6 +7,10 @@ binding = "DB"
 database_name = "itsuki-homepage"
 database_id = "REPLACE_WITH_D1_DATABASE_ID"
 
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "itsuki-homepage-images"
+
 [vars]
 # 管理画面ドメイン、公開サイトドメインをカンマ区切りで指定
 ALLOWED_ORIGINS = "https://1212hp.com,https://admin.1212hp.com"

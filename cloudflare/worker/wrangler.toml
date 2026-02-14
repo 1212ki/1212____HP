@@ -9,6 +9,10 @@ database_name = "itsuki-homepage"
 # `wrangler d1 create itsuki-homepage` で取得したIDに置換
 database_id = "94a2ae9c-4bfc-4dc5-880e-e4712243f81c"
 
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "itsuki-homepage-images"
+
 [vars]
 # 管理画面ドメイン、公開サイトドメインをカンマ区切りで指定
 ALLOWED_ORIGINS = "https://1212hp.com,https://admin.1212hp.com"
