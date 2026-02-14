@@ -147,6 +147,103 @@ async function loadXPostStatuses() {
   }
 }
 
+async function loadTickets() {
+  if (!IS_API_MODE) return;
+  const listEl = document.getElementById('tickets-list');
+  if (!listEl) return;
+
+  const liveId = document.getElementById('tickets-live-filter')?.value || '';
+  const status = document.getElementById('tickets-status-filter')?.value || '';
+  const params = new URLSearchParams();
+  if (liveId) params.set('liveId', liveId);
+  if (status) params.set('status', status);
+  params.set('limit', '200');
+
+  listEl.innerHTML = '<div class="empty-state"><p>読み込み中...</p></div>';
+  try {
+    const res = await adminFetch(`/api/admin/ticket-reservations?${params.toString()}`);
+    const payload = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(getErrorMessage(payload, '予約一覧を取得できませんでした'));
+    const reservations = Array.isArray(payload.reservations) ? payload.reservations : [];
+    if (reservations.length === 0) {
+      listEl.innerHTML = '<div class="empty-state"><p>予約がありません</p></div>';
+      return;
+    }
+    listEl.innerHTML = reservations.map(r => renderTicketRow(r)).join('');
+  } catch (e) {
+    listEl.innerHTML = `<div class="empty-state"><p>取得失敗: ${escapeHtml(e.message)}</p></div>`;
+  }
+}
+
+function renderTicketRow(r) {
+  const status = r.status || 'unknown';
+  const statusLabel = status === 'pending' ? '未対応' : status === 'handled' ? '対応済み' : status === 'cancelled' ? 'キャンセル' : status;
+  const badgeColor = status === 'pending' ? 'var(--danger)' : status === 'handled' ? 'var(--success)' : 'var(--gray-500)';
+  const title = `${r.liveDate || ''} ${r.liveVenue || ''}`.trim();
+  const meta = `${r.name || ''} / ${r.quantity || 1}枚 / ${r.email || ''}`.trim();
+  const msg = r.message ? `<div class="meta" style="margin-top:6px; white-space:pre-wrap;">${escapeHtml(r.message)}</div>` : '';
+  const actions = status === 'pending'
+    ? `<button class="x-test-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','handled')">対応済み</button>
+       <button class="x-post-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','cancelled')">キャンセル</button>`
+    : `<button class="x-test-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','pending')">未対応に戻す</button>`;
+
+  return `
+    <div class="item-card" style="cursor: default;">
+      <div class="info">
+        <div class="title">${escapeHtml(title || r.liveId || '')}</div>
+        <div class="meta">${escapeHtml(meta)}</div>
+        ${msg}
+        <div class="meta" style="margin-top:6px;">${escapeHtml(r.createdAt || '')}</div>
+      </div>
+      <div class="actions" style="flex-direction: column; align-items: flex-end;">
+        <span style="font-size:0.75em; font-weight:bold; color:${badgeColor};">${escapeHtml(statusLabel)}</span>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+          ${actions}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function markTicketStatus(id, status) {
+  if (!IS_API_MODE) return;
+  try {
+    const res = await adminFetch(`/api/admin/ticket-reservations/${encodeURIComponent(id)}/status`, {
+      method: 'POST',
+      body: JSON.stringify({ status })
+    });
+    const payload = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(getErrorMessage(payload, 'ステータス更新に失敗しました'));
+    await loadTickets();
+  } catch (e) {
+    showToast(`更新失敗: ${e.message}`, 'error');
+  }
+}
+
+async function downloadTicketsCsv() {
+  if (!IS_API_MODE) {
+    showToast('CSVはAPIモードでのみ利用できます', 'error');
+    return;
+  }
+  try {
+    const liveId = document.getElementById('tickets-live-filter')?.value || '';
+    const status = document.getElementById('tickets-status-filter')?.value || '';
+    const params = new URLSearchParams();
+    if (liveId) params.set('liveId', liveId);
+    if (status) params.set('status', status);
+    params.set('limit', '200');
+    const url = `${API_BASE_URL}/api/admin/ticket-reservations.csv?${params.toString()}`;
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ticket_reservations.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } catch (e) {
+    showToast(`CSV失敗: ${e.message}`, 'error');
+  }
+}
+
 // データ読み込み
 async function loadData() {
   if (IS_API_MODE) {
@@ -159,6 +256,7 @@ async function loadData() {
       siteData = normalizeSiteData(payload.data ?? payload);
       setConnectionBanner('Cloudflare API接続中', 'api');
       await loadXPostStatuses();
+      await loadTickets();
       return;
     } catch (error) {
       console.error('APIデータ読み込みエラー:', error);
@@ -195,8 +293,20 @@ function setupTabs() {
 function renderAll() {
   renderNews();
   renderLive();
+  renderTicketsUi();
   renderDiscography();
   renderProfile();
+}
+
+function renderTicketsUi() {
+  const liveSelect = document.getElementById('tickets-live-filter');
+  if (!liveSelect) return;
+  const options = [
+    { value: '', label: '全ライブ' },
+    ...((siteData?.live?.upcoming || []).map(l => ({ value: l.id, label: `${l.date || ''} ${l.venue || ''}`.trim() }))),
+    ...((siteData?.live?.past || []).map(l => ({ value: l.id, label: `${l.date || ''} ${l.venue || ''}`.trim() }))),
+  ];
+  liveSelect.innerHTML = options.map(o => `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`).join('');
 }
 
 // サムネイル画像のsrc取得（新規画像対応）

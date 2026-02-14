@@ -9,6 +9,10 @@ function nowIso() {
   return new Date().toISOString();
 }
 
+function generateId(prefix = "id") {
+  return `${prefix}_${nowIso().replace(/[-:.TZ]/g, "")}_${makeNonce(10)}`;
+}
+
 function percentEncode(value) {
   return encodeURIComponent(value)
     .replace(/[!'()*]/g, (ch) => "%" + ch.charCodeAt(0).toString(16).toUpperCase());
@@ -64,6 +68,17 @@ function jsonResponse(body, request, env, status = 200) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
+      ...createCorsHeaders(request, env),
+    },
+  });
+}
+
+function textResponse(body, request, env, status = 200, headers = {}) {
+  return new Response(body, {
+    status,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      ...headers,
       ...createCorsHeaders(request, env),
     },
   });
@@ -143,6 +158,178 @@ async function saveSiteData(env, data) {
     "INSERT OR REPLACE INTO site_data (id, data, updated_at) VALUES (1, ?, ?)"
   ).bind(JSON.stringify(normalized), nowIso()).run();
   return normalized;
+}
+
+function isValidEmail(email) {
+  const value = String(email || "").trim();
+  if (value.length < 5 || value.length > 254) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function clampInt(value, min, max) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return min;
+  return Math.max(min, Math.min(max, Math.floor(n)));
+}
+
+async function createTicketReservation(env, input) {
+  const liveId = String(input.liveId || "").trim();
+  const name = String(input.name || "").trim();
+  const email = String(input.email || "").trim();
+  const message = String(input.message || "").trim();
+  const quantity = clampInt(input.quantity, 1, 10);
+
+  if (!liveId) throw new Error("liveId is required");
+  if (!name) throw new Error("name is required");
+  if (!isValidEmail(email)) throw new Error("email is invalid");
+
+  const siteData = await getSiteData(env);
+  const live = findLiveById(siteData, liveId);
+  if (!live) throw new Error("live not found");
+
+  // Basic de-dupe: same live+email within 5 minutes.
+  const dedupe = await env.DB.prepare(
+    `SELECT id FROM ticket_reservations
+     WHERE live_id = ? AND email = ? AND created_at >= datetime('now', '-5 minutes')
+     ORDER BY created_at DESC LIMIT 1`
+  ).bind(liveId, email).first();
+  if (dedupe?.id) throw new Error("reservation already submitted recently");
+
+  const id = generateId("ticket");
+  const createdAt = nowIso();
+  const status = "pending";
+
+  await env.DB.prepare(
+    `INSERT INTO ticket_reservations
+      (id, live_id, live_date, live_venue, name, email, quantity, message, status, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).bind(
+    id,
+    liveId,
+    String(live.date || ""),
+    String(live.venue || ""),
+    name,
+    email,
+    quantity,
+    message,
+    status,
+    createdAt,
+    createdAt
+  ).run();
+
+  return {
+    id,
+    liveId,
+    liveDate: String(live.date || ""),
+    liveVenue: String(live.venue || ""),
+    name,
+    email,
+    quantity,
+    message,
+    status,
+    createdAt,
+  };
+}
+
+async function listTicketReservations(env, options = {}) {
+  const liveId = String(options.liveId || "").trim();
+  const status = String(options.status || "").trim();
+  const limit = clampInt(options.limit, 1, 200);
+
+  let stmt;
+  if (liveId && status) {
+    stmt = env.DB.prepare(
+      `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+       FROM ticket_reservations
+       WHERE live_id = ? AND status = ?
+       ORDER BY created_at DESC
+       LIMIT ?`
+    ).bind(liveId, status, limit);
+  } else if (liveId) {
+    stmt = env.DB.prepare(
+      `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+       FROM ticket_reservations
+       WHERE live_id = ?
+       ORDER BY created_at DESC
+       LIMIT ?`
+    ).bind(liveId, limit);
+  } else if (status) {
+    stmt = env.DB.prepare(
+      `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+       FROM ticket_reservations
+       WHERE status = ?
+       ORDER BY created_at DESC
+       LIMIT ?`
+    ).bind(status, limit);
+  } else {
+    stmt = env.DB.prepare(
+      `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+       FROM ticket_reservations
+       ORDER BY created_at DESC
+       LIMIT ?`
+    ).bind(limit);
+  }
+
+  const result = await stmt.all();
+  return result.results || [];
+}
+
+async function updateTicketReservationStatus(env, id, status) {
+  const allowed = new Set(["pending", "handled", "cancelled"]);
+  const next = String(status || "").trim();
+  if (!allowed.has(next)) throw new Error("invalid status");
+
+  const updatedAt = nowIso();
+  const res = await env.DB.prepare(
+    `UPDATE ticket_reservations SET status = ?, updated_at = ? WHERE id = ?`
+  ).bind(next, updatedAt, id).run();
+
+  if (!res.success) throw new Error("update failed");
+  return { id, status: next, updatedAt };
+}
+
+function toCsv(rows) {
+  const header = [
+    "id",
+    "status",
+    "createdAt",
+    "updatedAt",
+    "liveId",
+    "liveDate",
+    "liveVenue",
+    "name",
+    "email",
+    "quantity",
+    "message",
+  ];
+  const escape = (v) => {
+    const s = String(v ?? "");
+    if (/[\",\n\r]/.test(s)) return `"${s.replace(/\"/g, "\"\"")}"`;
+    return s;
+  };
+  const lines = [header.join(",")];
+  for (const r of rows) {
+    lines.push(
+      [
+        r.id,
+        r.status,
+        r.createdAt,
+        r.updatedAt,
+        r.liveId,
+        r.liveDate,
+        r.liveVenue,
+        r.name,
+        r.email,
+        r.quantity,
+        r.message,
+      ].map(escape).join(",")
+    );
+  }
+  return lines.join("\n") + "\n";
 }
 
 function findLiveById(siteData, liveId) {
@@ -371,6 +558,23 @@ async function handleRequest(request, env) {
     return jsonResponse({ data }, request, env);
   }
 
+  if (path === "/api/public/ticket-reservations" && request.method === "POST") {
+    const payload = await request.json().catch(() => null);
+    if (!payload || typeof payload !== "object") {
+      return jsonResponse({ error: "invalid payload" }, request, env, 400);
+    }
+    // Honeypot
+    if (payload.company) {
+      return jsonResponse({ ok: true }, request, env);
+    }
+    try {
+      const reservation = await createTicketReservation(env, payload);
+      return jsonResponse({ ok: true, reservation }, request, env, 201);
+    } catch (error) {
+      return jsonResponse({ error: error.message }, request, env, 400);
+    }
+  }
+
   if (path === "/api/admin/site-data" && request.method === "GET") {
     if (!isAdminAuthorized(request, env)) {
       return jsonResponse({ error: "unauthorized" }, request, env, 401);
@@ -407,6 +611,50 @@ async function handleRequest(request, env) {
         );
     const result = await stmt.all();
     return jsonResponse({ posts: result.results || [] }, request, env);
+  }
+
+  if (path === "/api/admin/ticket-reservations" && request.method === "GET") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const liveId = url.searchParams.get("liveId") || "";
+    const status = url.searchParams.get("status") || "";
+    const limit = url.searchParams.get("limit") || "100";
+    const reservations = await listTicketReservations(env, { liveId, status, limit });
+    return jsonResponse({ reservations }, request, env);
+  }
+
+  if (path === "/api/admin/ticket-reservations.csv" && request.method === "GET") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const liveId = url.searchParams.get("liveId") || "";
+    const status = url.searchParams.get("status") || "";
+    const limit = url.searchParams.get("limit") || "200";
+    const rows = await listTicketReservations(env, { liveId, status, limit });
+    const csv = toCsv(rows);
+    return textResponse(csv, request, env, 200, {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Content-Disposition": "attachment; filename=\"ticket_reservations.csv\"",
+    });
+  }
+
+  const ticketStatusMatch = path.match(/^\/api\/admin\/ticket-reservations\/([^/]+)\/status$/);
+  if (ticketStatusMatch && request.method === "POST") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const id = decodeURIComponent(ticketStatusMatch[1]);
+    const payload = await request.json().catch(() => null);
+    if (!payload || typeof payload !== "object") {
+      return jsonResponse({ error: "invalid payload" }, request, env, 400);
+    }
+    try {
+      const updated = await updateTicketReservationStatus(env, id, payload.status);
+      return jsonResponse({ ok: true, updated }, request, env);
+    } catch (error) {
+      return jsonResponse({ error: error.message }, request, env, 400);
+    }
   }
 
   if (path === "/api/admin/upload-image" && request.method === "POST") {

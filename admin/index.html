@@ -22,6 +22,7 @@
     <nav class="tab-nav">
       <button class="tab-btn active" data-tab="news">News</button>
       <button class="tab-btn" data-tab="live">Live</button>
+      <button class="tab-btn" data-tab="tickets">Tickets</button>
       <button class="tab-btn" data-tab="discography">Disco</button>
       <button class="tab-btn" data-tab="profile">Profile</button>
     </nav>
@@ -53,6 +54,27 @@
         <h3>公演終了</h3>
         <div class="items-list" id="live-past-list"></div>
       </div>
+    </section>
+
+    <!-- Ticketsタブ -->
+    <section class="tab-content" id="tickets-tab">
+      <div class="section-header">
+        <h2>Tickets</h2>
+        <button class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+      </div>
+      <div class="form-group">
+        <label>フィルタ</label>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+          <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+            <option value="">全ステータス</option>
+            <option value="pending">未対応</option>
+            <option value="handled">対応済み</option>
+            <option value="cancelled">キャンセル</option>
+          </select>
+        </div>
+      </div>
+      <div class="items-list" id="tickets-list"></div>
     </section>
 
     <!-- Discographyタブ -->

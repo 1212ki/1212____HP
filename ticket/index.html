@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>松本一樹 -Itsuki Matumoto- : Ticket</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <h1 class="logo">
+        松本一樹
+        <span class="pc-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
+        <span class="sp-only"> -<span class="terracotta">i</span>tsuki matsumoto-</span>
+      </h1>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+        <span class="nav-toggle-text">Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+      <nav id="global-nav">
+        <ul>
+          <li><a href="../">Home</a></li>
+          <li><a href="../profile/">Profile</a></li>
+          <li><a href="../live/">Live</a></li>
+          <li><a href="../youtube/">YouTube</a></li>
+          <li><a href="../discography/">Discography</a></li>
+          <li><a href="../contact/">Contact</a></li>
+          <li><a href="../ticket/" class="active">Ticket</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact">
+      <div class="container">
+        <h2 class="section-title">Ticket Reservation</h2>
+        <p style="margin-top: 12px; color: var(--ink-muted);">
+          ライブを選択して、必要事項を入力してください。送信後、こちらからの自動返信はありません（受付の記録のみ）。
+        </p>
+
+        <form id="ticket-form">
+          <label for="liveId">Live</label>
+          <select id="liveId" name="liveId" required></select>
+
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+
+          <label for="quantity">Quantity</label>
+          <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
+
+          <label for="message">Message (optional)</label>
+          <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>
+
+          <!-- Honeypot -->
+          <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">
+
+          <button type="submit" id="submitBtn">Send</button>
+        </form>
+
+        <div id="ticket-result" style="margin-top: 18px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 松本一樹 -Itsuki Matumoto-. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/ticket.js"></script>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>
+

@@ -59,22 +59,25 @@
     if (!container || !Array.isArray(events)) return;
     container.innerHTML = events
       .map((item) => {
-        const href = escapeHtml(item.link || "#");
         const rawImage = item.image || "";
         const image = /^https?:\/\//.test(rawImage) || rawImage.startsWith("/")
           ? escapeHtml(rawImage)
           : `../${escapeHtml(rawImage)}`;
         const safeDesc = escapeHtml((item.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
+        const reserveHref = `../ticket/?liveId=${encodeURIComponent(item.id || "")}`;
+        const detailHref = item.link ? escapeHtml(item.link) : "";
         return `
           <div class="live-event">
-            <a href="${href}" target="_blank" rel="noopener" style="display: block; text-decoration: none; color: inherit;">
-              ${image ? `<img src="${image}" alt="${escapeHtml(item.venue || "Live")}">` : ""}
-              <div class="live-info">
-                <p class="live-date">${escapeHtml(item.date || "")}</p>
-                <p class="live-venue">${escapeHtml(item.venue || "")}</p>
-                <p class="live-description">${safeDesc}</p>
+            ${image ? `<img src="${image}" alt="${escapeHtml(item.venue || "Live")}">` : ""}
+            <div class="live-info">
+              <p class="live-date">${escapeHtml(item.date || "")}</p>
+              <p class="live-venue">${escapeHtml(item.venue || "")}</p>
+              <p class="live-description">${safeDesc}</p>
+              <div class="live-actions" style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="${reserveHref}" class="application-link">▷Reserve</a>
+                ${detailHref ? `<a href="${detailHref}" class="application-link" target="_blank" rel="noopener">▷Details</a>` : ""}
               </div>
-            </a>
+            </div>
           </div>
         `;
       })
@@ -84,7 +87,9 @@
   function renderLive(data) {
     if (!data || !data.live) return;
     const ticket = document.getElementById("ticket-link-anchor");
-    if (ticket && data.live.ticketLink) {
+    // Keep the page-local default (../ticket/) to avoid external double-maintenance.
+    // If you really want to override, set a relative path like "/ticket/".
+    if (ticket && data.live.ticketLink && /^\/(?!\/)/.test(String(data.live.ticketLink))) {
       ticket.href = data.live.ticketLink;
     }
     renderLiveEvents(document.getElementById("live-upcoming-events"), data.live.upcoming || []);
