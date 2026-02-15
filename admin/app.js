@@ -1112,6 +1112,7 @@ function addLive() {
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
         <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">Xで開く</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-copy-btn">URLコピー</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
       </div>
     </div>
@@ -1172,6 +1173,7 @@ function editLive(id, category) {
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
         <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">Xで開く</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-copy-btn">URLコピー</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
       </div>
     </div>
@@ -1588,6 +1590,7 @@ function wireXPreviewInModal() {
   });
 
   document.getElementById('x-intent-btn')?.addEventListener('click', openXIntentFromModal);
+  document.getElementById('x-intent-copy-btn')?.addEventListener('click', copyXIntentUrlFromModal);
 
   previewEl.addEventListener('input', () => {
     xPreviewDirty = true;
@@ -1618,23 +1621,78 @@ function buildLiveOgUrl(liveId) {
   return `${API_BASE_URL}/og/live/${encodeURIComponent(id)}`;
 }
 
+function isProbablyMobile() {
+  return /iphone|ipad|ipod|android/i.test(navigator.userAgent || '');
+}
+
+async function copyToClipboard(text) {
+  const value = String(text || '');
+  try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch (_e) {
+    // Fallback for older browsers / non-secure contexts.
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = value;
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (_e2) {
+      return false;
+    }
+  }
+}
+
+function buildXIntentUrlFromModal() {
+  if (!IS_API_MODE) return '';
+  const live = readLiveFromModal();
+  const ogUrl = buildLiveOgUrl(live.id);
+  if (!ogUrl) return '';
+
+  const preview = String(document.getElementById('x-preview-text')?.value || '').trim() || buildTweetTextForAdmin(live);
+  const text = stripUrlsFromTweetText(preview) || '【Live Info】';
+
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(ogUrl)}`;
+}
+
+async function copyXIntentUrlFromModal() {
+  const intentUrl = buildXIntentUrlFromModal();
+  if (!intentUrl) {
+    showToast('Intent URLを生成できませんでした', 'error');
+    return;
+  }
+  const ok = await copyToClipboard(intentUrl);
+  if (!ok) {
+    showToast('クリップボードにコピーできませんでした', 'error');
+    return;
+  }
+  showToast('Intent URLをコピーしました（指定アカウントでログイン済みのブラウザに貼り付けて開いてください）', 'success');
+}
+
 function openXIntentFromModal() {
   if (!IS_API_MODE) {
     showToast('Web IntentはAPIモードでのみ利用できます', 'error');
     return;
   }
 
-  const live = readLiveFromModal();
-  const ogUrl = buildLiveOgUrl(live.id);
-  if (!ogUrl) {
-    showToast('OGP URLを生成できませんでした', 'error');
+  const intentUrl = buildXIntentUrlFromModal();
+  if (!intentUrl) {
+    showToast('Intent URLを生成できませんでした', 'error');
     return;
   }
 
-  const preview = String(document.getElementById('x-preview-text')?.value || '').trim() || buildTweetTextForAdmin(live);
-  const text = stripUrlsFromTweetText(preview) || '【Live Info】';
+  // On mobile, universal links often jump to the X app and the wrong account.
+  // Provide a reliable fallback via the copy button.
+  if (isProbablyMobile()) {
+    showToast('Xアプリで開いてしまう場合は「URLコピー」→ブラウザに貼り付けて開いてください', '');
+  }
 
-  const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(ogUrl)}`;
   window.open(intentUrl, '_blank', 'noopener');
 }
 
