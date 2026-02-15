@@ -1250,6 +1250,7 @@ async function saveModal() {
   const tweetText = String(document.getElementById('x-preview-text')?.value || '').trim();
   closeModal();
   markChanged();
+  showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
 
   if (liveAction && liveAction.postToX) {
     if (!IS_API_MODE) {
@@ -1407,6 +1408,7 @@ function deleteItem() {
 
   closeModal();
   markChanged();
+  showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
 }
 
 // 変更マーク
@@ -1811,6 +1813,7 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
+
 
 
 
