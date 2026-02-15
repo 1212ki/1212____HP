@@ -252,7 +252,13 @@
   </div>
   <script>
   // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
-  window.ADMIN_BUILD_ID = '2026-02-15T2220Z';
+  window.ADMIN_BUILD_ID = '2026-02-15T2230Z';
+  try {
+    var badge = document.getElementById('modeBadge');
+    if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+    var banner0 = document.getElementById('connectionBanner');
+    if (banner0) banner0.textContent = '読み込み中...';
+  } catch (e) {}
   window.addEventListener('error', function (ev) {
     try {
       var banner = document.getElementById('connectionBanner');
@@ -263,8 +269,8 @@
     } catch (e) {}
   });
 </script>
-<script src="config.js?v=20260215-2220"></script>
-<script src="app.js?v=20260215-2220"></script>
+<script src="config.js?v=20260215-2230"></script>
+<script src="app.js?v=20260215-2230"></script>
 </body>
 </html>
 
