@@ -144,6 +144,103 @@ function textResponse(body, request, env, status = 200, headers = {}) {
   });
 }
 
+function htmlResponse(body, status = 200, headers = {}) {
+  return new Response(body, {
+    status,
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      ...headers,
+    },
+  });
+}
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function truncate(str, maxLen) {
+  const s = String(str || "");
+  if (s.length <= maxLen) return s;
+  return s.slice(0, Math.max(0, maxLen - 1)) + "…";
+}
+
+function buildCompactDescription(raw) {
+  const txt = String(raw || "")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/\r\n/g, "\n");
+  const parts = txt
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  return parts.join(" / ");
+}
+
+function resolveOgImageUrl(raw, ogOrigin, publicOrigin, env) {
+  const v = String(raw || "").trim();
+  if (!v) return "";
+  if (/^https?:\/\//i.test(v)) return v;
+
+  const looksStatic = v.startsWith("assets/") || v.startsWith("/assets/");
+  if (looksStatic) {
+    return resolvePublicImageUrl(v, publicOrigin, env);
+  }
+
+  return resolvePublicImageUrl(v, ogOrigin, env);
+}
+
+function buildOgLiveHtml({ pageUrl, canonicalUrl, title, description, imageUrl }) {
+  const safeTitle = escapeHtml(title || "");
+  const safeDesc = escapeHtml(description || "");
+  const safePageUrl = escapeHtml(pageUrl || "");
+  const safeCanonical = escapeHtml(canonicalUrl || "");
+  const safeImg = escapeHtml(imageUrl || "");
+
+  return `<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>${safeTitle}</title>
+  ${canonicalUrl ? `<link rel="canonical" href="${safeCanonical}" />` : ""}
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="松本一樹" />
+  <meta property="og:url" content="${safePageUrl}" />
+  <meta property="og:title" content="${safeTitle}" />
+  <meta property="og:description" content="${safeDesc}" />
+  ${imageUrl ? `<meta property="og:image" content="${safeImg}" />` : ""}
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${safeTitle}" />
+  <meta name="twitter:description" content="${safeDesc}" />
+  ${imageUrl ? `<meta name="twitter:image" content="${safeImg}" />` : ""}
+
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; padding: 24px; background: #fff; color: #111; }
+    .card { max-width: 720px; margin: 0 auto; border: 1px solid rgba(0,0,0,0.12); border-radius: 16px; padding: 18px; }
+    h1 { font-size: 18px; margin: 0 0 10px; }
+    p { margin: 0 0 14px; color: #444; line-height: 1.6; white-space: pre-wrap; }
+    a { color: #111; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.12); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>${safeTitle}</h1>
+    <p>${safeDesc}</p>
+    ${canonicalUrl ? `<a class="btn" href="${safeCanonical}" rel="noopener">詳細を見る</a>` : ""}
+  </main>
+</body>
+</html>`;
+}
+
 function sanitizeFilename(name) {
   const base = String(name || "image")
     .trim()
@@ -895,6 +992,45 @@ async function handleRequest(request, env, ctx) {
   const imageMatch = path.match(/^\/images\/(.+)$/);
   if (imageMatch && request.method === "GET") {
     return serveImage(request, env, decodeURIComponent(imageMatch[1]));
+  }
+
+  const ogLiveMatch = path.match(/^\/og\/live\/([^/]+)$/);
+  if (ogLiveMatch && request.method === "GET") {
+    const liveId = decodeURIComponent(ogLiveMatch[1]);
+    const siteData = await getSiteData(env);
+    const live = findLiveById(siteData, liveId);
+    if (!live) {
+      return htmlResponse("not found", 404, { "Cache-Control": "no-store" });
+    }
+
+    const publicOrigin = guessPublicOrigin(env) || url.origin;
+    const canonicalUrl = String(
+      live.link ||
+      siteData?.live?.ticketLink ||
+      `${publicOrigin}/ticket/?liveId=${encodeURIComponent(liveId)}`
+    ).trim();
+
+    const heading = `${String(live?.date || "").trim()} ${String(live?.venue || "").trim()}`.trim();
+    const title = heading ? `${heading} | 松本一樹` : "松本一樹 | Live";
+
+    const compact = buildCompactDescription(live?.description || "");
+    const description = truncate(compact || heading || "Live info", 180);
+
+    const imageUrl =
+      resolveOgImageUrl(live?.image || "", url.origin, publicOrigin, env) ||
+      resolveOgImageUrl(siteData?.site?.heroImage || "", url.origin, publicOrigin, env);
+
+    const html = buildOgLiveHtml({
+      pageUrl: url.href,
+      canonicalUrl,
+      title,
+      description,
+      imageUrl,
+    });
+
+    return htmlResponse(html, 200, {
+      "Cache-Control": "public, max-age=300",
+    });
   }
 
   if (path === "/api/public/site-data" && request.method === "GET") {

@@ -1111,6 +1111,7 @@ function addLive() {
       </div>
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">Xで開く</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
       </div>
     </div>
@@ -1170,6 +1171,7 @@ function editLive(id, category) {
       </div>
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">Xで開く</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
       </div>
     </div>
@@ -1585,6 +1587,8 @@ function wireXPreviewInModal() {
     updateXPreviewInModal({ force: true });
   });
 
+  document.getElementById('x-intent-btn')?.addEventListener('click', openXIntentFromModal);
+
   previewEl.addEventListener('input', () => {
     xPreviewDirty = true;
   });
@@ -1593,6 +1597,45 @@ function wireXPreviewInModal() {
     document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
     document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
   });
+}
+
+function stripUrlsFromTweetText(text) {
+  const raw = String(text || '');
+  // Remove URLs so the OGP URL is the only one in the intent.
+  const urlRe = /https?:\/\/\S+/g;
+  const lines = raw
+    .replace(/\r\n/g, '\n')
+    .split('\n')
+    .map((line) => String(line).replace(urlRe, '').trim())
+    .filter(Boolean);
+  return lines.join('\n').trim();
+}
+
+function buildLiveOgUrl(liveId) {
+  if (!API_BASE_URL) return '';
+  const id = String(liveId || '').trim();
+  if (!id) return '';
+  return `${API_BASE_URL}/og/live/${encodeURIComponent(id)}`;
+}
+
+function openXIntentFromModal() {
+  if (!IS_API_MODE) {
+    showToast('Web IntentはAPIモードでのみ利用できます', 'error');
+    return;
+  }
+
+  const live = readLiveFromModal();
+  const ogUrl = buildLiveOgUrl(live.id);
+  if (!ogUrl) {
+    showToast('OGP URLを生成できませんでした', 'error');
+    return;
+  }
+
+  const preview = String(document.getElementById('x-preview-text')?.value || '').trim() || buildTweetTextForAdmin(live);
+  const text = stripUrlsFromTweetText(preview) || '【Live Info】';
+
+  const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(ogUrl)}`;
+  window.open(intentUrl, '_blank', 'noopener');
 }
 
 async function scheduleLiveToXFromModal() {
