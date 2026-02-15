@@ -1067,16 +1067,15 @@ function addLive() {
       <label for="edit-isPast">公演終了</label>
     </div>
     <div class="subsection" style="margin-top: 16px;">
-      <h3>告知文（コピー用）</h3>
+      <h3>告知文</h3>
       <div class="form-group">
         <label>テキスト</label>
         <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。「Xを開く」はブラウザでログイン中のアカウントで開きます。</p>
+        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※ブラウザでログイン中のアカウントで開きます。</p>
       </div>
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
-        <button type="button" class="btn btn-primary btn-compact" id="x-preview-copy-btn">コピー</button>
-        <button type="button" class="btn btn-secondary btn-compact" id="x-open-btn">Xを開く</button>
+        <button type="button" class="btn btn-primary btn-compact" id="x-apply-btn">Xに反映</button>
       </div>
     </div>
   `);
@@ -1122,16 +1121,15 @@ function editLive(id, category) {
       <label for="edit-isPast">公演終了</label>
     </div>
     <div class="subsection" style="margin-top: 16px;">
-      <h3>告知文（コピー用）</h3>
+      <h3>告知文</h3>
       <div class="form-group">
         <label>テキスト</label>
         <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。「Xを開く」はブラウザでログイン中のアカウントで開きます。</p>
+        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※ブラウザでログイン中のアカウントで開きます。</p>
       </div>
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
-        <button type="button" class="btn btn-primary btn-compact" id="x-preview-copy-btn">コピー</button>
-        <button type="button" class="btn btn-secondary btn-compact" id="x-open-btn">Xを開く</button>
+        <button type="button" class="btn btn-primary btn-compact" id="x-apply-btn">Xに反映</button>
       </div>
     </div>
   `);
@@ -1564,20 +1562,18 @@ function wireXPreviewInModal() {
     updateXPreviewInModal({ force: true });
   });
 
-  document.getElementById('x-preview-copy-btn')?.addEventListener('click', async () => {
-    const text = String(previewEl.value || '').trim();
+  document.getElementById('x-apply-btn')?.addEventListener('click', () => {
+    const live = readLiveFromModal();
+    const rawText = String(previewEl.value || '').trim() || buildTweetTextForAdmin(live);
+    const text = stripUrlsFromTweetText(rawText);
     if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      showToast('コピーしました', 'success');
-    } catch (_e) {
-      showToast('コピーに失敗しました', 'error');
-    }
-  });
-  document.getElementById('x-open-btn')?.addEventListener('click', () => {
-    const text = String(previewEl.value || '').trim();
-    if (!text) return;
-    const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+
+    const ogBase = buildLiveOgUrl(live.id);
+    const ogUrl = ogBase ? `${ogBase}${ogBase.includes('?') ? '&' : '?'}v=${Date.now().toString(36)}` : '';
+    const fallbackUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(String(live.id || ''))}`;
+    const url = ogUrl || fallbackUrl;
+
+    const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     window.open(intentUrl, '_blank', 'noopener');
   });
 
@@ -1821,6 +1817,8 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
+
+
 
 
 
