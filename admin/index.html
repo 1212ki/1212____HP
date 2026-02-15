@@ -249,14 +249,29 @@
 
     <!-- トースト -->
     <div class="toast" id="toast"></div>
-  </div>
-
-  <script>
+  </div>\r\n  <script>
     window.ADMIN_CONFIG = window.ADMIN_CONFIG || {};
-  </script>
-  <script src="config.js?v=adfc844"></script>
-  <script src="app.js?v=adfc844"></script>
-</body>
+
+    (function () {
+      // Always bypass GitHub Pages caching for admin scripts.
+      const v = Date.now().toString(36);
+      const load = (src) => new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = `${src}?v=${v}`;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.body.appendChild(s);
+      });
+
+      load('config.js')
+        .then(() => load('app.js'))
+        .catch((e) => {
+          console.error('admin script load failed', e);
+          alert('管理画面の読み込みに失敗しました。再読み込みしてください。');
+        });
+    })();
+  </script>\r\n</body>
 </html>
+
 
 
