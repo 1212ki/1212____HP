@@ -502,31 +502,36 @@ function findLiveById(siteData, liveId) {
 }
 
 function buildTweetText(live, _env) {
-  const rawDescription = (live.description || "").replace(/<br\s*\/?>/gi, "\n");
-  const compactDescription = rawDescription
+  const rawDescription = String((live && live.description) || "").replace(/<br\s*\/?>/gi, "\n");
+  const descLines = rawDescription
+    .replace(/\r\n/g, "\n")
     .split("\n")
     .map((line) => line.trim())
-    .filter(Boolean)
-    .join(" / ");
+    .filter(Boolean);
 
-  const lines = [
-    "【Live Info】",
-    `${live.date || "日付未設定"} ${live.venue || ""}`.trim(),
-    compactDescription,
-    live.link || "",
-  ].filter(Boolean);
+  const header = "【LIVE】";
+  const heading = `${String(live?.date || "日付未設定").trim()} ${String(live?.venue || "").trim()}`.trim();
 
-  let text = lines.join("\n");
+  const blocks = [header];
+  if (heading) blocks.push(heading);
+  if (descLines.length > 0) {
+    blocks.push("");
+    blocks.push(...descLines);
+  }
+
+  let text = blocks.join("\n").trim();
   if (text.length <= 280) return text;
 
-  const shortened = compactDescription ? compactDescription.slice(0, 80) + "…" : "";
-  text = [lines[0], lines[1], shortened, live.link || ""].filter(Boolean).join("\n");
+  text = [header, heading, ...descLines].filter(Boolean).join("\n").trim();
   if (text.length <= 280) return text;
 
-  text = [lines[0], lines[1], live.link || ""].filter(Boolean).join("\n");
+  const compact = descLines.join(" / ");
+  const shortened = compact ? compact.slice(0, 120) + "…" : "";
+  text = [header, heading, shortened].filter(Boolean).join("\n").trim();
   if (text.length <= 280) return text;
 
-  return [lines[0], lines[1]].filter(Boolean).join("\n").slice(0, 280);
+  text = [header, heading].filter(Boolean).join("\n").trim();
+  return text.slice(0, 280);
 }
 
 function makeNonce(length = 16) {
