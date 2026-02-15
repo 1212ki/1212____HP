@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>1212 HP Admin</title>
+  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- ヘッダー -->
+    <header class="header">
+      <div>
+        <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+        <p class="header-meta" id="modeBadge">Local Mode</p>
+      </div>
+      <button class="save-btn" id="saveBtn" onclick="saveData()">保存</button>
+    </header>
+    <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+
+    <!-- タブナビ -->
+    <nav class="tab-nav">
+      <button class="tab-btn" data-tab="site">Site</button>
+      <button class="tab-btn active" data-tab="news">News</button>
+      <button class="tab-btn" data-tab="live">Live</button>
+      <button class="tab-btn" data-tab="tickets">Tickets</button>
+      <button class="tab-btn" data-tab="youtube">YouTube</button>
+      <button class="tab-btn" data-tab="discography">Disco</button>
+      <button class="tab-btn" data-tab="profile">Profile</button>
+    </nav>
+
+    <!-- Siteタブ -->
+    <section class="tab-content" id="site-tab">
+      <div class="section-header">
+        <h2>Site</h2>
+      </div>
+
+      <div class="subsection">
+        <h3>Home Hero</h3>
+        <div id="site-hero-image-form"></div>
+      </div>
+
+      <div class="subsection">
+        <h3>Home Links</h3>
+        <div class="form-group">
+          <label>Bandcamp</label>
+          <input type="url" id="site-link-bandcamp" class="text-input" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>YouTube</label>
+          <input type="url" id="site-link-youtube" class="text-input" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>X</label>
+          <input type="url" id="site-link-x" class="text-input" placeholder="https://...">
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>Footer</h3>
+        <div class="form-group">
+          <label>フッター文言（空なら既定のまま）</label>
+          <input type="text" id="site-footer-text" class="text-input" placeholder="&copy; ...">
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>Contact</h3>
+        <div class="form-group">
+          <label>導入文</label>
+          <textarea id="contact-intro-text" class="textarea" rows="3" placeholder="お問い合わせは..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Form Action（Formspree URL）</label>
+          <input type="url" id="contact-form-action" class="text-input" placeholder="https://formspree.io/f/...">
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsタブ -->
+    <section class="tab-content active" id="news-tab">
+      <div class="section-header">
+        <h2>News</h2>
+        <button class="add-btn" onclick="addNews()">+ 追加</button>
+      </div>
+      <div class="items-list" id="news-list"></div>
+    </section>
+
+    <!-- Liveタブ -->
+    <section class="tab-content" id="live-tab">
+      <div class="section-header">
+        <h2>Live</h2>
+        <button class="add-btn" onclick="addLive()">+ 追加</button>
+      </div>
+      <div class="subsection">
+        <h3>開催予定</h3>
+        <div class="items-list" id="live-upcoming-list"></div>
+      </div>
+      <div class="subsection">
+        <h3>公演終了</h3>
+        <div class="items-list" id="live-past-list"></div>
+      </div>
+    </section>
+
+    <!-- Ticketsタブ -->
+    <section class="tab-content" id="tickets-tab">
+      <div class="section-header">
+        <h2>Tickets</h2>
+        <button class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+      </div>
+      <div class="subsection">
+        <h3>Ticket Page（表示文言）</h3>
+        <div class="form-group">
+          <label>導入文（空なら既定のまま）</label>
+          <textarea id="ticket-intro-text" class="textarea" rows="2" placeholder="ライブを選択して..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>注意文（空なら既定のまま）</label>
+          <textarea id="ticket-notice-text" class="textarea" rows="2" placeholder="送信後..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>完了文（空なら既定のまま）</label>
+          <textarea id="ticket-complete-text" class="textarea" rows="2" placeholder="予約しました..."></textarea>
+        </div>
+        <div class="subsection">
+          <h3>Ticket Page（表示項目）</h3>
+          <div class="checkbox-group">
+            <input type="checkbox" id="ticket-field-quantity">
+            <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+          </div>
+          <div class="form-group">
+            <label>枚数 ラベル（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-label-quantity" class="text-input" placeholder="枚数">
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="ticket-field-message">
+            <label for="ticket-field-message">備考（任意）を表示</label>
+          </div>
+          <div class="form-group">
+            <label>備考 ラベル（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-label-message" class="text-input" placeholder="備考">
+          </div>
+          <div class="form-group">
+            <label>備考 プレースホルダ（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-placeholder-message" class="text-input" placeholder="例: 取り置き名義が別の場合など">
+          </div>
+
+          <div class="form-group">
+            <label>送信ボタン文言（空なら既定のまま）</label>
+            <input type="text" id="ticket-field-submit-label" class="text-input" placeholder="予約する">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>フィルタ</label>
+        <div class="filters">
+          <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+          <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+            <option value="">全ステータス</option>
+            <option value="pending">未対応</option>
+            <option value="handled">対応済み</option>
+            <option value="cancelled">キャンセル</option>
+          </select>
+        </div>
+      </div>
+      <div class="items-list" id="tickets-list"></div>
+    </section>
+
+    <!-- YouTubeタブ -->
+    <section class="tab-content" id="youtube-tab">
+      <div class="section-header">
+        <h2>YouTube</h2>
+        <button class="add-btn" onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+      </div>
+
+      <div class="subsection">
+        <h3>Channel URL</h3>
+        <input type="url" id="youtube-channel-url" class="text-input" placeholder="https://www.youtube.com/@...">
+      </div>
+
+      <div class="subsection">
+        <h3>Music Video</h3>
+        <div class="items-list" id="youtube-musicVideos-list"></div>
+        <button class="add-btn small" onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+      </div>
+
+      <div class="subsection">
+        <h3>Live Movie</h3>
+        <div class="items-list" id="youtube-liveMovies-list"></div>
+        <button class="add-btn small" onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+      </div>
+
+      <div class="subsection">
+        <h3>Demo</h3>
+        <div class="items-list" id="youtube-demos-list"></div>
+        <button class="add-btn small" onclick="addYouTubeVideo('demos')">+ 追加</button>
+      </div>
+    </section>
+
+    <!-- Discographyタブ -->
+    <section class="tab-content" id="discography-tab">
+      <div class="section-header">
+        <h2>Discography</h2>
+        <button class="add-btn" onclick="addDiscography()">+ 追加</button>
+      </div>
+      <div class="subsection">
+        <h3>Digital Release</h3>
+        <div class="items-list" id="disc-digital-list"></div>
+      </div>
+      <div class="subsection">
+        <h3>宅録Demo</h3>
+        <div class="items-list" id="disc-demo-list"></div>
+      </div>
+    </section>
+
+    <!-- Profileタブ -->
+    <section class="tab-content" id="profile-tab">
+      <div class="section-header">
+        <h2>Profile</h2>
+      </div>
+      <div id="profile-image-form"></div>
+      <div class="form-group">
+        <label>プロフィールテキスト</label>
+        <textarea id="profile-text" class="textarea" rows="10" placeholder="プロフィール本文"></textarea>
+      </div>
+      <div class="subsection">
+        <h3>SNSリンク</h3>
+        <div class="items-list" id="profile-links-list"></div>
+        <button class="add-btn small" onclick="addProfileLink()">+ リンク追加</button>
+      </div>
+    </section>
+
+    <!-- モーダル -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">編集</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+        <button class="btn btn-danger" id="delete-btn" onclick="deleteItem()">削除</button>
+        <button class="btn btn-primary" onclick="saveModal()">更新</button>
+      </div>
+    </div>
+
+    <!-- トースト -->
+    <div class="toast" id="toast"></div>
+  </div>
+  <script>
+  // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+  window.ADMIN_BUILD_ID = '2026-02-15T2230Z';
+  try {
+    var badge = document.getElementById('modeBadge');
+    if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+    var banner0 = document.getElementById('connectionBanner');
+    if (banner0) banner0.textContent = '読み込み中...';
+  } catch (e) {}
+  window.addEventListener('error', function (ev) {
+    try {
+      var banner = document.getElementById('connectionBanner');
+      if (banner) {
+        banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+        banner.classList.add('is-error');
+      }
+    } catch (e) {}
+  });
+</script>
+<script src="config.js?v=20260215-2230"></script>
+<script src="app.js?v=20260215-2230"></script>
+</body>
+</html>
+
+
+
