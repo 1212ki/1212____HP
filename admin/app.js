@@ -34,12 +34,20 @@ const DEFAULT_SITE_DATA = {
   }
 };
 
-const ADMIN_CONFIG = window.ADMIN_CONFIG || {};
-const API_BASE_URL = (ADMIN_CONFIG.apiBaseUrl || '').replace(/\/+$/, '');
-const IS_API_MODE = Boolean(API_BASE_URL);
 const ADMIN_TOKEN_STORAGE_KEY = '1212hp_admin_token';
-let adminToken = (ADMIN_CONFIG.adminToken || localStorage.getItem(ADMIN_TOKEN_STORAGE_KEY) || '').trim();
+let API_BASE_URL = '';
+let IS_API_MODE = false;
+let adminToken = '';
 
+function refreshAdminRuntimeConfig() {
+  const cfg = window.ADMIN_CONFIG || {};
+  API_BASE_URL = String(cfg.apiBaseUrl || '').replace(/\/+$/, '');
+  IS_API_MODE = Boolean(API_BASE_URL);
+  adminToken = String(cfg.adminToken || localStorage.getItem(ADMIN_TOKEN_STORAGE_KEY) || '').trim();
+}
+
+// In case scripts are cached/mis-ordered, compute API mode at runtime too.
+refreshAdminRuntimeConfig();
 let siteData = null;
 let currentEditType = null;
 let currentEditId = null;
@@ -59,6 +67,7 @@ let activeImageUploads = new Set();
 
 // 初期化
 document.addEventListener('DOMContentLoaded', async () => {
+  refreshAdminRuntimeConfig();
   renderModeBadge();
   await loadData();
   setupTabs();
