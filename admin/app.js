@@ -41,7 +41,10 @@ let adminToken = '';
 
 function refreshAdminRuntimeConfig() {
   const cfg = window.ADMIN_CONFIG || {};
-  API_BASE_URL = String(cfg.apiBaseUrl || '').replace(/\/+$/, '');
+  const rawBase = String(cfg.apiBaseUrl || '').trim();
+  const defaultProdBase = 'https://itsuki-homepage-api.itsukii0414.workers.dev';
+  const isProdHost = typeof location !== 'undefined' && (location.hostname === '1212hp.com' || location.hostname.endsWith('.1212hp.com'));
+  API_BASE_URL = String(rawBase || (isProdHost ? defaultProdBase : '')).replace(/\/+$/, '');
   IS_API_MODE = Boolean(API_BASE_URL);
   adminToken = String(cfg.adminToken || localStorage.getItem(ADMIN_TOKEN_STORAGE_KEY) || '').trim();
 }
