@@ -640,44 +640,12 @@ function formatIsoToLocalLabel(iso) {
 }
 
 function renderLiveItem(item, category) {
-  const status = getLiveStatus(item.id);
-  const isPosting = postingLiveIds.has(item.id);
-  const isScheduled = status && status.status === 'scheduled';
-  const buttonClass = [
-    'x-post-btn',
-    status && status.status === 'success' ? 'is-posted' : '',
-    isScheduled ? 'is-scheduled' : '',
-    isPosting ? 'is-busy' : ''
-  ].filter(Boolean).join(' ');
-  const testButtonClass = [
-    'x-test-btn',
-    isPosting ? 'is-busy' : ''
-  ].filter(Boolean).join(' ');
-  const label = isPosting ? '投稿中...' : (isScheduled ? '予約済み' : (status && status.status === 'success' ? '再投稿' : 'X投稿'));
-  const testLabel = isPosting ? '確認中...' : 'Xテスト';
-  const linkHtml = status && status.tweetUrl
-    ? `<a class="x-link" href="${escapeHtml(status.tweetUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">投稿を見る</a>`
-    : '';
-  const scheduleHtml = isScheduled && status.createdAt
-    ? `<div class="x-scheduled-at">予約: ${escapeHtml(formatIsoToLocalLabel(status.createdAt))}</div>`
-    : '';
-  const cancelHtml = isScheduled && status.id
-    ? `<button class="x-cancel-btn" onclick="event.stopPropagation(); cancelXSchedule(${Number(status.id)})">予約解除</button>`
-    : '';
-
   return `
     <div class="item-card ${category === 'past' ? 'past' : ''}" onclick="editLive('${item.id}', '${category}')">
       <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
       <div class="info">
         <div class="title">${escapeHtml((item.title || '').trim() || item.venue)}</div>
         <div class="meta">${escapeHtml([item.date, (item.title || '').trim() ? item.venue : ''].filter(Boolean).join(' '))}</div>
-        ${scheduleHtml}
-      </div>
-      <div class="actions">
-        <button class="${testButtonClass}" onclick="event.stopPropagation(); testLivePostToX('${item.id}')">${testLabel}</button>
-        <button class="${buttonClass}" onclick="event.stopPropagation(); postLiveToX('${item.id}')">${label}</button>
-        ${cancelHtml}
-        ${linkHtml}
       </div>
       <span class="arrow">›</span>
     </div>
@@ -1098,32 +1066,22 @@ function addLive() {
       <input type="checkbox" id="edit-isPast">
       <label for="edit-isPast">公演終了</label>
     </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="edit-postToX">
-      <label for="edit-postToX">保存後にすぐXへ投稿（開催予定のみ）</label>
-    </div>
     <div class="subsection" style="margin-top: 16px;">
-      <h3>X投稿</h3>
+      <h3>告知文（コピー用）</h3>
       <div class="form-group">
-        <label>プレビュー</label>
-        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="プレビュー（必要なら編集）"></textarea>
-      </div>
-      <div class="form-group">
-        <label>予約日時</label>
-        <input type="datetime-local" id="x-schedule-at" class="text-input">
-        <p class="field-hint">予約投稿は「保存済み」の内容で行われます。</p>
+        <label>テキスト</label>
+        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
+        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。</p>
       </div>
       <div class="field-row">
-        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
-        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">Xで開く</button>
-        <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">再生成</button>
+        <button type="button" class="btn btn-primary btn-compact" id="x-preview-copy-btn">コピー</button>
       </div>
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'none';
 
   wireXPreviewInModal();
-  document.getElementById('x-schedule-btn')?.addEventListener('click', scheduleLiveToXFromModal);
 }
 
 // Live編集
@@ -1162,32 +1120,22 @@ function editLive(id, category) {
       <input type="checkbox" id="edit-isPast" ${category === 'past' ? 'checked' : ''}>
       <label for="edit-isPast">公演終了</label>
     </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="edit-postToX" ${category === 'past' ? 'disabled' : ''}>
-      <label for="edit-postToX">保存後にすぐXへ投稿（開催予定のみ）</label>
-    </div>
     <div class="subsection" style="margin-top: 16px;">
-      <h3>X投稿</h3>
+      <h3>告知文（コピー用）</h3>
       <div class="form-group">
-        <label>プレビュー</label>
-        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="プレビュー（必要なら編集）"></textarea>
-      </div>
-      <div class="form-group">
-        <label>予約日時</label>
-        <input type="datetime-local" id="x-schedule-at" class="text-input">
-        <p class="field-hint">予約投稿は「保存済み」の内容で行われます。</p>
+        <label>テキスト</label>
+        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
+        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。</p>
       </div>
       <div class="field-row">
-        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
-        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">Xで開く</button>
-        <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">再生成</button>
+        <button type="button" class="btn btn-primary btn-compact" id="x-preview-copy-btn">コピー</button>
       </div>
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'block';
 
   wireXPreviewInModal();
-  document.getElementById('x-schedule-btn')?.addEventListener('click', scheduleLiveToXFromModal);
 }
 
 // Discography追加
@@ -1367,7 +1315,6 @@ function saveNewsItem() {
 // Live保存
 function saveLiveItem() {
   const isPast = document.getElementById('edit-isPast').checked;
-  const shouldPostToX = !isPast && document.getElementById('edit-postToX')?.checked;
   const item = {
     id: currentEditId,
     date: document.getElementById('edit-date').value,
@@ -1394,7 +1341,7 @@ function saveLiveItem() {
   }
 
   renderLive();
-  return { liveId: item.id, postToX: Boolean(shouldPostToX) };
+  return { liveId: item.id, postToX: false };
 }
 
 // Discography保存
@@ -1613,13 +1560,22 @@ function wireXPreviewInModal() {
     updateXPreviewInModal({ force: true });
   });
 
-  document.getElementById('x-intent-btn')?.addEventListener('click', openXIntentFromModal);
+  document.getElementById('x-preview-copy-btn')?.addEventListener('click', async () => {
+    const text = String(previewEl.value || '').trim();
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('コピーしました', 'success');
+    } catch (_e) {
+      showToast('コピーに失敗しました', 'error');
+    }
+  });
 
   previewEl.addEventListener('input', () => {
     xPreviewDirty = true;
   });
 
-  ['edit-date', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
+  ['edit-date', 'edit-title', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
     document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
     document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
   });
@@ -1855,3 +1811,6 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
+
+
+
