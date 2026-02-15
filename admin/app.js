@@ -1071,7 +1071,7 @@ function addLive() {
       <div class="form-group">
         <label>テキスト</label>
         <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※ブラウザでログイン中のアカウントで開きます。</p>
+        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※APIモードなら自動保存してから開きます。※ブラウザでログイン中のアカウントで開きます。</p>
       </div>
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
@@ -1125,7 +1125,7 @@ function editLive(id, category) {
       <div class="form-group">
         <label>テキスト</label>
         <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※ブラウザでログイン中のアカウントで開きます。</p>
+        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※APIモードなら自動保存してから開きます。※ブラウザでログイン中のアカウントで開きます。</p>
       </div>
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
@@ -1562,7 +1562,19 @@ function wireXPreviewInModal() {
     updateXPreviewInModal({ force: true });
   });
 
-  document.getElementById('x-apply-btn')?.addEventListener('click', () => {
+  document.getElementById('x-apply-btn')?.addEventListener('click', async () => {
+    if (!ensureNoActiveImageUploads()) return;
+
+    // Persist current modal edits so the OGP page can resolve live data.
+    if (currentEditType && currentEditType.startsWith('live')) {
+      saveLiveItem();
+      markChanged();
+      if (IS_API_MODE) {
+        const saved = await saveData({ silent: true });
+        if (!saved) return;
+      }
+    }
+
     const live = readLiveFromModal();
     const rawText = String(previewEl.value || '').trim() || buildTweetTextForAdmin(live);
     const text = stripUrlsFromTweetText(rawText);
@@ -1817,6 +1829,7 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
+
 
 
 
