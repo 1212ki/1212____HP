@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -243,14 +243,17 @@
       <div class="modal-footer">
         <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
         <button class="btn btn-danger" id="delete-btn" onclick="deleteItem()">削除</button>
-        <button class="btn btn-primary" onclick="saveModal()">反映</button>
+        <button class="btn btn-primary" onclick="saveModal()">更新</button>
       </div>
     </div>
 
     <!-- トースト -->
     <div class="toast" id="toast"></div>
-  </div>\r\n  <script>
+  </div>
+  <script>
+    // Cache-bust admin scripts on GitHub Pages-like hosting.
     window.ADMIN_CONFIG = window.ADMIN_CONFIG || {};
+    window.ADMIN_BUILD_ID = '2026-02-15T2100Z';
 
     (function () {
       // Always bypass GitHub Pages caching for admin scripts.
@@ -270,7 +273,8 @@
           alert('管理画面の読み込みに失敗しました。再読み込みしてください。');
         });
     })();
-  </script>\r\n</body>
+  </script>
+</body>
 </html>
 
 

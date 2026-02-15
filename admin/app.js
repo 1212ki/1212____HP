@@ -1,4 +1,4 @@
-// 1212 HP Admin - App.js
+﻿// 1212 HP Admin - App.js
 
 const DEFAULT_SITE_DATA = {
   news: [],
@@ -70,15 +70,17 @@ function renderModeBadge() {
   const banner = document.getElementById('connectionBanner');
   if (!modeBadge || !banner) return;
 
+  const build = window.ADMIN_BUILD_ID ? ' (' + window.ADMIN_BUILD_ID + ')' : '';
+
   if (IS_API_MODE) {
-    modeBadge.textContent = 'API Mode';
+    modeBadge.textContent = 'API Mode' + build;
     banner.textContent = 'Cloudflare APIへ接続中...';
     banner.classList.add('is-api');
     banner.classList.remove('is-error');
     return;
   }
 
-  modeBadge.textContent = 'Local Mode';
+  modeBadge.textContent = 'Local Mode' + build;
   banner.textContent = 'ローカルJSONモード（従来運用）';
   banner.classList.remove('is-api', 'is-error');
 }
@@ -1250,7 +1252,12 @@ async function saveModal() {
   const tweetText = String(document.getElementById('x-preview-text')?.value || '').trim();
   closeModal();
   markChanged();
-  showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
+  if (IS_API_MODE && !(liveAction && liveAction.postToX)) {
+    const saved = await saveData({ silent: true });
+    if (saved) showToast('保存しました', 'success');
+  } else {
+    showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
+  }
 
   if (liveAction && liveAction.postToX) {
     if (!IS_API_MODE) {
