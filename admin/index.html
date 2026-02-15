@@ -253,20 +253,20 @@
   <script>
     // Cache-bust admin scripts on GitHub Pages-like hosting.
     window.ADMIN_CONFIG = window.ADMIN_CONFIG || {};
-    window.ADMIN_BUILD_ID = '2026-02-15T2145Z';
+    window.ADMIN_BUILD_ID = '2026-02-15T2205Z';
 
     (function () {
-  // Force revalidation against CDN (query alone can still be cached).
+  // Bypass CDN cache by using a unique query param.
   const v = Date.now().toString(36);
 
-  const load = async (src) => {
-    const res = await fetch(`${src}?v=${v}`, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`${src} ${res.status}`);
-    const code = await res.text();
+  const load = (src) => new Promise((resolve, reject) => {
     const s = document.createElement('script');
-    s.text = `${code}\n//# sourceURL=${src}?v=${v}`;
+    s.src = `${src}?v=${v}`;
+    s.async = false;
+    s.onload = resolve;
+    s.onerror = reject;
     document.body.appendChild(s);
-  };
+  });
 
   load('config.js')
     .then(() => load('app.js'))
