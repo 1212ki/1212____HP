@@ -1577,8 +1577,37 @@ function wireXPreviewInModal() {
 
       if (!ensureNoActiveImageUploads()) { closeW(); return; }
 
+      // Determine if the modal edits differ from current siteData.
+      const draft = {
+        id: currentEditId,
+        date: document.getElementById('edit-date')?.value || '',
+        title: document.getElementById('edit-title')?.value || '',
+        venue: document.getElementById('edit-venue')?.value || '',
+        description: document.getElementById('edit-description')?.value || '',
+        image: document.getElementById('edit-image')?.value || '',
+        link: document.getElementById('edit-link')?.value || '',
+        isPast: Boolean(document.getElementById('edit-isPast')?.checked)
+      };
+
+      const upcoming = Array.isArray(siteData?.live?.upcoming) ? siteData.live.upcoming : [];
+      const past = Array.isArray(siteData?.live?.past) ? siteData.live.past : [];
+      const storedUpcoming = upcoming.find((v) => String(v.id) === String(draft.id)) || null;
+      const storedPast = past.find((v) => String(v.id) === String(draft.id)) || null;
+      const stored = storedUpcoming || storedPast;
+      const storedIsPast = Boolean(storedPast);
+
+      const norm = (v) => String(v || '').trim();
+      const isDirty = !stored
+        || storedIsPast !== Boolean(draft.isPast)
+        || norm(stored.date) !== norm(draft.date)
+        || norm(stored.title) !== norm(draft.title)
+        || norm(stored.venue) !== norm(draft.venue)
+        || norm(stored.description) !== norm(draft.description)
+        || norm(stored.image) !== norm(draft.image)
+        || norm(stored.link) !== norm(draft.link);
+
       // Persist current modal edits so the OGP page can resolve live data.
-      if (currentEditType && currentEditType.startsWith('live')) {
+      if (isDirty) {
         saveLiveItem();
         markChanged();
 
