@@ -178,8 +178,7 @@ header.header-scrolled {
   100% { transform: scale(1); }
 }
 
-.accent,
-.terracotta {
+.accent {
   color: var(--accent);
 }
 
@@ -352,7 +351,7 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  /* No terracotta at rest; keep it monochrome until hover. */
+  /* No accent at rest; keep it monochrome until hover. */
   border: 1px solid rgba(0, 0, 0, 0.14);
   background: rgba(255, 255, 255, 0.75);
   color: var(--ink-muted);
