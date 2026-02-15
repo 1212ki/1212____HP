@@ -1563,30 +1563,58 @@ function wireXPreviewInModal() {
   });
 
   document.getElementById('x-apply-btn')?.addEventListener('click', async () => {
-    if (!ensureNoActiveImageUploads()) return;
+    // Open a placeholder tab synchronously to avoid popup blockers.
+    // We'll navigate it after async save completes.
+    const w = window.open('', '_blank');
 
-    // Persist current modal edits so the OGP page can resolve live data.
-    if (currentEditType && currentEditType.startsWith('live')) {
-      saveLiveItem();
-      markChanged();
-      if (IS_API_MODE) {
-        const saved = await saveData({ silent: true });
-        if (!saved) return;
+    try {
+      if (w && w.document) {
+        w.document.open();
+        w.document.write('<!doctype html><meta charset="utf-8"><title>Opening X...</title><p style="font-family:system-ui,sans-serif;padding:16px">Opening X...</p>');
+        w.document.close();
       }
+
+      if (!ensureNoActiveImageUploads()) return;
+
+      // Persist current modal edits so the OGP page can resolve live data.
+      if (currentEditType && currentEditType.startsWith('live')) {
+        saveLiveItem();
+        markChanged();
+        if (IS_API_MODE) {
+          const saved = await saveData({ silent: true });
+          if (!saved) return;
+        }
+      }
+
+      const live = readLiveFromModal();
+      const rawText = String(previewEl.value || '').trim() || buildTweetTextForAdmin(live);
+      const text = stripUrlsFromTweetText(rawText);
+      if (!text) return;
+
+      const ogBase = buildLiveOgUrl(live.id);
+      const ogUrl = ogBase ? `${ogBase}${ogBase.includes('?') ? '&' : '?'}v=${Date.now().toString(36)}` : '';
+      const fallbackUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(String(live.id || ''))}`;
+      const url = ogUrl || fallbackUrl;
+
+      const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+
+      if (w && !w.closed) {
+        w.location.href = intentUrl;
+        try { w.opener = null; } catch (_e) {}
+      } else {
+        window.open(intentUrl, '_blank', 'noopener');
+      }
+    } catch (e) {
+      console.error('X intent failed', e);
+      if (w && w.document && !w.closed) {
+        try {
+          w.document.open();
+          w.document.write('<!doctype html><meta charset="utf-8"><title>Error</title><p style="font-family:system-ui,sans-serif;padding:16px">Failed to open X. Please try again.</p>');
+          w.document.close();
+        } catch (_e) {}
+      }
+      showToast('Xを開けませんでした（ポップアップブロックの可能性）。再度お試しください', 'error');
     }
-
-    const live = readLiveFromModal();
-    const rawText = String(previewEl.value || '').trim() || buildTweetTextForAdmin(live);
-    const text = stripUrlsFromTweetText(rawText);
-    if (!text) return;
-
-    const ogBase = buildLiveOgUrl(live.id);
-    const ogUrl = ogBase ? `${ogBase}${ogBase.includes('?') ? '&' : '?'}v=${Date.now().toString(36)}` : '';
-    const fallbackUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(String(live.id || ''))}`;
-    const url = ogUrl || fallbackUrl;
-
-    const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-    window.open(intentUrl, '_blank', 'noopener');
   });
 
   previewEl.addEventListener('input', () => {
@@ -1829,6 +1857,7 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
+
 
 
 
