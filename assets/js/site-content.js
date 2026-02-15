@@ -147,6 +147,7 @@
         const safeDesc = escapeHtml((item.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
         const prefix = isRootPage() ? "" : "../";
         const reserveHref = `${prefix}ticket/?liveId=${encodeURIComponent(item.id || "")}`;
+        const detailHref = `${prefix}live/detail/?liveId=${encodeURIComponent(item.id || "")}`;
         return `
           <div class="live-event">
             ${image ? `<img src="${image}" alt="${escapeHtml(item.venue || "Live")}">` : ""}
@@ -157,7 +158,7 @@
               <p class="live-description">${safeDesc}</p>
               <div class="live-actions" style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
                 <a href="${reserveHref}" class="application-link">▷予約</a>
-                <button type="button" class="application-link" data-live-detail-id="${escapeHtml(item.id || "")}">▷詳細</button>
+                <a href="${detailHref}" class="application-link">▷詳細</a>
               </div>
             </div>
           </div>
@@ -276,6 +277,78 @@
     }
 
     wireLiveDetailModal(data, version);
+  }
+
+
+  function renderLiveDetailPage(siteData, version) {
+    const rootEl = document.getElementById("live-detail");
+    if (!rootEl) return;
+
+    const params = new URLSearchParams(String(window.location && window.location.search ? window.location.search : ""));
+    const liveId = String(params.get("liveId") || "").trim();
+
+    const titleEl = document.getElementById("live-detail-title");
+    const headingEl = document.getElementById("live-detail-heading");
+    const imgEl = document.getElementById("live-detail-image");
+    const descEl = document.getElementById("live-detail-description");
+    const ticketEl = document.getElementById("live-detail-ticket-link");
+    const backEl = document.getElementById("live-detail-back-link");
+    const notFoundEl = document.getElementById("live-detail-notfound");
+
+    if (backEl) backEl.href = "../";
+
+    if (!liveId) {
+      if (notFoundEl) {
+        notFoundEl.style.display = "";
+        notFoundEl.textContent = "liveId が指定されていません";
+      }
+      if (titleEl) titleEl.textContent = "live detail";
+      return;
+    }
+
+    const live = findLiveById(siteData, liveId);
+    if (!live) {
+      if (notFoundEl) {
+        notFoundEl.style.display = "";
+        notFoundEl.textContent = "ライブ情報が見つかりません";
+      }
+      if (titleEl) titleEl.textContent = "live detail";
+      return;
+    }
+
+    if (notFoundEl) notFoundEl.style.display = "none";
+
+    const liveTitle = String(live.title || "").trim();
+    const date = String(live.date || "").trim();
+    const venue = String(live.venue || "").trim();
+    const heading = `${date} ${venue}`.trim();
+
+    if (titleEl) titleEl.textContent = liveTitle ? liveTitle : "live detail";
+    if (headingEl) headingEl.textContent = heading;
+
+    const image = resolveImageSrc(live.image || "", version);
+    if (imgEl) {
+      if (image) {
+        imgEl.src = escapeHtml(image);
+        imgEl.style.display = "";
+      } else {
+        imgEl.removeAttribute("src");
+        imgEl.style.display = "none";
+      }
+    }
+
+    const raw = String(live.description || "").replace(/<br\s*\/?>/gi, "\n");
+    const text = raw.replace(/\r\n/g, "\n").trim();
+    if (descEl) descEl.textContent = text;
+
+    if (ticketEl) {
+      const href = `../../ticket/?liveId=${encodeURIComponent(String(live.id || liveId))}`;
+      ticketEl.href = href;
+    }
+
+    // Improve browser title for sharing.
+    const docTitle = [liveTitle, heading, "松本一樹"].filter(Boolean).join(" | ");
+    if (docTitle) document.title = docTitle;
   }
 
   function renderDiscography(discography, version) {
@@ -417,6 +490,7 @@
     renderContact(siteData.contact || {});
     renderNews(siteData.news || [], version);
     renderLive(siteData, version);
+    renderLiveDetailPage(siteData, version);
     renderDiscography(siteData.discography || {}, version);
     renderProfile(siteData.profile || {}, version);
     renderYouTube(siteData.youtube || {});

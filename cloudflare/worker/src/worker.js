@@ -169,6 +169,20 @@ function truncate(str, maxLen) {
   return s.slice(0, Math.max(0, maxLen - 1)) + "…";
 }
 
+function isOgCrawler(userAgent) {
+  const ua = String(userAgent || "").toLowerCase();
+  if (!ua) return false;
+  return (
+    ua.includes("twitterbot") ||
+    ua.includes("facebookexternalhit") ||
+    ua.includes("slackbot") ||
+    ua.includes("discordbot") ||
+    ua.includes("linkedinbot") ||
+    ua.includes("whatsapp") ||
+    ua.includes("telegrambot")
+  );
+}
+
 function buildCompactDescription(raw) {
   const txt = String(raw || "")
     .replace(/<br\s*\/?>/gi, "\n")
@@ -1010,12 +1024,13 @@ async function handleRequest(request, env, ctx) {
       return htmlResponse("not found", 404, { "Cache-Control": "no-store" });
     }
 
-    const publicOrigin = guessPublicOrigin(env) || url.origin;
-    const canonicalUrl = String(
-      live.link ||
-      siteData?.live?.ticketLink ||
-      `${publicOrigin}/ticket/?liveId=${encodeURIComponent(liveId)}`
-    ).trim();
+    const publicOrigin = guessPublicOrigin(env) || "https://1212hp.com";
+    const canonicalUrl = `${String(publicOrigin).replace(/\/+$/, "")}/live/detail/?liveId=${encodeURIComponent(liveId)}`;
+
+    const ua = request.headers.get("User-Agent") || "";
+    if (!isOgCrawler(ua)) {
+      return Response.redirect(canonicalUrl, 302);
+    }
 
     const liveTitle = String(live?.title || "").trim();
     const heading = `${String(live?.date || "").trim()} ${String(live?.venue || "").trim()}`.trim();
@@ -1039,7 +1054,7 @@ async function handleRequest(request, env, ctx) {
     }
 
     const html = buildOgLiveHtml({
-      pageUrl: url.href,
+      pageUrl: canonicalUrl,
       canonicalUrl,
       title,
       description,

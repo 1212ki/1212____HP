@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>松本一樹 -itsuki matsumoto- : live detail</title>
+  <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="container header-container">
+      <h1 class="logo">
+        松本一樹
+        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+      </h1>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+        <span class="nav-toggle-text">Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+      <nav id="global-nav">
+        <ul>
+          <li><a href="../../">Home</a></li>
+          <li><a href="../../profile/">Profile</a></li>
+          <li><a href="../">Live</a></li>
+          <li><a href="../../ticket/">Ticket</a></li>
+          <li><a href="../../youtube/">YouTube</a></li>
+          <li><a href="../../discography/">Discography</a></li>
+          <li><a href="../../contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="live" id="live-detail">
+      <div class="container">
+        <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+          <h2 class="section-title" style="margin-bottom: 0;">live detail</h2>
+          <a id="live-detail-back-link" class="application-link" href="../">▷back</a>
+        </div>
+
+        <div id="live-detail-notfound" style="display:none; margin-top: 18px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);"></div>
+
+        <div style="margin-top: 18px; display:flex; gap: 18px; align-items:flex-start; flex-wrap: wrap;">
+          <img id="live-detail-image" alt="" style="width: min(360px, 100%); aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius-md); border: 1px solid var(--line); background: rgba(255,255,255,0.7);" />
+
+          <div style="flex: 1; min-width: 240px;">
+            <div id="live-detail-title" style="font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.08em;"></div>
+            <div id="live-detail-heading" style="margin-top: 10px; color: var(--ink-muted);"></div>
+            <pre id="live-detail-description" style="margin-top: 14px; white-space: pre-wrap; color: var(--ink); line-height: 1.8; font-family: var(--font-body);"></pre>
+
+            <div style="margin-top: 16px; display:flex; gap: 10px; flex-wrap: wrap;">
+              <a id="live-detail-ticket-link" class="application-link" href="../../ticket/">▷ticket</a>
+              <a class="application-link" href="../../">▷home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/site-config.js"></script>
+  <script src="../../assets/js/site-content.js"></script>
+  <script src="../../assets/js/script.js"></script>
+</body>
+
+</html>
