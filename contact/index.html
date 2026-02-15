@@ -61,6 +61,23 @@
         </form>
       </div>
     </section>
+  
+    <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>
+    <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">
+      <div class="ticket-modal-header">
+        <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>
+        <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>
+      </div>
+      <div class="ticket-modal-body">
+        <p id="contactConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">送信しています。</p>
+        <div class="ticket-confirm-summary" id="contactConfirmSummary"></div>
+        <div id="contactConfirmError" class="ticket-confirm-error" style="display:none;"></div>
+      </div>
+      <div class="ticket-modal-footer">
+        <a class="ticket-modal-btn ghost" id="contactModalBackLink" href="./">もう一度</a>
+        <a class="ticket-modal-btn primary" id="contactModalHomeLink" href="../">home</a>
+      </div>
+    </div>
   </main>
   
   <footer>
@@ -71,6 +88,7 @@
   
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/site-content.js"></script>
+  <script src="../assets/js/contact.js"></script>
   <script src="../assets/js/script.js"></script>
 </body>
 </html>

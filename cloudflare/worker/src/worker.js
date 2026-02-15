@@ -404,33 +404,32 @@ function findLiveById(siteData, liveId) {
   return [...upcoming, ...past].find((item) => item.id === liveId) || null;
 }
 
-function buildTweetText(live, env) {
+function buildTweetText(live, _env) {
   const rawDescription = (live.description || "").replace(/<br\s*\/?>/gi, "\n");
-  const compactDescription = rawDescription.split("\n").map((line) => line.trim()).filter(Boolean).join(" / ");
-  const hashtags = (env.X_DEFAULT_HASHTAGS || "").trim();
+  const compactDescription = rawDescription
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join(" / ");
 
   const lines = [
     "【Live Info】",
     `${live.date || "日付未設定"} ${live.venue || ""}`.trim(),
     compactDescription,
     live.link || "",
-    hashtags,
   ].filter(Boolean);
 
   let text = lines.join("\n");
   if (text.length <= 280) return text;
 
-  const keep = lines.slice();
-  keep[2] = compactDescription.slice(0, 80) + "…";
-  text = keep.filter(Boolean).join("\n");
+  const shortened = compactDescription ? compactDescription.slice(0, 80) + "…" : "";
+  text = [lines[0], lines[1], shortened, live.link || ""].filter(Boolean).join("\n");
   if (text.length <= 280) return text;
 
-  if (hashtags) {
-    text = `【Live Info】\n${live.date || ""} ${live.venue || ""}\n${hashtags}`.trim();
-  } else {
-    text = `【Live Info】\n${live.date || ""} ${live.venue || ""}`.trim();
-  }
-  return text.slice(0, 280);
+  text = [lines[0], lines[1], live.link || ""].filter(Boolean).join("\n");
+  if (text.length <= 280) return text;
+
+  return [lines[0], lines[1]].filter(Boolean).join("\n").slice(0, 280);
 }
 
 function makeNonce(length = 16) {
@@ -509,7 +508,115 @@ function getXCredentials(env) {
   return { consumerKey, consumerSecret, accessToken, accessTokenSecret };
 }
 
-async function postTweetToX(env, text) {
+function resolvePublicImageUrl(raw, fallbackOrigin, env) {
+  const value = String(raw || "").trim();
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+
+  const envOrigin = String(env?.PUBLIC_ORIGIN || env?.SITE_ORIGIN || "")
+    .trim()
+    .replace(/\/+$/, "");
+  const origin = String(fallbackOrigin || envOrigin || "").trim().replace(/\/+$/, "");
+  if (!origin) return "";
+
+  if (value.startsWith("/")) return origin + value;
+
+  const normalized = value.replace(/^\.\//, "").replace(/^\.\.\//, "");
+  return `${origin}/${normalized}`;
+}
+
+function guessPublicOrigin(env) {
+  const direct = String(env?.PUBLIC_ORIGIN || env?.SITE_ORIGIN || "")
+    .trim()
+    .replace(/\/+$/, "");
+  if (direct) return direct;
+
+  const allowed = String(env?.ALLOWED_ORIGINS || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => s.replace(/\/+$/, ""));
+
+  // Prefer public site over admin origin if present.
+  const preferred = allowed.find((s) => !/\/\/admin\./i.test(s)) || allowed[0] || "";
+  return String(preferred || "").trim().replace(/\/+$/, "");
+}
+
+async function fetchImageBytes(imageUrl) {
+  const url = String(imageUrl || "").trim();
+  if (!url) throw new Error("image url is empty");
+
+  const res = await fetch(url, { cf: { cacheTtl: 0, cacheEverything: false } });
+  if (!res.ok) throw new Error(`image fetch failed: ${res.status}`);
+
+  const contentType = String(res.headers.get("Content-Type") || "").toLowerCase();
+  if (!contentType.startsWith("image/")) throw new Error("image is not image/*");
+
+  const bytes = await res.arrayBuffer();
+  const size = Number(bytes.byteLength || 0);
+  const maxBytes = 5 * 1024 * 1024;
+  if (size <= 0) throw new Error("image is empty");
+  if (size > maxBytes) throw new Error("image too large (max 5MB)");
+
+  return { bytes, contentType };
+}
+
+async function uploadMediaToX(env, bytes, contentType) {
+  const { consumerKey, consumerSecret, accessToken, accessTokenSecret } = getXCredentials(env);
+  if (!consumerKey || !consumerSecret || !accessToken || !accessTokenSecret) {
+    throw new Error("X API認証情報が不足しています");
+  }
+
+  const method = "POST";
+  const url = "https://upload.twitter.com/1.1/media/upload.json";
+  const authHeader = await buildOAuthHeaderForX({
+    method,
+    url,
+    consumerKey,
+    consumerSecret,
+    accessToken,
+    accessTokenSecret,
+  });
+
+  const form = new FormData();
+  form.append(
+    "media",
+    new Blob([bytes], { type: contentType || "application/octet-stream" }),
+    "flyer"
+  );
+
+  const response = await fetch(url, {
+    method,
+    headers: { Authorization: authHeader },
+    body: form,
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const details =
+      payload?.errors?.[0]?.message || payload?.error || payload?.detail || payload?.title || "unknown";
+    throw new Error(`media upload failed: ${details}`);
+  }
+
+  const mediaId = payload?.media_id_string || (payload?.media_id ? String(payload.media_id) : "");
+  if (!mediaId) throw new Error("media upload failed: no media id");
+  return mediaId;
+}
+
+async function getFlyerMediaIds(env, live, fallbackOrigin) {
+  if (!live) throw new Error("live not found");
+  const raw = String(live.image || "").trim();
+  if (!raw) return [];
+
+  const imageUrl = resolvePublicImageUrl(raw, fallbackOrigin, env);
+  if (!imageUrl) throw new Error("flyer url cannot be resolved (set PUBLIC_ORIGIN/SITE_ORIGIN/ALLOWED_ORIGINS)");
+
+  const { bytes, contentType } = await fetchImageBytes(imageUrl);
+  const mediaId = await uploadMediaToX(env, bytes, contentType);
+  return mediaId ? [mediaId] : [];
+}
+
+async function postTweetToX(env, text, options = {}) {
   const { consumerKey, consumerSecret, accessToken, accessTokenSecret } = getXCredentials(env);
 
   if (!consumerKey || !consumerSecret || !accessToken || !accessTokenSecret) {
@@ -527,13 +634,19 @@ async function postTweetToX(env, text) {
     accessTokenSecret,
   });
 
+  const body = { text: String(text || "") };
+  const mediaIds = Array.isArray(options.mediaIds) ? options.mediaIds.filter(Boolean) : [];
+  if (mediaIds.length > 0) {
+    body.media = { media_ids: mediaIds };
+  }
+
   const response = await fetch(url, {
     method,
     headers: {
       Authorization: authHeader,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ text }),
+    body: JSON.stringify(body),
   });
 
   const payload = await response.json().catch(() => ({}));
@@ -665,6 +778,8 @@ async function executeDueXPostSchedules(env) {
      LIMIT 10`
   ).bind(now).all();
   const jobs = result.results || [];
+  const fallbackOrigin = guessPublicOrigin(env);
+  const siteData = await getSiteData(env);
   for (const job of jobs) {
     const text = String(job.tweetText || "").trim();
     if (!text) {
@@ -674,7 +789,15 @@ async function executeDueXPostSchedules(env) {
       continue;
     }
     try {
-      const tweet = await postTweetToX(env, text);
+      const live = findLiveById(siteData, job.liveId);
+      let mediaIds = [];
+      try {
+        mediaIds = await getFlyerMediaIds(env, live, fallbackOrigin);
+      } catch (e) {
+        console.warn("flyer media skipped:", e);
+        mediaIds = [];
+      }
+      const tweet = await postTweetToX(env, text, { mediaIds });
       await env.DB.prepare(
         `UPDATE x_posts
          SET status = ?, tweet_id = ?, tweet_url = ?, error_message = ?
@@ -867,7 +990,12 @@ async function handleRequest(request, env, ctx) {
     const siteData = await getSiteData(env);
     const live = findLiveById(siteData, liveId);
     if (!live) return jsonResponse({ error: "live not found" }, request, env, 404);
-    const tweetText = buildTweetText(live, env);
+
+    const tweetTextInput = typeof payload.tweetText === "string" ? payload.tweetText.trim() : "";
+    const tweetText = tweetTextInput || buildTweetText(live, env);
+    if (!tweetText) return jsonResponse({ error: "tweetText is empty" }, request, env, 400);
+    if (tweetText.length > 280) return jsonResponse({ error: "tweetText is too long" }, request, env, 400);
+
     const job = await createXPostSchedule(env, liveId, scheduledAtIso, tweetText);
     return jsonResponse({ ok: true, job }, request, env, 201);
   }
@@ -980,6 +1108,7 @@ async function handleRequest(request, env, ctx) {
     if (!isAdminAuthorized(request, env)) {
       return jsonResponse({ error: "unauthorized" }, request, env, 401);
     }
+    const payload = await request.json().catch(() => null);
     const dryRunParam = (url.searchParams.get("dryRun") || "").toLowerCase();
     const dryRun = dryRunParam === "1" || dryRunParam === "true" || dryRunParam === "yes";
     const liveId = decodeURIComponent(livePostMatch[1]);
@@ -989,7 +1118,15 @@ async function handleRequest(request, env, ctx) {
       return jsonResponse({ error: "live not found" }, request, env, 404);
     }
 
-    const tweetText = buildTweetText(live, env);
+    const tweetTextInput = payload && typeof payload === "object" && typeof payload.tweetText === "string" ? payload.tweetText.trim() : "";
+    const tweetText = tweetTextInput || buildTweetText(live, env);
+    if (!tweetText) {
+      return jsonResponse({ error: "tweetText is empty" }, request, env, 400);
+    }
+    if (tweetText.length > 280) {
+      return jsonResponse({ error: "tweetText is too long" }, request, env, 400);
+    }
+
     if (dryRun) {
       try {
         const account = await verifyXCredentials(env);
@@ -1021,7 +1158,14 @@ async function handleRequest(request, env, ctx) {
     }
 
     try {
-      const tweet = await postTweetToX(env, tweetText);
+      let mediaIds = [];
+      try {
+        mediaIds = await getFlyerMediaIds(env, live, url.origin);
+      } catch (e) {
+        console.warn("flyer media skipped:", e);
+        mediaIds = [];
+      }
+      const tweet = await postTweetToX(env, tweetText, { mediaIds });
       await recordPostLog(env, {
         liveId,
         status: "success",

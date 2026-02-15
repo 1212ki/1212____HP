@@ -48,6 +48,9 @@ let hasChanges = false;
 let isSaving = false;
 let xPostStatusMap = {};
 let postingLiveIds = new Set();
+let xPreviewDirty = false;
+let xPreviewLastAutoText = '';
+
 
 // 新規追加した画像を保存（{filename: base64data}）
 let pendingImages = {};
@@ -1080,7 +1083,7 @@ function addLive() {
     </div>
     <div class="form-group">
       <label>詳細</label>
-      <textarea id="edit-description" class="textarea" rows="3" placeholder="open/start TBA&#10;adv/door ¥2500 (+1d)"></textarea>
+      <textarea id="edit-description" class="textarea" rows="3">open/start &#10;adv/door &#10;w.</textarea>
     </div>
     ${getImageFormHtml('')}
     <div class="form-group">
@@ -1099,7 +1102,7 @@ function addLive() {
       <h3>X投稿</h3>
       <div class="form-group">
         <label>プレビュー</label>
-        <textarea id="x-preview-text" class="textarea" rows="6" readonly></textarea>
+        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="プレビュー（必要なら編集）"></textarea>
       </div>
       <div class="form-group">
         <label>予約日時</label>
@@ -1114,13 +1117,8 @@ function addLive() {
   `);
   document.getElementById('delete-btn').style.display = 'none';
 
-  updateXPreviewInModal();
-  document.getElementById('x-preview-refresh-btn')?.addEventListener('click', updateXPreviewInModal);
+  wireXPreviewInModal();
   document.getElementById('x-schedule-btn')?.addEventListener('click', scheduleLiveToXFromModal);
-  ['edit-date', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
-    document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
-    document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
-  });
 }
 
 // Live編集
@@ -1163,7 +1161,7 @@ function editLive(id, category) {
       <h3>X投稿</h3>
       <div class="form-group">
         <label>プレビュー</label>
-        <textarea id="x-preview-text" class="textarea" rows="6" readonly></textarea>
+        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="プレビュー（必要なら編集）"></textarea>
       </div>
       <div class="form-group">
         <label>予約日時</label>
@@ -1178,13 +1176,8 @@ function editLive(id, category) {
   `);
   document.getElementById('delete-btn').style.display = 'block';
 
-  updateXPreviewInModal();
-  document.getElementById('x-preview-refresh-btn')?.addEventListener('click', updateXPreviewInModal);
+  wireXPreviewInModal();
   document.getElementById('x-schedule-btn')?.addEventListener('click', scheduleLiveToXFromModal);
-  ['edit-date', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
-    document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
-    document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
-  });
 }
 
 // Discography追加
@@ -1296,6 +1289,7 @@ async function saveModal() {
   }
 
   if (!ok) return;
+  const tweetText = String(document.getElementById('x-preview-text')?.value || '').trim();
   closeModal();
   markChanged();
 
@@ -1306,7 +1300,7 @@ async function saveModal() {
     }
     const saved = await saveData({ silent: true });
     if (saved) {
-      await postLiveToX(liveAction.liveId, { skipUnsavedCheck: true });
+      await postLiveToX(liveAction.liveId, { skipUnsavedCheck: true, tweetText });
     }
   }
 }
@@ -1531,30 +1525,23 @@ async function testLivePostToX(liveId) {
 function buildTweetTextForAdmin(live) {
   const rawDescription = String((live && live.description) || '').replace(/<br\s*\/?>/gi, '\n');
   const compactDescription = rawDescription.split('\n').map((line) => line.trim()).filter(Boolean).join(' / ');
-  const hashtags = String((window.ADMIN_CONFIG && window.ADMIN_CONFIG.xDefaultHashtags) || '#松本一樹 #ライブ').trim();
 
-  const lines = [
-    '【Live Info】',
-    `${String(live?.date || '日付未設定').trim()} ${String(live?.venue || '').trim()}`.trim(),
-    compactDescription,
-    String(live?.link || '').trim(),
-    hashtags
-  ].filter(Boolean);
+  const header = '【Live Info】';
+  const heading = `${String(live?.date || '日付未設定').trim()} ${String(live?.venue || '').trim()}`.trim();
+  const link = String(live?.link || '').trim();
 
+  const lines = [header, heading, compactDescription, link].filter(Boolean);
   let text = lines.join('\n');
   if (text.length <= 280) return text;
 
-  const keep = lines.slice();
-  keep[2] = (compactDescription || '').slice(0, 80) + '…';
-  text = keep.filter(Boolean).join('\n');
+  const shortened = compactDescription ? compactDescription.slice(0, 80) + '…' : '';
+  text = [header, heading, shortened, link].filter(Boolean).join('\n');
   if (text.length <= 280) return text;
 
-  if (hashtags) {
-    text = `【Live Info】\n${String(live?.date || '').trim()} ${String(live?.venue || '').trim()}\n${hashtags}`.trim();
-  } else {
-    text = `【Live Info】\n${String(live?.date || '').trim()} ${String(live?.venue || '').trim()}`.trim();
-  }
-  return text.slice(0, 280);
+  text = [header, heading, link].filter(Boolean).join('\n');
+  if (text.length <= 280) return text;
+
+  return [header, heading].filter(Boolean).join('\n').slice(0, 280);
 }
 
 function readLiveFromModal() {
@@ -1567,11 +1554,45 @@ function readLiveFromModal() {
   };
 }
 
-function updateXPreviewInModal() {
+function updateXPreviewInModal(options = {}) {
   const previewEl = document.getElementById('x-preview-text');
   if (!previewEl) return;
+
+  const force = options && typeof options === 'object' && options.force === true;
+
   const live = readLiveFromModal();
-  previewEl.value = buildTweetTextForAdmin(live);
+  const autoText = buildTweetTextForAdmin(live);
+
+  if (force || !xPreviewDirty || previewEl.value === xPreviewLastAutoText) {
+    previewEl.value = autoText;
+    xPreviewDirty = false;
+  }
+
+  xPreviewLastAutoText = autoText;
+}
+
+function wireXPreviewInModal() {
+  const previewEl = document.getElementById('x-preview-text');
+  if (!previewEl) return;
+
+  xPreviewDirty = false;
+  xPreviewLastAutoText = '';
+
+  updateXPreviewInModal({ force: true });
+
+  document.getElementById('x-preview-refresh-btn')?.addEventListener('click', () => {
+    xPreviewDirty = false;
+    updateXPreviewInModal({ force: true });
+  });
+
+  previewEl.addEventListener('input', () => {
+    xPreviewDirty = true;
+  });
+
+  ['edit-date', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
+    document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
+    document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
+  });
 }
 
 async function scheduleLiveToXFromModal() {
@@ -1602,7 +1623,7 @@ async function scheduleLiveToXFromModal() {
   try {
     const response = await adminFetch(`/api/admin/live/${encodeURIComponent(live.id)}/schedule-x`, {
       method: 'POST',
-      body: JSON.stringify({ scheduledAt: d.toISOString() })
+      body: JSON.stringify({ scheduledAt: d.toISOString(), tweetText: String(document.getElementById('x-preview-text')?.value || '').trim() || buildTweetTextForAdmin(live) })
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
@@ -1652,8 +1673,14 @@ async function postLiveToX(liveId, options = {}) {
   try {
     const dryRun = Boolean(options.dryRun);
     const query = dryRun ? '?dryRun=1' : '';
+    const tweetText = typeof options.tweetText === 'string' ? options.tweetText.trim() : '';
+    if (tweetText && tweetText.length > 280) {
+      showToast('X投稿テキストが280文字を超えています（プレビューを短くしてください）', 'error');
+      return;
+    }
     const response = await adminFetch(`/api/admin/live/${encodeURIComponent(liveId)}/post-x${query}`, {
-      method: 'POST'
+      method: 'POST',
+      ...(tweetText ? { body: JSON.stringify({ tweetText }) } : {})
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
