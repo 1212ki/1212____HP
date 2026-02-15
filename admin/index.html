@@ -251,31 +251,20 @@
     <div class="toast" id="toast"></div>
   </div>
   <script>
-    // Cache-bust admin scripts on GitHub Pages-like hosting.
-    window.ADMIN_CONFIG = window.ADMIN_CONFIG || {};
-    window.ADMIN_BUILD_ID = '2026-02-15T2205Z';
-
-    (function () {
-  // Bypass CDN cache by using a unique query param.
-  const v = Date.now().toString(36);
-
-  const load = (src) => new Promise((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = `${src}?v=${v}`;
-    s.async = false;
-    s.onload = resolve;
-    s.onerror = reject;
-    document.body.appendChild(s);
+  // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+  window.ADMIN_BUILD_ID = '2026-02-15T2220Z';
+  window.addEventListener('error', function (ev) {
+    try {
+      var banner = document.getElementById('connectionBanner');
+      if (banner) {
+        banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+        banner.classList.add('is-error');
+      }
+    } catch (e) {}
   });
-
-  load('config.js')
-    .then(() => load('app.js'))
-    .catch((e) => {
-      console.error('admin script load failed', e);
-      alert('管理画面の読み込みに失敗しました。再読み込みしてください。');
-    });
-})();
-  </script>
+</script>
+<script src="config.js?v=20260215-2220"></script>
+<script src="app.js?v=20260215-2220"></script>
 </body>
 </html>
 
