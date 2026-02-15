@@ -1071,11 +1071,12 @@ function addLive() {
       <div class="form-group">
         <label>テキスト</label>
         <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。</p>
+        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。「Xを開く」はブラウザでログイン中のアカウントで開きます。</p>
       </div>
       <div class="field-row">
-        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">再生成</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-preview-copy-btn">コピー</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-open-btn">Xを開く</button>
       </div>
     </div>
   `);
@@ -1125,11 +1126,12 @@ function editLive(id, category) {
       <div class="form-group">
         <label>テキスト</label>
         <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。</p>
+        <p class="field-hint">Xにはこの文をコピーして貼り付けてください（ハッシュタグなし）。「Xを開く」はブラウザでログイン中のアカウントで開きます。</p>
       </div>
       <div class="field-row">
-        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">再生成</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-preview-copy-btn">コピー</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-open-btn">Xを開く</button>
       </div>
     </div>
   `);
@@ -1572,6 +1574,12 @@ function wireXPreviewInModal() {
       showToast('コピーに失敗しました', 'error');
     }
   });
+  document.getElementById('x-open-btn')?.addEventListener('click', () => {
+    const text = String(previewEl.value || '').trim();
+    if (!text) return;
+    const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(intentUrl, '_blank', 'noopener');
+  });
 
   previewEl.addEventListener('input', () => {
     xPreviewDirty = true;
@@ -1813,6 +1821,8 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
+
+
 
 
 
