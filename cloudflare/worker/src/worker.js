@@ -213,6 +213,7 @@ function buildOgLiveHtml({ pageUrl, canonicalUrl, title, description, imageUrl }
   const safePageUrl = escapeHtml(pageUrl || "");
   const safeCanonical = escapeHtml(canonicalUrl || "");
   const safeImg = escapeHtml(imageUrl || "");
+  const safeCanonicalJs = JSON.stringify(String(canonicalUrl || ""));
 
   return `<!doctype html>
 <html lang="ja">
@@ -251,6 +252,11 @@ function buildOgLiveHtml({ pageUrl, canonicalUrl, title, description, imageUrl }
     <p>${safeDesc}</p>
     ${canonicalUrl ? `<a class="btn" href="${safeCanonical}" rel="noopener">詳細を見る</a>` : ""}
   </main>
+  ${canonicalUrl ? `
+  <script>
+    // X/Twitter card bots do not execute JS. For humans, redirect quickly to the canonical HP URL.
+    try { setTimeout(function () { location.replace(${safeCanonicalJs}); }, 30); } catch (e) {}
+  </script>` : ""}
 </body>
 </html>`;
 }
@@ -1026,12 +1032,6 @@ async function handleRequest(request, env, ctx) {
 
     const publicOrigin = guessPublicOrigin(env) || "https://1212hp.com";
     const canonicalUrl = `${String(publicOrigin).replace(/\/+$/, "")}/live/detail/?liveId=${encodeURIComponent(liveId)}`;
-
-    const ua = request.headers.get("User-Agent") || "";
-    if (!isOgCrawler(ua)) {
-      return Response.redirect(canonicalUrl, 302);
-    }
-
     const liveTitle = String(live?.title || "").trim();
     const heading = `${String(live?.date || "").trim()} ${String(live?.venue || "").trim()}`.trim();
     const title = liveTitle
