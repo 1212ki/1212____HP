@@ -635,6 +635,14 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   color: var(--ink);
 }
 
+.live-info .live-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  color: var(--ink);
+}
+
 .live-info .live-venue {
   font-style: italic;
   color: var(--ink-muted);

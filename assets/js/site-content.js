@@ -152,6 +152,7 @@
             ${image ? `<img src="${image}" alt="${escapeHtml(item.venue || "Live")}">` : ""}
             <div class="live-info">
               <p class="live-date">${escapeHtml(item.date || "")}</p>
+              ${(item.title || '').trim() ? `<p class="live-title">${escapeHtml(String(item.title || '').trim())}</p>` : ''}
               <p class="live-venue">${escapeHtml(item.venue || "")}</p>
               <p class="live-description">${safeDesc}</p>
               <div class="live-actions" style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
@@ -185,7 +186,8 @@
     if (!live) return;
 
     const heading = `${String(live.date || "").trim()} ${String(live.venue || "").trim()}`.trim() || "live detail";
-    if (title) title.textContent = heading;
+    const liveTitle = String(live.title || "").trim();
+    if (title) title.textContent = liveTitle ? `${liveTitle} / ${heading}` : heading;
 
     const image = resolveImageSrc(live.image || "", version);
     const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");

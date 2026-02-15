@@ -510,9 +510,11 @@ function buildTweetText(live, _env) {
     .filter(Boolean);
 
   const header = "【LIVE】";
+  const eventTitle = String(live?.title || "").trim();
   const heading = `${String(live?.date || "日付未設定").trim()} ${String(live?.venue || "").trim()}`.trim();
 
   const blocks = [header];
+  if (eventTitle) blocks.push(eventTitle);
   if (heading) blocks.push(heading);
   if (descLines.length > 0) {
     blocks.push("");
@@ -522,15 +524,15 @@ function buildTweetText(live, _env) {
   let text = blocks.join("\n").trim();
   if (text.length <= 280) return text;
 
-  text = [header, heading, ...descLines].filter(Boolean).join("\n").trim();
+  text = [header, eventTitle, heading, ...descLines].filter(Boolean).join("\n").trim();
   if (text.length <= 280) return text;
 
   const compact = descLines.join(" / ");
   const shortened = compact ? compact.slice(0, 120) + "…" : "";
-  text = [header, heading, shortened].filter(Boolean).join("\n").trim();
+  text = [header, eventTitle, heading, shortened].filter(Boolean).join("\n").trim();
   if (text.length <= 280) return text;
 
-  text = [header, heading].filter(Boolean).join("\n").trim();
+  text = [header, eventTitle, heading].filter(Boolean).join("\n").trim();
   return text.slice(0, 280);
 }
 
@@ -1015,8 +1017,11 @@ async function handleRequest(request, env, ctx) {
       `${publicOrigin}/ticket/?liveId=${encodeURIComponent(liveId)}`
     ).trim();
 
+    const liveTitle = String(live?.title || "").trim();
     const heading = `${String(live?.date || "").trim()} ${String(live?.venue || "").trim()}`.trim();
-    const title = heading ? `${heading} | 松本一樹` : "松本一樹 | Live";
+    const title = liveTitle
+      ? `${liveTitle} | ${heading || "Live"} | 松本一樹`
+      : (heading ? `${heading} | 松本一樹` : "松本一樹 | Live");
 
     const compact = buildCompactDescription(live?.description || "");
     const description = truncate(compact || heading || "Live info", 180);

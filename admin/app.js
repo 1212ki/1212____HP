@@ -669,8 +669,8 @@ function renderLiveItem(item, category) {
     <div class="item-card ${category === 'past' ? 'past' : ''}" onclick="editLive('${item.id}', '${category}')">
       <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
       <div class="info">
-        <div class="title">${escapeHtml(item.venue)}</div>
-        <div class="meta">${escapeHtml(item.date)}</div>
+        <div class="title">${escapeHtml((item.title || '').trim() || item.venue)}</div>
+        <div class="meta">${escapeHtml([item.date, (item.title || '').trim() ? item.venue : ''].filter(Boolean).join(' '))}</div>
         ${scheduleHtml}
       </div>
       <div class="actions">
@@ -1078,6 +1078,10 @@ function addLive() {
       <input type="text" id="edit-date" class="text-input" placeholder="2025.01.01">
     </div>
     <div class="form-group">
+      <label>ライブ名（任意）</label>
+      <input type="text" id="edit-title" class="text-input" placeholder="例: 〇〇企画 / 〇〇 presents...">
+    </div>
+    <div class="form-group">
       <label>会場</label>
       <input type="text" id="edit-venue" class="text-input" placeholder="下北沢XXX">
     </div>
@@ -1136,6 +1140,10 @@ function editLive(id, category) {
     <div class="form-group">
       <label>日付</label>
       <input type="text" id="edit-date" class="text-input" value="${escapeHtml(item.date)}">
+    </div>
+    <div class="form-group">
+      <label>ライブ名（任意）</label>
+      <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title || '')}" placeholder="例: 〇〇企画 / 〇〇 presents...">
     </div>
     <div class="form-group">
       <label>会場</label>
@@ -1363,6 +1371,7 @@ function saveLiveItem() {
   const item = {
     id: currentEditId,
     date: document.getElementById('edit-date').value,
+    title: document.getElementById('edit-title')?.value || '',
     venue: document.getElementById('edit-venue').value,
     description: document.getElementById('edit-description').value,
     image: document.getElementById('edit-image').value,
@@ -1533,9 +1542,11 @@ function buildTweetTextForAdmin(live) {
     .filter(Boolean);
 
   const header = '【LIVE】';
+  const eventTitle = String(live?.title || '').trim();
   const heading = `${String(live?.date || '日付未設定').trim()} ${String(live?.venue || '').trim()}`.trim();
 
   const blocks = [header];
+  if (eventTitle) blocks.push(eventTitle);
   if (heading) blocks.push(heading);
   if (descLines.length > 0) {
     blocks.push('');
@@ -1546,17 +1557,17 @@ function buildTweetTextForAdmin(live) {
   if (text.length <= 280) return text;
 
   // 1) Remove blank line separation.
-  text = [header, heading, ...descLines].filter(Boolean).join('\n').trim();
+  text = [header, eventTitle, heading, ...descLines].filter(Boolean).join('\n').trim();
   if (text.length <= 280) return text;
 
   // 2) Compact description and truncate.
   const compact = descLines.join(' / ');
   const shortened = compact ? compact.slice(0, 120) + '…' : '';
-  text = [header, heading, shortened].filter(Boolean).join('\n').trim();
+  text = [header, eventTitle, heading, shortened].filter(Boolean).join('\n').trim();
   if (text.length <= 280) return text;
 
   // 3) Last resort.
-  text = [header, heading].filter(Boolean).join('\n').trim();
+  text = [header, eventTitle, heading].filter(Boolean).join('\n').trim();
   return text.slice(0, 280);
 }
 
@@ -1564,6 +1575,7 @@ function readLiveFromModal() {
   return {
     id: currentEditId,
     date: document.getElementById('edit-date')?.value || '',
+    title: document.getElementById('edit-title')?.value || '',
     venue: document.getElementById('edit-venue')?.value || '',
     description: document.getElementById('edit-description')?.value || '',
     link: document.getElementById('edit-link')?.value || ''
@@ -1636,8 +1648,10 @@ function buildXIntentUrlFromModal() {
   if (!IS_API_MODE) return '';
 
   const live = readLiveFromModal();
-  const ogUrl = buildLiveOgUrl(live.id);
-  if (!ogUrl) return '';
+  const ogUrlBase = buildLiveOgUrl(live.id);
+  if (!ogUrlBase) return '';
+  // Cache-bust for X card preview; X may cache earlier failures for the same URL.
+  const ogUrl = `${ogUrlBase}${ogUrlBase.includes('?') ? '&' : '?'}v=${Date.now().toString(36)}`;
 
   const preview = String(document.getElementById('x-preview-text')?.value || '').trim() || buildTweetTextForAdmin(live);
   const text = stripUrlsFromTweetText(preview) || '【LIVE】';

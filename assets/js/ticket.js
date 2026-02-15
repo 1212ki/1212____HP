@@ -165,6 +165,7 @@
           ${imageSrc ? `<img src="${escapeHtml(imageSrc)}" alt="" style="width: 120px; height: 120px; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.7);">` : ""}
           <div style="flex: 1; min-width: 220px;">
             <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(`${live.date || ""} ${live.venue || ""}`.trim())}</div>
+            ${String(live.title || "").trim() ? `<div style="margin-top: 6px; font-weight: 700; letter-spacing: 0.06em;">${escapeHtml(String(live.title || "").trim())}</div>` : ""}
             ${safeDesc ? `<div style="margin-top: 8px; color: var(--ink-muted); line-height: 1.7;">${safeDesc}</div>` : ""}
             ${instagramHref ? `<div style="margin-top: 12px;"><a href="${instagramHref}" class="application-link" target="_blank" rel="noopener">▷instagram</a></div>` : ""}
           </div>
