@@ -18,9 +18,21 @@ ALLOWED_ORIGINS = "https://1212hp.com,https://admin.1212hp.com"
 BYPASS_ADMIN_TOKEN = "false"
 X_DEFAULT_HASHTAGS = "#松本一樹 #ライブ"
 
+[triggers]
+# X予約投稿の実行（1分ごと）
+crons = ["* * * * *"]
+
 # wrangler secret put X_CONSUMER_KEY
 # wrangler secret put X_CONSUMER_SECRET
 # wrangler secret put X_ACCESS_TOKEN
 # wrangler secret put X_ACCESS_TOKEN_SECRET
 #
 # wrangler secret put ADMIN_SHARED_TOKEN
+#
+# LINE通知（任意: チケット予約が届いたら通知）
+# 方式A: Messaging API push（推奨）
+# wrangler secret put LINE_CHANNEL_ACCESS_TOKEN
+# wrangler secret put LINE_TO
+#
+# 方式B: 任意Webhook（Slack互換など）
+# wrangler secret put LINE_WEBHOOK_URL

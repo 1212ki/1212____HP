@@ -19,3 +19,7 @@ ALLOWED_ORIGINS = "https://1212hp.com,https://admin.1212hp.com"
 # Cloudflare Accessで守る場合は true にして ADMIN_TOKEN を空でも可
 BYPASS_ADMIN_TOKEN = "false"
 X_DEFAULT_HASHTAGS = "#松本一樹 #ライブ"
+
+[triggers]
+# X予約投稿の実行（1分ごと）
+crons = ["* * * * *"]

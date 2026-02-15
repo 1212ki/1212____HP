@@ -461,6 +461,34 @@ body {
   pointer-events: none;
 }
 
+.x-post-btn.is-scheduled {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(191, 85, 77, 0.55);
+  color: var(--primary);
+}
+
+.x-cancel-btn {
+  border: 1px solid var(--gray-200);
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.75em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.x-cancel-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.x-scheduled-at {
+  margin-top: 4px;
+  font-size: 0.78em;
+  color: var(--gray-500);
+}
+
 .x-link {
   font-size: 0.72em;
   color: var(--primary);

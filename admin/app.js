@@ -203,7 +203,7 @@ async function adminFetch(path, options = {}) {
 async function loadXPostStatuses() {
   if (!IS_API_MODE) return;
   try {
-    const response = await adminFetch('/api/admin/x-posts');
+    const response = await adminFetch('/api/admin/x-posts?limit=200');
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
       throw new Error(getErrorMessage(payload, 'X投稿履歴を取得できませんでした'));
@@ -214,8 +214,11 @@ async function loadXPostStatuses() {
       const liveId = post.liveId || post.live_id;
       if (!liveId || map[liveId]) continue;
       map[liveId] = {
+        id: post.id || post.postId || null,
         status: post.status || 'unknown',
         tweetUrl: post.tweetUrl || post.tweet_url || '',
+        tweetText: post.tweetText || post.tweet_text || '',
+        errorMessage: post.errorMessage || post.error_message || '',
         createdAt: post.createdAt || post.created_at || ''
       };
     }
@@ -624,22 +627,39 @@ function getLiveStatus(itemId) {
   return xPostStatusMap[itemId] || null;
 }
 
+function formatIsoToLocalLabel(iso) {
+  const v = String(iso || '').trim();
+  if (!v) return '';
+  const d = new Date(v);
+  if (!Number.isFinite(d.getTime())) return v;
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 function renderLiveItem(item, category) {
   const status = getLiveStatus(item.id);
   const isPosting = postingLiveIds.has(item.id);
+  const isScheduled = status && status.status === 'scheduled';
   const buttonClass = [
     'x-post-btn',
     status && status.status === 'success' ? 'is-posted' : '',
+    isScheduled ? 'is-scheduled' : '',
     isPosting ? 'is-busy' : ''
   ].filter(Boolean).join(' ');
   const testButtonClass = [
     'x-test-btn',
     isPosting ? 'is-busy' : ''
   ].filter(Boolean).join(' ');
-  const label = isPosting ? '投稿中...' : (status && status.status === 'success' ? '再投稿' : 'X投稿');
+  const label = isPosting ? '投稿中...' : (isScheduled ? '予約済み' : (status && status.status === 'success' ? '再投稿' : 'X投稿'));
   const testLabel = isPosting ? '確認中...' : 'Xテスト';
   const linkHtml = status && status.tweetUrl
     ? `<a class="x-link" href="${escapeHtml(status.tweetUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">投稿を見る</a>`
+    : '';
+  const scheduleHtml = isScheduled && status.createdAt
+    ? `<div class="x-scheduled-at">予約: ${escapeHtml(formatIsoToLocalLabel(status.createdAt))}</div>`
+    : '';
+  const cancelHtml = isScheduled && status.id
+    ? `<button class="x-cancel-btn" onclick="event.stopPropagation(); cancelXSchedule(${Number(status.id)})">予約解除</button>`
     : '';
 
   return `
@@ -648,10 +668,12 @@ function renderLiveItem(item, category) {
       <div class="info">
         <div class="title">${escapeHtml(item.venue)}</div>
         <div class="meta">${escapeHtml(item.date)}</div>
+        ${scheduleHtml}
       </div>
       <div class="actions">
         <button class="${testButtonClass}" onclick="event.stopPropagation(); testLivePostToX('${item.id}')">${testLabel}</button>
         <button class="${buttonClass}" onclick="event.stopPropagation(); postLiveToX('${item.id}')">${label}</button>
+        ${cancelHtml}
         ${linkHtml}
       </div>
       <span class="arrow">›</span>
@@ -1071,10 +1093,34 @@ function addLive() {
     </div>
     <div class="checkbox-group">
       <input type="checkbox" id="edit-postToX">
-      <label for="edit-postToX">保存後にXへ投稿（開催予定のみ）</label>
+      <label for="edit-postToX">保存後にすぐXへ投稿（開催予定のみ）</label>
+    </div>
+    <div class="subsection" style="margin-top: 16px;">
+      <h3>X投稿</h3>
+      <div class="form-group">
+        <label>プレビュー</label>
+        <textarea id="x-preview-text" class="textarea" rows="6" readonly></textarea>
+      </div>
+      <div class="form-group">
+        <label>予約日時</label>
+        <input type="datetime-local" id="x-schedule-at" class="text-input">
+        <p class="field-hint">予約投稿は「保存済み」の内容で行われます。</p>
+      </div>
+      <div class="field-row">
+        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
+        <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
+      </div>
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'none';
+
+  updateXPreviewInModal();
+  document.getElementById('x-preview-refresh-btn')?.addEventListener('click', updateXPreviewInModal);
+  document.getElementById('x-schedule-btn')?.addEventListener('click', scheduleLiveToXFromModal);
+  ['edit-date', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
+    document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
+    document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
+  });
 }
 
 // Live編集
@@ -1111,10 +1157,34 @@ function editLive(id, category) {
     </div>
     <div class="checkbox-group">
       <input type="checkbox" id="edit-postToX" ${category === 'past' ? 'disabled' : ''}>
-      <label for="edit-postToX">保存後にXへ投稿（開催予定のみ）</label>
+      <label for="edit-postToX">保存後にすぐXへ投稿（開催予定のみ）</label>
+    </div>
+    <div class="subsection" style="margin-top: 16px;">
+      <h3>X投稿</h3>
+      <div class="form-group">
+        <label>プレビュー</label>
+        <textarea id="x-preview-text" class="textarea" rows="6" readonly></textarea>
+      </div>
+      <div class="form-group">
+        <label>予約日時</label>
+        <input type="datetime-local" id="x-schedule-at" class="text-input">
+        <p class="field-hint">予約投稿は「保存済み」の内容で行われます。</p>
+      </div>
+      <div class="field-row">
+        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">更新</button>
+        <button type="button" class="btn btn-primary btn-compact" id="x-schedule-btn">予約投稿</button>
+      </div>
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'block';
+
+  updateXPreviewInModal();
+  document.getElementById('x-preview-refresh-btn')?.addEventListener('click', updateXPreviewInModal);
+  document.getElementById('x-schedule-btn')?.addEventListener('click', scheduleLiveToXFromModal);
+  ['edit-date', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
+    document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
+    document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
+  });
 }
 
 // Discography追加
@@ -1456,6 +1526,114 @@ async function saveData(options = {}) {
 
 async function testLivePostToX(liveId) {
   return postLiveToX(liveId, { dryRun: true });
+}
+
+function buildTweetTextForAdmin(live) {
+  const rawDescription = String((live && live.description) || '').replace(/<br\s*\/?>/gi, '\n');
+  const compactDescription = rawDescription.split('\n').map((line) => line.trim()).filter(Boolean).join(' / ');
+  const hashtags = String((window.ADMIN_CONFIG && window.ADMIN_CONFIG.xDefaultHashtags) || '#松本一樹 #ライブ').trim();
+
+  const lines = [
+    '【Live Info】',
+    `${String(live?.date || '日付未設定').trim()} ${String(live?.venue || '').trim()}`.trim(),
+    compactDescription,
+    String(live?.link || '').trim(),
+    hashtags
+  ].filter(Boolean);
+
+  let text = lines.join('\n');
+  if (text.length <= 280) return text;
+
+  const keep = lines.slice();
+  keep[2] = (compactDescription || '').slice(0, 80) + '…';
+  text = keep.filter(Boolean).join('\n');
+  if (text.length <= 280) return text;
+
+  if (hashtags) {
+    text = `【Live Info】\n${String(live?.date || '').trim()} ${String(live?.venue || '').trim()}\n${hashtags}`.trim();
+  } else {
+    text = `【Live Info】\n${String(live?.date || '').trim()} ${String(live?.venue || '').trim()}`.trim();
+  }
+  return text.slice(0, 280);
+}
+
+function readLiveFromModal() {
+  return {
+    id: currentEditId,
+    date: document.getElementById('edit-date')?.value || '',
+    venue: document.getElementById('edit-venue')?.value || '',
+    description: document.getElementById('edit-description')?.value || '',
+    link: document.getElementById('edit-link')?.value || ''
+  };
+}
+
+function updateXPreviewInModal() {
+  const previewEl = document.getElementById('x-preview-text');
+  if (!previewEl) return;
+  const live = readLiveFromModal();
+  previewEl.value = buildTweetTextForAdmin(live);
+}
+
+async function scheduleLiveToXFromModal() {
+  if (!IS_API_MODE) {
+    showToast('予約投稿はAPIモードでのみ利用できます', 'error');
+    return;
+  }
+  if (!ensureNoActiveImageUploads()) return;
+
+  const live = readLiveFromModal();
+  const raw = String(document.getElementById('x-schedule-at')?.value || '').trim();
+  if (!raw) {
+    showToast('予約日時を入力してください', 'error');
+    return;
+  }
+  const d = new Date(raw);
+  if (!Number.isFinite(d.getTime())) {
+    showToast('予約日時が不正です', 'error');
+    return;
+  }
+
+  // Apply modal edits to siteData before scheduling (then save to API if needed).
+  saveLiveItem();
+  markChanged();
+  const saved = await saveData({ silent: true });
+  if (!saved) return;
+
+  try {
+    const response = await adminFetch(`/api/admin/live/${encodeURIComponent(live.id)}/schedule-x`, {
+      method: 'POST',
+      body: JSON.stringify({ scheduledAt: d.toISOString() })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(getErrorMessage(payload, '予約投稿に失敗しました'));
+    }
+    await loadXPostStatuses();
+    renderLive();
+    showToast(`予約しました: ${formatIsoToLocalLabel(payload?.job?.createdAt || d.toISOString())}`, 'success');
+  } catch (error) {
+    showToast(`予約投稿失敗: ${error.message}`, 'error');
+  }
+}
+
+async function cancelXSchedule(postId) {
+  if (!IS_API_MODE) {
+    showToast('予約解除はAPIモードでのみ利用できます', 'error');
+    return;
+  }
+  if (!confirm('予約投稿を解除しますか？')) return;
+  try {
+    const response = await adminFetch(`/api/admin/x-posts/${encodeURIComponent(String(postId))}/cancel`, { method: 'POST' });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(getErrorMessage(payload, '予約解除に失敗しました'));
+    }
+    await loadXPostStatuses();
+    renderLive();
+    showToast('予約を解除しました', 'success');
+  } catch (error) {
+    showToast(`予約解除失敗: ${error.message}`, 'error');
+  }
 }
 
 async function postLiveToX(liveId, options = {}) {

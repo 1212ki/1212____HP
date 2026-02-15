@@ -19,6 +19,11 @@
 - `POST /api/admin/live/:liveId/post-x`
   - 指定ライブ情報を整形してXへ投稿
   - `?dryRun=1` を付けると投稿せずに連携確認と投稿文プレビューのみ実行
+- `POST /api/admin/live/:liveId/schedule-x`
+  - 指定ライブ情報を整形してXの予約投稿（D1に保存）
+  - Cron Triggerで予約時刻になったらWorkerが自動実行
+- `POST /api/admin/x-posts/:id/cancel`
+  - 予約投稿のキャンセル
 
 ## 初期セットアップ
 
@@ -37,6 +42,12 @@
    - `wrangler secret put X_ACCESS_TOKEN`
    - `wrangler secret put X_ACCESS_TOKEN_SECRET`
    - `wrangler secret put ADMIN_SHARED_TOKEN`（管理API保護トークン。リポジトリにコミットしない）
+   - （任意）チケット予約のLINE通知
+     - 方式A: LINE Messaging API push（推奨）
+       - `wrangler secret put LINE_CHANNEL_ACCESS_TOKEN`
+       - `wrangler secret put LINE_TO`（通知先。ユーザーID/グループIDなど）
+     - 方式B: 任意Webhook（Slack互換など）
+       - `wrangler secret put LINE_WEBHOOK_URL`
 5. デプロイ
    - `wrangler deploy`
 
@@ -49,3 +60,4 @@
 
 - 画像は管理画面からアップロード可能（R2へ保存、`/images/` で配信）
 - 投稿テンプレートは `src/worker.js` の `buildTweetText` で調整できます
+- X予約投稿を動かすには `wrangler.toml` の `triggers.crons` が必要です（1分ごと推奨）

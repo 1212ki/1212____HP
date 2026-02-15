@@ -603,7 +603,162 @@ async function recordPostLog(env, log) {
   ).run();
 }
 
-async function handleRequest(request, env) {
+function isValidIsoDate(value) {
+  const v = String(value || "").trim();
+  if (!v) return false;
+  const d = new Date(v);
+  return Number.isFinite(d.getTime());
+}
+
+function toIso(value) {
+  const d = value instanceof Date ? value : new Date(value);
+  return new Date(d.getTime()).toISOString();
+}
+
+async function listXPosts(env, options = {}) {
+  const liveId = String(options.liveId || "").trim();
+  const limit = clampInt(options.limit, 1, 200);
+  const stmt = liveId
+    ? env.DB.prepare(
+        `SELECT id, live_id as liveId, status, tweet_id as tweetId, tweet_url as tweetUrl, tweet_text as tweetText,
+                error_message as errorMessage, created_at as createdAt
+         FROM x_posts WHERE live_id = ? ORDER BY created_at DESC LIMIT ?`
+      ).bind(liveId, limit)
+    : env.DB.prepare(
+        `SELECT id, live_id as liveId, status, tweet_id as tweetId, tweet_url as tweetUrl, tweet_text as tweetText,
+                error_message as errorMessage, created_at as createdAt
+         FROM x_posts ORDER BY created_at DESC LIMIT ?`
+      ).bind(limit);
+  const result = await stmt.all();
+  return result.results || [];
+}
+
+async function createXPostSchedule(env, liveId, scheduledAtIso, tweetText) {
+  const res = await env.DB.prepare(
+    `INSERT INTO x_posts (live_id, status, tweet_id, tweet_url, tweet_text, error_message, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
+  ).bind(liveId, "scheduled", "", "", tweetText || "", "", scheduledAtIso).run();
+
+  const id = res?.meta?.last_row_id || null;
+  return { id, liveId, status: "scheduled", tweetText, createdAt: scheduledAtIso };
+}
+
+async function cancelScheduledXPost(env, id) {
+  const row = await env.DB.prepare(
+    `SELECT id, status FROM x_posts WHERE id = ? LIMIT 1`
+  ).bind(id).first();
+  if (!row) throw new Error("not found");
+  if (String(row.status) !== "scheduled") throw new Error("not scheduled");
+  await env.DB.prepare(
+    `UPDATE x_posts SET status = ?, error_message = ? WHERE id = ?`
+  ).bind("cancelled", "cancelled", id).run();
+  return { id, status: "cancelled" };
+}
+
+async function executeDueXPostSchedules(env) {
+  const now = nowIso();
+  const result = await env.DB.prepare(
+    `SELECT id, live_id as liveId, tweet_text as tweetText, created_at as createdAt
+     FROM x_posts
+     WHERE status = 'scheduled' AND created_at <= ?
+     ORDER BY created_at ASC
+     LIMIT 10`
+  ).bind(now).all();
+  const jobs = result.results || [];
+  for (const job of jobs) {
+    const text = String(job.tweetText || "").trim();
+    if (!text) {
+      await env.DB.prepare(
+        `UPDATE x_posts SET status = ?, error_message = ? WHERE id = ?`
+      ).bind("failed", "tweet text is empty", job.id).run();
+      continue;
+    }
+    try {
+      const tweet = await postTweetToX(env, text);
+      await env.DB.prepare(
+        `UPDATE x_posts
+         SET status = ?, tweet_id = ?, tweet_url = ?, error_message = ?
+         WHERE id = ?`
+      ).bind("success", tweet.tweetId || "", tweet.url || "", "", job.id).run();
+    } catch (error) {
+      await env.DB.prepare(
+        `UPDATE x_posts
+         SET status = ?, error_message = ?
+         WHERE id = ?`
+      ).bind("failed", error.message || "failed", job.id).run();
+    }
+  }
+  return { ok: true, processed: jobs.length, now };
+}
+
+function buildTicketLineMessage(reservation) {
+  const r = reservation && typeof reservation === "object" ? reservation : {};
+  const live = `${String(r.liveDate || "").trim()} ${String(r.liveVenue || "").trim()}`.trim();
+  const lines = ["[ticket] 予約が届きました"];
+  if (live) lines.push(live);
+  if (r.name) lines.push(`名前: ${String(r.name).trim()}`);
+  if (r.quantity) lines.push(`枚数: ${String(r.quantity).trim()}`);
+  const msg = String(r.message || "").trim();
+  if (msg) lines.push(`備考: ${msg.slice(0, 140)}`);
+  if (r.id) lines.push(`id: ${String(r.id).trim()}`);
+  return lines.join("\n");
+}
+
+async function sendLinePush(env, text) {
+  const token = String(env.LINE_CHANNEL_ACCESS_TOKEN || "").trim();
+  const to = String(env.LINE_TO || "").trim();
+  if (!token || !to) return { skipped: true, reason: "not configured" };
+
+  const res = await fetch("https://api.line.me/v2/bot/message/push", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      to,
+      messages: [{ type: "text", text }],
+    }),
+  });
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`LINE push failed: ${res.status} ${body}`.trim());
+  }
+  return { ok: true };
+}
+
+async function sendLineWebhook(env, payload) {
+  const url = String(env.LINE_WEBHOOK_URL || "").trim();
+  if (!url) return { skipped: true, reason: "not configured" };
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload || {}),
+  });
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`LINE webhook failed: ${res.status} ${body}`.trim());
+  }
+  return { ok: true };
+}
+
+async function notifyTicketReservation(env, reservation) {
+  const text = buildTicketLineMessage(reservation);
+  const results = [];
+  try {
+    results.push(await sendLinePush(env, text));
+  } catch (e) {
+    console.error("LINE push error:", e);
+  }
+  try {
+    results.push(await sendLineWebhook(env, { text, reservation }));
+  } catch (e) {
+    console.error("LINE webhook error:", e);
+  }
+  return results;
+}
+
+async function handleRequest(request, env, ctx) {
   if (request.method === "OPTIONS") {
     return new Response(null, {
       status: 204,
@@ -635,6 +790,11 @@ async function handleRequest(request, env) {
     }
     try {
       const reservation = await createTicketReservation(env, payload);
+      if (ctx && typeof ctx.waitUntil === "function") {
+        ctx.waitUntil(notifyTicketReservation(env, reservation));
+      } else {
+        notifyTicketReservation(env, reservation).catch(() => {});
+      }
       return jsonResponse({ ok: true, reservation }, request, env, 201);
     } catch (error) {
       return jsonResponse({ error: error.message }, request, env, 400);
@@ -665,18 +825,68 @@ async function handleRequest(request, env) {
     if (!isAdminAuthorized(request, env)) {
       return jsonResponse({ error: "unauthorized" }, request, env, 401);
     }
-    const liveId = url.searchParams.get("liveId");
-    const stmt = liveId
-      ? env.DB.prepare(
-          `SELECT live_id as liveId, status, tweet_id as tweetId, tweet_url as tweetUrl, tweet_text as tweetText, error_message as errorMessage, created_at as createdAt
-           FROM x_posts WHERE live_id = ? ORDER BY created_at DESC LIMIT 50`
-        ).bind(liveId)
-      : env.DB.prepare(
-          `SELECT live_id as liveId, status, tweet_id as tweetId, tweet_url as tweetUrl, tweet_text as tweetText, error_message as errorMessage, created_at as createdAt
-           FROM x_posts ORDER BY created_at DESC LIMIT 100`
-        );
-    const result = await stmt.all();
-    return jsonResponse({ posts: result.results || [] }, request, env);
+    const liveId = url.searchParams.get("liveId") || "";
+    const limit = url.searchParams.get("limit") || "100";
+    const posts = await listXPosts(env, { liveId, limit });
+    return jsonResponse({ posts }, request, env);
+  }
+
+  const previewMatch = path.match(/^\/api\/admin\/live\/([^/]+)\/preview-x$/);
+  if (previewMatch && request.method === "POST") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const liveId = decodeURIComponent(previewMatch[1]);
+    const siteData = await getSiteData(env);
+    const live = findLiveById(siteData, liveId);
+    if (!live) return jsonResponse({ error: "live not found" }, request, env, 404);
+    const tweetText = buildTweetText(live, env);
+    return jsonResponse({ ok: true, liveId, tweetText }, request, env);
+  }
+
+  const scheduleMatch = path.match(/^\/api\/admin\/live\/([^/]+)\/schedule-x$/);
+  if (scheduleMatch && request.method === "POST") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const liveId = decodeURIComponent(scheduleMatch[1]);
+    const payload = await request.json().catch(() => null);
+    if (!payload || typeof payload !== "object") {
+      return jsonResponse({ error: "invalid payload" }, request, env, 400);
+    }
+    const scheduledAt = payload.scheduledAt || payload.scheduled_at || "";
+    if (!isValidIsoDate(scheduledAt)) {
+      return jsonResponse({ error: "scheduledAt is invalid" }, request, env, 400);
+    }
+    const scheduledAtIso = toIso(scheduledAt);
+    const now = Date.now();
+    if (new Date(scheduledAtIso).getTime() < now + 30 * 1000) {
+      return jsonResponse({ error: "scheduledAt must be in the future" }, request, env, 400);
+    }
+
+    const siteData = await getSiteData(env);
+    const live = findLiveById(siteData, liveId);
+    if (!live) return jsonResponse({ error: "live not found" }, request, env, 404);
+    const tweetText = buildTweetText(live, env);
+    const job = await createXPostSchedule(env, liveId, scheduledAtIso, tweetText);
+    return jsonResponse({ ok: true, job }, request, env, 201);
+  }
+
+  const cancelMatch = path.match(/^\/api\/admin\/x-posts\/(\d+)\/cancel$/);
+  if (cancelMatch && request.method === "POST") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const id = Number(cancelMatch[1]);
+    if (!Number.isFinite(id) || id <= 0) {
+      return jsonResponse({ error: "invalid id" }, request, env, 400);
+    }
+    try {
+      const updated = await cancelScheduledXPost(env, id);
+      return jsonResponse({ ok: true, updated }, request, env);
+    } catch (error) {
+      return jsonResponse({ error: error.message }, request, env, 400);
+    }
   }
 
   if (path === "/api/admin/ticket-reservations" && request.method === "GET") {
@@ -852,9 +1062,9 @@ async function handleRequest(request, env) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     try {
-      return await handleRequest(request, env);
+      return await handleRequest(request, env, ctx);
     } catch (error) {
       return jsonResponse(
         { error: error.message || "internal error" },
@@ -863,5 +1073,8 @@ export default {
         500
       );
     }
+  },
+  async scheduled(_event, env, ctx) {
+    ctx.waitUntil(executeDueXPostSchedules(env));
   },
 };
