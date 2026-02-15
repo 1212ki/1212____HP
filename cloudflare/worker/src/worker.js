@@ -299,7 +299,8 @@ async function serveImage(request, env, key) {
   if (!safeKey || safeKey.includes("..")) {
     return new Response("bad key", { status: 400 });
   }
-  const obj = await env.IMAGES.get(safeKey);
+  const method = String(request.method || "GET").toUpperCase();
+  const obj = method === "HEAD" ? await env.IMAGES.head(safeKey) : await env.IMAGES.get(safeKey);
   if (!obj) return new Response("not found", { status: 404 });
 
   const headers = new Headers();
@@ -310,7 +311,7 @@ async function serveImage(request, env, key) {
   // Allow images to be embedded anywhere.
   headers.set("Access-Control-Allow-Origin", "*");
 
-  return new Response(obj.body, { status: 200, headers });
+  return new Response(method === "HEAD" ? null : obj.body, { status: 200, headers });
 }
 
 async function getSiteDataRow(env) {
@@ -1017,7 +1018,7 @@ async function handleRequest(request, env, ctx) {
   const path = url.pathname;
 
   const imageMatch = path.match(/^\/images\/(.+)$/);
-  if (imageMatch && request.method === "GET") {
+  if (imageMatch && (request.method === "GET" || request.method === "HEAD")) {
     return serveImage(request, env, decodeURIComponent(imageMatch[1]));
   }
 
