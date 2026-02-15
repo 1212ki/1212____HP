@@ -33,6 +33,12 @@
     footer.textContent = text || "";
   }
 
+  function isInstagramUrl(url) {
+    const value = String(url || "").trim();
+    if (!value) return false;
+    return /^https?:\/\/(www\.)?instagram\.com\//i.test(value);
+  }
+
   async function fetchSiteData() {
     const endpoint = apiBase ? `${apiBase}/api/public/site-data` : "/api/public/site-data";
     const res = await fetch(endpoint, { cache: "no-store" });
@@ -151,7 +157,7 @@
 
     const imageSrc = withCacheBust(resolveAssetPath(live.image || ""));
     const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
-    const detailHref = live.link ? escapeHtml(live.link) : "";
+    const instagramHref = isInstagramUrl(live.link) ? escapeHtml(live.link) : "";
 
     container.innerHTML = `
       <div style="padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">
@@ -160,7 +166,7 @@
           <div style="flex: 1; min-width: 220px;">
             <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(`${live.date || ""} ${live.venue || ""}`.trim())}</div>
             ${safeDesc ? `<div style="margin-top: 8px; color: var(--ink-muted); line-height: 1.7;">${safeDesc}</div>` : ""}
-            ${detailHref ? `<div style="margin-top: 12px;"><a href="${detailHref}" class="application-link" target="_blank" rel="noopener">▷詳細</a></div>` : ""}
+            ${instagramHref ? `<div style="margin-top: 12px;"><a href="${instagramHref}" class="application-link" target="_blank" rel="noopener">▷instagram</a></div>` : ""}
           </div>
         </div>
       </div>

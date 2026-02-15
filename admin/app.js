@@ -681,24 +681,6 @@ function renderNews() {
 
 // Live描画
 function renderLive() {
-  const ticketInput = document.getElementById('ticket-link');
-  const openBtn = document.getElementById('openTicketLinkBtn');
-  ticketInput.value = siteData.live.ticketLink || '';
-  ticketInput.onchange = () => {
-    siteData.live.ticketLink = ticketInput.value;
-    markChanged();
-  };
-  if (openBtn) {
-    openBtn.onclick = () => {
-      const url = String(ticketInput.value || '').trim();
-      if (!url) {
-        showToast('チケット予約リンクが未設定です', 'error');
-        return;
-      }
-      window.open(url, '_blank', 'noopener');
-    };
-  }
-
   const upcomingList = document.getElementById('live-upcoming-list');
   const pastList = document.getElementById('live-past-list');
 
@@ -1013,7 +995,7 @@ function addNews() {
     </div>
     ${getImageFormHtml('')}
     <div class="form-group">
-      <label>リンクURL</label>
+      <label>詳細リンクURL（instagramなど/任意）</label>
       <input type="url" id="edit-link" class="text-input" placeholder="https://...">
     </div>
     <div class="form-group">
@@ -1120,7 +1102,7 @@ function editLive(id, category) {
     </div>
     ${getImageFormHtml(item.image)}
     <div class="form-group">
-      <label>リンクURL</label>
+      <label>詳細リンクURL（instagramなど/任意）</label>
       <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link)}">
     </div>
     <div class="checkbox-group">

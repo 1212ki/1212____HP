@@ -739,8 +739,8 @@ form {
 
 form label {
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-transform: none;
   font-size: 0.78rem;
 }
 
@@ -774,8 +774,15 @@ form button {
   font-weight: 600;
   font-size: 0.85rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
+  text-transform: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Ticket form groups (ticket page wraps each field in a div) */
+#ticket-form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 form button:hover {
@@ -953,9 +960,11 @@ form button:hover {
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-transform: none;
   transition: all 0.3s ease;
+  font-family: var(--font-body);
+  cursor: pointer;
 }
 
 .application-link:hover {

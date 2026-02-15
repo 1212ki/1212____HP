@@ -53,6 +53,12 @@
       .replace(/'/g, "&#039;");
   }
 
+  function isInstagramUrl(url) {
+    const value = String(url || "").trim();
+    if (!value) return false;
+    return /^https?:\/\/(www\.)?instagram\.com\//i.test(value);
+  }
+
   function renderSite(site, version) {
     const heroImg = document.getElementById("home-hero-image");
     const linkBandcamp = document.getElementById("home-link-bandcamp");
@@ -141,7 +147,6 @@
         const safeDesc = escapeHtml((item.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
         const prefix = isRootPage() ? "" : "../";
         const reserveHref = `${prefix}ticket/?liveId=${encodeURIComponent(item.id || "")}`;
-        const detailHref = item.link ? escapeHtml(item.link) : "";
         return `
           <div class="live-event">
             ${image ? `<img src="${image}" alt="${escapeHtml(item.venue || "Live")}">` : ""}
@@ -151,7 +156,7 @@
               <p class="live-description">${safeDesc}</p>
               <div class="live-actions" style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
                 <a href="${reserveHref}" class="application-link">▷予約</a>
-                ${detailHref ? `<a href="${detailHref}" class="application-link" target="_blank" rel="noopener">▷詳細</a>` : ""}
+                <button type="button" class="application-link" data-live-detail-id="${escapeHtml(item.id || "")}">▷詳細</button>
               </div>
             </div>
           </div>
@@ -160,14 +165,105 @@
       .join("");
   }
 
+  function findLiveById(siteData, liveId) {
+    const data = siteData && typeof siteData === "object" ? siteData : {};
+    const live = data.live && typeof data.live === "object" ? data.live : {};
+    const upcoming = Array.isArray(live.upcoming) ? live.upcoming : [];
+    const past = Array.isArray(live.past) ? live.past : [];
+    return [...upcoming, ...past].find((item) => String(item.id) === String(liveId)) || null;
+  }
+
+  function openLiveDetailModal(siteData, liveId, version) {
+    const overlay = document.getElementById("liveDetailOverlay");
+    const modal = document.getElementById("liveDetailModal");
+    const title = document.getElementById("liveDetailTitle");
+    const body = document.getElementById("liveDetailBody");
+    const ext = document.getElementById("liveDetailExternalLink");
+    if (!overlay || !modal || !body) return;
+
+    const live = findLiveById(siteData, liveId);
+    if (!live) return;
+
+    const heading = `${String(live.date || "").trim()} ${String(live.venue || "").trim()}`.trim() || "live detail";
+    if (title) title.textContent = heading;
+
+    const image = resolveImageSrc(live.image || "", version);
+    const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
+    body.innerHTML = `
+      <div style="display:flex; gap: 14px; align-items: flex-start; flex-wrap: wrap;">
+        ${image ? `<img src="${escapeHtml(image)}" alt="" style="width: 160px; height: 160px; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.7);">` : ""}
+        <div style="flex: 1; min-width: 240px;">
+          <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(heading)}</div>
+          ${safeDesc ? `<div style="margin-top: 10px; color: var(--ink-muted); line-height: 1.8;">${safeDesc}</div>` : ""}
+        </div>
+      </div>
+    `;
+
+    const link = String(live.link || "").trim();
+    if (ext) {
+      if (isInstagramUrl(link)) {
+        ext.href = link;
+        ext.textContent = "instagram";
+        ext.style.display = "";
+      } else {
+        ext.href = "#";
+        ext.style.display = "none";
+      }
+    }
+
+    overlay.classList.add("is-open");
+    modal.classList.add("is-open");
+    overlay.setAttribute("aria-hidden", "false");
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeLiveDetailModal() {
+    const overlay = document.getElementById("liveDetailOverlay");
+    const modal = document.getElementById("liveDetailModal");
+    if (!overlay || !modal) return;
+    overlay.classList.remove("is-open");
+    modal.classList.remove("is-open");
+    overlay.setAttribute("aria-hidden", "true");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  function wireLiveDetailModal(siteData, version) {
+    const overlay = document.getElementById("liveDetailOverlay");
+    const modal = document.getElementById("liveDetailModal");
+    if (!overlay || !modal) return;
+    if (modal.dataset && modal.dataset.wired === "1") return;
+    if (modal.dataset) modal.dataset.wired = "1";
+
+    const closeBtn = document.getElementById("liveDetailCloseBtn");
+    const closeLink = document.getElementById("liveDetailCloseLink");
+    overlay.addEventListener("click", closeLiveDetailModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeLiveDetailModal);
+    if (closeLink) {
+      closeLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeLiveDetailModal();
+      });
+    }
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLiveDetailModal();
+    });
+
+    const handler = (e) => {
+      const btn = e.target && e.target.closest ? e.target.closest("[data-live-detail-id]") : null;
+      if (!btn) return;
+      const liveId = btn.getAttribute("data-live-detail-id") || "";
+      if (!liveId) return;
+      openLiveDetailModal(siteData, liveId, version);
+    };
+
+    const upcoming = document.getElementById("live-upcoming-events");
+    const past = document.getElementById("live-past-events");
+    if (upcoming) upcoming.addEventListener("click", handler);
+    if (past) past.addEventListener("click", handler);
+  }
+
   function renderLive(data, version) {
     if (!data || !data.live) return;
-    const ticket = document.getElementById("ticket-link-anchor");
-    // Keep the page-local default (../ticket/) to avoid external double-maintenance.
-    // If you really want to override, set a relative path like "/ticket/".
-    if (ticket && data.live.ticketLink && /^\/(?!\/)/.test(String(data.live.ticketLink))) {
-      ticket.href = data.live.ticketLink;
-    }
     renderLiveEvents(document.getElementById("live-upcoming-events"), data.live.upcoming || [], version);
     renderLiveEvents(document.getElementById("live-past-events"), data.live.past || [], version);
 
@@ -176,6 +272,8 @@
       const hasPast = Array.isArray(data.live.past) && data.live.past.length > 0;
       pastHeading.style.display = hasPast ? "" : "none";
     }
+
+    wireLiveDetailModal(data, version);
   }
 
   function renderDiscography(discography, version) {

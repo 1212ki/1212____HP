@@ -60,6 +60,22 @@
         <div class="live-events" id="live-past-events"></div>
       </div>
     </section>
+
+    <!-- Live detail modal -->
+    <div class="ticket-modal-overlay" id="liveDetailOverlay" aria-hidden="true"></div>
+    <div class="ticket-modal" id="liveDetailModal" role="dialog" aria-modal="true" aria-labelledby="liveDetailTitle" aria-hidden="true">
+      <div class="ticket-modal-header">
+        <h3 id="liveDetailTitle" class="ticket-modal-title">live detail</h3>
+        <button type="button" class="ticket-modal-close" id="liveDetailCloseBtn" aria-label="Close">×</button>
+      </div>
+      <div class="ticket-modal-body">
+        <div id="liveDetailBody"></div>
+      </div>
+      <div class="ticket-modal-footer">
+        <a class="ticket-modal-btn ghost" id="liveDetailCloseLink" href="#">閉じる</a>
+        <a class="ticket-modal-btn primary" id="liveDetailExternalLink" href="#" target="_blank" rel="noopener" style="display:none;">instagram</a>
+      </div>
+    </div>
   </main>
 
   <footer>
