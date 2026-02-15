@@ -995,7 +995,7 @@ async function handleRequest(request, env, ctx) {
   }
 
   const ogLiveMatch = path.match(/^\/og\/live\/([^/]+)$/);
-  if (ogLiveMatch && request.method === "GET") {
+  if (ogLiveMatch && (request.method === "GET" || request.method === "HEAD")) {
     const liveId = decodeURIComponent(ogLiveMatch[1]);
     const siteData = await getSiteData(env);
     const live = findLiveById(siteData, liveId);
@@ -1020,6 +1020,14 @@ async function handleRequest(request, env, ctx) {
       resolveOgImageUrl(live?.image || "", url.origin, publicOrigin, env) ||
       resolveOgImageUrl(siteData?.site?.heroImage || "", url.origin, publicOrigin, env);
 
+    const headers = {
+      "Cache-Control": "public, max-age=300",
+    };
+
+    if (request.method === "HEAD") {
+      return htmlResponse("", 200, headers);
+    }
+
     const html = buildOgLiveHtml({
       pageUrl: url.href,
       canonicalUrl,
@@ -1028,9 +1036,7 @@ async function handleRequest(request, env, ctx) {
       imageUrl,
     });
 
-    return htmlResponse(html, 200, {
-      "Cache-Control": "public, max-age=300",
-    });
+    return htmlResponse(html, 200, headers);
   }
 
   if (path === "/api/public/site-data" && request.method === "GET") {
