@@ -68,8 +68,10 @@ npx wrangler d1 execute itsuki-homepage --file=./schema.sql --remote
 
 Write-Host ""
 Write-Host "次の手順:" -ForegroundColor Cyan
-Write-Host "1) wrangler secret put X_CONSUMER_KEY"
-Write-Host "2) wrangler secret put X_CONSUMER_SECRET"
-Write-Host "3) wrangler secret put X_ACCESS_TOKEN"
-Write-Host "4) wrangler secret put X_ACCESS_TOKEN_SECRET"
-Write-Host "5) npx wrangler deploy"
+Write-Host "1) npx wrangler secret put ADMIN_SHARED_TOKEN" -ForegroundColor Yellow
+Write-Host "2) （任意）X APIを使う場合のみ:" -ForegroundColor Yellow
+Write-Host "   - npx wrangler secret put X_CONSUMER_KEY"
+Write-Host "   - npx wrangler secret put X_CONSUMER_SECRET"
+Write-Host "   - npx wrangler secret put X_ACCESS_TOKEN"
+Write-Host "   - npx wrangler secret put X_ACCESS_TOKEN_SECRET"
+Write-Host "3) npx wrangler deploy" -ForegroundColor Yellow

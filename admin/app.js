@@ -1,11 +1,23 @@
-﻿// 1212 HP Admin - App.js
+// 1212 HP Admin - App.js
 
 const DEFAULT_SITE_DATA = {
   news: [],
   live: { ticketLink: '', upcoming: [], past: [] },
   discography: { digital: [], demo: [] },
   profile: { image: '', text: '', links: [] },
-  youtube: { channelUrl: 'https://www.youtube.com/@1212____ki', musicVideos: [], liveMovies: [], demos: [] },
+  // Seed with known videos so "missing youtube section" does not render as empty on public/admin.
+  youtube: {
+    channelUrl: 'https://www.youtube.com/@1212____ki',
+    musicVideos: [
+      { id: 'yt-mv-tsukiwomatte', title: '月を待って', youtubeId: 'JaPin67uO7A' },
+      { id: 'yt-mv-lens', title: 'lens', youtubeId: 'gMNngWO5m1k' },
+    ],
+    liveMovies: [
+      { id: 'yt-live-1', title: 'Live Movie 1', youtubeId: 'UembkfsXzJ4' },
+      { id: 'yt-live-2', title: 'Live Movie 2', youtubeId: 'A58sXPiLb9M' },
+    ],
+    demos: [{ id: 'yt-demo-contrail', title: 'コントレイル', youtubeId: 'X5LEi_lEAWI' }],
+  },
   site: {
     heroImage: 'assets/images/hero.jpg',
     links: {
@@ -39,10 +51,20 @@ let API_BASE_URL = '';
 let IS_API_MODE = false;
 let adminToken = '';
 
+function normalizeLegacyApiBaseUrl(raw) {
+  const v = String(raw || '').trim();
+  if (!v) return '';
+  return v
+    .replace('tsukimatsumoto.workers.dev', 'itsukimatsumoto.workers.dev')
+    .replace('itsuki-homepage-api.itsukii0414.workers.dev', '1212hp.itsukimatsumoto.workers.dev')
+    .replace('1212hp.itsukii0414.workers.dev', '1212hp.itsukimatsumoto.workers.dev')
+    .replace('itsuki-homepage-api.itsukimatsumoto.workers.dev', '1212hp.itsukimatsumoto.workers.dev');
+}
+
 function refreshAdminRuntimeConfig() {
   const cfg = window.ADMIN_CONFIG || {};
-  const rawBase = String(cfg.apiBaseUrl || '').trim();
-  const defaultProdBase = 'https://itsuki-homepage-api.itsukii0414.workers.dev';
+  const rawBase = normalizeLegacyApiBaseUrl(cfg.apiBaseUrl || '');
+  const defaultProdBase = 'https://1212hp.itsukimatsumoto.workers.dev';
   const isProdHost = typeof location !== 'undefined' && (location.hostname === '1212hp.com' || location.hostname.endsWith('.1212hp.com'));
   API_BASE_URL = String(rawBase || (isProdHost ? defaultProdBase : '')).replace(/\/+$/, '');
   IS_API_MODE = Boolean(API_BASE_URL);
@@ -57,8 +79,6 @@ let currentEditId = null;
 let isNewItem = false;
 let hasChanges = false;
 let isSaving = false;
-let xPostStatusMap = {};
-let postingLiveIds = new Set();
 let xPreviewDirty = false;
 let xPreviewLastAutoText = '';
 
@@ -132,10 +152,10 @@ function normalizeSiteData(input) {
   normalized.profile.links = Array.isArray(normalized.profile.links) ? normalized.profile.links : [];
 
   normalized.youtube = normalized.youtube && typeof normalized.youtube === 'object' ? normalized.youtube : base.youtube;
-  normalized.youtube.channelUrl = normalized.youtube.channelUrl || '';
-  normalized.youtube.musicVideos = Array.isArray(normalized.youtube.musicVideos) ? normalized.youtube.musicVideos : [];
-  normalized.youtube.liveMovies = Array.isArray(normalized.youtube.liveMovies) ? normalized.youtube.liveMovies : [];
-  normalized.youtube.demos = Array.isArray(normalized.youtube.demos) ? normalized.youtube.demos : [];
+  normalized.youtube.channelUrl = normalized.youtube.channelUrl || base.youtube.channelUrl;
+  normalized.youtube.musicVideos = Array.isArray(normalized.youtube.musicVideos) ? normalized.youtube.musicVideos : base.youtube.musicVideos;
+  normalized.youtube.liveMovies = Array.isArray(normalized.youtube.liveMovies) ? normalized.youtube.liveMovies : base.youtube.liveMovies;
+  normalized.youtube.demos = Array.isArray(normalized.youtube.demos) ? normalized.youtube.demos : base.youtube.demos;
 
   normalized.site = normalized.site && typeof normalized.site === 'object' ? normalized.site : base.site;
   normalized.site.heroImage = normalized.site.heroImage || '';
@@ -215,34 +235,6 @@ async function adminFetch(path, options = {}) {
     headers.set('Content-Type', 'application/json');
   }
   return fetch(url, { ...options, headers });
-}
-
-async function loadXPostStatuses() {
-  if (!IS_API_MODE) return;
-  try {
-    const response = await adminFetch('/api/admin/x-posts?limit=200');
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      throw new Error(getErrorMessage(payload, 'X投稿履歴を取得できませんでした'));
-    }
-    const posts = Array.isArray(payload.posts) ? payload.posts : [];
-    const map = {};
-    for (const post of posts) {
-      const liveId = post.liveId || post.live_id;
-      if (!liveId || map[liveId]) continue;
-      map[liveId] = {
-        id: post.id || post.postId || null,
-        status: post.status || 'unknown',
-        tweetUrl: post.tweetUrl || post.tweet_url || '',
-        tweetText: post.tweetText || post.tweet_text || '',
-        errorMessage: post.errorMessage || post.error_message || '',
-        createdAt: post.createdAt || post.created_at || ''
-      };
-    }
-    xPostStatusMap = map;
-  } catch (error) {
-    console.error('X投稿履歴読み込みエラー:', error);
-  }
 }
 
 async function loadTickets() {
@@ -353,7 +345,6 @@ async function loadData() {
       }
       siteData = normalizeSiteData(payload.data ?? payload);
       setConnectionBanner('Cloudflare API接続中', 'api');
-      await loadXPostStatuses();
       await loadTickets();
       return;
     } catch (error) {
@@ -638,19 +629,6 @@ function getImageSrc(imagePath) {
   }
   // 既存画像
   return `../${imagePath}`;
-}
-
-function getLiveStatus(itemId) {
-  return xPostStatusMap[itemId] || null;
-}
-
-function formatIsoToLocalLabel(iso) {
-  const v = String(iso || '').trim();
-  if (!v) return '';
-  const d = new Date(v);
-  if (!Number.isFinite(d.getTime())) return v;
-  const pad = (n) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
 function renderLiveItem(item, category) {
@@ -1090,6 +1068,7 @@ function addLive() {
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-apply-btn">Xに反映</button>
+        <button type="button" class="btn btn-secondary btn-compact btn-mini" id="x-share-copy-btn" title="インスタストーリー等に貼るリンクをコピー">リンクコピー</button>
       </div>
     </div>
   `);
@@ -1144,6 +1123,7 @@ function editLive(id, category) {
       <div class="field-row">
         <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
         <button type="button" class="btn btn-primary btn-compact" id="x-apply-btn">Xに反映</button>
+        <button type="button" class="btn btn-secondary btn-compact btn-mini" id="x-share-copy-btn" title="インスタストーリー等に貼るリンクをコピー">リンクコピー</button>
       </div>
     </div>
   `);
@@ -1247,13 +1227,12 @@ function closeModal() {
 
 // モーダル保存
 async function saveModal() {
-  let liveAction = null;
   let ok = true;
   if (!ensureNoActiveImageUploads()) return;
   if (currentEditType === 'news') {
     saveNewsItem();
   } else if (currentEditType.startsWith('live')) {
-    liveAction = saveLiveItem();
+    saveLiveItem();
   } else if (currentEditType.startsWith('youtube')) {
     ok = saveYouTubeItem();
   } else if (currentEditType.startsWith('discography')) {
@@ -1261,25 +1240,13 @@ async function saveModal() {
   }
 
   if (!ok) return;
-  const tweetText = String(document.getElementById('x-preview-text')?.value || '').trim();
   closeModal();
   markChanged();
-  if (IS_API_MODE && !(liveAction && liveAction.postToX)) {
+  if (IS_API_MODE) {
     const saved = await saveData({ silent: true });
     if (saved) showToast('保存しました', 'success');
   } else {
     showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
-  }
-
-  if (liveAction && liveAction.postToX) {
-    if (!IS_API_MODE) {
-      showToast('X投稿はAPIモードでのみ利用できます', 'error');
-      return;
-    }
-    const saved = await saveData({ silent: true });
-    if (saved) {
-      await postLiveToX(liveAction.liveId, { skipUnsavedCheck: true, tweetText });
-    }
   }
 }
 
@@ -1497,10 +1464,6 @@ async function saveData(options = {}) {
   }
 }
 
-async function testLivePostToX(liveId) {
-  return postLiveToX(liveId, { dryRun: true });
-}
-
 function buildTweetTextForAdmin(live) {
   const rawDescription = String((live && live.description) || '').replace(/<br\s*\/?>/gi, '\n');
   const descLines = rawDescription
@@ -1579,6 +1542,23 @@ function wireXPreviewInModal() {
   document.getElementById('x-preview-refresh-btn')?.addEventListener('click', () => {
     xPreviewDirty = false;
     updateXPreviewInModal({ force: true });
+  });
+
+  document.getElementById('x-share-copy-btn')?.addEventListener('click', async () => {
+    const live = readLiveFromModal();
+    const ogUrl = buildLiveOgUrl(live.id);
+    const fallbackUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(String(live.id || ''))}`;
+    const url = ogUrl || fallbackUrl;
+    if (!url) {
+      showToast('リンクを生成できませんでした', 'error');
+      return;
+    }
+    const ok = await copyToClipboard(url);
+    if (!ok) {
+      showToast('クリップボードにコピーできませんでした', 'error');
+      return;
+    }
+    showToast('リンクをコピーしました', 'success');
   });
 
   document.getElementById('x-apply-btn')?.addEventListener('click', async () => {
@@ -1692,10 +1672,35 @@ function stripUrlsFromTweetText(text) {
 }
 
 function buildLiveOgUrl(liveId) {
-  if (!API_BASE_URL) return '';
+  const base = String(API_BASE_URL || '').replace(/\/+$/, '');
+  if (!base) return '';
   const id = String(liveId || '').trim();
   if (!id) return '';
-  return `${API_BASE_URL}/og/live/${encodeURIComponent(id)}`;
+  return `${base}/og/live/${encodeURIComponent(id)}`;
+}
+
+async function copyToClipboard(text) {
+  const value = String(text || '');
+  try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch (_e) {
+    // Fallback for older browsers / non-secure contexts.
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = value;
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (_e2) {
+      return false;
+    }
+  }
 }
 
 function buildXIntentUrlFromModal() {
@@ -1729,115 +1734,18 @@ function openXIntentFromModal() {
 }
 
 async function scheduleLiveToXFromModal() {
-  if (!IS_API_MODE) {
-    showToast('予約投稿はAPIモードでのみ利用できます', 'error');
-    return;
-  }
-  if (!ensureNoActiveImageUploads()) return;
-
-  const live = readLiveFromModal();
-  const raw = String(document.getElementById('x-schedule-at')?.value || '').trim();
-  if (!raw) {
-    showToast('予約日時を入力してください', 'error');
-    return;
-  }
-  const d = new Date(raw);
-  if (!Number.isFinite(d.getTime())) {
-    showToast('予約日時が不正です', 'error');
-    return;
-  }
-
-  // Apply modal edits to siteData before scheduling (then save to API if needed).
-  saveLiveItem();
-  markChanged();
-  const saved = await saveData({ silent: true });
-  if (!saved) return;
-
-  try {
-    const response = await adminFetch(`/api/admin/live/${encodeURIComponent(live.id)}/schedule-x`, {
-      method: 'POST',
-      body: JSON.stringify({ scheduledAt: d.toISOString(), tweetText: String(document.getElementById('x-preview-text')?.value || '').trim() || buildTweetTextForAdmin(live) })
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      throw new Error(getErrorMessage(payload, '予約投稿に失敗しました'));
-    }
-    await loadXPostStatuses();
-    renderLive();
-    showToast(`予約しました: ${formatIsoToLocalLabel(payload?.job?.createdAt || d.toISOString())}`, 'success');
-  } catch (error) {
-    showToast(`予約投稿失敗: ${error.message}`, 'error');
-  }
+  showToast('予約投稿（X API）はこの運用では使いません。Web Intentで投稿してください', 'error');
 }
 
 async function cancelXSchedule(postId) {
-  if (!IS_API_MODE) {
-    showToast('予約解除はAPIモードでのみ利用できます', 'error');
-    return;
-  }
-  if (!confirm('予約投稿を解除しますか？')) return;
-  try {
-    const response = await adminFetch(`/api/admin/x-posts/${encodeURIComponent(String(postId))}/cancel`, { method: 'POST' });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      throw new Error(getErrorMessage(payload, '予約解除に失敗しました'));
-    }
-    await loadXPostStatuses();
-    renderLive();
-    showToast('予約を解除しました', 'success');
-  } catch (error) {
-    showToast(`予約解除失敗: ${error.message}`, 'error');
-  }
+  void postId;
+  showToast('予約投稿（X API）はこの運用では使いません', 'error');
 }
 
 async function postLiveToX(liveId, options = {}) {
-  if (!IS_API_MODE) {
-    showToast('X投稿はAPIモードでのみ利用できます', 'error');
-    return;
-  }
-  if (!options.skipUnsavedCheck && hasChanges) {
-    showToast('先に保存してからX投稿してください', 'error');
-    return;
-  }
-  if (postingLiveIds.has(liveId)) return;
-
-  postingLiveIds.add(liveId);
-  renderLive();
-  try {
-    const dryRun = Boolean(options.dryRun);
-    const query = dryRun ? '?dryRun=1' : '';
-    const tweetText = typeof options.tweetText === 'string' ? options.tweetText.trim() : '';
-    if (tweetText && tweetText.length > 280) {
-      showToast('X投稿テキストが280文字を超えています（プレビューを短くしてください）', 'error');
-      return;
-    }
-    const response = await adminFetch(`/api/admin/live/${encodeURIComponent(liveId)}/post-x${query}`, {
-      method: 'POST',
-      ...(tweetText ? { body: JSON.stringify({ tweetText }) } : {})
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      throw new Error(getErrorMessage(payload, 'X投稿に失敗しました'));
-    }
-    if (dryRun) {
-      const account = payload.account || {};
-      const accountLabel = account.screenName ? ` @${account.screenName}` : '';
-      showToast(`Xテスト成功（投稿なし）${accountLabel}`, 'success');
-      return;
-    }
-    xPostStatusMap[liveId] = {
-      status: 'success',
-      tweetUrl: payload.tweet?.url || payload.tweetUrl || '',
-      createdAt: payload.createdAt || new Date().toISOString()
-    };
-    showToast('Xへ投稿しました', 'success');
-  } catch (error) {
-    const label = options.dryRun ? 'Xテスト失敗' : 'X投稿失敗';
-    showToast(`${label}: ${error.message}`, 'error');
-  } finally {
-    postingLiveIds.delete(liveId);
-    renderLive();
-  }
+  void liveId;
+  void options;
+  showToast('自動投稿（X API）はこの運用では使いません。Web Intentで投稿してください', 'error');
 }
 
 // JSONダウンロード
@@ -1909,6 +1817,8 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
+
+
 
 
 

@@ -1,4 +1,4 @@
-name = "itsuki-homepage-api"
+name = "1212hp"
 main = "src/worker.js"
 compatibility_date = "2026-02-14"
 
@@ -13,19 +13,10 @@ bucket_name = "itsuki-homepage-images"
 
 [vars]
 # 管理画面ドメイン、公開サイトドメインをカンマ区切りで指定
-ALLOWED_ORIGINS = "https://1212hp.com,https://admin.1212hp.com"
+ALLOWED_ORIGINS = "https://1212hp.com,https://www.1212hp.com,https://admin.1212hp.com,https://1212hp.itsukimatsumoto.workers.dev,http://127.0.0.1:8080,http://localhost:8080,http://127.0.0.1:8888,http://localhost:8888,null"
 # Cloudflare Accessで守る場合は true にして ADMIN_TOKEN を空でも可
 BYPASS_ADMIN_TOKEN = "false"
 X_DEFAULT_HASHTAGS = "#松本一樹 #ライブ"
-
-[triggers]
-# X予約投稿の実行（1分ごと）
-crons = ["* * * * *"]
-
-# wrangler secret put X_CONSUMER_KEY
-# wrangler secret put X_CONSUMER_SECRET
-# wrangler secret put X_ACCESS_TOKEN
-# wrangler secret put X_ACCESS_TOKEN_SECRET
 #
 # wrangler secret put ADMIN_SHARED_TOKEN
 #
@@ -36,3 +27,5 @@ crons = ["* * * * *"]
 #
 # 方式B: 任意Webhook（Slack互換など）
 # wrangler secret put LINE_WEBHOOK_URL
+
+# 参考: X APIの予約投稿などを使う場合は、ここに crons を追加し、X系のsecretも設定する。
