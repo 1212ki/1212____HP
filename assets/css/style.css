@@ -120,13 +120,13 @@ header.header-scrolled {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 18px 0;
+  padding: 14px 0;
 }
 
 .logo {
   font-family: var(--font-display);
   /* Keep the header logo size stable; only adjust at breakpoints. */
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: var(--text-heading-1-font-weight, 500);
   letter-spacing: 0.08em;
   display: flex;
@@ -161,8 +161,8 @@ header.header-scrolled {
 .logo .sp-only {
   font-family: var(--font-body);
   font-size: 0.56em;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  text-transform: none;
   color: var(--ink-muted);
 }
 
@@ -1103,12 +1103,13 @@ footer p {
 
 @media (max-width: 820px) {
   header {
-    padding: 8px 0;
+    padding: 0;
   }
 
   .header-container {
     flex-wrap: wrap;
     gap: 12px;
+    padding: 10px 0;
   }
 
   .nav-toggle {
@@ -1149,7 +1150,7 @@ footer p {
   }
 
   .logo {
-    font-size: 1.95rem;
+    font-size: 1.6rem;
   }
 
   .news-item {
@@ -1193,3 +1194,4 @@ footer p {
     scroll-behavior: auto !important;
   }
 }
+
