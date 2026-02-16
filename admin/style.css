@@ -692,6 +692,11 @@ body {
   background: var(--white);
 }
 
+.btn-mini {
+  padding: 10px 12px;
+  font-size: 0.82em;
+}
+
 .btn-danger {
   background: var(--gray-900);
   color: var(--white);

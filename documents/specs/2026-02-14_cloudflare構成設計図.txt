@@ -79,7 +79,7 @@ Project: 1212ホームページ Cloudflare運用設計
 - API課金はX利用分を主対象とし、インフラ固定費は最小化
 
 ## 11. Cloudflareリソース設計
-- Worker名: `itsuki-homepage-api`
+- Worker名: `1212hp`
 - D1データベース名: `itsuki-homepage`
 - 環境変数:
   - `ALLOWED_ORIGINS`: 管理画面と公開サイトのオリジン

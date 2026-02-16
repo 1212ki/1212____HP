@@ -50,12 +50,13 @@
 
 1. 管理画面設定
    - `admin/config.example.js` を `admin/config.js` にコピー
-   - `apiBaseUrl` と `adminToken` を設定
+   - `apiBaseUrl` / `adminToken` を設定
 2. Worker設定
    - `cloudflare/worker/wrangler.toml.example` を `wrangler.toml` へコピー
    - `setx CLOUDFLARE_API_TOKEN "<token>"` を設定
    - `pwsh ./cloudflare/worker/setup.ps1` を実行（D1作成+schema適用）
-   - X APIキーを `wrangler secret put` で登録
+   - `wrangler secret put ADMIN_SHARED_TOKEN` を設定
+   - （任意）X APIを使う場合のみ、X系secretを設定
 3. デプロイ
    - `wrangler deploy`
 
@@ -85,10 +86,11 @@ python -m http.server 8888 --bind 127.0.0.1
 
 ## Links
 
-- [YouTube](https://www.youtube.com/@1212ki)
+- [YouTube](https://www.youtube.com/@1212____ki)
 - [Bandcamp](https://1212ki.bandcamp.com/)
 - [note](https://note.com/1212_4939)
 
 ## License
 
 All rights reserved. Copyright 2025 Itsuki Matsumoto.
+

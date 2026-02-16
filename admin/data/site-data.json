@@ -128,10 +128,56 @@
     "image": "assets/images/artist2.JPG",
     "text": "松本一樹 -itsukimatsumoto-\nindie rock / acoustic\n東京都内を中心に活動するシンガーソングライター。\n2023年より宅録での楽曲制作を中心に音楽活動を開始。\n弾き語り/バンドセットの２形態でのライブ活動を継続中。\n\n～リリース～\n・2025年3月:Single『lens』\n・2025年5月:Single『月を待って』",
     "links": [
-      {"name": "X", "url": "https://www.x.com/1212____ki"},
-      {"name": "Instagram", "url": "https://www.instagram.com/1212____ki"},
-      {"name": "YouTube", "url": "https://www.youtube.com/@1212____ki"},
-      {"name": "note", "url": "https://note.com/1212_4939/m/m466c3962969c"}
+      {
+        "name": "X",
+        "url": "https://www.x.com/1212____ki"
+      },
+      {
+        "name": "Instagram",
+        "url": "https://www.instagram.com/1212____ki"
+      },
+      {
+        "name": "YouTube",
+        "url": "https://www.youtube.com/@1212____ki"
+      },
+      {
+        "name": "note",
+        "url": "https://note.com/1212_4939/m/m466c3962969c"
+      }
+    ]
+  },
+  "youtube": {
+    "channelUrl": "https://www.youtube.com/@1212____ki",
+    "musicVideos": [
+      {
+        "id": "yt-mv-tsukiwomatte",
+        "title": "月を待って",
+        "youtubeId": "JaPin67uO7A"
+      },
+      {
+        "id": "yt-mv-lens",
+        "title": "lens",
+        "youtubeId": "gMNngWO5m1k"
+      }
+    ],
+    "liveMovies": [
+      {
+        "id": "yt-live-1",
+        "title": "Live Movie 1",
+        "youtubeId": "UembkfsXzJ4"
+      },
+      {
+        "id": "yt-live-2",
+        "title": "Live Movie 2",
+        "youtubeId": "A58sXPiLb9M"
+      }
+    ],
+    "demos": [
+      {
+        "id": "yt-demo-contrail",
+        "title": "コントレイル",
+        "youtubeId": "X5LEi_lEAWI"
+      }
     ]
   }
 }

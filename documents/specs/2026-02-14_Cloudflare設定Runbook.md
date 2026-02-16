@@ -5,11 +5,11 @@
 
 ## 2. 事前準備
 - Cloudflareアカウント
-- X開発者アカウント（Consumer Key/Secret, Access Token/Secret）
+- （任意）X APIを使う場合のみ: X開発者アカウント（Consumer Key/Secret, Access Token/Secret）
 - 画像アップロード運用をする場合: Cloudflare R2（バケット作成）
 
 ## 3. 使うリソース
-- Workers: `itsuki-homepage-api`
+- Workers: `1212hp`
 - D1: `itsuki-homepage`
 
 ## 4. ローカル設定
@@ -42,12 +42,10 @@ R2（画像アップロード）:
 ## 7. Secret設定
 
 ```bash
-npx wrangler secret put X_CONSUMER_KEY
-npx wrangler secret put X_CONSUMER_SECRET
-npx wrangler secret put X_ACCESS_TOKEN
-npx wrangler secret put X_ACCESS_TOKEN_SECRET
 npx wrangler secret put ADMIN_SHARED_TOKEN
 ```
+
+※「管理画面 → Web Intentで半自動投稿（X APIを使わない）」運用なら、XのSecretは不要です。
 
 ## 8. デプロイ
 
@@ -67,10 +65,8 @@ npx wrangler deploy
 ## 11. 動作確認
 1. 管理画面でLiveを1件追加して保存
 2. 公開サイト `live` ページに反映されることを確認
-3. 投稿なし検証: Liveカードの `Xテスト` を実行
-4. トーストに `Xテスト成功（投稿なし）` が表示されることを確認
-5. 本投稿検証: Liveカードの `X投稿` を実行
-6. X投稿URLが管理画面に表示されることを確認
+3. Live編集モーダルの「Xに反映」から投稿画面が開くことを確認（Web Intent）
+4. 投稿に含まれるURLでカード（画像/タイトル/説明）が出ることを確認
 
 ## 12. 障害対応
 - `401 unauthorized`

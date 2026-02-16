@@ -2,6 +2,8 @@
 
 管理画面と公開サイト向けのAPI、およびX自動投稿を担当するWorkerです。
 
+※現在の推奨運用は「管理画面 → Web Intentで半自動投稿（X APIを使わない）＋OGPリンクカード」です。X APIを使うエンドポイントは将来拡張として残しています。
+
 ## 機能
 
 - `GET /api/public/site-data`
@@ -37,11 +39,12 @@
 3. セットアップスクリプト実行（D1作成 + schema適用）
    - `pwsh ./setup.ps1`
 4. シークレット設定
-   - `wrangler secret put X_CONSUMER_KEY`
-   - `wrangler secret put X_CONSUMER_SECRET`
-   - `wrangler secret put X_ACCESS_TOKEN`
-   - `wrangler secret put X_ACCESS_TOKEN_SECRET`
    - `wrangler secret put ADMIN_SHARED_TOKEN`（管理API保護トークン。リポジトリにコミットしない）
+   - （任意）X APIを使う場合のみ
+     - `wrangler secret put X_CONSUMER_KEY`
+     - `wrangler secret put X_CONSUMER_SECRET`
+     - `wrangler secret put X_ACCESS_TOKEN`
+     - `wrangler secret put X_ACCESS_TOKEN_SECRET`
    - （任意）チケット予約のLINE通知
      - 方式A: LINE Messaging API push（推奨）
        - `wrangler secret put LINE_CHANNEL_ACCESS_TOKEN`
@@ -60,4 +63,4 @@
 
 - 画像は管理画面からアップロード可能（R2へ保存、`/images/` で配信）
 - 投稿テンプレートは `src/worker.js` の `buildTweetText` で調整できます
-- X予約投稿を動かすには `wrangler.toml` の `triggers.crons` が必要です（1分ごと推奨）
+- （任意）X予約投稿を動かすには `wrangler.toml` の `triggers.crons` が必要です（1分ごと推奨）
