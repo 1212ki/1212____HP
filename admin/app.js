@@ -1659,7 +1659,7 @@ function wireXPreviewInModal() {
       if (w && w.document) {
         w.document.open();
         const homeUrl = (() => {
-          try { return new URL('/', window.location.href).toString(); } catch (_e) { return 'https://1212hp.com/'; }
+          try { return new URL('./', window.location.href).toString(); } catch (_e) { return (window.location && window.location.origin ? window.location.origin + '/' : '/'); }
         })();
         const homeUrlJs = JSON.stringify(homeUrl);
 
@@ -1753,7 +1753,7 @@ function wireXPreviewInModal() {
         try { w.opener = null; } catch (_e) {}
         try {
           const returnHomeUrl = (() => {
-            try { return new URL('/', window.location.href).toString(); } catch (_e) { return 'https://1212hp.com/'; }
+            try { return new URL('./', window.location.href).toString(); } catch (_e) { return (window.location && window.location.origin ? window.location.origin + '/' : '/'); }
           })();
           setTimeout(() => {
             try { if (w && !w.closed) w.location.replace(returnHomeUrl); } catch (_e2) {}
