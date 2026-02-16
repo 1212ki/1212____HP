@@ -1658,7 +1658,34 @@ function wireXPreviewInModal() {
     try {
       if (w && w.document) {
         w.document.open();
-        w.document.write('<!doctype html><meta charset="utf-8"><title>Opening X...</title><p style="font-family:system-ui,sans-serif;padding:16px">Opening X...</p>');
+        const homeUrl = (() => {
+          try { return new URL('/', window.location.href).toString(); } catch (_e) { return 'https://1212hp.com/'; }
+        })();
+        const homeUrlJs = JSON.stringify(homeUrl);
+
+        // Some mobile browsers may keep this tab blank if they block navigation after async work.
+        // If X doesn't open quickly, fall back to the home so the user isn't left on a white page.
+        w.document.write(`<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Opening X...</title>
+    <style>
+      body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; padding: 18px; margin: 0; }
+      p { margin: 0 0 12px; color: #111; line-height: 1.6; }
+      a { color: #111; }
+    </style>
+  </head>
+  <body>
+    <p>X投稿画面を開いています...</p>
+    <p>もしこの画面のままなら、数秒後にホームへ戻ります。</p>
+    <p><a href="${homeUrl}" rel="noopener">ホームへ戻る</a></p>
+    <script>
+      try { setTimeout(function () { location.replace(${homeUrlJs}); }, 2500); } catch (e) {}
+    </script>
+  </body>
+</html>`);
         w.document.close();
       }
 
@@ -1724,6 +1751,14 @@ function wireXPreviewInModal() {
       if (w && !w.closed) {
         w.location.href = intentUrl;
         try { w.opener = null; } catch (_e) {}
+        try {
+          const returnHomeUrl = (() => {
+            try { return new URL('/', window.location.href).toString(); } catch (_e) { return 'https://1212hp.com/'; }
+          })();
+          setTimeout(() => {
+            try { if (w && !w.closed) w.location.replace(returnHomeUrl); } catch (_e2) {}
+          }, 90000);
+        } catch (_e) {}
         return;
       }
 
