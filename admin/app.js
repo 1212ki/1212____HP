@@ -50,6 +50,7 @@ const ADMIN_TOKEN_STORAGE_KEY = '1212hp_admin_token';
 let API_BASE_URL = '';
 let IS_API_MODE = false;
 let adminToken = '';
+const CANONICAL_API_BASE_URL = 'https://1212hp.itsukimatsumoto.workers.dev';
 
 function normalizeLegacyApiBaseUrl(raw) {
   const v = String(raw || '').trim();
@@ -64,7 +65,7 @@ function normalizeLegacyApiBaseUrl(raw) {
 function refreshAdminRuntimeConfig() {
   const cfg = window.ADMIN_CONFIG || {};
   const rawBase = normalizeLegacyApiBaseUrl(cfg.apiBaseUrl || '');
-  const defaultProdBase = 'https://1212hp.itsukimatsumoto.workers.dev';
+  const defaultProdBase = CANONICAL_API_BASE_URL;
   const isProdHost = typeof location !== 'undefined' && (location.hostname === '1212hp.com' || location.hostname.endsWith('.1212hp.com'));
   API_BASE_URL = String(rawBase || (isProdHost ? defaultProdBase : '')).replace(/\/+$/, '');
   IS_API_MODE = Boolean(API_BASE_URL);
@@ -225,7 +226,6 @@ async function adminFetch(path, options = {}) {
   if (!(await ensureAdminToken())) {
     throw new Error('管理トークン未設定');
   }
-  const url = `${API_BASE_URL}${path}`;
   const headers = new Headers(options.headers || {});
   if (adminToken) {
     headers.set('Authorization', `Bearer ${adminToken}`);
@@ -234,7 +234,24 @@ async function adminFetch(path, options = {}) {
   if (options.body && !headers.has('Content-Type') && typeof options.body === 'string') {
     headers.set('Content-Type', 'application/json');
   }
-  return fetch(url, { ...options, headers });
+
+  const bases = [];
+  const primary = String(API_BASE_URL || '').replace(/\/+$/, '');
+  if (primary) bases.push(primary);
+  if (!bases.includes(CANONICAL_API_BASE_URL)) bases.push(CANONICAL_API_BASE_URL);
+
+  let lastError = null;
+  for (const base of bases) {
+    try {
+      const response = await fetch(`${base}${path}`, { ...options, headers });
+      if (base !== API_BASE_URL) API_BASE_URL = base;
+      return response;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError || new Error('API request failed');
 }
 
 async function loadTickets() {
