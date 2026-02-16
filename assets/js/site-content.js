@@ -141,32 +141,32 @@
     if (!container || !Array.isArray(events)) return;
     container.innerHTML = "";
     if (events.length === 0) return;
+
+    // Compact list: date + venue + title only. Details are shown on the detail page.
     container.innerHTML = events
       .map((item) => {
-        const image = escapeHtml(resolveImageSrc(item.image || "", version));
-        const safeDesc = escapeHtml((item.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
         const prefix = isRootPage() ? "" : "../";
-        const reserveHref = `${prefix}ticket/?liveId=${encodeURIComponent(item.id || "")}`;
-        const detailHref = `${prefix}live/detail/?liveId=${encodeURIComponent(item.id || "")}`;
+        const liveId = String(item.id || "").trim();
+        const date = String(item.date || "").trim();
+        const venue = String(item.venue || "").trim();
+        const title = String(item.title || "").trim();
+        const detailHref = `${prefix}live/detail/?liveId=${encodeURIComponent(liveId)}`;
+
         return `
-          <div class="live-event">
-            ${image ? `<img src="${image}" alt="${escapeHtml(item.venue || "Live")}">` : ""}
+          <a class="live-event" href="${detailHref}">
             <div class="live-info">
-              <p class="live-date">${escapeHtml(item.date || "")}</p>
-              ${(item.title || '').trim() ? `<p class="live-title">${escapeHtml(String(item.title || '').trim())}</p>` : ''}
-              <p class="live-venue">${escapeHtml(item.venue || "")}</p>
-              <p class="live-description">${safeDesc}</p>
-              <div class="live-actions" style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <a href="${reserveHref}" class="application-link">▷予約</a>
-                <a href="${detailHref}" class="application-link">▷詳細</a>
+              <div class="live-meta">
+                <span class="live-date">${escapeHtml(date)}</span>
+                <span class="live-venue">${escapeHtml(venue)}</span>
               </div>
+              ${title ? `<div class="live-title">${escapeHtml(title)}</div>` : ""}
             </div>
-          </div>
+            <span class="live-chevron" aria-hidden="true">›</span>
+          </a>
         `;
       })
       .join("");
   }
-
   function findLiveById(siteData, liveId) {
     const data = siteData && typeof siteData === "object" ? siteData : {};
     const live = data.live && typeof data.live === "object" ? data.live : {};
