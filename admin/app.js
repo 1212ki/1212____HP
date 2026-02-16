@@ -188,9 +188,17 @@ function normalizeSiteData(input) {
 
 function getErrorMessage(payload, fallback) {
   if (!payload) return fallback;
-  if (typeof payload === 'string') return payload;
-  if (payload.error) return payload.error;
-  if (payload.message) return payload.message;
+  if (typeof payload === "string") return payload;
+
+  const msg = payload.error || payload.message;
+  if (msg) {
+    // Worker returns { error: "unauthorized" } on auth failure.
+    if (String(msg).toLowerCase() === "unauthorized") {
+      return "認証エラー: 管理トークンが違う/期限切れの可能性があります（再入力してください）";
+    }
+    return msg;
+  }
+
   return fallback;
 }
 
@@ -211,10 +219,15 @@ function ensureNoActiveImageUploads() {
   return false;
 }
 
-async function ensureAdminToken() {
+async function ensureAdminToken(forcePrompt = false) {
   if (!IS_API_MODE) return true;
-  if (adminToken) return true;
-  const entered = window.prompt('管理トークンを入力してください（初回のみ）', '');
+  if (!forcePrompt && adminToken) return true;
+
+  const promptText = forcePrompt
+    ? "認証に失敗しました。管理トークンを再入力してください"
+    : "管理トークンを入力してください（初回のみ）";
+
+  const entered = window.prompt(promptText, "");
   if (!entered) return false;
   adminToken = String(entered).trim();
   if (!adminToken) return false;
@@ -223,35 +236,93 @@ async function ensureAdminToken() {
 }
 
 async function adminFetch(path, options = {}) {
+  const resetToken = () => {
+    adminToken = "";
+    try {
+      localStorage.removeItem(ADMIN_TOKEN_STORAGE_KEY);
+    } catch (e) {}
+  };
+
   if (!(await ensureAdminToken())) {
-    throw new Error('管理トークン未設定');
-  }
-  const headers = new Headers(options.headers || {});
-  if (adminToken) {
-    headers.set('Authorization', `Bearer ${adminToken}`);
-  }
-  // Let the browser set Content-Type for FormData.
-  if (options.body && !headers.has('Content-Type') && typeof options.body === 'string') {
-    headers.set('Content-Type', 'application/json');
+    throw new Error("管理トークン未設定");
   }
 
+  const baseHeaders = new Headers(options.headers || {});
+
+  const buildHeaders = () => {
+    const headers = new Headers(baseHeaders);
+    if (adminToken) {
+      headers.set("Authorization", `Bearer ${adminToken}`);
+    }
+    // Let the browser set Content-Type for FormData.
+    if (options.body && !headers.has("Content-Type") && typeof options.body === "string") {
+      headers.set("Content-Type", "application/json");
+    }
+    return headers;
+  };
+
   const bases = [];
-  const primary = String(API_BASE_URL || '').replace(/\/+$/, '');
+  const primary = String(API_BASE_URL || "").replace(/\/+$/, "");
   if (primary) bases.push(primary);
   if (!bases.includes(CANONICAL_API_BASE_URL)) bases.push(CANONICAL_API_BASE_URL);
 
   let lastError = null;
+  let lastResponse = null;
+  let didRetryAuth = false;
+
+  const shouldTryNextBase = (status) => {
+    return status === 401 || status === 403 || status === 404 || status >= 500;
+  };
+
   for (const base of bases) {
-    try {
-      const response = await fetch(`${base}${path}`, { ...options, headers });
-      if (base !== API_BASE_URL) API_BASE_URL = base;
-      return response;
-    } catch (error) {
-      lastError = error;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const response = await fetch(`${base}${path}`, { ...options, headers: buildHeaders() });
+        lastResponse = response;
+
+        if (response.ok) {
+          if (base !== API_BASE_URL) API_BASE_URL = base;
+          return response;
+        }
+
+        // If auth failed, clear stored token, prompt once, and retry on the same base.
+        if (!didRetryAuth && (response.status === 401 || response.status === 403)) {
+          let isUnauthorized = true;
+          try {
+            const payload = await response.clone().json();
+            const msg = payload && (payload.error || payload.message);
+            if (msg && String(msg).toLowerCase() !== "unauthorized") {
+              isUnauthorized = false;
+            }
+          } catch (e) {}
+
+          if (isUnauthorized) {
+            didRetryAuth = true;
+            resetToken();
+            if (await ensureAdminToken(true)) {
+              continue;
+            }
+          }
+        }
+
+        if (shouldTryNextBase(response.status)) {
+          break; // try next base
+        }
+
+        if (base !== API_BASE_URL) API_BASE_URL = base;
+        return response;
+      } catch (error) {
+        lastError = error;
+        break; // try next base
+      }
     }
   }
 
-  throw lastError || new Error('API request failed');
+  if (lastResponse) {
+    return lastResponse;
+  }
+
+  throw lastError || new Error("API request failed");
 }
 
 async function loadTickets() {
