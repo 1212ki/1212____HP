@@ -49,7 +49,7 @@
 
         <div id="live-detail-notfound" style="display:none; margin-top: 18px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);"></div>
 
-        <div style="margin-top: 18px; display:flex; gap: 18px; align-items:flex-start; flex-wrap: wrap;">
+        <div id="live-detail-single" style="margin-top: 18px; display:flex; gap: 18px; align-items:flex-start; flex-wrap: wrap;">
           <img id="live-detail-image" alt="" style="width: min(360px, 100%); aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius-md); border: 1px solid var(--line); background: rgba(255,255,255,0.7);" />
 
           <div style="flex: 1; min-width: 240px;">
@@ -62,6 +62,12 @@
               <a class="application-link" href="../../">▷home</a>
             </div>
           </div>
+        </div>
+
+        <div id="live-archive" style="display:none; margin-top: 18px;">
+          <h3>公演終了（全件）</h3>
+          <div id="live-archive-events" class="live-events"></div>
+          <p id="live-archive-empty" style="display:none; margin-top: 14px; color: var(--ink-muted);">公開中の終了公演はありません。</p>
         </div>
       </div>
     </section>

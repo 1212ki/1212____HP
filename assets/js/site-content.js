@@ -1,4 +1,6 @@
 (function () {
+  const LIVE_PAST_PREVIEW_LIMIT = 3;
+
   function isRootPage() {
     const pathname = String(window.location && window.location.pathname ? window.location.pathname : "");
     const parts = pathname.split("/").filter(Boolean);
@@ -57,6 +59,61 @@
     const value = String(url || "").trim();
     if (!value) return false;
     return /^https?:\/\/(www\.)?instagram\.com\//i.test(value);
+  }
+
+  function toDateTime(year, month, day) {
+    const y = Number(year);
+    const m = Number(month);
+    const d = Number(day);
+    if (!Number.isInteger(y) || !Number.isInteger(m) || !Number.isInteger(d)) return NaN;
+    if (m < 1 || m > 12 || d < 1 || d > 31) return NaN;
+    return new Date(y, m - 1, d, 12, 0, 0, 0).getTime();
+  }
+
+  function parseLiveDateTime(rawDate) {
+    const text = String(rawDate || "").trim();
+    if (!text) return NaN;
+
+    const japanese = text.match(/(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/);
+    if (japanese) return toDateTime(japanese[1], japanese[2], japanese[3]);
+
+    const normalized = text.replace(/[.]/g, "/").replace(/-/g, "/");
+    const slash = normalized.match(/(\d{4})\s*\/\s*(\d{1,2})\s*\/\s*(\d{1,2})/);
+    if (slash) return toDateTime(slash[1], slash[2], slash[3]);
+
+    const fallback = Date.parse(text);
+    return Number.isFinite(fallback) ? fallback : NaN;
+  }
+
+  function sortLivesByDate(events, direction) {
+    const list = Array.isArray(events) ? events.slice() : [];
+    const isAsc = direction === "asc";
+    return list
+      .map((item, index) => ({
+        item,
+        index,
+        timestamp: parseLiveDateTime(item && item.date),
+      }))
+      .sort((a, b) => {
+        const aValid = Number.isFinite(a.timestamp);
+        const bValid = Number.isFinite(b.timestamp);
+        if (aValid && bValid) {
+          const delta = isAsc ? a.timestamp - b.timestamp : b.timestamp - a.timestamp;
+          if (delta !== 0) return delta;
+        } else if (aValid !== bValid) {
+          return aValid ? -1 : 1;
+        }
+        return a.index - b.index;
+      })
+      .map((entry) => entry.item);
+  }
+
+  function sortUpcomingLives(events) {
+    return sortLivesByDate(events, "asc");
+  }
+
+  function sortPastLives(events) {
+    return sortLivesByDate(events, "desc");
   }
 
   function renderSite(site, version) {
@@ -137,12 +194,14 @@
       .join("");
   }
 
-  function renderLiveEvents(container, events, version) {
+  function renderLiveEvents(container, events, version, options) {
     if (!container || !Array.isArray(events)) return;
     container.innerHTML = "";
     if (events.length === 0) return;
+    const config = options && typeof options === "object" ? options : {};
+    const showFlyer = Boolean(config.showFlyer);
+    const detailHrefFactory = typeof config.detailHrefFactory === "function" ? config.detailHrefFactory : null;
 
-    // Compact list: date + venue + title only. Details are shown on the detail page.
     container.innerHTML = events
       .map((item) => {
         const prefix = isRootPage() ? "" : "../";
@@ -150,10 +209,30 @@
         const date = String(item.date || "").trim();
         const venue = String(item.venue || "").trim();
         const title = String(item.title || "").trim();
-        const detailHref = `${prefix}live/detail/?liveId=${encodeURIComponent(liveId)}`;
+        const image = resolveImageSrc(item.image || "", version);
+        const detailHref = detailHrefFactory
+          ? detailHrefFactory(item, liveId)
+          : liveId
+            ? `${prefix}live/detail/?liveId=${encodeURIComponent(liveId)}`
+            : `${prefix}live/detail/`;
+        const imageAlt = [title, date, venue].filter(Boolean).join(" / ") || "live flyer";
+        const flyerClass = showFlyer ? " with-flyer" : "";
 
         return `
-          <a class="live-event" href="${detailHref}">
+          <a class="live-event${flyerClass}" href="${escapeHtml(detailHref)}">
+            ${
+              showFlyer
+                ? `
+              <div class="live-flyer">
+                ${
+                  image
+                    ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(imageAlt)}" loading="lazy">`
+                    : `<div class="live-flyer-placeholder" aria-hidden="true">flyer</div>`
+                }
+              </div>
+            `
+                : ""
+            }
             <div class="live-info">
               <div class="live-meta">
                 <span class="live-date">${escapeHtml(date)}</span>
@@ -267,16 +346,44 @@
 
   function renderLive(data, version) {
     if (!data || !data.live) return;
-    renderLiveEvents(document.getElementById("live-upcoming-events"), data.live.upcoming || [], version);
-    renderLiveEvents(document.getElementById("live-past-events"), data.live.past || [], version);
+    const live = data.live && typeof data.live === "object" ? data.live : {};
+    const upcomingEvents = sortUpcomingLives(live.upcoming || []);
+    const pastEvents = sortPastLives(live.past || []);
+
+    renderLiveEvents(document.getElementById("live-upcoming-events"), upcomingEvents, version, { showFlyer: true });
+    renderLiveEvents(document.getElementById("live-past-events"), pastEvents.slice(0, LIVE_PAST_PREVIEW_LIMIT), version, { showFlyer: false });
 
     const pastHeading = document.getElementById("live-past-heading");
     if (pastHeading) {
-      const hasPast = Array.isArray(data.live.past) && data.live.past.length > 0;
+      const hasPast = pastEvents.length > 0;
       pastHeading.style.display = hasPast ? "" : "none";
     }
 
+    const pastMore = document.getElementById("live-past-more");
+    if (pastMore) {
+      pastMore.style.display = pastEvents.length > LIVE_PAST_PREVIEW_LIMIT ? "" : "none";
+    }
+
     wireLiveDetailModal(data, version);
+  }
+
+  function renderLivePastArchive(siteData, version) {
+    const archiveRoot = document.getElementById("live-archive");
+    const archiveEvents = document.getElementById("live-archive-events");
+    const archiveEmpty = document.getElementById("live-archive-empty");
+    if (!archiveRoot || !archiveEvents) return;
+
+    const data = siteData && typeof siteData === "object" ? siteData : {};
+    const live = data.live && typeof data.live === "object" ? data.live : {};
+    const sortedPast = sortPastLives(live.past || []);
+
+    renderLiveEvents(archiveEvents, sortedPast, version, {
+      showFlyer: false,
+      detailHrefFactory: (_item, liveId) => (liveId ? `?liveId=${encodeURIComponent(liveId)}` : "#"),
+    });
+
+    if (archiveEmpty) archiveEmpty.style.display = sortedPast.length === 0 ? "" : "none";
+    archiveRoot.style.display = "";
   }
 
 
@@ -286,6 +393,7 @@
 
     const params = new URLSearchParams(String(window.location && window.location.search ? window.location.search : ""));
     const liveId = String(params.get("liveId") || "").trim();
+    const view = String(params.get("view") || "").trim().toLowerCase();
 
     const titleEl = document.getElementById("live-detail-title");
     const headingEl = document.getElementById("live-detail-heading");
@@ -294,8 +402,20 @@
     const ticketEl = document.getElementById("live-detail-ticket-link");
     const backEl = document.getElementById("live-detail-back-link");
     const notFoundEl = document.getElementById("live-detail-notfound");
+    const singleEl = document.getElementById("live-detail-single");
+    const archiveEl = document.getElementById("live-archive");
 
     if (backEl) backEl.href = "../";
+    if (singleEl) singleEl.style.display = "";
+    if (archiveEl) archiveEl.style.display = "none";
+
+    if (view === "past" && !liveId) {
+      if (singleEl) singleEl.style.display = "none";
+      if (notFoundEl) notFoundEl.style.display = "none";
+      renderLivePastArchive(siteData, version);
+      document.title = "公演終了 | 松本一樹";
+      return;
+    }
 
     if (!liveId) {
       if (notFoundEl) {
