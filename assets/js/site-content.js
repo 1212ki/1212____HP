@@ -495,7 +495,6 @@
     const pastEvents = sortPastLives(live.past || []);
 
     renderHomeNextLive(live, version);
-
     renderLiveEvents(document.getElementById("live-upcoming-events"), upcomingEvents, version, {
       showFlyer: true,
       featured: true,

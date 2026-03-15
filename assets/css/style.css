@@ -789,8 +789,8 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   width: clamp(92px, 22vw, 128px);
   flex: 0 0 clamp(92px, 22vw, 128px);
   border-radius: var(--radius-sm);
-  border: none;
-  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 245, 245, 0.9));
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -844,7 +844,6 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   position: relative;
   color: inherit;
 }
-
 .live-event.is-featured .live-flyer {
   width: 100%;
   flex-basis: auto;
@@ -1596,4 +1595,3 @@ footer p {
     scroll-behavior: auto !important;
   }
 }
-
