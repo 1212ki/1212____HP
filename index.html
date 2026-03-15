@@ -53,40 +53,27 @@
     </div>
   </div>
 
-  <!-- ボタンはボタンとして（元の意図に寄せる） -->
-  <div class="container hero-actions" aria-label="External links">
-    <a id="home-link-bandcamp" href="https://1212ki.bandcamp.com/" class="cta primary" target="_blank" rel="noopener">
-      <span class="cta-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
-          <path d="M9.2 6h10.8L14.8 18H4L9.2 6Z"></path>
-        </svg>
-      </span>
-      <span class="cta-label">Bandcamp</span>
-    </a>
-    <a id="home-link-youtube" href="https://www.youtube.com/@1212____ki" class="cta ghost" target="_blank" rel="noopener">
-      <span class="cta-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
-          <path d="M21 8.2c0-1.2-1-2.2-2.2-2.2H5.2C4 6 3 7 3 8.2v7.6C3 17 4 18 5.2 18h13.6c1.2 0 2.2-1 2.2-2.2V8.2ZM10 16V8l7 4-7 4Z"></path>
-        </svg>
-      </span>
-      <span class="cta-label">YouTube</span>
-    </a>
-    <a id="home-link-x" href="https://www.x.com/1212____ki" class="cta ghost" target="_blank" rel="noopener">
-      <span class="cta-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
-          <path d="M18.4 3H21l-5.7 6.6L22 21h-6.2l-4.2-5.5L6.8 21H3l6.1-7.1L2.7 3H9l3.8 5L18.4 3ZM17 19h1.4L8.1 5H6.6l10.4 14Z"></path>
-        </svg>
-      </span>
-      <span class="cta-label">X</span>
-    </a>
-  </div>
+  <div class="container hero-actions" id="home-link-list" aria-label="External links"></div>
 </section>
 
-    <!-- ニュースセクション -->
-    <section class="news">
-      <div class="container">
-        <h2 class="section-title">news</h2>
+    <section class="home-main">
+      <div class="container home-grid">
+        <section class="home-block home-live-block" aria-labelledby="home-next-live-title">
+          <div class="home-block-header">
+            <p class="home-kicker">current</p>
+            <h2 class="section-title" id="home-next-live-title">next live</h2>
+          </div>
+          <div class="live-events live-events-home" id="home-next-live-events"></div>
+          <p class="home-empty-state" id="home-next-live-empty" hidden>schedule update soon.</p>
+        </section>
+
+        <section class="home-block home-news-block news" aria-labelledby="home-news-title">
+          <div class="home-block-header">
+            <p class="home-kicker">update</p>
+            <h2 class="section-title" id="home-news-title">news</h2>
+          </div>
         <div class="news-items" id="news-items"></div>
+        </section>
       </div>
     </section>
   </main>
