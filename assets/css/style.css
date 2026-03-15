@@ -751,6 +751,24 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   margin-top: 24px;
 }
 
+@media (min-width: 769px) {
+  .live-page #live-upcoming-events,
+  .live-page #live-past-events {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .live-page #live-upcoming-events .live-event,
+  .live-page #live-past-events .live-event {
+    height: 100%;
+  }
+
+  .live-page #live-upcoming-events .live-event.is-featured .live-flyer {
+    min-height: clamp(180px, 26vw, 260px);
+  }
+}
+
 .live-event {
   background: var(--surface);
   border: 1px solid var(--line);
