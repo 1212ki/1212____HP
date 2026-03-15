@@ -10,6 +10,8 @@ const DEFAULT_SITE_DATA = {
       bandcamp: "https://1212ki.bandcamp.com/",
       youtube: "https://www.youtube.com/@1212____ki",
       x: "https://www.x.com/1212____ki",
+      instagram: "https://www.instagram.com/1212____ki",
+      note: "https://note.com/1212_4939/m/m466c3962969c",
     },
     footerText: "© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.",
   },
@@ -74,6 +76,8 @@ function normalizeSiteData(input) {
   data.site.links.bandcamp = data.site.links.bandcamp || base.site.links.bandcamp;
   data.site.links.youtube = data.site.links.youtube || base.site.links.youtube;
   data.site.links.x = data.site.links.x || base.site.links.x;
+  data.site.links.instagram = data.site.links.instagram || base.site.links.instagram;
+  data.site.links.note = data.site.links.note || base.site.links.note;
   data.site.footerText = data.site.footerText || base.site.footerText;
 
   data.ticket = data.ticket && typeof data.ticket === "object" ? data.ticket : base.ticket;

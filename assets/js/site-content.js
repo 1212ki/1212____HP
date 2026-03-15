@@ -1,5 +1,12 @@
 (function () {
   const LIVE_PAST_PREVIEW_LIMIT = 3;
+  const SHARED_LINKS = [
+    { key: "bandcamp", label: "Bandcamp", aliases: ["bandcamp"], iconSlug: "bandcamp" },
+    { key: "youtube", label: "YouTube", aliases: ["youtube"], iconSlug: "youtube" },
+    { key: "x", label: "X", aliases: ["x", "twitter"], iconSlug: "x" },
+    { key: "instagram", label: "Instagram", aliases: ["instagram"], iconSlug: "instagram" },
+    { key: "note", label: "note", aliases: ["note"], iconSlug: "note" },
+  ];
 
   function isRootPage() {
     const pathname = String(window.location && window.location.pathname ? window.location.pathname : "");
@@ -53,6 +60,60 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
+  }
+
+  function findProfileLink(profileLinks, aliases) {
+    if (!Array.isArray(profileLinks) || profileLinks.length === 0) return "";
+    const safeAliases = Array.isArray(aliases) ? aliases.map((alias) => String(alias).trim().toLowerCase()) : [];
+    const match = profileLinks.find((item) => {
+      const name = String(item && item.name ? item.name : "").trim().toLowerCase();
+      return safeAliases.some((alias) => name === alias || name.includes(alias));
+    });
+    return match && match.url ? String(match.url).trim() : "";
+  }
+
+  function buildSharedLinks(siteLinks, profileLinks) {
+    const site = siteLinks && typeof siteLinks === "object" ? siteLinks : {};
+    return SHARED_LINKS
+      .map((entry, index) => {
+        const url = String(site[entry.key] || "").trim() || findProfileLink(profileLinks, entry.aliases);
+        if (!url) return null;
+        return {
+          key: entry.key,
+          label: entry.label,
+          iconSlug: entry.iconSlug,
+          url,
+          tone: index === 0 ? "primary" : "ghost",
+        };
+      })
+      .filter(Boolean);
+  }
+
+  function getSharedLinkIcon(iconSlug, label) {
+    const slug = String(iconSlug || "").trim();
+    const src = slug ? `https://cdn.simpleicons.org/${encodeURIComponent(slug)}/666666?viewbox=auto` : "";
+    return `
+      <span class="cta-icon" aria-hidden="true">
+        ${src ? `<img src="${src}" alt="" class="cta-icon-image" loading="lazy" decoding="async" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">` : ""}
+        <span class="cta-icon-fallback">${escapeHtml(String(label || "").slice(0, 2).toUpperCase())}</span>
+      </span>
+    `;
+  }
+
+  function renderHomeLinks(siteLinks, profileLinks) {
+    const container = document.getElementById("home-link-list");
+    if (!container) return;
+    const links = buildSharedLinks(siteLinks, profileLinks);
+    container.innerHTML = links
+      .map(
+        (link) => `
+          <a href="${escapeHtml(link.url)}" class="cta ${escapeHtml(link.tone)}" target="_blank" rel="noopener">
+            ${getSharedLinkIcon(link.iconSlug, link.label)}
+            <span class="cta-label">${escapeHtml(link.label)}</span>
+          </a>
+        `,
+      )
+      .join("");
   }
 
   function isInstagramUrl(url) {
@@ -118,13 +179,9 @@
 
   function renderSite(site, version) {
     const heroImg = document.getElementById("home-hero-image");
-    const linkBandcamp = document.getElementById("home-link-bandcamp");
-    const linkYouTube = document.getElementById("home-link-youtube");
-    const linkX = document.getElementById("home-link-x");
     const footer = document.getElementById("site-footer");
 
     const data = site && typeof site === "object" ? site : {};
-    const links = data.links && typeof data.links === "object" ? data.links : {};
 
     if (heroImg) {
       const src = resolveImageSrc(data.heroImage || "", version);
@@ -136,10 +193,6 @@
         heroImg.style.display = "none";
       }
     }
-
-    if (linkBandcamp && links.bandcamp) linkBandcamp.href = String(links.bandcamp);
-    if (linkYouTube && links.youtube) linkYouTube.href = String(links.youtube);
-    if (linkX && links.x) linkX.href = String(links.x);
 
     if (footer) {
       const text = String(data.footerText || "").trim();
@@ -164,34 +217,78 @@
     const container = document.getElementById("news-items");
     if (!container || !Array.isArray(news)) return;
     container.innerHTML = "";
-    const list = news.slice(0, 12);
+    const list = news.slice(0, 6);
     if (list.length === 0) return;
     container.innerHTML = list
       .map((item) => {
-        const image = escapeHtml(resolveImageSrc(item.image || "", version));
-        const link = escapeHtml(item.link || "#");
-        const linkText = escapeHtml(item.linkText || "view...");
+        const image = resolveImageSrc(item.image || "", version);
+        const hasImage = Boolean(image);
+        const link = String(item.link || "").trim();
+        const linkText = String(item.linkText || "view...").trim();
+        const description = String(item.description || "")
+          .replace(/<br\s*\/?>/gi, " / ")
+          .replace(/\s+/g, " ")
+          .trim();
         return `
-          <article class="news-item">
+          <article class="news-item${hasImage ? "" : " is-text-only"}">
+            ${
+              hasImage
+                ? `
             <div class="news-image">
-              ${image ? `<img src="${image}" alt="${escapeHtml(item.title || "News")}">` : ""}
+              <img src="${escapeHtml(image)}" alt="${escapeHtml(item.title || "News")}" loading="lazy">
             </div>
+            `
+                : ""
+            }
             <div class="news-content">
-              <div class="news-header">
-                <p class="news-date">${escapeHtml(item.date || "")}</p>
-              </div>
-              <div class="news-body">
-                <p class="news-title">${escapeHtml(item.title || "")}</p>
-                <p class="news-price">${escapeHtml(item.description || "")}</p>
-              </div>
-              <div class="news-footer">
-                <a href="${link}" class="application-link" target="_blank" rel="noopener">▷${linkText}</a>
-              </div>
+              <p class="news-date">${escapeHtml(item.date || "")}</p>
+              <p class="news-title">${escapeHtml(item.title || "")}</p>
+              ${description ? `<p class="news-summary">${escapeHtml(description)}</p>` : ""}
             </div>
+            ${
+              link
+                ? `
+            <div class="news-footer">
+              <a href="${escapeHtml(link)}" class="application-link" target="_blank" rel="noopener">▷${escapeHtml(linkText)}</a>
+            </div>
+            `
+                : ""
+            }
           </article>
         `;
       })
       .join("");
+  }
+
+  function renderHomeNextLive(live, version) {
+    const container = document.getElementById("home-next-live-events");
+    const empty = document.getElementById("home-next-live-empty");
+    if (!container && !empty) return;
+
+    const data = live && typeof live === "object" ? live : {};
+    const upcomingEvents = sortUpcomingLives(data.upcoming || []);
+    const nextEvent = upcomingEvents[0] || null;
+
+    if (container) container.innerHTML = "";
+
+    if (!nextEvent) {
+      if (empty) empty.hidden = false;
+      return;
+    }
+
+    if (empty) empty.hidden = true;
+    const liveId = String(nextEvent.id || "").trim();
+    renderLiveEvents(container, [nextEvent], version, {
+      showFlyer: true,
+      featured: true,
+      inlineActionsHtmlFactory: () => `
+        <div class="live-inline-actions live-inline-actions-home">
+          <a href="${escapeHtml(liveId ? `ticket/?liveId=${encodeURIComponent(liveId)}` : "ticket/")}" class="live-inline-link is-primary">ticket</a>
+          <a href="${escapeHtml(liveId ? `live/detail/?liveId=${encodeURIComponent(liveId)}` : "live/")}" class="live-inline-link">detail</a>
+          <a href="live/" class="live-inline-link">all live</a>
+        </div>
+      `,
+    });
   }
 
   function renderLiveEvents(container, events, version, options) {
@@ -200,7 +297,10 @@
     if (events.length === 0) return;
     const config = options && typeof options === "object" ? options : {};
     const showFlyer = Boolean(config.showFlyer);
+    const featured = Boolean(config.featured);
     const detailHrefFactory = typeof config.detailHrefFactory === "function" ? config.detailHrefFactory : null;
+    const inlineActionsHtmlFactory =
+      typeof config.inlineActionsHtmlFactory === "function" ? config.inlineActionsHtmlFactory : null;
 
     container.innerHTML = events
       .map((item) => {
@@ -209,6 +309,14 @@
         const date = String(item.date || "").trim();
         const venue = String(item.venue || "").trim();
         const title = String(item.title || "").trim();
+        const description = String(item.description || "")
+          .replace(/<br\s*\/?>/gi, "\n")
+          .replace(/\r\n/g, "\n")
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .slice(0, 2)
+          .join("\n");
         const image = resolveImageSrc(item.image || "", version);
         const detailHref = detailHrefFactory
           ? detailHrefFactory(item, liveId)
@@ -217,9 +325,44 @@
             : `${prefix}live/detail/`;
         const imageAlt = [title, date, venue].filter(Boolean).join(" / ") || "live flyer";
         const flyerClass = showFlyer ? " with-flyer" : "";
+        const featuredClass = featured ? " is-featured" : "";
+        const inlineActionsHtml = inlineActionsHtmlFactory ? inlineActionsHtmlFactory(item, liveId, detailHref) : "";
+        const useStaticWrapper = Boolean(inlineActionsHtml);
+
+        if (useStaticWrapper) {
+          return `
+          <article class="live-event${flyerClass}${featuredClass} is-static">
+            <a class="live-event-main" href="${escapeHtml(detailHref)}">
+              ${
+                showFlyer
+                  ? `
+              <div class="live-flyer">
+                ${
+                  image
+                    ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(imageAlt)}" loading="lazy">`
+                    : `<div class="live-flyer-placeholder" aria-hidden="true">Coming Soon</div>`
+                }
+              </div>
+            `
+                  : ""
+              }
+              <div class="live-info">
+                <div class="live-meta">
+                  <span class="live-date">${escapeHtml(date)}</span>
+                  <span class="live-venue">${escapeHtml(venue)}</span>
+                </div>
+                ${title ? `<div class="live-title">${escapeHtml(title)}</div>` : ""}
+                ${featured && description ? `<div class="live-description">${escapeHtml(description).replace(/\n/g, "<br>")}</div>` : ""}
+              </div>
+              <span class="live-chevron" aria-hidden="true">›</span>
+            </a>
+            ${inlineActionsHtml}
+          </article>
+        `;
+        }
 
         return `
-          <a class="live-event${flyerClass}" href="${escapeHtml(detailHref)}">
+          <a class="live-event${flyerClass}${featuredClass}" href="${escapeHtml(detailHref)}">
             ${
               showFlyer
                 ? `
@@ -227,7 +370,7 @@
                 ${
                   image
                     ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(imageAlt)}" loading="lazy">`
-                    : `<div class="live-flyer-placeholder" aria-hidden="true">flyer</div>`
+                    : `<div class="live-flyer-placeholder" aria-hidden="true">Coming Soon</div>`
                 }
               </div>
             `
@@ -239,6 +382,7 @@
                 <span class="live-venue">${escapeHtml(venue)}</span>
               </div>
               ${title ? `<div class="live-title">${escapeHtml(title)}</div>` : ""}
+              ${featured && description ? `<div class="live-description">${escapeHtml(description).replace(/\n/g, "<br>")}</div>` : ""}
             </div>
             <span class="live-chevron" aria-hidden="true">›</span>
           </a>
@@ -273,7 +417,7 @@
     const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
     body.innerHTML = `
       <div style="display:flex; gap: 14px; align-items: flex-start; flex-wrap: wrap;">
-        ${image ? `<img src="${escapeHtml(image)}" alt="" style="width: 160px; height: 160px; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.7);">` : ""}
+        ${image ? `<img src="${escapeHtml(image)}" alt="" style="width: min(220px, 100%); max-height: min(70vh, 520px); object-fit: contain; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,245,0.92)); padding: 8px;">` : `<div class="live-flyer-placeholder" style="width: min(220px, 100%); min-height: min(70vh, 520px); border-radius: 14px; border: 1px solid var(--line);">Coming Soon</div>`}
         <div style="flex: 1; min-width: 240px;">
           <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(heading)}</div>
           ${safeDesc ? `<div style="margin-top: 10px; color: var(--ink-muted); line-height: 1.8;">${safeDesc}</div>` : ""}
@@ -350,7 +494,12 @@
     const upcomingEvents = sortUpcomingLives(live.upcoming || []);
     const pastEvents = sortPastLives(live.past || []);
 
-    renderLiveEvents(document.getElementById("live-upcoming-events"), upcomingEvents, version, { showFlyer: true });
+    renderHomeNextLive(live, version);
+
+    renderLiveEvents(document.getElementById("live-upcoming-events"), upcomingEvents, version, {
+      showFlyer: true,
+      featured: true,
+    });
     renderLiveEvents(document.getElementById("live-past-events"), pastEvents.slice(0, LIVE_PAST_PREVIEW_LIMIT), version, { showFlyer: false });
 
     const pastHeading = document.getElementById("live-past-heading");
@@ -398,6 +547,7 @@
     const titleEl = document.getElementById("live-detail-title");
     const headingEl = document.getElementById("live-detail-heading");
     const imgEl = document.getElementById("live-detail-image");
+    const placeholderEl = document.getElementById("live-detail-placeholder");
     const descEl = document.getElementById("live-detail-description");
     const ticketEl = document.getElementById("live-detail-ticket-link");
     const backEl = document.getElementById("live-detail-back-link");
@@ -443,17 +593,19 @@
     const venue = String(live.venue || "").trim();
     const heading = `${date} ${venue}`.trim();
 
-    if (titleEl) titleEl.textContent = liveTitle ? liveTitle : "live detail";
+    if (titleEl) titleEl.textContent = liveTitle ? liveTitle : "Coming Soon";
     if (headingEl) headingEl.textContent = heading;
 
     const image = resolveImageSrc(live.image || "", version);
     if (imgEl) {
       if (image) {
-        imgEl.src = escapeHtml(image);
+        imgEl.src = image;
         imgEl.style.display = "";
+        if (placeholderEl) placeholderEl.style.display = "none";
       } else {
         imgEl.removeAttribute("src");
         imgEl.style.display = "none";
+        if (placeholderEl) placeholderEl.style.display = "";
       }
     }
 
@@ -509,7 +661,7 @@
     renderList(demo, data.demo);
   }
 
-  function renderProfile(profile, version) {
+  function renderProfile(profile, siteLinks, version) {
     const img = document.getElementById("profile-image");
     const text = document.getElementById("profile-text");
     const links = document.getElementById("profile-links");
@@ -539,7 +691,11 @@
     }
 
     if (links) {
-      const list = Array.isArray(data.links) ? data.links : [];
+      const shared = buildSharedLinks(siteLinks, data.links);
+      const fallback = Array.isArray(data.links) ? data.links : [];
+      const list = shared.length > 0
+        ? shared.map((entry) => ({ name: entry.label, url: entry.url }))
+        : fallback;
       links.innerHTML = "";
       if (list.length === 0) return;
       links.innerHTML = list
@@ -606,13 +762,16 @@
     if (!payload) return;
     const siteData = payload.data || {};
     const version = payload.meta && payload.meta.updatedAt ? payload.meta.updatedAt : "";
-    renderSite(siteData.site || {}, version);
+    const site = siteData.site || {};
+    const profile = siteData.profile || {};
+    renderSite(site, version);
+    renderHomeLinks(site.links || {}, profile.links || []);
     renderContact(siteData.contact || {});
     renderNews(siteData.news || [], version);
     renderLive(siteData, version);
     renderLiveDetailPage(siteData, version);
     renderDiscography(siteData.discography || {}, version);
-    renderProfile(siteData.profile || {}, version);
+    renderProfile(profile, site.links || {}, version);
     renderYouTube(siteData.youtube || {});
   }
 

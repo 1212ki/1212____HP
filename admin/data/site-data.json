@@ -129,16 +129,20 @@
     "text": "松本一樹 -itsukimatsumoto-\nindie rock / acoustic\n東京都内を中心に活動するシンガーソングライター。\n2023年より宅録での楽曲制作を中心に音楽活動を開始。\n弾き語り/バンドセットの２形態でのライブ活動を継続中。\n\n～リリース～\n・2025年3月:Single『lens』\n・2025年5月:Single『月を待って』",
     "links": [
       {
+        "name": "Bandcamp",
+        "url": "https://1212ki.bandcamp.com/"
+      },
+      {
+        "name": "YouTube",
+        "url": "https://www.youtube.com/@1212____ki"
+      },
+      {
         "name": "X",
         "url": "https://www.x.com/1212____ki"
       },
       {
         "name": "Instagram",
         "url": "https://www.instagram.com/1212____ki"
-      },
-      {
-        "name": "YouTube",
-        "url": "https://www.youtube.com/@1212____ki"
       },
       {
         "name": "note",
@@ -178,6 +182,16 @@
         "title": "コントレイル",
         "youtubeId": "X5LEi_lEAWI"
       }
-    ]
+    ]  },
+  "site": {
+    "heroImage": "assets/images/hero.jpg",
+    "links": {
+      "bandcamp": "https://1212ki.bandcamp.com/",
+      "youtube": "https://www.youtube.com/@1212____ki",
+      "x": "https://www.x.com/1212____ki",
+      "instagram": "https://www.instagram.com/1212____ki",
+      "note": "https://note.com/1212_4939/m/m466c3962969c"
+    },
+    "footerText": "© 2025 松本一樹 -itsuki matsumoto-. All rights reserved."
   }
 }

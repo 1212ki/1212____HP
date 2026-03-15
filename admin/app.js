@@ -23,7 +23,9 @@ const DEFAULT_SITE_DATA = {
     links: {
       bandcamp: 'https://1212ki.bandcamp.com/',
       youtube: 'https://www.youtube.com/@1212____ki',
-      x: 'https://www.x.com/1212____ki'
+      x: 'https://www.x.com/1212____ki',
+      instagram: 'https://www.instagram.com/1212____ki',
+      note: 'https://note.com/1212_4939/m/m466c3962969c'
     },
     footerText: '© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.'
   },
@@ -164,6 +166,8 @@ function normalizeSiteData(input) {
   normalized.site.links.bandcamp = normalized.site.links.bandcamp || '';
   normalized.site.links.youtube = normalized.site.links.youtube || '';
   normalized.site.links.x = normalized.site.links.x || '';
+  normalized.site.links.instagram = normalized.site.links.instagram || '';
+  normalized.site.links.note = normalized.site.links.note || '';
   normalized.site.footerText = normalized.site.footerText || '';
 
   normalized.ticket = normalized.ticket && typeof normalized.ticket === 'object' ? normalized.ticket : base.ticket;
@@ -491,6 +495,8 @@ function renderSiteSettings() {
   const bandcamp = document.getElementById('site-link-bandcamp');
   const youtube = document.getElementById('site-link-youtube');
   const x = document.getElementById('site-link-x');
+  const instagram = document.getElementById('site-link-instagram');
+  const note = document.getElementById('site-link-note');
   const footer = document.getElementById('site-footer-text');
   const contactIntro = document.getElementById('contact-intro-text');
   const contactAction = document.getElementById('contact-form-action');
@@ -513,6 +519,20 @@ function renderSiteSettings() {
     x.value = siteData.site.links.x || '';
     x.onchange = () => {
       siteData.site.links.x = x.value;
+      markChanged();
+    };
+  }
+  if (instagram) {
+    instagram.value = siteData.site.links.instagram || '';
+    instagram.onchange = () => {
+      siteData.site.links.instagram = instagram.value;
+      markChanged();
+    };
+  }
+  if (note) {
+    note.value = siteData.site.links.note || '';
+    note.onchange = () => {
+      siteData.site.links.note = note.value;
       markChanged();
     };
   }
