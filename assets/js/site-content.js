@@ -200,6 +200,7 @@
     if (events.length === 0) return;
     const config = options && typeof options === "object" ? options : {};
     const showFlyer = Boolean(config.showFlyer);
+    const featured = Boolean(config.featured);
     const detailHrefFactory = typeof config.detailHrefFactory === "function" ? config.detailHrefFactory : null;
 
     container.innerHTML = events
@@ -209,6 +210,14 @@
         const date = String(item.date || "").trim();
         const venue = String(item.venue || "").trim();
         const title = String(item.title || "").trim();
+        const description = String(item.description || "")
+          .replace(/<br\s*\/?>/gi, "\n")
+          .replace(/\r\n/g, "\n")
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .slice(0, 2)
+          .join("\n");
         const image = resolveImageSrc(item.image || "", version);
         const detailHref = detailHrefFactory
           ? detailHrefFactory(item, liveId)
@@ -217,9 +226,10 @@
             : `${prefix}live/detail/`;
         const imageAlt = [title, date, venue].filter(Boolean).join(" / ") || "live flyer";
         const flyerClass = showFlyer ? " with-flyer" : "";
+        const featuredClass = featured ? " is-featured" : "";
 
         return `
-          <a class="live-event${flyerClass}" href="${escapeHtml(detailHref)}">
+          <a class="live-event${flyerClass}${featuredClass}" href="${escapeHtml(detailHref)}">
             ${
               showFlyer
                 ? `
@@ -227,7 +237,7 @@
                 ${
                   image
                     ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(imageAlt)}" loading="lazy">`
-                    : `<div class="live-flyer-placeholder" aria-hidden="true">flyer</div>`
+                    : `<div class="live-flyer-placeholder" aria-hidden="true">Coming Soon</div>`
                 }
               </div>
             `
@@ -239,6 +249,7 @@
                 <span class="live-venue">${escapeHtml(venue)}</span>
               </div>
               ${title ? `<div class="live-title">${escapeHtml(title)}</div>` : ""}
+              ${featured && description ? `<div class="live-description">${escapeHtml(description).replace(/\n/g, "<br>")}</div>` : ""}
             </div>
             <span class="live-chevron" aria-hidden="true">›</span>
           </a>
@@ -273,7 +284,7 @@
     const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
     body.innerHTML = `
       <div style="display:flex; gap: 14px; align-items: flex-start; flex-wrap: wrap;">
-        ${image ? `<img src="${escapeHtml(image)}" alt="" style="width: 160px; height: 160px; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.7);">` : ""}
+        ${image ? `<img src="${escapeHtml(image)}" alt="" style="width: min(220px, 100%); max-height: min(70vh, 520px); object-fit: contain; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,245,0.92)); padding: 8px;">` : `<div class="live-flyer-placeholder" style="width: min(220px, 100%); min-height: min(70vh, 520px); border-radius: 14px; border: 1px solid var(--line);">Coming Soon</div>`}
         <div style="flex: 1; min-width: 240px;">
           <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(heading)}</div>
           ${safeDesc ? `<div style="margin-top: 10px; color: var(--ink-muted); line-height: 1.8;">${safeDesc}</div>` : ""}
@@ -350,7 +361,10 @@
     const upcomingEvents = sortUpcomingLives(live.upcoming || []);
     const pastEvents = sortPastLives(live.past || []);
 
-    renderLiveEvents(document.getElementById("live-upcoming-events"), upcomingEvents, version, { showFlyer: true });
+    renderLiveEvents(document.getElementById("live-upcoming-events"), upcomingEvents, version, {
+      showFlyer: true,
+      featured: true,
+    });
     renderLiveEvents(document.getElementById("live-past-events"), pastEvents.slice(0, LIVE_PAST_PREVIEW_LIMIT), version, { showFlyer: false });
 
     const pastHeading = document.getElementById("live-past-heading");
@@ -398,6 +412,7 @@
     const titleEl = document.getElementById("live-detail-title");
     const headingEl = document.getElementById("live-detail-heading");
     const imgEl = document.getElementById("live-detail-image");
+    const placeholderEl = document.getElementById("live-detail-placeholder");
     const descEl = document.getElementById("live-detail-description");
     const ticketEl = document.getElementById("live-detail-ticket-link");
     const backEl = document.getElementById("live-detail-back-link");
@@ -443,17 +458,19 @@
     const venue = String(live.venue || "").trim();
     const heading = `${date} ${venue}`.trim();
 
-    if (titleEl) titleEl.textContent = liveTitle ? liveTitle : "live detail";
+    if (titleEl) titleEl.textContent = liveTitle ? liveTitle : "Coming Soon";
     if (headingEl) headingEl.textContent = heading;
 
     const image = resolveImageSrc(live.image || "", version);
     if (imgEl) {
       if (image) {
-        imgEl.src = escapeHtml(image);
+        imgEl.src = image;
         imgEl.style.display = "";
+        if (placeholderEl) placeholderEl.style.display = "none";
       } else {
         imgEl.removeAttribute("src");
         imgEl.style.display = "none";
+        if (placeholderEl) placeholderEl.style.display = "";
       }
     }
 
@@ -618,3 +635,4 @@
 
   boot();
 })();
+
