@@ -817,6 +817,24 @@ body {
   object-fit: contain;
 }
 
+.image-download-link {
+  display: inline-flex;
+  justify-content: center;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  line-height: 0;
+}
+
+.image-download-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.image-download-link .image-preview-large {
+  display: block;
+}
+
 .image-placeholder {
   padding: 40px 20px;
   text-align: center;
