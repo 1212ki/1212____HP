@@ -60,6 +60,14 @@
 3. デプロイ
    - `wrangler deploy`
 
+## Development Workflow
+
+この repo の作業管理は GitHub Issue と GitHub Project `1212hp` で行います。
+作業前に Issue を確認または作成し、Project Status を `In Progress` にしてから branch を切ります。
+PR 作成直前は Status を `Review`、完了後は `close` にします。
+
+詳細: `GITHUB_WORKFLOW.md`
+
 ## Local Development
 
 ### 推奨（Windows / PowerShell）
@@ -93,4 +101,3 @@ python -m http.server 8888 --bind 127.0.0.1
 ## License
 
 All rights reserved. Copyright 2025 Itsuki Matsumoto.
-

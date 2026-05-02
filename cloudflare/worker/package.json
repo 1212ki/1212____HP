@@ -2,8 +2,10 @@
   "name": "itsuki-homepage-worker",
   "version": "1.0.0",
   "description": "管理画面と公開サイト向けのAPI、およびX自動投稿を担当するWorkerです。",
+  "type": "module",
   "main": "src/worker.js",
   "scripts": {
+    "test": "node --test",
     "cf:dev": "wrangler dev",
     "cf:deploy": "wrangler deploy",
     "cf:d1:migrate": "wrangler d1 execute itsuki-homepage --file=./schema.sql",

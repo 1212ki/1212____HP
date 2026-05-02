@@ -31,8 +31,8 @@ const DEFAULT_SITE_DATA = {
   },
   ticket: {
     introText: 'ライブを選択して、必要事項を入力してください。',
-    noticeText: '送信後、こちらからの自動返信はありません（受付の記録のみ）。',
-    completeText: '予約しました。こちらからの自動返信はありません（受付の記録のみ）。',
+    noticeText: '送信後、入力したe-mail宛に受付内容の自動返信をお送りします。',
+    completeText: '予約しました。入力したe-mail宛に受付内容の自動返信をお送りします。',
     fields: {
       showQuantity: true,
       showMessage: true,
@@ -2012,12 +2012,3 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
-
-
-
-
-
-
-
-
-

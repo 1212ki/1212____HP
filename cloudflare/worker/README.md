@@ -51,6 +51,10 @@
        - `wrangler secret put LINE_TO`（通知先。ユーザーID/グループIDなど）
      - 方式B: 任意Webhook（Slack互換など）
        - `wrangler secret put LINE_WEBHOOK_URL`
+   - （任意）チケット予約の申込者向け自動返信
+     - `wrangler secret put TICKET_AUTOREPLY_FORM_URL`
+     - Formspreeなど、`FormData` のPOSTを受け付ける送信先URLを設定します
+     - 未設定または送信失敗時も、予約APIの成功レスポンスは妨げません
 5. デプロイ
    - `wrangler deploy`
 
