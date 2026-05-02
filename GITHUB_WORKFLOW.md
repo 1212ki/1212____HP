@@ -16,9 +16,12 @@
    - 例: `feature/13-ticket-autoreply`
 5. 実装後、ローカル検証と `git status` / secret 混入確認を行う。
 6. PR 作成直前に Project Status を `Review` にする。
-7. PR 本文に `Closes #XX` を入れ、Issue と PR を紐付ける。
-8. PR 作成後、Project item に linked pull request が表示されていることを確認する。
-9. merge / completion 後、Project Status を `close` にする。
+7. PR は gate 通過後に作成する。PR 作成に個別のユーザー許可は不要。
+8. PR 本文に `Closes #XX` を入れ、Issue と PR を紐付ける。
+9. PR 作成後、Project item に linked pull request が表示されていることを確認する。
+10. merge / completion 後、Project Status を `close` にする。
+
+PR 作成はレビュー依頼の入口であり、反映そのものではない。merge は人間レビュー後に行う。
 
 ## Status
 
