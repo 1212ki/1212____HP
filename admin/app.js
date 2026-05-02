@@ -943,23 +943,67 @@ function deleteProfileLink(index) {
   markChanged();
 }
 
+const LIVE_FLYER_IMAGE_OPTIONS = {
+  downloadablePreview: true,
+  showPath: false,
+};
+
+function getImageDownloadFilename(imagePath) {
+  const cleaned = String(imagePath || '').split('#')[0].split('?')[0];
+  return cleaned.split('/').filter(Boolean).pop() || 'image';
+}
+
+function getImagePreviewHtml(inputId, previewSrc, options = {}) {
+  if (!previewSrc) {
+    return `<div class="image-placeholder" id="${inputId}-placeholder">タップして画像を選択</div>`;
+  }
+
+  const imageHtml = `<img class="image-preview-large" id="${inputId}-preview" src="${escapeHtml(previewSrc)}" alt="">`;
+  if (!options.downloadablePreview) return imageHtml;
+
+  const downloadName = options.downloadName || getImageDownloadFilename(options.imagePath || previewSrc);
+  const href = options.href || previewSrc;
+  return `<a class="image-download-link" href="${escapeHtml(href)}" download="${escapeHtml(downloadName)}" aria-label="画像を保存">${imageHtml}</a>`;
+}
+
+function renderImagePreview(inputId, previewSrc, options = {}) {
+  const container = document.getElementById(`${inputId}-preview-container`);
+  if (!container) return;
+
+  const downloadablePreview = container.dataset?.downloadablePreview === 'true';
+  container.innerHTML = getImagePreviewHtml(inputId, previewSrc, {
+    ...options,
+    downloadablePreview,
+  });
+}
+
 // 画像選択フォームHTML生成
-function getImageFormHtml(currentImage, inputId = 'edit-image') {
+function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
   const previewSrc = currentImage ? getImageSrc(currentImage) : '';
+  const showPath = options.showPath !== false;
+  const downloadablePreview = options.downloadablePreview === true;
+  const previewHtml = getImagePreviewHtml(inputId, previewSrc, {
+    downloadablePreview,
+    imagePath: currentImage,
+  });
+  const pathHtml = showPath
+    ? `<p class="image-path-display" id="${inputId}-path">${currentImage ? `パス: ${escapeHtml(currentImage)}` : ''}</p>`
+    : '';
+
   return `
     <div class="form-group">
       <label>画像</label>
       <div class="image-upload-area" id="image-upload-area">
         <input type="file" id="${inputId}-file" accept="image/*" onchange="handleImageSelect(this, '${inputId}')" style="display:none">
         <input type="hidden" id="${inputId}" value="${escapeHtml(currentImage || '')}">
-        <div class="image-preview-container" id="${inputId}-preview-container">
-          ${previewSrc ? `<img class="image-preview-large" id="${inputId}-preview" src="${previewSrc}" alt="">` : `<div class="image-placeholder" id="${inputId}-placeholder">タップして画像を選択</div>`}
+        <div class="image-preview-container" id="${inputId}-preview-container" data-downloadable-preview="${downloadablePreview ? 'true' : 'false'}">
+          ${previewHtml}
         </div>
         <div class="image-actions">
           <button type="button" class="btn-image-select" onclick="document.getElementById('${inputId}-file').click()">画像を選択</button>
           ${currentImage ? `<button type="button" class="btn-image-clear" onclick="clearImage('${inputId}')">削除</button>` : ''}
         </div>
-        <p class="image-path-display" id="${inputId}-path">${currentImage ? `パス: ${currentImage}` : ''}</p>
+        ${pathHtml}
       </div>
     </div>
   `;
@@ -980,7 +1024,10 @@ function handleImageSelect(input, inputId) {
 
     // プレビュー更新
     const container = document.getElementById(`${inputId}-preview-container`);
-    container.innerHTML = `<img class="image-preview-large" id="${inputId}-preview" src="${base64}" alt="">`;
+    renderImagePreview(inputId, base64, {
+      href: base64,
+      downloadName: file.name || 'image',
+    });
 
     if (!IS_API_MODE) {
       // ローカルJSON運用: ファイル名を生成（日付＋元のファイル名）
@@ -1009,6 +1056,10 @@ function handleImageSelect(input, inputId) {
       .then((result) => {
         document.getElementById(inputId).value = result.url;
         if (pathEl) pathEl.textContent = `URL: ${result.url}`;
+        renderImagePreview(inputId, base64, {
+          href: result.url,
+          imagePath: result.url,
+        });
         setImagePathForInputId(inputId, result.url);
         markChanged();
       })
@@ -1055,7 +1106,8 @@ function clearImage(inputId) {
   document.getElementById(inputId).value = '';
   const container = document.getElementById(`${inputId}-preview-container`);
   container.innerHTML = `<div class="image-placeholder" id="${inputId}-placeholder">タップして画像を選択</div>`;
-  document.getElementById(`${inputId}-path`).textContent = '';
+  const pathEl = document.getElementById(`${inputId}-path`);
+  if (pathEl) pathEl.textContent = '';
 
   // クリアボタンを削除
   const clearBtn = container.parentElement.querySelector('.btn-image-clear');
@@ -1157,7 +1209,7 @@ function addLive() {
       <label>詳細</label>
       <textarea id="edit-description" class="textarea" rows="3">open/start &#10;adv/door &#10;w.</textarea>
     </div>
-    ${getImageFormHtml('')}
+    ${getImageFormHtml('', 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
     <div class="form-group">
       <label>リンクURL</label>
       <input type="url" id="edit-link" class="text-input" placeholder="https://...">
@@ -1212,7 +1264,7 @@ function editLive(id, category) {
       <label>詳細</label>
       <textarea id="edit-description" class="textarea" rows="3">${escapeHtml(item.description)}</textarea>
     </div>
-    ${getImageFormHtml(item.image)}
+    ${getImageFormHtml(item.image, 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
     <div class="form-group">
       <label>詳細リンクURL（instagramなど/任意）</label>
       <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link)}">
@@ -1960,15 +2012,3 @@ window.addEventListener('beforeunload', (e) => {
     e.returnValue = '';
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
