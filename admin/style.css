@@ -215,6 +215,198 @@ body {
   border-left: 3px solid var(--primary);
 }
 
+/* ----- Live Operations Hub ----- */
+.live-secondary {
+  margin-top: 24px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.live-secondary summary {
+  padding: 16px 20px;
+  color: var(--gray-700);
+  font-weight: 700;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.live-secondary summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -4px;
+}
+
+.live-secondary[open] summary {
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.live-secondary-body {
+  padding: 20px;
+}
+
+.section-header.compact {
+  margin-bottom: 16px;
+}
+
+.section-header.compact h3 {
+  font-size: 1.05em;
+}
+
+.live-editor-section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.live-editor-section:first-child {
+  padding-top: 0;
+}
+
+.live-editor-section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.operation-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.operation-heading h3 {
+  color: var(--gray-900);
+  font-size: 1.05em;
+  letter-spacing: 0.04em;
+}
+
+.operation-step {
+  color: var(--primary);
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.source-intake {
+  background: var(--gray-100);
+  margin: -20px -20px 0;
+  padding: 24px 20px;
+  border-left: 4px solid var(--primary);
+}
+
+.parse-warnings {
+  margin-top: 12px;
+  padding-left: 12px;
+  border-left: 3px solid var(--primary);
+  color: var(--gray-700);
+  font-size: 0.85em;
+}
+
+.parse-warnings:empty {
+  display: none;
+}
+
+.parse-warnings ul {
+  margin: 4px 0 0 18px;
+}
+
+.parse-ok {
+  color: var(--gray-500);
+}
+
+.preview-text {
+  background: var(--gray-100);
+  border-style: dashed;
+}
+
+.operation-gate {
+  border-left: 3px solid var(--primary);
+  background: var(--primary-soft);
+  padding: 12px 16px;
+  color: var(--gray-700);
+  font-size: 0.85em;
+  text-align: left;
+  margin: 12px 0;
+}
+
+.manual-reservation-form {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--gray-300);
+}
+
+.manual-reservation-form h4 {
+  margin-bottom: 16px;
+  font-size: 0.95em;
+}
+
+.manual-fields {
+  align-items: flex-start;
+}
+
+.manual-fields .form-group {
+  flex: 1;
+}
+
+.manual-fields .quantity-field {
+  flex: 0 0 96px;
+}
+
+.form-error {
+  min-height: 1.6em;
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-size: 0.85em;
+}
+
+.reservation-totals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.reservation-totals span {
+  padding: 12px;
+  border: 1px solid var(--gray-200);
+  background: var(--gray-100);
+  color: var(--gray-700);
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.reservation-totals strong {
+  display: block;
+  color: var(--gray-900);
+  font-size: 1.45em;
+  line-height: 1.2;
+}
+
+.source-badge {
+  display: inline-flex;
+  flex: 0 0 auto;
+  padding: 3px 8px;
+  border: 1px solid var(--gray-300);
+  color: var(--gray-700);
+  font-size: 0.7em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.source-badge.is-manual {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.ticket-note {
+  white-space: pre-wrap;
+}
+
+.meta-label {
+  font-weight: 700;
+  color: var(--gray-700);
+}
+
 /* ----- Add Button ----- */
 .add-btn {
   background: var(--white);
@@ -291,6 +483,21 @@ body {
 .item-card:active {
   transform: scale(0.98);
   box-shadow: var(--shadow);
+}
+
+.live-edit-trigger {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.live-edit-trigger:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .item-card .thumbnail {
@@ -645,6 +852,12 @@ body {
   line-height: 1;
 }
 
+.modal-close:focus-visible,
+.modal:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .modal-body {
   padding: 20px;
 }
@@ -704,6 +917,13 @@ body {
 
 .btn:active {
   transform: scale(0.95);
+}
+
+.btn:disabled,
+.text-input:disabled,
+.textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 
 /* ----- Toast ----- */

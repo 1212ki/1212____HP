@@ -29,7 +29,10 @@ CREATE TABLE IF NOT EXISTS ticket_reservations (
   message TEXT,
   status TEXT NOT NULL,
   created_at TEXT NOT NULL,
-  updated_at TEXT NOT NULL
+  updated_at TEXT NOT NULL,
+  source TEXT NOT NULL DEFAULT 'web',
+  contact TEXT,
+  internal_note TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_ticket_reservations_live_id_created_at

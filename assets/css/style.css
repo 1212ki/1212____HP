@@ -532,7 +532,26 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 .live-inline-link.is-primary {
-  color: var(--ink);
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.live-inline-link.is-primary:hover {
+  color: var(--paper);
+  box-shadow: 0 8px 20px rgba(191, 85, 77, 0.2);
+}
+
+.live-inline-link.is-inactive {
+  background: var(--paper-deep);
+  color: var(--ink-muted);
+  cursor: default;
+  opacity: 0.78;
+}
+
+.live-inline-link.is-inactive::after {
+  content: none;
 }
 
 @media (max-width: 520px) {
@@ -857,6 +876,14 @@ header.nav-open .nav-toggle-icon span:nth-child(3) {
   transform: none;
 }
 
+.live-event.is-static:not(.is-featured) {
+  display: block;
+}
+
+.live-event.is-static .live-event-main {
+  width: 100%;
+}
+
 .live-event.is-featured .live-event-main {
   display: block;
   position: relative;
@@ -1110,6 +1137,56 @@ form button:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 25px rgba(191, 85, 77, 0.25);
   background: var(--accent);
+}
+
+form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+}
+
+.ticket-route-message {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-deep);
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.ticket-route-message .application-link {
+  margin: 8px 0 0 8px;
+}
+
+.live-detail-reservation-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--paper);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.live-detail-reservation-cta:hover {
+  color: var(--paper);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(191, 85, 77, 0.22);
+}
+
+.live-detail-reservation-cta.is-inactive {
+  border-color: var(--line);
+  background: var(--paper-deep);
+  color: var(--ink-muted);
+  cursor: default;
+  box-shadow: none;
+  transform: none;
 }
 
 /* Ticket confirmation modal */
@@ -1560,6 +1637,11 @@ footer p {
   .live-inline-actions {
     gap: 10px 14px;
     padding-top: 10px;
+  }
+
+  .live-inline-actions .live-inline-link.is-primary,
+  .live-detail-reservation-cta {
+    width: 100%;
   }
 
   .hero-title {

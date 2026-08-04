@@ -62,6 +62,51 @@
       .replace(/'/g, "&#039;");
   }
 
+  function getSharedTicketCta(live, internalUrl, options) {
+    const operations = window.LiveOperations;
+    if (!operations || typeof operations.getTicketCta !== "function") {
+      return {
+        active: false,
+        url: "",
+        external: false,
+        label: "予約情報を確認できません",
+        reason: "helperUnavailable",
+      };
+    }
+    return operations.getTicketCta(live, internalUrl, options);
+  }
+
+  function resolveSharedLive(input, liveId) {
+    const operations = window.LiveOperations;
+    if (!operations || typeof operations.resolveLiveById !== "function") {
+      return { status: "helperUnavailable", live: null, category: null };
+    }
+    return operations.resolveLiveById(input, liveId);
+  }
+
+  function getSharedResolvedTicketCta(input, liveId, internalUrl) {
+    const resolved = resolveSharedLive(input, liveId);
+    if (resolved.status !== "unique") {
+      return {
+        active: false,
+        url: "",
+        external: false,
+        label: "予約情報を確認できません",
+        reason: resolved.status === "ambiguous" ? "ambiguous" : resolved.status,
+      };
+    }
+    return getSharedTicketCta(resolved.live, internalUrl, { isPast: resolved.category === "past" });
+  }
+
+  function renderReservationAction(cta, className) {
+    const classes = String(className || "live-inline-link is-primary").trim();
+    if (!cta || !cta.active) {
+      return `<span class="${escapeHtml(`${classes} is-inactive`)}" aria-disabled="true">${escapeHtml(cta && cta.label ? cta.label : "予約情報を確認できません")}</span>`;
+    }
+    const externalAttributes = cta.external ? ' target="_blank" rel="noopener"' : "";
+    return `<a href="${escapeHtml(cta.url)}" class="${escapeHtml(classes)}"${externalAttributes}>${escapeHtml(cta.label)}</a>`;
+  }
+
   function findProfileLink(profileLinks, aliases) {
     if (!Array.isArray(profileLinks) || profileLinks.length === 0) return "";
     const safeAliases = Array.isArray(aliases) ? aliases.map((alias) => String(alias).trim().toLowerCase()) : [];
@@ -277,17 +322,20 @@
     }
 
     if (empty) empty.hidden = true;
-    const liveId = String(nextEvent.id || "").trim();
     renderLiveEvents(container, [nextEvent], version, {
       showFlyer: true,
       featured: true,
-      inlineActionsHtmlFactory: () => `
+      inlineActionsHtmlFactory: (item, liveId) => {
+        const internalUrl = liveId ? `ticket/?liveId=${encodeURIComponent(liveId)}` : "ticket/";
+        const cta = getSharedResolvedTicketCta(data, liveId, internalUrl);
+        return `
         <div class="live-inline-actions live-inline-actions-home">
-          <a href="${escapeHtml(liveId ? `ticket/?liveId=${encodeURIComponent(liveId)}` : "ticket/")}" class="live-inline-link is-primary">ticket</a>
+          ${renderReservationAction(cta)}
           <a href="${escapeHtml(liveId ? `live/detail/?liveId=${encodeURIComponent(liveId)}` : "live/")}" class="live-inline-link">detail</a>
           <a href="live/" class="live-inline-link">all live</a>
         </div>
-      `,
+      `;
+      },
     });
   }
 
@@ -391,11 +439,8 @@
       .join("");
   }
   function findLiveById(siteData, liveId) {
-    const data = siteData && typeof siteData === "object" ? siteData : {};
-    const live = data.live && typeof data.live === "object" ? data.live : {};
-    const upcoming = Array.isArray(live.upcoming) ? live.upcoming : [];
-    const past = Array.isArray(live.past) ? live.past : [];
-    return [...upcoming, ...past].find((item) => String(item.id) === String(liveId)) || null;
+    const resolved = resolveSharedLive(siteData, liveId);
+    return resolved.status === "unique" ? resolved.live : null;
   }
 
   function openLiveDetailModal(siteData, liveId, version) {
@@ -498,8 +543,29 @@
     renderLiveEvents(document.getElementById("live-upcoming-events"), upcomingEvents, version, {
       showFlyer: true,
       featured: true,
+      inlineActionsHtmlFactory: (item, liveId, detailHref) => {
+        const internalUrl = liveId ? `../ticket/?liveId=${encodeURIComponent(liveId)}` : "../ticket/";
+        const cta = getSharedResolvedTicketCta(live, liveId, internalUrl);
+        return `
+          <div class="live-inline-actions">
+            ${renderReservationAction(cta)}
+            <a href="${escapeHtml(detailHref)}" class="live-inline-link">detail</a>
+          </div>
+        `;
+      },
     });
-    renderLiveEvents(document.getElementById("live-past-events"), pastEvents.slice(0, LIVE_PAST_PREVIEW_LIMIT), version, { showFlyer: false });
+    renderLiveEvents(document.getElementById("live-past-events"), pastEvents.slice(0, LIVE_PAST_PREVIEW_LIMIT), version, {
+      showFlyer: false,
+      inlineActionsHtmlFactory: (item, liveId, detailHref) => {
+        const cta = getSharedResolvedTicketCta(live, liveId, "../ticket/");
+        return `
+          <div class="live-inline-actions">
+            ${renderReservationAction(cta)}
+            <a href="${escapeHtml(detailHref)}" class="live-inline-link">detail</a>
+          </div>
+        `;
+      },
+    });
 
     const pastHeading = document.getElementById("live-past-heading");
     if (pastHeading) {
@@ -554,6 +620,16 @@
     const singleEl = document.getElementById("live-detail-single");
     const archiveEl = document.getElementById("live-archive");
 
+    if (ticketEl) {
+      ticketEl.hidden = true;
+      ticketEl.textContent = "";
+      ticketEl.removeAttribute("href");
+      ticketEl.removeAttribute("target");
+      ticketEl.removeAttribute("rel");
+      ticketEl.removeAttribute("aria-disabled");
+      ticketEl.classList.remove("is-inactive");
+    }
+
     if (backEl) backEl.href = "../";
     if (singleEl) singleEl.style.display = "";
     if (archiveEl) archiveEl.style.display = "none";
@@ -575,15 +651,18 @@
       return;
     }
 
-    const live = findLiveById(siteData, liveId);
-    if (!live) {
+    const resolvedLive = resolveSharedLive(siteData, liveId);
+    if (resolvedLive.status !== "unique") {
       if (notFoundEl) {
         notFoundEl.style.display = "";
-        notFoundEl.textContent = "ライブ情報が見つかりません";
+        notFoundEl.textContent = resolvedLive.status === "ambiguous"
+          ? "Live IDが重複しているため、ライブ情報を一意に特定できません"
+          : "ライブ情報が見つかりません";
       }
       if (titleEl) titleEl.textContent = "live detail";
       return;
     }
+    const live = resolvedLive.live;
 
     if (notFoundEl) notFoundEl.style.display = "none";
 
@@ -613,8 +692,22 @@
     if (descEl) descEl.textContent = text;
 
     if (ticketEl) {
-      const href = `../../ticket/?liveId=${encodeURIComponent(String(live.id || liveId))}`;
-      ticketEl.href = href;
+      const resolvedId = String(live.id || liveId);
+      const href = `../../ticket/?liveId=${encodeURIComponent(resolvedId)}`;
+      const cta = getSharedTicketCta(live, href, { isPast: resolvedLive.category === "past" });
+      ticketEl.hidden = false;
+      ticketEl.textContent = cta.label;
+      if (cta.active) {
+        ticketEl.href = cta.url;
+        if (cta.external) {
+          ticketEl.target = "_blank";
+          ticketEl.rel = "noopener";
+        }
+      } else {
+        ticketEl.removeAttribute("href");
+        ticketEl.setAttribute("aria-disabled", "true");
+        ticketEl.classList.add("is-inactive");
+      }
     }
 
     // Improve browser title for sharing.

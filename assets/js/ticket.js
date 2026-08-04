@@ -10,6 +10,7 @@
     labelMessage: "備考",
   };
   let siteDataVersion = "";
+  let eligibleLiveIds = new Set();
 
   function $(id) {
     return document.getElementById(id);
@@ -57,15 +58,80 @@
     };
   }
 
+  function getLiveOperations() {
+    const operations = window.LiveOperations;
+    return operations
+      && typeof operations.getTicketCta === "function"
+      && typeof operations.resolveLiveById === "function"
+      ? operations
+      : null;
+  }
+
   function buildLiveOptions(siteData) {
-    const upcoming = (siteData.live && siteData.live.upcoming) || [];
-    const past = (siteData.live && siteData.live.past) || [];
-    const items = [...upcoming, ...past];
-    return items.map((l) => ({
-      id: l.id,
-      label: `${l.date || ""} ${l.venue || ""}`.trim() || l.id,
-      isPast: past.some((p) => p.id === l.id),
-    }));
+    const operations = getLiveOperations();
+    if (!operations) return [];
+    const live = siteData && siteData.live && typeof siteData.live === "object" ? siteData.live : {};
+    const upcoming = Array.isArray(live.upcoming) ? live.upcoming : [];
+    return upcoming
+      .map((item) => {
+        const id = String(item && item.id != null ? item.id : "");
+        const resolved = operations.resolveLiveById(siteData, id);
+        if (resolved.status !== "unique" || resolved.category !== "upcoming") return null;
+        const uniqueLive = resolved.live;
+        const internalUrl = `./?liveId=${encodeURIComponent(id)}`;
+        const cta = operations.getTicketCta(uniqueLive, internalUrl, { isPast: false });
+        if (!id || !cta.active || cta.external) return null;
+        return {
+          id,
+          label: `${uniqueLive.date || ""} ${uniqueLive.venue || ""}`.trim() || id,
+        };
+      })
+      .filter(Boolean);
+  }
+
+  function findLiveRoute(siteData, liveId) {
+    const operations = getLiveOperations();
+    if (!operations) return { type: "helperUnavailable", live: null, cta: null };
+    const resolved = operations.resolveLiveById(siteData, liveId);
+    if (resolved.status === "ambiguous") return { type: "ambiguous", live: null, cta: null };
+    if (resolved.status !== "unique") return { type: "unknown", live: null, cta: null };
+    const cta = operations.getTicketCta(resolved.live, `./?liveId=${encodeURIComponent(String(liveId))}`, {
+      isPast: resolved.category === "past",
+    });
+    if (cta.reason === "reservationClosed") return { type: "closed", live: resolved.live, cta };
+    if (cta.reason === "past") return { type: "past", live: resolved.live, cta };
+    if (cta.reason === "invalidTicketUrl") return { type: "invalid", live: resolved.live, cta };
+    if (cta.active && cta.external) return { type: "external", live: resolved.live, cta };
+    if (cta.active) return { type: "internal", live: resolved.live, cta };
+    return { type: "unavailable", live: resolved.live, cta };
+  }
+
+  function setRouteMessage(route) {
+    const element = $("ticket-route-message");
+    if (!element) return;
+    if (!route) {
+      element.hidden = true;
+      element.innerHTML = "";
+      return;
+    }
+    element.hidden = false;
+    if (route.type === "external" && route.cta) {
+      element.innerHTML = `このライブの予約は外部サイトで受け付けています。<a class="application-link" href="${escapeHtml(route.cta.url)}" target="_blank" rel="noopener">外部サイトで予約</a>`;
+      return;
+    }
+    const messages = {
+      helperUnavailable: "予約情報を確認できません。時間をおいて再度お試しください。",
+      past: "指定されたライブは終了したライブです。別のライブを選択してください。",
+      closed: "指定されたライブの予約受付は終了しています。別のライブを選択してください。",
+      invalid: "指定されたライブの予約URLが無効です。別のライブを選択してください。",
+      ambiguous: "Live IDが重複しているため、指定されたライブを一意に特定できません。",
+      unknown: "指定されたライブが見つかりません。別のライブを選択してください。",
+      unavailable: "指定されたライブは現在予約できません。別のライブを選択してください。",
+      empty: "現在、このサイトで予約できるライブはありません。",
+      invalidSelection: "このライブはこのフォームから予約できません。ライブを選択し直してください。",
+    };
+    element.textContent = messages[route.type] || messages.unavailable;
+    element.innerHTML = escapeHtml(element.textContent);
   }
 
   function resolveAssetPath(raw) {
@@ -146,14 +212,13 @@
   function renderSelectedLivePreview(siteData, liveId) {
     const container = $("ticket-live-preview");
     if (!container) return;
-    const upcoming = (siteData.live && siteData.live.upcoming) || [];
-    const past = (siteData.live && siteData.live.past) || [];
-    const all = [...upcoming, ...past];
-    const live = all.find((l) => String(l.id) === String(liveId));
-    if (!live) {
+    const operations = getLiveOperations();
+    const resolved = operations ? operations.resolveLiveById(siteData, liveId) : null;
+    if (!resolved || resolved.status !== "unique") {
       container.innerHTML = "";
       return;
     }
+    const live = resolved.live;
 
     const imageSrc = withCacheBust(resolveAssetPath(live.image || ""));
     const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
@@ -176,19 +241,18 @@
 
   function renderSelect(options, selectedId) {
     const select = $("liveId");
+    if (!select) return;
     select.innerHTML = options
       .map((opt) => {
-        const disabled = opt.isPast ? "disabled" : "";
+        const disabled = opt.disabled ? "disabled" : "";
         const selected = opt.id === selectedId ? "selected" : "";
-        return `<option value="${escapeHtml(opt.id)}" ${selected} ${disabled}>${escapeHtml(opt.label)}${opt.isPast ? " (終了)" : ""}</option>`;
+        return `<option value="${escapeHtml(opt.id)}" ${selected} ${disabled}>${escapeHtml(opt.label)}</option>`;
       })
       .join("");
   }
 
-  async function submitReservation(formData) {
+  async function submitReservation(payload) {
     const endpoint = apiBase ? `${apiBase}/api/public/ticket-reservations` : "/api/public/ticket-reservations";
-    const payload = Object.fromEntries(formData.entries());
-    payload.quantity = Number(payload.quantity || 1);
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -203,6 +267,22 @@
     if (!selectEl || selectEl.selectedIndex < 0) return "";
     const opt = selectEl.options[selectEl.selectedIndex];
     return opt ? String(opt.textContent || "").trim() : "";
+  }
+
+  function buildPublicReservationPayload(liveSnapshot) {
+    const valueOf = (id) => String($(id) && $(id).value || "");
+    const quantity = Number(valueOf("quantity"));
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+      throw new Error("枚数は1〜10の整数で入力してください。");
+    }
+    return Object.freeze({
+      liveId: String(liveSnapshot && liveSnapshot.id || ""),
+      name: valueOf("name").trim(),
+      email: valueOf("email").trim(),
+      quantity,
+      message: valueOf("message").trim(),
+      company: valueOf("company"),
+    });
   }
 
   function setConfirmError(message) {
@@ -246,16 +326,14 @@
     setConfirmError("");
   }
 
-  function renderConfirmSummary(formData) {
+  function renderConfirmSummary(payload, liveSnapshot) {
     const summary = $("ticketConfirmSummary");
     if (!summary) return;
-    const select = $("liveId");
-    const liveText = safeGetText(select);
-    const payload = Object.fromEntries(formData.entries());
+    const selectedLive = liveSnapshot && typeof liveSnapshot === "object" ? liveSnapshot : {};
     const message = String(payload.message || "").trim();
 
     const rows = [
-      ["ライブ", liveText || String(payload.liveId || "")],
+      ["ライブ", String(selectedLive.label || selectedLive.id || payload.liveId || "")],
       ["名前", String(payload.name || "")],
       ["e-mail", String(payload.email || "")],
       ...(ticketFieldConfig.showQuantity ? [[ticketFieldConfig.labelQuantity, String(payload.quantity || "1")]] : []),
@@ -294,29 +372,61 @@
     const query = parseQuery();
     const form = $("ticket-form");
     const submitBtn = $("submitBtn");
+    const liveSelect = $("liveId");
+    let siteData = null;
+
+    if (!getLiveOperations()) {
+      if (liveSelect) liveSelect.innerHTML = "";
+      if (submitBtn) submitBtn.disabled = true;
+      setRouteMessage({ type: "helperUnavailable" });
+      return;
+    }
+
+    let draft = null;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY) || "";
+      const parsed = raw ? JSON.parse(raw) : null;
+      if (parsed && typeof parsed === "object") draft = parsed;
+    } catch (_e) {}
 
     try {
-      const siteData = await fetchSiteData();
+      siteData = await fetchSiteData();
       renderSiteFooter(siteData.site || {});
       renderTicketCopy(siteData.ticket || {});
       renderTicketFields(siteData.ticket || {});
-      const options = buildLiveOptions(siteData).filter((o) => !o.isPast);
+      const options = buildLiveOptions(siteData);
+      eligibleLiveIds = new Set(options.map((option) => option.id));
+      const hasQuery = new URL(window.location.href).searchParams.has("liveId");
+      const queryRoute = hasQuery ? findLiveRoute(siteData, query.liveId) : null;
       if (options.length === 0) {
-        renderSelect([{ id: "", label: "開催予定のライブがありません", isPast: false }], "");
+        renderSelect([{ id: "", label: "開催予定のライブがありません", disabled: true }], "");
         if (submitBtn) submitBtn.disabled = true;
+        setRouteMessage(hasQuery ? queryRoute : { type: "empty" });
         return;
       }
-      const selected = options.some((o) => o.id === query.liveId) ? query.liveId : options[0].id;
-      renderSelect(options, selected);
+
+      const validQuery = hasQuery && queryRoute.type === "internal" && eligibleLiveIds.has(String(query.liveId));
+      const validDraftId = !hasQuery && draft && eligibleLiveIds.has(String(draft.liveId)) ? String(draft.liveId) : "";
+      const selected = validQuery ? String(query.liveId) : (validDraftId || (!hasQuery ? options[0].id : ""));
+      const selectOptions = hasQuery && !validQuery
+        ? [{ id: "", label: "ライブを選択してください", disabled: true }, ...options]
+        : options;
+      renderSelect(selectOptions, selected);
       renderSelectedLivePreview(siteData, selected);
-      const liveSelect = $("liveId");
+      if (hasQuery && !validQuery) setRouteMessage(queryRoute);
+      else setRouteMessage(null);
+      if (submitBtn) submitBtn.disabled = !eligibleLiveIds.has(selected);
       if (liveSelect) {
         liveSelect.addEventListener("change", () => {
-          renderSelectedLivePreview(siteData, liveSelect.value);
+          const selectedId = String(liveSelect.value || "");
+          const valid = eligibleLiveIds.has(selectedId);
+          renderSelectedLivePreview(siteData, valid ? selectedId : "");
+          if (submitBtn) submitBtn.disabled = !valid;
+          setRouteMessage(valid ? null : { type: "invalidSelection" });
           try {
             const raw = localStorage.getItem(STORAGE_KEY) || "";
-            const draft = raw ? JSON.parse(raw) : {};
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...(draft || {}), liveId: liveSelect.value }));
+            const savedDraft = raw ? JSON.parse(raw) : {};
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...(savedDraft || {}), liveId: valid ? selectedId : "" }));
           } catch (_e) {}
         });
       }
@@ -329,18 +439,14 @@
     const url = new URL(window.location.href);
     const dryRun = url.searchParams.get("dryRun") === "1";
 
-    // Draft restore (avoid losing input when users go back/fwd).
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY) || "";
-      const draft = raw ? JSON.parse(raw) : null;
-      if (draft && typeof draft === "object") {
-        if (form && draft.liveId) $("liveId").value = String(draft.liveId);
-        if (form && draft.name) $("name").value = String(draft.name);
-        if (form && draft.email) $("email").value = String(draft.email);
-        if (form && draft.quantity) $("quantity").value = String(draft.quantity);
-        if (form && draft.message) $("message").value = String(draft.message);
-      }
-    } catch (_e) {}
+    // Restore non-routing fields. Live selection was validated above so a draft
+    // cannot override a valid query or reintroduce an excluded Live.
+    if (draft) {
+      if (form && draft.name) $("name").value = String(draft.name);
+      if (form && draft.email) $("email").value = String(draft.email);
+      if (form && draft.quantity) $("quantity").value = String(draft.quantity);
+      if (form && draft.message) $("message").value = String(draft.message);
+    }
 
     function persistDraft() {
       if (!form) return;
@@ -377,19 +483,38 @@
 
   function setBusy(busy) {
     if (!submitBtn) return;
-    submitBtn.disabled = busy;
+    submitBtn.disabled = busy || !eligibleLiveIds.has(String($("liveId") && $("liveId").value || ""));
     submitBtn.textContent = busy ? "..." : ticketFieldConfig.submitLabel;
   }
 
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
+      const selectedLiveControl = $("liveId");
+      const selectedLiveSnapshot = Object.freeze({
+        id: String(selectedLiveControl && selectedLiveControl.value || ""),
+        label: safeGetText(selectedLiveControl),
+      });
+      const selectedId = selectedLiveSnapshot.id;
+      const route = findLiveRoute(siteData, selectedId);
+      if (!eligibleLiveIds.has(selectedId) || route.type !== "internal") {
+        setRouteMessage({ type: "invalidSelection" });
+        setResult("このライブはこのフォームから予約できません。ライブを選択し直してください。", "error");
+        if (submitBtn) submitBtn.disabled = true;
+        return;
+      }
+      let payload;
+      try {
+        payload = buildPublicReservationPayload(selectedLiveSnapshot);
+      } catch (error) {
+        setResult(escapeHtml(error.message), "error");
+        return;
+      }
       setBusy(true);
       try {
-        const fd = new FormData(ev.target);
         setConfirmStage("sending");
         const title = $("ticketConfirmTitle");
         if (title) title.textContent = "送信中...";
-        renderConfirmSummary(fd);
+        renderConfirmSummary(payload, selectedLiveSnapshot);
         openConfirmModal();
 
         setConfirmError("");
@@ -402,7 +527,7 @@
           return;
         }
 
-        const res = await submitReservation(fd);
+        const res = await submitReservation(payload);
         const r = res.reservation || {};
         try {
           localStorage.removeItem(STORAGE_KEY);

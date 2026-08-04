@@ -33,6 +33,67 @@ const DEFAULT_SITE_DATA = {
     formAction: "https://formspree.io/f/xqaeddgj",
   },
 };
+const TOKYO_UTC_OFFSET_MS = 9 * 60 * 60 * 1000;
+const LIVE_AI_SOURCE_MAX_LENGTH = 12_000;
+const LIVE_AI_TIMEOUT_MS = 15_000;
+const LIVE_AI_DRAFT_KEYS = ["date", "title", "venue", "description", "ticketUrl", "link"];
+const LIVE_AI_DRAFT_LIMITS = {
+  date: 10,
+  title: 300,
+  venue: 300,
+  description: 10_000,
+  ticketUrl: 2_048,
+  link: 2_048,
+};
+const LIVE_AI_OUTPUT_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  properties: Object.fromEntries(LIVE_AI_DRAFT_KEYS.map((key) => [key, { type: "string" }])),
+  required: LIVE_AI_DRAFT_KEYS,
+};
+const LIVE_AI_INSTRUCTIONS = [
+  "ライブ／公演の元情報を、指定された6項目へ整理してください。",
+  "原文にない情報は補わず、判断できない項目は空文字にしてください。",
+  "dateは判断できる場合だけYYYY.MM.DD形式にしてください。",
+  "ticketUrlにはチケットの予約または購入先URLだけを入れてください。",
+  "linkには公演詳細やSNSなど、予約・購入先ではない関連URLを入れてください。",
+  "descriptionにはOPEN、START、料金、出演者など独立項目のない情報を読みやすく整理してください。",
+].join("\n");
+
+class SiteDataValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "SiteDataValidationError";
+  }
+}
+
+class PublicReservationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "PublicReservationError";
+  }
+}
+
+class KnownClientError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "KnownClientError";
+  }
+}
+
+class LiveAiProviderError extends Error {
+  constructor() {
+    super("AI source intake failed");
+    this.name = "LiveAiProviderError";
+  }
+}
+
+class LiveAiTimeoutError extends Error {
+  constructor() {
+    super("AI source intake timed out");
+    this.name = "LiveAiTimeoutError";
+  }
+}
 
 function nowIso() {
   return new Date().toISOString();
@@ -96,6 +157,20 @@ function normalizeSiteData(input) {
   data.contact.introText = data.contact.introText || base.contact.introText;
   data.contact.formAction = data.contact.formAction || base.contact.formAction;
   return data;
+}
+
+function projectPublicSiteData(data) {
+  const projected = structuredClone(data);
+  for (const collection of ["upcoming", "past"]) {
+    const lives = projected?.live?.[collection];
+    if (!Array.isArray(lives)) continue;
+    for (const live of lives) {
+      if (!live || typeof live !== "object") continue;
+      delete live.sourceText;
+      delete live.xComment;
+    }
+  }
+  return projected;
 }
 
 function getAllowedOrigins(env) {
@@ -295,6 +370,147 @@ function isAdminAuthorized(request, env) {
   return token === expected;
 }
 
+function isValidLiveAiDate(value) {
+  const match = /^(\d{4})\.(\d{2})\.(\d{2})$/.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12) return false;
+  const leapYear = year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+  const daysInMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day >= 1 && day <= daysInMonth[month - 1];
+}
+
+function isValidLiveAiUrl(value) {
+  if (!value) return true;
+  try {
+    const url = new URL(value);
+    return (
+      (url.protocol === "http:" || url.protocol === "https:") &&
+      Boolean(url.hostname) &&
+      !url.username &&
+      !url.password
+    );
+  } catch (_error) {
+    return false;
+  }
+}
+
+function validateLiveAiDraft(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    throw new LiveAiProviderError();
+  }
+
+  const keys = Object.keys(input);
+  if (
+    keys.length !== LIVE_AI_DRAFT_KEYS.length ||
+    !LIVE_AI_DRAFT_KEYS.every((key) => Object.prototype.hasOwnProperty.call(input, key))
+  ) {
+    throw new LiveAiProviderError();
+  }
+
+  const draft = {};
+  for (const key of LIVE_AI_DRAFT_KEYS) {
+    if (typeof input[key] !== "string") throw new LiveAiProviderError();
+    const value = input[key].trim();
+    if (value.length > LIVE_AI_DRAFT_LIMITS[key]) throw new LiveAiProviderError();
+    draft[key] = value;
+  }
+
+  if (draft.date && !isValidLiveAiDate(draft.date)) throw new LiveAiProviderError();
+  if (!isValidLiveAiUrl(draft.ticketUrl) || !isValidLiveAiUrl(draft.link)) {
+    throw new LiveAiProviderError();
+  }
+  return draft;
+}
+
+function hasLiveAiRefusal(payload) {
+  if (typeof payload?.refusal === "string" && payload.refusal.trim()) return true;
+  if (!Array.isArray(payload?.output)) return false;
+  return payload.output.some((item) => (
+    Array.isArray(item?.content) && item.content.some((content) => (
+      content?.type === "refusal" ||
+      (typeof content?.refusal === "string" && content.refusal.trim())
+    ))
+  ));
+}
+
+function extractLiveAiOutputText(payload) {
+  if (typeof payload?.output_text === "string" && payload.output_text.trim()) {
+    return payload.output_text;
+  }
+  if (!Array.isArray(payload?.output)) return "";
+  for (const item of payload.output) {
+    if (!Array.isArray(item?.content)) continue;
+    for (const content of item.content) {
+      if (content?.type === "output_text" && typeof content.text === "string" && content.text.trim()) {
+        return content.text;
+      }
+    }
+  }
+  return "";
+}
+
+async function requestLiveAiDraft(env, sourceText) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), LIVE_AI_TIMEOUT_MS);
+  let payload;
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: String(env.LIVE_AI_MODEL || "").trim() || "gpt-5-mini",
+        instructions: LIVE_AI_INSTRUCTIONS,
+        input: sourceText,
+        text: {
+          format: {
+            type: "json_schema",
+            name: "live_source_intake",
+            strict: true,
+            schema: LIVE_AI_OUTPUT_SCHEMA,
+          },
+        },
+      }),
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new LiveAiProviderError();
+    payload = await response.json();
+  } catch (error) {
+    if (controller.signal.aborted) throw new LiveAiTimeoutError();
+    if (error instanceof LiveAiProviderError) throw error;
+    throw new LiveAiProviderError();
+  } finally {
+    clearTimeout(timeout);
+  }
+
+  if (
+    !payload ||
+    typeof payload !== "object" ||
+    payload.error ||
+    (payload.status && payload.status !== "completed") ||
+    hasLiveAiRefusal(payload)
+  ) {
+    throw new LiveAiProviderError();
+  }
+
+  const outputText = extractLiveAiOutputText(payload);
+  if (!outputText) throw new LiveAiProviderError();
+
+  let parsed;
+  try {
+    parsed = JSON.parse(outputText);
+  } catch (_error) {
+    throw new LiveAiProviderError();
+  }
+  return validateLiveAiDraft(parsed);
+}
+
 async function serveImage(request, env, key) {
   if (!env.IMAGES) {
     return new Response("image storage not configured", { status: 500 });
@@ -341,6 +557,10 @@ async function getSiteData(env) {
 }
 
 async function saveSiteData(env, data) {
+  const duplicateLiveIds = findDuplicateLiveIds(data);
+  if (duplicateLiveIds.length > 0) {
+    throw new SiteDataValidationError(`duplicate Live ID: ${duplicateLiveIds.join(", ")}`);
+  }
   const normalized = normalizeSiteData(data);
   await env.DB.prepare(
     "INSERT OR REPLACE INTO site_data (id, data, updated_at) VALUES (1, ?, ?)"
@@ -365,32 +585,37 @@ async function createTicketReservation(env, input) {
   const name = String(input.name || "").trim();
   const email = String(input.email || "").trim();
   const message = String(input.message || "").trim();
-  const quantity = clampInt(input.quantity, 1, 10);
+  const quantity = input.quantity;
 
-  if (!liveId) throw new Error("liveId is required");
-  if (!name) throw new Error("name is required");
-  if (!isValidEmail(email)) throw new Error("email is invalid");
+  if (!liveId) throw new PublicReservationError("liveId is required");
+  if (!name) throw new PublicReservationError("name is required");
+  if (!isValidEmail(email)) throw new PublicReservationError("email is invalid");
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+    throw new PublicReservationError("quantity is invalid");
+  }
 
   const siteData = await getSiteData(env);
-  const live = findLiveById(siteData, liveId);
-  if (!live) throw new Error("live not found");
-
-  // Basic de-dupe: same live+email within 5 minutes.
-  const dedupe = await env.DB.prepare(
-    `SELECT id FROM ticket_reservations
-     WHERE live_id = ? AND email = ? AND created_at >= datetime('now', '-5 minutes')
-     ORDER BY created_at DESC LIMIT 1`
-  ).bind(liveId, email).first();
-  if (dedupe?.id) throw new Error("reservation already submitted recently");
+  const resolvedLive = resolveLiveById(siteData, liveId);
+  if (resolvedLive.status === "ambiguous") throw new PublicReservationError("live ID is ambiguous");
+  if (resolvedLive.status !== "unique") throw new PublicReservationError("live not found");
+  const live = resolvedLive.live;
+  if (!isPublicTicketReservationEligible(siteData, liveId)) {
+    throw new PublicReservationError("live is not available for public reservation");
+  }
 
   const id = generateId("ticket");
   const createdAt = nowIso();
+  const duplicateThreshold = new Date(Date.parse(createdAt) - 5 * 60 * 1000).toISOString();
   const status = "pending";
 
-  await env.DB.prepare(
+  const insertResult = await env.DB.prepare(
     `INSERT INTO ticket_reservations
-      (id, live_id, live_date, live_venue, name, email, quantity, message, status, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      (id, live_id, live_date, live_venue, name, email, quantity, message, status, created_at, updated_at, source)
+     SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+     WHERE NOT EXISTS (
+       SELECT 1 FROM ticket_reservations
+       WHERE live_id = ? AND email = ? AND created_at >= ?
+     )`
   ).bind(
     id,
     liveId,
@@ -402,8 +627,15 @@ async function createTicketReservation(env, input) {
     message,
     status,
     createdAt,
-    createdAt
+    createdAt,
+    "web",
+    liveId,
+    email,
+    duplicateThreshold
   ).run();
+  if (Number(insertResult?.meta?.changes) === 0) {
+    throw new PublicReservationError("reservation already submitted recently");
+  }
 
   return {
     id,
@@ -415,6 +647,78 @@ async function createTicketReservation(env, input) {
     quantity,
     message,
     status,
+    source: "web",
+    createdAt,
+  };
+}
+
+async function createManualTicketReservation(env, input) {
+  const liveId = typeof input.liveId === "string" ? input.liveId.trim() : "";
+  const name = typeof input.name === "string" ? input.name.trim() : "";
+  const quantity = input.quantity;
+
+  if (!liveId) throw new KnownClientError("liveId is required");
+  if (!name) throw new KnownClientError("name is required");
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+    throw new KnownClientError("quantity is invalid");
+  }
+  if (input.contact != null && typeof input.contact !== "string") {
+    throw new KnownClientError("contact is invalid");
+  }
+  if (input.internalNote != null && typeof input.internalNote !== "string") {
+    throw new KnownClientError("internalNote is invalid");
+  }
+
+  const contact = String(input.contact || "").trim();
+  const internalNote = String(input.internalNote || "").trim();
+  if (contact.length > 200) throw new KnownClientError("contact is too long");
+  if (internalNote.length > 2000) throw new KnownClientError("internalNote is too long");
+
+  const siteData = await getSiteData(env);
+  const resolvedLive = resolveLiveById(siteData, liveId);
+  if (resolvedLive.status === "ambiguous") throw new KnownClientError("live ID is ambiguous");
+  if (resolvedLive.status !== "unique") throw new KnownClientError("live not found");
+  const live = resolvedLive.live;
+
+  const id = generateId("ticket");
+  const createdAt = nowIso();
+  const status = "handled";
+  const source = "manual";
+
+  await env.DB.prepare(
+    `INSERT INTO ticket_reservations
+      (id, live_id, live_date, live_venue, name, email, quantity, message, status, created_at, updated_at, source, contact, internal_note)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).bind(
+    id,
+    liveId,
+    String(live.date || ""),
+    String(live.venue || ""),
+    name,
+    "",
+    quantity,
+    "",
+    status,
+    createdAt,
+    createdAt,
+    source,
+    contact,
+    internalNote
+  ).run();
+
+  return {
+    id,
+    liveId,
+    liveDate: String(live.date || ""),
+    liveVenue: String(live.venue || ""),
+    name,
+    email: "",
+    quantity,
+    message: "",
+    status,
+    source,
+    contact,
+    internalNote,
     createdAt,
   };
 }
@@ -428,7 +732,8 @@ async function listTicketReservations(env, options = {}) {
   if (liveId && status) {
     stmt = env.DB.prepare(
       `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
-              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+              COALESCE(source, 'web') as source, contact, internal_note as internalNote
        FROM ticket_reservations
        WHERE live_id = ? AND status = ?
        ORDER BY created_at DESC
@@ -437,7 +742,8 @@ async function listTicketReservations(env, options = {}) {
   } else if (liveId) {
     stmt = env.DB.prepare(
       `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
-              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+              COALESCE(source, 'web') as source, contact, internal_note as internalNote
        FROM ticket_reservations
        WHERE live_id = ?
        ORDER BY created_at DESC
@@ -446,7 +752,8 @@ async function listTicketReservations(env, options = {}) {
   } else if (status) {
     stmt = env.DB.prepare(
       `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
-              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+              COALESCE(source, 'web') as source, contact, internal_note as internalNote
        FROM ticket_reservations
        WHERE status = ?
        ORDER BY created_at DESC
@@ -455,7 +762,8 @@ async function listTicketReservations(env, options = {}) {
   } else {
     stmt = env.DB.prepare(
       `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
-              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt
+              name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+              COALESCE(source, 'web') as source, contact, internal_note as internalNote
        FROM ticket_reservations
        ORDER BY created_at DESC
        LIMIT ?`
@@ -469,7 +777,7 @@ async function listTicketReservations(env, options = {}) {
 async function updateTicketReservationStatus(env, id, status) {
   const allowed = new Set(["pending", "handled", "cancelled"]);
   const next = String(status || "").trim();
-  if (!allowed.has(next)) throw new Error("invalid status");
+  if (!allowed.has(next)) throw new KnownClientError("invalid status");
 
   const updatedAt = nowIso();
   const res = await env.DB.prepare(
@@ -493,9 +801,15 @@ function toCsv(rows) {
     "email",
     "quantity",
     "message",
+    "source",
+    "contact",
+    "internalNote",
   ];
   const escape = (v) => {
-    const s = String(v ?? "");
+    const raw = String(v ?? "");
+    const s = typeof v === "string" && /^[\s\x00-\x1f\x7f-\x9f]*[=+\-@]/.test(v)
+      ? `'${raw}`
+      : raw;
     if (/[\",\n\r]/.test(s)) return `"${s.replace(/\"/g, "\"\"")}"`;
     return s;
   };
@@ -514,16 +828,182 @@ function toCsv(rows) {
         r.email,
         r.quantity,
         r.message,
+        r.source || "web",
+        r.contact,
+        r.internalNote,
       ].map(escape).join(",")
     );
   }
   return lines.join("\n") + "\n";
 }
 
+function getLiveEntries(siteData) {
+  const live = siteData && siteData.live && typeof siteData.live === "object" ? siteData.live : {};
+  const upcoming = Array.isArray(live.upcoming) ? live.upcoming : [];
+  const past = Array.isArray(live.past) ? live.past : [];
+  return [
+    ...upcoming.map((item) => ({ live: item, category: "upcoming" })),
+    ...past.map((item) => ({ live: item, category: "past" })),
+  ];
+}
+
+function normalizeLiveId(value) {
+  return String(value == null ? "" : value).trim();
+}
+
+function resolveLiveById(siteData, liveId) {
+  const id = normalizeLiveId(liveId);
+  const matches = id
+    ? getLiveEntries(siteData).filter((entry) => normalizeLiveId(entry.live && entry.live.id) === id)
+    : [];
+  if (matches.length === 0) return { status: "missing", live: null, category: null };
+  if (matches.length !== 1) return { status: "ambiguous", live: null, category: null };
+  return { status: "unique", live: matches[0].live, category: matches[0].category };
+}
+
+function findDuplicateLiveIds(siteData) {
+  const counts = new Map();
+  for (const entry of getLiveEntries(siteData)) {
+    const id = normalizeLiveId(entry.live && entry.live.id);
+    if (!id) continue;
+    counts.set(id, (counts.get(id) || 0) + 1);
+  }
+  return [...counts.entries()]
+    .filter(([, count]) => count > 1)
+    .map(([id]) => id)
+    .sort();
+}
+
 function findLiveById(siteData, liveId) {
-  const upcoming = siteData.live.upcoming || [];
-  const past = siteData.live.past || [];
-  return [...upcoming, ...past].find((item) => item.id === liveId) || null;
+  const resolved = resolveLiveById(siteData, liveId);
+  return resolved.status === "unique" ? resolved.live : null;
+}
+
+const PUBLIC_RESERVATION_SOCIAL_HOSTS = [
+  "instagram.com",
+  "x.com",
+  "twitter.com",
+  "youtube.com",
+  "youtu.be",
+  "facebook.com",
+  "fb.com",
+  "tiktok.com",
+  "threads.net",
+  "bandcamp.com",
+  "soundcloud.com",
+  "spotify.com",
+];
+
+const PUBLIC_RESERVATION_TICKET_HOSTS = [
+  "tiget.net",
+  "eplus.jp",
+  "pia.jp",
+  "l-tike.com",
+  "livepocket.jp",
+  "zaiko.io",
+  "peatix.com",
+  "teket.jp",
+  "ticketpay.jp",
+  "confetti-web.com",
+  "rakuten-ticket.com",
+  "ticketbook.jp",
+  "eventregist.com",
+];
+
+function hasOwn(object, property) {
+  return object != null && Object.prototype.hasOwnProperty.call(object, property);
+}
+
+function cleanPublicReservationUrl(value) {
+  return String(value == null ? "" : value).trim()
+    .replace(/^[\s\u300c\u300e\u3010(<\[]+/u, "")
+    .replace(/[\s\u300d\u300f\u3011。、，．!！?？;；:：)>\]}]+$/u, "");
+}
+
+function parseSafePublicReservationUrl(value) {
+  let parsed;
+  try {
+    parsed = new URL(String(value == null ? "" : value).trim());
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+    decodeURIComponent(parsed.pathname);
+    decodeURIComponent(parsed.search);
+    decodeURIComponent(parsed.hash);
+  } catch (_error) {
+    return null;
+  }
+  return parsed;
+}
+
+function publicReservationHostMatches(hostname, candidate) {
+  return hostname === candidate || hostname.endsWith(`.${candidate}`);
+}
+
+function isRecognizablePublicBookingUrl(value) {
+  const cleaned = cleanPublicReservationUrl(value);
+  const parsed = parseSafePublicReservationUrl(cleaned);
+  if (!parsed) return false;
+
+  const hostname = parsed.hostname.toLowerCase().replace(/^www\./, "");
+  if (PUBLIC_RESERVATION_SOCIAL_HOSTS.some((candidate) => publicReservationHostMatches(hostname, candidate))) {
+    return false;
+  }
+  const path = decodeURIComponent(parsed.pathname).toLowerCase();
+  if (/(?:^|\/)profile(?:\/|$)/.test(path)) return false;
+  if (/(?:^|\/)live\/detail(?:\/|$)/.test(path)) return false;
+  if (hostname === "ssl.form-mailer.jp" && /^\/fms\/[a-z0-9_-]+\/?$/i.test(path)) return true;
+  if (PUBLIC_RESERVATION_TICKET_HOSTS.some((candidate) => publicReservationHostMatches(hostname, candidate))) {
+    return true;
+  }
+  if (/(?:^|[\/_.-])(?:tickets?|reserve|reservation|reservations|booking)(?:$|[\/_.-])/.test(path)) {
+    return true;
+  }
+  for (const key of parsed.searchParams.keys()) {
+    if (/^(?:ticket|tickets|reserve|reservation|booking)$/i.test(key)) return true;
+  }
+  return false;
+}
+
+function parsePublicReservationLiveDate(value) {
+  const text = String(value == null ? "" : value);
+  const match = text.match(/(20\d{2})\s*(?:[.\/-]|年)\s*(\d{1,2})\s*(?:[.\/-]|月)\s*(\d{1,2})\s*日?/u);
+  if (!match) return null;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    date.getUTCFullYear() !== year
+    || date.getUTCMonth() !== month - 1
+    || date.getUTCDate() !== day
+  ) {
+    return null;
+  }
+  return { year, month, day };
+}
+
+function isPublicReservationPastLive(live) {
+  if (live.isPast === true || live.past === true) return true;
+  const parsed = parsePublicReservationLiveDate(live.date);
+  if (!parsed) return false;
+
+  const now = new Date();
+  const tokyoNow = new Date(now.getTime() + TOKYO_UTC_OFFSET_MS);
+  const today = Date.UTC(tokyoNow.getUTCFullYear(), tokyoNow.getUTCMonth(), tokyoNow.getUTCDate());
+  const liveDate = Date.UTC(parsed.year, parsed.month - 1, parsed.day);
+  return liveDate < today;
+}
+
+function isPublicTicketReservationEligible(siteData, liveId) {
+  const resolved = resolveLiveById(siteData, liveId);
+  if (resolved.status !== "unique" || resolved.category !== "upcoming") return false;
+  const live = resolved.live;
+  if (live.reservationClosed === true || isPublicReservationPastLive(live)) return false;
+
+  if (hasOwn(live, "ticketUrl")) {
+    return String(live.ticketUrl == null ? "" : live.ticketUrl).trim() === "";
+  }
+  return !isRecognizablePublicBookingUrl(live.link);
 }
 
 function buildTweetText(live, _env) {
@@ -889,8 +1369,8 @@ async function cancelScheduledXPost(env, id) {
   const row = await env.DB.prepare(
     `SELECT id, status FROM x_posts WHERE id = ? LIMIT 1`
   ).bind(id).first();
-  if (!row) throw new Error("not found");
-  if (String(row.status) !== "scheduled") throw new Error("not scheduled");
+  if (!row) throw new KnownClientError("not found");
+  if (String(row.status) !== "scheduled") throw new KnownClientError("not scheduled");
   await env.DB.prepare(
     `UPDATE x_posts SET status = ?, error_message = ? WHERE id = ?`
   ).bind("cancelled", "cancelled", id).run();
@@ -1131,7 +1611,11 @@ async function handleRequest(request, env, ctx) {
 
   if (path === "/api/public/site-data" && request.method === "GET") {
     const row = await getSiteDataRow(env);
-    return jsonResponse({ data: row.data, meta: { updatedAt: row.updatedAt } }, request, env);
+    return jsonResponse(
+      { data: projectPublicSiteData(row.data), meta: { updatedAt: row.updatedAt } },
+      request,
+      env,
+    );
   }
 
   if (path === "/api/public/ticket-reservations" && request.method === "POST") {
@@ -1145,18 +1629,52 @@ async function handleRequest(request, env, ctx) {
     }
     try {
       const reservation = await createTicketReservation(env, payload);
-      const notifications = Promise.all([
-        notifyTicketReservation(env, reservation),
-        notifyTicketAutoReply(env, reservation),
-      ]);
-      if (ctx && typeof ctx.waitUntil === "function") {
-        ctx.waitUntil(notifications);
-      } else {
-        notifications.catch(() => {});
+      let notifications = null;
+      try {
+        notifications = Promise.all([
+          notifyTicketReservation(env, reservation),
+          notifyTicketAutoReply(env, reservation),
+        ]);
+        if (ctx && typeof ctx.waitUntil === "function") {
+          ctx.waitUntil(notifications);
+        } else {
+          notifications.catch(() => {});
+        }
+      } catch (notificationError) {
+        console.error("ticket reservation notification scheduling error:", notificationError);
+        if (notifications) notifications.catch(() => {});
       }
       return jsonResponse({ ok: true, reservation }, request, env, 201);
     } catch (error) {
-      return jsonResponse({ error: error.message }, request, env, 400);
+      if (error instanceof PublicReservationError) {
+        return jsonResponse({ error: error.message }, request, env, 400);
+      }
+      console.error("public ticket reservation error:", error);
+      return jsonResponse({ error: "internal server error" }, request, env, 500);
+    }
+  }
+
+  if (path === "/api/admin/live-source-intake" && request.method === "POST") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const payload = await request.json().catch(() => null);
+    const sourceText = typeof payload?.sourceText === "string" ? payload.sourceText.trim() : "";
+    if (!sourceText || sourceText.length > LIVE_AI_SOURCE_MAX_LENGTH) {
+      return jsonResponse({ error: "invalid sourceText" }, request, env, 400);
+    }
+    if (!String(env.OPENAI_API_KEY || "").trim()) {
+      return jsonResponse({ error: "AI source intake is not configured" }, request, env, 503);
+    }
+
+    try {
+      const draft = await requestLiveAiDraft(env, sourceText);
+      return jsonResponse({ draft }, request, env);
+    } catch (error) {
+      if (error instanceof LiveAiTimeoutError) {
+        return jsonResponse({ error: "AI source intake timed out" }, request, env, 504);
+      }
+      return jsonResponse({ error: "AI source intake failed" }, request, env, 502);
     }
   }
 
@@ -1176,8 +1694,15 @@ async function handleRequest(request, env, ctx) {
     if (!payload || typeof payload !== "object") {
       return jsonResponse({ error: "invalid payload" }, request, env, 400);
     }
-    const saved = await saveSiteData(env, payload.data ?? payload);
-    return jsonResponse({ ok: true, data: saved }, request, env);
+    try {
+      const saved = await saveSiteData(env, payload.data ?? payload);
+      return jsonResponse({ ok: true, data: saved }, request, env);
+    } catch (error) {
+      if (error instanceof SiteDataValidationError) {
+        return jsonResponse({ error: error.message }, request, env, 400);
+      }
+      throw error;
+    }
   }
 
   if (path === "/api/admin/x-posts" && request.method === "GET") {
@@ -1249,7 +1774,10 @@ async function handleRequest(request, env, ctx) {
       const updated = await cancelScheduledXPost(env, id);
       return jsonResponse({ ok: true, updated }, request, env);
     } catch (error) {
-      return jsonResponse({ error: error.message }, request, env, 400);
+      if (error instanceof KnownClientError) {
+        return jsonResponse({ error: error.message }, request, env, 400);
+      }
+      throw error;
     }
   }
 
@@ -1262,6 +1790,25 @@ async function handleRequest(request, env, ctx) {
     const limit = url.searchParams.get("limit") || "100";
     const reservations = await listTicketReservations(env, { liveId, status, limit });
     return jsonResponse({ reservations }, request, env);
+  }
+
+  if (path === "/api/admin/ticket-reservations" && request.method === "POST") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const payload = await request.json().catch(() => null);
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+      return jsonResponse({ error: "invalid payload" }, request, env, 400);
+    }
+    try {
+      const reservation = await createManualTicketReservation(env, payload);
+      return jsonResponse({ ok: true, reservation }, request, env, 201);
+    } catch (error) {
+      if (error instanceof KnownClientError) {
+        return jsonResponse({ error: error.message }, request, env, 400);
+      }
+      throw error;
+    }
   }
 
   if (path === "/api/admin/ticket-reservations.csv" && request.method === "GET") {
@@ -1293,7 +1840,10 @@ async function handleRequest(request, env, ctx) {
       const updated = await updateTicketReservationStatus(env, id, payload.status);
       return jsonResponse({ ok: true, updated }, request, env);
     } catch (error) {
-      return jsonResponse({ error: error.message }, request, env, 400);
+      if (error instanceof KnownClientError) {
+        return jsonResponse({ error: error.message }, request, env, 400);
+      }
+      throw error;
     }
   }
 
@@ -1364,33 +1914,19 @@ async function handleRequest(request, env, ctx) {
     }
 
     if (dryRun) {
-      try {
-        const account = await verifyXCredentials(env);
-        return jsonResponse(
-          {
-            ok: true,
-            dryRun: true,
-            liveId,
-            tweetText,
-            account,
-            createdAt: nowIso(),
-          },
-          request,
-          env
-        );
-      } catch (error) {
-        return jsonResponse(
-          {
-            error: error.message,
-            liveId,
-            dryRun: true,
-            tweetText,
-          },
-          request,
-          env,
-          500
-        );
-      }
+      const account = await verifyXCredentials(env);
+      return jsonResponse(
+        {
+          ok: true,
+          dryRun: true,
+          liveId,
+          tweetText,
+          account,
+          createdAt: nowIso(),
+        },
+        request,
+        env
+      );
     }
 
     try {
@@ -1420,21 +1956,17 @@ async function handleRequest(request, env, ctx) {
         env
       );
     } catch (error) {
-      await recordPostLog(env, {
-        liveId,
-        status: "failed",
-        tweetText,
-        errorMessage: error.message,
-      });
-      return jsonResponse(
-        {
-          error: error.message,
+      try {
+        await recordPostLog(env, {
           liveId,
-        },
-        request,
-        env,
-        500
-      );
+          status: "failed",
+          tweetText,
+          errorMessage: error.message,
+        });
+      } catch (logError) {
+        console.error("x post failure log error:", logError);
+      }
+      throw error;
     }
   }
 
@@ -1446,8 +1978,9 @@ export default {
     try {
       return await handleRequest(request, env, ctx);
     } catch (error) {
+      console.error("worker request error:", error);
       return jsonResponse(
-        { error: error.message || "internal error" },
+        { error: "internal server error" },
         request,
         env,
         500
