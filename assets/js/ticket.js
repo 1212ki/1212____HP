@@ -67,6 +67,21 @@
       : null;
   }
 
+  function formatLiveDate(operations, value) {
+    return typeof operations?.formatLiveDate === "function"
+      ? operations.formatLiveDate(value)
+      : String(value || "").trim();
+  }
+
+  function formatLiveDetails(operations, live) {
+    if (typeof operations?.formatLiveDetails === "function") {
+      return operations.formatLiveDetails(live);
+    }
+    return String(live && live.description ? live.description : "")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .trim();
+  }
+
   function buildLiveOptions(siteData) {
     const operations = getLiveOperations();
     if (!operations) return [];
@@ -83,7 +98,7 @@
         if (!id || !cta.active || cta.external) return null;
         return {
           id,
-          label: `${uniqueLive.date || ""} ${uniqueLive.venue || ""}`.trim() || id,
+          label: `${formatLiveDate(operations, uniqueLive.date)} ${uniqueLive.venue || ""}`.trim() || id,
         };
       })
       .filter(Boolean);
@@ -221,7 +236,8 @@
     const live = resolved.live;
 
     const imageSrc = withCacheBust(resolveAssetPath(live.image || ""));
-    const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
+    const formattedDate = formatLiveDate(operations, live.date);
+    const safeDesc = escapeHtml(formatLiveDetails(operations, live)).replace(/\n/g, "<br>");
     const instagramHref = isInstagramUrl(live.link) ? escapeHtml(live.link) : "";
 
     container.innerHTML = `
@@ -229,7 +245,7 @@
         <div style="display:flex; gap: 14px; align-items: flex-start; flex-wrap: wrap;">
           ${imageSrc ? `<img src="${escapeHtml(imageSrc)}" alt="" style="width: 120px; height: 120px; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.7);">` : ""}
           <div style="flex: 1; min-width: 220px;">
-            <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(`${live.date || ""} ${live.venue || ""}`.trim())}</div>
+            <div style="font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em;">${escapeHtml(`${formattedDate} ${live.venue || ""}`.trim())}</div>
             ${String(live.title || "").trim() ? `<div style="margin-top: 6px; font-weight: 700; letter-spacing: 0.06em;">${escapeHtml(String(live.title || "").trim())}</div>` : ""}
             ${safeDesc ? `<div style="margin-top: 8px; color: var(--ink-muted); line-height: 1.7;">${safeDesc}</div>` : ""}
             ${instagramHref ? `<div style="margin-top: 12px;"><a href="${instagramHref}" class="application-link" target="_blank" rel="noopener">▷instagram</a></div>` : ""}

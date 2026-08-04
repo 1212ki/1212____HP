@@ -5,12 +5,27 @@ import worker from "../src/worker.js";
 
 const ADMIN_TOKEN = "test-admin-token";
 const OPENAI_KEY = "test-openai-key";
-const DRAFT_KEYS = ["date", "title", "venue", "description", "ticketUrl", "link"];
+const DRAFT_KEYS = [
+  "date",
+  "title",
+  "venue",
+  "openTime",
+  "startTime",
+  "ticket",
+  "notes",
+  "performers",
+  "ticketUrl",
+  "link",
+];
 const VALID_DRAFT = {
-  date: "2026.08.20",
+  date: "2026-08-20",
   title: "1212 Live",
   venue: "下北沢Example",
-  description: "OPEN 18:30 / START 19:00\n出演: 松本一樹\n前売: ¥2,500",
+  openTime: "18:30",
+  startTime: "19:00",
+  ticket: "前売 ¥2,500 + 1D",
+  notes: "再入場不可\n受付は18:00から",
+  performers: "共演者A",
   ticketUrl: "https://tickets.example/events/1212",
   link: "https://example.com/events/1212",
 };
@@ -184,10 +199,14 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
   test("calls Responses API with the strict extraction contract and returns a normalized draft", async () => {
     let outbound = null;
     const providerDraft = {
-      date: " 2026.08.20 ",
+      date: " 2026-08-20 ",
       title: " 1212 Live ",
       venue: " 下北沢Example ",
-      description: " OPEN 18:30 / START 19:00\n出演: 松本一樹\n前売: ¥2,500 ",
+      openTime: " 18:30 ",
+      startTime: " 19:00 ",
+      ticket: " 前売 ¥2,500 + 1D ",
+      notes: " 再入場不可\n受付は18:00から ",
+      performers: " 共演者A ",
       ticketUrl: " https://tickets.example/events/1212 ",
       link: " https://example.com/events/1212 ",
     };
@@ -199,7 +218,7 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
       },
       async () => {
         const response = await worker.fetch(
-          sourceIntakeRequest({ sourceText: "  2026/08/20 下北沢 公演情報  " }),
+          sourceIntakeRequest({ sourceText: "  2026/08/20 下北沢 公演情報\n出演：松本一樹 / 共演者A  " }),
           adminEnv(),
           {},
         );
@@ -219,7 +238,7 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
 
     const body = JSON.parse(outbound.options.body);
     assert.equal(body.model, "gpt-5-mini");
-    assert.equal(body.input, "2026/08/20 下北沢 公演情報");
+    assert.equal(body.input, "2026/08/20 下北沢 公演情報\n出演：松本一樹 / 共演者A");
     assert.equal(body.text.format.type, "json_schema");
     assert.equal(body.text.format.strict, true);
     assert.equal(body.text.format.schema.type, "object");
@@ -230,10 +249,14 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
       assert.deepEqual(body.text.format.schema.properties[key], { type: "string" });
     }
     assert.match(body.instructions, /原文にない情報.*補わ/);
-    assert.match(body.instructions, /YYYY\.MM\.DD/);
+    assert.match(body.instructions, /YYYY-MM-DD/);
+    assert.match(body.instructions, /openTime.*startTime.*HH:mm/s);
+    assert.match(body.instructions, /notes.*※.*含め/s);
+    assert.match(body.instructions, /performers.*\/.*w\./s);
+    assert.match(body.instructions, /performers.*松本一樹.*1212.*除外.*共演者/s);
     assert.match(body.instructions, /ticketUrl.*予約.*購入/s);
     assert.match(body.instructions, /link.*公演詳細.*SNS/s);
-    assert.match(body.instructions, /description.*OPEN.*START.*料金.*出演者/s);
+    assert.doesNotMatch(body.instructions, /description/);
   });
 
   test("accepts the 12,000 character boundary, model override, and standard nested output text", async () => {
@@ -266,12 +289,15 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
       { name: "non-object", value: [] },
       { name: "null", value: null },
       { name: "wrong field type", value: { ...VALID_DRAFT, venue: 1212 } },
-      { name: "wrong date format", value: { ...VALID_DRAFT, date: "2026-08-20" } },
-      { name: "impossible calendar date", value: { ...VALID_DRAFT, date: "2026.02.30" } },
-      { name: "non-leap February 29", value: { ...VALID_DRAFT, date: "2026.02.29" } },
+      { name: "wrong date format", value: { ...VALID_DRAFT, date: "2026.08.20" } },
+      { name: "impossible calendar date", value: { ...VALID_DRAFT, date: "2026-02-30" } },
+      { name: "non-leap February 29", value: { ...VALID_DRAFT, date: "2026-02-29" } },
+      { name: "invalid open time", value: { ...VALID_DRAFT, openTime: "24:00" } },
+      { name: "invalid start time", value: { ...VALID_DRAFT, startTime: "19:60" } },
       { name: "long title", value: { ...VALID_DRAFT, title: "t".repeat(301) } },
       { name: "long venue", value: { ...VALID_DRAFT, venue: "v".repeat(301) } },
-      { name: "long description", value: { ...VALID_DRAFT, description: "d".repeat(10_001) } },
+      { name: "long notes", value: { ...VALID_DRAFT, notes: "n".repeat(10_001) } },
+      { name: "long performers", value: { ...VALID_DRAFT, performers: "p".repeat(10_001) } },
       { name: "unsafe ticket URL", value: { ...VALID_DRAFT, ticketUrl: "javascript:alert(1)" } },
       { name: "ticket URL credentials", value: { ...VALID_DRAFT, ticketUrl: "https://user@example.com/ticket" } },
       { name: "link credentials", value: { ...VALID_DRAFT, link: "https://user:pass@example.com/live" } },

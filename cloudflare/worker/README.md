@@ -44,7 +44,9 @@
 - Request: `{ "sourceText": "..." }`
   - `sourceText`はtrim後1〜12,000文字です。範囲外は`400`を返します。
 - Response: `{ "draft": { ... } }`
-  - `draft`は`date`、`title`、`venue`、`description`、`ticketUrl`、`link`の6項目です。
+  - `draft`は`date`、`title`、`venue`、`openTime`、`startTime`、`ticket`、`notes`、`performers`、`ticketUrl`、`link`の10項目です。
+  - `date`は`YYYY-MM-DD`、時刻は24時間の`HH:mm`です。不明な項目は空文字になります。
+  - `notes`は`※`なしの1補足1行、`performers`は松本一樹／1212本人を除いた共演者だけを`w.`なしの` / `区切りで返します。共演者がいなければ空文字です。`description`は生成しません。
 - OpenAI呼び出しは15秒でtimeoutし、`504`を返します。
 - 主なエラーは、入力不正`400`、認証失敗`401`、provider／出力検証失敗`502`、設定不足`503`、timeout`504`です。
 - providerのレスポンス本文、request ID、APIキー、プロンプトなどはクライアントへ返さず、エラー内容をsanitizeします。
@@ -52,6 +54,8 @@
 `OPENAI_API_KEY`はWorker secretとしてのみ設定し、コード、HTML、ブラウザ側JavaScript、レスポンスへ置かないでください。モデルは任意の`LIVE_AI_MODEL`で変更でき、未設定時は`gpt-5-mini`を使います。
 
 本番のsecret設定とdeployは、ownerの明示承認後にのみ実施してください。
+
+公開LiveのOG titleは日付を`YYYY.MM.DD(Day)`へ正規化し、OG descriptionはOpen/Start、ticket、補足、共演者の構造化項目から組み立てます。構造化項目がすべて空の過去Liveだけ、旧`description`へフォールバックします。
 
 ## 初期セットアップ
 

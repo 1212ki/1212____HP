@@ -356,10 +356,14 @@ globalThis.__adminLiveTest = {
 
 function setLiveForm(elements, values = {}) {
   const defaults = {
-    'edit-date': '2026.08.10',
+    'edit-date': '2026-08-10',
     'edit-title': 'Night Shift',
     'edit-venue': '柴崎mod',
-    'edit-description': 'OPEN 18:30 / START 19:00',
+    'edit-openTime': '18:30',
+    'edit-startTime': '19:00',
+    'edit-ticket': '¥2,500 + 1D',
+    'edit-notes': '再入場不可',
+    'edit-performers': '松本一樹 / another band',
     'edit-image': 'assets/images/live.jpg',
     'edit-link': 'https://instagram.com/night-shift',
     'edit-sourceText': 'raw booking copy',
@@ -383,7 +387,11 @@ const LIVE_SOURCE_INTAKE_FIELD_IDS = [
   'edit-date',
   'edit-title',
   'edit-venue',
-  'edit-description',
+  'edit-openTime',
+  'edit-startTime',
+  'edit-ticket',
+  'edit-notes',
+  'edit-performers',
   'edit-ticketUrl',
   'edit-link',
   'edit-sourceText',
@@ -399,10 +407,14 @@ function assertLiveSourceIntakeUnchanged(elements, snapshot) {
 
 function validLiveSourceIntakeDraft(overrides = {}) {
   return {
-    date: '2026.08.20',
+    date: '2026-08-20',
     title: 'AI title',
     venue: 'AI venue',
-    description: 'OPEN 18:30 / START 19:00',
+    openTime: '18:30',
+    startTime: '19:00',
+    ticket: '¥2,500 + 1D',
+    notes: '再入場不可',
+    performers: '松本一樹 / another band',
     ticketUrl: 'https://tickets.example/live/1',
     link: 'https://example.com/live/1',
     ...overrides,
@@ -449,6 +461,7 @@ test('shared LiveOperations script is loaded before the admin application', () =
   const appIndex = adminHtml.indexOf('app.js');
   assert.ok(sharedIndex >= 0);
   assert.ok(sharedIndex < appIndex);
+  assert.match(adminHtml, /href="style\.css\?v=20260804-2"/);
 });
 
 test('AIで整理 source intake posts the exact source once, replaces non-empty fields, and never parses or saves', async () => {
@@ -472,10 +485,14 @@ test('AIで整理 source intake posts the exact source once, replaces non-empty 
   const sourceText = '  2026/8/20\nAIで整理する元情報  \n';
   setLiveForm(app.elements, {
     'edit-sourceText': sourceText,
-    'edit-date': 'manual date',
+    'edit-date': '2026-08-19',
     'edit-title': 'manual title',
     'edit-venue': 'manual venue stays',
-    'edit-description': 'manual description',
+    'edit-openTime': '17:30',
+    'edit-startTime': '18:00',
+    'edit-ticket': 'manual ticket',
+    'edit-notes': 'manual notes',
+    'edit-performers': 'manual performer',
     'edit-ticketUrl': 'https://old.example/ticket',
     'edit-link': 'https://old.example/detail',
   });
@@ -483,10 +500,14 @@ test('AIで整理 source intake posts the exact source once, replaces non-empty 
   app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
   app.useAdminFetch(async () => jsonResponse({
     draft: validLiveSourceIntakeDraft({
-      date: ' 2026.08.20 ',
+      date: ' 2026-08-20 ',
       title: ' AI replacement ',
       venue: '   ',
-      description: ' AI description ',
+      openTime: ' 18:30 ',
+      startTime: ' 19:00 ',
+      ticket: ' AI ticket ',
+      notes: ' AI notes ',
+      performers: ' AI performer A / AI performer B ',
       ticketUrl: ' https://tickets.example/live/2 ',
       link: ' https://example.com/detail/2 ',
     }),
@@ -502,10 +523,14 @@ test('AIで整理 source intake posts the exact source once, replaces non-empty 
   assert.deepEqual(JSON.parse(app.fetchCalls[0].options.body), { sourceText });
   assert.deepEqual({ ...app.fetchCalls[0].policy }, { allowBaseFallback: false });
   assert.equal(parserCalls, 0);
-  assert.equal(app.elements.get('edit-date').value, '2026.08.20');
+  assert.equal(app.elements.get('edit-date').value, '2026-08-20');
   assert.equal(app.elements.get('edit-title').value, 'AI replacement');
   assert.equal(app.elements.get('edit-venue').value, 'manual venue stays');
-  assert.equal(app.elements.get('edit-description').value, 'AI description');
+  assert.equal(app.elements.get('edit-openTime').value, '18:30');
+  assert.equal(app.elements.get('edit-startTime').value, '19:00');
+  assert.equal(app.elements.get('edit-ticket').value, 'AI ticket');
+  assert.equal(app.elements.get('edit-notes').value, 'AI notes');
+  assert.equal(app.elements.get('edit-performers').value, 'AI performer A / AI performer B');
   assert.equal(app.elements.get('edit-ticketUrl').value, 'https://tickets.example/live/2');
   assert.equal(app.elements.get('edit-link').value, 'https://example.com/detail/2');
   assert.equal(app.elements.get('edit-sourceText').value, sourceText);
@@ -626,10 +651,14 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
   app.addLive();
   setLiveForm(app.elements, {
     'edit-sourceText': 'source B',
-    'edit-date': 'B date before',
+    'edit-date': '2026-09-08',
     'edit-title': 'B title before',
     'edit-venue': 'B venue before',
-    'edit-description': 'B description before',
+    'edit-openTime': '17:00',
+    'edit-startTime': '18:00',
+    'edit-ticket': 'B ticket before',
+    'edit-notes': 'B notes before',
+    'edit-performers': 'B performer before',
     'edit-ticketUrl': 'https://b.example/ticket-before',
     'edit-link': 'https://b.example/detail-before',
   });
@@ -652,10 +681,14 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
 
   payloadB.resolve({
     draft: validLiveSourceIntakeDraft({
-      date: '2026.09.09',
+      date: '2026-09-09',
       title: 'CURRENT B',
       venue: 'B venue',
-      description: 'B description',
+      openTime: '18:30',
+      startTime: '19:00',
+      ticket: 'B ticket',
+      notes: 'B notes',
+      performers: 'B performer',
       ticketUrl: 'https://b.example/ticket',
       link: 'https://b.example/detail',
     }),
@@ -673,10 +706,14 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
   assert.equal(buttonB.disabled, false);
   assert.equal(buttonB.textContent, 'AIで整理');
   assert.equal(app.elements.get('edit-sourceText').value, 'source B');
-  assert.equal(app.elements.get('edit-date').value, '2026.09.09');
+  assert.equal(app.elements.get('edit-date').value, '2026-09-09');
   assert.equal(app.elements.get('edit-title').value, 'CURRENT B');
   assert.equal(app.elements.get('edit-venue').value, 'B venue');
-  assert.equal(app.elements.get('edit-description').value, 'B description');
+  assert.equal(app.elements.get('edit-openTime').value, '18:30');
+  assert.equal(app.elements.get('edit-startTime').value, '19:00');
+  assert.equal(app.elements.get('edit-ticket').value, 'B ticket');
+  assert.equal(app.elements.get('edit-notes').value, 'B notes');
+  assert.equal(app.elements.get('edit-performers').value, 'B performer');
   assert.equal(app.elements.get('edit-ticketUrl').value, 'https://b.example/ticket');
   assert.equal(app.elements.get('edit-link').value, 'https://b.example/detail');
   assert.doesNotMatch(app.elements.get('x-reply-preview').value, /STALE A/);
@@ -696,10 +733,14 @@ test('AIで整理 source intake keeps every field and preview unchanged for HTTP
     ['JSON', async () => ({ ok: true, status: 200, async json() { throw new SyntaxError('provider-secret'); } })],
     ['missing draft key', async () => jsonResponse({
       draft: {
-        date: '2026.08.20',
+        date: '2026-08-20',
         title: 'partial',
         venue: 'venue',
-        description: 'details',
+        openTime: '',
+        startTime: '',
+        ticket: '',
+        notes: '',
+        performers: '',
         ticketUrl: '',
       },
     })],
@@ -775,7 +816,7 @@ test('AIで整理 source intake never falls back from a custom API base to canon
   }
 });
 
-test('AIで整理 source intake fails atomically when one of the six destination fields is missing', async () => {
+test('AIで整理 source intake fails atomically when one of the ten destination fields is missing', async () => {
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.addLive();
@@ -891,6 +932,86 @@ test('Live editor exposes new fields and conservatively infers only a missing le
   assert.doesNotMatch(newHtml, /id="edit-reservationClosed"[^>]*checked/);
 });
 
+test('structured Live editor normalizes legacy date and saves independent detail fields', () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{
+        id: 'structured-live',
+        date: '2026.9.28(日)',
+        title: 'Legacy title',
+        venue: 'Legacy venue',
+        description: '旧詳細を保持する',
+        image: '',
+        link: '',
+      }],
+      past: [],
+    },
+  });
+
+  app.editLive('structured-live', 'upcoming');
+  const html = app.elements.get('modal-body').innerHTML;
+  assert.match(html, /type="date"[^>]*id="edit-date"[^>]*value="2026-09-28"/);
+  assert.match(html, /type="time"[^>]*id="edit-openTime"/);
+  assert.match(html, /type="time"[^>]*id="edit-startTime"/);
+  assert.match(html, /id="edit-ticket"/);
+  assert.match(html, /id="edit-notes"/);
+  assert.match(html, /id="edit-performers"/);
+  assert.match(html, /旧詳細（未構造化）/);
+  assert.match(html, /旧詳細を保持する/);
+
+  app.elements.get('edit-date').value = '2026-09-28';
+  app.elements.get('edit-openTime').value = '18:30';
+  app.elements.get('edit-startTime').value = '19:00';
+  app.elements.get('edit-ticket').value = '¥2,500 + 1D';
+  app.elements.get('edit-notes').value = '再入場不可';
+  app.elements.get('edit-performers').value = 'A\nB / C';
+  app.saveLiveItem();
+
+  const saved = app.getSiteData().live.upcoming[0];
+  assert.equal(saved.date, '2026-09-28');
+  assert.equal(saved.openTime, '18:30');
+  assert.equal(saved.startTime, '19:00');
+  assert.equal(saved.ticket, '¥2,500 + 1D');
+  assert.equal(saved.notes, '再入場不可');
+  assert.equal(saved.performers, 'A / B / C');
+  assert.equal(saved.description, '旧詳細を保持する');
+  assert.match(app.elements.get('live-upcoming-list').innerHTML, /2026\.09\.28\(Mon\)/);
+});
+
+test('unparsed legacy Live date is preserved until a valid replacement is entered', () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{
+        id: 'unparsed-date',
+        date: 'date TBA',
+        title: 'Unparsed date Live',
+        venue: 'Old venue',
+        description: '',
+        image: '',
+        link: '',
+      }],
+      past: [],
+    },
+  });
+
+  app.editLive('unparsed-date', 'upcoming');
+  const html = app.elements.get('modal-body').innerHTML;
+  assert.match(html, /id="edit-date"[^>]*value=""[^>]*data-original-unparsed-date="date TBA"/);
+  assert.match(html, /現在の保存値: <code>date TBA<\/code>/);
+  assert.match(app.elements.get('x-reply-preview').value, /日付：date TBA/);
+  app.elements.get('edit-venue').value = 'Changed venue';
+  app.saveLiveItem();
+  assert.equal(app.getSiteData().live.upcoming[0].date, 'date TBA');
+  assert.equal(app.getSiteData().live.upcoming[0].venue, 'Changed venue');
+
+  app.editLive('unparsed-date', 'upcoming');
+  app.elements.get('edit-date').value = '2026-09-28';
+  app.saveLiveItem();
+  assert.equal(app.getSiteData().live.upcoming[0].date, '2026-09-28');
+});
+
 test('saving a Live merges new fields into the original object without dropping unknown properties', () => {
   const app = loadAdminApp();
   app.setSiteData({
@@ -943,7 +1064,10 @@ test('X uses separate canonical parent and detail reply; intent and copy never s
   assert.match(parent, /#ライブ/);
   assert.match(parent, /https:\/\/1212hp\.com\/live\/detail\/\?liveId=live-x/);
   assert.doesNotMatch(parent, /OPEN|START|Night Shift/);
-  assert.match(reply, /OPEN 18:30/);
+  assert.match(reply, /Open\/Start: 18:30\/19:00/);
+  assert.match(reply, /ticket: ¥2,500 \+ 1D/);
+  assert.match(reply, /※再入場不可/);
+  assert.match(reply, /w\. 松本一樹 \/ another band/);
   assert.match(reply, /Night Shift/);
 
   const intent = new URL(app.buildXIntentUrlFromModal());
@@ -1318,9 +1442,9 @@ test('cross-Live filters refresh without reloading when the effective selection 
 
   app.editLive('move-me', 'upcoming');
   app.fetchCalls.length = 0;
-  setLiveForm(app.elements, { 'edit-date': 'MOVED', 'edit-venue': 'Moved venue', isPast: true });
+  setLiveForm(app.elements, { 'edit-date': '2026-09-30', 'edit-venue': 'Moved venue', isPast: true });
   app.saveLiveItem();
-  assert.match(filter.innerHTML, /MOVED Moved venue/);
+  assert.match(filter.innerHTML, /2026\.09\.30\(Wed\) Moved venue/);
   assert.equal(filter.value, 'keep-selected');
 
   assert.equal(app.fetchCalls.length, 0);

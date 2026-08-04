@@ -450,6 +450,29 @@ body {
   min-width: 0;
 }
 
+.live-time-fields {
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.live-time-fields .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.legacy-live-details {
+  margin-bottom: 16px;
+}
+
+.legacy-live-details summary {
+  cursor: pointer;
+  color: var(--gray-500);
+}
+
+.legacy-live-details .form-group {
+  margin-top: 12px;
+}
+
 .field-hint {
   margin-top: 8px;
   font-size: 0.85em;

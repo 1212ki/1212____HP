@@ -36,12 +36,27 @@ const DEFAULT_SITE_DATA = {
 const TOKYO_UTC_OFFSET_MS = 9 * 60 * 60 * 1000;
 const LIVE_AI_SOURCE_MAX_LENGTH = 12_000;
 const LIVE_AI_TIMEOUT_MS = 15_000;
-const LIVE_AI_DRAFT_KEYS = ["date", "title", "venue", "description", "ticketUrl", "link"];
+const LIVE_AI_DRAFT_KEYS = [
+  "date",
+  "title",
+  "venue",
+  "openTime",
+  "startTime",
+  "ticket",
+  "notes",
+  "performers",
+  "ticketUrl",
+  "link",
+];
 const LIVE_AI_DRAFT_LIMITS = {
   date: 10,
   title: 300,
   venue: 300,
-  description: 10_000,
+  openTime: 5,
+  startTime: 5,
+  ticket: 2_000,
+  notes: 10_000,
+  performers: 10_000,
   ticketUrl: 2_048,
   link: 2_048,
 };
@@ -52,12 +67,15 @@ const LIVE_AI_OUTPUT_SCHEMA = {
   required: LIVE_AI_DRAFT_KEYS,
 };
 const LIVE_AI_INSTRUCTIONS = [
-  "ライブ／公演の元情報を、指定された6項目へ整理してください。",
+  "ライブ／公演の元情報を、指定された10項目へ整理してください。",
   "原文にない情報は補わず、判断できない項目は空文字にしてください。",
-  "dateは判断できる場合だけYYYY.MM.DD形式にしてください。",
+  "dateは判断できる場合だけYYYY-MM-DD形式にしてください。",
+  "openTimeとstartTimeはそれぞれ24時間表記のHH:mm形式にし、ラベルは含めないでください。",
+  "ticketには料金や券種の本文だけを入れ、ticket:などのラベルは含めないでください。",
+  "notesは補足を1項目1行にし、行頭の※は含めないでください。",
+  "performersは松本一樹または1212本人を除外し、共演者だけを / 区切りにしてください。共演者がいなければ空文字にし、w.などのラベルは含めないでください。",
   "ticketUrlにはチケットの予約または購入先URLだけを入れてください。",
   "linkには公演詳細やSNSなど、予約・購入先ではない関連URLを入れてください。",
-  "descriptionにはOPEN、START、料金、出演者など独立項目のない情報を読みやすく整理してください。",
 ].join("\n");
 
 class SiteDataValidationError extends Error {
@@ -273,6 +291,51 @@ function buildCompactDescription(raw) {
   return parts.join(" / ");
 }
 
+function formatLiveDateForDisplay(value) {
+  const original = String(value == null ? "" : value).trim();
+  if (!original) return "";
+  const parsed = parsePublicReservationLiveDate(original);
+  if (!parsed) return original;
+  const date = new Date(Date.UTC(parsed.year, parsed.month - 1, parsed.day));
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return `${String(parsed.year).padStart(4, "0")}.${String(parsed.month).padStart(2, "0")}.${String(parsed.day).padStart(2, "0")}(${weekdays[date.getUTCDay()]})`;
+}
+
+function normalizeLivePerformersForDisplay(value) {
+  return String(value == null ? "" : value)
+    .replace(/\r\n?/g, "\n")
+    .replace(/(^|[\n/])\s*(?:(?:w\s*[./])\s*)+/giu, "$1")
+    .split(/\n|\s*\/\s*/u)
+    .map((performer) => performer.trim())
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function formatLiveDetailsForDisplay(liveInput) {
+  const live = liveInput && typeof liveInput === "object" ? liveInput : {};
+  const openTime = String(live.openTime || "").trim();
+  const startTime = String(live.startTime || "").trim();
+  const ticket = String(live.ticket || "").trim();
+  const notes = String(live.notes || "")
+    .replace(/\r\n?/g, "\n")
+    .split("\n")
+    .map((note) => note.trim().replace(/^※+\s*/u, ""))
+    .filter(Boolean);
+  const performers = normalizeLivePerformersForDisplay(live.performers);
+  const lines = [];
+
+  if (openTime && startTime) lines.push(`Open/Start: ${openTime}/${startTime}`);
+  else if (startTime) lines.push(`Start: ${startTime}`);
+  else if (openTime) lines.push(`Open: ${openTime}`);
+  if (ticket) lines.push(`ticket: ${ticket}`);
+  lines.push(...notes.map((note) => `※${note}`));
+  if (performers) lines.push(`w. ${performers}`);
+
+  return lines.length > 0
+    ? lines.join("\n")
+    : String(live.description || "").replace(/<br\s*\/?>/gi, "\n").trim();
+}
+
 function resolveOgImageUrl(raw, ogOrigin, publicOrigin, env) {
   const v = String(raw || "").trim();
   if (!v) return "";
@@ -371,7 +434,7 @@ function isAdminAuthorized(request, env) {
 }
 
 function isValidLiveAiDate(value) {
-  const match = /^(\d{4})\.(\d{2})\.(\d{2})$/.exec(value);
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
   if (!match) return false;
   const year = Number(match[1]);
   const month = Number(match[2]);
@@ -380,6 +443,13 @@ function isValidLiveAiDate(value) {
   const leapYear = year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
   const daysInMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return day >= 1 && day <= daysInMonth[month - 1];
+}
+
+function isValidLiveAiTime(value) {
+  if (!value) return true;
+  const match = /^(\d{2}):(\d{2})$/.exec(value);
+  if (!match) return false;
+  return Number(match[1]) <= 23 && Number(match[2]) <= 59;
 }
 
 function isValidLiveAiUrl(value) {
@@ -419,6 +489,9 @@ function validateLiveAiDraft(input) {
   }
 
   if (draft.date && !isValidLiveAiDate(draft.date)) throw new LiveAiProviderError();
+  if (!isValidLiveAiTime(draft.openTime) || !isValidLiveAiTime(draft.startTime)) {
+    throw new LiveAiProviderError();
+  }
   if (!isValidLiveAiUrl(draft.ticketUrl) || !isValidLiveAiUrl(draft.link)) {
     throw new LiveAiProviderError();
   }
@@ -1007,8 +1080,8 @@ function isPublicTicketReservationEligible(siteData, liveId) {
 }
 
 function buildTweetText(live, _env) {
-  const rawDescription = String((live && live.description) || "").replace(/<br\s*\/?>/gi, "\n");
-  const descLines = rawDescription
+  const formattedDetails = formatLiveDetailsForDisplay(live);
+  const descLines = formattedDetails
     .replace(/\r\n/g, "\n")
     .split("\n")
     .map((line) => line.trim())
@@ -1016,7 +1089,8 @@ function buildTweetText(live, _env) {
 
   const header = "【LIVE】";
   const eventTitle = String(live?.title || "").trim();
-  const heading = `${String(live?.date || "日付未設定").trim()} ${String(live?.venue || "").trim()}`.trim();
+  const date = formatLiveDateForDisplay(live?.date) || "日付未設定";
+  const heading = `${date} ${String(live?.venue || "").trim()}`.trim();
 
   const blocks = [header];
   if (eventTitle) blocks.push(eventTitle);
@@ -1578,12 +1652,12 @@ async function handleRequest(request, env, ctx) {
     const publicOrigin = guessPublicOrigin(env) || "https://1212hp.com";
     const canonicalUrl = `${String(publicOrigin).replace(/\/+$/, "")}/live/detail/?liveId=${encodeURIComponent(liveId)}`;
     const liveTitle = String(live?.title || "").trim();
-    const heading = `${String(live?.date || "").trim()} ${String(live?.venue || "").trim()}`.trim();
+    const heading = `${formatLiveDateForDisplay(live?.date)} ${String(live?.venue || "").trim()}`.trim();
     const title = liveTitle
       ? `${liveTitle} | ${heading || "Live"} | 松本一樹`
       : (heading ? `${heading} | 松本一樹` : "松本一樹 | Live");
 
-    const compact = buildCompactDescription(live?.description || "");
+    const compact = buildCompactDescription(formatLiveDetailsForDisplay(live));
     const description = truncate(compact || heading || "Live info", 180);
 
     const imageUrl =
@@ -1995,6 +2069,8 @@ export default {
 export {
   buildTicketAutoReplyFormData,
   buildTicketAutoReplyText,
+  formatLiveDateForDisplay,
+  formatLiveDetailsForDisplay,
   notifyTicketAutoReply,
   sendTicketAutoReply,
 };

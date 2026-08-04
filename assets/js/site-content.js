@@ -84,6 +84,24 @@
     return operations.resolveLiveById(input, liveId);
   }
 
+  function formatSharedLiveDate(value) {
+    const operations = window.LiveOperations;
+    if (operations && typeof operations.formatLiveDate === "function") {
+      return operations.formatLiveDate(value);
+    }
+    return String(value || "").trim();
+  }
+
+  function formatSharedLiveDetails(live) {
+    const operations = window.LiveOperations;
+    if (operations && typeof operations.formatLiveDetails === "function") {
+      return operations.formatLiveDetails(live);
+    }
+    return String(live && live.description ? live.description : "")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .trim();
+  }
+
   function getSharedResolvedTicketCta(input, liveId, internalUrl) {
     const resolved = resolveSharedLive(input, liveId);
     if (resolved.status !== "unique") {
@@ -354,11 +372,10 @@
       .map((item) => {
         const prefix = isRootPage() ? "" : "../";
         const liveId = String(item.id || "").trim();
-        const date = String(item.date || "").trim();
+        const date = formatSharedLiveDate(item.date);
         const venue = String(item.venue || "").trim();
         const title = String(item.title || "").trim();
-        const description = String(item.description || "")
-          .replace(/<br\s*\/?>/gi, "\n")
+        const description = formatSharedLiveDetails(item)
           .replace(/\r\n/g, "\n")
           .split("\n")
           .map((line) => line.trim())
@@ -454,12 +471,12 @@
     const live = findLiveById(siteData, liveId);
     if (!live) return;
 
-    const heading = `${String(live.date || "").trim()} ${String(live.venue || "").trim()}`.trim() || "live detail";
+    const heading = `${formatSharedLiveDate(live.date)} ${String(live.venue || "").trim()}`.trim() || "live detail";
     const liveTitle = String(live.title || "").trim();
     if (title) title.textContent = liveTitle ? `${liveTitle} / ${heading}` : heading;
 
     const image = resolveImageSrc(live.image || "", version);
-    const safeDesc = escapeHtml(String(live.description || "").replace(/<br\s*\/?>/gi, "\n")).replace(/\n/g, "<br>");
+    const safeDesc = escapeHtml(formatSharedLiveDetails(live)).replace(/\n/g, "<br>");
     body.innerHTML = `
       <div style="display:flex; gap: 14px; align-items: flex-start; flex-wrap: wrap;">
         ${image ? `<img src="${escapeHtml(image)}" alt="" style="width: min(220px, 100%); max-height: min(70vh, 520px); object-fit: contain; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,245,0.92)); padding: 8px;">` : `<div class="live-flyer-placeholder" style="width: min(220px, 100%); min-height: min(70vh, 520px); border-radius: 14px; border: 1px solid var(--line);">Coming Soon</div>`}
@@ -667,7 +684,7 @@
     if (notFoundEl) notFoundEl.style.display = "none";
 
     const liveTitle = String(live.title || "").trim();
-    const date = String(live.date || "").trim();
+    const date = formatSharedLiveDate(live.date);
     const venue = String(live.venue || "").trim();
     const heading = `${date} ${venue}`.trim();
 
@@ -687,8 +704,7 @@
       }
     }
 
-    const raw = String(live.description || "").replace(/<br\s*\/?>/gi, "\n");
-    const text = raw.replace(/\r\n/g, "\n").trim();
+    const text = formatSharedLiveDetails(live).replace(/\r\n/g, "\n").trim();
     if (descEl) descEl.textContent = text;
 
     if (ticketEl) {
