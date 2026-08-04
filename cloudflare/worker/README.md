@@ -16,8 +16,18 @@
   - 管理画面の保存
 - `POST /api/admin/upload-image`
   - 画像アップロード（認証必須、R2に保存）
+- `POST /api/admin/live-source-intake`
+  - Liveの元情報をAIで既存フォーム項目へ整理（管理Bearer認証必須）
 - `GET /api/admin/x-posts`
   - X投稿履歴取得
+- `GET /api/admin/ticket-reservations`
+  - Web予約と手動取り置きの一覧取得（認証必須）
+- `POST /api/admin/ticket-reservations`
+  - Liveに手動取り置きを追加（認証必須）
+  - `liveId`、`name`、1〜10の整数`quantity`、任意の`contact`、`internalNote`を受け付けます
+  - 手動取り置きは`source: manual`、`status: handled`で保存され、公開予約の通知・自動返信は実行しません
+- `GET /api/admin/ticket-reservations.csv`
+  - Web予約と手動取り置きをCSV出力（認証必須）
 - `POST /api/admin/live/:liveId/post-x`
   - 指定ライブ情報を整形してXへ投稿
   - `?dryRun=1` を付けると投稿せずに連携確認と投稿文プレビューのみ実行
@@ -26,6 +36,22 @@
   - Cron Triggerで予約時刻になったらWorkerが自動実行
 - `POST /api/admin/x-posts/:id/cancel`
   - 予約投稿のキャンセル
+
+## Live元情報のAI整理
+
+`POST /api/admin/live-source-intake`は、管理画面で貼り付けたLiveの元情報をOpenAI Responses APIのStructured Outputsで整理します。既存の管理APIと同じBearer認証が必要です。
+
+- Request: `{ "sourceText": "..." }`
+  - `sourceText`はtrim後1〜12,000文字です。範囲外は`400`を返します。
+- Response: `{ "draft": { ... } }`
+  - `draft`は`date`、`title`、`venue`、`description`、`ticketUrl`、`link`の6項目です。
+- OpenAI呼び出しは15秒でtimeoutし、`504`を返します。
+- 主なエラーは、入力不正`400`、認証失敗`401`、provider／出力検証失敗`502`、設定不足`503`、timeout`504`です。
+- providerのレスポンス本文、request ID、APIキー、プロンプトなどはクライアントへ返さず、エラー内容をsanitizeします。
+
+`OPENAI_API_KEY`はWorker secretとしてのみ設定し、コード、HTML、ブラウザ側JavaScript、レスポンスへ置かないでください。モデルは任意の`LIVE_AI_MODEL`で変更でき、未設定時は`gpt-5-mini`を使います。
+
+本番のsecret設定とdeployは、ownerの明示承認後にのみ実施してください。
 
 ## 初期セットアップ
 
@@ -57,6 +83,34 @@
      - 未設定または送信失敗時も、予約APIの成功レスポンスは妨げません
 5. デプロイ
    - `wrangler deploy`
+
+## 既存D1の手動取り置き対応マイグレーション
+
+既存のD1には`schema.sql`の変更だけでは列が追加されません。新しいWorkerをデプロイする前に、`migrations/0001_manual_ticket_reservations.sql`を一度だけ適用してください。順序は必ず「マイグレーションを先、Workerデプロイを後」です。マイグレーションは対象DBのpreflightで未適用を確認した場合に限り、一度だけ実施してください。
+
+1. `cloudflare/worker`ディレクトリから、preflight（事前確認）として対象のremote DBで列一覧を確認します。
+
+   ```bash
+   npx wrangler d1 execute itsuki-homepage --remote --command="PRAGMA table_info('ticket_reservations');"
+   ```
+
+   `source`、`contact`、`internal_note`の3列すべてが存在しないことを確認します。一部の列が存在する場合、または3列がすでに存在する場合はここで停止し、マイグレーションを再実行しないでください。
+
+2. `migrations/0001_manual_ticket_reservations.sql`を対象DBへ一度だけ適用します。
+
+   ```bash
+   npx wrangler d1 execute itsuki-homepage --remote --file=./migrations/0001_manual_ticket_reservations.sql
+   ```
+
+3. postflight（事後確認）として同じremote DBで再確認します。
+
+   ```bash
+   npx wrangler d1 execute itsuki-homepage --remote --command="PRAGMA table_info('ticket_reservations');"
+   ```
+
+   `source TEXT NOT NULL DEFAULT 'web'`、`contact TEXT`、`internal_note TEXT`が追加され、既存行の`source`が`web`として読めることを確認します。
+
+4. postflight確認が完了してから、新しいWorkerをデプロイします。
 
 ## 認証方針
 

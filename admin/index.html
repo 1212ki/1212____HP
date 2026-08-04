@@ -22,9 +22,8 @@
     <!-- タブナビ -->
     <nav class="tab-nav">
       <button class="tab-btn" data-tab="site">Site</button>
-      <button class="tab-btn active" data-tab="news">News</button>
-      <button class="tab-btn" data-tab="live">Live</button>
-      <button class="tab-btn" data-tab="tickets">Tickets</button>
+      <button class="tab-btn" data-tab="news">News</button>
+      <button class="tab-btn active" data-tab="live">Live</button>
       <button class="tab-btn" data-tab="youtube">YouTube</button>
       <button class="tab-btn" data-tab="discography">Disco</button>
       <button class="tab-btn" data-tab="profile">Profile</button>
@@ -87,7 +86,7 @@
     </section>
 
     <!-- Newsタブ -->
-    <section class="tab-content active" id="news-tab">
+    <section class="tab-content" id="news-tab">
       <div class="section-header">
         <h2>News</h2>
         <button class="add-btn" onclick="addNews()">+ 追加</button>
@@ -96,7 +95,7 @@
     </section>
 
     <!-- Liveタブ -->
-    <section class="tab-content" id="live-tab">
+    <section class="tab-content active" id="live-tab">
       <div class="section-header">
         <h2>Live</h2>
         <button class="add-btn" onclick="addLive()">+ 追加</button>
@@ -109,15 +108,9 @@
         <h3>公演終了</h3>
         <div class="items-list" id="live-past-list"></div>
       </div>
-    </section>
-
-    <!-- Ticketsタブ -->
-    <section class="tab-content" id="tickets-tab">
-      <div class="section-header">
-        <h2>Tickets</h2>
-        <button class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
-      </div>
-      <div class="subsection">
+      <details class="live-secondary">
+        <summary>Ticket Page 設定</summary>
+        <div class="live-secondary-body subsection">
         <h3>Ticket Page（表示文言）</h3>
         <div class="form-group">
           <label>導入文（空なら既定のまま）</label>
@@ -160,20 +153,30 @@
             <input type="text" id="ticket-field-submit-label" class="text-input" placeholder="予約する">
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label>フィルタ</label>
-        <div class="filters">
-          <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
-          <select id="tickets-status-filter" class="select" onchange="loadTickets()">
-            <option value="">全ステータス</option>
-            <option value="pending" selected>未対応</option>
-            <option value="handled">対応済み</option>
-            <option value="cancelled">キャンセル</option>
-          </select>
         </div>
-      </div>
-      <div class="items-list" id="tickets-list"></div>
+      </details>
+      <details class="live-secondary">
+        <summary>予約一覧（全Live）</summary>
+        <div class="live-secondary-body">
+          <div class="section-header compact">
+            <h3>横断予約台帳</h3>
+            <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+          </div>
+          <div class="form-group">
+            <label for="tickets-live-filter">フィルタ</label>
+            <div class="filters">
+              <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+              <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                <option value="">全ステータス</option>
+                <option value="pending" selected>未対応</option>
+                <option value="handled">対応済み</option>
+                <option value="cancelled">キャンセル</option>
+              </select>
+            </div>
+          </div>
+          <div class="items-list" id="tickets-list"></div>
+        </div>
+      </details>
     </section>
 
     <!-- YouTubeタブ -->
@@ -242,10 +245,10 @@
 
     <!-- モーダル -->
     <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
-    <div class="modal" id="modal">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
       <div class="modal-header">
         <h3 id="modal-title">編集</h3>
-        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
       </div>
       <div class="modal-body" id="modal-body"></div>
       <div class="modal-footer">
@@ -260,7 +263,7 @@
   </div>
   <script>
   // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
-  window.ADMIN_BUILD_ID = '2026-02-16T2001Z';
+  window.ADMIN_BUILD_ID = '2026-08-04T0142Z';
   try {
     var badge = document.getElementById('modeBadge');
     if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
@@ -278,9 +281,7 @@
   });
 </script>
 <script src="config.js?v=20260216-2001"></script>
-<script src="app.js?v=20260216-2001"></script>
+<script src="../assets/js/live-operations.js?v=20260731"></script>
+<script src="app.js?v=20260804-0142"></script>
 </body>
 </html>
-
-
-

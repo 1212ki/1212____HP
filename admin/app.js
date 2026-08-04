@@ -82,14 +82,24 @@ let currentEditId = null;
 let isNewItem = false;
 let hasChanges = false;
 let isSaving = false;
-let xPreviewDirty = false;
-let xPreviewLastAutoText = '';
+let activeLiveSourceIntakeOperation = null;
+let modalGeneration = 0;
+let modalReturnFocus = null;
+let modalReturnFocusLive = null;
+let liveReservationRequestSequence = 0;
+let crossLiveReservationRequestSequence = 0;
 
 
 // 新規追加した画像を保存（{filename: base64data}）
 let pendingImages = {};
 // APIモードの画像アップロード中ガード
 let activeImageUploads = new Set();
+let imageUploadSequence = 0;
+const latestImageUploadByInput = new WeakMap();
+
+document.addEventListener('click', handleTicketStatusAction);
+document.addEventListener('click', handleLiveEditAction);
+document.addEventListener('keydown', handleModalKeydown);
 
 // 初期化
 document.addEventListener('DOMContentLoaded', async () => {
@@ -190,6 +200,27 @@ function normalizeSiteData(input) {
   return normalized;
 }
 
+function findDuplicateLiveIds(input) {
+  const operations = window.LiveOperations;
+  if (operations && typeof operations.findDuplicateLiveIds === 'function') {
+    return operations.findDuplicateLiveIds(input);
+  }
+
+  const live = input && input.live && typeof input.live === 'object' ? input.live : {};
+  const upcoming = Array.isArray(live.upcoming) ? live.upcoming : [];
+  const past = Array.isArray(live.past) ? live.past : [];
+  const counts = new Map();
+  for (const item of [...upcoming, ...past]) {
+    const id = String(item && item.id != null ? item.id : '').trim();
+    if (!id) continue;
+    counts.set(id, (counts.get(id) || 0) + 1);
+  }
+  return [...counts.entries()]
+    .filter(([, count]) => count > 1)
+    .map(([id]) => id)
+    .sort();
+}
+
 function getErrorMessage(payload, fallback) {
   if (!payload) return fallback;
   if (typeof payload === "string") return payload;
@@ -239,7 +270,7 @@ async function ensureAdminToken(forcePrompt = false) {
   return true;
 }
 
-async function adminFetch(path, options = {}) {
+async function adminFetch(path, options = {}, policy = {}) {
   const resetToken = () => {
     adminToken = "";
     try {
@@ -268,7 +299,9 @@ async function adminFetch(path, options = {}) {
   const bases = [];
   const primary = String(API_BASE_URL || "").replace(/\/+$/, "");
   if (primary) bases.push(primary);
-  if (!bases.includes(CANONICAL_API_BASE_URL)) bases.push(CANONICAL_API_BASE_URL);
+  if (policy.allowBaseFallback !== false && !bases.includes(CANONICAL_API_BASE_URL)) {
+    bases.push(CANONICAL_API_BASE_URL);
+  }
 
   let lastError = null;
   let lastResponse = null;
@@ -334,17 +367,31 @@ async function loadTickets() {
   const listEl = document.getElementById('tickets-list');
   if (!listEl) return;
 
-  const liveId = document.getElementById('tickets-live-filter')?.value || '';
-  const status = document.getElementById('tickets-status-filter')?.value || '';
+  const liveFilter = document.getElementById('tickets-live-filter');
+  const statusFilter = document.getElementById('tickets-status-filter');
+  const liveId = liveFilter?.value || '';
+  const status = statusFilter?.value || '';
+  const requestSequence = ++crossLiveReservationRequestSequence;
+  const ownsCurrentList = () => (
+    crossLiveReservationRequestSequence === requestSequence
+    && listEl.isConnected
+    && document.getElementById('tickets-list') === listEl
+    && document.getElementById('tickets-live-filter') === liveFilter
+    && document.getElementById('tickets-status-filter') === statusFilter
+    && (liveFilter?.value || '') === liveId
+    && (statusFilter?.value || '') === status
+  );
   const params = new URLSearchParams();
   if (liveId) params.set('liveId', liveId);
   if (status) params.set('status', status);
   params.set('limit', '200');
 
+  if (!ownsCurrentList()) return;
   listEl.innerHTML = '<div class="empty-state"><p>読み込み中...</p></div>';
   try {
     const res = await adminFetch(`/api/admin/ticket-reservations?${params.toString()}`);
     const payload = await res.json().catch(() => ({}));
+    if (!ownsCurrentList()) return;
     if (!res.ok) throw new Error(getErrorMessage(payload, '予約一覧を取得できませんでした'));
     const reservations = Array.isArray(payload.reservations) ? payload.reservations : [];
     if (reservations.length === 0) {
@@ -353,31 +400,39 @@ async function loadTickets() {
     }
     listEl.innerHTML = reservations.map(r => renderTicketRow(r)).join('');
   } catch (e) {
+    if (!ownsCurrentList()) return;
     listEl.innerHTML = `<div class="empty-state"><p>取得失敗: ${escapeHtml(e.message)}</p></div>`;
   }
 }
 
-function renderTicketRow(r) {
+function renderTicketRow(r, options = {}) {
   const status = r.status || 'unknown';
   const statusLabel = status === 'pending' ? '未対応' : status === 'handled' ? '対応済み' : status === 'cancelled' ? 'キャンセル' : status;
   const statusClass = status === 'pending' ? 'is-pending' : status === 'handled' ? 'is-handled' : status === 'cancelled' ? 'is-cancelled' : '';
   const title = `${r.liveDate || ''} ${r.liveVenue || ''}`.trim();
-  const meta = `${r.name || ''} / ${r.quantity || 1}枚 / ${r.email || ''}`.trim();
+  const source = r.source === 'manual' ? 'manual' : 'web';
+  const sourceLabel = source === 'manual' ? '手動' : 'Web';
+  const contact = source === 'manual' ? (r.contact || '') : (r.email || r.contact || '');
+  const meta = `${r.name || ''} / ${r.quantity || 1}枚${contact ? ` / ${contact}` : ''}`.trim();
   const msg = r.message ? `<div class="meta ticket-message">${escapeHtml(r.message)}</div>` : '';
+  const note = r.internalNote ? `<div class="meta ticket-note"><span class="meta-label">内部メモ</span> ${escapeHtml(r.internalNote)}</div>` : '';
+  const reservationId = escapeHtml(String(r.id || ''));
   const actions = status === 'pending'
-    ? `<button class="x-test-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','handled')">対応済み</button>
-       <button class="x-post-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','cancelled')">キャンセル</button>`
-    : `<button class="x-test-btn" onclick="markTicketStatus('${escapeHtml(r.id)}','pending')">未対応に戻す</button>`;
+    ? `<button type="button" class="x-test-btn" data-reservation-id="${reservationId}" data-reservation-status="handled">対応済み</button>
+       <button type="button" class="x-post-btn" data-reservation-id="${reservationId}" data-reservation-status="cancelled">キャンセル</button>`
+    : `<button type="button" class="x-test-btn" data-reservation-id="${reservationId}" data-reservation-status="pending">未対応に戻す</button>`;
 
   return `
-    <div class="item-card ticket-row">
+    <div class="item-card ticket-row ${options.compact ? 'is-compact' : ''}">
       <div class="info">
         <div class="ticket-top">
-          <div class="title">${escapeHtml(title || r.liveId || '')}</div>
+          <div class="title">${escapeHtml(options.compact ? (r.name || '') : (title || r.liveId || ''))}</div>
+          <span class="source-badge is-${source}">${sourceLabel}</span>
           <span class="status-badge ${statusClass}">${escapeHtml(statusLabel)}</span>
         </div>
         <div class="meta">${escapeHtml(meta)}</div>
         ${msg}
+        ${note}
         <div class="meta mt-2">${escapeHtml(r.createdAt || '')}</div>
         <div class="ticket-actions">
           ${actions}
@@ -385,6 +440,16 @@ function renderTicketRow(r) {
       </div>
     </div>
   `;
+}
+
+function handleTicketStatusAction(event) {
+  const button = event.target?.closest?.('[data-reservation-status]');
+  if (!button) return undefined;
+  const id = String(button.dataset?.reservationId || '');
+  const status = String(button.dataset?.reservationStatus || '');
+  if (!id || !['pending', 'handled', 'cancelled'].includes(status)) return undefined;
+  event.preventDefault?.();
+  return markTicketStatus(id, status);
 }
 
 async function markTicketStatus(id, status) {
@@ -396,7 +461,9 @@ async function markTicketStatus(id, status) {
     });
     const payload = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(getErrorMessage(payload, 'ステータス更新に失敗しました'));
-    await loadTickets();
+    const refreshes = [loadTickets()];
+    if (!isNewItem && currentEditId) refreshes.push(loadLiveReservations(currentEditId));
+    await Promise.all(refreshes);
   } catch (e) {
     showToast(`更新失敗: ${e.message}`, 'error');
   }
@@ -407,6 +474,8 @@ async function downloadTicketsCsv() {
     showToast('CSVはAPIモードでのみ利用できます', 'error');
     return;
   }
+  let anchor = null;
+  let objectUrl = '';
   try {
     const liveId = document.getElementById('tickets-live-filter')?.value || '';
     const status = document.getElementById('tickets-status-filter')?.value || '';
@@ -414,15 +483,30 @@ async function downloadTicketsCsv() {
     if (liveId) params.set('liveId', liveId);
     if (status) params.set('status', status);
     params.set('limit', '200');
-    const url = `${API_BASE_URL}/api/admin/ticket-reservations.csv?${params.toString()}`;
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'ticket_reservations.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const response = await adminFetch(`/api/admin/ticket-reservations.csv?${params.toString()}`);
+    if (!response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      throw new Error(getErrorMessage(payload, 'CSVを取得できませんでした'));
+    }
+    const blob = await response.blob();
+    objectUrl = URL.createObjectURL(blob);
+    anchor = document.createElement('a');
+    anchor.href = objectUrl;
+    anchor.download = 'ticket_reservations.csv';
+    document.body.appendChild(anchor);
+    anchor.click();
   } catch (e) {
     showToast(`CSV失敗: ${e.message}`, 'error');
+  } finally {
+    try {
+      if (anchor?.parentElement) {
+        anchor.parentElement.removeChild(anchor);
+      }
+    } finally {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    }
   }
 }
 
@@ -718,12 +802,16 @@ function renderYouTube() {
 function renderTicketsUi() {
   const liveSelect = document.getElementById('tickets-live-filter');
   if (!liveSelect) return;
+  const currentValue = liveSelect.value || '';
   const options = [
     { value: '', label: '全ライブ' },
     ...((siteData?.live?.upcoming || []).map(l => ({ value: l.id, label: `${l.date || ''} ${l.venue || ''}`.trim() }))),
     ...((siteData?.live?.past || []).map(l => ({ value: l.id, label: `${l.date || ''} ${l.venue || ''}`.trim() }))),
   ];
+  const nextValue = options.some((option) => option.value === currentValue) ? currentValue : '';
   liveSelect.innerHTML = options.map(o => `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`).join('');
+  liveSelect.value = nextValue;
+  if (nextValue !== currentValue) void loadTickets();
 }
 
 // サムネイル画像のsrc取得（新規画像対応）
@@ -741,15 +829,25 @@ function getImageSrc(imagePath) {
 
 function renderLiveItem(item, category) {
   return `
-    <div class="item-card ${category === 'past' ? 'past' : ''}" onclick="editLive('${item.id}', '${category}')">
+    <button type="button" class="item-card live-edit-trigger ${category === 'past' ? 'past' : ''}" data-live-edit data-live-id="${escapeHtml(String(item.id || ''))}" data-live-category="${category}">
       <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
-      <div class="info">
-        <div class="title">${escapeHtml((item.title || '').trim() || item.venue)}</div>
-        <div class="meta">${escapeHtml([item.date, (item.title || '').trim() ? item.venue : ''].filter(Boolean).join(' '))}</div>
-      </div>
+      <span class="info">
+        <span class="title">${escapeHtml((item.title || '').trim() || item.venue)}</span>
+        <span class="meta">${escapeHtml([item.date, (item.title || '').trim() ? item.venue : ''].filter(Boolean).join(' '))}</span>
+      </span>
       <span class="arrow">›</span>
-    </div>
+    </button>
   `;
+}
+
+function handleLiveEditAction(event) {
+  const trigger = event.target?.closest?.('[data-live-edit]');
+  if (!trigger) return;
+  const id = String(trigger.dataset?.liveId || '');
+  const category = String(trigger.dataset?.liveCategory || '');
+  if (!id || !['upcoming', 'past'].includes(category)) return;
+  event.preventDefault?.();
+  editLive(id, category);
 }
 
 // News描画
@@ -966,8 +1064,8 @@ function getImagePreviewHtml(inputId, previewSrc, options = {}) {
   return `<a class="image-download-link" href="${escapeHtml(href)}" download="${escapeHtml(downloadName)}" aria-label="画像を保存">${imageHtml}</a>`;
 }
 
-function renderImagePreview(inputId, previewSrc, options = {}) {
-  const container = document.getElementById(`${inputId}-preview-container`);
+function renderImagePreview(inputId, previewSrc, options = {}, targetContainer = null) {
+  const container = targetContainer || document.getElementById(`${inputId}-preview-container`);
   if (!container) return;
 
   const downloadablePreview = container.dataset?.downloadablePreview === 'true';
@@ -1014,22 +1112,50 @@ function handleImageSelect(input, inputId) {
   const file = input.files[0];
   if (!file) return;
 
+  const inputElement = document.getElementById(inputId);
+  const container = document.getElementById(`${inputId}-preview-container`);
   const pathEl = document.getElementById(`${inputId}-path`);
+  if (!inputElement || !container) return;
+
+  const modalScoped = inputId === 'edit-image';
+  const ownerGeneration = modalGeneration;
+  const ownerEditId = currentEditId;
+  const ownerEditType = currentEditType;
+  const apiUploadToken = IS_API_MODE ? `image-upload-${++imageUploadSequence}` : '';
+  const ownsCurrentInput = () => (
+    document.getElementById(inputId) === inputElement
+    && document.getElementById(`${inputId}-preview-container`) === container
+    && (!modalScoped || (
+      modalGeneration === ownerGeneration
+      && currentEditId === ownerEditId
+      && currentEditType === ownerEditType
+    ))
+  );
+
+  if (apiUploadToken) {
+    activeImageUploads.add(apiUploadToken);
+    latestImageUploadByInput.set(inputElement, apiUploadToken);
+  }
   if (pathEl) pathEl.textContent = IS_API_MODE ? 'アップロード中...' : '';
 
   // FileReaderでBase64に変換
   const reader = new FileReader();
   reader.onload = function(e) {
     const base64 = e.target.result;
+    const isLatestUpload = () => !apiUploadToken || latestImageUploadByInput.get(inputElement) === apiUploadToken;
+
+    if (!ownsCurrentInput() || !isLatestUpload()) {
+      if (apiUploadToken) activeImageUploads.delete(apiUploadToken);
+      return;
+    }
 
     // プレビュー更新
-    const container = document.getElementById(`${inputId}-preview-container`);
     renderImagePreview(inputId, base64, {
       href: base64,
       downloadName: file.name || 'image',
-    });
+    }, container);
 
-    if (!IS_API_MODE) {
+    if (!apiUploadToken) {
       // ローカルJSON運用: ファイル名を生成（日付＋元のファイル名）
       const ext = file.name.split('.').pop().toLowerCase();
       const baseName = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_');
@@ -1041,7 +1167,7 @@ function handleImageSelect(input, inputId) {
       pendingImages[filename] = base64;
 
       // hiddenフィールドにパスを設定
-      document.getElementById(inputId).value = imagePath;
+      inputElement.value = imagePath;
       if (pathEl) pathEl.textContent = `パス: ${imagePath}`;
 
       setImagePathForInputId(inputId, imagePath);
@@ -1051,24 +1177,28 @@ function handleImageSelect(input, inputId) {
     }
 
     // API運用: Cloudflare(R2)へアップロードしてURLを保存
-    activeImageUploads.add(inputId);
     uploadImageToApi(file)
       .then((result) => {
-        document.getElementById(inputId).value = result.url;
+        if (!ownsCurrentInput() || !isLatestUpload()) return;
+        inputElement.value = result.url;
         if (pathEl) pathEl.textContent = `URL: ${result.url}`;
         renderImagePreview(inputId, base64, {
           href: result.url,
           imagePath: result.url,
-        });
+        }, container);
         setImagePathForInputId(inputId, result.url);
         markChanged();
       })
       .catch((err) => {
+        if (!ownsCurrentInput() || !isLatestUpload()) return;
         if (pathEl) pathEl.textContent = '';
         showToast(`画像アップロード失敗: ${err.message}`, 'error');
       })
       .finally(() => {
-        activeImageUploads.delete(inputId);
+        activeImageUploads.delete(apiUploadToken);
+        if (latestImageUploadByInput.get(inputElement) === apiUploadToken) {
+          latestImageUploadByInput.delete(inputElement);
+        }
       });
 
     // クリアボタンを追加（なければ）
@@ -1082,7 +1212,20 @@ function handleImageSelect(input, inputId) {
       actionsDiv.appendChild(clearBtn);
     }
   };
-  reader.readAsDataURL(file);
+  reader.onerror = function() {
+    if (apiUploadToken) {
+      activeImageUploads.delete(apiUploadToken);
+      if (latestImageUploadByInput.get(inputElement) === apiUploadToken) {
+        latestImageUploadByInput.delete(inputElement);
+      }
+    }
+    if (ownsCurrentInput()) showToast('画像を読み込めませんでした', 'error');
+  };
+  try {
+    reader.readAsDataURL(file);
+  } catch (error) {
+    reader.onerror();
+  }
 }
 
 async function uploadImageToApi(file) {
@@ -1186,55 +1329,136 @@ function editNews(id) {
   document.getElementById('delete-btn').style.display = 'block';
 }
 
+function getLiveOperations() {
+  return typeof window !== 'undefined' && window.LiveOperations ? window.LiveOperations : null;
+}
+
+function getEditorTicketUrl(item) {
+  if (item && Object.prototype.hasOwnProperty.call(item, 'ticketUrl')) {
+    return String(item.ticketUrl || '').trim();
+  }
+  return getLiveOperations()?.getTicketUrl(item) || '';
+}
+
+function buildLiveEditorHtml(itemInput, category, isNew) {
+  const item = itemInput && typeof itemInput === 'object' ? itemInput : {};
+  const ticketUrl = getEditorTicketUrl(item);
+  const disabled = isNew ? ' disabled' : '';
+  const saveFirstX = isNew ? '<p class="operation-gate">保存後にWeb Intentを利用できます。</p>' : '';
+  const ledgerGate = isNew
+    ? '<div class="empty-state operation-gate"><p>予約台帳はLiveを保存すると利用できます。</p></div>'
+    : '<div class="empty-state"><p>予約台帳を読み込みます...</p></div>';
+
+  return `
+    <section class="live-editor-section source-intake">
+      <div class="operation-heading"><span class="operation-step">01</span><h3>元情報を取り込む</h3></div>
+      <div class="form-group">
+        <label for="edit-sourceText">受け取った公演情報</label>
+        <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け">${escapeHtml(item.sourceText || '')}</textarea>
+        <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+      </div>
+      <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで整理</button>
+      <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
+    </section>
+
+    <section class="live-editor-section">
+      <div class="operation-heading"><span class="operation-step">02</span><h3>Live情報</h3></div>
+      <div class="form-group">
+        <label for="edit-date">日付</label>
+        <input type="text" id="edit-date" class="text-input" value="${escapeHtml(item.date || '')}" placeholder="2025.01.01">
+      </div>
+      <div class="form-group">
+        <label for="edit-title">ライブ名（任意）</label>
+        <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title || '')}" placeholder="例: 〇〇企画 / 〇〇 presents...">
+      </div>
+      <div class="form-group">
+        <label for="edit-venue">会場</label>
+        <input type="text" id="edit-venue" class="text-input" value="${escapeHtml(item.venue || '')}" placeholder="下北沢XXX">
+      </div>
+      <div class="form-group">
+        <label for="edit-description">詳細</label>
+        <textarea id="edit-description" class="textarea" rows="5">${escapeHtml(item.description || '')}</textarea>
+      </div>
+      ${getImageFormHtml(item.image || '', 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
+      <div class="form-group">
+        <label for="edit-ticketUrl">予約先</label>
+        <input type="url" id="edit-ticketUrl" class="text-input" value="${escapeHtml(ticketUrl)}" placeholder="https://...">
+        <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
+      </div>
+      <div class="form-group">
+        <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
+        <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link || '')}" placeholder="Instagramや公演詳細など">
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="edit-reservationClosed" ${item.reservationClosed === true ? 'checked' : ''}>
+        <label for="edit-reservationClosed">予約受付を終了</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="edit-isPast" ${category === 'past' ? 'checked' : ''}>
+        <label for="edit-isPast">公演終了</label>
+      </div>
+    </section>
+
+    <section class="live-editor-section announcement-panel">
+      <div class="operation-heading"><span class="operation-step">03</span><h3>X告知を準備</h3></div>
+      <div class="form-group">
+        <label for="edit-xComment">オーナーコメント</label>
+        <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと">${escapeHtml(item.xComment || '')}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="x-parent-preview">親投稿プレビュー</label>
+        <textarea id="x-parent-preview" class="textarea preview-text" rows="5" readonly></textarea>
+        <p class="field-hint">コメント・#ライブ・1212HPのLive詳細URLだけを投稿します。</p>
+      </div>
+      <div class="form-group">
+        <label for="x-reply-preview">返信用 詳細プレビュー</label>
+        <textarea id="x-reply-preview" class="textarea preview-text" rows="7" readonly></textarea>
+      </div>
+      ${saveFirstX}
+      <div class="field-row">
+        <button type="button" class="btn btn-primary btn-compact" id="x-intent-btn"${disabled}>X Web Intentを開く</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-reply-copy-btn">詳細をコピー</button>
+      </div>
+    </section>
+
+    <section class="live-editor-section reservation-panel">
+      <div class="operation-heading"><span class="operation-step">04</span><h3>予約台帳</h3></div>
+      <div id="live-reservation-ledger" aria-live="polite">${ledgerGate}</div>
+      <form id="manual-reservation-form" class="manual-reservation-form">
+        <h4>手動取り置きを追加</h4>
+        <div class="form-group">
+          <label for="manual-reservation-name">お名前</label>
+          <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200"${disabled}>
+        </div>
+        <div class="field-row manual-fields">
+          <div class="form-group quantity-field">
+            <label for="manual-reservation-quantity">枚数</label>
+            <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required${disabled}>
+          </div>
+          <div class="form-group">
+            <label for="manual-reservation-contact">連絡先（任意）</label>
+            <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200"${disabled}>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="manual-reservation-note">内部メモ（任意）</label>
+          <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"${disabled}></textarea>
+        </div>
+        <div id="manual-reservation-error" class="form-error" role="alert"></div>
+        <button type="submit" class="btn btn-secondary btn-compact" id="manual-reservation-submit"${disabled}>手動取り置きを追加</button>
+      </form>
+    </section>
+  `;
+}
+
 // Live追加
 function addLive() {
   isNewItem = true;
   currentEditType = 'live-upcoming';
   currentEditId = 'live-' + Date.now();
-
-  showModal('新規Live', `
-    <div class="form-group">
-      <label>日付</label>
-      <input type="text" id="edit-date" class="text-input" placeholder="2025.01.01">
-    </div>
-    <div class="form-group">
-      <label>ライブ名（任意）</label>
-      <input type="text" id="edit-title" class="text-input" placeholder="例: 〇〇企画 / 〇〇 presents...">
-    </div>
-    <div class="form-group">
-      <label>会場</label>
-      <input type="text" id="edit-venue" class="text-input" placeholder="下北沢XXX">
-    </div>
-    <div class="form-group">
-      <label>詳細</label>
-      <textarea id="edit-description" class="textarea" rows="3">open/start &#10;adv/door &#10;w.</textarea>
-    </div>
-    ${getImageFormHtml('', 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
-    <div class="form-group">
-      <label>リンクURL</label>
-      <input type="url" id="edit-link" class="text-input" placeholder="https://...">
-    </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="edit-isPast">
-      <label for="edit-isPast">公演終了</label>
-    </div>
-    <div class="subsection" style="margin-top: 16px;">
-      <h3>告知文</h3>
-      <div class="form-group">
-        <label>テキスト</label>
-        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※APIモードなら自動保存してから開きます。※ブラウザでログイン中のアカウントで開きます。</p>
-      </div>
-      <div class="field-row">
-        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
-        <button type="button" class="btn btn-primary btn-compact" id="x-apply-btn">Xに反映</button>
-        <button type="button" class="btn btn-secondary btn-compact btn-mini" id="x-share-copy-btn" title="インスタストーリー等に貼るリンクをコピー">リンクコピー</button>
-      </div>
-    </div>
-  `);
+  showModal('新規Live', buildLiveEditorHtml({}, 'upcoming', true));
   document.getElementById('delete-btn').style.display = 'none';
-
-  wireXPreviewInModal();
+  wireLiveOperationsModal();
 }
 
 // Live編集
@@ -1247,49 +1471,9 @@ function editLive(id, category) {
   currentEditType = `live-${category}`;
   currentEditId = id;
 
-  showModal('Live編集', `
-    <div class="form-group">
-      <label>日付</label>
-      <input type="text" id="edit-date" class="text-input" value="${escapeHtml(item.date)}">
-    </div>
-    <div class="form-group">
-      <label>ライブ名（任意）</label>
-      <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title || '')}" placeholder="例: 〇〇企画 / 〇〇 presents...">
-    </div>
-    <div class="form-group">
-      <label>会場</label>
-      <input type="text" id="edit-venue" class="text-input" value="${escapeHtml(item.venue)}">
-    </div>
-    <div class="form-group">
-      <label>詳細</label>
-      <textarea id="edit-description" class="textarea" rows="3">${escapeHtml(item.description)}</textarea>
-    </div>
-    ${getImageFormHtml(item.image, 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
-    <div class="form-group">
-      <label>詳細リンクURL（instagramなど/任意）</label>
-      <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link)}">
-    </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="edit-isPast" ${category === 'past' ? 'checked' : ''}>
-      <label for="edit-isPast">公演終了</label>
-    </div>
-    <div class="subsection" style="margin-top: 16px;">
-      <h3>告知文</h3>
-      <div class="form-group">
-        <label>テキスト</label>
-        <textarea id="x-preview-text" class="textarea" rows="6" placeholder="ここに告知文が入ります（必要なら編集）"></textarea>
-        <p class="field-hint">「告知文を生成」で作成し、必要なら手入力で調整して「Xに反映」を押してください（フライヤー画像のOGP付きリンクを付けます）。※APIモードなら自動保存してから開きます。※ブラウザでログイン中のアカウントで開きます。</p>
-      </div>
-      <div class="field-row">
-        <button type="button" class="btn btn-secondary btn-compact" id="x-preview-refresh-btn">告知文を生成</button>
-        <button type="button" class="btn btn-primary btn-compact" id="x-apply-btn">Xに反映</button>
-        <button type="button" class="btn btn-secondary btn-compact btn-mini" id="x-share-copy-btn" title="インスタストーリー等に貼るリンクをコピー">リンクコピー</button>
-      </div>
-    </div>
-  `);
+  showModal('Live編集', buildLiveEditorHtml(item, category, false));
   document.getElementById('delete-btn').style.display = 'block';
-
-  wireXPreviewInModal();
+  wireLiveOperationsModal();
 }
 
 // Discography追加
@@ -1368,21 +1552,64 @@ function editDiscography(id, category) {
 
 // モーダル表示
 function showModal(title, content) {
+  const modal = document.getElementById('modal');
+  const modalBody = document.getElementById('modal-body');
+  if (!modal.classList.contains('active')) {
+    modalReturnFocus = document.activeElement;
+    const liveId = String(modalReturnFocus?.dataset?.liveId || '');
+    const liveCategory = String(modalReturnFocus?.dataset?.liveCategory || '');
+    modalReturnFocusLive = liveId && ['upcoming', 'past'].includes(liveCategory)
+      ? { id: liveId, category: liveCategory }
+      : null;
+  }
+  modalGeneration += 1;
   document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-body').innerHTML = content;
+  modalBody.innerHTML = content;
   document.getElementById('modal-overlay').classList.add('active');
-  document.getElementById('modal').classList.add('active');
+  modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  const initialFocus = modalBody.querySelector(
+    'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled]), button:not([disabled])'
+  );
+  (initialFocus || modal).focus();
 }
 
 // モーダル閉じる
 function closeModal() {
+  const returnFocus = modalReturnFocus;
+  const returnFocusLive = modalReturnFocusLive;
+  modalReturnFocus = null;
+  modalReturnFocusLive = null;
+  modalGeneration += 1;
   document.getElementById('modal-overlay').classList.remove('active');
   document.getElementById('modal').classList.remove('active');
   document.body.style.overflow = '';
   currentEditType = null;
   currentEditId = null;
   isNewItem = false;
+  const hasConnectedReturnFocus = (
+    returnFocus
+    && typeof returnFocus.focus === 'function'
+    && (typeof document.contains !== 'function' || document.contains(returnFocus))
+  );
+  if (hasConnectedReturnFocus) {
+    returnFocus.focus();
+    return;
+  }
+  if (!returnFocusLive) return;
+  const replacement = Array.from(document.querySelectorAll('[data-live-edit]')).find((trigger) => (
+    String(trigger.dataset?.liveId || '') === returnFocusLive.id
+    && String(trigger.dataset?.liveCategory || '') === returnFocusLive.category
+  ));
+  replacement?.focus?.();
+}
+
+function handleModalKeydown(event) {
+  if (event.key !== 'Escape') return;
+  const modal = document.getElementById('modal');
+  if (!modal?.classList.contains('active')) return;
+  event.preventDefault?.();
+  closeModal();
 }
 
 // モーダル保存
@@ -1462,20 +1689,26 @@ function saveNewsItem() {
 // Live保存
 function saveLiveItem() {
   const isPast = document.getElementById('edit-isPast').checked;
+  const originalCategory = currentEditType.split('-')[1];
+  const originalList = originalCategory === 'upcoming' ? siteData.live.upcoming : siteData.live.past;
+  const originalIndex = originalList.findIndex(l => l.id === currentEditId);
+  const originalItem = originalIndex === -1 ? {} : originalList[originalIndex];
   const item = {
+    ...originalItem,
     id: currentEditId,
     date: document.getElementById('edit-date').value,
     title: document.getElementById('edit-title')?.value || '',
     venue: document.getElementById('edit-venue').value,
     description: document.getElementById('edit-description').value,
     image: document.getElementById('edit-image').value,
-    link: document.getElementById('edit-link').value
+    link: document.getElementById('edit-link').value,
+    sourceText: document.getElementById('edit-sourceText')?.value || '',
+    ticketUrl: document.getElementById('edit-ticketUrl')?.value.trim() || '',
+    reservationClosed: Boolean(document.getElementById('edit-reservationClosed')?.checked),
+    xComment: document.getElementById('edit-xComment')?.value || ''
   };
 
   // 元のカテゴリから削除
-  const originalCategory = currentEditType.split('-')[1];
-  const originalList = originalCategory === 'upcoming' ? siteData.live.upcoming : siteData.live.past;
-  const originalIndex = originalList.findIndex(l => l.id === currentEditId);
   if (originalIndex !== -1) {
     originalList.splice(originalIndex, 1);
   }
@@ -1487,7 +1720,12 @@ function saveLiveItem() {
     siteData.live.upcoming.unshift(item);
   }
 
+  if (modalReturnFocusLive?.id === String(item.id)) {
+    modalReturnFocusLive.category = isPast ? 'past' : 'upcoming';
+  }
+
   renderLive();
+  renderTicketsUi();
   return { liveId: item.id, postToX: false };
 }
 
@@ -1536,6 +1774,7 @@ function deleteItem() {
       siteData.live.past = siteData.live.past.filter(l => l.id !== currentEditId);
     }
     renderLive();
+    renderTicketsUi();
   } else if (currentEditType.startsWith('youtube')) {
     const category = currentEditType.split('-')[1];
     if (siteData.youtube[category]) {
@@ -1594,6 +1833,11 @@ async function saveToApi() {
 async function saveData(options = {}) {
   if (isSaving) return false;
   if (!ensureNoActiveImageUploads()) return false;
+  const duplicateLiveIds = findDuplicateLiveIds(siteData);
+  if (duplicateLiveIds.length > 0) {
+    showToast(`保存できません: Live IDが重複しています: ${duplicateLiveIds.join(', ')}`, 'error');
+    return false;
+  }
   isSaving = true;
   const { silent = false } = options;
   const pendingCount = Object.keys(pendingImages).length;
@@ -1624,44 +1868,6 @@ async function saveData(options = {}) {
   }
 }
 
-function buildTweetTextForAdmin(live) {
-  const rawDescription = String((live && live.description) || '').replace(/<br\s*\/?>/gi, '\n');
-  const descLines = rawDescription
-    .replace(/\r\n/g, '\n')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  const header = '【LIVE】';
-  const eventTitle = String(live?.title || '').trim();
-  const heading = `${String(live?.date || '日付未設定').trim()} ${String(live?.venue || '').trim()}`.trim();
-
-  const blocks = [header];
-  if (eventTitle) blocks.push(eventTitle);
-  if (heading) blocks.push(heading);
-  if (descLines.length > 0) {
-    blocks.push('');
-    blocks.push(...descLines);
-  }
-
-  let text = blocks.join('\n').trim();
-  if (text.length <= 280) return text;
-
-  // 1) Remove blank line separation.
-  text = [header, eventTitle, heading, ...descLines].filter(Boolean).join('\n').trim();
-  if (text.length <= 280) return text;
-
-  // 2) Compact description and truncate.
-  const compact = descLines.join(' / ');
-  const shortened = compact ? compact.slice(0, 120) + '…' : '';
-  text = [header, eventTitle, heading, shortened].filter(Boolean).join('\n').trim();
-  if (text.length <= 280) return text;
-
-  // 3) Last resort.
-  text = [header, eventTitle, heading].filter(Boolean).join('\n').trim();
-  return text.slice(0, 280);
-}
-
 function readLiveFromModal() {
   return {
     id: currentEditId,
@@ -1669,209 +1875,168 @@ function readLiveFromModal() {
     title: document.getElementById('edit-title')?.value || '',
     venue: document.getElementById('edit-venue')?.value || '',
     description: document.getElementById('edit-description')?.value || '',
-    link: document.getElementById('edit-link')?.value || ''
+    link: document.getElementById('edit-link')?.value || '',
+    sourceText: document.getElementById('edit-sourceText')?.value || '',
+    ticketUrl: document.getElementById('edit-ticketUrl')?.value || '',
+    reservationClosed: Boolean(document.getElementById('edit-reservationClosed')?.checked),
+    xComment: document.getElementById('edit-xComment')?.value || ''
   };
 }
 
-function updateXPreviewInModal(options = {}) {
-  const previewEl = document.getElementById('x-preview-text');
-  if (!previewEl) return;
+function getCanonicalLiveUrl(liveId) {
+  const id = String(liveId || '').trim();
+  return id ? `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(id)}` : '';
+}
 
-  const force = options && typeof options === 'object' && options.force === true;
-
+function updateXPreviewsInModal() {
+  const parentEl = document.getElementById('x-parent-preview');
+  const replyEl = document.getElementById('x-reply-preview');
+  if (!parentEl || !replyEl) return;
   const live = readLiveFromModal();
-  const autoText = buildTweetTextForAdmin(live);
+  const operations = getLiveOperations();
+  if (!operations) {
+    parentEl.value = '';
+    replyEl.value = '';
+    return;
+  }
+  parentEl.value = operations.buildXParentText(live, live.xComment, getCanonicalLiveUrl(live.id));
+  replyEl.value = operations.buildXReplyText(live);
+}
 
-  if (force || !xPreviewDirty || previewEl.value === xPreviewLastAutoText) {
-    previewEl.value = autoText;
-    xPreviewDirty = false;
+function setLiveSourceIntakeStatus(message) {
+  const target = document.getElementById('live-source-warnings');
+  if (!target) return;
+  target.textContent = String(message || '');
+}
+
+const LIVE_SOURCE_INTAKE_FIELD_MAP = {
+  date: 'edit-date',
+  title: 'edit-title',
+  venue: 'edit-venue',
+  description: 'edit-description',
+  ticketUrl: 'edit-ticketUrl',
+  link: 'edit-link',
+};
+
+function normalizeLiveSourceIntakePayload(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return null;
+  const payloadKeys = Object.keys(payload);
+  if (payloadKeys.length !== 1 || payloadKeys[0] !== 'draft') return null;
+
+  const draft = payload.draft;
+  if (!draft || typeof draft !== 'object' || Array.isArray(draft)) return null;
+  const expectedKeys = Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP).sort();
+  const draftKeys = Object.keys(draft).sort();
+  if (draftKeys.length !== expectedKeys.length || draftKeys.some((key, index) => key !== expectedKeys[index])) {
+    return null;
   }
 
-  xPreviewLastAutoText = autoText;
+  const normalized = {};
+  for (const key of expectedKeys) {
+    if (typeof draft[key] !== 'string') return null;
+    normalized[key] = draft[key].trim();
+  }
+  return normalized;
 }
 
-function wireXPreviewInModal() {
-  const previewEl = document.getElementById('x-preview-text');
-  if (!previewEl) return;
+async function handleLiveSourceParse() {
+  const sourceElement = document.getElementById('edit-sourceText');
+  const button = document.getElementById('live-source-parse-btn');
+  if (!IS_API_MODE) {
+    setLiveSourceIntakeStatus('AIで整理はAPI Modeで利用可能です。元情報は変更されていません。');
+    return false;
+  }
+  if (!sourceElement || !button) return false;
 
-  xPreviewDirty = false;
-  xPreviewLastAutoText = '';
+  const sourceText = sourceElement.value;
+  const ownerGeneration = modalGeneration;
+  if (
+    activeLiveSourceIntakeOperation
+    && activeLiveSourceIntakeOperation.ownerGeneration === ownerGeneration
+    && activeLiveSourceIntakeOperation.button === button
+  ) {
+    return false;
+  }
+  const fieldElements = Object.fromEntries(Object.entries(LIVE_SOURCE_INTAKE_FIELD_MAP).map(([key, id]) => (
+    [key, document.getElementById(id)]
+  )));
+  const parentPreviewElement = document.getElementById('x-parent-preview');
+  const replyPreviewElement = document.getElementById('x-reply-preview');
+  if (Object.values(fieldElements).some((field) => !field) || !parentPreviewElement || !replyPreviewElement) {
+    setLiveSourceIntakeStatus('AIで整理できませんでした。元情報は変更されていません。');
+    return false;
+  }
+  const ownsCurrentEditor = () => (
+    modalGeneration === ownerGeneration
+    && document.getElementById('edit-sourceText') === sourceElement
+    && document.getElementById('live-source-parse-btn') === button
+    && Object.entries(LIVE_SOURCE_INTAKE_FIELD_MAP).every(([key, id]) => document.getElementById(id) === fieldElements[key])
+    && document.getElementById('x-parent-preview') === parentPreviewElement
+    && document.getElementById('x-reply-preview') === replyPreviewElement
+  );
+  const requestInputSnapshot = {
+    sourceText,
+    fields: Object.fromEntries(Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP).map((key) => [key, fieldElements[key].value])),
+  };
+  const operation = { ownerGeneration, button };
+  let rollbackSnapshot = null;
 
-  updateXPreviewInModal({ force: true });
+  activeLiveSourceIntakeOperation = operation;
+  button.disabled = true;
+  button.textContent = 'AIで整理中...';
+  setLiveSourceIntakeStatus('AIで整理しています...');
 
-  document.getElementById('x-preview-refresh-btn')?.addEventListener('click', () => {
-    xPreviewDirty = false;
-    updateXPreviewInModal({ force: true });
-  });
-
-  document.getElementById('x-share-copy-btn')?.addEventListener('click', async () => {
-    const live = readLiveFromModal();
-    const ogUrl = buildLiveOgUrl(live.id);
-    const fallbackUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(String(live.id || ''))}`;
-    const url = ogUrl || fallbackUrl;
-    if (!url) {
-      showToast('リンクを生成できませんでした', 'error');
-      return;
+  try {
+    const response = await adminFetch('/api/admin/live-source-intake', {
+      method: 'POST',
+      body: JSON.stringify({ sourceText }),
+    }, { allowBaseFallback: false });
+    if (!response?.ok) throw new Error('live source intake failed');
+    const payload = await response.json();
+    const draft = normalizeLiveSourceIntakePayload(payload);
+    if (!draft) throw new Error('invalid live source intake payload');
+    if (!ownsCurrentEditor()) return false;
+    const inputChanged = (
+      sourceElement.value !== requestInputSnapshot.sourceText
+      || Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP).some((key) => (
+        fieldElements[key].value !== requestInputSnapshot.fields[key]
+      ))
+    );
+    if (inputChanged) {
+      setLiveSourceIntakeStatus('入力が変更されたため反映しませんでした。もう一度AIで整理してください。');
+      return false;
     }
-    const ok = await copyToClipboard(url);
-    if (!ok) {
-      showToast('クリップボードにコピーできませんでした', 'error');
-      return;
+
+    rollbackSnapshot = {
+      fields: Object.fromEntries(Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP).map((key) => [key, fieldElements[key].value])),
+      parentPreview: parentPreviewElement.value,
+      replyPreview: replyPreviewElement.value,
+    };
+    for (const key of Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP)) {
+      if (draft[key]) fieldElements[key].value = draft[key];
     }
-    showToast('リンクをコピーしました', 'success');
-  });
-
-  document.getElementById('x-apply-btn')?.addEventListener('click', async () => {
-    // Open a window synchronously to avoid popup blockers.
-    // If it fails, offer to open in this tab as a fallback.
-    const w = window.open('', '_blank');
-    const closeW = () => { try { if (w && !w.closed) w.close(); } catch (_e) {} };
-
-    try {
-      if (w && w.document) {
-        w.document.open();
-        const homeUrl = (() => {
-          try { return new URL('./', window.location.href).toString(); } catch (_e) { return (window.location && window.location.origin ? window.location.origin + '/' : '/'); }
-        })();
-        const homeUrlJs = JSON.stringify(homeUrl);
-
-        // Some mobile browsers may keep this tab blank if they block navigation after async work.
-        // If X doesn't open quickly, fall back to the home so the user isn't left on a white page.
-        w.document.write(`<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Opening X...</title>
-    <style>
-      body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; padding: 18px; margin: 0; }
-      p { margin: 0 0 12px; color: #111; line-height: 1.6; }
-      a { color: #111; }
-    </style>
-  </head>
-  <body>
-    <p>X投稿画面を開いています...</p>
-    <p>もしこの画面のままなら、数秒後にホームへ戻ります。</p>
-    <p><a href="${homeUrl}" rel="noopener">ホームへ戻る</a></p>
-    <script>
-      try { setTimeout(function () { location.replace(${homeUrlJs}); }, 2500); } catch (e) {}
-    </script>
-  </body>
-</html>`);
-        w.document.close();
-      }
-
-      if (!ensureNoActiveImageUploads()) { closeW(); return; }
-
-      // Determine if the modal edits differ from current siteData.
-      const draft = {
-        id: currentEditId,
-        date: document.getElementById('edit-date')?.value || '',
-        title: document.getElementById('edit-title')?.value || '',
-        venue: document.getElementById('edit-venue')?.value || '',
-        description: document.getElementById('edit-description')?.value || '',
-        image: document.getElementById('edit-image')?.value || '',
-        link: document.getElementById('edit-link')?.value || '',
-        isPast: Boolean(document.getElementById('edit-isPast')?.checked)
-      };
-
-      const upcoming = Array.isArray(siteData?.live?.upcoming) ? siteData.live.upcoming : [];
-      const past = Array.isArray(siteData?.live?.past) ? siteData.live.past : [];
-      const storedUpcoming = upcoming.find((v) => String(v.id) === String(draft.id)) || null;
-      const storedPast = past.find((v) => String(v.id) === String(draft.id)) || null;
-      const stored = storedUpcoming || storedPast;
-      const storedIsPast = Boolean(storedPast);
-
-      const norm = (v) => String(v || '').trim();
-      const isDirty = !stored
-        || storedIsPast !== Boolean(draft.isPast)
-        || norm(stored.date) !== norm(draft.date)
-        || norm(stored.title) !== norm(draft.title)
-        || norm(stored.venue) !== norm(draft.venue)
-        || norm(stored.description) !== norm(draft.description)
-        || norm(stored.image) !== norm(draft.image)
-        || norm(stored.link) !== norm(draft.link);
-
-      // Persist current modal edits so the OGP page can resolve live data.
-      if (isDirty) {
-        saveLiveItem();
-        markChanged();
-
-        if (IS_API_MODE) {
-          const saved = await saveData({ silent: true });
-          if (!saved) {
-            const proceed = confirm('保存に失敗しました。保存せずにXを開きますか？');
-            if (!proceed) { closeW(); return; }
-          }
+    updateXPreviewsInModal();
+    setLiveSourceIntakeStatus('AIで整理しました。内容を確認してから更新してください。');
+    return true;
+  } catch (_error) {
+    if (ownsCurrentEditor()) {
+      if (rollbackSnapshot) {
+        for (const key of Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP)) {
+          fieldElements[key].value = rollbackSnapshot.fields[key];
         }
+        parentPreviewElement.value = rollbackSnapshot.parentPreview;
+        replyPreviewElement.value = rollbackSnapshot.replyPreview;
       }
-
-      const live = readLiveFromModal();
-      const rawText = String(previewEl.value || '').trim() || buildTweetTextForAdmin(live);
-      const baseText = stripUrlsFromTweetText(rawText);
-      if (!baseText) { closeW(); return; }
-
-      const ogBase = buildLiveOgUrl(live.id);
-      const ogUrl = ogBase ? `${ogBase}${ogBase.includes('?') ? '&' : '?'}v=${Date.now().toString(36)}` : '';
-      const fallbackUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(String(live.id || ''))}`;
-      const url = ogUrl || fallbackUrl;
-
-      // Put URL in text to ensure it is attached even if the 'url=' param is ignored by client.
-      const intentText = `${baseText}\n${url}`;
-      const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(intentText)}`;
-
-      if (w && !w.closed) {
-        w.location.href = intentUrl;
-        try { w.opener = null; } catch (_e) {}
-        try {
-          const returnHomeUrl = (() => {
-            try { return new URL('./', window.location.href).toString(); } catch (_e) { return (window.location && window.location.origin ? window.location.origin + '/' : '/'); }
-          })();
-          setTimeout(() => {
-            try { if (w && !w.closed) w.location.replace(returnHomeUrl); } catch (_e2) {}
-          }, 90000);
-        } catch (_e) {}
-        return;
-      }
-
-      const sameTab = confirm('ポップアップがブロックされています。このタブでX投稿画面を開きますか？');
-      if (sameTab) window.location.href = intentUrl;
-      else showToast('ポップアップを許可してから再度お試しください', 'error');
-    } catch (e) {
-      console.error('X intent failed', e);
-      closeW();
-      showToast('Xを開けませんでした。ポップアップ設定を確認して再度お試しください', 'error');
+      setLiveSourceIntakeStatus('AIで整理できませんでした。元情報は変更されていません。');
     }
-  });
-
-  previewEl.addEventListener('input', () => {
-    xPreviewDirty = true;
-  });
-
-  ['edit-date', 'edit-title', 'edit-venue', 'edit-description', 'edit-link'].forEach((id) => {
-    document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
-    document.getElementById(id)?.addEventListener('change', updateXPreviewInModal);
-  });
-}
-
-function stripUrlsFromTweetText(text) {
-  const raw = String(text || '');
-  // Remove URLs so the OGP URL is the only one in the intent.
-  const urlRe = /https?:\/\/\S+/g;
-  const lines = raw
-    .replace(/\r\n/g, '\n')
-    .split('\n')
-    .map((line) => String(line).replace(urlRe, '').trim())
-    .filter(Boolean);
-  return lines.join('\n').trim();
-}
-
-function buildLiveOgUrl(liveId) {
-  const base = String(API_BASE_URL || '').replace(/\/+$/, '');
-  if (!base) return '';
-  const id = String(liveId || '').trim();
-  if (!id) return '';
-  return `${base}/og/live/${encodeURIComponent(id)}`;
+    return false;
+  } finally {
+    if (activeLiveSourceIntakeOperation === operation) {
+      activeLiveSourceIntakeOperation = null;
+    }
+    button.disabled = false;
+    button.textContent = 'AIで整理';
+  }
 }
 
 async function copyToClipboard(text) {
@@ -1899,48 +2064,165 @@ async function copyToClipboard(text) {
 }
 
 function buildXIntentUrlFromModal() {
-  if (!IS_API_MODE) return '';
-
-  const live = readLiveFromModal();
-  const ogUrlBase = buildLiveOgUrl(live.id);
-  if (!ogUrlBase) return '';
-  // Cache-bust for X card preview; X may cache earlier failures for the same URL.
-  const ogUrl = `${ogUrlBase}${ogUrlBase.includes('?') ? '&' : '?'}v=${Date.now().toString(36)}`;
-
-  const preview = String(document.getElementById('x-preview-text')?.value || '').trim() || buildTweetTextForAdmin(live);
-  const text = stripUrlsFromTweetText(preview) || '【LIVE】';
-
-  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(ogUrl)}`;
+  if (isNewItem || !currentEditId) return '';
+  updateXPreviewsInModal();
+  const text = String(document.getElementById('x-parent-preview')?.value || '').trim();
+  return text ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}` : '';
 }
 
 function openXIntentFromModal() {
-  if (!IS_API_MODE) {
-    showToast('Web IntentはAPIモードでのみ利用できます', 'error');
-    return;
-  }
-
   const intentUrl = buildXIntentUrlFromModal();
   if (!intentUrl) {
-    showToast('Intent URLを生成できませんでした', 'error');
+    showToast('先にLiveを保存してください', 'error');
     return;
   }
-
   window.open(intentUrl, '_blank', 'noopener');
 }
 
-async function scheduleLiveToXFromModal() {
-  showToast('予約投稿（X API）はこの運用では使いません。Web Intentで投稿してください', 'error');
+async function copyXReplyFromModal() {
+  updateXPreviewsInModal();
+  const text = document.getElementById('x-reply-preview')?.value || '';
+  const ok = await copyToClipboard(text);
+  showToast(ok ? '返信用詳細をコピーしました' : 'コピーできませんでした', ok ? 'success' : 'error');
+  return ok;
 }
 
-async function cancelXSchedule(postId) {
-  void postId;
-  showToast('予約投稿（X API）はこの運用では使いません', 'error');
+function calculateActiveReservationTotals(reservations) {
+  return (Array.isArray(reservations) ? reservations : []).reduce((totals, reservation) => {
+    if (reservation?.status === 'cancelled') return totals;
+    totals.records += 1;
+    const quantity = Number(reservation?.quantity);
+    totals.seats += Number.isFinite(quantity) ? quantity : 0;
+    return totals;
+  }, { records: 0, seats: 0 });
 }
 
-async function postLiveToX(liveId, options = {}) {
-  void liveId;
-  void options;
-  showToast('自動投稿（X API）はこの運用では使いません。Web Intentで投稿してください', 'error');
+function renderLiveReservationLedger(reservations, target = document.getElementById('live-reservation-ledger')) {
+  if (!target) return;
+  const rows = Array.isArray(reservations) ? reservations : [];
+  const totals = calculateActiveReservationTotals(rows);
+  target.innerHTML = `
+    <div class="reservation-totals" aria-label="有効予約集計">
+      <span><strong>${totals.records}</strong> 有効予約件数</span>
+      <span><strong>${totals.seats}</strong> 予約枚数</span>
+    </div>
+    <div class="items-list live-ledger-list">
+      ${rows.length ? rows.map((row) => renderTicketRow(row, { compact: true })).join('') : '<div class="empty-state"><p>予約がありません</p></div>'}
+    </div>`;
+}
+
+async function loadLiveReservations(liveId = currentEditId) {
+  const target = document.getElementById('live-reservation-ledger');
+  const normalizedLiveId = String(liveId || '');
+  if (
+    !target
+    || isNewItem
+    || !normalizedLiveId
+    || !currentEditType?.startsWith('live')
+    || String(currentEditId || '') !== normalizedLiveId
+  ) return;
+  const ownerGeneration = modalGeneration;
+  const requestSequence = ++liveReservationRequestSequence;
+  const ownsCurrentLedger = () => (
+    modalGeneration === ownerGeneration
+    && liveReservationRequestSequence === requestSequence
+    && String(currentEditId || '') === normalizedLiveId
+    && document.getElementById('live-reservation-ledger') === target
+  );
+  if (!IS_API_MODE) {
+    if (!ownsCurrentLedger()) return;
+    target.innerHTML = '<div class="empty-state operation-gate"><p>予約台帳と手動取り置きにはAPI接続が必要です。Local Modeでは予約データを変更しません。</p></div>';
+    const submit = document.getElementById('manual-reservation-submit');
+    if (submit) submit.disabled = true;
+    return;
+  }
+
+  target.innerHTML = '<div class="empty-state"><p>予約台帳を読み込み中...</p></div>';
+  try {
+    const params = new URLSearchParams({ liveId: normalizedLiveId, limit: '200' });
+    const response = await adminFetch(`/api/admin/ticket-reservations?${params.toString()}`);
+    const payload = await response.json().catch(() => ({}));
+    if (!ownsCurrentLedger()) return;
+    if (!response.ok) throw new Error(getErrorMessage(payload, '予約台帳を取得できませんでした'));
+    renderLiveReservationLedger(payload.reservations, target);
+  } catch (error) {
+    if (!ownsCurrentLedger()) return;
+    target.innerHTML = `<div class="empty-state operation-error"><p>取得失敗: ${escapeHtml(error.message)}</p></div>`;
+  }
+}
+
+async function submitManualReservation() {
+  const errorEl = document.getElementById('manual-reservation-error');
+  const submit = document.getElementById('manual-reservation-submit');
+  if (errorEl) errorEl.textContent = '';
+  if (!IS_API_MODE) {
+    if (errorEl) errorEl.textContent = '手動取り置きにはAPI接続が必要です。';
+    return false;
+  }
+  if (isNewItem || !currentEditId) {
+    if (errorEl) errorEl.textContent = '先にLiveを保存してください。';
+    return false;
+  }
+
+  const nameEl = document.getElementById('manual-reservation-name');
+  const quantityEl = document.getElementById('manual-reservation-quantity');
+  const contactEl = document.getElementById('manual-reservation-contact');
+  const noteEl = document.getElementById('manual-reservation-note');
+  const name = String(nameEl?.value || '').trim();
+  const quantity = Number(quantityEl?.value);
+  if (!name || !Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+    if (errorEl) errorEl.textContent = 'お名前と1〜10の枚数を確認してください。';
+    return false;
+  }
+
+  const payload = { liveId: currentEditId, name, quantity };
+  const contact = String(contactEl?.value || '').trim();
+  const internalNote = String(noteEl?.value || '').trim();
+  if (contact) payload.contact = contact;
+  if (internalNote) payload.internalNote = internalNote;
+
+  if (submit) {
+    submit.disabled = true;
+    submit.textContent = '追加中...';
+  }
+  try {
+    const response = await adminFetch('/api/admin/ticket-reservations', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(getErrorMessage(result, '手動取り置きを追加できませんでした'));
+    if (nameEl) nameEl.value = '';
+    if (quantityEl) quantityEl.value = '1';
+    if (contactEl) contactEl.value = '';
+    if (noteEl) noteEl.value = '';
+    await Promise.all([loadLiveReservations(currentEditId), loadTickets()]);
+    showToast('手動取り置きを追加しました', 'success');
+    return true;
+  } catch (error) {
+    if (errorEl) errorEl.textContent = error.message;
+    return false;
+  } finally {
+    if (submit) {
+      submit.disabled = false;
+      submit.textContent = '手動取り置きを追加';
+    }
+  }
+}
+
+function wireLiveOperationsModal() {
+  document.getElementById('live-source-parse-btn')?.addEventListener('click', handleLiveSourceParse);
+  ['edit-date', 'edit-title', 'edit-venue', 'edit-description', 'edit-xComment'].forEach((id) => {
+    document.getElementById(id)?.addEventListener('input', updateXPreviewsInModal);
+  });
+  document.getElementById('x-intent-btn')?.addEventListener('click', openXIntentFromModal);
+  document.getElementById('x-reply-copy-btn')?.addEventListener('click', copyXReplyFromModal);
+  document.getElementById('manual-reservation-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    submitManualReservation();
+  });
+  updateXPreviewsInModal();
+  loadLiveReservations(currentEditId);
 }
 
 // JSONダウンロード
