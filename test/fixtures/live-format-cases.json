@@ -1,0 +1,79 @@
+{
+  "dates": [
+    {
+      "name": "ISO date",
+      "input": "2026-09-28",
+      "expected": "2026.09.28(Mon)"
+    },
+    {
+      "name": "legacy dot date with wrong weekday",
+      "input": "2026.9.28(日)",
+      "expected": "2026.09.28(Mon)"
+    },
+    {
+      "name": "legacy slash date",
+      "input": "2026/09/28",
+      "expected": "2026.09.28(Mon)"
+    },
+    {
+      "name": "unparsed date fallback",
+      "input": " date TBA ",
+      "expected": "date TBA"
+    }
+  ],
+  "details": [
+    {
+      "name": "open and start",
+      "live": {
+        "openTime": "18:30",
+        "startTime": "19:00"
+      },
+      "expected": "Open/Start: 18:30/19:00"
+    },
+    {
+      "name": "start only",
+      "live": {
+        "startTime": "19:00"
+      },
+      "expected": "Start: 19:00"
+    },
+    {
+      "name": "open only",
+      "live": {
+        "openTime": "18:30"
+      },
+      "expected": "Open: 18:30"
+    },
+    {
+      "name": "ticket notes and explicit labeled co-performers",
+      "live": {
+        "ticket": "¥2,500 + 1D",
+        "notes": "※再入場不可\n受付は18:00から",
+        "performers": "w. w/ A / w. B"
+      },
+      "expected": "ticket: ¥2,500 + 1D\n※再入場不可\n※受付は18:00から\nw. A / B"
+    },
+    {
+      "name": "performer names beginning with with are preserved",
+      "live": {
+        "performers": "Within Temptation / Wither\nWithout Her / With Confidence"
+      },
+      "expected": "w. Within Temptation / Wither / Without Her / With Confidence"
+    },
+    {
+      "name": "legacy description fallback",
+      "live": {
+        "description": "OPEN 18:30 / START 19:00<br>出演：旧データ"
+      },
+      "expected": "OPEN 18:30 / START 19:00\n出演：旧データ"
+    },
+    {
+      "name": "structured details override legacy description",
+      "live": {
+        "startTime": "19:00",
+        "description": "legacy must not render"
+      },
+      "expected": "Start: 19:00"
+    }
+  ]
+}

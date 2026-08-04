@@ -48,7 +48,10 @@
 
   if (idEl) idEl.textContent = q.rid ? q.rid : "-";
   if (liveEl) {
-    const parts = [q.date, q.venue].filter(Boolean);
+    const formattedDate = typeof window.LiveOperations?.formatLiveDate === "function"
+      ? window.LiveOperations.formatLiveDate(q.date)
+      : q.date;
+    const parts = [formattedDate, q.venue].filter(Boolean);
     liveEl.innerHTML = parts.length ? escapeHtml(parts.join(" ")) : "<span style=\"color: var(--ink-muted);\">-</span>";
   }
 

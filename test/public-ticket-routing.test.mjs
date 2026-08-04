@@ -8,6 +8,7 @@ const repoRoot = process.cwd();
 const helperSource = readFileSync(join(repoRoot, 'assets/js/live-operations.js'), 'utf8');
 const siteContentSource = readFileSync(join(repoRoot, 'assets/js/site-content.js'), 'utf8');
 const ticketSource = readFileSync(join(repoRoot, 'assets/js/ticket.js'), 'utf8');
+const ticketCompleteSource = readFileSync(join(repoRoot, 'assets/js/ticket-complete.js'), 'utf8');
 
 const futureDate = '2099.08.02';
 const pastDate = '2000.01.02';
@@ -287,6 +288,28 @@ async function runTicketPage({
   return { context, document, elements, fetchCalls, storage };
 }
 
+async function runTicketCompletePage({ href, data = siteData }) {
+  const ids = ['site-footer', 'ticket-receipt-id', 'ticket-receipt-live', 'ticket-complete-message'];
+  const { document, elements } = createDom({ ids });
+  const window = {
+    SITE_API_BASE: '',
+    location: { href },
+    addEventListener() {},
+  };
+  const context = {
+    console,
+    document,
+    fetch: async () => response({ data, meta: { updatedAt: 'test-version' } }),
+    URL,
+    window,
+  };
+  context.globalThis = context;
+  runHelper(context);
+  vm.runInNewContext(ticketCompleteSource, context, { filename: 'assets/js/ticket-complete.js' });
+  await settle();
+  return { context, document, elements };
+}
+
 test('shared helper route matrix keeps explicit-empty authority and conservative legacy inference', () => {
   const context = { window: {}, URL, Date };
   context.globalThis = context;
@@ -352,6 +375,102 @@ test('Live list renders shared reservation and detail actions only for active up
   assert.match(upcoming, /href="\.\.\/live\/detail\/\?liveId=external-live"/);
   assert.doesNotMatch(past, /<a[^>]+(?:ticket\/|tiget\.net)[^>]*>/i);
   assert.match(past, /href="\.\.\/live\/detail\/\?liveId=past-live"/);
+});
+
+test('public Live summary, detail, and modal share the structured date and detail format', async () => {
+  const structuredData = {
+    site: { footerText: 'footer' },
+    ticket: {},
+    live: {
+      upcoming: [{
+        id: 'structured-public',
+        date: '2026-09-28',
+        title: 'Structured Live',
+        venue: '<Hall>',
+        openTime: '18:30',
+        startTime: '19:00',
+        ticket: '¥2,500 + 1D',
+        notes: '再入場不可',
+        performers: 'A / B',
+        description: '<legacy must not render>',
+        ticketUrl: '',
+      }],
+      past: [],
+    },
+  };
+
+  const home = await runSitePage({
+    pathname: '/',
+    ids: ['home-next-live-events', 'home-next-live-empty'],
+    data: structuredData,
+  });
+  const homeHtml = home.elements.get('home-next-live-events').innerHTML;
+  assert.match(homeHtml, /2026\.09\.28\(Mon\)/);
+  assert.match(homeHtml, /Open\/Start: 18:30\/19:00<br>ticket: ¥2,500 \+ 1D/);
+  assert.doesNotMatch(homeHtml, /再入場不可|w\. A|legacy must not render/);
+  assert.match(homeHtml, /&lt;Hall&gt;/);
+
+  const detailIds = [
+    'live-detail', 'live-detail-title', 'live-detail-heading', 'live-detail-image', 'live-detail-placeholder',
+    'live-detail-description', 'live-detail-ticket-link', 'live-detail-back-link', 'live-detail-notfound',
+    'live-detail-single', 'live-archive', 'live-archive-events', 'live-archive-empty',
+  ];
+  const detail = await runSitePage({
+    pathname: '/live/detail/',
+    search: '?liveId=structured-public',
+    ids: detailIds,
+    data: structuredData,
+  });
+  assert.equal(detail.elements.get('live-detail-heading').textContent, '2026.09.28(Mon) <Hall>');
+  assert.equal(detail.elements.get('live-detail-description').textContent, [
+    'Open/Start: 18:30/19:00',
+    'ticket: ¥2,500 + 1D',
+    '※再入場不可',
+    'w. A / B',
+  ].join('\n'));
+
+  const modalIds = [
+    'live-upcoming-events', 'live-past-events', 'live-past-heading', 'live-past-more',
+    'liveDetailOverlay', 'liveDetailModal', 'liveDetailTitle', 'liveDetailBody',
+    'liveDetailExternalLink', 'liveDetailCloseBtn', 'liveDetailCloseLink',
+  ];
+  const modal = await runSitePage({ pathname: '/live/', ids: modalIds, data: structuredData });
+  const trigger = {
+    closest(selector) { return selector === '[data-live-detail-id]' ? this : null; },
+    getAttribute(name) { return name === 'data-live-detail-id' ? 'structured-public' : ''; },
+  };
+  await modal.elements.get('live-upcoming-events').dispatch('click', { target: trigger });
+  assert.match(modal.elements.get('liveDetailTitle').textContent, /2026\.09\.28\(Mon\)/);
+  assert.match(modal.elements.get('liveDetailBody').innerHTML, /Open\/Start: 18:30\/19:00/);
+  assert.match(modal.elements.get('liveDetailBody').innerHTML, /※再入場不可/);
+  assert.match(modal.elements.get('liveDetailBody').innerHTML, /w\. A \/ B/);
+  assert.doesNotMatch(modal.elements.get('liveDetailBody').innerHTML, /legacy must not render/);
+});
+
+test('public Live details preserve legacy description when structured fields are empty', async () => {
+  const legacyData = structuredClone(siteData);
+  legacyData.live.upcoming = [{
+    id: 'legacy-description',
+    date: '2026.9.28(日)',
+    title: 'Legacy',
+    venue: 'Hall',
+    description: 'OPEN 18:30 / START 19:00\n出演：旧データ',
+    ticketUrl: '',
+  }];
+  const ids = [
+    'live-detail', 'live-detail-title', 'live-detail-heading', 'live-detail-image', 'live-detail-placeholder',
+    'live-detail-description', 'live-detail-ticket-link', 'live-detail-back-link', 'live-detail-notfound',
+    'live-detail-single', 'live-archive', 'live-archive-events', 'live-archive-empty',
+  ];
+  const page = await runSitePage({
+    pathname: '/live/detail/',
+    search: '?liveId=legacy-description',
+    ids,
+    data: legacyData,
+  });
+
+  assert.equal(page.elements.get('live-detail-heading').textContent, '2026.09.28(Mon) Hall');
+  assert.equal(page.elements.get('live-detail-description').textContent, 'OPEN 18:30 / START 19:00\n出演：旧データ');
 });
 
 test('Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely', async () => {
@@ -467,6 +586,47 @@ test('ticket form lists and falls back only to open internal Lives', async () =>
   assert.equal(page.elements.get('submitBtn').disabled, false);
   assert.doesNotMatch(select.innerHTML, /external-live|legacy-booking|closed-live|invalid-live|past-live/);
   assert.match(select.innerHTML, /&lt;Internal &amp; Hall&gt;/);
+});
+
+test('ticket options and selected Live preview use the shared structured format', async () => {
+  const structuredData = structuredClone(siteData);
+  structuredData.live.upcoming = [{
+    id: 'ticket-structured',
+    date: '2099-09-28',
+    title: 'Ticket Structured',
+    venue: '<Ticket Hall>',
+    openTime: '18:30',
+    startTime: '19:00',
+    ticket: '¥2,500 + 1D',
+    notes: '再入場不可',
+    performers: 'A / B',
+    description: 'legacy must not render',
+    ticketUrl: '',
+  }];
+
+  const page = await runTicketPage({
+    href: 'https://1212hp.com/ticket/?liveId=ticket-structured',
+    data: structuredData,
+  });
+  const select = page.elements.get('liveId');
+  const preview = page.elements.get('ticket-live-preview').innerHTML;
+
+  assert.equal(select.options[0].textContent, '2099.09.28(Mon) <Ticket Hall>');
+  assert.match(preview, /2099\.09\.28\(Mon\) &lt;Ticket Hall&gt;/);
+  assert.match(preview, /Open\/Start: 18:30\/19:00/);
+  assert.match(preview, /ticket: ¥2,500 \+ 1D/);
+  assert.match(preview, /※再入場不可/);
+  assert.match(preview, /w\. A \/ B/);
+  assert.doesNotMatch(preview, /legacy must not render/);
+});
+
+test('ticket completion formats legacy query dates through LiveOperations', async () => {
+  const page = await runTicketCompletePage({
+    href: 'https://1212hp.com/ticket/complete/?rid=r-1&date=2026.9.28(%E6%97%A5)&venue=%3CHall%3E',
+  });
+
+  assert.equal(page.elements.get('ticket-receipt-id').textContent, 'r-1');
+  assert.equal(page.elements.get('ticket-receipt-live').innerHTML, '2026.09.28(Mon) &lt;Hall&gt;');
 });
 
 test('ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere', async () => {
@@ -661,7 +821,7 @@ test('ticket confirmation and payload share one immutable Live snapshot across r
       assert.equal(JSON.parse(posts[0].options.body).liveId, dangerousId);
       assert.equal(page.elements.get('liveId').value, 'legacy-social');
       const summary = page.elements.get('ticketConfirmSummary').innerHTML;
-      assert.match(summary, /2099\.08\.03 &lt;Internal &amp; Hall&gt;/);
+      assert.match(summary, /2099\.08\.03\(Mon\) &lt;Internal &amp; Hall&gt;/);
       assert.doesNotMatch(summary, /2099\.08\.05 Social Hall/);
     });
   }
@@ -700,7 +860,7 @@ test('ticket confirmation and JSON use only canonical ID controls despite duplic
         company: '',
       });
       const summary = page.elements.get('ticketConfirmSummary').innerHTML;
-      assert.match(summary, /2099\.08\.03 &lt;Internal &amp; Hall&gt;/);
+      assert.match(summary, /2099\.08\.03\(Mon\) &lt;Internal &amp; Hall&gt;/);
       assert.match(summary, /Canonical &lt;Name&gt;/);
       assert.match(summary, /canonical@example\.com/);
       assert.match(summary, />3</);
@@ -758,7 +918,9 @@ test('public HTML loads the helper in order, removes only global Ticket nav, and
   assert.ok(ticketHtml.indexOf('live-operations.js') < ticketHtml.indexOf('ticket.js'));
   assert.match(ticketHtml, /<form\s+id="ticket-form"/);
   assert.match(ticketHtml, /id="ticket-route-message"/);
-  assert.match(readFileSync(join(repoRoot, 'ticket/complete/index.html'), 'utf8'), /id="ticket-complete-card"/);
+  const completeHtml = readFileSync(join(repoRoot, 'ticket/complete/index.html'), 'utf8');
+  assert.match(completeHtml, /id="ticket-complete-card"/);
+  assert.ok(completeHtml.indexOf('live-operations.js') < completeHtml.indexOf('ticket-complete.js'));
   const liveHtml = readFileSync(join(repoRoot, 'live/index.html'), 'utf8');
   assert.doesNotMatch(liveHtml, /id="ticket-link-anchor"|class="live-application"/);
 });

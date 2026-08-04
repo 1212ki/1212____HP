@@ -805,13 +805,17 @@ function renderTicketsUi() {
   const currentValue = liveSelect.value || '';
   const options = [
     { value: '', label: '全ライブ' },
-    ...((siteData?.live?.upcoming || []).map(l => ({ value: l.id, label: `${l.date || ''} ${l.venue || ''}`.trim() }))),
-    ...((siteData?.live?.past || []).map(l => ({ value: l.id, label: `${l.date || ''} ${l.venue || ''}`.trim() }))),
+    ...((siteData?.live?.upcoming || []).map(l => ({ value: l.id, label: `${getAdminLiveDisplayDate(l.date)} ${l.venue || ''}`.trim() }))),
+    ...((siteData?.live?.past || []).map(l => ({ value: l.id, label: `${getAdminLiveDisplayDate(l.date)} ${l.venue || ''}`.trim() }))),
   ];
   const nextValue = options.some((option) => option.value === currentValue) ? currentValue : '';
   liveSelect.innerHTML = options.map(o => `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`).join('');
   liveSelect.value = nextValue;
   if (nextValue !== currentValue) void loadTickets();
+}
+
+function getAdminLiveDisplayDate(value) {
+  return getLiveOperations()?.formatLiveDate(value) || String(value || '').trim();
 }
 
 // サムネイル画像のsrc取得（新規画像対応）
@@ -833,7 +837,7 @@ function renderLiveItem(item, category) {
       <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
       <span class="info">
         <span class="title">${escapeHtml((item.title || '').trim() || item.venue)}</span>
-        <span class="meta">${escapeHtml([item.date, (item.title || '').trim() ? item.venue : ''].filter(Boolean).join(' '))}</span>
+        <span class="meta">${escapeHtml([getAdminLiveDisplayDate(item.date), (item.title || '').trim() ? item.venue : ''].filter(Boolean).join(' '))}</span>
       </span>
       <span class="arrow">›</span>
     </button>
@@ -1340,9 +1344,20 @@ function getEditorTicketUrl(item) {
   return getLiveOperations()?.getTicketUrl(item) || '';
 }
 
+function readLiveDateFromEditor() {
+  const dateElement = document.getElementById('edit-date');
+  const inputValue = String(dateElement?.value || '').trim();
+  return inputValue || String(dateElement?.dataset?.originalUnparsedDate || '');
+}
+
 function buildLiveEditorHtml(itemInput, category, isNew) {
   const item = itemInput && typeof itemInput === 'object' ? itemInput : {};
   const ticketUrl = getEditorTicketUrl(item);
+  const operations = getLiveOperations();
+  const normalizedDate = operations?.normalizeLiveDateInput(item.date) || '';
+  const originalDate = String(item.date || '');
+  const unparsedOriginalDate = originalDate.trim() && !normalizedDate ? originalDate : '';
+  const normalizedPerformers = operations?.normalizeLivePerformers(item.performers) || String(item.performers || '').trim();
   const disabled = isNew ? ' disabled' : '';
   const saveFirstX = isNew ? '<p class="operation-gate">保存後にWeb Intentを利用できます。</p>' : '';
   const ledgerGate = isNew
@@ -1365,7 +1380,8 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
       <div class="operation-heading"><span class="operation-step">02</span><h3>Live情報</h3></div>
       <div class="form-group">
         <label for="edit-date">日付</label>
-        <input type="text" id="edit-date" class="text-input" value="${escapeHtml(item.date || '')}" placeholder="2025.01.01">
+        <input type="date" id="edit-date" class="text-input" value="${escapeHtml(normalizedDate)}" data-original-unparsed-date="${escapeHtml(unparsedOriginalDate)}">
+        ${unparsedOriginalDate ? `<p class="field-hint">現在の保存値: <code>${escapeHtml(unparsedOriginalDate)}</code>。有効な日付を入力するまではこの値を保持します。</p>` : ''}
       </div>
       <div class="form-group">
         <label for="edit-title">ライブ名（任意）</label>
@@ -1375,10 +1391,37 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
         <label for="edit-venue">会場</label>
         <input type="text" id="edit-venue" class="text-input" value="${escapeHtml(item.venue || '')}" placeholder="下北沢XXX">
       </div>
-      <div class="form-group">
-        <label for="edit-description">詳細</label>
-        <textarea id="edit-description" class="textarea" rows="5">${escapeHtml(item.description || '')}</textarea>
+      <div class="field-row live-time-fields">
+        <div class="form-group">
+          <label for="edit-openTime">Open</label>
+          <input type="time" id="edit-openTime" class="text-input" value="${escapeHtml(item.openTime || '')}">
+        </div>
+        <div class="form-group">
+          <label for="edit-startTime">Start</label>
+          <input type="time" id="edit-startTime" class="text-input" value="${escapeHtml(item.startTime || '')}">
+        </div>
       </div>
+      <div class="form-group">
+        <label for="edit-ticket">ticket</label>
+        <input type="text" id="edit-ticket" class="text-input" value="${escapeHtml(item.ticket || '')}" placeholder="例: ¥2,500 + 1D">
+      </div>
+      <div class="form-group">
+        <label for="edit-notes">補足</label>
+        <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">${escapeHtml(item.notes || '')}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="edit-performers">共演者</label>
+        <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">${escapeHtml(normalizedPerformers)}</textarea>
+      </div>
+      ${item.description ? `
+      <details class="legacy-live-details">
+        <summary>旧詳細（未構造化）</summary>
+        <div class="form-group">
+          <label for="edit-description">過去データ互換</label>
+          <textarea id="edit-description" class="textarea" rows="4">${escapeHtml(item.description)}</textarea>
+          <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>
+        </div>
+      </details>` : ''}
       ${getImageFormHtml(item.image || '', 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
       <div class="form-group">
         <label for="edit-ticketUrl">予約先</label>
@@ -1693,13 +1736,25 @@ function saveLiveItem() {
   const originalList = originalCategory === 'upcoming' ? siteData.live.upcoming : siteData.live.past;
   const originalIndex = originalList.findIndex(l => l.id === currentEditId);
   const originalItem = originalIndex === -1 ? {} : originalList[originalIndex];
+  const operations = getLiveOperations();
+  const editorDate = readLiveDateFromEditor();
+  const normalizedDate = operations?.normalizeLiveDateInput(editorDate) || '';
   const item = {
     ...originalItem,
     id: currentEditId,
-    date: document.getElementById('edit-date').value,
+    date: normalizedDate || editorDate,
     title: document.getElementById('edit-title')?.value || '',
     venue: document.getElementById('edit-venue').value,
-    description: document.getElementById('edit-description').value,
+    openTime: document.getElementById('edit-openTime')?.value || '',
+    startTime: document.getElementById('edit-startTime')?.value || '',
+    ticket: document.getElementById('edit-ticket')?.value.trim() || '',
+    notes: (document.getElementById('edit-notes')?.value || '')
+      .split(/\r?\n/u)
+      .map((note) => note.trim().replace(/^※+\s*/u, ''))
+      .filter(Boolean)
+      .join('\n'),
+    performers: operations?.normalizeLivePerformers(document.getElementById('edit-performers')?.value) || '',
+    description: document.getElementById('edit-description')?.value ?? originalItem.description ?? '',
     image: document.getElementById('edit-image').value,
     link: document.getElementById('edit-link').value,
     sourceText: document.getElementById('edit-sourceText')?.value || '',
@@ -1871,9 +1926,14 @@ async function saveData(options = {}) {
 function readLiveFromModal() {
   return {
     id: currentEditId,
-    date: document.getElementById('edit-date')?.value || '',
+    date: readLiveDateFromEditor(),
     title: document.getElementById('edit-title')?.value || '',
     venue: document.getElementById('edit-venue')?.value || '',
+    openTime: document.getElementById('edit-openTime')?.value || '',
+    startTime: document.getElementById('edit-startTime')?.value || '',
+    ticket: document.getElementById('edit-ticket')?.value || '',
+    notes: document.getElementById('edit-notes')?.value || '',
+    performers: document.getElementById('edit-performers')?.value || '',
     description: document.getElementById('edit-description')?.value || '',
     link: document.getElementById('edit-link')?.value || '',
     sourceText: document.getElementById('edit-sourceText')?.value || '',
@@ -1913,7 +1973,11 @@ const LIVE_SOURCE_INTAKE_FIELD_MAP = {
   date: 'edit-date',
   title: 'edit-title',
   venue: 'edit-venue',
-  description: 'edit-description',
+  openTime: 'edit-openTime',
+  startTime: 'edit-startTime',
+  ticket: 'edit-ticket',
+  notes: 'edit-notes',
+  performers: 'edit-performers',
   ticketUrl: 'edit-ticketUrl',
   link: 'edit-link',
 };
@@ -2212,7 +2276,18 @@ async function submitManualReservation() {
 
 function wireLiveOperationsModal() {
   document.getElementById('live-source-parse-btn')?.addEventListener('click', handleLiveSourceParse);
-  ['edit-date', 'edit-title', 'edit-venue', 'edit-description', 'edit-xComment'].forEach((id) => {
+  [
+    'edit-date',
+    'edit-title',
+    'edit-venue',
+    'edit-openTime',
+    'edit-startTime',
+    'edit-ticket',
+    'edit-notes',
+    'edit-performers',
+    'edit-description',
+    'edit-xComment',
+  ].forEach((id) => {
     document.getElementById(id)?.addEventListener('input', updateXPreviewsInModal);
   });
   document.getElementById('x-intent-btn')?.addEventListener('click', openXIntentFromModal);

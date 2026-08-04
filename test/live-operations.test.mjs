@@ -7,14 +7,60 @@ import vm from 'node:vm';
 
 const repoRoot = process.cwd();
 const require = createRequire(import.meta.url);
+const liveFormatCases = JSON.parse(readFileSync(join(repoRoot, 'test/fixtures/live-format-cases.json'), 'utf8'));
 const {
   buildXParentText,
   buildXReplyText,
+  formatLiveDate,
+  formatLiveDetails,
   getTicketCta,
   getTicketUrl,
+  normalizeLiveDateInput,
+  normalizeLivePerformers,
   parseLiveSourceText,
   resolveLiveById,
 } = require(join(repoRoot, 'assets/js/live-operations.js'));
+
+test('browser Live formatters satisfy the shared fixture matrix', () => {
+  for (const fixture of liveFormatCases.dates) {
+    assert.equal(formatLiveDate(fixture.input), fixture.expected, fixture.name);
+  }
+  for (const fixture of liveFormatCases.details) {
+    assert.equal(formatLiveDetails(fixture.live), fixture.expected, fixture.name);
+  }
+});
+
+test('formatLiveDate normalizes legacy separators and recomputes the weekday', () => {
+  for (const value of ['2026-09-28', '2026.9.28(月)', '2026/09/28', '2026.09.28(Sun)']) {
+    assert.equal(formatLiveDate(value), '2026.09.28(Mon)', value);
+  }
+  assert.equal(formatLiveDate('  date TBA  '), 'date TBA');
+  assert.equal(formatLiveDate(''), '');
+  assert.equal(normalizeLiveDateInput('2026.9.28(月)'), '2026-09-28');
+  assert.equal(normalizeLiveDateInput('date TBA'), '');
+});
+
+test('formatLiveDetails uses canonical order, labels, and normalization', () => {
+  assert.equal(formatLiveDetails({
+    openTime: '18:30',
+    startTime: '19:00',
+    ticket: '¥2,500 + 1D',
+    notes: '再入場不可\n※受付は18:00から',
+    performers: '共演者A\n共演者B / 共演者C',
+    description: 'legacy details must not win',
+  }), [
+    'Open/Start: 18:30/19:00',
+    'ticket: ¥2,500 + 1D',
+    '※再入場不可',
+    '※受付は18:00から',
+    'w. 共演者A / 共演者B / 共演者C',
+  ].join('\n'));
+
+  assert.equal(formatLiveDetails({ startTime: '19:00' }), 'Start: 19:00');
+  assert.equal(formatLiveDetails({ openTime: '18:30' }), 'Open: 18:30');
+  assert.equal(formatLiveDetails({ description: 'OPEN 18:30 / START 19:00\n出演：旧データ' }), 'OPEN 18:30 / START 19:00\n出演：旧データ');
+  assert.equal(normalizeLivePerformers(' A / B\nC '), 'A / B / C');
+});
 
 const sample = [
   '2026/08/02(日)',
@@ -326,17 +372,25 @@ test('buildXParentText contains only owner framing, hashtag, and canonical Live 
 
 test('buildXReplyText contains structured Live details', () => {
   const text = buildXReplyText({
-    date: '2026.08.02',
+    date: '2026-08-02',
     title: '1212 presents',
     venue: '柴崎mod',
-    description: 'open/start 18:30/19:00\n出演：松本一樹',
+    openTime: '18:30',
+    startTime: '19:00',
+    ticket: '¥2,500 + 1D',
+    notes: '再入場不可',
+    performers: '松本一樹 / another band',
+    description: 'legacy must not render',
   });
 
-  assert.match(text, /2026\.08\.02/);
+  assert.match(text, /2026\.08\.02\(Sun\)/);
   assert.match(text, /1212 presents/);
   assert.match(text, /会場：柴崎mod/);
-  assert.match(text, /open\/start 18:30\/19:00/);
-  assert.match(text, /出演：松本一樹/);
+  assert.match(text, /Open\/Start: 18:30\/19:00/);
+  assert.match(text, /ticket: ¥2,500 \+ 1D/);
+  assert.match(text, /※再入場不可/);
+  assert.match(text, /w\. 松本一樹 \/ another band/);
+  assert.doesNotMatch(text, /legacy must not render/);
 });
 
 test('the dependency-free module exposes the same API to a browser global', () => {

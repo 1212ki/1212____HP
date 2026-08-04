@@ -11,6 +11,7 @@
   'use strict';
 
   const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
+  const DISPLAY_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const ENGLISH_WEEKDAYS = {
     sun: 0,
     sunday: 0,
@@ -161,6 +162,55 @@
       return '';
     }
     return `記載曜日（${WEEKDAYS[parsedDate.declaredWeekday]}）と日付の曜日（${WEEKDAYS[parsedDate.weekday]}）が一致しません。`;
+  }
+
+  function normalizeLiveDateInput(value) {
+    const parsed = parseLiveDate(value);
+    if (!parsed) return '';
+    return `${String(parsed.year).padStart(4, '0')}-${String(parsed.month).padStart(2, '0')}-${String(parsed.day).padStart(2, '0')}`;
+  }
+
+  function formatLiveDate(value) {
+    const original = stringValue(value);
+    if (!original) return '';
+    const parsed = parseLiveDate(original);
+    if (!parsed) return original;
+    return `${parsed.date}(${DISPLAY_WEEKDAYS[parsed.weekday]})`;
+  }
+
+  function normalizeLivePerformers(value) {
+    return String(value == null ? '' : value)
+      .replace(/\r\n?/gu, '\n')
+      .replace(/(^|[\n/])\s*(?:(?:w\s*[./])\s*)+/giu, '$1')
+      .split(/\n|\s*\/\s*/u)
+      .map(stringValue)
+      .filter(Boolean)
+      .join(' / ');
+  }
+
+  function formatLiveDetails(liveInput) {
+    const live = liveInput && typeof liveInput === 'object' ? liveInput : {};
+    const openTime = stringValue(live.openTime);
+    const startTime = stringValue(live.startTime);
+    const ticket = stringValue(live.ticket);
+    const notes = String(live.notes == null ? '' : live.notes)
+      .replace(/\r\n?/gu, '\n')
+      .split('\n')
+      .map((note) => note.trim().replace(/^※+\s*/u, ''))
+      .filter(Boolean);
+    const performers = normalizeLivePerformers(live.performers);
+    const lines = [];
+
+    if (openTime && startTime) lines.push(`Open/Start: ${openTime}/${startTime}`);
+    else if (startTime) lines.push(`Start: ${startTime}`);
+    else if (openTime) lines.push(`Open: ${openTime}`);
+    if (ticket) lines.push(`ticket: ${ticket}`);
+    lines.push(...notes.map((note) => `※${note}`));
+    if (performers) lines.push(`w. ${performers}`);
+
+    return lines.length > 0
+      ? lines.join('\n')
+      : stringValue(live.description).replace(/<br\s*\/?>/giu, '\n');
   }
 
   function emptyDraft(sourceText) {
@@ -379,10 +429,10 @@
 
   function buildXReplyText(liveInput) {
     const live = liveInput && typeof liveInput === 'object' ? liveInput : {};
-    const details = stringValue(live.details || live.description);
+    const details = formatLiveDetails(live);
     const lines = ['【ライブ詳細】'];
     if (stringValue(live.title)) lines.push(`公演：${stringValue(live.title)}`);
-    if (stringValue(live.date)) lines.push(`日付：${stringValue(live.date)}`);
+    if (formatLiveDate(live.date)) lines.push(`日付：${formatLiveDate(live.date)}`);
     if (stringValue(live.venue)) lines.push(`会場：${stringValue(live.venue)}`);
     if (details) lines.push('', details);
     return lines.join('\n');
@@ -392,10 +442,14 @@
     buildXParentText,
     buildXReplyText,
     findDuplicateLiveIds,
+    formatLiveDate,
+    formatLiveDetails,
     getTicketCta,
     getTicketUrl,
     getWeekdayMismatchWarning,
     isRecognizableBookingUrl,
+    normalizeLiveDateInput,
+    normalizeLivePerformers,
     parseLiveDate,
     parseLiveSourceText,
     resolveLiveById,
