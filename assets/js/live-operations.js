@@ -438,7 +438,54 @@
     return lines.join('\n');
   }
 
+  function formatXLiveDate(value) {
+    const original = stringValue(value);
+    if (!original) return '';
+    const parsed = parseLiveDate(original);
+    if (!parsed) return original;
+    return `${parsed.year}.${parsed.month}.${parsed.day}(${WEEKDAYS[parsed.weekday]})`;
+  }
+
+  function buildXAnnouncementText(liveInput, comment, canonicalUrl) {
+    const live = liveInput && typeof liveInput === 'object' ? liveInput : {};
+    const dateAndVenue = [formatXLiveDate(live.date), stringValue(live.venue)].filter(Boolean).join(' ');
+    const title = stringValue(live.title);
+    const openTime = stringValue(live.openTime);
+    const startTime = stringValue(live.startTime);
+    const details = [];
+
+    if (openTime && startTime) details.push(`OPEN / ${openTime} START / ${startTime}`);
+    else if (openTime) details.push(`OPEN / ${openTime}`);
+    else if (startTime) details.push(`START / ${startTime}`);
+
+    const ticket = stringValue(live.ticket);
+    if (ticket) details.push(ticket);
+    details.push(...String(live.notes == null ? '' : live.notes)
+      .replace(/\r\n?/gu, '\n')
+      .split('\n')
+      .map((note) => note.trim().replace(/^※+\s*/u, ''))
+      .filter(Boolean)
+      .map((note) => `※${note}`));
+
+    const performers = normalizeLivePerformers(live.performers)
+      .split(/\s*\/\s*/u)
+      .map(stringValue)
+      .filter(Boolean);
+    const performerBlock = performers.length > 0 ? ['-act-', ...performers].join('\n') : '';
+
+    return [
+      dateAndVenue,
+      title ? `「${title}」` : '',
+      details.join('\n'),
+      performerBlock,
+      stringValue(comment),
+      '#ライブ',
+      stringValue(canonicalUrl),
+    ].filter(Boolean).join('\n\n');
+  }
+
   return {
+    buildXAnnouncementText,
     buildXParentText,
     buildXReplyText,
     findDuplicateLiveIds,
