@@ -18,6 +18,7 @@ function decodeHtml(value) {
 
 function createElement(id, ownerDocument = null, tagName = 'div') {
   const classes = new Set();
+  const attributes = new Map();
   let html = '';
   const element = {
     id,
@@ -38,6 +39,8 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
       contains(name) { return classes.has(name); },
     },
     addEventListener() {},
+    getAttribute(name) { return attributes.get(name) ?? null; },
+    setAttribute(name, value) { attributes.set(name, String(value)); },
     appendChild(child) {
       child.parentElement = this;
       this.children.push(child);
@@ -80,7 +83,12 @@ function loadAdminApp() {
     getElementById(id) {
       return elements.get(id) || null;
     },
-    querySelectorAll() { return []; },
+    querySelectorAll(selector) {
+      const dataSelector = selector.match(/^\[data-([\w-]+)\]$/);
+      if (!dataSelector) return [];
+      const dataKey = dataSelector[1].replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
+      return [...elements.values()].filter((element) => element.dataset?.[dataKey] !== undefined);
+    },
     contains(element) { return Boolean(element?.isConnected); },
   };
   document.body = createElement('body', document, 'body');
@@ -204,6 +212,10 @@ globalThis.__adminTest = {
 	  handleImageSelect,
 	  clearImage,
   setApiMode(value) { IS_API_MODE = value; },
+  setApiFallbackReadOnly(value) {
+    isApiFallbackReadOnly = value;
+    applyApiFallbackReadOnlyState();
+  },
   setSiteData(value) { siteData = value; },
   setUploadImageToApi(fn) { uploadImageToApi = fn; },
   ensureNoActiveImageUploads,
@@ -348,6 +360,37 @@ test('Live image clear marks the workspace editor dirty and disables the global 
   assert.equal(app.elements.get('edit-image').value, '');
   assert.equal(app.elements.get('saveBtn').disabled, true);
   assert.equal(app.elements.get('live-editor-save-status').textContent, '未保存');
+});
+
+test('API fallback disables and runtime-guards Live flyer select and clear mutations', () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'fallback-image', date: '2026-08-10', title: 'Fallback', venue: 'Venue', image: 'assets/images/original.jpg' }],
+      past: [],
+    },
+  });
+  app.editLive('fallback-image', 'upcoming');
+  const editorHtml = app.elements.get('live-editor-body').innerHTML;
+  assert.match(editorHtml, /id="edit-image-select-btn"[^>]*data-live-editor-mutation/);
+  assert.match(editorHtml, /id="edit-image-clear-btn"[^>]*data-live-editor-mutation/);
+
+  const imageInput = app.elements.get('edit-image');
+  const preview = app.elements.get('edit-image-preview-container');
+  const originalPreview = preview.innerHTML;
+  app.setApiFallbackReadOnly(true);
+
+  assert.equal(app.elements.get('edit-image-select-btn').disabled, true);
+  assert.equal(app.elements.get('edit-image-clear-btn').disabled, true);
+  assert.equal(imageInput.value, 'assets/images/original.jpg');
+  app.handleImageSelect({ files: [{ name: 'replacement.png' }] }, 'edit-image');
+  assert.equal(imageInput.value, 'assets/images/original.jpg');
+  assert.equal(preview.innerHTML, originalPreview);
+  assert.equal(app.clearImage('edit-image'), false);
+  assert.equal(imageInput.value, 'assets/images/original.jpg');
+  assert.equal(preview.innerHTML, originalPreview);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
 });
 
 test('Live image API upload updates the flyer download link to the uploaded URL', async () => {

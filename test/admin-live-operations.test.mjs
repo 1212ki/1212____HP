@@ -106,6 +106,8 @@ function createDomHarness() {
   const documentListeners = new Map();
   const modalOwnedIds = new Set();
   const modalOrder = [];
+  const modalOwnedElements = new Map();
+  const liveEditorOwnedElements = new Map();
   const createdAnchors = [];
   const objectUrls = [];
   const revokedObjectUrls = [];
@@ -133,6 +135,11 @@ function createDomHarness() {
     },
     execCommand: () => true,
     getElementById(id) {
+      // The Live editor precedes the generic modal in the real document. Keep
+      // that lookup order when duplicate edit-* IDs expose an ownership bug.
+      if (liveEditorOwnedElements.has(id) && modalOwnedElements.has(id)) {
+        return liveEditorOwnedElements.get(id);
+      }
       return elements.get(id) || null;
     },
     querySelectorAll(selector) {
@@ -206,15 +213,16 @@ function createDomHarness() {
     });
   }
 
-  function installOwnedHtmlBehavior(root, ownedIds, order) {
+  function installOwnedHtmlBehavior(root, ownedIds, order, ownedElements = new Map()) {
     Object.defineProperty(root, 'innerHTML', {
       configurable: true,
       get() { return root._html || ''; },
       set(value) {
         for (const id of ownedIds) {
-          const prior = elements.get(id);
+          const prior = ownedElements.get(id);
           if (prior) prior.isConnected = false;
-          elements.delete(id);
+          if (elements.get(id) === prior) elements.delete(id);
+          ownedElements.delete(id);
         }
         ownedIds.clear();
         order.length = 0;
@@ -246,6 +254,7 @@ function createDomHarness() {
           }
           if (tagName.toLowerCase() === 'select') installSelectHtmlBehavior(element);
           elements.set(id, element);
+          ownedElements.set(id, element);
           ownedIds.add(id);
           order.push(element);
         }
@@ -256,10 +265,13 @@ function createDomHarness() {
       if (element.tagName === 'INPUT' && element.type === 'hidden') return false;
       return ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName);
     }) || null;
+    root.querySelectorAll = () => order.filter((element) => (
+      ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName)
+    ));
   }
 
   const modalBody = addStatic('modal-body');
-  installOwnedHtmlBehavior(modalBody, modalOwnedIds, modalOrder);
+  installOwnedHtmlBehavior(modalBody, modalOwnedIds, modalOrder, modalOwnedElements);
 
   addStatic('modal-title');
   addStatic('modal-overlay');
@@ -267,8 +279,13 @@ function createDomHarness() {
   addStatic('delete-btn', 'button');
   addStatic('toast');
   addStatic('saveBtn', 'button');
+  addStatic('live-add-btn', 'button');
   addStatic('modeBadge');
   addStatic('connectionBanner');
+  addStatic('news-list');
+  const siteGlobalTab = addStatic('global-tab-site', 'button');
+  siteGlobalTab.dataset.tab = 'site';
+  siteGlobalTab.classList.add('tab-btn');
   const liveGlobalTab = addStatic('global-tab-live', 'button');
   liveGlobalTab.dataset.tab = 'live';
   liveGlobalTab.classList.add('tab-btn', 'active');
@@ -279,6 +296,8 @@ function createDomHarness() {
   liveGlobalPanel.classList.add('tab-content', 'active');
   const newsGlobalPanel = addStatic('news-tab', 'section');
   newsGlobalPanel.classList.add('tab-content');
+  const siteGlobalPanel = addStatic('site-tab', 'section');
+  siteGlobalPanel.classList.add('tab-content');
   addStatic('tickets-list');
   const liveFilter = addStatic('tickets-live-filter', 'select');
   installSelectHtmlBehavior(liveFilter);
@@ -323,7 +342,7 @@ function createDomHarness() {
   liveEditorBody.parentElement = liveEditorPane;
   const liveEditorOwnedIds = new Set();
   const liveEditorOrder = [];
-  installOwnedHtmlBehavior(liveEditorBody, liveEditorOwnedIds, liveEditorOrder);
+  installOwnedHtmlBehavior(liveEditorBody, liveEditorOwnedIds, liveEditorOrder, liveEditorOwnedElements);
   upcomingPanel.parentElement = livePagePrimary;
   pastPanel.parentElement = livePagePrimary;
   const liveTicketSettingsOpen = addStatic('live-ticket-settings-open', 'button');
@@ -416,6 +435,7 @@ function loadAdminApp(options = {}) {
 	  closeLiveEditor: typeof closeLiveEditor === 'function' ? closeLiveEditor : null,
 	  saveLiveWorkspace: typeof saveLiveWorkspace === 'function' ? saveLiveWorkspace : null,
 	  deleteLiveFromWorkspace: typeof deleteLiveFromWorkspace === 'function' ? deleteLiveFromWorkspace : null,
+	  requestLiveEditorTransition: typeof requestLiveEditorTransition === 'function' ? requestLiveEditorTransition : null,
   handleLiveSourceParse,
   saveLiveItem,
   updateXPreviewInModal: typeof updateXPreviewInModal === 'function' ? updateXPreviewInModal : null,
@@ -460,6 +480,8 @@ function loadAdminApp(options = {}) {
 	  },
   setAdminFetch(fn) { adminFetch = async (...args) => { const result = await fn(...args); return result; }; },
 	  setSaveSpy() { saveData = async () => { globalThis.__adminSaveCalls += 1; return true; }; },
+  setSaveFunction(fn) { saveData = fn; },
+  invokeSaveData(options) { return saveData(options); },
   setConfirm(fn) { confirm = fn; },
 };`, context);
 
@@ -702,8 +724,9 @@ test('Live edit workspace renders add and edit in the detail pane while News kee
   assert.match(app.elements.get('live-editor-body').innerHTML, /id="live-editor-delete-btn"[^>]*hidden/);
   assert.equal(app.elements.get('modal').classList.contains('active'), false);
 
-  app.closeLiveEditor();
-  app.addNews();
+  app.setConfirm(() => true);
+  assert.equal(app.closeLiveEditor(), true);
+  assert.equal(app.addNews(), true);
   assert.equal(app.elements.get('modal').classList.contains('active'), true);
   assert.match(app.elements.get('modal-body').innerHTML, /ニュースタイトル/);
 });
@@ -991,6 +1014,16 @@ test('responsive Live workspace fixes overflow, focus, sticky actions, and actio
   assert.doesNotMatch(editorHtml, /class="[^"]*btn-primary[^"]*"[^>]*id="x-intent-btn"/);
 });
 
+test('sticky Live task and publish actions share a non-scrolling editor-pane ancestor', () => {
+  const paneRule = [...adminCss.matchAll(/(?:^|\n)\.live-editor-pane\s*\{([^}]*)\}/g)]
+    .find((match) => /overflow:/.test(match[1]));
+  assert.ok(paneRule, 'Live editor pane rule must exist');
+  assert.match(paneRule[1], /overflow:\s*clip\s*;/);
+  assert.doesNotMatch(paneRule[1], /overflow:\s*(?:hidden|auto|scroll)\s*;/);
+  assert.match(adminCss, /\.live-editor-task-tabs\s*\{[^}]*position:\s*sticky/s);
+  assert.match(adminCss, /\.live-editor-footer\s*\{[^}]*position:\s*sticky/s);
+});
+
 test('Live edit workspace saves a category move in place and routes Local Mode to JSON export', async () => {
   const app = loadAdminApp();
   app.setSiteData({
@@ -1047,6 +1080,233 @@ test('Live edit workspace API save uses the existing save route and deletion kee
   assert.equal(app.getSiteData().live.upcoming.some((live) => live.id === 'delete-live'), false);
   assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
   assert.equal(app.getSaveCalls(), 1, 'deletion keeps the existing header-save contract');
+});
+
+test('Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    news: [],
+    live: {
+      upcoming: [{ id: 'live-owner', date: '2026-08-10', title: 'LIVE TITLE', venue: 'LIVE VENUE', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('live-owner', 'upcoming');
+  app.elements.get('edit-title').value = 'LIVE UNSAVED';
+  await app.elements.get('edit-title').dispatch('input');
+
+  app.setConfirm(() => false);
+  assert.equal(app.addNews(), false);
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+  assert.equal(app.getModalState().currentEditId, 'live-owner');
+  assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-title"/);
+
+  app.setConfirm(() => true);
+  assert.equal(app.addNews(), true);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+  assert.equal(app.elements.get('modal').classList.contains('active'), true);
+  assert.doesNotMatch(app.elements.get('modal-body').innerHTML, /LIVE UNSAVED/);
+  app.elements.get('edit-date').value = '2026-08-20';
+  app.elements.get('edit-title').value = 'NEWS ONLY';
+  app.elements.get('edit-description').value = 'NEWS DESCRIPTION';
+  app.elements.get('edit-image').value = '';
+  app.elements.get('edit-link').value = 'https://example.com/news';
+  app.elements.get('edit-linkText').value = 'read';
+
+  await app.saveModal();
+
+  assert.equal(app.getSiteData().news[0].title, 'NEWS ONLY');
+  assert.equal(app.getSiteData().news[0].description, 'NEWS DESCRIPTION');
+  assert.equal(app.getSiteData().live.upcoming[0].title, 'LIVE TITLE');
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+  assert.equal(app.getModalState().currentEditId, null);
+});
+
+test('Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    live: {
+      upcoming: [
+        { id: 'pending-live', date: '2026-08-10', title: 'Before', venue: 'A', image: '' },
+        { id: 'other-live', date: '2026-08-11', title: 'Other', venue: 'B', image: '' },
+      ],
+      past: [],
+    },
+  });
+  app.renderLive();
+  app.editLive('pending-live', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'Pending save' });
+  const pendingAi = deferred();
+  app.useAdminFetch(() => pendingAi.promise);
+  const aiOperation = app.elements.get('live-source-parse-btn').dispatch('click');
+  await flushAsync();
+  const pendingSave = deferred();
+  let saveCalls = 0;
+  app.setSaveFunction(() => {
+    saveCalls += 1;
+    return pendingSave.promise;
+  });
+
+  const firstSave = app.saveLiveWorkspace();
+  await flushAsync();
+  const secondSave = app.saveLiveWorkspace();
+
+  assert.equal(saveCalls, 1);
+  assert.equal(await secondSave, false);
+  assert.equal(app.elements.get('edit-title').disabled, true);
+  assert.equal(app.elements.get('live-editor-task-public').disabled, true);
+  assert.equal(app.elements.get('live-editor-back').disabled, true);
+  assert.equal(app.elements.get('live-editor-delete-btn').disabled, true);
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  assert.equal(app.elements.get('live-add-btn').disabled, true);
+  assert.equal(app.elements.get('edit-title').getAttribute('aria-disabled'), 'true');
+  assert.equal(app.elements.get('live-editor-back').getAttribute('aria-disabled'), 'true');
+  assert.equal(app.elements.get('live-editor-pane').getAttribute('aria-busy'), 'true');
+  app.setConfirm(() => true);
+  assert.equal(app.editLive('other-live', 'upcoming'), false);
+  assert.equal(app.getModalState().currentEditId, 'pending-live');
+  assert.equal(app.closeLiveEditor(), false);
+  assert.equal(app.setLiveWorkspaceView('reservations'), false);
+  assert.equal(app.setLiveListView('past'), false);
+  assert.equal(app.setTicketSettingsOpen(true), false);
+  assert.equal(app.setLiveEditorTask('announcement'), false);
+  assert.equal(await app.deleteLiveFromWorkspace(), false);
+
+  pendingAi.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft({ title: 'LATE AI' }) }));
+  assert.equal(await aiOperation, false);
+  assert.equal(app.elements.get('edit-title').value, 'Pending save');
+  assert.equal(app.elements.get('live-source-parse-btn').disabled, true);
+
+  pendingSave.resolve(true);
+  assert.equal(await firstSave, true);
+  assert.equal(app.getModalState().currentEditId, 'pending-live');
+  assert.equal(app.elements.get('edit-title').disabled, false);
+  assert.equal(app.elements.get('live-add-btn').disabled, false);
+  assert.notEqual(app.elements.get('edit-title').getAttribute('aria-disabled'), 'true');
+  assert.equal(app.elements.get('live-editor-back').getAttribute('aria-disabled'), 'false');
+  assert.equal(app.elements.get('live-editor-pane').getAttribute('aria-busy'), 'false');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
+});
+
+test('Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    news: [],
+    live: {
+      upcoming: [{ id: 'rollback-live', date: '2026-08-10', title: 'Stored title', venue: 'Stored venue', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('rollback-live', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'FAILED TITLE', 'edit-venue': 'FAILED VENUE', isPast: true });
+  const failedSave = deferred();
+  app.setSaveFunction(() => failedSave.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  assert.equal(app.getSiteData().live.upcoming.length, 0, 'candidate mutation stays isolated to the pending transaction');
+  failedSave.resolve(false);
+  assert.equal(await save, false);
+
+  assert.equal(app.getSiteData().live.upcoming[0].title, 'Stored title');
+  assert.equal(app.getSiteData().live.upcoming[0].venue, 'Stored venue');
+  assert.equal(app.getSiteData().live.past.length, 0);
+  assert.equal(app.elements.get('edit-title').value, 'FAILED TITLE');
+  assert.equal(app.elements.get('edit-venue').value, 'FAILED VENUE');
+  assert.equal(app.elements.get('edit-isPast').checked, true);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+
+  app.setConfirm(() => true);
+  assert.equal(app.addNews(), true);
+  let persistedData = null;
+  app.setSaveFunction(async () => {
+    persistedData = structuredClone(app.getSiteData());
+    return true;
+  });
+  assert.equal(await app.invokeSaveData({ silent: true }), true);
+  assert.equal(persistedData.live.upcoming[0].title, 'Stored title');
+  assert.equal(persistedData.live.past.length, 0);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+});
+
+test('Live API publish blocks global tab navigation and marks every global tab disabled while pending', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({ live: { upcoming: [{ id: 'nav-pending', date: '2026-08-10', title: 'Before', venue: 'A', image: '' }], past: [] } });
+  app.setupTabs();
+  app.editLive('nav-pending', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'Publishing' });
+  const pending = deferred();
+  app.setSaveFunction(() => pending.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  const tabs = ['site', 'news', 'live'].map((name) => app.elements.get(`global-tab-${name}`));
+  assert.equal(tabs.every((tab) => tab.disabled), true);
+  assert.equal(tabs.every((tab) => tab.getAttribute('aria-disabled') === 'true'), true);
+
+  await app.elements.get('global-tab-site').dispatch('click');
+  assert.equal(app.elements.get('global-tab-live').classList.contains('active'), true);
+  assert.equal(app.elements.get('global-tab-site').classList.contains('active'), false);
+  assert.equal(app.elements.get('live-tab').classList.contains('active'), true);
+  assert.equal(app.elements.get('site-tab').classList.contains('active'), false);
+
+  pending.resolve(true);
+  assert.equal(await save, true);
+});
+
+test('global tabs re-enable and navigate normally after Live API publish succeeds', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({ live: { upcoming: [{ id: 'nav-success', date: '2026-08-10', title: 'Before', venue: 'A', image: '' }], past: [] } });
+  app.setupTabs();
+  app.editLive('nav-success', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'Published' });
+  const pending = deferred();
+  app.setSaveFunction(() => pending.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  pending.resolve(true);
+  assert.equal(await save, true);
+
+  const tabs = ['site', 'news', 'live'].map((name) => app.elements.get(`global-tab-${name}`));
+  assert.equal(tabs.every((tab) => !tab.disabled), true);
+  assert.equal(tabs.every((tab) => tab.getAttribute('aria-disabled') === 'false'), true);
+  await app.elements.get('global-tab-site').dispatch('click');
+  assert.equal(app.elements.get('global-tab-site').classList.contains('active'), true);
+  assert.equal(app.elements.get('site-tab').classList.contains('active'), true);
+  assert.equal(app.elements.get('live-tab').classList.contains('active'), false);
+});
+
+test('global tabs re-enable after Live API publish rollback while the failed Live form stays dirty', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({ live: { upcoming: [{ id: 'nav-failure', date: '2026-08-10', title: 'Stored', venue: 'A', image: '' }], past: [] } });
+  app.setupTabs();
+  app.editLive('nav-failure', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'FAILED VALUE' });
+  const pending = deferred();
+  app.setSaveFunction(() => pending.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  pending.resolve(false);
+  assert.equal(await save, false);
+
+  const tabs = ['site', 'news', 'live'].map((name) => app.elements.get(`global-tab-${name}`));
+  assert.equal(tabs.every((tab) => !tab.disabled), true);
+  assert.equal(tabs.every((tab) => tab.getAttribute('aria-disabled') === 'false'), true);
+  assert.equal(app.elements.get('edit-title').value, 'FAILED VALUE');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  app.setConfirm(() => true);
+  await app.elements.get('global-tab-news').dispatch('click');
+  assert.equal(app.elements.get('global-tab-news').classList.contains('active'), true);
+  assert.equal(app.elements.get('news-tab').classList.contains('active'), true);
 });
 
 test('shared LiveOperations script is loaded before the admin application', () => {

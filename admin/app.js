@@ -90,6 +90,10 @@ let liveEditorGeneration = 0;
 let liveEditorReturnFocus = null;
 let liveEditorReturnFocusLive = null;
 let liveEditorDirty = false;
+let liveEditorOwner = null;
+let liveEditorRevision = 0;
+let liveWorkspaceSaveOperation = null;
+let liveWorkspaceSaveSequence = 0;
 let liveReservationRequestSequence = 0;
 let crossLiveReservationRequestSequence = 0;
 let liveWorkspaceView = 'page';
@@ -203,6 +207,10 @@ function applyApiFallbackReadOnlyState() {
   readOnlyFieldIds.forEach((id) => {
     const field = document.getElementById(id);
     if (field) field.disabled = true;
+  });
+  document.querySelectorAll('[data-live-editor-mutation]').forEach((control) => {
+    control.disabled = true;
+    control.setAttribute('aria-disabled', 'true');
   });
   [
     'live-source-parse-btn',
@@ -544,6 +552,7 @@ function handleTicketStatusAction(event) {
 }
 
 async function markTicketStatus(id, status) {
+  if (liveWorkspaceSaveOperation) return false;
   if (rejectApiFallbackMutation('読み取り専用のため予約状態を変更できません。')) return false;
   if (!IS_API_MODE) return false;
   try {
@@ -641,6 +650,7 @@ function setupTabs() {
   const tabBtns = document.querySelectorAll('.tab-btn');
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+      if (liveWorkspaceSaveOperation || btn.disabled || btn.getAttribute('aria-disabled') === 'true') return;
       const activate = () => {
         if (currentEditType?.startsWith('live')) closeLiveEditorImmediately();
         tabBtns.forEach(b => b.classList.remove('active'));
@@ -658,12 +668,20 @@ function setupTabs() {
 }
 
 function requestLiveEditorTransition(action) {
+  if (liveWorkspaceSaveOperation) return false;
   if (liveEditorDirty) {
     const shouldDiscard = confirm('未保存の変更を破棄して移動しますか？');
     if (!shouldDiscard) return false;
     setLiveEditorDirty(false);
   }
   return action() !== false;
+}
+
+function prepareGenericEditorTransition() {
+  return requestLiveEditorTransition(() => {
+    if (liveEditorOwner) closeLiveEditorImmediately();
+    return true;
+  });
 }
 
 function syncLiveWorkspaceTabs() {
@@ -724,6 +742,7 @@ function applyTicketSettingsOpen(open) {
 }
 
 function setLiveWorkspaceView(view) {
+  if (liveWorkspaceSaveOperation) return false;
   const target = view === 'reservations' ? 'reservations' : 'page';
   if (target === liveWorkspaceView) return applyLiveWorkspaceView(target);
   return requestLiveEditorTransition(() => {
@@ -733,6 +752,7 @@ function setLiveWorkspaceView(view) {
 }
 
 function setLiveListView(view) {
+  if (liveWorkspaceSaveOperation) return false;
   const target = view === 'past' ? 'past' : 'upcoming';
   if (target === liveListView) return applyLiveListView(target);
   return requestLiveEditorTransition(() => {
@@ -742,6 +762,7 @@ function setLiveListView(view) {
 }
 
 function setTicketSettingsOpen(open) {
+  if (liveWorkspaceSaveOperation) return false;
   const target = Boolean(open);
   if (target === liveTicketSettingsOpen) return applyTicketSettingsOpen(target);
   return requestLiveEditorTransition(() => {
@@ -1073,7 +1094,7 @@ function getImageSrc(imagePath) {
 }
 
 function renderLiveItem(item, category, options = {}) {
-  const isSelected = currentEditType === `live-${category}` && String(currentEditId || '') === String(item.id || '');
+  const isSelected = liveEditorOwner?.type === `live-${category}` && String(liveEditorOwner?.id || '') === String(item.id || '');
   return `
     <button type="button" class="item-card live-edit-trigger ${category === 'past' ? 'past' : ''}${isSelected ? ' is-selected' : ''}" data-live-edit data-live-id="${escapeHtml(String(item.id || ''))}" data-live-category="${category}" aria-current="${isSelected ? 'true' : 'false'}">
       <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
@@ -1090,8 +1111,8 @@ function renderLiveItem(item, category, options = {}) {
 function syncLiveSelectionState() {
   document.querySelectorAll('[data-live-edit]').forEach((trigger) => {
     const isSelected = (
-      currentEditType === `live-${String(trigger.dataset?.liveCategory || '')}`
-      && String(currentEditId || '') === String(trigger.dataset?.liveId || '')
+      liveEditorOwner?.type === `live-${String(trigger.dataset?.liveCategory || '')}`
+      && String(liveEditorOwner?.id || '') === String(trigger.dataset?.liveId || '')
     );
     trigger.classList[isSelected ? 'add' : 'remove']('is-selected');
     trigger.setAttribute('aria-current', String(isSelected));
@@ -1239,6 +1260,7 @@ function addProfileLink() {
 }
 
 function addYouTubeVideo(category) {
+  if (!prepareGenericEditorTransition()) return false;
   isNewItem = true;
   currentEditType = `youtube-${category}`;
   currentEditId = 'yt-' + Date.now();
@@ -1262,12 +1284,14 @@ function addYouTubeVideo(category) {
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'none';
+  return true;
 }
 
 function editYouTubeVideo(id, category) {
   const list = siteData.youtube[category] || [];
   const item = list.find(v => v.id === id);
-  if (!item) return;
+  if (!item) return false;
+  if (!prepareGenericEditorTransition()) return false;
 
   isNewItem = false;
   currentEditType = `youtube-${category}`;
@@ -1292,6 +1316,7 @@ function editYouTubeVideo(id, category) {
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'block';
+  return true;
 }
 
 // プロフィールリンク削除
@@ -1347,6 +1372,7 @@ function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
   const pathHtml = showPath
     ? `<p class="image-path-display" id="${inputId}-path">${currentImage ? `パス: ${escapeHtml(currentImage)}` : ''}</p>`
     : '';
+  const liveMutationAttribute = inputId === 'edit-image' ? ' data-live-editor-mutation="true"' : '';
 
   return `
     <div class="form-group">
@@ -1358,8 +1384,8 @@ function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
           ${previewHtml}
         </div>
         <div class="image-actions">
-          <button type="button" class="btn-image-select" onclick="document.getElementById('${inputId}-file').click()">画像を選択</button>
-          ${currentImage ? `<button type="button" class="btn-image-clear" onclick="clearImage('${inputId}')">削除</button>` : ''}
+          <button type="button" class="btn-image-select" id="${inputId}-select-btn"${liveMutationAttribute} onclick="document.getElementById('${inputId}-file').click()">画像を選択</button>
+          ${currentImage ? `<button type="button" class="btn-image-clear" id="${inputId}-clear-btn"${liveMutationAttribute} onclick="clearImage('${inputId}')">削除</button>` : ''}
         </div>
         ${pathHtml}
       </div>
@@ -1369,6 +1395,7 @@ function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
 
 // 画像選択処理
 function handleImageSelect(input, inputId) {
+  if (rejectApiFallbackMutation('読み取り専用のため画像を変更できません。')) return false;
   const file = input.files[0];
   if (!file) return;
 
@@ -1469,7 +1496,9 @@ function handleImageSelect(input, inputId) {
     if (!actionsDiv.querySelector('.btn-image-clear')) {
       const clearBtn = document.createElement('button');
       clearBtn.type = 'button';
+      clearBtn.id = `${inputId}-clear-btn`;
       clearBtn.className = 'btn-image-clear';
+      if (inputId === 'edit-image') clearBtn.dataset.liveEditorMutation = '';
       clearBtn.textContent = '削除';
       clearBtn.onclick = () => clearImage(inputId);
       actionsDiv.appendChild(clearBtn);
@@ -1509,6 +1538,7 @@ async function uploadImageToApi(file) {
 
 // 画像クリア
 function clearImage(inputId) {
+  if (rejectApiFallbackMutation('読み取り専用のため画像を削除できません。')) return false;
   document.getElementById(inputId).value = '';
   const container = document.getElementById(`${inputId}-preview-container`);
   container.innerHTML = `<div class="image-placeholder" id="${inputId}-placeholder">タップして画像を選択</div>`;
@@ -1525,10 +1555,12 @@ function clearImage(inputId) {
   } else if (inputId === 'profile-image' || inputId === 'site-hero-image') {
     markChanged();
   }
+  return true;
 }
 
 // News追加
 function addNews() {
+  if (!prepareGenericEditorTransition()) return false;
   isNewItem = true;
   currentEditType = 'news';
   currentEditId = 'news-' + Date.now();
@@ -1557,12 +1589,14 @@ function addNews() {
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'none';
+  return true;
 }
 
 // News編集
 function editNews(id) {
   const item = siteData.news.find(n => n.id === id);
-  if (!item) return;
+  if (!item) return false;
+  if (!prepareGenericEditorTransition()) return false;
 
   isNewItem = false;
   currentEditType = 'news';
@@ -1592,6 +1626,7 @@ function editNews(id) {
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'block';
+  return true;
 }
 
 function getLiveOperations() {
@@ -1790,6 +1825,7 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
 }
 
 function setLiveEditorTask(task, options = {}) {
+  if (liveWorkspaceSaveOperation) return false;
   const tabs = Array.from(document.querySelectorAll('[data-live-editor-task]'));
   const enabledTabs = tabs.filter((tab) => !tab.disabled);
   const requested = enabledTabs.find((tab) => tab.dataset.liveEditorTask === task);
@@ -1919,8 +1955,53 @@ function setLiveEditorDirty(dirty, status = '') {
 }
 
 function markLiveEditorDirty() {
-  if (!currentEditType?.startsWith('live') || !getLiveEditorRoot()) return;
+  if (!liveEditorOwner || !getLiveEditorRoot() || liveWorkspaceSaveOperation) return;
+  liveEditorRevision += 1;
   setLiveEditorDirty(true);
+}
+
+function setLiveEditorInteractionLocked(locked, priorState = [], operation = null) {
+  if (!locked && operation && liveWorkspaceSaveOperation !== operation) return priorState;
+  const controlIds = [
+    'saveBtn',
+    'live-add-btn',
+    'live-workspace-page-tab',
+    'live-workspace-reservations-tab',
+    'live-list-upcoming-tab',
+    'live-list-past-tab',
+    'live-ticket-settings-open',
+    'live-ticket-settings-close',
+    'live-editor-back',
+  ];
+  const editorControls = getLiveEditorRoot()?.querySelectorAll?.('button, input, textarea, select') || [];
+  const controls = [
+    ...controlIds.map((id) => document.getElementById(id)).filter(Boolean),
+    ...Array.from(editorControls),
+    ...Array.from(document.querySelectorAll('.tab-btn')),
+    ...Array.from(document.querySelectorAll('[data-live-edit]')),
+  ];
+  const uniqueControls = [...new Set(controls)];
+
+  if (locked) {
+    const state = uniqueControls.map((element) => ({
+      element,
+      disabled: Boolean(element.disabled),
+    }));
+    state.forEach(({ element }) => {
+      element.disabled = true;
+      element.setAttribute('aria-disabled', 'true');
+    });
+    document.getElementById('live-editor-pane')?.setAttribute('aria-busy', 'true');
+    return state;
+  }
+
+  priorState.forEach(({ element, disabled }) => {
+    if (element?.isConnected === false) return;
+    element.disabled = disabled;
+    element.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+  });
+  document.getElementById('live-editor-pane')?.setAttribute('aria-busy', 'false');
+  return [];
 }
 
 function bindLiveEditorDirtyState() {
@@ -1969,6 +2050,14 @@ function openLiveEditor(item, category, isNew) {
   }
 
   liveEditorGeneration += 1;
+  liveEditorRevision = 0;
+  liveEditorOwner = {
+    id: currentEditId,
+    type: currentEditType,
+    category,
+    isNew: Boolean(isNew),
+    generation: liveEditorGeneration,
+  };
   applyLiveWorkspaceView('page');
   applyTicketSettingsOpen(false);
   applyLiveListView(category);
@@ -2005,10 +2094,11 @@ function addLive() {
 
 // Live編集
 function editLive(id, category) {
+  if (liveWorkspaceSaveOperation) return false;
   const list = category === 'upcoming' ? siteData.live.upcoming : siteData.live.past;
   const item = list.find(l => l.id === id);
   if (!item) return false;
-  if (currentEditType === `live-${category}` && String(currentEditId) === String(id)) return true;
+  if (liveEditorOwner?.type === `live-${category}` && String(liveEditorOwner?.id) === String(id)) return true;
 
   return requestLiveEditorTransition(() => {
     isNewItem = false;
@@ -2023,11 +2113,14 @@ function closeLiveEditor() {
 }
 
 function closeLiveEditorImmediately() {
+  const closingOwner = liveEditorOwner;
   const returnFocus = liveEditorReturnFocus;
   const returnFocusLive = liveEditorReturnFocusLive;
   liveEditorReturnFocus = null;
   liveEditorReturnFocusLive = null;
   liveEditorGeneration += 1;
+  liveEditorRevision = 0;
+  liveEditorOwner = null;
   liveReservationRequestSequence += 1;
   const root = getLiveEditorRoot();
   if (root) root.innerHTML = getLiveEditorEmptyHtml();
@@ -2045,7 +2138,7 @@ function closeLiveEditorImmediately() {
     saveBtn.disabled = false;
     saveBtn.title = '';
   }
-  if (currentEditType?.startsWith('live')) {
+  if (closingOwner && currentEditType === closingOwner.type && String(currentEditId) === String(closingOwner.id)) {
     currentEditType = null;
     currentEditId = null;
     isNewItem = false;
@@ -2069,6 +2162,7 @@ function closeLiveEditorImmediately() {
 
 // Discography追加
 function addDiscography() {
+  if (!prepareGenericEditorTransition()) return false;
   isNewItem = true;
   currentEditType = 'discography-digital';
   currentEditId = 'disc-' + Date.now();
@@ -2100,13 +2194,15 @@ function addDiscography() {
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'none';
+  return true;
 }
 
 // Discography編集
 function editDiscography(id, category) {
   const list = category === 'digital' ? siteData.discography.digital : siteData.discography.demo;
   const item = list.find(d => d.id === id);
-  if (!item) return;
+  if (!item) return false;
+  if (!prepareGenericEditorTransition()) return false;
 
   isNewItem = false;
   currentEditType = `discography-${category}`;
@@ -2139,6 +2235,7 @@ function editDiscography(id, category) {
     </div>
   `);
   document.getElementById('delete-btn').style.display = 'block';
+  return true;
 }
 
 // モーダル表示
@@ -2278,17 +2375,18 @@ function saveNewsItem() {
 
 // Live保存
 function saveLiveItem() {
+  if (!liveEditorOwner) return null;
   const isPast = document.getElementById('edit-isPast').checked;
-  const originalCategory = currentEditType.split('-')[1];
+  const originalCategory = liveEditorOwner.category;
   const originalList = originalCategory === 'upcoming' ? siteData.live.upcoming : siteData.live.past;
-  const originalIndex = originalList.findIndex(l => l.id === currentEditId);
+  const originalIndex = originalList.findIndex(l => String(l.id) === String(liveEditorOwner.id));
   const originalItem = originalIndex === -1 ? {} : originalList[originalIndex];
   const operations = getLiveOperations();
   const editorDate = readLiveDateFromEditor();
   const normalizedDate = operations?.normalizeLiveDateInput(editorDate) || '';
   const item = {
     ...originalItem,
-    id: currentEditId,
+    id: liveEditorOwner.id,
     date: normalizedDate || editorDate,
     title: document.getElementById('edit-title')?.value || '',
     venue: document.getElementById('edit-venue').value,
@@ -2323,8 +2421,12 @@ function saveLiveItem() {
   }
 
   const destinationCategory = isPast ? 'past' : 'upcoming';
+  currentEditId = item.id;
   currentEditType = `live-${destinationCategory}`;
   isNewItem = false;
+  liveEditorOwner.type = currentEditType;
+  liveEditorOwner.category = destinationCategory;
+  liveEditorOwner.isNew = false;
 
   if (modalReturnFocusLive?.id === String(item.id)) {
     modalReturnFocusLive.category = destinationCategory;
@@ -2342,7 +2444,8 @@ function saveLiveItem() {
 }
 
 async function saveLiveWorkspace() {
-  if (!currentEditType?.startsWith('live') || !currentEditId) return false;
+  if (liveWorkspaceSaveOperation) return false;
+  if (!liveEditorOwner || !currentEditType?.startsWith('live') || !currentEditId) return false;
   if (rejectApiFallbackMutation('読み取り専用のためLiveを保存できません。')) return false;
   if (!ensureNoActiveImageUploads()) return false;
   if (!validateLiveEditor()) {
@@ -2350,33 +2453,123 @@ async function saveLiveWorkspace() {
     return false;
   }
 
-  const result = saveLiveItem();
-  if (IS_API_MODE) {
-    setLiveEditorSaveStatus('保存中');
-    const saved = await saveData({ silent: true });
-    if (!saved) {
-      setLiveEditorDirty(true, '保存失敗');
+  const snapshot = {
+    siteData: structuredClone(siteData),
+    currentEditType,
+    currentEditId,
+    isNewItem,
+    liveEditorOwner: { ...liveEditorOwner },
+    liveEditorRevision,
+    liveListView,
+    liveWorkspaceView,
+    liveTicketSettingsOpen,
+    modalReturnFocusLive: modalReturnFocusLive ? { ...modalReturnFocusLive } : null,
+    liveEditorReturnFocusLive: liveEditorReturnFocusLive ? { ...liveEditorReturnFocusLive } : null,
+  };
+
+  // The publish owns this exact editor revision. Older AI and reservation
+  // responses must fail their generation/sequence checks from this point.
+  liveEditorGeneration += 1;
+  liveEditorOwner.generation = liveEditorGeneration;
+  liveReservationRequestSequence += 1;
+  const operation = {
+    token: ++liveWorkspaceSaveSequence,
+    generation: liveEditorGeneration,
+    revision: liveEditorRevision,
+    ownerId: String(liveEditorOwner.id),
+    lockedControls: [],
+  };
+  liveWorkspaceSaveOperation = operation;
+  setLiveEditorSaveStatus('保存中');
+  operation.lockedControls = setLiveEditorInteractionLocked(true);
+
+  const stillOwnsEditor = () => (
+    liveWorkspaceSaveOperation === operation
+    && liveEditorGeneration === operation.generation
+    && liveEditorRevision === operation.revision
+    && String(liveEditorOwner?.id || '') === operation.ownerId
+  );
+
+  const unlockOwnedOperation = () => {
+    if (liveWorkspaceSaveOperation !== operation) return false;
+    setLiveEditorInteractionLocked(false, operation.lockedControls, operation);
+    liveWorkspaceSaveOperation = null;
+    return true;
+  };
+
+  const rollback = () => {
+    const ownsEditor = stillOwnsEditor();
+    siteData = snapshot.siteData;
+    if (ownsEditor) {
+      currentEditType = snapshot.currentEditType;
+      currentEditId = snapshot.currentEditId;
+      isNewItem = snapshot.isNewItem;
+      liveEditorOwner = { ...snapshot.liveEditorOwner, generation: liveEditorGeneration };
+      liveEditorRevision = snapshot.liveEditorRevision;
+      liveListView = snapshot.liveListView;
+      liveWorkspaceView = snapshot.liveWorkspaceView;
+      liveTicketSettingsOpen = snapshot.liveTicketSettingsOpen;
+      modalReturnFocusLive = snapshot.modalReturnFocusLive;
+      liveEditorReturnFocusLive = snapshot.liveEditorReturnFocusLive;
+    }
+    renderLive();
+    renderTicketsUi();
+    if (ownsEditor) {
+      syncLiveWorkspaceTabs();
+      syncLiveListTabs();
+      syncTicketSettingsPanel();
+    }
+    unlockOwnedOperation();
+    if (!ownsEditor) return;
+    const sourceButton = document.getElementById('live-source-parse-btn');
+    if (sourceButton && activeLiveSourceIntakeOperation?.button !== sourceButton) {
+      sourceButton.disabled = false;
+      sourceButton.setAttribute('aria-disabled', 'false');
+      sourceButton.textContent = 'AIで下書きを作る';
+    }
+    setLiveEditorDirty(true, '保存失敗');
+  };
+
+  try {
+    const result = saveLiveItem();
+    if (!result) throw new Error('Live editor owner is unavailable');
+    if (IS_API_MODE) {
+      const saved = await saveData({ silent: true });
+      if (!saved) {
+        rollback();
+        return false;
+      }
+    } else {
+      markChanged();
+    }
+
+    if (!stillOwnsEditor()) {
+      unlockOwnedOperation();
       return false;
     }
-  } else {
-    markChanged();
-  }
 
-  openLiveEditor(result.item, result.category, false);
-  setLiveEditorDirty(false, IS_API_MODE ? '保存済み' : 'JSON書き出し待ち');
-  const saveBtn = document.getElementById('saveBtn');
-  if (saveBtn && !IS_API_MODE) saveBtn.textContent = 'JSONを書き出す *';
-  showToast(IS_API_MODE ? '保存しました' : '編集内容を反映しました。右上の「JSONを書き出す」で確定します', 'success');
-  return true;
+    unlockOwnedOperation();
+    openLiveEditor(result.item, result.category, false);
+    setLiveEditorDirty(false, IS_API_MODE ? '保存済み' : 'JSON書き出し待ち');
+    const saveBtn = document.getElementById('saveBtn');
+    if (saveBtn && !IS_API_MODE) saveBtn.textContent = 'JSONを書き出す *';
+    showToast(IS_API_MODE ? '保存しました' : '編集内容を反映しました。右上の「JSONを書き出す」で確定します', 'success');
+    return true;
+  } catch (error) {
+    rollback();
+    showToast(`保存に失敗しました: ${error.message}`, 'error');
+    return false;
+  }
 }
 
 async function deleteLiveFromWorkspace() {
-  if (!currentEditType?.startsWith('live') || !currentEditId) return false;
+  if (liveWorkspaceSaveOperation) return false;
+  if (!liveEditorOwner || !currentEditType?.startsWith('live') || !currentEditId) return false;
   if (rejectApiFallbackMutation('読み取り専用のためLiveを削除できません。')) return false;
   if (!confirm('削除しますか？')) return false;
 
-  const category = currentEditType.split('-')[1];
-  const liveId = currentEditId;
+  const category = liveEditorOwner.category;
+  const liveId = liveEditorOwner.id;
   if (category === 'upcoming') {
     siteData.live.upcoming = siteData.live.upcoming.filter(live => live.id !== liveId);
   } else {
@@ -2611,6 +2804,7 @@ function normalizeLiveSourceIntakePayload(payload) {
 async function handleLiveSourceParse() {
   const sourceElement = document.getElementById('edit-sourceText');
   const button = document.getElementById('live-source-parse-btn');
+  if (liveWorkspaceSaveOperation) return false;
   if (rejectApiFallbackMutation('読み取り専用のためAI整理を実行できません。')) return false;
   if (!IS_API_MODE) {
     setLiveSourceIntakeStatus('AIで整理はAPI Modeで利用可能です。元情報は変更されていません。');
@@ -2702,8 +2896,11 @@ async function handleLiveSourceParse() {
     if (activeLiveSourceIntakeOperation === operation) {
       activeLiveSourceIntakeOperation = null;
     }
-    button.disabled = false;
-    button.textContent = 'AIで下書きを作る';
+    if (document.getElementById('live-source-parse-btn') === button && !liveWorkspaceSaveOperation) {
+      button.disabled = false;
+      button.setAttribute('aria-disabled', 'false');
+      button.textContent = 'AIで下書きを作る';
+    }
   }
 }
 
@@ -2829,6 +3026,7 @@ async function submitManualReservation() {
   const errorEl = document.getElementById('manual-reservation-error');
   const submit = document.getElementById('manual-reservation-submit');
   if (errorEl) errorEl.textContent = '';
+  if (liveWorkspaceSaveOperation) return false;
   if (rejectApiFallbackMutation('読み取り専用のため予約を追加できません。')) {
     if (errorEl) errorEl.textContent = 'API接続失敗中は予約を追加できません。';
     return false;

@@ -339,7 +339,7 @@ body {
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
   background: var(--white);
-  overflow: hidden;
+  overflow: clip;
 }
 
 .live-master-detail.has-live-selection .live-master-pane {
