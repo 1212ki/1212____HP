@@ -1374,7 +1374,7 @@ test('shared LiveOperations script is loaded before the admin application', () =
   assert.match(adminHtml, /href="style\.css\?v=20260816-22"/);
 });
 
-test('AIで整理 source intake posts the exact source once, replaces non-empty fields, and never parses or saves', async () => {
+test('AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves', async () => {
   let parserCalls = 0;
   const app = loadAdminApp({
     liveOperations: {
@@ -1407,19 +1407,31 @@ test('AIで整理 source intake posts the exact source once, replaces non-empty 
     'edit-link': 'https://old.example/detail',
   });
   app.elements.get('x-post-preview').value = 'POST BEFORE';
+  const expectedDraft = {
+    date: '2026-08-20',
+    title: 'AI replacement',
+    venue: '',
+    openTime: '',
+    startTime: '19:00',
+    ticket: '',
+    notes: 'AI notes',
+    performers: '',
+    ticketUrl: '',
+    link: 'https://example.com/detail/2',
+  };
   app.useAdminFetch(async () => jsonResponse({
-    draft: validLiveSourceIntakeDraft({
+    draft: {
       date: ' 2026-08-20 ',
       title: ' AI replacement ',
       venue: '   ',
-      openTime: ' 18:30 ',
+      openTime: '',
       startTime: ' 19:00 ',
-      ticket: ' AI ticket ',
+      ticket: '   ',
       notes: ' AI notes ',
-      performers: ' AI performer A / AI performer B ',
-      ticketUrl: ' https://tickets.example/live/2 ',
+      performers: '',
+      ticketUrl: '   ',
       link: ' https://example.com/detail/2 ',
-    }),
+    },
   }));
 
   const editorHtml = app.elements.get('live-editor-body').innerHTML;
@@ -1432,22 +1444,18 @@ test('AIで整理 source intake posts the exact source once, replaces non-empty 
   assert.deepEqual(JSON.parse(app.fetchCalls[0].options.body), { sourceText });
   assert.deepEqual({ ...app.fetchCalls[0].policy }, { allowBaseFallback: false });
   assert.equal(parserCalls, 0);
-  assert.equal(app.elements.get('edit-date').value, '2026-08-20');
-  assert.equal(app.elements.get('edit-title').value, 'AI replacement');
-  assert.equal(app.elements.get('edit-venue').value, 'manual venue stays');
-  assert.equal(app.elements.get('edit-openTime').value, '18:30');
-  assert.equal(app.elements.get('edit-startTime').value, '19:00');
-  assert.equal(app.elements.get('edit-ticket').value, 'AI ticket');
-  assert.equal(app.elements.get('edit-notes').value, 'AI notes');
-  assert.equal(app.elements.get('edit-performers').value, 'AI performer A / AI performer B');
-  assert.equal(app.elements.get('edit-ticketUrl').value, 'https://tickets.example/live/2');
-  assert.equal(app.elements.get('edit-link').value, 'https://example.com/detail/2');
+  assert.deepEqual(
+    Object.fromEntries(Object.entries(expectedDraft).map(([key, value]) => [key, app.elements.get(`edit-${key}`).value])),
+    expectedDraft,
+  );
   assert.equal(app.elements.get('edit-sourceText').value, sourceText);
   assert.notEqual(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.match(app.elements.get('x-post-preview').value, /AI replacement/);
+  assert.doesNotMatch(app.elements.get('x-post-preview').value, /manual venue stays|manual ticket|manual performer/);
   assert.match(app.elements.get('live-source-warnings').textContent, /整理しました/);
   assert.deepEqual(app.getSiteData(), initial);
   assert.equal(app.getSaveCalls(), 0);
+  assert.deepEqual(app.openedUrls, []);
 });
 
 test('Live edit workspace marks an applied AI draft dirty and routes saving to the editor', async () => {

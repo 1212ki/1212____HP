@@ -76,4 +76,4 @@ clientはvalidated draft受領後、10項目を空文字も含めて一括代入
 - focused testをRED→GREENで確認する。
 - root全Node testとWorker全testを実行する。
 - JS syntax、`git diff --check`、secret/credential/対象外差分を監査する。
-- 実装者と別のread-only reviewerがIssue #19をAC単位で確認する。
+- 実装したIssueごとに、実装者とは別のread-only reviewerが独立してAC単位で確認する。

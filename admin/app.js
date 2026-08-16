@@ -2876,7 +2876,7 @@ async function handleLiveSourceParse() {
       preview: previewElement.value,
     };
     for (const key of Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP)) {
-      if (draft[key]) fieldElements[key].value = draft[key];
+      fieldElements[key].value = draft[key];
     }
     updateXPreviewInModal();
     revealNewLivePublicFields();
