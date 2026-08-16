@@ -1050,6 +1050,73 @@ test('Live dirty guard blocks and then discards navigation to another Live, list
   assert.equal(app.getModalState().currentEditId, null);
 });
 
+test('reselecting the active global Live tab is a no-op for a dirty editor', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'reselect-dirty', date: '2026-08-20', title: 'Stored', venue: 'Venue', image: '' }],
+      past: [],
+    },
+  });
+  app.setupLiveWorkspace();
+  app.setupTabs();
+  app.renderLive();
+  app.editLive('reselect-dirty', 'upcoming');
+  const title = app.elements.get('edit-title');
+  title.value = 'Unsaved value';
+  await title.dispatch('input');
+  title.focus();
+  const selectedTrigger = app.elements.get('live-upcoming-list').children.find(
+    (trigger) => trigger.dataset.liveId === 'reselect-dirty',
+  );
+  let confirmations = 0;
+  app.setConfirm(() => {
+    confirmations += 1;
+    return false;
+  });
+
+  await app.elements.get('global-tab-live').dispatch('click');
+
+  assert.equal(confirmations, 0, 'an already-active destination does not request a discard decision');
+  assert.equal(app.getModalState().currentEditId, 'reselect-dirty');
+  assert.equal(app.elements.get('edit-title'), title);
+  assert.equal(title.value, 'Unsaved value');
+  assert.equal(app.document.activeElement, title);
+  assert.equal(
+    app.elements.get('live-upcoming-list').children.find((trigger) => trigger.dataset.liveId === 'reselect-dirty'),
+    selectedTrigger,
+  );
+  assert.equal(selectedTrigger.classList.contains('is-selected'), true);
+  assert.equal(selectedTrigger.getAttribute('aria-current'), 'true');
+  assert.equal(app.elements.get('live-master-detail').classList.contains('has-live-selection'), true);
+});
+
+test('reselecting the active global Live tab is also a no-op for a clean editor', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'reselect-clean', date: '2026-08-20', title: 'Stored', venue: 'Venue', image: '' }],
+      past: [],
+    },
+  });
+  app.setupLiveWorkspace();
+  app.setupTabs();
+  app.renderLive();
+  app.editLive('reselect-clean', 'upcoming');
+  const title = app.elements.get('edit-title');
+  title.focus();
+
+  await app.elements.get('global-tab-live').dispatch('click');
+
+  assert.equal(app.getModalState().currentEditId, 'reselect-clean');
+  assert.equal(app.elements.get('edit-title'), title);
+  assert.equal(app.document.activeElement, title);
+  const selectedTrigger = app.elements.get('live-upcoming-list').children.find(
+    (trigger) => trigger.dataset.liveId === 'reselect-clean',
+  );
+  assert.equal(selectedTrigger.getAttribute('aria-current'), 'true');
+});
+
 test('Live internal task switching preserves dirty input without discard confirmation', async () => {
   const app = loadAdminApp();
   app.setSiteData({
@@ -1184,11 +1251,29 @@ test('API fallback keeps every admin collection immutable while existing details
   assert.match(adminReadme, /admin全体がread-only[\s\S]*既存のNews・YouTube・Disco・Profile[\s\S]*閲覧/);
 
   const modalCases = [
-    ['News', (instance) => instance.editNews('news-readonly')],
-    ['YouTube', (instance) => instance.editYouTubeVideo('youtube-readonly', 'musicVideos')],
-    ['Discography', (instance) => instance.editDiscography('disco-readonly', 'digital')],
+    ['News', (instance) => instance.editNews('news-readonly'), {
+      'edit-date': '2026.08.10',
+      'edit-title': 'News',
+      'edit-description': '',
+      'edit-image': '',
+      'edit-link': '',
+      'edit-linkText': '',
+    }],
+    ['YouTube', (instance) => instance.editYouTubeVideo('youtube-readonly', 'musicVideos'), {
+      'edit-category': 'musicVideos',
+      'edit-title': 'Video',
+      'edit-youtube': 'JaPin67uO7A',
+    }],
+    ['Discography', (instance) => instance.editDiscography('disco-readonly', 'digital'), {
+      'edit-category': 'digital',
+      'edit-title': 'Release',
+      'edit-releaseDate': '2026.08.10',
+      'edit-description': '',
+      'edit-image': '',
+      'edit-link': '',
+    }],
   ];
-  for (const [name, open] of modalCases) {
+  for (const [name, open, canonicalFields] of modalCases) {
     const instance = loadAdminApp();
     instance.setSiteData(structuredClone(fallbackData));
     instance.setApiFallbackReadOnly(true);
@@ -1197,12 +1282,21 @@ test('API fallback keeps every admin collection immutable while existing details
     const modalHtml = instance.elements.get('modal-body').innerHTML;
     assert.equal(instance.elements.get('modal').classList.contains('active'), true);
     assert.equal(instance.elements.get('edit-title').disabled, true);
-    instance.elements.get('edit-title').value = 'MUTATED IN READ ONLY';
+    const focusedBeforeSave = instance.document.activeElement;
+    for (const id of Object.keys(canonicalFields)) {
+      instance.elements.get(id).value = `MUTATED ${id}`;
+    }
     assert.equal(await instance.saveModal(), false);
     assert.equal(instance.deleteItem(), false);
     assert.equal(JSON.stringify(instance.getSiteData()), before);
     assert.equal(instance.elements.get('modal-body').innerHTML, modalHtml);
     assert.equal(instance.elements.get('modal').classList.contains('active'), true);
+    assert.equal(instance.document.activeElement, focusedBeforeSave, `${name} modal keeps focus`);
+    for (const [id, value] of Object.entries(canonicalFields)) {
+      assert.equal(instance.elements.get(id).value, value, `${name} restores ${id}`);
+      assert.equal(instance.elements.get(id).disabled, true, `${name} keeps ${id} read-only`);
+    }
+    assert.equal(instance.fetchCalls.length, 0);
   }
 });
 

@@ -826,6 +826,7 @@ function setupTabs() {
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       if (liveWorkspaceSaveOperation || btn.disabled || btn.getAttribute('aria-disabled') === 'true') return;
+      if (btn.dataset.tab === 'live' && btn.classList.contains('active')) return;
       const activate = () => {
         if (currentEditType?.startsWith('live')) closeLiveEditorImmediately();
         tabBtns.forEach(b => b.classList.remove('active'));
@@ -2529,9 +2530,67 @@ function handleModalKeydown(event) {
   closeModal();
 }
 
+function setGenericModalCanonicalValues(values) {
+  Object.entries(values || {}).forEach(([id, value]) => {
+    const control = document.getElementById(id);
+    if (control) control.value = value == null ? '' : String(value);
+  });
+}
+
+function restoreGenericModalCanonicalValues() {
+  if (isNewItem || !currentEditId || !currentEditType) return false;
+
+  if (currentEditType === 'news') {
+    const item = siteData.news.find((candidate) => candidate.id === currentEditId);
+    if (!item) return false;
+    setGenericModalCanonicalValues({
+      'edit-date': item.date,
+      'edit-title': item.title,
+      'edit-description': item.description,
+      'edit-image': item.image,
+      'edit-link': item.link,
+      'edit-linkText': item.linkText,
+    });
+    return true;
+  }
+
+  if (currentEditType.startsWith('youtube-')) {
+    const category = currentEditType.slice('youtube-'.length);
+    const item = (siteData.youtube[category] || []).find((candidate) => candidate.id === currentEditId);
+    if (!item) return false;
+    setGenericModalCanonicalValues({
+      'edit-category': category,
+      'edit-title': item.title,
+      'edit-youtube': item.youtubeId,
+    });
+    return true;
+  }
+
+  if (currentEditType.startsWith('discography-')) {
+    const category = currentEditType.slice('discography-'.length);
+    const list = category === 'digital' ? siteData.discography.digital : siteData.discography.demo;
+    const item = list.find((candidate) => candidate.id === currentEditId);
+    if (!item) return false;
+    setGenericModalCanonicalValues({
+      'edit-category': category,
+      'edit-title': item.title,
+      'edit-releaseDate': item.releaseDate,
+      'edit-description': item.description,
+      'edit-image': item.image,
+      'edit-link': item.link,
+    });
+    return true;
+  }
+
+  return false;
+}
+
 // モーダル保存
 async function saveModal() {
-  if (rejectApiFallbackMutation()) return false;
+  if (rejectApiFallbackMutation()) {
+    restoreGenericModalCanonicalValues();
+    return false;
+  }
   let ok = true;
   if (!ensureNoActiveImageUploads()) return false;
   if (currentEditType?.startsWith('live')) return saveLiveWorkspace();
