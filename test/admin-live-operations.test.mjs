@@ -9,6 +9,7 @@ const repoRoot = process.cwd();
 const adminHtml = readFileSync(join(repoRoot, 'admin/index.html'), 'utf8');
 const adminJs = readFileSync(join(repoRoot, 'admin/app.js'), 'utf8');
 const adminCss = readFileSync(join(repoRoot, 'admin/style.css'), 'utf8');
+const adminReadme = readFileSync(join(repoRoot, 'admin/README.md'), 'utf8');
 const require = createRequire(import.meta.url);
 const LiveOperations = require(join(repoRoot, 'assets/js/live-operations.js'));
 
@@ -26,6 +27,7 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
   const classes = new Set();
   const attributes = new Map();
   let html = '';
+  let isHidden = false;
   const element = {
     id,
     tagName: tagName.toUpperCase(),
@@ -34,13 +36,13 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
     value: '',
     checked: false,
     disabled: false,
-    hidden: false,
     tabIndex: 0,
     textContent: '',
     parentElement: null,
     style: {},
     isConnected: true,
     focusCount: 0,
+    focusAttemptCount: 0,
     classList: {
       add(...names) { names.forEach((name) => classes.add(name)); },
       remove(...names) { names.forEach((name) => classes.delete(name)); },
@@ -58,6 +60,10 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
       const normalized = String(value);
       attributes.set(name, normalized);
       if (name === 'tabindex') this.tabIndex = Number(normalized);
+      if (name.startsWith('data-')) {
+        const dataKey = name.slice(5).replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
+        this.dataset[dataKey] = normalized;
+      }
     },
     appendChild(child) {
       child.parentElement = this;
@@ -74,6 +80,7 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
     },
     click() {},
     focus() {
+      this.focusAttemptCount += 1;
       let focusTarget = this;
       while (focusTarget) {
         if (!focusTarget.isConnected || focusTarget.hidden) return;
@@ -97,6 +104,23 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
     configurable: true,
     get() { return html; },
     set(value) { html = String(value); },
+  });
+  Object.defineProperty(element, 'hidden', {
+    configurable: true,
+    get() { return isHidden; },
+    set(value) {
+      isHidden = Boolean(value);
+      if (isHidden && ownerDocument?.activeElement) {
+        let focusTarget = ownerDocument.activeElement;
+        while (focusTarget) {
+          if (focusTarget === element) {
+            ownerDocument.activeElement = ownerDocument.body;
+            break;
+          }
+          focusTarget = focusTarget.parentElement;
+        }
+      }
+    },
   });
   return element;
 }
@@ -143,16 +167,14 @@ function createDomHarness() {
       return elements.get(id) || null;
     },
     querySelectorAll(selector) {
-      if (selector === '.tab-btn') {
-        return [...elements.values()].filter((element) => element.classList.contains('tab-btn'));
-      }
-      if (selector === '.tab-content') {
-        return [...elements.values()].filter((element) => element.classList.contains('tab-content'));
-      }
       if (selector === '[data-live-edit]') {
         return ['live-upcoming-list', 'live-past-list']
           .flatMap((id) => elements.get(id)?.children || [])
           .filter((element) => element.dataset?.liveEdit !== undefined);
+      }
+      const classSelector = selector.match(/^\.([\w-]+)$/);
+      if (classSelector) {
+        return [...elements.values()].filter((element) => element.classList.contains(classSelector[1]));
       }
       const dataSelector = selector.match(/^\[data-([\w-]+)\]$/);
       if (!dataSelector) return [];
@@ -247,6 +269,8 @@ function createDomHarness() {
           for (const ariaAttr of attrs.matchAll(/\b(aria-[\w-]+)="([^"]*)"/gi)) {
             element.setAttribute(ariaAttr[1], decodeHtml(ariaAttr[2]));
           }
+          const tabindexAttr = attrs.match(/\btabindex="(-?\d+)"/i)?.[1];
+          if (tabindexAttr !== undefined) element.setAttribute('tabindex', tabindexAttr);
           if (tagName.toLowerCase() === 'textarea') {
             const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const body = root._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
@@ -265,9 +289,22 @@ function createDomHarness() {
       if (element.tagName === 'INPUT' && element.type === 'hidden') return false;
       return ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName);
     }) || null;
-    root.querySelectorAll = () => order.filter((element) => (
-      ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName)
-    ));
+    root.querySelectorAll = (selector) => {
+      if (
+        selector === 'input, textarea, select, button'
+        || selector === 'button, input, textarea, select'
+      ) {
+        return order.filter((element) => ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName));
+      }
+      if (selector === 'input:not([readonly]), textarea:not([readonly]), select, .btn-image-select, .btn-image-clear') {
+        return order.filter((element) => (
+          ['INPUT', 'TEXTAREA', 'SELECT'].includes(element.tagName)
+          || element.classList.contains('btn-image-select')
+          || element.classList.contains('btn-image-clear')
+        ));
+      }
+      return [];
+    };
   }
 
   const modalBody = addStatic('modal-body');
@@ -276,13 +313,16 @@ function createDomHarness() {
   addStatic('modal-title');
   addStatic('modal-overlay');
   addStatic('modal');
-  addStatic('delete-btn', 'button');
+  const deleteButton = addStatic('delete-btn', 'button');
+  deleteButton.dataset.adminMutation = '';
   addStatic('toast');
-  addStatic('saveBtn', 'button');
-  addStatic('live-add-btn', 'button');
+  const globalSaveButton = addStatic('saveBtn', 'button');
+  globalSaveButton.dataset.adminMutation = '';
   addStatic('modeBadge');
   addStatic('connectionBanner');
   addStatic('news-list');
+  const newsAddButton = addStatic('news-add-btn', 'button');
+  newsAddButton.dataset.adminMutation = '';
   const siteGlobalTab = addStatic('global-tab-site', 'button');
   siteGlobalTab.dataset.tab = 'site';
   siteGlobalTab.classList.add('tab-btn');
@@ -304,6 +344,9 @@ function createDomHarness() {
   const statusFilter = addStatic('tickets-status-filter', 'select');
   statusFilter.value = 'pending';
   const liveWorkspace = addStatic('live-workspace');
+  liveWorkspace.parentElement = liveGlobalPanel;
+  const liveAddButton = addStatic('live-add-btn', 'button');
+  liveAddButton.dataset.adminMutation = '';
   const livePageTab = addStatic('live-workspace-page-tab', 'button');
   livePageTab.dataset.liveWorkspaceView = 'page';
   const liveReservationsTab = addStatic('live-workspace-reservations-tab', 'button');
@@ -351,12 +394,63 @@ function createDomHarness() {
   liveTicketSettingsPanel.parentElement = livePagePanel;
   const liveTicketSettingsClose = addStatic('live-ticket-settings-close', 'button');
   liveTicketSettingsClose.parentElement = liveTicketSettingsPanel;
+  [
+    ['ticket-intro-text', 'textarea'],
+    ['ticket-notice-text', 'textarea'],
+    ['ticket-complete-text', 'textarea'],
+    ['ticket-field-quantity', 'input'],
+    ['ticket-field-message', 'input'],
+    ['ticket-field-label-quantity', 'input'],
+    ['ticket-field-label-message', 'input'],
+    ['ticket-field-placeholder-message', 'input'],
+    ['ticket-field-submit-label', 'input'],
+  ].forEach(([id, tagName]) => {
+    const field = addStatic(id, tagName);
+    field.parentElement = liveTicketSettingsPanel;
+    field.dataset.adminMutation = '';
+  });
   const upcomingList = addStatic('live-upcoming-list');
   upcomingList.parentElement = upcomingPanel;
   installLiveListHtmlBehavior(upcomingList);
   const pastList = addStatic('live-past-list');
   pastList.parentElement = pastPanel;
   installLiveListHtmlBehavior(pastList);
+
+  const siteHeroForm = addStatic('site-hero-image-form');
+  installOwnedHtmlBehavior(siteHeroForm, new Set(), [], new Map());
+  [
+    ['site-link-bandcamp', 'input'],
+    ['site-link-youtube', 'input'],
+    ['site-link-x', 'input'],
+    ['site-link-instagram', 'input'],
+    ['site-link-note', 'input'],
+    ['site-footer-text', 'input'],
+    ['contact-intro-text', 'textarea'],
+    ['contact-form-action', 'input'],
+    ['youtube-channel-url', 'input'],
+    ['profile-text', 'textarea'],
+  ].forEach(([id, tagName]) => {
+    const control = addStatic(id, tagName);
+    control.dataset.adminMutation = '';
+  });
+  [
+    'youtube-add-musicVideos-btn',
+    'youtube-add-musicVideos-secondary-btn',
+    'youtube-add-liveMovies-btn',
+    'youtube-add-demos-btn',
+    'discography-add-btn',
+    'profile-link-add-btn',
+    'modal-save-btn',
+  ].forEach((id) => {
+    const control = addStatic(id, 'button');
+    control.dataset.adminMutation = '';
+  });
+  ['youtube-musicVideos-list', 'youtube-liveMovies-list', 'youtube-demos-list', 'disc-digital-list', 'disc-demo-list']
+    .forEach((id) => addStatic(id));
+  const profileImageForm = addStatic('profile-image-form');
+  installOwnedHtmlBehavior(profileImageForm, new Set(), [], new Map());
+  const profileLinksList = addStatic('profile-links-list');
+  installOwnedHtmlBehavior(profileLinksList, new Set(), [], new Map());
 
   class TestURL extends URL {}
   TestURL.createObjectURL = (blob) => {
@@ -389,6 +483,7 @@ function loadAdminApp(options = {}) {
   const networkFetchCalls = [];
   const clipboardWrites = [];
   const openedUrls = [];
+  const windowListeners = new Map();
 
   const context = {
     Blob,
@@ -398,7 +493,7 @@ function loadAdminApp(options = {}) {
     URLSearchParams,
     clearTimeout,
     confirm: () => false,
-    console,
+    console: options.console || console,
     document,
     fetch: async (url, fetchOptions = {}) => {
       networkFetchCalls.push({ url, options: fetchOptions });
@@ -417,7 +512,11 @@ function loadAdminApp(options = {}) {
       ADMIN_CONFIG: options.adminConfig || {},
       ADMIN_BUILD_ID: '',
       LiveOperations: options.liveOperations || LiveOperations,
-      addEventListener() {},
+      addEventListener(type, listener) {
+        const group = windowListeners.get(type) || [];
+        group.push(listener);
+        windowListeners.set(type, group);
+      },
       location: { href: 'https://1212hp.com/admin/', origin: 'https://1212hp.com' },
       open(url) { openedUrls.push(url); return null; },
       prompt: () => '',
@@ -428,8 +527,23 @@ function loadAdminApp(options = {}) {
 
   vm.runInNewContext(`${adminJs}
 	globalThis.__adminLiveTest = {
+	  applyApiFallbackReadOnlyState,
+	  renderAll,
+	  renderSiteSettings,
+	  renderYouTube,
+	  renderDiscography,
+	  renderProfile,
 	  addNews,
 	  editNews,
+	  addYouTubeVideo,
+	  editYouTubeVideo,
+	  addDiscography,
+	  editDiscography,
+	  addProfileLink,
+	  updateProfileLink,
+	  deleteProfileLink,
+	  handleImageSelect,
+	  clearImage,
 	  addLive,
 	  editLive,
 	  closeLiveEditor: typeof closeLiveEditor === 'function' ? closeLiveEditor : null,
@@ -438,6 +552,7 @@ function loadAdminApp(options = {}) {
 	  requestLiveEditorTransition: typeof requestLiveEditorTransition === 'function' ? requestLiveEditorTransition : null,
   handleLiveSourceParse,
   saveLiveItem,
+  saveToApi,
   updateXPreviewInModal: typeof updateXPreviewInModal === 'function' ? updateXPreviewInModal : null,
   buildXIntentUrlFromModal,
   copyXAnnouncementFromModal: typeof copyXAnnouncementFromModal === 'function' ? copyXAnnouncementFromModal : null,
@@ -481,7 +596,11 @@ function loadAdminApp(options = {}) {
   setAdminFetch(fn) { adminFetch = async (...args) => { const result = await fn(...args); return result; }; },
 	  setSaveSpy() { saveData = async () => { globalThis.__adminSaveCalls += 1; return true; }; },
   setSaveFunction(fn) { saveData = fn; },
-  invokeSaveData(options) { return saveData(options); },
+	  invokeSaveData(options) { return saveData(options); },
+	  setApiFallbackReadOnly(value) {
+	    isApiFallbackReadOnly = Boolean(value);
+	    if (isApiFallbackReadOnly) applyApiFallbackReadOnlyState();
+	  },
   setConfirm(fn) { confirm = fn; },
 };`, context);
 
@@ -492,6 +611,12 @@ function loadAdminApp(options = {}) {
     fetchCalls,
     networkFetchCalls,
     openedUrls,
+    async dispatchWindow(type, event = {}) {
+      for (const listener of windowListeners.get(type) || []) {
+        await listener(event);
+      }
+      return event;
+    },
     getSaveCalls: () => context.__adminSaveCalls,
     useAdminFetch(fn) {
       context.__adminLiveTest.setAdminFetch(async (path, options = {}, policy = {}) => {
@@ -983,6 +1108,173 @@ test('API fallback is read-only while keeping Live navigation available', async 
   assert.equal(app.getSiteData().live.upcoming[0].id, 'fallback-live');
 });
 
+test('API fallback keeps every admin collection immutable while existing details remain viewable', async () => {
+  const fallbackData = {
+    site: {
+      heroImage: 'assets/images/hero.jpg',
+      links: { bandcamp: 'https://example.com/original', youtube: '', x: '', instagram: '', note: '' },
+      footerText: 'Original footer',
+    },
+    contact: { introText: 'Original contact', formAction: 'https://example.com/contact' },
+    ticket: { introText: '', noticeText: '', completeText: '', fields: {} },
+    news: [{ id: 'news-readonly', date: '2026.08.10', title: 'News', description: '', image: '', link: '', linkText: '' }],
+    live: { upcoming: [], past: [] },
+    youtube: {
+      channelUrl: 'https://youtube.com/@original',
+      musicVideos: [{ id: 'youtube-readonly', title: 'Video', youtubeId: 'JaPin67uO7A' }],
+      liveMovies: [],
+      demos: [],
+    },
+    discography: {
+      digital: [{ id: 'disco-readonly', title: 'Release', releaseDate: '2026.08.10', description: '', image: '', link: '' }],
+      demo: [],
+    },
+    profile: {
+      image: 'assets/images/profile.jpg',
+      text: 'Original profile',
+      links: [{ name: 'Original link', url: 'https://example.com/profile' }],
+    },
+  };
+  const app = loadAdminApp();
+  app.setSiteData(structuredClone(fallbackData));
+  app.renderAll();
+  app.setApiFallbackReadOnly(true);
+  app.applyApiFallbackReadOnlyState();
+
+  for (const id of [
+    'site-link-bandcamp',
+    'site-hero-image-select-btn',
+    'news-add-btn',
+    'youtube-channel-url',
+    'youtube-add-musicVideos-btn',
+    'discography-add-btn',
+    'profile-text',
+    'profile-image-select-btn',
+    'profile-link-0-name',
+    'profile-link-0-url',
+    'profile-link-0-delete-btn',
+    'profile-link-add-btn',
+    'saveBtn',
+  ]) {
+    const control = app.elements.get(id);
+    assert.ok(control, `${id} must be a stable mutation control`);
+    assert.equal(control.disabled, true, `${id} must be disabled in fallback mode`);
+    assert.equal(control.getAttribute('aria-disabled'), 'true', `${id} must expose its disabled state`);
+  }
+  assert.equal(app.elements.get('global-tab-site').disabled, false);
+  assert.equal(app.elements.get('live-workspace-page-tab').disabled, false);
+  assert.equal(app.elements.get('tickets-live-filter').disabled, false);
+
+  const immutableSnapshot = JSON.stringify(app.getSiteData());
+  const bandcamp = app.elements.get('site-link-bandcamp');
+  bandcamp.value = 'https://example.com/mutated';
+  assert.equal(bandcamp.onchange(), false);
+  assert.equal(bandcamp.value, 'https://example.com/original');
+  assert.equal(app.addNews(), false);
+  assert.equal(app.addYouTubeVideo('musicVideos'), false);
+  assert.equal(app.addDiscography(), false);
+  assert.equal(app.addProfileLink(), false);
+  const profileName = app.elements.get('profile-link-0-name');
+  profileName.value = 'Mutated link';
+  assert.equal(app.updateProfileLink(0, 'name', 'Mutated link'), false);
+  assert.equal(profileName.value, 'Original link');
+  assert.equal(app.deleteProfileLink(0), false);
+  assert.equal(JSON.stringify(app.getSiteData()), immutableSnapshot);
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+  assert.match(adminReadme, /admin全体がread-only[\s\S]*既存のNews・YouTube・Disco・Profile[\s\S]*閲覧/);
+
+  const modalCases = [
+    ['News', (instance) => instance.editNews('news-readonly')],
+    ['YouTube', (instance) => instance.editYouTubeVideo('youtube-readonly', 'musicVideos')],
+    ['Discography', (instance) => instance.editDiscography('disco-readonly', 'digital')],
+  ];
+  for (const [name, open] of modalCases) {
+    const instance = loadAdminApp();
+    instance.setSiteData(structuredClone(fallbackData));
+    instance.setApiFallbackReadOnly(true);
+    assert.equal(open(instance), true, `${name} detail remains viewable`);
+    const before = JSON.stringify(instance.getSiteData());
+    const modalHtml = instance.elements.get('modal-body').innerHTML;
+    assert.equal(instance.elements.get('modal').classList.contains('active'), true);
+    assert.equal(instance.elements.get('edit-title').disabled, true);
+    instance.elements.get('edit-title').value = 'MUTATED IN READ ONLY';
+    assert.equal(await instance.saveModal(), false);
+    assert.equal(instance.deleteItem(), false);
+    assert.equal(JSON.stringify(instance.getSiteData()), before);
+    assert.equal(instance.elements.get('modal-body').innerHTML, modalHtml);
+    assert.equal(instance.elements.get('modal').classList.contains('active'), true);
+  }
+});
+
+test('API fallback blocks direct Live item and API save calls before mutation or PUT', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'direct-fallback', date: '2026-08-10', title: 'Stored', venue: 'Venue', image: '' }],
+      past: [],
+    },
+  });
+  app.renderLive();
+  app.editLive('direct-fallback', 'upcoming');
+  setLiveForm(app.elements, { 'edit-date': '', 'edit-title': 'MUTATED', isPast: true });
+  const dataBefore = JSON.stringify(app.getSiteData());
+  const upcomingBefore = app.elements.get('live-upcoming-list').innerHTML;
+  const pastBefore = app.elements.get('live-past-list').innerHTML;
+  let apiCalls = 0;
+  app.setAdminFetch(async () => {
+    apiCalls += 1;
+    return jsonResponse({});
+  });
+  app.setApiFallbackReadOnly(true);
+
+  assert.equal(app.saveLiveItem(), false);
+  assert.equal(await app.saveToApi(), false);
+  assert.equal(JSON.stringify(app.getSiteData()), dataBefore);
+  assert.equal(app.elements.get('live-upcoming-list').innerHTML, upcomingBefore);
+  assert.equal(app.elements.get('live-past-list').innerHTML, pastBefore);
+  assert.equal(app.getModalState().currentEditType, 'live-upcoming');
+  assert.equal(apiCalls, 0);
+});
+
+test('beforeunload protects global changes and Live dirty or saving states', async () => {
+  const clean = loadAdminApp();
+  const cleanEvent = { prevented: 0, returnValue: undefined, preventDefault() { this.prevented += 1; } };
+  await clean.dispatchWindow('beforeunload', cleanEvent);
+  assert.equal(cleanEvent.prevented, 0);
+
+  const live = loadAdminApp();
+  live.setApiMode(true);
+  live.setSiteData({ live: { upcoming: [{ id: 'beforeunload-live', date: '2026-08-10', title: 'Before', venue: 'Venue', image: '' }], past: [] } });
+  live.renderLive();
+  live.editLive('beforeunload-live', 'upcoming');
+  live.elements.get('edit-title').value = 'Dirty Live';
+  await live.elements.get('edit-title').dispatch('input');
+  const dirtyEvent = { prevented: 0, returnValue: undefined, preventDefault() { this.prevented += 1; } };
+  await live.dispatchWindow('beforeunload', dirtyEvent);
+  assert.equal(dirtyEvent.prevented, 1);
+
+  live.setConfirm(() => true);
+  assert.equal(live.closeLiveEditor(), true);
+  const discardedEvent = { prevented: 0, returnValue: undefined, preventDefault() { this.prevented += 1; } };
+  await live.dispatchWindow('beforeunload', discardedEvent);
+  assert.equal(discardedEvent.prevented, 0);
+
+  live.editLive('beforeunload-live', 'upcoming');
+  const pendingSave = deferred();
+  live.setSaveFunction(() => pendingSave.promise);
+  const saving = live.saveLiveWorkspace();
+  await flushAsync();
+  const savingEvent = { prevented: 0, returnValue: undefined, preventDefault() { this.prevented += 1; } };
+  await live.dispatchWindow('beforeunload', savingEvent);
+  assert.equal(savingEvent.prevented, 1);
+  pendingSave.resolve(true);
+  assert.equal(await saving, true);
+  const savedEvent = { prevented: 0, returnValue: undefined, preventDefault() { this.prevented += 1; } };
+  await live.dispatchWindow('beforeunload', savedEvent);
+  assert.equal(savedEvent.prevented, 0);
+});
+
 test('explicit Local Mode labels the header action as JSON export', () => {
   const app = loadAdminApp();
   app.renderModeBadge();
@@ -1045,7 +1337,7 @@ test('sticky Live controls have no scrolling mechanism in the complete ancestor 
       `${selector} must not create a scrolling mechanism for Live sticky controls`,
     );
   }
-  assert.match(directRuleBodies('.live-workspace').join('\n'), /overflow:\s*clip\s*;/);
+  assert.match(directRuleBodies('.live-workspace').join('\n'), /overflow:\s*visible\s*;/);
   assert.match(directRuleBodies('.live-editor-pane').join('\n'), /overflow:\s*clip\s*;/);
   assert.match(adminCss, /\.live-editor-task-tabs\s*\{[^}]*position:\s*sticky/s);
   assert.match(adminCss, /\.live-editor-footer\s*\{[^}]*position:\s*sticky/s);
@@ -1068,6 +1360,50 @@ test('essential mobile Live workspace list utility and back controls guarantee 4
     adminCss,
     /@media\s*\(max-width:\s*899px\)\s*\{\s*\.live-workspace-tab,\s*\.live-list-tab,\s*\.live-workspace-utility,\s*\.live-editor-back\s*\{[^}]*min-height:\s*44px\s*;/s,
   );
+});
+
+test('saved header action maintains white text contrast through hover and focus', () => {
+  assert.match(
+    adminCss,
+    /\.save-btn\.saved\s*,\s*\.save-btn\.saved:hover\s*,\s*\.save-btn\.saved:focus-visible\s*\{[^}]*background:\s*var\(--gray-900\);[^}]*color:\s*var\(--white\);/s,
+  );
+});
+
+test('sticky Live task tabs and footer have no clipping workspace ancestor', () => {
+  const workspaceRule = adminCss.match(/\.live-workspace\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(workspaceRule, /overflow:\s*visible;/);
+  assert.doesNotMatch(workspaceRule, /overflow(?:-x|-y)?:\s*(?:hidden|auto|scroll|clip);/);
+  assert.match(adminCss, /\.live-editor-task-tabs\s*\{[^}]*position:\s*sticky;/s);
+  assert.match(adminCss, /\.live-editor-footer\s*\{[^}]*position:\s*sticky;/s);
+});
+
+test('production Live lock gives every workspace button a disabled affordance', () => {
+  assert.match(adminJs, /querySelectorAll\?\.\('button, input, textarea, select'\)/);
+  assert.match(adminJs, /document\.querySelectorAll\('\[data-live-edit\]'\)/);
+  const disabledRule = adminCss.match(/\.save-btn:disabled,([\s\S]*?)\{([^}]*)\}/);
+  assert.ok(disabledRule, 'the shared non-.btn disabled rule must exist');
+  for (const selector of [
+    '.add-btn:disabled',
+    '.tab-btn:disabled',
+    '.live-workspace button:disabled',
+    '.live-workspace button[aria-disabled="true"]',
+  ]) {
+    assert.match(disabledRule[1], new RegExp(selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+  assert.match(disabledRule[2], /cursor:\s*not-allowed;/);
+  assert.match(disabledRule[2], /pointer-events:\s*none;/);
+  assert.match(disabledRule[2], /transform:\s*none;/);
+  assert.match(disabledRule[2], /box-shadow:\s*none;/);
+});
+
+test('admin build marker and operator docs match the merged Live UI assets', () => {
+  assert.match(adminHtml, /window\.ADMIN_BUILD_ID\s*=\s*'2026-08-16T\d{4}Z';/);
+  const styleVersion = adminHtml.match(/style\.css\?v=([\w-]+)/)?.[1];
+  const scriptVersion = adminHtml.match(/app\.js\?v=([\w-]+)/)?.[1];
+  assert.ok(styleVersion);
+  assert.equal(scriptVersion, styleVersion);
+  assert.match(adminReadme, /Live編集の`AIで下書きを作る`/);
+  assert.match(adminReadme, /10項目を一括置換/);
 });
 
 test('Live edit workspace saves a category move in place and routes Local Mode to JSON export', async () => {

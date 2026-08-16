@@ -108,6 +108,8 @@ let pendingImages = {};
 let activeImageUploads = new Set();
 let imageUploadSequence = 0;
 const latestImageUploadByInput = new WeakMap();
+const imageUploadOwners = new Map();
+const imageUploadSeriesByInput = new WeakMap();
 
 document.addEventListener('click', handleTicketStatusAction);
 document.addEventListener('click', handleLiveEditAction);
@@ -164,8 +166,49 @@ function setConnectionBanner(text, state = 'normal') {
   if (state === 'error') banner.classList.add('is-error');
 }
 
+const API_FALLBACK_MUTATION_CONTROL_IDS = [
+  'saveBtn',
+  'live-add-btn',
+  'ticket-intro-text',
+  'ticket-notice-text',
+  'ticket-complete-text',
+  'ticket-field-quantity',
+  'ticket-field-message',
+  'ticket-field-label-quantity',
+  'ticket-field-label-message',
+  'ticket-field-placeholder-message',
+  'ticket-field-submit-label',
+  'live-editor-save-btn',
+  'live-editor-delete-btn',
+  'live-source-parse-btn',
+  'live-manual-entry-btn',
+  'edit-sourceText',
+  'edit-date',
+  'edit-title',
+  'edit-venue',
+  'edit-openTime',
+  'edit-startTime',
+  'edit-ticket',
+  'edit-notes',
+  'edit-performers',
+  'edit-description',
+  'edit-image-file',
+  'edit-image-select-btn',
+  'edit-image-clear-btn',
+  'edit-ticketUrl',
+  'edit-link',
+  'edit-reservationClosed',
+  'edit-isPast',
+  'edit-xComment',
+  'manual-reservation-name',
+  'manual-reservation-quantity',
+  'manual-reservation-contact',
+  'manual-reservation-note',
+  'manual-reservation-submit',
+];
+
 function applyApiFallbackReadOnlyState() {
-  if (!isApiFallbackReadOnly) return;
+  if (!isApiFallbackReadOnly) return false;
   const saveBtn = document.getElementById('saveBtn');
   if (saveBtn) {
     saveBtn.disabled = true;
@@ -173,64 +216,46 @@ function applyApiFallbackReadOnlyState() {
   }
   setConnectionBanner('API接続失敗（ローカルJSONを読み取り専用で表示）', 'error');
 
-  const readOnlyFieldIds = [
-    'ticket-intro-text',
-    'ticket-notice-text',
-    'ticket-complete-text',
-    'ticket-field-quantity',
-    'ticket-field-message',
-    'ticket-field-label-quantity',
-    'ticket-field-label-message',
-    'ticket-field-placeholder-message',
-    'ticket-field-submit-label',
-    'edit-sourceText',
-    'edit-date',
-    'edit-title',
-    'edit-venue',
-    'edit-openTime',
-    'edit-startTime',
-    'edit-ticket',
-    'edit-notes',
-    'edit-performers',
-    'edit-description',
-    'edit-image-file',
-    'edit-ticketUrl',
-    'edit-link',
-    'edit-reservationClosed',
-    'edit-isPast',
-    'edit-xComment',
-    'manual-reservation-name',
-    'manual-reservation-quantity',
-    'manual-reservation-contact',
-    'manual-reservation-note',
+  const mutationControls = [
+    ...API_FALLBACK_MUTATION_CONTROL_IDS.map((id) => document.getElementById(id)),
+    ...Array.from(document.querySelectorAll('[data-admin-mutation]')),
+    ...Array.from(document.querySelectorAll('[data-live-editor-mutation]')),
   ];
-  readOnlyFieldIds.forEach((id) => {
-    const field = document.getElementById(id);
-    if (field) field.disabled = true;
-  });
-  document.querySelectorAll('[data-live-editor-mutation]').forEach((control) => {
+  [...new Set(mutationControls.filter(Boolean))].forEach((control) => {
     control.disabled = true;
     control.setAttribute('aria-disabled', 'true');
   });
-  [
-    'live-source-parse-btn',
-    'live-manual-entry-btn',
-    'manual-reservation-submit',
-    'live-editor-save-btn',
-    'live-editor-delete-btn',
-  ].forEach((id) => {
-    const action = document.getElementById(id);
-    if (action) {
-      action.disabled = true;
-      action.setAttribute('aria-disabled', 'true');
-    }
+  const editorMutations = getLiveEditorRoot()?.querySelectorAll?.(
+    'input:not([readonly]), textarea:not([readonly]), select, .btn-image-select, .btn-image-clear'
+  ) || [];
+  Array.from(editorMutations).forEach((control) => {
+    control.disabled = true;
+    control.setAttribute?.('aria-disabled', 'true');
   });
+  document.querySelectorAll('[data-reservation-status]').forEach((control) => {
+    control.disabled = true;
+    control.setAttribute('aria-disabled', 'true');
+  });
+  return true;
 }
 
 function rejectApiFallbackMutation(message = 'API接続を復旧してから操作してください。') {
   if (!isApiFallbackReadOnly) return false;
   showToast(message, 'error');
   applyApiFallbackReadOnlyState();
+  return true;
+}
+
+function applyAdminFieldMutation(control, currentValue, mutation) {
+  if (rejectApiFallbackMutation()) {
+    if (control) {
+      if (typeof currentValue === 'boolean') control.checked = currentValue;
+      else control.value = currentValue == null ? '' : String(currentValue);
+    }
+    return false;
+  }
+  mutation();
+  markChanged();
   return true;
 }
 
@@ -347,6 +372,156 @@ function ensureNoActiveImageUploads() {
   if (activeImageUploads.size === 0) return true;
   showToast('画像アップロード中です。完了してから保存してください', 'error');
   return false;
+}
+
+function hasActiveImageUploadForCurrentLiveEditor() {
+  if (!liveEditorOwner) return false;
+  return Array.from(imageUploadOwners.values()).some((owner) => (
+    owner.usesLiveEditor
+    && owner.generation === liveEditorGeneration
+    && owner.editId === currentEditId
+    && owner.editType === currentEditType
+  ));
+}
+
+function settleImageUpload(token, inputElement) {
+  if (!token) return;
+  const uploadOwner = imageUploadOwners.get(token);
+  const series = uploadOwner?.series;
+  series?.tokens?.delete(token);
+  activeImageUploads.delete(token);
+  imageUploadOwners.delete(token);
+  if (latestImageUploadByInput.get(inputElement) === token) {
+    latestImageUploadByInput.delete(inputElement);
+  }
+  if (series?.tokens?.size === 0 && imageUploadSeriesByInput.get(inputElement) === series) {
+    imageUploadSeriesByInput.delete(inputElement);
+  }
+}
+
+function isSameImageOperationOwner(left, right) {
+  return Boolean(
+    left
+    && right
+    && left.ownerKind === right.ownerKind
+    && left.generation === right.generation
+    && left.editId === right.editId
+    && left.editType === right.editType
+  );
+}
+
+function resolveImageOperationOwner(inputId, inputElement) {
+  const editorScoped = inputId === 'edit-image';
+  const usesLiveEditor = editorScoped && currentEditType?.startsWith('live');
+  const ownerKind = usesLiveEditor
+    ? 'live-editor'
+    : editorScoped
+      ? 'generic-modal'
+      : 'page';
+  return {
+    ownerKind,
+    usesLiveEditor,
+    generation: ownerKind === 'live-editor'
+      ? liveEditorGeneration
+      : ownerKind === 'generic-modal'
+        ? modalGeneration
+        : 0,
+    editId: ownerKind === 'page' ? null : currentEditId,
+    editType: ownerKind === 'page' ? null : currentEditType,
+    inputElement,
+  };
+}
+
+function imageOperationOwnsCurrentContext(owner) {
+  if (owner.ownerKind === 'page') return true;
+  if (owner.ownerKind === 'live-editor') {
+    return (
+      liveEditorGeneration === owner.generation
+      && currentEditId === owner.editId
+      && currentEditType === owner.editType
+    );
+  }
+  return (
+    modalGeneration === owner.generation
+    && currentEditId === owner.editId
+    && currentEditType === owner.editType
+  );
+}
+
+function releaseImageOperations(matches, exceptToken = '') {
+  for (const [token, owner] of imageUploadOwners) {
+    if (token !== exceptToken && matches(owner)) {
+      settleImageUpload(token, owner.inputElement);
+    }
+  }
+}
+
+function getOrCreateImageUploadSeries(inputElement, container, pathEl, owner) {
+  const existing = imageUploadSeriesByInput.get(inputElement);
+  const hasSameOwner = (
+    existing
+    && existing.tokens.size > 0
+    && existing.ownerKind === owner.ownerKind
+    && existing.usesLiveEditor === owner.usesLiveEditor
+    && existing.generation === owner.generation
+    && existing.editId === owner.editId
+    && existing.editType === owner.editType
+  );
+  if (hasSameOwner) return existing;
+
+  const actions = container.parentElement?.querySelector?.('.image-actions') || null;
+  const series = {
+    inputElement,
+    container,
+    pathEl,
+    actions,
+    ownerKind: owner.ownerKind,
+    usesLiveEditor: owner.usesLiveEditor,
+    generation: owner.generation,
+    editId: owner.editId,
+    editType: owner.editType,
+    tokens: new Set(),
+    baseline: {
+      inputValue: inputElement.value,
+      previewHtml: container.innerHTML,
+      pathText: pathEl?.textContent || '',
+      hadClearButton: Boolean(actions?.querySelector?.('.btn-image-clear')),
+      liveEditorDirty: Boolean(liveEditorDirty),
+      liveEditorRevision,
+      liveEditorStatus: document.getElementById('live-editor-save-status')?.textContent || '',
+    },
+  };
+  imageUploadSeriesByInput.set(inputElement, series);
+  return series;
+}
+
+function restoreImageUploadSeriesBaseline(series) {
+  if (!series) return;
+  const { baseline, inputElement, container, pathEl, actions } = series;
+  inputElement.value = baseline.inputValue;
+  container.innerHTML = baseline.previewHtml;
+  if (pathEl) pathEl.textContent = baseline.pathText;
+  if (!baseline.hadClearButton) actions?.querySelector?.('.btn-image-clear')?.remove?.();
+  if (series.usesLiveEditor && liveEditorRevision === baseline.liveEditorRevision) {
+    setLiveEditorDirty(baseline.liveEditorDirty, baseline.liveEditorStatus);
+  }
+}
+
+function releaseImageUploadsForLiveOwner(owner) {
+  if (!owner) return;
+  releaseImageOperations((uploadOwner) => (
+    uploadOwner.usesLiveEditor
+    && uploadOwner.generation === owner.generation
+    && uploadOwner.editId === owner.id
+    && uploadOwner.editType === owner.type
+  ));
+}
+
+function releaseImageUploadsForModalGeneration(generation) {
+  releaseImageOperations((owner) => (
+    owner.ownerKind === 'generic-modal'
+    && owner.generation === generation
+  ));
 }
 
 async function ensureAdminToken(forcePrompt = false) {
@@ -669,9 +844,11 @@ function setupTabs() {
 
 function requestLiveEditorTransition(action) {
   if (liveWorkspaceSaveOperation) return false;
-  if (liveEditorDirty) {
-    const shouldDiscard = confirm('未保存の変更を破棄して移動しますか？');
+  const hasPendingImage = hasActiveImageUploadForCurrentLiveEditor();
+  if (liveEditorDirty || hasPendingImage) {
+    const shouldDiscard = confirm('未保存の変更または処理中の画像を破棄して移動しますか？');
     if (!shouldDiscard) return false;
+    if (hasPendingImage) releaseImageUploadsForLiveOwner(liveEditorOwner);
     setLiveEditorDirty(false);
   }
   return action() !== false;
@@ -834,6 +1011,7 @@ function renderSiteSettings() {
     heroForm.innerHTML = getImageFormHtml(siteData.site.heroImage || '', 'site-hero-image');
     const previewContainer = document.getElementById('site-hero-image-preview-container');
     if (previewContainer) {
+      previewContainer.setAttribute('data-admin-mutation', '');
       previewContainer.onclick = () => document.getElementById('site-hero-image-file')?.click();
     }
   }
@@ -849,60 +1027,68 @@ function renderSiteSettings() {
 
   if (bandcamp) {
     bandcamp.value = siteData.site.links.bandcamp || '';
-    bandcamp.onchange = () => {
-      siteData.site.links.bandcamp = bandcamp.value;
-      markChanged();
-    };
+    bandcamp.onchange = () => applyAdminFieldMutation(
+      bandcamp,
+      siteData.site.links.bandcamp || '',
+      () => { siteData.site.links.bandcamp = bandcamp.value; }
+    );
   }
   if (youtube) {
     youtube.value = siteData.site.links.youtube || '';
-    youtube.onchange = () => {
-      siteData.site.links.youtube = youtube.value;
-      markChanged();
-    };
+    youtube.onchange = () => applyAdminFieldMutation(
+      youtube,
+      siteData.site.links.youtube || '',
+      () => { siteData.site.links.youtube = youtube.value; }
+    );
   }
   if (x) {
     x.value = siteData.site.links.x || '';
-    x.onchange = () => {
-      siteData.site.links.x = x.value;
-      markChanged();
-    };
+    x.onchange = () => applyAdminFieldMutation(
+      x,
+      siteData.site.links.x || '',
+      () => { siteData.site.links.x = x.value; }
+    );
   }
   if (instagram) {
     instagram.value = siteData.site.links.instagram || '';
-    instagram.onchange = () => {
-      siteData.site.links.instagram = instagram.value;
-      markChanged();
-    };
+    instagram.onchange = () => applyAdminFieldMutation(
+      instagram,
+      siteData.site.links.instagram || '',
+      () => { siteData.site.links.instagram = instagram.value; }
+    );
   }
   if (note) {
     note.value = siteData.site.links.note || '';
-    note.onchange = () => {
-      siteData.site.links.note = note.value;
-      markChanged();
-    };
+    note.onchange = () => applyAdminFieldMutation(
+      note,
+      siteData.site.links.note || '',
+      () => { siteData.site.links.note = note.value; }
+    );
   }
   if (footer) {
     footer.value = siteData.site.footerText || '';
-    footer.onchange = () => {
-      siteData.site.footerText = footer.value;
-      markChanged();
-    };
+    footer.onchange = () => applyAdminFieldMutation(
+      footer,
+      siteData.site.footerText || '',
+      () => { siteData.site.footerText = footer.value; }
+    );
   }
 
   if (contactIntro) {
     contactIntro.value = siteData.contact.introText || '';
-    contactIntro.onchange = () => {
-      siteData.contact.introText = contactIntro.value;
-      markChanged();
-    };
+    contactIntro.onchange = () => applyAdminFieldMutation(
+      contactIntro,
+      siteData.contact.introText || '',
+      () => { siteData.contact.introText = contactIntro.value; }
+    );
   }
   if (contactAction) {
     contactAction.value = siteData.contact.formAction || '';
-    contactAction.onchange = () => {
-      siteData.contact.formAction = contactAction.value;
-      markChanged();
-    };
+    contactAction.onchange = () => applyAdminFieldMutation(
+      contactAction,
+      siteData.contact.formAction || '',
+      () => { siteData.contact.formAction = contactAction.value; }
+    );
   }
 }
 
@@ -919,67 +1105,76 @@ function renderTicketSettings() {
 
   if (intro) {
     intro.value = siteData.ticket.introText || '';
-    intro.onchange = () => {
-      siteData.ticket.introText = intro.value;
-      markChanged();
-    };
+    intro.onchange = () => applyAdminFieldMutation(
+      intro,
+      siteData.ticket.introText || '',
+      () => { siteData.ticket.introText = intro.value; }
+    );
   }
   if (notice) {
     notice.value = siteData.ticket.noticeText || '';
-    notice.onchange = () => {
-      siteData.ticket.noticeText = notice.value;
-      markChanged();
-    };
+    notice.onchange = () => applyAdminFieldMutation(
+      notice,
+      siteData.ticket.noticeText || '',
+      () => { siteData.ticket.noticeText = notice.value; }
+    );
   }
   if (complete) {
     complete.value = siteData.ticket.completeText || '';
-    complete.onchange = () => {
-      siteData.ticket.completeText = complete.value;
-      markChanged();
-    };
+    complete.onchange = () => applyAdminFieldMutation(
+      complete,
+      siteData.ticket.completeText || '',
+      () => { siteData.ticket.completeText = complete.value; }
+    );
   }
 
   if (showQuantity) {
     showQuantity.checked = Boolean(siteData.ticket.fields.showQuantity);
-    showQuantity.onchange = () => {
-      siteData.ticket.fields.showQuantity = Boolean(showQuantity.checked);
-      markChanged();
-    };
+    showQuantity.onchange = () => applyAdminFieldMutation(
+      showQuantity,
+      Boolean(siteData.ticket.fields.showQuantity),
+      () => { siteData.ticket.fields.showQuantity = Boolean(showQuantity.checked); }
+    );
   }
   if (showMessage) {
     showMessage.checked = Boolean(siteData.ticket.fields.showMessage);
-    showMessage.onchange = () => {
-      siteData.ticket.fields.showMessage = Boolean(showMessage.checked);
-      markChanged();
-    };
+    showMessage.onchange = () => applyAdminFieldMutation(
+      showMessage,
+      Boolean(siteData.ticket.fields.showMessage),
+      () => { siteData.ticket.fields.showMessage = Boolean(showMessage.checked); }
+    );
   }
   if (labelQuantity) {
     labelQuantity.value = siteData.ticket.fields.labelQuantity || '';
-    labelQuantity.onchange = () => {
-      siteData.ticket.fields.labelQuantity = labelQuantity.value;
-      markChanged();
-    };
+    labelQuantity.onchange = () => applyAdminFieldMutation(
+      labelQuantity,
+      siteData.ticket.fields.labelQuantity || '',
+      () => { siteData.ticket.fields.labelQuantity = labelQuantity.value; }
+    );
   }
   if (labelMessage) {
     labelMessage.value = siteData.ticket.fields.labelMessage || '';
-    labelMessage.onchange = () => {
-      siteData.ticket.fields.labelMessage = labelMessage.value;
-      markChanged();
-    };
+    labelMessage.onchange = () => applyAdminFieldMutation(
+      labelMessage,
+      siteData.ticket.fields.labelMessage || '',
+      () => { siteData.ticket.fields.labelMessage = labelMessage.value; }
+    );
   }
   if (placeholderMessage) {
     placeholderMessage.value = siteData.ticket.fields.placeholderMessage || '';
-    placeholderMessage.onchange = () => {
-      siteData.ticket.fields.placeholderMessage = placeholderMessage.value;
-      markChanged();
-    };
+    placeholderMessage.onchange = () => applyAdminFieldMutation(
+      placeholderMessage,
+      siteData.ticket.fields.placeholderMessage || '',
+      () => { siteData.ticket.fields.placeholderMessage = placeholderMessage.value; }
+    );
   }
   if (submitLabel) {
     submitLabel.value = siteData.ticket.fields.submitLabel || '';
-    submitLabel.onchange = () => {
-      siteData.ticket.fields.submitLabel = submitLabel.value;
-      markChanged();
-    };
+    submitLabel.onchange = () => applyAdminFieldMutation(
+      submitLabel,
+      siteData.ticket.fields.submitLabel || '',
+      () => { siteData.ticket.fields.submitLabel = submitLabel.value; }
+    );
   }
 }
 
@@ -1038,10 +1233,11 @@ function renderYouTube() {
   const channelInput = document.getElementById('youtube-channel-url');
   if (channelInput) {
     channelInput.value = siteData.youtube.channelUrl || '';
-    channelInput.onchange = () => {
-      siteData.youtube.channelUrl = channelInput.value;
-      markChanged();
-    };
+    channelInput.onchange = () => applyAdminFieldMutation(
+      channelInput,
+      siteData.youtube.channelUrl || '',
+      () => { siteData.youtube.channelUrl = channelInput.value; }
+    );
   }
 
   renderYouTubeList(
@@ -1213,15 +1409,17 @@ function renderProfile() {
     profileImageForm.innerHTML = getImageFormHtml(siteData.profile.image || '', 'profile-image');
     const previewContainer = document.getElementById('profile-image-preview-container');
     if (previewContainer) {
+      previewContainer.setAttribute('data-admin-mutation', '');
       previewContainer.onclick = () => document.getElementById('profile-image-file')?.click();
     }
   }
   profileText.value = siteData.profile.text || '';
 
-  profileText.onchange = () => {
-    siteData.profile.text = profileText.value;
-    markChanged();
-  };
+  profileText.onchange = () => applyAdminFieldMutation(
+    profileText,
+    siteData.profile.text || '',
+    () => { siteData.profile.text = profileText.value; }
+  );
 
   renderProfileLinks();
 }
@@ -1236,30 +1434,39 @@ function renderProfileLinks() {
 
   list.innerHTML = siteData.profile.links.map((link, index) => `
     <div class="link-item">
-      <input type="text" placeholder="名前" value="${escapeHtml(link.name)}"
+      <input type="text" id="profile-link-${index}-name" data-admin-mutation="" placeholder="名前" value="${escapeHtml(link.name)}"
         onchange="updateProfileLink(${index}, 'name', this.value)">
-      <input type="url" placeholder="URL" value="${escapeHtml(link.url)}"
+      <input type="url" id="profile-link-${index}-url" data-admin-mutation="" placeholder="URL" value="${escapeHtml(link.url)}"
         onchange="updateProfileLink(${index}, 'url', this.value)">
-      <button class="delete-link-btn" onclick="deleteProfileLink(${index})">×</button>
+      <button class="delete-link-btn" id="profile-link-${index}-delete-btn" data-admin-mutation="" onclick="deleteProfileLink(${index})">×</button>
     </div>
   `).join('');
 }
 
 // プロフィールリンク更新
 function updateProfileLink(index, field, value) {
+  if (rejectApiFallbackMutation()) {
+    const control = document.getElementById(`profile-link-${index}-${field}`);
+    if (control) control.value = siteData.profile.links[index]?.[field] || '';
+    return false;
+  }
   siteData.profile.links[index][field] = value;
   markChanged();
+  return true;
 }
 
 // プロフィールリンク追加
 function addProfileLink() {
+  if (rejectApiFallbackMutation()) return false;
   if (!siteData.profile.links) siteData.profile.links = [];
   siteData.profile.links.push({ name: '', url: '' });
   renderProfileLinks();
   markChanged();
+  return true;
 }
 
 function addYouTubeVideo(category) {
+  if (rejectApiFallbackMutation()) return false;
   if (!prepareGenericEditorTransition()) return false;
   isNewItem = true;
   currentEditType = `youtube-${category}`;
@@ -1321,9 +1528,11 @@ function editYouTubeVideo(id, category) {
 
 // プロフィールリンク削除
 function deleteProfileLink(index) {
+  if (rejectApiFallbackMutation()) return false;
   siteData.profile.links.splice(index, 1);
   renderProfileLinks();
   markChanged();
+  return true;
 }
 
 const LIVE_FLYER_IMAGE_OPTIONS = {
@@ -1378,14 +1587,14 @@ function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
     <div class="form-group">
       <label>画像</label>
       <div class="image-upload-area" id="image-upload-area">
-        <input type="file" id="${inputId}-file" accept="image/*" onchange="handleImageSelect(this, '${inputId}')" style="display:none">
-        <input type="hidden" id="${inputId}" value="${escapeHtml(currentImage || '')}">
+        <input type="file" id="${inputId}-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, '${inputId}')" style="display:none">
+        <input type="hidden" id="${inputId}" data-admin-mutation="" value="${escapeHtml(currentImage || '')}">
         <div class="image-preview-container" id="${inputId}-preview-container" data-downloadable-preview="${downloadablePreview ? 'true' : 'false'}">
           ${previewHtml}
         </div>
         <div class="image-actions">
-          <button type="button" class="btn-image-select" id="${inputId}-select-btn"${liveMutationAttribute} onclick="document.getElementById('${inputId}-file').click()">画像を選択</button>
-          ${currentImage ? `<button type="button" class="btn-image-clear" id="${inputId}-clear-btn"${liveMutationAttribute} onclick="clearImage('${inputId}')">削除</button>` : ''}
+          <button type="button" class="btn-image-select" id="${inputId}-select-btn" data-admin-mutation=""${liveMutationAttribute} onclick="document.getElementById('${inputId}-file').click()">画像を選択</button>
+          ${currentImage ? `<button type="button" class="btn-image-clear" id="${inputId}-clear-btn" data-admin-mutation=""${liveMutationAttribute} onclick="clearImage('${inputId}')">削除</button>` : ''}
         </div>
         ${pathHtml}
       </div>
@@ -1397,43 +1606,42 @@ function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
 function handleImageSelect(input, inputId) {
   if (rejectApiFallbackMutation('読み取り専用のため画像を変更できません。')) return false;
   const file = input.files[0];
-  if (!file) return;
+  if (!file) return false;
 
   const inputElement = document.getElementById(inputId);
   const container = document.getElementById(`${inputId}-preview-container`);
   const pathEl = document.getElementById(`${inputId}-path`);
-  if (!inputElement || !container) return;
+  if (!inputElement || !container) return false;
 
-  const editorScoped = inputId === 'edit-image';
-  const ownerUsesLiveEditor = currentEditType?.startsWith('live');
-  const ownerGeneration = ownerUsesLiveEditor ? liveEditorGeneration : modalGeneration;
-  const ownerEditId = currentEditId;
-  const ownerEditType = currentEditType;
-  const apiUploadToken = IS_API_MODE ? `image-upload-${++imageUploadSequence}` : '';
+  let temporaryClearButton = null;
+  const imageOperationToken = `image-operation-${++imageUploadSequence}`;
+  const uploadOwner = resolveImageOperationOwner(inputId, inputElement);
+  const ownerUsesLiveEditor = uploadOwner.usesLiveEditor;
   const ownsCurrentInput = () => (
     document.getElementById(inputId) === inputElement
     && document.getElementById(`${inputId}-preview-container`) === container
-    && (!editorScoped || (
-      (ownerUsesLiveEditor ? liveEditorGeneration : modalGeneration) === ownerGeneration
-      && currentEditId === ownerEditId
-      && currentEditType === ownerEditType
-    ))
+    && imageOperationOwnsCurrentContext(uploadOwner)
   );
 
-  if (apiUploadToken) {
-    activeImageUploads.add(apiUploadToken);
-    latestImageUploadByInput.set(inputElement, apiUploadToken);
-  }
+  const imageUploadSeries = getOrCreateImageUploadSeries(inputElement, container, pathEl, uploadOwner);
+  imageUploadSeries.tokens.add(imageOperationToken);
+  activeImageUploads.add(imageOperationToken);
+  imageUploadOwners.set(imageOperationToken, { ...uploadOwner, series: imageUploadSeries });
+  latestImageUploadByInput.set(inputElement, imageOperationToken);
+  releaseImageOperations((owner) => (
+    owner.inputElement === inputElement
+    && isSameImageOperationOwner(owner, uploadOwner)
+  ), imageOperationToken);
   if (pathEl) pathEl.textContent = IS_API_MODE ? 'アップロード中...' : '';
 
   // FileReaderでBase64に変換
   const reader = new FileReader();
   reader.onload = function(e) {
     const base64 = e.target.result;
-    const isLatestUpload = () => !apiUploadToken || latestImageUploadByInput.get(inputElement) === apiUploadToken;
+    const isLatestUpload = () => latestImageUploadByInput.get(inputElement) === imageOperationToken;
 
     if (!ownsCurrentInput() || !isLatestUpload()) {
-      if (apiUploadToken) activeImageUploads.delete(apiUploadToken);
+      settleImageUpload(imageOperationToken, inputElement);
       return;
     }
 
@@ -1443,7 +1651,7 @@ function handleImageSelect(input, inputId) {
       downloadName: file.name || 'image',
     }, container);
 
-    if (!apiUploadToken) {
+    if (!IS_API_MODE) {
       // ローカルJSON運用: ファイル名を生成（日付＋元のファイル名）
       const ext = file.name.split('.').pop().toLowerCase();
       const baseName = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_');
@@ -1462,6 +1670,7 @@ function handleImageSelect(input, inputId) {
 
       if (ownerUsesLiveEditor) markLiveEditorDirty();
       else markChanged();
+      settleImageUpload(imageOperationToken, inputElement);
       return;
     }
 
@@ -1481,14 +1690,12 @@ function handleImageSelect(input, inputId) {
       })
       .catch((err) => {
         if (!ownsCurrentInput() || !isLatestUpload()) return;
-        if (pathEl) pathEl.textContent = '';
+        restoreImageUploadSeriesBaseline(imageUploadSeries);
+        temporaryClearButton?.remove?.();
         showToast(`画像アップロード失敗: ${err.message}`, 'error');
       })
       .finally(() => {
-        activeImageUploads.delete(apiUploadToken);
-        if (latestImageUploadByInput.get(inputElement) === apiUploadToken) {
-          latestImageUploadByInput.delete(inputElement);
-        }
+        settleImageUpload(imageOperationToken, inputElement);
       });
 
     // クリアボタンを追加（なければ）
@@ -1498,29 +1705,34 @@ function handleImageSelect(input, inputId) {
       clearBtn.type = 'button';
       clearBtn.id = `${inputId}-clear-btn`;
       clearBtn.className = 'btn-image-clear';
+      clearBtn.dataset.adminMutation = '';
       if (inputId === 'edit-image') clearBtn.dataset.liveEditorMutation = '';
       clearBtn.textContent = '削除';
       clearBtn.onclick = () => clearImage(inputId);
       actionsDiv.appendChild(clearBtn);
+      temporaryClearButton = clearBtn;
     }
   };
   reader.onerror = function() {
-    if (apiUploadToken) {
-      activeImageUploads.delete(apiUploadToken);
-      if (latestImageUploadByInput.get(inputElement) === apiUploadToken) {
-        latestImageUploadByInput.delete(inputElement);
-      }
+    const isLatestUpload = latestImageUploadByInput.get(inputElement) === imageOperationToken;
+    if (ownsCurrentInput() && isLatestUpload) {
+      restoreImageUploadSeriesBaseline(imageUploadSeries);
+      showToast('画像を読み込めませんでした', 'error');
     }
-    if (ownsCurrentInput()) showToast('画像を読み込めませんでした', 'error');
+    settleImageUpload(imageOperationToken, inputElement);
   };
   try {
     reader.readAsDataURL(file);
   } catch (error) {
     reader.onerror();
   }
+  return true;
 }
 
 async function uploadImageToApi(file) {
+  if (rejectApiFallbackMutation('読み取り専用のため画像を変更できません。')) {
+    throw new Error('API接続に失敗したため閲覧専用です');
+  }
   if (!IS_API_MODE) throw new Error('APIモードではありません');
   const form = new FormData();
   form.append('file', file, file.name || 'image');
@@ -1539,7 +1751,13 @@ async function uploadImageToApi(file) {
 // 画像クリア
 function clearImage(inputId) {
   if (rejectApiFallbackMutation('読み取り専用のため画像を削除できません。')) return false;
-  document.getElementById(inputId).value = '';
+  const inputElement = document.getElementById(inputId);
+  const clearOwner = resolveImageOperationOwner(inputId, inputElement);
+  releaseImageOperations((owner) => (
+    owner.inputElement === inputElement
+    && isSameImageOperationOwner(owner, clearOwner)
+  ));
+  inputElement.value = '';
   const container = document.getElementById(`${inputId}-preview-container`);
   container.innerHTML = `<div class="image-placeholder" id="${inputId}-placeholder">タップして画像を選択</div>`;
   const pathEl = document.getElementById(`${inputId}-path`);
@@ -1560,6 +1778,7 @@ function clearImage(inputId) {
 
 // News追加
 function addNews() {
+  if (rejectApiFallbackMutation()) return false;
   if (!prepareGenericEditorTransition()) return false;
   isNewItem = true;
   currentEditType = 'news';
@@ -2085,6 +2304,7 @@ function openLiveEditor(item, category, isNew) {
 
 // Live追加
 function addLive() {
+  if (rejectApiFallbackMutation()) return false;
   return requestLiveEditorTransition(() => {
     isNewItem = true;
     currentEditType = 'live-upcoming';
@@ -2117,6 +2337,7 @@ function closeLiveEditorImmediately() {
   const closingOwner = liveEditorOwner;
   const returnFocus = liveEditorReturnFocus;
   const returnFocusLive = liveEditorReturnFocusLive;
+  releaseImageUploadsForLiveOwner(closingOwner);
   liveEditorReturnFocus = null;
   liveEditorReturnFocusLive = null;
   liveEditorGeneration += 1;
@@ -2163,6 +2384,7 @@ function closeLiveEditorImmediately() {
 
 // Discography追加
 function addDiscography() {
+  if (rejectApiFallbackMutation()) return false;
   if (!prepareGenericEditorTransition()) return false;
   isNewItem = true;
   currentEditType = 'discography-digital';
@@ -2251,12 +2473,17 @@ function showModal(title, content) {
       ? { id: liveId, category: liveCategory }
       : null;
   }
+  releaseImageUploadsForModalGeneration(modalGeneration);
   modalGeneration += 1;
   document.getElementById('modal-title').textContent = title;
   modalBody.innerHTML = content;
+  Array.from(modalBody.querySelectorAll?.('input, textarea, select, button') || []).forEach((control) => {
+    control.setAttribute('data-admin-mutation', '');
+  });
   document.getElementById('modal-overlay').classList.add('active');
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  applyApiFallbackReadOnlyState();
   const initialFocus = modalBody.querySelector(
     'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled]), button:not([disabled])'
   );
@@ -2269,6 +2496,7 @@ function closeModal() {
   const returnFocusLive = modalReturnFocusLive;
   modalReturnFocus = null;
   modalReturnFocusLive = null;
+  releaseImageUploadsForModalGeneration(modalGeneration);
   modalGeneration += 1;
   document.getElementById('modal-overlay').classList.remove('active');
   document.getElementById('modal').classList.remove('active');
@@ -2303,8 +2531,9 @@ function handleModalKeydown(event) {
 
 // モーダル保存
 async function saveModal() {
+  if (rejectApiFallbackMutation()) return false;
   let ok = true;
-  if (!ensureNoActiveImageUploads()) return;
+  if (!ensureNoActiveImageUploads()) return false;
   if (currentEditType?.startsWith('live')) return saveLiveWorkspace();
   if (currentEditType === 'news') {
     saveNewsItem();
@@ -2314,7 +2543,7 @@ async function saveModal() {
     saveDiscographyItem();
   }
 
-  if (!ok) return;
+  if (!ok) return false;
   closeModal();
   markChanged();
   if (IS_API_MODE) {
@@ -2323,9 +2552,11 @@ async function saveModal() {
   } else {
     showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
   }
+  return true;
 }
 
 function saveYouTubeItem() {
+  if (rejectApiFallbackMutation()) return false;
   const newCategory = document.getElementById('edit-category').value;
   const input = document.getElementById('edit-youtube').value;
   const youtubeId = getYouTubeVideoId(input);
@@ -2354,6 +2585,7 @@ function saveYouTubeItem() {
 
 // News保存
 function saveNewsItem() {
+  if (rejectApiFallbackMutation()) return false;
   const item = {
     id: currentEditId,
     date: document.getElementById('edit-date').value,
@@ -2372,10 +2604,12 @@ function saveNewsItem() {
   }
 
   renderNews();
+  return true;
 }
 
 // Live保存
 function saveLiveItem() {
+  if (rejectApiFallbackMutation()) return false;
   if (!liveEditorOwner) return null;
   const isPast = document.getElementById('edit-isPast').checked;
   const originalCategory = liveEditorOwner.category;
@@ -2592,6 +2826,7 @@ async function deleteLiveFromWorkspace() {
 
 // Discography保存
 function saveDiscographyItem() {
+  if (rejectApiFallbackMutation()) return false;
   const newCategory = document.getElementById('edit-category').value;
   const item = {
     id: currentEditId,
@@ -2622,8 +2857,9 @@ function saveDiscographyItem() {
 
 // アイテム削除
 function deleteItem() {
+  if (rejectApiFallbackMutation()) return false;
   if (currentEditType?.startsWith('live')) return deleteLiveFromWorkspace();
-  if (!confirm('削除しますか？')) return;
+  if (!confirm('削除しますか？')) return false;
 
   if (currentEditType === 'news') {
     siteData.news = siteData.news.filter(n => n.id !== currentEditId);
@@ -2647,10 +2883,15 @@ function deleteItem() {
   closeModal();
   markChanged();
   showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
+  return true;
 }
 
 // 変更マーク
 function markChanged() {
+  if (isApiFallbackReadOnly) {
+    applyApiFallbackReadOnlyState();
+    return;
+  }
   hasChanges = true;
   const saveBtn = document.getElementById('saveBtn');
   if (!saveBtn) return;
@@ -2675,6 +2916,7 @@ function setSaveStateSaved(silent = false) {
 }
 
 async function saveToApi() {
+  if (rejectApiFallbackMutation()) return false;
   const response = await adminFetch('/api/admin/site-data', {
     method: 'PUT',
     body: JSON.stringify(siteData)
@@ -3183,7 +3425,7 @@ function escapeHtml(str) {
 
 // ページ離脱時の警告
 window.addEventListener('beforeunload', (e) => {
-  if (hasChanges) {
+  if (hasChanges || liveEditorDirty || liveWorkspaceSaveOperation || activeImageUploads.size > 0) {
     e.preventDefault();
     e.returnValue = '';
   }
