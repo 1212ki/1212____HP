@@ -2077,7 +2077,7 @@ async function handleLiveSourceParse() {
       replyPreview: replyPreviewElement.value,
     };
     for (const key of Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP)) {
-      if (draft[key]) fieldElements[key].value = draft[key];
+      fieldElements[key].value = draft[key];
     }
     updateXPreviewsInModal();
     setLiveSourceIntakeStatus('AIで整理しました。内容を確認してから更新してください。');

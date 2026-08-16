@@ -69,6 +69,11 @@ const LIVE_AI_OUTPUT_SCHEMA = {
 const LIVE_AI_INSTRUCTIONS = [
   "ライブ／公演の元情報を、指定された10項目へ整理してください。",
   "原文にない情報は補わず、判断できない項目は空文字にしてください。",
+  "原文の「公演名」のような引用符付き公演名は、引用符を除いた本文をtitleに入れてください。",
+  "日付と会場が同じ行にある場合は、日付をdate、会場名をvenueに分けてください。",
+  "OPENに続く時刻をopenTime、STARTに続く時刻をstartTimeに入れてください。",
+  "ADVとDOORを含む料金・券種の表記は、両方をticketに入れてください。",
+  "-act-の下に並ぶ出演者はperformersとして扱ってください。",
   "dateは判断できる場合だけYYYY-MM-DD形式にしてください。",
   "openTimeとstartTimeはそれぞれ24時間表記のHH:mm形式にし、ラベルは含めないでください。",
   "ticketには料金や券種の本文だけを入れ、ticket:などのラベルは含めないでください。",
