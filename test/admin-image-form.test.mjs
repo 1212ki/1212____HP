@@ -91,24 +91,24 @@ function loadAdminApp() {
     return element;
   }
 
-  const modalBody = addStatic('modal-body');
-  Object.defineProperty(modalBody, 'innerHTML', {
-    configurable: true,
-    get() { return modalBody._html || ''; },
-    set(value) {
-      for (const id of modalOwnedIds) {
-        const prior = elements.get(id);
-        if (prior) prior.isConnected = false;
-        elements.delete(id);
-      }
-      modalOwnedIds.clear();
-      modalOrder.length = 0;
-      modalBody._html = String(value);
+  function installOwnedHtmlBehavior(root, ownedIds, order) {
+    Object.defineProperty(root, 'innerHTML', {
+      configurable: true,
+      get() { return root._html || ''; },
+      set(value) {
+        for (const id of ownedIds) {
+          const prior = elements.get(id);
+          if (prior) prior.isConnected = false;
+          elements.delete(id);
+        }
+        ownedIds.clear();
+        order.length = 0;
+        root._html = String(value);
       const openingTag = /<([a-z][\w-]*)\b([^>]*\bid="([^"]+)"[^>]*)>/gi;
-      for (const match of modalBody._html.matchAll(openingTag)) {
+      for (const match of root._html.matchAll(openingTag)) {
         const [, tagName, attrs, id] = match;
         const element = createElement(id, document, tagName);
-        element.parentElement = modalBody;
+        element.parentElement = root;
         element.disabled = /\bdisabled(?:\s|>|$)/i.test(attrs);
         element.checked = /\bchecked(?:\s|>|$)/i.test(attrs);
         const valueAttr = attrs.match(/\bvalue="([^"]*)"/i);
@@ -119,14 +119,14 @@ function loadAdminApp() {
         }
         if (tagName.toLowerCase() === 'textarea') {
           const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          const body = modalBody._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
+          const body = root._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
           element.value = decodeHtml(body || '');
         }
         elements.set(id, element);
-        modalOwnedIds.add(id);
-        modalOrder.push(element);
+        ownedIds.add(id);
+        order.push(element);
       }
-      for (const id of modalOwnedIds) {
+      for (const id of ownedIds) {
         if (!id.endsWith('-preview-container')) continue;
         const container = elements.get(id);
         const actions = createElement(`${id}-actions`, document);
@@ -135,11 +135,15 @@ function loadAdminApp() {
           querySelector(selector) { return selector === '.image-actions' ? actions : null; },
         };
       }
-    },
-  });
-  modalBody.querySelector = () => modalOrder.find((element) => (
-    !element.disabled && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName)
-  )) || null;
+      },
+    });
+    root.querySelector = () => order.find((element) => (
+      !element.disabled && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName)
+    )) || null;
+  }
+
+  const modalBody = addStatic('modal-body');
+  installOwnedHtmlBehavior(modalBody, modalOwnedIds, modalOrder);
 
   addStatic('modal-title');
   addStatic('modal-overlay');
@@ -152,6 +156,14 @@ function loadAdminApp() {
   addStatic('tickets-status-filter', 'select');
   addStatic('live-upcoming-list');
   addStatic('live-past-list');
+  addStatic('live-master-detail');
+  addStatic('live-master-pane');
+  addStatic('live-editor-pane');
+  addStatic('live-editor-heading');
+  addStatic('live-editor-save-status');
+  addStatic('live-editor-back', 'button');
+  const liveEditorBody = addStatic('live-editor-body');
+  installOwnedHtmlBehavior(liveEditorBody, new Set(), []);
 
   const context = {
     Blob,
@@ -188,8 +200,9 @@ function loadAdminApp() {
 globalThis.__adminTest = {
   addLive,
   editLive,
-  getImageFormHtml,
-  handleImageSelect,
+	  getImageFormHtml,
+	  handleImageSelect,
+	  clearImage,
   setApiMode(value) { IS_API_MODE = value; },
   setSiteData(value) { siteData = value; },
   setUploadImageToApi(fn) { uploadImageToApi = fn; },
@@ -278,7 +291,7 @@ test('downloadable live flyer forms hide path text and wrap the preview in a dow
   assert.match(html, /download="flyer\.jpg"/);
 });
 
-test('Live edit modal uses a downloadable flyer preview without path or URL display', () => {
+test('Live edit workspace uses a downloadable flyer preview without path or URL display', () => {
   const { editLive, elements, setSiteData } = loadAdminApp();
   setSiteData({
     live: {
@@ -298,7 +311,7 @@ test('Live edit modal uses a downloadable flyer preview without path or URL disp
   });
 
   editLive('live-1', 'upcoming');
-  const html = elements.get('modal-body').innerHTML;
+  const html = elements.get('live-editor-body').innerHTML;
 
   assert.match(html, /class="image-download-link"/);
   assert.match(html, /href="\.\.\/assets\/images\/flyer\.jpg"/);
@@ -319,7 +332,25 @@ test('Live image selection keeps the selected flyer preview inside a download li
   assert.match(container.innerHTML, /download="new flyer\.png"/);
 });
 
-test('Live API upload updates the flyer download link to the uploaded URL', async () => {
+test('Live image clear marks the workspace editor dirty and disables the global save route', () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'clear-live', date: '2026-08-10', title: 'Clear', venue: 'Venue', image: 'assets/images/live.jpg' }],
+      past: [],
+    },
+  });
+  app.editLive('clear-live', 'upcoming');
+  assert.equal(app.elements.get('saveBtn').disabled, false);
+
+  app.clearImage('edit-image');
+
+  assert.equal(app.elements.get('edit-image').value, '');
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '未保存');
+});
+
+test('Live image API upload updates the flyer download link to the uploaded URL', async () => {
   const {
     elements,
     handleImageSelect,
@@ -341,7 +372,7 @@ test('Live API upload updates the flyer download link to the uploaded URL', asyn
   assert.match(container.innerHTML, /download="flyer-final\.png"/);
 });
 
-test('a Live image upload cannot update a replacement modal that reuses edit-image IDs', async () => {
+test('a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs', async () => {
   const app = loadAdminApp();
   app.setSiteData({
     live: {
@@ -371,7 +402,7 @@ test('a Live image upload cannot update a replacement modal that reuses edit-ima
   assert.doesNotMatch(replacementPreview.innerHTML, /a-final\.png/);
 });
 
-test('overlapping same-ID uploads keep the save guard until both settle and older completion cannot win', async () => {
+test('Live image overlapping same-ID uploads keep the save guard until both settle and older completion cannot win', async () => {
   const app = loadAdminApp();
   app.setSiteData({
     live: {

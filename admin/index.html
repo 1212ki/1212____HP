@@ -116,12 +116,30 @@
               <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
             </div>
 
-            <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
-              <div class="items-list" id="live-upcoming-list"></div>
-            </section>
-            <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
-              <div class="items-list" id="live-past-list"></div>
-            </section>
+            <div class="live-master-detail" id="live-master-detail">
+              <div class="live-master-pane" id="live-master-pane">
+                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                  <div class="items-list" id="live-upcoming-list"></div>
+                </section>
+                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                  <div class="items-list" id="live-past-list"></div>
+                </section>
+              </div>
+
+              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                <header class="live-editor-header">
+                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                  <div class="live-editor-title-group">
+                    <p class="live-workspace-eyebrow">選択中Live</p>
+                    <h3 id="live-editor-heading">Liveを選択</h3>
+                  </div>
+                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                </header>
+                <div class="live-editor-body" id="live-editor-body">
+                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                </div>
+              </section>
+            </div>
           </div>
 
           <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>

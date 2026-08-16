@@ -323,6 +323,120 @@ body {
   display: none;
 }
 
+.live-master-detail {
+  min-width: 0;
+}
+
+.live-master-pane,
+.live-editor-pane {
+  min-width: 0;
+}
+
+.live-editor-pane {
+  display: none;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  overflow: hidden;
+}
+
+.live-master-detail.has-live-selection .live-master-pane {
+  display: none;
+}
+
+.live-master-detail.has-live-selection .live-editor-pane {
+  display: block;
+}
+
+.live-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.live-editor-title-group {
+  min-width: 0;
+  flex: 1;
+}
+
+.live-editor-title-group h3 {
+  overflow: hidden;
+  color: var(--gray-900);
+  font-size: 1.05em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.live-editor-back {
+  border: 0;
+  background: transparent;
+  color: var(--gray-700);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.live-editor-save-status {
+  flex: 0 0 auto;
+  color: var(--gray-500);
+  font-size: 0.78em;
+  font-weight: 700;
+}
+
+.live-editor-body {
+  padding: 20px;
+}
+
+.live-editor-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: 10px;
+  margin: 24px -20px -20px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--gray-200);
+  background: var(--white);
+}
+
+.live-edit-trigger.is-selected {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.next-live-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: var(--primary);
+  font-size: 0.68em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .live-master-detail {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .live-master-detail .live-master-pane,
+  .live-master-detail.has-live-selection .live-master-pane,
+  .live-master-detail .live-editor-pane {
+    display: block;
+  }
+
+  .live-editor-back {
+    display: none;
+  }
+}
+
 .section-header.compact {
   margin-bottom: 16px;
 }
