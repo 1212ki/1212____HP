@@ -15,7 +15,7 @@
         <h1 class="logo">1212 <span class="accent">Admin</span></h1>
         <p class="header-meta" id="modeBadge">Local Mode</p>
       </div>
-      <button class="save-btn" id="saveBtn" onclick="saveData()">保存</button>
+      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
     </header>
     <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
 
@@ -44,23 +44,23 @@
         <h3>Home Links</h3>
         <div class="form-group">
           <label>Bandcamp</label>
-          <input type="url" id="site-link-bandcamp" class="text-input" placeholder="https://...">
+          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
         </div>
         <div class="form-group">
           <label>YouTube</label>
-          <input type="url" id="site-link-youtube" class="text-input" placeholder="https://...">
+          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
         </div>
         <div class="form-group">
           <label>X</label>
-          <input type="url" id="site-link-x" class="text-input" placeholder="https://...">
+          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
         </div>
         <div class="form-group">
           <label>Instagram</label>
-          <input type="url" id="site-link-instagram" class="text-input" placeholder="https://...">
+          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
         </div>
         <div class="form-group">
           <label>note</label>
-          <input type="url" id="site-link-note" class="text-input" placeholder="https://...">
+          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
         </div>
       </div>
 
@@ -68,7 +68,7 @@
         <h3>Footer</h3>
         <div class="form-group">
           <label>フッター文言（空なら既定のまま）</label>
-          <input type="text" id="site-footer-text" class="text-input" placeholder="&copy; ...">
+          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
         </div>
       </div>
 
@@ -76,11 +76,11 @@
         <h3>Contact</h3>
         <div class="form-group">
           <label>導入文</label>
-          <textarea id="contact-intro-text" class="textarea" rows="3" placeholder="お問い合わせは..."></textarea>
+          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
         </div>
         <div class="form-group">
           <label>Form Action（Formspree URL）</label>
-          <input type="url" id="contact-form-action" class="text-input" placeholder="https://formspree.io/f/...">
+          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
         </div>
       </div>
     </section>
@@ -89,7 +89,7 @@
     <section class="tab-content" id="news-tab">
       <div class="section-header">
         <h2>News</h2>
-        <button class="add-btn" onclick="addNews()">+ 追加</button>
+        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
       </div>
       <div class="items-list" id="news-list"></div>
     </section>
@@ -98,7 +98,7 @@
     <section class="tab-content active" id="live-tab">
       <div class="section-header">
         <h2>Live</h2>
-        <button class="add-btn live-primary-action" id="live-add-btn" onclick="addLive()">+ 新規Live</button>
+        <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>
       </div>
       <div class="live-workspace" id="live-workspace">
         <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
@@ -154,44 +154,44 @@
               <h3>Ticket Page（表示文言）</h3>
               <div class="form-group">
                 <label>導入文（空なら既定のまま）</label>
-                <textarea id="ticket-intro-text" class="textarea" rows="2" placeholder="ライブを選択して..."></textarea>
+                <textarea id="ticket-intro-text" class="textarea" data-admin-mutation rows="2" placeholder="ライブを選択して..."></textarea>
               </div>
               <div class="form-group">
                 <label>注意文（空なら既定のまま）</label>
-                <textarea id="ticket-notice-text" class="textarea" rows="2" placeholder="送信後..."></textarea>
+                <textarea id="ticket-notice-text" class="textarea" data-admin-mutation rows="2" placeholder="送信後..."></textarea>
               </div>
               <div class="form-group">
                 <label>完了文（空なら既定のまま）</label>
-                <textarea id="ticket-complete-text" class="textarea" rows="2" placeholder="予約しました..."></textarea>
+                <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
               </div>
             </div>
             <div class="subsection">
               <h3>Ticket Page（表示項目）</h3>
               <div class="checkbox-group">
-                <input type="checkbox" id="ticket-field-quantity">
+                <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
                 <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
               </div>
               <div class="form-group">
                 <label>枚数 ラベル（空なら既定のまま）</label>
-                <input type="text" id="ticket-field-label-quantity" class="text-input" placeholder="枚数">
+                <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
               </div>
 
               <div class="checkbox-group">
-                <input type="checkbox" id="ticket-field-message">
+                <input type="checkbox" id="ticket-field-message" data-admin-mutation>
                 <label for="ticket-field-message">備考（任意）を表示</label>
               </div>
               <div class="form-group">
                 <label>備考 ラベル（空なら既定のまま）</label>
-                <input type="text" id="ticket-field-label-message" class="text-input" placeholder="備考">
+                <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
               </div>
               <div class="form-group">
                 <label>備考 プレースホルダ（空なら既定のまま）</label>
-                <input type="text" id="ticket-field-placeholder-message" class="text-input" placeholder="例: 取り置き名義が別の場合など">
+                <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
               </div>
 
               <div class="form-group">
                 <label>送信ボタン文言（空なら既定のまま）</label>
-                <input type="text" id="ticket-field-submit-label" class="text-input" placeholder="予約する">
+                <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
               </div>
             </div>
           </section>
@@ -225,30 +225,30 @@
     <section class="tab-content" id="youtube-tab">
       <div class="section-header">
         <h2>YouTube</h2>
-        <button class="add-btn" onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+        <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
       </div>
 
       <div class="subsection">
         <h3>Channel URL</h3>
-        <input type="url" id="youtube-channel-url" class="text-input" placeholder="https://www.youtube.com/@...">
+        <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
       </div>
 
       <div class="subsection">
         <h3>Music Video</h3>
         <div class="items-list" id="youtube-musicVideos-list"></div>
-        <button class="add-btn small" onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+        <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
       </div>
 
       <div class="subsection">
         <h3>Live Movie</h3>
         <div class="items-list" id="youtube-liveMovies-list"></div>
-        <button class="add-btn small" onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+        <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
       </div>
 
       <div class="subsection">
         <h3>Demo</h3>
         <div class="items-list" id="youtube-demos-list"></div>
-        <button class="add-btn small" onclick="addYouTubeVideo('demos')">+ 追加</button>
+        <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
       </div>
     </section>
 
@@ -256,7 +256,7 @@
     <section class="tab-content" id="discography-tab">
       <div class="section-header">
         <h2>Discography</h2>
-        <button class="add-btn" onclick="addDiscography()">+ 追加</button>
+        <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
       </div>
       <div class="subsection">
         <h3>Digital Release</h3>
@@ -276,12 +276,12 @@
       <div id="profile-image-form"></div>
       <div class="form-group">
         <label>プロフィールテキスト</label>
-        <textarea id="profile-text" class="textarea" rows="10" placeholder="プロフィール本文"></textarea>
+        <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
       </div>
       <div class="subsection">
         <h3>SNSリンク</h3>
         <div class="items-list" id="profile-links-list"></div>
-        <button class="add-btn small" onclick="addProfileLink()">+ リンク追加</button>
+        <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
       </div>
     </section>
 
@@ -295,8 +295,8 @@
       <div class="modal-body" id="modal-body"></div>
       <div class="modal-footer">
         <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
-        <button class="btn btn-danger" id="delete-btn" onclick="deleteItem()">削除</button>
-        <button class="btn btn-primary" onclick="saveModal()">更新</button>
+        <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+        <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
       </div>
     </div>
 
@@ -305,7 +305,7 @@
   </div>
   <script>
   // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
-  window.ADMIN_BUILD_ID = '2026-08-04T0142Z';
+  window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
   try {
     var badge = document.getElementById('modeBadge');
     if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';

@@ -108,8 +108,11 @@ body {
   transform: scale(0.95);
 }
 
-.save-btn.saved {
+.save-btn.saved,
+.save-btn.saved:hover,
+.save-btn.saved:focus-visible {
   background: var(--gray-900);
+  color: var(--white);
 }
 
 .connection-banner {
@@ -225,7 +228,7 @@ body {
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
-  overflow: clip;
+  overflow: visible;
 }
 
 .live-workspace-tabs,
@@ -1225,6 +1228,45 @@ body {
 .textarea:disabled {
   cursor: not-allowed;
   opacity: 0.48;
+}
+
+.save-btn:disabled,
+.add-btn:disabled,
+.tab-btn:disabled,
+.live-workspace button:disabled,
+.live-workspace button[aria-disabled="true"],
+[data-admin-mutation]:disabled,
+[data-admin-mutation][aria-disabled="true"] {
+  background: var(--gray-100);
+  border-color: var(--gray-200);
+  color: var(--gray-500);
+  cursor: not-allowed;
+  opacity: 0.44;
+  pointer-events: none;
+  filter: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.save-btn:disabled:hover,
+.add-btn:disabled:hover,
+.tab-btn:disabled:hover,
+.live-workspace button:disabled:hover,
+.live-workspace button[aria-disabled="true"]:hover,
+[data-admin-mutation]:disabled:hover,
+[data-admin-mutation][aria-disabled="true"]:hover {
+  background: var(--gray-100);
+  border-color: var(--gray-200);
+  color: var(--gray-500);
+  filter: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.tab-btn:disabled::after,
+.live-workspace-tab:disabled::after,
+.live-editor-task-tab:disabled::after {
+  background: var(--gray-300);
 }
 
 /* ----- Toast ----- */
