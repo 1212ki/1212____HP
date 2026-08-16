@@ -1449,18 +1449,13 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
         <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと">${escapeHtml(item.xComment || '')}</textarea>
       </div>
       <div class="form-group">
-        <label for="x-parent-preview">親投稿プレビュー</label>
-        <textarea id="x-parent-preview" class="textarea preview-text" rows="5" readonly></textarea>
-        <p class="field-hint">コメント・#ライブ・1212HPのLive詳細URLだけを投稿します。</p>
-      </div>
-      <div class="form-group">
-        <label for="x-reply-preview">返信用 詳細プレビュー</label>
-        <textarea id="x-reply-preview" class="textarea preview-text" rows="7" readonly></textarea>
+        <label for="x-post-preview">X投稿プレビュー</label>
+        <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>
       </div>
       ${saveFirstX}
       <div class="field-row">
         <button type="button" class="btn btn-primary btn-compact" id="x-intent-btn"${disabled}>X Web Intentを開く</button>
-        <button type="button" class="btn btn-secondary btn-compact" id="x-reply-copy-btn">詳細をコピー</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
       </div>
     </section>
 
@@ -1948,19 +1943,17 @@ function getCanonicalLiveUrl(liveId) {
   return id ? `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(id)}` : '';
 }
 
-function updateXPreviewsInModal() {
-  const parentEl = document.getElementById('x-parent-preview');
-  const replyEl = document.getElementById('x-reply-preview');
-  if (!parentEl || !replyEl) return;
+function updateXPreviewInModal() {
+  const previewEl = document.getElementById('x-post-preview');
+  if (!previewEl) return;
   const live = readLiveFromModal();
   const operations = getLiveOperations();
   if (!operations) {
-    parentEl.value = '';
-    replyEl.value = '';
+    previewEl.value = '';
     return;
   }
-  parentEl.value = operations.buildXParentText(live, live.xComment, getCanonicalLiveUrl(live.id));
-  replyEl.value = operations.buildXReplyText(live);
+  const canonicalUrl = isNewItem ? '' : getCanonicalLiveUrl(live.id);
+  previewEl.value = operations.buildXAnnouncementText(live, live.xComment, canonicalUrl);
 }
 
 function setLiveSourceIntakeStatus(message) {
@@ -2024,9 +2017,8 @@ async function handleLiveSourceParse() {
   const fieldElements = Object.fromEntries(Object.entries(LIVE_SOURCE_INTAKE_FIELD_MAP).map(([key, id]) => (
     [key, document.getElementById(id)]
   )));
-  const parentPreviewElement = document.getElementById('x-parent-preview');
-  const replyPreviewElement = document.getElementById('x-reply-preview');
-  if (Object.values(fieldElements).some((field) => !field) || !parentPreviewElement || !replyPreviewElement) {
+  const previewElement = document.getElementById('x-post-preview');
+  if (Object.values(fieldElements).some((field) => !field) || !previewElement) {
     setLiveSourceIntakeStatus('AIで整理できませんでした。元情報は変更されていません。');
     return false;
   }
@@ -2035,8 +2027,7 @@ async function handleLiveSourceParse() {
     && document.getElementById('edit-sourceText') === sourceElement
     && document.getElementById('live-source-parse-btn') === button
     && Object.entries(LIVE_SOURCE_INTAKE_FIELD_MAP).every(([key, id]) => document.getElementById(id) === fieldElements[key])
-    && document.getElementById('x-parent-preview') === parentPreviewElement
-    && document.getElementById('x-reply-preview') === replyPreviewElement
+    && document.getElementById('x-post-preview') === previewElement
   );
   const requestInputSnapshot = {
     sourceText,
@@ -2073,13 +2064,12 @@ async function handleLiveSourceParse() {
 
     rollbackSnapshot = {
       fields: Object.fromEntries(Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP).map((key) => [key, fieldElements[key].value])),
-      parentPreview: parentPreviewElement.value,
-      replyPreview: replyPreviewElement.value,
+      preview: previewElement.value,
     };
     for (const key of Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP)) {
       fieldElements[key].value = draft[key];
     }
-    updateXPreviewsInModal();
+    updateXPreviewInModal();
     setLiveSourceIntakeStatus('AIで整理しました。内容を確認してから更新してください。');
     return true;
   } catch (_error) {
@@ -2088,8 +2078,7 @@ async function handleLiveSourceParse() {
         for (const key of Object.keys(LIVE_SOURCE_INTAKE_FIELD_MAP)) {
           fieldElements[key].value = rollbackSnapshot.fields[key];
         }
-        parentPreviewElement.value = rollbackSnapshot.parentPreview;
-        replyPreviewElement.value = rollbackSnapshot.replyPreview;
+        previewElement.value = rollbackSnapshot.preview;
       }
       setLiveSourceIntakeStatus('AIで整理できませんでした。元情報は変更されていません。');
     }
@@ -2129,8 +2118,8 @@ async function copyToClipboard(text) {
 
 function buildXIntentUrlFromModal() {
   if (isNewItem || !currentEditId) return '';
-  updateXPreviewsInModal();
-  const text = String(document.getElementById('x-parent-preview')?.value || '').trim();
+  updateXPreviewInModal();
+  const text = String(document.getElementById('x-post-preview')?.value || '').trim();
   return text ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}` : '';
 }
 
@@ -2143,11 +2132,11 @@ function openXIntentFromModal() {
   window.open(intentUrl, '_blank', 'noopener');
 }
 
-async function copyXReplyFromModal() {
-  updateXPreviewsInModal();
-  const text = document.getElementById('x-reply-preview')?.value || '';
+async function copyXAnnouncementFromModal() {
+  updateXPreviewInModal();
+  const text = document.getElementById('x-post-preview')?.value || '';
   const ok = await copyToClipboard(text);
-  showToast(ok ? '返信用詳細をコピーしました' : 'コピーできませんでした', ok ? 'success' : 'error');
+  showToast(ok ? '投稿文をコピーしました' : 'コピーできませんでした', ok ? 'success' : 'error');
   return ok;
 }
 
@@ -2288,15 +2277,15 @@ function wireLiveOperationsModal() {
     'edit-description',
     'edit-xComment',
   ].forEach((id) => {
-    document.getElementById(id)?.addEventListener('input', updateXPreviewsInModal);
+    document.getElementById(id)?.addEventListener('input', updateXPreviewInModal);
   });
   document.getElementById('x-intent-btn')?.addEventListener('click', openXIntentFromModal);
-  document.getElementById('x-reply-copy-btn')?.addEventListener('click', copyXReplyFromModal);
+  document.getElementById('x-post-copy-btn')?.addEventListener('click', copyXAnnouncementFromModal);
   document.getElementById('manual-reservation-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     submitManualReservation();
   });
-  updateXPreviewsInModal();
+  updateXPreviewInModal();
   loadLiveReservations(currentEditId);
 }
 

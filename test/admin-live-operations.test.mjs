@@ -309,9 +309,9 @@ globalThis.__adminLiveTest = {
   editLive,
   handleLiveSourceParse,
   saveLiveItem,
-  updateXPreviewsInModal,
+  updateXPreviewInModal: typeof updateXPreviewInModal === 'function' ? updateXPreviewInModal : null,
   buildXIntentUrlFromModal,
-  copyXReplyFromModal,
+  copyXAnnouncementFromModal: typeof copyXAnnouncementFromModal === 'function' ? copyXAnnouncementFromModal : null,
   loadLiveReservations,
   submitManualReservation,
   calculateActiveReservationTotals,
@@ -496,8 +496,7 @@ test('AIで整理 source intake posts the exact source once, replaces all ten fi
     'edit-ticketUrl': 'https://old.example/ticket',
     'edit-link': 'https://old.example/detail',
   });
-  app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-  app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+  app.elements.get('x-post-preview').value = 'POST BEFORE';
   const expectedDraft = {
     date: '2026-08-20',
     title: 'AI replacement',
@@ -540,12 +539,13 @@ test('AIで整理 source intake posts the exact source once, replaces all ten fi
     expectedDraft,
   );
   assert.equal(app.elements.get('edit-sourceText').value, sourceText);
-  assert.notEqual(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-  assert.match(app.elements.get('x-reply-preview').value, /AI replacement/);
-  assert.doesNotMatch(app.elements.get('x-reply-preview').value, /manual venue stays|manual ticket|manual performer/);
+  assert.notEqual(app.elements.get('x-post-preview').value, 'POST BEFORE');
+  assert.match(app.elements.get('x-post-preview').value, /AI replacement/);
+  assert.doesNotMatch(app.elements.get('x-post-preview').value, /manual venue stays|manual ticket|manual performer/);
   assert.match(app.elements.get('live-source-warnings').textContent, /整理しました/);
   assert.deepEqual(app.getSiteData(), initial);
   assert.equal(app.getSaveCalls(), 0);
+  assert.deepEqual(app.openedUrls, []);
 });
 
 test('AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button', async () => {
@@ -580,8 +580,7 @@ test('AIで整理 source intake discards a stale response when source text chang
   app.setApiMode(true);
   setLiveForm(app.elements, { 'edit-sourceText': 'source at request start' });
   app.setSaveSpy();
-  app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-  app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+  app.elements.get('x-post-preview').value = 'POST BEFORE';
   const response = deferred();
   app.useAdminFetch(() => response.promise);
 
@@ -595,8 +594,7 @@ test('AIで整理 source intake discards a stale response when source text chang
 
   assert.equal(result, false);
   assertLiveSourceIntakeUnchanged(app.elements, latestSnapshot);
-  assert.equal(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-  assert.equal(app.elements.get('x-reply-preview').value, 'REPLY BEFORE');
+  assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.match(app.elements.get('live-source-warnings').textContent, /入力が変更されたため反映しませんでした/);
   assert.match(app.elements.get('live-source-warnings').textContent, /もう一度/);
   assert.equal(app.getSaveCalls(), 0);
@@ -609,8 +607,7 @@ test('AIで整理 source intake discards every AI field when one destination fie
   app.setApiMode(true);
   setLiveForm(app.elements, { 'edit-sourceText': 'same source throughout request' });
   app.setSaveSpy();
-  app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-  app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+  app.elements.get('x-post-preview').value = 'POST BEFORE';
   const response = deferred();
   app.useAdminFetch(() => response.promise);
 
@@ -624,8 +621,7 @@ test('AIで整理 source intake discards every AI field when one destination fie
 
   assert.equal(result, false);
   assertLiveSourceIntakeUnchanged(app.elements, latestSnapshot);
-  assert.equal(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-  assert.equal(app.elements.get('x-reply-preview').value, 'REPLY BEFORE');
+  assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.match(app.elements.get('live-source-warnings').textContent, /入力が変更されたため反映しませんでした/);
   assert.match(app.elements.get('live-source-warnings').textContent, /もう一度/);
   assert.equal(app.getSaveCalls(), 0);
@@ -669,8 +665,7 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
     'edit-ticketUrl': 'https://b.example/ticket-before',
     'edit-link': 'https://b.example/detail-before',
   });
-  app.elements.get('x-parent-preview').value = 'B PARENT BEFORE';
-  app.elements.get('x-reply-preview').value = 'B REPLY BEFORE';
+  app.elements.get('x-post-preview').value = 'B POST BEFORE';
   const buttonB = app.elements.get('live-source-parse-btn');
   assert.equal(buttonB.disabled, false);
   const pendingB = buttonB.dispatch('click');
@@ -723,8 +718,8 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
   assert.equal(app.elements.get('edit-performers').value, 'B performer');
   assert.equal(app.elements.get('edit-ticketUrl').value, 'https://b.example/ticket');
   assert.equal(app.elements.get('edit-link').value, 'https://b.example/detail');
-  assert.doesNotMatch(app.elements.get('x-reply-preview').value, /STALE A/);
-  assert.match(app.elements.get('x-reply-preview').value, /CURRENT B/);
+  assert.doesNotMatch(app.elements.get('x-post-preview').value, /STALE A/);
+  assert.match(app.elements.get('x-post-preview').value, /CURRENT B/);
   assert.match(app.elements.get('live-source-warnings').textContent, /整理しました/);
   assert.equal(app.getSaveCalls(), 0);
 });
@@ -767,16 +762,14 @@ test('AIで整理 source intake keeps every field and preview unchanged for HTTP
       app.setApiMode(true);
       setLiveForm(app.elements, { 'edit-sourceText': `source stays: ${name}` });
       app.setSaveSpy();
-      app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-      app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+      app.elements.get('x-post-preview').value = 'POST BEFORE';
       const snapshot = snapshotLiveSourceIntake(app.elements);
       app.useAdminFetch(responder);
 
       await app.handleLiveSourceParse();
 
       assertLiveSourceIntakeUnchanged(app.elements, snapshot);
-      assert.equal(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-      assert.equal(app.elements.get('x-reply-preview').value, 'REPLY BEFORE');
+      assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
       assert.equal(app.elements.get('live-source-parse-btn').disabled, false);
       assert.equal(app.elements.get('live-source-parse-btn').textContent, 'AIで整理');
       assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
@@ -804,8 +797,7 @@ test('AIで整理 source intake never falls back from a custom API base to canon
       app.addLive();
       setLiveForm(app.elements, { 'edit-sourceText': `private source ${name}` });
       app.setSaveSpy();
-      app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-      app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+      app.elements.get('x-post-preview').value = 'POST BEFORE';
       const snapshot = snapshotLiveSourceIntake(app.elements);
 
       const result = await app.handleLiveSourceParse();
@@ -815,8 +807,7 @@ test('AIで整理 source intake never falls back from a custom API base to canon
       assert.equal(app.networkFetchCalls[0].url, `${customBase}/api/admin/live-source-intake`);
       assert.equal(app.networkFetchCalls.some((call) => call.url.startsWith('https://1212hp.itsukimatsumoto.workers.dev')), false);
       assertLiveSourceIntakeUnchanged(app.elements, snapshot);
-      assert.equal(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-      assert.equal(app.elements.get('x-reply-preview').value, 'REPLY BEFORE');
+      assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
       assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
       assert.equal(app.getSaveCalls(), 0);
     });
@@ -831,8 +822,7 @@ test('AIで整理 source intake fails atomically when one of the ten destination
   setLiveForm(app.elements, { 'edit-sourceText': 'source stays when a destination is missing' });
   app.setSaveSpy();
   app.elements.delete('edit-link');
-  app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-  app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+  app.elements.get('x-post-preview').value = 'POST BEFORE';
   const snapshot = snapshotLiveSourceIntake(app.elements);
   app.useAdminFetch(async () => jsonResponse({ draft: validLiveSourceIntakeDraft() }));
 
@@ -840,23 +830,19 @@ test('AIで整理 source intake fails atomically when one of the ten destination
 
   assert.equal(result, false);
   assertLiveSourceIntakeUnchanged(app.elements, snapshot);
-  assert.equal(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-  assert.equal(app.elements.get('x-reply-preview').value, 'REPLY BEFORE');
+  assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
   assert.equal(app.getSaveCalls(), 0);
 });
 
-test('AIで整理 source intake rolls back all fields and both previews when X preview generation fails partway', async () => {
+test('AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails', async () => {
   let failPreview = false;
   const app = loadAdminApp({
     liveOperations: {
       ...LiveOperations,
-      buildXParentText(...args) {
-        return failPreview ? 'PARTIAL PARENT' : LiveOperations.buildXParentText(...args);
-      },
-      buildXReplyText(...args) {
+      buildXAnnouncementText(...args) {
         if (failPreview) throw new Error('preview generation failed');
-        return LiveOperations.buildXReplyText(...args);
+        return LiveOperations.buildXAnnouncementText(...args);
       },
     },
   });
@@ -865,8 +851,7 @@ test('AIで整理 source intake rolls back all fields and both previews when X p
   app.setApiMode(true);
   setLiveForm(app.elements, { 'edit-sourceText': 'source stays when preview fails' });
   app.setSaveSpy();
-  app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-  app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+  app.elements.get('x-post-preview').value = 'POST BEFORE';
   const snapshot = snapshotLiveSourceIntake(app.elements);
   failPreview = true;
   app.useAdminFetch(async () => jsonResponse({ draft: validLiveSourceIntakeDraft() }));
@@ -875,8 +860,7 @@ test('AIで整理 source intake rolls back all fields and both previews when X p
 
   assert.equal(result, false);
   assertLiveSourceIntakeUnchanged(app.elements, snapshot);
-  assert.equal(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-  assert.equal(app.elements.get('x-reply-preview').value, 'REPLY BEFORE');
+  assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
   assert.equal(app.getSaveCalls(), 0);
 });
@@ -893,8 +877,7 @@ test('AIで整理 source intake stays local-only in Local Mode without calling A
   app.addLive();
   setLiveForm(app.elements, { 'edit-sourceText': 'local source stays' });
   app.setSaveSpy();
-  app.elements.get('x-parent-preview').value = 'PARENT BEFORE';
-  app.elements.get('x-reply-preview').value = 'REPLY BEFORE';
+  app.elements.get('x-post-preview').value = 'POST BEFORE';
   const snapshot = snapshotLiveSourceIntake(app.elements);
   app.useAdminFetch(async () => { throw new Error('API must not be called'); });
 
@@ -903,8 +886,7 @@ test('AIで整理 source intake stays local-only in Local Mode without calling A
   assert.equal(app.fetchCalls.length, 0);
   assert.equal(parserCalls, 0);
   assertLiveSourceIntakeUnchanged(app.elements, snapshot);
-  assert.equal(app.elements.get('x-parent-preview').value, 'PARENT BEFORE');
-  assert.equal(app.elements.get('x-reply-preview').value, 'REPLY BEFORE');
+  assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.match(app.elements.get('live-source-warnings').textContent, /API Modeで利用可能/);
   assert.equal(app.getSaveCalls(), 0);
 });
@@ -1007,7 +989,7 @@ test('unparsed legacy Live date is preserved until a valid replacement is entere
   const html = app.elements.get('modal-body').innerHTML;
   assert.match(html, /id="edit-date"[^>]*value=""[^>]*data-original-unparsed-date="date TBA"/);
   assert.match(html, /現在の保存値: <code>date TBA<\/code>/);
-  assert.match(app.elements.get('x-reply-preview').value, /日付：date TBA/);
+  assert.match(app.elements.get('x-post-preview').value, /^date TBA/m);
   app.elements.get('edit-venue').value = 'Changed venue';
   app.saveLiveItem();
   assert.equal(app.getSiteData().live.upcoming[0].date, 'date TBA');
@@ -1057,31 +1039,48 @@ test('saving a Live merges new fields into the original object without dropping 
   assert.equal(saved.link, 'https://instagram.com/night-shift');
 });
 
-test('X uses separate canonical parent and detail reply; intent and copy never save', async () => {
+test('unified X announcement preview drives Intent and copy without save', async () => {
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [{ id: 'live-x' }], past: [] } });
   app.editLive('live-x', 'upcoming');
+  const editorHtml = app.elements.get('modal-body').innerHTML;
+  assert.equal((editorHtml.match(/id="x-post-preview"/g) || []).length, 1);
+  assert.match(editorHtml, /<label for="x-post-preview">X投稿プレビュー<\/label>/);
+  assert.doesNotMatch(editorHtml, /x-parent-preview|x-reply-preview|親投稿プレビュー|返信用 詳細プレビュー/);
+  assert.equal(typeof app.updateXPreviewInModal, 'function');
+  assert.equal(typeof app.copyXAnnouncementFromModal, 'function');
+
   setLiveForm(app.elements);
   app.setSaveSpy();
 
-  app.updateXPreviewsInModal({ force: true });
-  const parent = app.elements.get('x-parent-preview').value;
-  const reply = app.elements.get('x-reply-preview').value;
-  assert.match(parent, /ぜひ来てください/);
-  assert.match(parent, /#ライブ/);
-  assert.match(parent, /https:\/\/1212hp\.com\/live\/detail\/\?liveId=live-x/);
-  assert.doesNotMatch(parent, /OPEN|START|Night Shift/);
-  assert.match(reply, /Open\/Start: 18:30\/19:00/);
-  assert.match(reply, /ticket: ¥2,500 \+ 1D/);
-  assert.match(reply, /※再入場不可/);
-  assert.match(reply, /w\. 松本一樹 \/ another band/);
-  assert.match(reply, /Night Shift/);
+  app.updateXPreviewInModal();
+  const announcement = app.elements.get('x-post-preview').value;
+  assert.equal(announcement, LiveOperations.buildXAnnouncementText({
+    id: 'live-x',
+    date: '2026-08-10',
+    title: 'Night Shift',
+    venue: '柴崎mod',
+    openTime: '18:30',
+    startTime: '19:00',
+    ticket: '¥2,500 + 1D',
+    notes: '再入場不可',
+    performers: '松本一樹 / another band',
+    description: '',
+    link: 'https://instagram.com/night-shift',
+    sourceText: 'raw booking copy',
+    ticketUrl: '',
+    reservationClosed: false,
+    xComment: 'ぜひ来てください',
+  }, 'ぜひ来てください', 'https://1212hp.com/live/detail/?liveId=live-x'));
+  assert.match(announcement, /^2026\.8\.10\(月\) 柴崎mod/m);
+  assert.match(announcement, /OPEN \/ 18:30 START \/ 19:00/);
+  assert.match(announcement, /-act-\n松本一樹\nanother band/);
 
   const intent = new URL(app.buildXIntentUrlFromModal());
   assert.equal(intent.hostname, 'twitter.com');
-  assert.equal(intent.searchParams.get('text'), parent);
-  await app.copyXReplyFromModal();
-  assert.deepEqual(app.clipboardWrites, [reply]);
+  assert.equal(intent.searchParams.get('text'), announcement);
+  await app.copyXAnnouncementFromModal();
+  assert.deepEqual(app.clipboardWrites, [announcement]);
   assert.equal(app.getSaveCalls(), 0);
 });
 
