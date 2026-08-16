@@ -66,7 +66,14 @@
 作業前に Issue を確認または作成し、Project Status を `In Progress` にしてから branch を切ります。
 PR 作成直前は Status を `Review`、完了後は `close` にします。
 
-詳細: `GITHUB_WORKFLOW.md`
+実装前に `docs/specs/current/` の該当設計書を確認し、変更がある場合は先に設計書を更新します。
+設計書が `Approved` になるまでは実装を開始しません。
+
+詳細:
+
+- 文書体系と設計先行ルール: `docs/README.md`
+- 現在有効な設計書: `docs/specs/current/`
+- GitHub運用: `GITHUB_WORKFLOW.md`
 
 ## Local Development
 

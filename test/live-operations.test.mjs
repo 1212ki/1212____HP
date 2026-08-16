@@ -9,6 +9,7 @@ const repoRoot = process.cwd();
 const require = createRequire(import.meta.url);
 const liveFormatCases = JSON.parse(readFileSync(join(repoRoot, 'test/fixtures/live-format-cases.json'), 'utf8'));
 const {
+  buildXAnnouncementText,
   buildXParentText,
   buildXReplyText,
   formatLiveDate,
@@ -393,6 +394,52 @@ test('buildXReplyText contains structured Live details', () => {
   assert.doesNotMatch(text, /legacy must not render/);
 });
 
+test('X announcement emits the unified Live post in canonical order', () => {
+  const text = buildXAnnouncementText({
+    date: '2026-08-10',
+    title: '山頂',
+    venue: '下北沢おてまえ',
+    openTime: '18:30',
+    startTime: '19:00',
+    ticket: 'ADV¥2,300 / DOOR¥2,800(+1D)',
+    notes: '再入場不可\n※受付は18:00から',
+    performers: 'tiny-yang-yang / Erika\n小林義裕(晩年) / 棚上瑞',
+  }, '任意コメント', 'https://1212hp.com/live/detail/?liveId=live-1');
+
+  assert.equal(text, [
+    '2026.8.10(月) 下北沢おてまえ',
+    '「山頂」',
+    [
+      'OPEN / 18:30 START / 19:00',
+      'ADV¥2,300 / DOOR¥2,800(+1D)',
+      '※再入場不可',
+      '※受付は18:00から',
+    ].join('\n'),
+    ['-act-', 'tiny-yang-yang', 'Erika', '小林義裕(晩年)', '棚上瑞'].join('\n'),
+    '任意コメント',
+    '#ライブ',
+    'https://1212hp.com/live/detail/?liveId=live-1',
+  ].join('\n\n'));
+});
+
+test('X announcement recomputes Japanese weekday and omits empty blocks', () => {
+  assert.equal(buildXAnnouncementText({
+    date: '2026.9.28(日)',
+    startTime: '19:00',
+    notes: '\n※※注意事項\n  受付で名前を伝える  \n',
+  }, '', ''), [
+    '2026.9.28(月)',
+    ['START / 19:00', '※注意事項', '※受付で名前を伝える'].join('\n'),
+    '#ライブ',
+  ].join('\n\n'));
+
+  assert.equal(buildXAnnouncementText({ openTime: '18:30' }, '', ''), [
+    'OPEN / 18:30',
+    '#ライブ',
+  ].join('\n\n'));
+  assert.equal(buildXAnnouncementText({}, '', ''), '#ライブ');
+});
+
 test('the dependency-free module exposes the same API to a browser global', () => {
   const source = readFileSync(join(repoRoot, 'assets/js/live-operations.js'), 'utf8');
   const context = { window: {} };
@@ -402,6 +449,7 @@ test('the dependency-free module exposes the same API to a browser global', () =
 
   assert.equal(typeof context.window.LiveOperations.parseLiveSourceText, 'function');
   assert.equal(typeof context.window.LiveOperations.getTicketCta, 'function');
+  assert.equal(typeof context.window.LiveOperations.buildXAnnouncementText, 'function');
   assert.equal(typeof context.window.LiveOperations.buildXParentText, 'function');
 });
 
