@@ -2003,9 +2003,10 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
         <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>
       </div>
       ${saveFirstX}
-      <div class="field-row">
+      <div class="live-announcement-actions">
         <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn"${disabled}>X Web Intentを開く</button>
         <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn"${disabled}>リンクをコピー</button>
       </div>
     </section>
 
@@ -3255,6 +3256,15 @@ async function copyXAnnouncementFromModal() {
   return ok;
 }
 
+async function copyLiveLinkFromModal() {
+  if (isNewItem || !currentEditId) return false;
+  const canonicalUrl = getCanonicalLiveUrl(currentEditId);
+  if (!canonicalUrl) return false;
+  const ok = await copyToClipboard(canonicalUrl);
+  showToast(ok ? 'リンクをコピーしました' : 'コピーできませんでした', ok ? 'success' : 'error');
+  return ok;
+}
+
 function calculateActiveReservationTotals(reservations) {
   return (Array.isArray(reservations) ? reservations : []).reduce((totals, reservation) => {
     if (reservation?.status === 'cancelled') return totals;
@@ -3412,6 +3422,7 @@ function wireLiveOperationsModal() {
   });
   document.getElementById('x-intent-btn')?.addEventListener('click', openXIntentFromModal);
   document.getElementById('x-post-copy-btn')?.addEventListener('click', copyXAnnouncementFromModal);
+  document.getElementById('x-link-copy-btn')?.addEventListener('click', copyLiveLinkFromModal);
   document.getElementById('manual-reservation-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     submitManualReservation();

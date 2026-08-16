@@ -1205,6 +1205,22 @@ body {
   border: 2px solid var(--gray-200);
 }
 
+.live-announcement-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.live-announcement-actions .btn {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .btn.btn-secondary.btn-compact {
   background: var(--white);
 }
