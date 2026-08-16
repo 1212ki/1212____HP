@@ -125,7 +125,7 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
   return element;
 }
 
-function createDomHarness() {
+function createDomHarness(options = {}) {
   const elements = new Map();
   const documentListeners = new Map();
   const modalOwnedIds = new Set();
@@ -133,6 +133,8 @@ function createDomHarness() {
   const modalOwnedElements = new Map();
   const liveEditorOwnedElements = new Map();
   const createdAnchors = [];
+  const createdTextareas = [];
+  const execCommandCalls = [];
   const objectUrls = [];
   const revokedObjectUrls = [];
   let objectUrlSequence = 0;
@@ -155,9 +157,13 @@ function createDomHarness() {
         };
         createdAnchors.push(element);
       }
+      if (tag.toLowerCase() === 'textarea') createdTextareas.push(element);
       return element;
     },
-    execCommand: () => true,
+    execCommand(command) {
+      execCommandCalls.push(command);
+      return options.execCommandResult ?? true;
+    },
     getElementById(id) {
       // The Live editor precedes the generic modal in the real document. Keep
       // that lookup order when duplicate edit-* IDs expose an ownership bug.
@@ -463,8 +469,10 @@ function createDomHarness() {
   return {
     TestURL,
     createdAnchors,
+    createdTextareas,
     document,
     elements,
+    execCommandCalls,
     objectUrls,
     revokedObjectUrls,
     async dispatchDocument(type, event = {}) {
@@ -477,7 +485,7 @@ function createDomHarness() {
 }
 
 function loadAdminApp(options = {}) {
-  const dom = createDomHarness();
+  const dom = createDomHarness(options);
   const { document, elements } = dom;
   const fetchCalls = [];
   const networkFetchCalls = [];
@@ -504,7 +512,14 @@ function loadAdminApp(options = {}) {
     FileReader: class {},
     location: { hostname: 'localhost' },
     localStorage: { getItem: () => '', removeItem() {}, setItem() {} },
-    navigator: { clipboard: { async writeText(value) { clipboardWrites.push(value); } } },
+    navigator: {
+      clipboard: {
+        async writeText(value) {
+          clipboardWrites.push(value);
+          if (options.clipboardWrite) await options.clipboardWrite(value);
+        },
+      },
+    },
     prompt: () => '',
     setTimeout,
     structuredClone,
@@ -556,6 +571,7 @@ function loadAdminApp(options = {}) {
   updateXPreviewInModal: typeof updateXPreviewInModal === 'function' ? updateXPreviewInModal : null,
   buildXIntentUrlFromModal,
   copyXAnnouncementFromModal: typeof copyXAnnouncementFromModal === 'function' ? copyXAnnouncementFromModal : null,
+  copyLiveLinkFromModal: typeof copyLiveLinkFromModal === 'function' ? copyLiveLinkFromModal : null,
   loadLiveReservations,
   submitManualReservation,
   calculateActiveReservationTotals,
@@ -2443,6 +2459,94 @@ test('unified X announcement preview drives Intent and copy without save', async
   await app.copyXAnnouncementFromModal();
   assert.deepEqual(app.clipboardWrites, [announcement]);
   assert.equal(app.getSaveCalls(), 0);
+});
+
+test('Issue #20 live link actions copy only the saved canonical URL and keep X actions save-free', async () => {
+  const liveId = 'live copy/東京?';
+  const canonicalUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(liveId)}`;
+  const app = loadAdminApp();
+  app.setSiteData({ live: { upcoming: [{ id: liveId }], past: [] } });
+  app.editLive(liveId, 'upcoming');
+
+  const editorHtml = app.elements.get('live-editor-body').innerHTML;
+  const actionRow = editorHtml.match(/<div class="live-announcement-actions">([\s\S]*?)<\/div>/)?.[1] || '';
+  assert.match(actionRow, /id="x-intent-btn"/);
+  assert.match(actionRow, /id="x-post-copy-btn"/);
+  assert.match(actionRow, /id="x-link-copy-btn"/);
+  assert.equal(typeof app.copyLiveLinkFromModal, 'function');
+
+  setLiveForm(app.elements);
+  app.setSaveSpy();
+  assert.equal(await app.elements.get('x-link-copy-btn').dispatch('click'), true);
+  assert.deepEqual(app.clipboardWrites, [canonicalUrl]);
+  assert.equal(app.elements.get('toast').textContent, 'リンクをコピーしました');
+
+  await app.elements.get('x-intent-btn').dispatch('click');
+  const intent = new URL(app.openedUrls[0]);
+  assert.match(intent.searchParams.get('text'), new RegExp(`${canonicalUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`));
+  assert.equal(app.getSaveCalls(), 0);
+});
+
+test('Issue #20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save', async () => {
+  const app = loadAdminApp({
+    clipboardWrite: async () => { throw new Error('clipboard must not run'); },
+    execCommandResult: true,
+  });
+  app.setSiteData({ live: { upcoming: [], past: [] } });
+  app.addLive();
+  app.setSaveSpy();
+
+  const linkCopyButton = app.elements.get('x-link-copy-btn');
+  assert.ok(linkCopyButton);
+  assert.equal(linkCopyButton.disabled, true);
+  assert.equal(await app.copyLiveLinkFromModal(), false);
+  assert.deepEqual(app.clipboardWrites, []);
+  assert.deepEqual(app.execCommandCalls, []);
+  assert.equal(app.getSaveCalls(), 0);
+});
+
+test('Issue #20 live link actions use the existing clipboard fallback and report both outcomes', async () => {
+  const canonicalUrl = 'https://1212hp.com/live/detail/?liveId=fallback-live';
+  const fallbackSuccess = loadAdminApp({
+    clipboardWrite: async () => { throw new Error('permission denied'); },
+    execCommandResult: true,
+  });
+  fallbackSuccess.setSiteData({ live: { upcoming: [{ id: 'fallback-live' }], past: [] } });
+  fallbackSuccess.editLive('fallback-live', 'upcoming');
+  fallbackSuccess.setSaveSpy();
+
+  assert.equal(await fallbackSuccess.copyLiveLinkFromModal(), true);
+  assert.deepEqual(fallbackSuccess.clipboardWrites, [canonicalUrl]);
+  assert.deepEqual(fallbackSuccess.execCommandCalls, ['copy']);
+  assert.equal(fallbackSuccess.createdTextareas[0]?.value, canonicalUrl);
+  assert.equal(fallbackSuccess.elements.get('toast').textContent, 'リンクをコピーしました');
+  assert.equal(fallbackSuccess.getSaveCalls(), 0);
+
+  const fallbackFailure = loadAdminApp({
+    clipboardWrite: async () => { throw new Error('permission denied'); },
+    execCommandResult: false,
+  });
+  fallbackFailure.setSiteData({ live: { upcoming: [{ id: 'fallback-live' }], past: [] } });
+  fallbackFailure.editLive('fallback-live', 'upcoming');
+  fallbackFailure.setSaveSpy();
+
+  assert.equal(await fallbackFailure.copyLiveLinkFromModal(), false);
+  assert.deepEqual(fallbackFailure.clipboardWrites, [canonicalUrl]);
+  assert.deepEqual(fallbackFailure.execCommandCalls, ['copy']);
+  assert.equal(fallbackFailure.elements.get('toast').textContent, 'コピーできませんでした');
+  assert.equal(fallbackFailure.getSaveCalls(), 0);
+});
+
+test('Issue #20 live link actions use an isolated compact row that wraps without narrow overflow', () => {
+  const actionRowRule = adminCss.match(/\.live-announcement-actions\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(actionRowRule, /display:\s*flex/);
+  assert.match(actionRowRule, /flex-wrap:\s*wrap/);
+  assert.match(actionRowRule, /max-width:\s*100%/);
+
+  const actionButtonRule = adminCss.match(/\.live-announcement-actions\s+\.btn\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(actionButtonRule, /min-width:\s*0/);
+  assert.match(actionButtonRule, /max-width:\s*100%/);
+  assert.match(actionButtonRule, /overflow-wrap:\s*anywhere/);
 });
 
 test('new Live requires an explicit save before X Intent or reservation operations', () => {
