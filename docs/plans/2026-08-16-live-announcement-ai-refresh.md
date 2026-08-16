@@ -8,9 +8,9 @@
 
 **Tech Stack:** Vanilla HTML/CSS/JavaScript、Cloudflare Worker、OpenAI Responses API Structured Outputs、Node.js test runner。
 
-**Repository / publish authority:** Issue #19のcommit、push、PR作成はowner-authorizedである。ただし本reconciliation executionでは行わず、review後の別publish packetで扱う。mergeとproduction deployはowner-onlyで本計画のスコープ外とし、secret変更とmigrationも行わない。
+**Issue #21 delivery authority:** Itsuki承認により、Issue #21のcommit、push、draft PR作成は実行可。merge、production deploy、secret変更、migrationはowner-onlyであり、このplanでは実行しない。
 
-**Implementation gate:** `docs/specs/current/live-operations-admin-ui.md` が `Approved` になるまで実行しない。
+**Implementation gate:** canonical spec `docs/specs/current/live-operations-admin-ui.md` は `Approved`。承認済みscope内の実装を進め、新しい設計判断が必要な場合はspecを `Draft` に戻す。
 
 **Canonical spec:** `docs/specs/current/live-operations-admin-ui.md`
 

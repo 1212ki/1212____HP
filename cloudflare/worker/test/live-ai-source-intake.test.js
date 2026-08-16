@@ -259,6 +259,42 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
     assert.doesNotMatch(body.instructions, /description/);
   });
 
+  test("maps the real announcement format to draft fields in extraction instructions", async () => {
+    let requestBody = null;
+    const sourceText = [
+      "「真夏の夜」",
+      "2026.8.20(木) 柴崎mod",
+      "OPEN 18:30 / START 19:00",
+      "ADV ¥2,500 / DOOR ¥3,000",
+      "-act-",
+      "共演者A",
+      "松本一樹",
+    ].join("\n");
+
+    await withFetchStub(
+      async (_url, options) => {
+        requestBody = JSON.parse(options.body);
+        return openAiJsonResponse(openAiPayload(JSON.stringify(VALID_DRAFT)));
+      },
+      async () => {
+        const response = await worker.fetch(
+          sourceIntakeRequest({ sourceText }),
+          adminEnv(),
+          {},
+        );
+
+        assert.equal(response.status, 200);
+      },
+    );
+
+    assert.equal(requestBody.input, sourceText);
+    assert.match(requestBody.instructions, /「公演名」.*title/s);
+    assert.match(requestBody.instructions, /日付と会場が同じ行.*date.*venue/s);
+    assert.match(requestBody.instructions, /OPEN.*openTime.*START.*startTime/s);
+    assert.match(requestBody.instructions, /ADV.*DOOR.*ticket/s);
+    assert.match(requestBody.instructions, /-act-.*下.*performers/s);
+  });
+
   test("accepts the 12,000 character boundary, model override, and standard nested output text", async () => {
     let requestBody = null;
     await withFetchStub(
