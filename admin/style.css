@@ -216,33 +216,110 @@ body {
 }
 
 /* ----- Live Operations Hub ----- */
-.live-secondary {
-  margin-top: 24px;
+.live-workspace {
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
   overflow: hidden;
 }
 
-.live-secondary summary {
-  padding: 16px 20px;
-  color: var(--gray-700);
-  font-weight: 700;
-  cursor: pointer;
-  list-style-position: inside;
+.live-workspace-tabs,
+.live-list-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.live-secondary summary:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: -4px;
-}
-
-.live-secondary[open] summary {
+.live-workspace-tabs {
+  padding: 8px;
   border-bottom: 1px solid var(--gray-200);
 }
 
-.live-secondary-body {
+.live-workspace-tab,
+.live-list-tab,
+.live-workspace-utility {
+  border: 0;
+  background: transparent;
+  color: var(--gray-700);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.live-workspace-tab {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+}
+
+.live-workspace-tab.is-active {
+  background: var(--gray-900);
+  color: var(--white);
+}
+
+.live-workspace-panel {
   padding: 20px;
+}
+
+.live-page-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.live-list-tabs {
+  padding: 3px;
+  background: var(--gray-100);
+  border-radius: var(--radius-sm);
+}
+
+.live-list-tab {
+  padding: 7px 12px;
+  border-radius: 9px;
+  color: var(--gray-500);
+  font-size: 0.88em;
+}
+
+.live-list-tab.is-active {
+  background: var(--white);
+  color: var(--gray-900);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.live-workspace-utility {
+  padding: 8px 4px;
+  color: var(--gray-500);
+  font-size: 0.82em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.live-workspace-tab:focus-visible,
+.live-list-tab:focus-visible,
+.live-workspace-utility:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.live-ticket-settings-panel,
+.live-reservations-panel {
+  padding: 20px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+}
+
+.live-workspace-eyebrow {
+  margin-bottom: 4px;
+  color: var(--gray-500);
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.live-workspace [hidden] {
+  display: none;
 }
 
 .section-header.compact {

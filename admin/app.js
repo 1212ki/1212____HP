@@ -88,6 +88,9 @@ let modalReturnFocus = null;
 let modalReturnFocusLive = null;
 let liveReservationRequestSequence = 0;
 let crossLiveReservationRequestSequence = 0;
+let liveWorkspaceView = 'page';
+let liveListView = 'upcoming';
+let liveTicketSettingsOpen = false;
 
 
 // 新規追加した画像を保存（{filename: base64data}）
@@ -107,6 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderModeBadge();
   await loadData();
   setupTabs();
+  setupLiveWorkspace();
   renderAll();
 });
 
@@ -552,6 +556,103 @@ function setupTabs() {
       document.getElementById(`${btn.dataset.tab}-tab`).classList.add('active');
     });
   });
+}
+
+function syncLiveWorkspaceTabs() {
+  document.querySelectorAll('[data-live-workspace-view]').forEach((tab) => {
+    const isSelected = tab.dataset.liveWorkspaceView === liveWorkspaceView;
+    tab.setAttribute('aria-selected', String(isSelected));
+    tab.setAttribute('tabindex', isSelected ? '0' : '-1');
+    tab.classList[isSelected ? 'add' : 'remove']('is-active');
+  });
+
+  document.querySelectorAll('[data-live-workspace-panel]').forEach((panel) => {
+    panel.hidden = panel.dataset.liveWorkspacePanel !== liveWorkspaceView;
+  });
+}
+
+function syncLiveListTabs() {
+  document.querySelectorAll('[data-live-list-view]').forEach((tab) => {
+    const isSelected = tab.dataset.liveListView === liveListView;
+    tab.setAttribute('aria-selected', String(isSelected));
+    tab.setAttribute('tabindex', isSelected ? '0' : '-1');
+    tab.classList[isSelected ? 'add' : 'remove']('is-active');
+  });
+
+  document.querySelectorAll('[data-live-list-panel]').forEach((panel) => {
+    panel.hidden = panel.dataset.liveListPanel !== liveListView;
+  });
+}
+
+function syncTicketSettingsPanel() {
+  const livePagePrimary = document.getElementById('live-page-primary');
+  const ticketSettingsPanel = document.getElementById('live-ticket-settings-panel');
+  if (livePagePrimary) livePagePrimary.hidden = liveTicketSettingsOpen;
+  if (ticketSettingsPanel) ticketSettingsPanel.hidden = !liveTicketSettingsOpen;
+}
+
+function setLiveWorkspaceView(view) {
+  liveWorkspaceView = view === 'reservations' ? 'reservations' : 'page';
+  if (liveWorkspaceView !== 'page') liveTicketSettingsOpen = false;
+  syncLiveWorkspaceTabs();
+  syncTicketSettingsPanel();
+}
+
+function setLiveListView(view) {
+  liveListView = view === 'past' ? 'past' : 'upcoming';
+  syncLiveListTabs();
+}
+
+function setTicketSettingsOpen(open) {
+  liveTicketSettingsOpen = Boolean(open);
+  if (liveTicketSettingsOpen) liveWorkspaceView = 'page';
+  syncLiveWorkspaceTabs();
+  syncTicketSettingsPanel();
+}
+
+function bindLiveTablist(tabs, dataKey, setView) {
+  tabs.forEach((tab, index) => {
+    if (tab.dataset.liveTablistBound === 'true') return;
+    tab.dataset.liveTablistBound = 'true';
+    tab.addEventListener('click', () => setView(tab.dataset[dataKey]));
+    tab.addEventListener('keydown', (event) => {
+      let nextIndex = null;
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      const nextTab = tabs[nextIndex];
+      setView(nextTab.dataset[dataKey]);
+      nextTab.focus();
+    });
+  });
+}
+
+function setupLiveWorkspace() {
+  const workspaceTabs = Array.from(document.querySelectorAll('[data-live-workspace-view]'));
+  const listTabs = Array.from(document.querySelectorAll('[data-live-list-view]'));
+  bindLiveTablist(workspaceTabs, 'liveWorkspaceView', setLiveWorkspaceView);
+  bindLiveTablist(listTabs, 'liveListView', setLiveListView);
+
+  const openTicketSettings = document.getElementById('live-ticket-settings-open');
+  const closeTicketSettings = document.getElementById('live-ticket-settings-close');
+  if (openTicketSettings && openTicketSettings.dataset.liveSettingsBound !== 'true') {
+    openTicketSettings.dataset.liveSettingsBound = 'true';
+    openTicketSettings.addEventListener('click', () => setTicketSettingsOpen(true));
+  }
+  if (closeTicketSettings && closeTicketSettings.dataset.liveSettingsBound !== 'true') {
+    closeTicketSettings.dataset.liveSettingsBound = 'true';
+    closeTicketSettings.addEventListener('click', () => {
+      setTicketSettingsOpen(false);
+      openTicketSettings?.focus();
+    });
+  }
+
+  setLiveWorkspaceView('page');
+  setLiveListView('upcoming');
+  setTicketSettingsOpen(false);
 }
 
 // 全描画

@@ -23,6 +23,7 @@ function decodeHtml(value) {
 function createElement(id, ownerDocument = null, tagName = 'div') {
   const listeners = new Map();
   const classes = new Set();
+  const attributes = new Map();
   let html = '';
   const element = {
     id,
@@ -32,6 +33,8 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
     value: '',
     checked: false,
     disabled: false,
+    hidden: false,
+    tabIndex: 0,
     textContent: '',
     parentElement: null,
     style: {},
@@ -46,6 +49,14 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
       const group = listeners.get(type) || [];
       group.push(listener);
       listeners.set(type, group);
+    },
+    getAttribute(name) {
+      return attributes.get(name) ?? null;
+    },
+    setAttribute(name, value) {
+      const normalized = String(value);
+      attributes.set(name, normalized);
+      if (name === 'tabindex') this.tabIndex = Number(normalized);
     },
     appendChild(child) {
       child.parentElement = this;
@@ -119,10 +130,15 @@ function createDomHarness() {
       return elements.get(id) || null;
     },
     querySelectorAll(selector) {
-      if (selector !== '[data-live-edit]') return [];
-      return ['live-upcoming-list', 'live-past-list']
-        .flatMap((id) => elements.get(id)?.children || [])
-        .filter((element) => element.dataset?.liveEdit !== undefined);
+      if (selector === '[data-live-edit]') {
+        return ['live-upcoming-list', 'live-past-list']
+          .flatMap((id) => elements.get(id)?.children || [])
+          .filter((element) => element.dataset?.liveEdit !== undefined);
+      }
+      const dataSelector = selector.match(/^\[data-([\w-]+)\]$/);
+      if (!dataSelector) return [];
+      const dataKey = dataSelector[1].replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
+      return [...elements.values()].filter((element) => element.dataset?.[dataKey] !== undefined);
     },
     contains(element) { return Boolean(element?.isConnected); },
   };
@@ -230,6 +246,27 @@ function createDomHarness() {
   installSelectHtmlBehavior(liveFilter);
   const statusFilter = addStatic('tickets-status-filter', 'select');
   statusFilter.value = 'pending';
+  addStatic('live-workspace');
+  const livePageTab = addStatic('live-workspace-page-tab', 'button');
+  livePageTab.dataset.liveWorkspaceView = 'page';
+  const liveReservationsTab = addStatic('live-workspace-reservations-tab', 'button');
+  liveReservationsTab.dataset.liveWorkspaceView = 'reservations';
+  const livePagePanel = addStatic('live-workspace-page-panel', 'section');
+  livePagePanel.dataset.liveWorkspacePanel = 'page';
+  const liveReservationsPanel = addStatic('live-workspace-reservations-panel', 'section');
+  liveReservationsPanel.dataset.liveWorkspacePanel = 'reservations';
+  const upcomingTab = addStatic('live-list-upcoming-tab', 'button');
+  upcomingTab.dataset.liveListView = 'upcoming';
+  const pastTab = addStatic('live-list-past-tab', 'button');
+  pastTab.dataset.liveListView = 'past';
+  const upcomingPanel = addStatic('live-list-upcoming-panel', 'section');
+  upcomingPanel.dataset.liveListPanel = 'upcoming';
+  const pastPanel = addStatic('live-list-past-panel', 'section');
+  pastPanel.dataset.liveListPanel = 'past';
+  addStatic('live-page-primary');
+  addStatic('live-ticket-settings-open', 'button');
+  addStatic('live-ticket-settings-panel', 'section');
+  addStatic('live-ticket-settings-close', 'button');
   const upcomingList = addStatic('live-upcoming-list');
   installLiveListHtmlBehavior(upcomingList);
   const pastList = addStatic('live-past-list');
@@ -326,6 +363,10 @@ globalThis.__adminLiveTest = {
   saveModal,
   deleteItem,
   closeModal,
+  setupLiveWorkspace: typeof setupLiveWorkspace === 'function' ? setupLiveWorkspace : null,
+  setLiveWorkspaceView: typeof setLiveWorkspaceView === 'function' ? setLiveWorkspaceView : null,
+  setLiveListView: typeof setLiveListView === 'function' ? setLiveListView : null,
+  setTicketSettingsOpen: typeof setTicketSettingsOpen === 'function' ? setTicketSettingsOpen : null,
   ensureNoActiveImageUploads,
   handleTicketStatusAction: typeof handleTicketStatusAction === 'function' ? handleTicketStatusAction : null,
   setApiMode(value) { IS_API_MODE = value; },
@@ -444,16 +485,66 @@ async function flushAsync() {
   await new Promise((resolve) => setImmediate(resolve));
 }
 
-test('Live is the initial primary tab and Tickets remains only as secondary Live operations', () => {
+test('Live is the initial primary tab and Tickets is not a global tab', () => {
   const primaryNav = adminHtml.match(/<nav class="tab-nav">([\s\S]*?)<\/nav>/)?.[1] || '';
   assert.match(primaryNav, /class="tab-btn active" data-tab="live"/);
   assert.doesNotMatch(primaryNav, /data-tab="tickets"/);
   assert.match(adminHtml, /id="live-tab"[^>]*class="tab-content active"|class="tab-content active"[^>]*id="live-tab"/);
-  assert.match(adminHtml, /<details[^>]*class="live-secondary"[\s\S]*Ticket Page（表示文言）/);
-  assert.match(adminHtml, /<details[^>]*class="live-secondary"[\s\S]*予約一覧（全Live）/);
-  assert.match(adminHtml, /id="tickets-list"/);
-  assert.match(adminHtml, /id="ticket-intro-text"/);
-  assert.match(adminHtml, /downloadTicketsCsv\(\)/);
+});
+
+test('Live workspace has semantic Liveページ and 予約管理 tabs', () => {
+  assert.match(adminHtml, /class="live-workspace-tabs"[^>]*role="tablist"/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-workspace-view="page"[^>]*>Liveページ<\/button>/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-workspace-view="reservations"[^>]*>予約管理<\/button>/);
+});
+
+test('Live workspace Liveページ has semantic 開催予定 and 公演終了 filters', () => {
+  assert.match(adminHtml, /class="live-list-tabs"[^>]*role="tablist"/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-list-view="upcoming"[^>]*>開催予定<\/button>/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-list-view="past"[^>]*>公演終了<\/button>/);
+});
+
+test('Live workspace separates reservations and Ticket Page共通設定 from Live list details', () => {
+  assert.match(adminHtml, /id="live-workspace-reservations-panel"[^>]*role="tabpanel"/);
+  assert.match(adminHtml, /id="live-workspace-reservations-panel"[\s\S]*id="tickets-list"/);
+  assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*>Ticket Page共通設定<\/button>/);
+  assert.match(adminHtml, /id="live-ticket-settings-panel"[^>]*role="region"/);
+  assert.match(adminHtml, /id="live-ticket-settings-close"[^>]*>Liveページへ戻る<\/button>/);
+  assert.doesNotMatch(adminHtml, /<details[^>]*[\s\S]*?(?:Ticket Page|予約一覧（全Live）)[\s\S]*?<\/details>/);
+});
+
+test('Live workspace initial state is Liveページ and 開催予定', () => {
+  assert.match(adminHtml, /id="live-workspace-page-tab"[^>]*aria-selected="true"[^>]*tabindex="0"/);
+  assert.match(adminHtml, /id="live-workspace-reservations-tab"[^>]*aria-selected="false"[^>]*tabindex="-1"/);
+  assert.match(adminHtml, /id="live-workspace-reservations-panel"[^>]*hidden/);
+  assert.match(adminHtml, /id="live-list-upcoming-tab"[^>]*aria-selected="true"[^>]*tabindex="0"/);
+  assert.match(adminHtml, /id="live-list-past-tab"[^>]*aria-selected="false"[^>]*tabindex="-1"/);
+  assert.match(adminHtml, /id="live-list-past-panel"[^>]*hidden/);
+});
+
+test('Live workspace tablists support ArrowLeft ArrowRight Home and End movement', async () => {
+  const app = loadAdminApp();
+  assert.equal(typeof app.setupLiveWorkspace, 'function');
+  app.setupLiveWorkspace();
+
+  const pageTab = app.elements.get('live-workspace-page-tab');
+  const reservationsTab = app.elements.get('live-workspace-reservations-tab');
+  await pageTab.dispatch('keydown', { key: 'ArrowRight' });
+  assert.equal(reservationsTab.getAttribute('aria-selected'), 'true');
+  assert.equal(reservationsTab.focusCount, 1);
+  assert.equal(app.elements.get('live-workspace-page-panel').hidden, true);
+  assert.equal(app.elements.get('live-workspace-reservations-panel').hidden, false);
+  await reservationsTab.dispatch('keydown', { key: 'Home' });
+  assert.equal(pageTab.getAttribute('aria-selected'), 'true');
+
+  const upcomingTab = app.elements.get('live-list-upcoming-tab');
+  const pastTab = app.elements.get('live-list-past-tab');
+  await upcomingTab.dispatch('keydown', { key: 'End' });
+  assert.equal(pastTab.getAttribute('aria-selected'), 'true');
+  assert.equal(app.elements.get('live-list-upcoming-panel').hidden, true);
+  assert.equal(app.elements.get('live-list-past-panel').hidden, false);
+  await pastTab.dispatch('keydown', { key: 'ArrowLeft' });
+  assert.equal(upcomingTab.getAttribute('aria-selected'), 'true');
 });
 
 test('shared LiveOperations script is loaded before the admin application', () => {
