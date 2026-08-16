@@ -587,8 +587,10 @@ function syncLiveListTabs() {
 function syncTicketSettingsPanel() {
   const livePagePrimary = document.getElementById('live-page-primary');
   const ticketSettingsPanel = document.getElementById('live-ticket-settings-panel');
+  const openTicketSettings = document.getElementById('live-ticket-settings-open');
   if (livePagePrimary) livePagePrimary.hidden = liveTicketSettingsOpen;
   if (ticketSettingsPanel) ticketSettingsPanel.hidden = !liveTicketSettingsOpen;
+  openTicketSettings?.setAttribute('aria-expanded', String(liveTicketSettingsOpen));
 }
 
 function setLiveWorkspaceView(view) {
@@ -640,7 +642,10 @@ function setupLiveWorkspace() {
   const closeTicketSettings = document.getElementById('live-ticket-settings-close');
   if (openTicketSettings && openTicketSettings.dataset.liveSettingsBound !== 'true') {
     openTicketSettings.dataset.liveSettingsBound = 'true';
-    openTicketSettings.addEventListener('click', () => setTicketSettingsOpen(true));
+    openTicketSettings.addEventListener('click', () => {
+      setTicketSettingsOpen(true);
+      closeTicketSettings?.focus();
+    });
   }
   if (closeTicketSettings && closeTicketSettings.dataset.liveSettingsBound !== 'true') {
     closeTicketSettings.dataset.liveSettingsBound = 'true';
@@ -1875,6 +1880,9 @@ function saveLiveItem() {
     modalReturnFocusLive.category = isPast ? 'past' : 'upcoming';
   }
 
+  setLiveWorkspaceView('page');
+  setTicketSettingsOpen(false);
+  setLiveListView(isPast ? 'past' : 'upcoming');
   renderLive();
   renderTicketsUi();
   return { liveId: item.id, postToX: false };

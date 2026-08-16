@@ -73,6 +73,11 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
     },
     click() {},
     focus() {
+      let focusTarget = this;
+      while (focusTarget) {
+        if (!focusTarget.isConnected || focusTarget.hidden) return;
+        focusTarget = focusTarget.parentElement;
+      }
       this.focusCount += 1;
       if (ownerDocument) ownerDocument.activeElement = this;
     },
@@ -246,15 +251,17 @@ function createDomHarness() {
   installSelectHtmlBehavior(liveFilter);
   const statusFilter = addStatic('tickets-status-filter', 'select');
   statusFilter.value = 'pending';
-  addStatic('live-workspace');
+  const liveWorkspace = addStatic('live-workspace');
   const livePageTab = addStatic('live-workspace-page-tab', 'button');
   livePageTab.dataset.liveWorkspaceView = 'page';
   const liveReservationsTab = addStatic('live-workspace-reservations-tab', 'button');
   liveReservationsTab.dataset.liveWorkspaceView = 'reservations';
   const livePagePanel = addStatic('live-workspace-page-panel', 'section');
   livePagePanel.dataset.liveWorkspacePanel = 'page';
+  livePagePanel.parentElement = liveWorkspace;
   const liveReservationsPanel = addStatic('live-workspace-reservations-panel', 'section');
   liveReservationsPanel.dataset.liveWorkspacePanel = 'reservations';
+  liveReservationsPanel.parentElement = liveWorkspace;
   const upcomingTab = addStatic('live-list-upcoming-tab', 'button');
   upcomingTab.dataset.liveListView = 'upcoming';
   const pastTab = addStatic('live-list-past-tab', 'button');
@@ -263,13 +270,21 @@ function createDomHarness() {
   upcomingPanel.dataset.liveListPanel = 'upcoming';
   const pastPanel = addStatic('live-list-past-panel', 'section');
   pastPanel.dataset.liveListPanel = 'past';
-  addStatic('live-page-primary');
-  addStatic('live-ticket-settings-open', 'button');
-  addStatic('live-ticket-settings-panel', 'section');
-  addStatic('live-ticket-settings-close', 'button');
+  const livePagePrimary = addStatic('live-page-primary');
+  livePagePrimary.parentElement = livePagePanel;
+  upcomingPanel.parentElement = livePagePrimary;
+  pastPanel.parentElement = livePagePrimary;
+  const liveTicketSettingsOpen = addStatic('live-ticket-settings-open', 'button');
+  liveTicketSettingsOpen.parentElement = livePagePrimary;
+  const liveTicketSettingsPanel = addStatic('live-ticket-settings-panel', 'section');
+  liveTicketSettingsPanel.parentElement = livePagePanel;
+  const liveTicketSettingsClose = addStatic('live-ticket-settings-close', 'button');
+  liveTicketSettingsClose.parentElement = liveTicketSettingsPanel;
   const upcomingList = addStatic('live-upcoming-list');
+  upcomingList.parentElement = upcomingPanel;
   installLiveListHtmlBehavior(upcomingList);
   const pastList = addStatic('live-past-list');
+  pastList.parentElement = pastPanel;
   installLiveListHtmlBehavior(pastList);
 
   class TestURL extends URL {}
@@ -508,9 +523,33 @@ test('Live workspace separates reservations and Ticket Page共通設定 from Liv
   assert.match(adminHtml, /id="live-workspace-reservations-panel"[^>]*role="tabpanel"/);
   assert.match(adminHtml, /id="live-workspace-reservations-panel"[\s\S]*id="tickets-list"/);
   assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*>Ticket Page共通設定<\/button>/);
+  assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*aria-controls="live-ticket-settings-panel"/);
+  assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*aria-expanded="false"/);
   assert.match(adminHtml, /id="live-ticket-settings-panel"[^>]*role="region"/);
   assert.match(adminHtml, /id="live-ticket-settings-close"[^>]*>Liveページへ戻る<\/button>/);
   assert.doesNotMatch(adminHtml, /<details[^>]*[\s\S]*?(?:Ticket Page|予約一覧（全Live）)[\s\S]*?<\/details>/);
+});
+
+test('Live workspace Ticket Page settings moves focus and synchronizes disclosure state', async () => {
+  const app = loadAdminApp();
+  app.setupLiveWorkspace();
+  const openButton = app.elements.get('live-ticket-settings-open');
+  const closeButton = app.elements.get('live-ticket-settings-close');
+  const primaryPanel = app.elements.get('live-page-primary');
+  const settingsPanel = app.elements.get('live-ticket-settings-panel');
+
+  openButton.focus();
+  await openButton.dispatch('click');
+  assert.equal(openButton.getAttribute('aria-expanded'), 'true');
+  assert.equal(primaryPanel.hidden, true);
+  assert.equal(settingsPanel.hidden, false);
+  assert.equal(app.document.activeElement, closeButton);
+
+  await closeButton.dispatch('click');
+  assert.equal(openButton.getAttribute('aria-expanded'), 'false');
+  assert.equal(primaryPanel.hidden, false);
+  assert.equal(settingsPanel.hidden, true);
+  assert.equal(app.document.activeElement, openButton);
 });
 
 test('Live workspace initial state is Liveページ and 開催予定', () => {
@@ -1634,6 +1673,7 @@ test('saving a rendered Live restores focus to its matching replacement trigger 
       past: [{ id: 'wrong-live', date: '2026.07.01', title: 'Wrong Live', venue: 'Elsewhere', description: '', image: '', link: '' }],
     },
   });
+  app.setupLiveWorkspace();
   app.renderLive();
   const originalTrigger = app.elements.get('live-upcoming-list').children[0];
   originalTrigger.focus();
@@ -1649,9 +1689,26 @@ test('saving a rendered Live restores focus to its matching replacement trigger 
   assert.equal(originalTrigger.isConnected, false, 'renderLive must replace the original trigger');
   assert.ok(replacementTrigger, 'the moved Live must have a newly rendered trigger');
   assert.notEqual(replacementTrigger, originalTrigger);
+  assert.equal(app.elements.get('live-list-upcoming-panel').hidden, true);
+  assert.equal(app.elements.get('live-list-past-panel').hidden, false);
+  assert.equal(app.elements.get('live-list-past-tab').getAttribute('aria-selected'), 'true');
   assert.equal(app.document.activeElement, replacementTrigger);
   assert.equal(replacementTrigger.focusCount, 1);
   assert.equal(wrongTrigger.focusCount, 0, 'focus must not jump to a different Live');
+});
+
+test('saving a new past Live activates its visible destination category', () => {
+  const app = loadAdminApp();
+  app.setSiteData({ live: { upcoming: [], past: [] } });
+  app.setupLiveWorkspace();
+  app.addLive();
+  setLiveForm(app.elements, { isPast: true });
+
+  app.saveLiveItem();
+
+  assert.equal(app.elements.get('live-list-upcoming-panel').hidden, true);
+  assert.equal(app.elements.get('live-list-past-panel').hidden, false);
+  assert.equal(app.elements.get('live-list-past-tab').getAttribute('aria-selected'), 'true');
 });
 
 test('admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes', async (t) => {

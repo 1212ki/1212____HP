@@ -276,15 +276,16 @@ body {
 
 .live-list-tab {
   padding: 7px 12px;
-  border-radius: 9px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   color: var(--gray-500);
   font-size: 0.88em;
 }
 
 .live-list-tab.is-active {
   background: var(--white);
+  border-color: var(--gray-200);
   color: var(--gray-900);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 .live-workspace-utility {
