@@ -2,12 +2,12 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-08-16
-- Related issue: #22
-- Related implementation issues: #19, #20, #21
-- Owner approval: 2026-08-16（システム反映とPR作成の明示依頼）
-- Design review: APPROVED（Issue #22 AC0〜AC9）
-- Implementation gate: Statusが`Approved`の間はIssue #22の実装入力として利用可
+- Last updated: 2026-08-17
+- Related issue: #29
+- Related implementation issues: #19, #20, #21, #22
+- Owner approval: 2026-08-17（Issue #29のstable Worker share URLによるOGP回帰復旧設計）
+- Design review: APPROVED（Issue #22 AC0〜AC9、Issue #29 owner-approved design）
+- Implementation gate: Statusが`Approved`の間はIssue #29の実装入力として利用可
 
 ## 1. 目的
 
@@ -223,6 +223,23 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 - `Xを開く`、`詳細をコピー`、`リンクをコピー` は同じ操作群としてコンパクトに配置する。
 - 詳細テンプレートと操作仕様はIssue #19・#20で扱う。
 
+### 8.1 Live share URLとcanonical detail URL
+
+Live固有OGPを取得する共有入口と、人が最終的に閲覧する公開詳細を別の責務として固定する。
+
+| URL | 形式 | 責務 |
+|---|---|---|
+| stable share URL | `https://1212hp.itsukimatsumoto.workers.dev/og/live/:liveId` | X crawlerを含む共有アクセスへ、Live固有のOG/Twitter metadataを初期HTMLで返す |
+| canonical detail URL | `https://1212hp.com/live/detail/?liveId=...` | Worker HTMLのcanonical、`og:url`、人が到達する公開Live詳細 |
+
+- `:liveId`とqueryの`liveId`は、同じ保存済みLive IDを`encodeURIComponent`した値とする。
+- 保存済みLiveのX投稿preview、X Web Intent、「リンクをコピー」は、すべて同一のstable share URLを共有文字列として使う。
+- stable share URLはadminの固定Worker originを正本にし、実行中に切り替わり得るAPI接続先やcanonical detail URLへfallbackしない。
+- stable share URLにcache-bust用のquery parameter、timestamp、versionを付けない。
+- WorkerはLive固有の`og:title`、`og:description`、`og:image`と対応する`twitter:*`を初期HTMLで返す。canonical linkと`og:url`はcanonical detail URLを指す。
+- human UAにも同じWorker HTMLを返し、JavaScript redirectでcanonical detail URLへ移動する。redirectできない場合は`詳細を見る`リンクをfallbackとする。
+- canonical detail URLは共有文字列としてX投稿preview、Web Intent、clipboardへ直接入れない。ただしWorker metadataとhuman destinationとして維持する。
+
 ## 9. Desktop / Mobile wireframe
 
 ### Desktop
@@ -293,6 +310,11 @@ Live
 - AI抽出失敗時は既存入力と元情報を保持し、warningと再試行を提供する。
 - API接続に失敗してローカルJSONをfallback表示する場合はread-onlyとし、保存・AI整理・予約変更を無効化する。Local Modeとして明示的に起動した場合のJSON書き出しとは区別する。
 - 外部遷移やclipboard失敗は対象ボタンの近くで通知する。
+- 未保存LiveまたはIDなしではstable share URLを生成せず、X Web Intentとリンクコピーをdisabledにする。clipboard、fallback、保存処理は呼ばない。
+- Clipboard API失敗時は既存のcopy fallbackを使い、fallbackの成否を既存toastで通知する。入力値と保存状態は変更しない。
+- WorkerでLiveが見つからない場合は`404`と`Cache-Control: no-store`を返し、canonical detailやgeneric cardへ暗黙fallbackしない。
+- human redirectが実行できない場合はWorker HTML内のcanonical detailリンクを利用できる状態を維持する。
+- X側のplatform cache失敗を理由にshare URLへcache-bustを追加しない。origin responseとplatform cacheを分けて検証する。
 
 ## 11. Issue境界
 
@@ -301,6 +323,9 @@ Live
 - Issue #20は詳細URLコピーとX操作ボタンのcompact化を実装する。#22では新しいURL操作を追加しない。
 - Issue #21はAI抽出と10項目全置換を実装する。#22ではAI処理・prompt・置換挙動を変えない。
 - #19〜#21のworktreeと同じファイルを触る場合も、各Issueのbehaviorを先取りしない。
+- Issue #29は、保存済みLiveのX投稿preview、Web Intent、リンクコピーをstable Worker share URLへ復旧し、既存Worker OGP routeの契約をcharacterization testで固定する。production変更は`admin/app.js`のshare URL helperとそのX／リンクコピーcall siteだけに限定する。
+- Issue #29ではWorker source、公開Live詳細、DNS/CDN/hosting、Issue #19/#21、generic admin UIを変更しない。merge、production deploy、X cache refreshも行わない。
+- Issue #29のowner-approved設計は、`docs/plans/2026-08-16-issue-20-live-link-actions-ogp.md`に残る「canonical detail URLを共有する」「Worker share URLへ戻さない」という過去判断だけをsupersedeする。Issue #20の計画自体は履歴として書き換えず、compact action、unsaved gate、clipboard fallback、save-free behaviorは維持する。
 
 ### 11.1 Issue #22の実装段階
 
@@ -322,9 +347,12 @@ Live
 - 常時表示、タスク選択時表示、条件表示の区別がwireframeで確認できる。
 - `date / venue`の必須validation、開催区分warning、未保存移動guardが定義どおり動く。
 - 保存が`保存して公開`として明示され、外部送信・予約即時操作と混同されない。
-- X告知、詳細URLコピー、AI整理の仕様が#19・#20・#21と矛盾しない。
+- X告知、詳細URLコピー、AI整理は#19・#20・#21の既存behaviorを維持し、#20の共有URL判断だけが#29によりsupersedeされている。
 - Itsuki確認後にStatusが`Approved`へ更新されている。
 - 実装Issueとplanがこの設計書を参照している。
+- share URLとcanonical detail URLの責務が分かれ、保存済みLiveのX投稿preview、Web Intent、リンクコピーが同一のstable Worker share URLを使う。
+- Worker HTMLのcanonical、`og:url`、human destinationはcanonical detail URLを維持し、共有文字列にはcanonical detail URLもcache-bustも混入しない。
+- unsaved gate、clipboard fallback、save-free behaviorと既存Workerのmetadata／human fallbackをautomated testで観測できる。
 
 ## 13. 検証方法
 
@@ -333,6 +361,10 @@ Live
 - 主要タスク別のwalkthrough
 - #19・#20・#21との仕様境界review
 - 実装時のUI contract test、responsive確認、主要操作のmanual verification
+- admin focused testで、現行canonical detail共有契約に対するREDとstable Worker share URLへのGREENを同一commandで確認する。
+- Worker UA testは既存routeのcharacterizationとしてproduction変更前からPASSすることを確認し、REDには数えない。
+- root全test、Worker全test、syntax、diff、scope、secret監査を実行する。
+- owner merge／deploy後にのみ、同じstable share URLへTwitterbot UAとhuman UAでread-only requestを送り、Live固有metadata、canonical、human導線を確認する。origin responseとX platform cacheは別々に判定する。
 
 ## 14. Canonical file map
 
@@ -341,4 +373,5 @@ Live
 - 文書体系: `docs/README.md`
 - ビジュアルルール: `DESIGN_RULES.md`
 - 関連実装計画: `docs/plans/`
+- Issue #29実装計画: `docs/plans/2026-08-17-issue-29-live-ogp-regression-fix.md`
 - 旧来の要件・仕様・ユースケース: `documents/`
