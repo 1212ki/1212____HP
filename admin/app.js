@@ -95,6 +95,7 @@ let crossLiveReservationRequestSequence = 0;
 let liveWorkspaceView = 'page';
 let liveListView = 'upcoming';
 let liveTicketSettingsOpen = false;
+let isApiFallbackReadOnly = false;
 
 
 // 新規追加した画像を保存（{filename: base64data}）
@@ -116,26 +117,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupTabs();
   setupLiveWorkspace();
   renderAll();
+  applyApiFallbackReadOnlyState();
 });
 
 function renderModeBadge() {
   const modeBadge = document.getElementById('modeBadge');
   const banner = document.getElementById('connectionBanner');
+  const saveBtn = document.getElementById('saveBtn');
   if (!modeBadge || !banner) return;
 
   const build = window.ADMIN_BUILD_ID ? ' (' + window.ADMIN_BUILD_ID + ')' : '';
 
   if (IS_API_MODE) {
-    modeBadge.textContent = 'API Mode' + build;
-    banner.textContent = 'Cloudflare APIへ接続中...';
+    modeBadge.textContent = (isApiFallbackReadOnly ? 'API Fallback' : 'API Mode') + build;
+    banner.textContent = isApiFallbackReadOnly
+      ? 'API接続失敗（ローカルJSONを読み取り専用で表示）'
+      : 'Cloudflare APIへ接続中...';
     banner.classList.add('is-api');
-    banner.classList.remove('is-error');
+    banner.classList[isApiFallbackReadOnly ? 'add' : 'remove']('is-error');
+    if (saveBtn) {
+      saveBtn.textContent = isApiFallbackReadOnly ? '読み取り専用' : '保存';
+      saveBtn.disabled = isApiFallbackReadOnly;
+    }
     return;
   }
 
   modeBadge.textContent = 'Local Mode' + build;
   banner.textContent = 'ローカルJSONモード（従来運用）';
   banner.classList.remove('is-api', 'is-error');
+  if (saveBtn) {
+    saveBtn.textContent = 'JSONを書き出す';
+    saveBtn.disabled = false;
+  }
 }
 
 function setConnectionBanner(text, state = 'normal') {
@@ -145,6 +158,72 @@ function setConnectionBanner(text, state = 'normal') {
   banner.classList.remove('is-api', 'is-error');
   if (state === 'api') banner.classList.add('is-api');
   if (state === 'error') banner.classList.add('is-error');
+}
+
+function applyApiFallbackReadOnlyState() {
+  if (!isApiFallbackReadOnly) return;
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn) {
+    saveBtn.disabled = true;
+    saveBtn.textContent = '読み取り専用';
+  }
+  setConnectionBanner('API接続失敗（ローカルJSONを読み取り専用で表示）', 'error');
+
+  const readOnlyFieldIds = [
+    'ticket-intro-text',
+    'ticket-notice-text',
+    'ticket-complete-text',
+    'ticket-field-quantity',
+    'ticket-field-message',
+    'ticket-field-label-quantity',
+    'ticket-field-label-message',
+    'ticket-field-placeholder-message',
+    'ticket-field-submit-label',
+    'edit-sourceText',
+    'edit-date',
+    'edit-title',
+    'edit-venue',
+    'edit-openTime',
+    'edit-startTime',
+    'edit-ticket',
+    'edit-notes',
+    'edit-performers',
+    'edit-description',
+    'edit-image-file',
+    'edit-ticketUrl',
+    'edit-link',
+    'edit-reservationClosed',
+    'edit-isPast',
+    'edit-xComment',
+    'manual-reservation-name',
+    'manual-reservation-quantity',
+    'manual-reservation-contact',
+    'manual-reservation-note',
+  ];
+  readOnlyFieldIds.forEach((id) => {
+    const field = document.getElementById(id);
+    if (field) field.disabled = true;
+  });
+  [
+    'live-source-parse-btn',
+    'live-manual-entry-btn',
+    'manual-reservation-submit',
+    'live-editor-save-btn',
+    'live-editor-delete-btn',
+  ].forEach((id) => {
+    const action = document.getElementById(id);
+    if (action) {
+      action.disabled = true;
+      action.setAttribute('aria-disabled', 'true');
+    }
+  });
+}
+
+function rejectApiFallbackMutation(message = 'API接続を復旧してから操作してください。') {
+  if (!isApiFallbackReadOnly) return false;
+  showToast(message, 'error');
+  applyApiFallbackReadOnlyState();
+  return true;
 }
 
 function normalizeSiteData(input) {
@@ -374,6 +453,10 @@ async function loadTickets() {
   if (!IS_API_MODE) return;
   const listEl = document.getElementById('tickets-list');
   if (!listEl) return;
+  if (isApiFallbackReadOnly) {
+    listEl.innerHTML = '<div class="empty-state operation-gate"><p>API接続失敗中は予約管理を読み取り専用で表示します。</p></div>';
+    return;
+  }
 
   const liveFilter = document.getElementById('tickets-live-filter');
   const statusFilter = document.getElementById('tickets-status-filter');
@@ -461,7 +544,8 @@ function handleTicketStatusAction(event) {
 }
 
 async function markTicketStatus(id, status) {
-  if (!IS_API_MODE) return;
+  if (rejectApiFallbackMutation('読み取り専用のため予約状態を変更できません。')) return false;
+  if (!IS_API_MODE) return false;
   try {
     const res = await adminFetch(`/api/admin/ticket-reservations/${encodeURIComponent(id)}/status`, {
       method: 'POST',
@@ -472,8 +556,10 @@ async function markTicketStatus(id, status) {
     const refreshes = [loadTickets()];
     if (!isNewItem && currentEditId) refreshes.push(loadLiveReservations(currentEditId));
     await Promise.all(refreshes);
+    return true;
   } catch (e) {
     showToast(`更新失敗: ${e.message}`, 'error');
+    return false;
   }
 }
 
@@ -528,13 +614,17 @@ async function loadData() {
         throw new Error(getErrorMessage(payload, 'APIからデータを取得できませんでした'));
       }
       siteData = normalizeSiteData(payload.data ?? payload);
+      isApiFallbackReadOnly = false;
       setConnectionBanner('Cloudflare API接続中', 'api');
       await loadTickets();
       return;
     } catch (error) {
       console.error('APIデータ読み込みエラー:', error);
-      setConnectionBanner(`API接続失敗: ${error.message}（ローカルJSONへフォールバック）`, 'error');
+      isApiFallbackReadOnly = true;
+      setConnectionBanner(`API接続失敗: ${error.message}（ローカルJSONを読み取り専用で表示）`, 'error');
     }
+  } else {
+    isApiFallbackReadOnly = false;
   }
 
   try {
@@ -551,15 +641,29 @@ function setupTabs() {
   const tabBtns = document.querySelectorAll('.tab-btn');
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
-      document.getElementById(`${btn.dataset.tab}-tab`).classList.add('active');
+      const activate = () => {
+        if (currentEditType?.startsWith('live')) closeLiveEditorImmediately();
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        document.getElementById(`${btn.dataset.tab}-tab`).classList.add('active');
+        return true;
+      };
+      if (btn.dataset.tab === 'live') activate();
+      else requestLiveEditorTransition(activate);
     });
   });
+}
+
+function requestLiveEditorTransition(action) {
+  if (liveEditorDirty) {
+    const shouldDiscard = confirm('未保存の変更を破棄して移動しますか？');
+    if (!shouldDiscard) return false;
+    setLiveEditorDirty(false);
+  }
+  return action() !== false;
 }
 
 function syncLiveWorkspaceTabs() {
@@ -597,23 +701,53 @@ function syncTicketSettingsPanel() {
   openTicketSettings?.setAttribute('aria-expanded', String(liveTicketSettingsOpen));
 }
 
-function setLiveWorkspaceView(view) {
+function applyLiveWorkspaceView(view) {
   liveWorkspaceView = view === 'reservations' ? 'reservations' : 'page';
   if (liveWorkspaceView !== 'page') liveTicketSettingsOpen = false;
   syncLiveWorkspaceTabs();
   syncTicketSettingsPanel();
+  return true;
 }
 
-function setLiveListView(view) {
+function applyLiveListView(view) {
   liveListView = view === 'past' ? 'past' : 'upcoming';
   syncLiveListTabs();
+  return true;
 }
 
-function setTicketSettingsOpen(open) {
+function applyTicketSettingsOpen(open) {
   liveTicketSettingsOpen = Boolean(open);
   if (liveTicketSettingsOpen) liveWorkspaceView = 'page';
   syncLiveWorkspaceTabs();
   syncTicketSettingsPanel();
+  return true;
+}
+
+function setLiveWorkspaceView(view) {
+  const target = view === 'reservations' ? 'reservations' : 'page';
+  if (target === liveWorkspaceView) return applyLiveWorkspaceView(target);
+  return requestLiveEditorTransition(() => {
+    if (currentEditType?.startsWith('live')) closeLiveEditorImmediately();
+    return applyLiveWorkspaceView(target);
+  });
+}
+
+function setLiveListView(view) {
+  const target = view === 'past' ? 'past' : 'upcoming';
+  if (target === liveListView) return applyLiveListView(target);
+  return requestLiveEditorTransition(() => {
+    if (currentEditType?.startsWith('live')) closeLiveEditorImmediately();
+    return applyLiveListView(target);
+  });
+}
+
+function setTicketSettingsOpen(open) {
+  const target = Boolean(open);
+  if (target === liveTicketSettingsOpen) return applyTicketSettingsOpen(target);
+  return requestLiveEditorTransition(() => {
+    if (target && currentEditType?.startsWith('live')) closeLiveEditorImmediately();
+    return applyTicketSettingsOpen(target);
+  });
 }
 
 function bindLiveTablist(tabs, dataKey, setView) {
@@ -630,8 +764,7 @@ function bindLiveTablist(tabs, dataKey, setView) {
       if (nextIndex === null) return;
       event.preventDefault();
       const nextTab = tabs[nextIndex];
-      setView(nextTab.dataset[dataKey]);
-      nextTab.focus();
+      if (setView(nextTab.dataset[dataKey]) !== false) nextTab.focus();
     });
   });
 }
@@ -647,21 +780,19 @@ function setupLiveWorkspace() {
   if (openTicketSettings && openTicketSettings.dataset.liveSettingsBound !== 'true') {
     openTicketSettings.dataset.liveSettingsBound = 'true';
     openTicketSettings.addEventListener('click', () => {
-      setTicketSettingsOpen(true);
-      closeTicketSettings?.focus();
+      if (setTicketSettingsOpen(true) !== false) closeTicketSettings?.focus();
     });
   }
   if (closeTicketSettings && closeTicketSettings.dataset.liveSettingsBound !== 'true') {
     closeTicketSettings.dataset.liveSettingsBound = 'true';
     closeTicketSettings.addEventListener('click', () => {
-      setTicketSettingsOpen(false);
-      openTicketSettings?.focus();
+      if (setTicketSettingsOpen(false) !== false) openTicketSettings?.focus();
     });
   }
 
-  setLiveWorkspaceView('page');
-  setLiveListView('upcoming');
-  setTicketSettingsOpen(false);
+  applyLiveWorkspaceView('page');
+  applyLiveListView('upcoming');
+  applyTicketSettingsOpen(false);
 }
 
 // 全描画
@@ -1493,87 +1624,121 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
   const ledgerGate = isNew
     ? '<div class="empty-state operation-gate"><p>予約台帳はLiveを保存すると利用できます。</p></div>'
     : '<div class="empty-state"><p>予約台帳を読み込みます...</p></div>';
+  const taskDisabled = isNew ? ' disabled aria-disabled="true"' : '';
 
   return `
-    <section class="live-editor-section source-intake">
-      <div class="operation-heading"><span class="operation-step">01</span><h3>元情報を取り込む</h3></div>
-      <div class="form-group">
-        <label for="edit-sourceText">受け取った公演情報</label>
-        <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け">${escapeHtml(item.sourceText || '')}</textarea>
-        <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+    <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">
+      <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>
+      <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1"${taskDisabled}>告知</button>
+      <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1"${taskDisabled}>予約</button>
+    </div>
+
+    <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">
+      <details class="live-source-intake"${isNew ? ' open' : ''}>
+        <summary>元情報から作成</summary>
+        <div class="live-source-intake-body">
+          <p class="live-workspace-eyebrow">管理専用</p>
+          <div class="form-group">
+            <label for="edit-sourceText">受け取った公演情報</label>
+            <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け">${escapeHtml(item.sourceText || '')}</textarea>
+            <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+          </div>
+          <div class="live-source-actions">
+            <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>
+            ${isNew ? '<button type="button" class="btn btn-secondary btn-compact" id="live-manual-entry-btn">手入力で作成</button>' : ''}
+          </div>
+          <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <div id="live-public-fields"${isNew ? ' hidden' : ''}>
+        <p class="live-workspace-eyebrow">公開画面に表示</p>
+        <section class="live-editor-section live-basic-fields">
+          <div class="operation-heading"><h3>基本情報</h3></div>
+          <div class="field-row">
+            <div class="form-group">
+              <label for="edit-date">日付</label>
+              <input type="date" id="edit-date" class="text-input" value="${escapeHtml(normalizedDate)}" data-original-unparsed-date="${escapeHtml(unparsedOriginalDate)}" aria-describedby="edit-date-error">
+              <p id="edit-date-error" class="form-error" role="alert"></p>
+              ${unparsedOriginalDate ? `<p class="field-hint">現在の保存値: <code>${escapeHtml(unparsedOriginalDate)}</code>。有効な日付を入力するまではこの値を保持します。</p>` : ''}
+            </div>
+            <div class="form-group">
+              <label for="edit-venue">会場</label>
+              <input type="text" id="edit-venue" class="text-input" value="${escapeHtml(item.venue || '')}" placeholder="下北沢XXX" aria-describedby="edit-venue-error">
+              <p id="edit-venue-error" class="form-error" role="alert"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-title">ライブ名（任意）</label>
+            <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title || '')}" placeholder="例: 〇〇企画 / 〇〇 presents...">
+          </div>
+        </section>
+
+        <section class="live-editor-section">
+          <div class="operation-heading"><h3>公演情報</h3></div>
+          <div class="field-row live-time-fields">
+            <div class="form-group">
+              <label for="edit-openTime">Open</label>
+              <input type="time" id="edit-openTime" class="text-input" value="${escapeHtml(item.openTime || '')}">
+            </div>
+            <div class="form-group">
+              <label for="edit-startTime">Start</label>
+              <input type="time" id="edit-startTime" class="text-input" value="${escapeHtml(item.startTime || '')}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-ticket">ticket</label>
+            <input type="text" id="edit-ticket" class="text-input" value="${escapeHtml(item.ticket || '')}" placeholder="例: ¥2,500 + 1D">
+          </div>
+          <div class="form-group">
+            <label for="edit-notes">補足</label>
+            <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">${escapeHtml(item.notes || '')}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-performers">共演者</label>
+            <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">${escapeHtml(normalizedPerformers)}</textarea>
+          </div>
+        </section>
+
+        <details class="live-editor-details">
+          <summary>画像・リンクなど</summary>
+          <div class="live-editor-details-body">
+            ${item.description ? `
+            <details class="legacy-live-details">
+              <summary>旧詳細（未構造化）</summary>
+              <div class="form-group">
+                <label for="edit-description">過去データ互換</label>
+                <textarea id="edit-description" class="textarea" rows="4">${escapeHtml(item.description)}</textarea>
+                <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>
+              </div>
+            </details>` : ''}
+            ${getImageFormHtml(item.image || '', 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
+            <div class="form-group">
+              <label for="edit-ticketUrl">予約先</label>
+              <input type="url" id="edit-ticketUrl" class="text-input" value="${escapeHtml(ticketUrl)}" placeholder="https://...">
+              <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
+            </div>
+            <div class="form-group">
+              <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
+              <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link || '')}" placeholder="Instagramや公演詳細など">
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="edit-reservationClosed" ${item.reservationClosed === true ? 'checked' : ''}>
+              <label for="edit-reservationClosed">予約受付を終了</label>
+            </div>
+          </div>
+        </details>
+        <div class="checkbox-group live-category-field">
+          <input type="checkbox" id="edit-isPast" ${category === 'past' ? 'checked' : ''}>
+          <label for="edit-isPast">公演終了</label>
+        </div>
+        <p id="live-category-warning" class="form-warning" role="status"></p>
       </div>
-      <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで整理</button>
-      <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
     </section>
 
-    <section class="live-editor-section">
-      <div class="operation-heading"><span class="operation-step">02</span><h3>Live情報</h3></div>
-      <div class="form-group">
-        <label for="edit-date">日付</label>
-        <input type="date" id="edit-date" class="text-input" value="${escapeHtml(normalizedDate)}" data-original-unparsed-date="${escapeHtml(unparsedOriginalDate)}">
-        ${unparsedOriginalDate ? `<p class="field-hint">現在の保存値: <code>${escapeHtml(unparsedOriginalDate)}</code>。有効な日付を入力するまではこの値を保持します。</p>` : ''}
-      </div>
-      <div class="form-group">
-        <label for="edit-title">ライブ名（任意）</label>
-        <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title || '')}" placeholder="例: 〇〇企画 / 〇〇 presents...">
-      </div>
-      <div class="form-group">
-        <label for="edit-venue">会場</label>
-        <input type="text" id="edit-venue" class="text-input" value="${escapeHtml(item.venue || '')}" placeholder="下北沢XXX">
-      </div>
-      <div class="field-row live-time-fields">
-        <div class="form-group">
-          <label for="edit-openTime">Open</label>
-          <input type="time" id="edit-openTime" class="text-input" value="${escapeHtml(item.openTime || '')}">
-        </div>
-        <div class="form-group">
-          <label for="edit-startTime">Start</label>
-          <input type="time" id="edit-startTime" class="text-input" value="${escapeHtml(item.startTime || '')}">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="edit-ticket">ticket</label>
-        <input type="text" id="edit-ticket" class="text-input" value="${escapeHtml(item.ticket || '')}" placeholder="例: ¥2,500 + 1D">
-      </div>
-      <div class="form-group">
-        <label for="edit-notes">補足</label>
-        <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">${escapeHtml(item.notes || '')}</textarea>
-      </div>
-      <div class="form-group">
-        <label for="edit-performers">共演者</label>
-        <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">${escapeHtml(normalizedPerformers)}</textarea>
-      </div>
-      ${item.description ? `
-      <details class="legacy-live-details">
-        <summary>旧詳細（未構造化）</summary>
-        <div class="form-group">
-          <label for="edit-description">過去データ互換</label>
-          <textarea id="edit-description" class="textarea" rows="4">${escapeHtml(item.description)}</textarea>
-          <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>
-        </div>
-      </details>` : ''}
-      ${getImageFormHtml(item.image || '', 'edit-image', LIVE_FLYER_IMAGE_OPTIONS)}
-      <div class="form-group">
-        <label for="edit-ticketUrl">予約先</label>
-        <input type="url" id="edit-ticketUrl" class="text-input" value="${escapeHtml(ticketUrl)}" placeholder="https://...">
-        <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
-      </div>
-      <div class="form-group">
-        <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
-        <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link || '')}" placeholder="Instagramや公演詳細など">
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="edit-reservationClosed" ${item.reservationClosed === true ? 'checked' : ''}>
-        <label for="edit-reservationClosed">予約受付を終了</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="edit-isPast" ${category === 'past' ? 'checked' : ''}>
-        <label for="edit-isPast">公演終了</label>
-      </div>
-    </section>
-
-    <section class="live-editor-section announcement-panel">
-      <div class="operation-heading"><span class="operation-step">03</span><h3>X告知を準備</h3></div>
+    <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>
+      <div class="operation-heading"><h3>X告知を準備</h3></div>
+      <p class="live-workspace-eyebrow">管理専用</p>
       <div class="form-group">
         <label for="edit-xComment">オーナーコメント</label>
         <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと">${escapeHtml(item.xComment || '')}</textarea>
@@ -1584,13 +1749,13 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
       </div>
       ${saveFirstX}
       <div class="field-row">
-        <button type="button" class="btn btn-primary btn-compact" id="x-intent-btn"${disabled}>X Web Intentを開く</button>
+        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn"${disabled}>X Web Intentを開く</button>
         <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
       </div>
     </section>
 
-    <section class="live-editor-section reservation-panel">
-      <div class="operation-heading"><span class="operation-step">04</span><h3>予約台帳</h3></div>
+    <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>
+      <div class="operation-heading"><h3>予約台帳</h3></div>
       <div id="live-reservation-ledger" aria-live="polite">${ledgerGate}</div>
       <form id="manual-reservation-form" class="manual-reservation-form">
         <h4>手動取り置きを追加</h4>
@@ -1619,9 +1784,106 @@ function buildLiveEditorHtml(itemInput, category, isNew) {
 
     <footer class="live-editor-footer">
       <button type="button" class="btn btn-danger" id="live-editor-delete-btn" onclick="deleteLiveFromWorkspace()"${isNew ? ' hidden' : ''}>削除</button>
-      <button type="button" class="btn btn-primary" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>
+      <button type="button" class="btn btn-primary live-primary-action" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>
     </footer>
   `;
+}
+
+function setLiveEditorTask(task, options = {}) {
+  const tabs = Array.from(document.querySelectorAll('[data-live-editor-task]'));
+  const enabledTabs = tabs.filter((tab) => !tab.disabled);
+  const requested = enabledTabs.find((tab) => tab.dataset.liveEditorTask === task);
+  const selectedTask = requested?.dataset.liveEditorTask || 'public';
+
+  tabs.forEach((tab) => {
+    const isSelected = tab.dataset.liveEditorTask === selectedTask;
+    tab.setAttribute('aria-selected', String(isSelected));
+    tab.setAttribute('tabindex', isSelected ? '0' : '-1');
+    tab.classList[isSelected ? 'add' : 'remove']('is-active');
+  });
+  document.querySelectorAll('[data-live-editor-task-panel]').forEach((panel) => {
+    panel.hidden = panel.dataset.liveEditorTaskPanel !== selectedTask;
+  });
+
+  if (options.focus === true) {
+    tabs.find((tab) => tab.dataset.liveEditorTask === selectedTask)?.focus?.();
+  }
+  return selectedTask;
+}
+
+function bindLiveEditorTaskTabs() {
+  const tabs = Array.from(document.querySelectorAll('[data-live-editor-task]'));
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      if (!tab.disabled) setLiveEditorTask(tab.dataset.liveEditorTask);
+    });
+    tab.addEventListener('keydown', (event) => {
+      const enabledTabs = tabs.filter((candidate) => !candidate.disabled);
+      const currentIndex = enabledTabs.indexOf(tab);
+      if (currentIndex < 0) return;
+      let nextIndex = null;
+      if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % enabledTabs.length;
+      if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = enabledTabs.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      setLiveEditorTask(enabledTabs[nextIndex].dataset.liveEditorTask, { focus: true });
+    });
+  });
+}
+
+function revealNewLivePublicFields() {
+  const fields = document.getElementById('live-public-fields');
+  if (!fields) return;
+  fields.hidden = false;
+  document.getElementById('edit-date')?.focus?.();
+}
+
+function getTodayDateInputValue(now = new Date()) {
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getLiveCategoryWarning() {
+  const normalizedDate = getLiveOperations()?.normalizeLiveDateInput(readLiveDateFromEditor()) || '';
+  if (!normalizedDate) return '';
+  const isPast = Boolean(document.getElementById('edit-isPast')?.checked);
+  const today = getTodayDateInputValue();
+  if (!isPast && normalizedDate < today) {
+    return '開催予定ですが、過去の日付です。区分は自動変更しません。';
+  }
+  if (isPast && normalizedDate >= today) {
+    return '公演終了ですが、今日以降の日付です。区分は自動変更しません。';
+  }
+  return '';
+}
+
+function updateLiveCategoryWarning() {
+  const target = document.getElementById('live-category-warning');
+  if (target) target.textContent = getLiveCategoryWarning();
+}
+
+function validateLiveEditor() {
+  revealNewLivePublicFields();
+  const date = document.getElementById('edit-date');
+  const venue = document.getElementById('edit-venue');
+  const dateError = document.getElementById('edit-date-error');
+  const venueError = document.getElementById('edit-venue-error');
+  const dateMissing = !String(readLiveDateFromEditor() || '').trim();
+  const venueMissing = !String(venue?.value || '').trim();
+
+  date?.setAttribute('aria-invalid', String(dateMissing));
+  venue?.setAttribute('aria-invalid', String(venueMissing));
+  if (dateError) dateError.textContent = dateMissing ? '日付を入力してください。' : '';
+  if (venueError) venueError.textContent = venueMissing ? '会場を入力してください。' : '';
+  updateLiveCategoryWarning();
+
+  if (dateMissing) date?.focus?.();
+  else if (venueMissing) venue?.focus?.();
+  return !dateMissing && !venueMissing;
 }
 
 function getLiveEditorRoot() {
@@ -1637,7 +1899,8 @@ function getLiveEditorHeading(item, isNew = false) {
   const date = getAdminLiveDisplayDate(item?.date);
   const venue = String(item?.venue || '').trim();
   const title = String(item?.title || '').trim();
-  return [date, venue].filter(Boolean).join(' ') || title || 'Live編集';
+  const schedule = [date, venue].filter(Boolean).join(' ');
+  return [schedule, title].filter(Boolean).join(' — ') || 'Live編集';
 }
 
 function setLiveEditorSaveStatus(status) {
@@ -1706,20 +1969,24 @@ function openLiveEditor(item, category, isNew) {
   }
 
   liveEditorGeneration += 1;
-  setLiveWorkspaceView('page');
-  setTicketSettingsOpen(false);
-  setLiveListView(category);
+  applyLiveWorkspaceView('page');
+  applyTicketSettingsOpen(false);
+  applyLiveListView(category);
   root.innerHTML = buildLiveEditorHtml(item, category, isNew);
   document.getElementById('live-master-detail')?.classList.add('has-live-selection');
   const back = document.getElementById('live-editor-back');
   if (back) back.hidden = false;
   const heading = document.getElementById('live-editor-heading');
   if (heading) heading.textContent = getLiveEditorHeading(item, isNew);
+  const context = document.getElementById('live-editor-context');
+  if (context) context.textContent = `選択中Live・${category === 'past' ? '公演終了' : '開催予定'}`;
   syncLiveSelectionState();
   wireLiveOperationsModal();
   bindLiveEditorDirtyState();
+  updateLiveCategoryWarning();
   setLiveEditorDirty(isNew, isNew ? '未保存' : '保存済み');
-  const initialFocus = root.querySelector(
+  applyApiFallbackReadOnlyState();
+  const initialFocus = document.getElementById(isNew ? 'edit-sourceText' : 'edit-date') || root.querySelector(
     'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled]), button:not([disabled])'
   );
   initialFocus?.focus?.();
@@ -1728,25 +1995,34 @@ function openLiveEditor(item, category, isNew) {
 
 // Live追加
 function addLive() {
-  isNewItem = true;
-  currentEditType = 'live-upcoming';
-  currentEditId = 'live-' + Date.now();
-  openLiveEditor({}, 'upcoming', true);
+  return requestLiveEditorTransition(() => {
+    isNewItem = true;
+    currentEditType = 'live-upcoming';
+    currentEditId = 'live-' + Date.now();
+    return openLiveEditor({}, 'upcoming', true);
+  });
 }
 
 // Live編集
 function editLive(id, category) {
   const list = category === 'upcoming' ? siteData.live.upcoming : siteData.live.past;
   const item = list.find(l => l.id === id);
-  if (!item) return;
+  if (!item) return false;
+  if (currentEditType === `live-${category}` && String(currentEditId) === String(id)) return true;
 
-  isNewItem = false;
-  currentEditType = `live-${category}`;
-  currentEditId = id;
-  openLiveEditor(item, category, false);
+  return requestLiveEditorTransition(() => {
+    isNewItem = false;
+    currentEditType = `live-${category}`;
+    currentEditId = id;
+    return openLiveEditor(item, category, false);
+  });
 }
 
 function closeLiveEditor() {
+  return requestLiveEditorTransition(closeLiveEditorImmediately);
+}
+
+function closeLiveEditorImmediately() {
   const returnFocus = liveEditorReturnFocus;
   const returnFocusLive = liveEditorReturnFocusLive;
   liveEditorReturnFocus = null;
@@ -1760,6 +2036,8 @@ function closeLiveEditor() {
   if (back) back.hidden = true;
   const heading = document.getElementById('live-editor-heading');
   if (heading) heading.textContent = 'Liveを選択';
+  const context = document.getElementById('live-editor-context');
+  if (context) context.textContent = '選択中Live';
   setLiveEditorSaveStatus('');
   liveEditorDirty = false;
   const saveBtn = document.getElementById('saveBtn');
@@ -1773,6 +2051,7 @@ function closeLiveEditor() {
     isNewItem = false;
   }
   syncLiveSelectionState();
+  applyApiFallbackReadOnlyState();
 
   const hasConnectedReturnFocus = (
     returnFocus
@@ -1781,10 +2060,11 @@ function closeLiveEditor() {
   );
   if (hasConnectedReturnFocus) {
     returnFocus.focus();
-    return;
+    return true;
   }
-  if (!returnFocusLive) return;
+  if (!returnFocusLive) return true;
   findLiveEditTrigger(returnFocusLive.id, returnFocusLive.category)?.focus?.();
+  return true;
 }
 
 // Discography追加
@@ -2053,9 +2333,9 @@ function saveLiveItem() {
     liveEditorReturnFocusLive.category = destinationCategory;
   }
 
-  setLiveWorkspaceView('page');
-  setTicketSettingsOpen(false);
-  setLiveListView(destinationCategory);
+  applyLiveWorkspaceView('page');
+  applyTicketSettingsOpen(false);
+  applyLiveListView(destinationCategory);
   renderLive();
   renderTicketsUi();
   return { liveId: item.id, postToX: false, item, category: destinationCategory };
@@ -2063,10 +2343,16 @@ function saveLiveItem() {
 
 async function saveLiveWorkspace() {
   if (!currentEditType?.startsWith('live') || !currentEditId) return false;
+  if (rejectApiFallbackMutation('読み取り専用のためLiveを保存できません。')) return false;
   if (!ensureNoActiveImageUploads()) return false;
+  if (!validateLiveEditor()) {
+    setLiveEditorDirty(true, '未保存');
+    return false;
+  }
 
   const result = saveLiveItem();
   if (IS_API_MODE) {
+    setLiveEditorSaveStatus('保存中');
     const saved = await saveData({ silent: true });
     if (!saved) {
       setLiveEditorDirty(true, '保存失敗');
@@ -2086,6 +2372,7 @@ async function saveLiveWorkspace() {
 
 async function deleteLiveFromWorkspace() {
   if (!currentEditType?.startsWith('live') || !currentEditId) return false;
+  if (rejectApiFallbackMutation('読み取り専用のためLiveを削除できません。')) return false;
   if (!confirm('削除しますか？')) return false;
 
   const category = currentEditType.split('-')[1];
@@ -2097,7 +2384,7 @@ async function deleteLiveFromWorkspace() {
   }
   renderLive();
   renderTicketsUi();
-  closeLiveEditor();
+  closeLiveEditorImmediately();
   markChanged();
   showToast(
     IS_API_MODE
@@ -2205,6 +2492,7 @@ async function saveToApi() {
 
 // データ保存
 async function saveData(options = {}) {
+  if (rejectApiFallbackMutation('読み取り専用のため保存できません。')) return false;
   if (isSaving) return false;
   if (!ensureNoActiveImageUploads()) return false;
   const duplicateLiveIds = findDuplicateLiveIds(siteData);
@@ -2323,6 +2611,7 @@ function normalizeLiveSourceIntakePayload(payload) {
 async function handleLiveSourceParse() {
   const sourceElement = document.getElementById('edit-sourceText');
   const button = document.getElementById('live-source-parse-btn');
+  if (rejectApiFallbackMutation('読み取り専用のためAI整理を実行できません。')) return false;
   if (!IS_API_MODE) {
     setLiveSourceIntakeStatus('AIで整理はAPI Modeで利用可能です。元情報は変更されていません。');
     return false;
@@ -2394,6 +2683,7 @@ async function handleLiveSourceParse() {
       if (draft[key]) fieldElements[key].value = draft[key];
     }
     updateXPreviewInModal();
+    revealNewLivePublicFields();
     markLiveEditorDirty();
     setLiveSourceIntakeStatus('AIで整理しました。内容を確認してから更新してください。');
     return true;
@@ -2413,7 +2703,7 @@ async function handleLiveSourceParse() {
       activeLiveSourceIntakeOperation = null;
     }
     button.disabled = false;
-    button.textContent = 'AIで整理';
+    button.textContent = 'AIで下書きを作る';
   }
 }
 
@@ -2499,6 +2789,12 @@ async function loadLiveReservations(liveId = currentEditId) {
     || !currentEditType?.startsWith('live')
     || String(currentEditId || '') !== normalizedLiveId
   ) return;
+  if (isApiFallbackReadOnly) {
+    target.innerHTML = '<div class="empty-state operation-gate"><p>API接続失敗中は予約データを変更できません。</p></div>';
+    const submit = document.getElementById('manual-reservation-submit');
+    if (submit) submit.disabled = true;
+    return;
+  }
   const ownerGeneration = liveEditorGeneration;
   const requestSequence = ++liveReservationRequestSequence;
   const ownsCurrentLedger = () => (
@@ -2533,6 +2829,10 @@ async function submitManualReservation() {
   const errorEl = document.getElementById('manual-reservation-error');
   const submit = document.getElementById('manual-reservation-submit');
   if (errorEl) errorEl.textContent = '';
+  if (rejectApiFallbackMutation('読み取り専用のため予約を追加できません。')) {
+    if (errorEl) errorEl.textContent = 'API接続失敗中は予約を追加できません。';
+    return false;
+  }
   if (!IS_API_MODE) {
     if (errorEl) errorEl.textContent = '手動取り置きにはAPI接続が必要です。';
     return false;
@@ -2589,7 +2889,12 @@ async function submitManualReservation() {
 }
 
 function wireLiveOperationsModal() {
+  bindLiveEditorTaskTabs();
+  setLiveEditorTask('public');
   document.getElementById('live-source-parse-btn')?.addEventListener('click', handleLiveSourceParse);
+  document.getElementById('live-manual-entry-btn')?.addEventListener('click', revealNewLivePublicFields);
+  document.getElementById('edit-date')?.addEventListener('input', updateLiveCategoryWarning);
+  document.getElementById('edit-isPast')?.addEventListener('change', updateLiveCategoryWarning);
   [
     'edit-date',
     'edit-title',

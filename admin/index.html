@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>1212 HP Admin</title>
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="style.css?v=20260804-2">
+  <link rel="stylesheet" href="style.css?v=20260816-22">
 </head>
 <body>
   <div id="app">
@@ -98,7 +98,7 @@
     <section class="tab-content active" id="live-tab">
       <div class="section-header">
         <h2>Live</h2>
-        <button class="add-btn" onclick="addLive()">+ 追加</button>
+        <button class="add-btn live-primary-action" onclick="addLive()">+ 新規Live</button>
       </div>
       <div class="live-workspace" id="live-workspace">
         <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
@@ -130,7 +130,7 @@
                 <header class="live-editor-header">
                   <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
                   <div class="live-editor-title-group">
-                    <p class="live-workspace-eyebrow">選択中Live</p>
+                    <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
                     <h3 id="live-editor-heading">Liveを選択</h3>
                   </div>
                   <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
@@ -324,6 +324,6 @@
 </script>
 <script src="config.js?v=20260216-2001"></script>
 <script src="../assets/js/live-operations.js?v=20260804-2"></script>
-<script src="app.js?v=20260804-2"></script>
+<script src="app.js?v=20260816-22"></script>
 </body>
 </html>
