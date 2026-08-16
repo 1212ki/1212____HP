@@ -32,6 +32,9 @@
   --shadow-lg: var(--shadow-card, 0 12px 30px rgba(0, 0, 0, 0.12));
   --radius: var(--radius-card, 16px);
   --radius-sm: var(--radius-button, 12px);
+  --admin-header-sticky-height: 92px;
+  --admin-tab-nav-sticky-height: 54px;
+  --admin-global-chrome-sticky-offset: calc(var(--admin-header-sticky-height) + var(--admin-tab-nav-sticky-height));
 
   /* Status: avoid strong red/green fills; keep monochrome + accent hints */
   --status-pending-bg: var(--accent-soft);
@@ -60,6 +63,7 @@ body {
   background: var(--white);
   border-bottom: 1px solid var(--gray-200);
   padding: 16px 20px;
+  height: var(--admin-header-sticky-height);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -130,8 +134,9 @@ body {
   display: flex;
   background: var(--white);
   border-bottom: 1px solid var(--gray-200);
+  height: var(--admin-tab-nav-sticky-height);
   position: sticky;
-  top: 60px;
+  top: var(--admin-header-sticky-height);
   z-index: 99;
 }
 
@@ -220,7 +225,7 @@ body {
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: clip;
 }
 
 .live-workspace-tabs,
@@ -395,7 +400,7 @@ body {
 .live-editor-task-tabs {
   position: sticky;
   z-index: 2;
-  top: 0;
+  top: var(--admin-global-chrome-sticky-offset);
   display: flex;
   gap: 4px;
   margin: -20px -20px 20px;
@@ -488,6 +493,15 @@ body {
   font-size: 0.68em;
   font-weight: 700;
   white-space: nowrap;
+}
+
+@media (max-width: 899px) {
+  .live-workspace-tab,
+  .live-list-tab,
+  .live-workspace-utility,
+  .live-editor-back {
+    min-height: 44px;
+  }
 }
 
 @media (min-width: 900px) {

@@ -1014,14 +1014,60 @@ test('responsive Live workspace fixes overflow, focus, sticky actions, and actio
   assert.doesNotMatch(editorHtml, /class="[^"]*btn-primary[^"]*"[^>]*id="x-intent-btn"/);
 });
 
-test('sticky Live task and publish actions share a non-scrolling editor-pane ancestor', () => {
-  const paneRule = [...adminCss.matchAll(/(?:^|\n)\.live-editor-pane\s*\{([^}]*)\}/g)]
-    .find((match) => /overflow:/.test(match[1]));
-  assert.ok(paneRule, 'Live editor pane rule must exist');
-  assert.match(paneRule[1], /overflow:\s*clip\s*;/);
-  assert.doesNotMatch(paneRule[1], /overflow:\s*(?:hidden|auto|scroll)\s*;/);
+test('sticky Live controls have no scrolling mechanism in the complete ancestor chain', () => {
+  assert.match(
+    adminHtml,
+    /<body>[\s\S]*id="app"[\s\S]*id="live-tab"[\s\S]*id="live-workspace"[\s\S]*id="live-workspace-page-panel"[\s\S]*id="live-page-primary"[\s\S]*id="live-master-detail"[\s\S]*id="live-editor-pane"[\s\S]*id="live-editor-body"/,
+  );
+  assert.match(adminJs, /class="live-editor-task-tabs"[\s\S]*class="live-editor-footer"/);
+
+  const directRuleBodies = (selector) => {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return [...adminCss.matchAll(new RegExp(`(?:^|\\n)\\s*${escaped}\\s*\\{([^}]*)\\}`, 'g'))]
+      .map((match) => match[1]);
+  };
+  const stickyAncestorSelectors = [
+    'body',
+    '#app',
+    '.tab-content',
+    '.live-workspace',
+    '.live-workspace-panel',
+    '#live-page-primary',
+    '.live-master-detail',
+    '.live-editor-pane',
+    '.live-editor-body',
+  ];
+  for (const selector of stickyAncestorSelectors) {
+    const bodies = directRuleBodies(selector);
+    assert.doesNotMatch(
+      bodies.join('\n'),
+      /overflow(?:-x|-y)?:\s*(?:hidden|auto|scroll)\s*;/,
+      `${selector} must not create a scrolling mechanism for Live sticky controls`,
+    );
+  }
+  assert.match(directRuleBodies('.live-workspace').join('\n'), /overflow:\s*clip\s*;/);
+  assert.match(directRuleBodies('.live-editor-pane').join('\n'), /overflow:\s*clip\s*;/);
   assert.match(adminCss, /\.live-editor-task-tabs\s*\{[^}]*position:\s*sticky/s);
   assert.match(adminCss, /\.live-editor-footer\s*\{[^}]*position:\s*sticky/s);
+});
+
+test('sticky Live task tabs offset below the fixed global header and navigation chrome', () => {
+  assert.match(adminCss, /--admin-header-sticky-height:\s*\d+px\s*;/);
+  assert.match(adminCss, /--admin-tab-nav-sticky-height:\s*\d+px\s*;/);
+  assert.match(
+    adminCss,
+    /--admin-global-chrome-sticky-offset:\s*calc\(\s*var\(--admin-header-sticky-height\)\s*\+\s*var\(--admin-tab-nav-sticky-height\)\s*\)\s*;/,
+  );
+  assert.match(adminCss, /\.header\s*\{[^}]*height:\s*var\(--admin-header-sticky-height\)\s*;[^}]*position:\s*sticky\s*;[^}]*top:\s*0\s*;/s);
+  assert.match(adminCss, /\.tab-nav\s*\{[^}]*height:\s*var\(--admin-tab-nav-sticky-height\)\s*;[^}]*position:\s*sticky\s*;[^}]*top:\s*var\(--admin-header-sticky-height\)\s*;/s);
+  assert.match(adminCss, /\.live-editor-task-tabs\s*\{[^}]*position:\s*sticky\s*;[^}]*top:\s*var\(--admin-global-chrome-sticky-offset\)\s*;/s);
+});
+
+test('essential mobile Live workspace list utility and back controls guarantee 44px targets', () => {
+  assert.match(
+    adminCss,
+    /@media\s*\(max-width:\s*899px\)\s*\{\s*\.live-workspace-tab,\s*\.live-list-tab,\s*\.live-workspace-utility,\s*\.live-editor-back\s*\{[^}]*min-height:\s*44px\s*;/s,
+  );
 });
 
 test('Live edit workspace saves a category move in place and routes Local Mode to JSON export', async () => {
@@ -1135,6 +1181,7 @@ test('Live API save transaction deduplicates clicks and locks mutations, navigat
     },
   });
   app.renderLive();
+  const cardsBeforePublish = [...app.elements.get('live-upcoming-list').children];
   app.editLive('pending-live', 'upcoming');
   setLiveForm(app.elements, { 'edit-title': 'Pending save' });
   const pendingAi = deferred();
@@ -1163,6 +1210,14 @@ test('Live API save transaction deduplicates clicks and locks mutations, navigat
   assert.equal(app.elements.get('edit-title').getAttribute('aria-disabled'), 'true');
   assert.equal(app.elements.get('live-editor-back').getAttribute('aria-disabled'), 'true');
   assert.equal(app.elements.get('live-editor-pane').getAttribute('aria-busy'), 'true');
+  const replacementCards = [...app.elements.get('live-upcoming-list').children];
+  assert.equal(replacementCards.length, 2);
+  assert.notEqual(replacementCards[0], cardsBeforePublish[0], 'publish render must replace the list fixture');
+  assert.equal(replacementCards.every((card) => card.disabled), true);
+  assert.equal(replacementCards.every((card) => card.getAttribute('aria-disabled') === 'true'), true);
+  const replacementOtherCard = replacementCards.find((card) => card.dataset.liveId === 'other-live');
+  await app.dispatchDocument('click', { target: replacementOtherCard, preventDefault() {} });
+  assert.equal(app.getModalState().currentEditId, 'pending-live');
   app.setConfirm(() => true);
   assert.equal(app.editLive('other-live', 'upcoming'), false);
   assert.equal(app.getModalState().currentEditId, 'pending-live');
@@ -1183,6 +1238,8 @@ test('Live API save transaction deduplicates clicks and locks mutations, navigat
   assert.equal(app.getModalState().currentEditId, 'pending-live');
   assert.equal(app.elements.get('edit-title').disabled, false);
   assert.equal(app.elements.get('live-add-btn').disabled, false);
+  assert.equal(replacementCards.every((card) => !card.disabled), true);
+  assert.equal(replacementCards.every((card) => card.getAttribute('aria-disabled') === 'false'), true);
   assert.notEqual(app.elements.get('edit-title').getAttribute('aria-disabled'), 'true');
   assert.equal(app.elements.get('live-editor-back').getAttribute('aria-disabled'), 'false');
   assert.equal(app.elements.get('live-editor-pane').getAttribute('aria-busy'), 'false');

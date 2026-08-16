@@ -1961,7 +1961,7 @@ function markLiveEditorDirty() {
 }
 
 function setLiveEditorInteractionLocked(locked, priorState = [], operation = null) {
-  if (!locked && operation && liveWorkspaceSaveOperation !== operation) return priorState;
+  if (operation && liveWorkspaceSaveOperation !== operation) return priorState;
   const controlIds = [
     'saveBtn',
     'live-add-btn',
@@ -1983,11 +1983,12 @@ function setLiveEditorInteractionLocked(locked, priorState = [], operation = nul
   const uniqueControls = [...new Set(controls)];
 
   if (locked) {
-    const state = uniqueControls.map((element) => ({
-      element,
-      disabled: Boolean(element.disabled),
-    }));
-    state.forEach(({ element }) => {
+    const state = priorState;
+    const trackedElements = new Set(state.map(({ element }) => element));
+    uniqueControls.forEach((element) => {
+      if (!trackedElements.has(element)) {
+        state.push({ element, disabled: Boolean(element.disabled) });
+      }
       element.disabled = true;
       element.setAttribute('aria-disabled', 'true');
     });
@@ -2481,7 +2482,7 @@ async function saveLiveWorkspace() {
   };
   liveWorkspaceSaveOperation = operation;
   setLiveEditorSaveStatus('保存中');
-  operation.lockedControls = setLiveEditorInteractionLocked(true);
+  operation.lockedControls = setLiveEditorInteractionLocked(true, operation.lockedControls, operation);
 
   const stillOwnsEditor = () => (
     liveWorkspaceSaveOperation === operation
@@ -2533,6 +2534,7 @@ async function saveLiveWorkspace() {
   try {
     const result = saveLiveItem();
     if (!result) throw new Error('Live editor owner is unavailable');
+    operation.lockedControls = setLiveEditorInteractionLocked(true, operation.lockedControls, operation);
     if (IS_API_MODE) {
       const saved = await saveData({ silent: true });
       if (!saved) {
