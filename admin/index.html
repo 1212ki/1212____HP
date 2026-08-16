@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>1212 HP Admin</title>
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="style.css?v=20260804-2">
+  <link rel="stylesheet" href="style.css?v=20260816-22">
 </head>
 <body>
   <div id="app">
@@ -98,66 +98,107 @@
     <section class="tab-content active" id="live-tab">
       <div class="section-header">
         <h2>Live</h2>
-        <button class="add-btn" onclick="addLive()">+ 追加</button>
+        <button class="add-btn live-primary-action" id="live-add-btn" onclick="addLive()">+ 新規Live</button>
       </div>
-      <div class="subsection">
-        <h3>開催予定</h3>
-        <div class="items-list" id="live-upcoming-list"></div>
-      </div>
-      <div class="subsection">
-        <h3>公演終了</h3>
-        <div class="items-list" id="live-past-list"></div>
-      </div>
-      <details class="live-secondary">
-        <summary>Ticket Page 設定</summary>
-        <div class="live-secondary-body subsection">
-        <h3>Ticket Page（表示文言）</h3>
-        <div class="form-group">
-          <label>導入文（空なら既定のまま）</label>
-          <textarea id="ticket-intro-text" class="textarea" rows="2" placeholder="ライブを選択して..."></textarea>
+      <div class="live-workspace" id="live-workspace">
+        <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+          <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+          <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
         </div>
-        <div class="form-group">
-          <label>注意文（空なら既定のまま）</label>
-          <textarea id="ticket-notice-text" class="textarea" rows="2" placeholder="送信後..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>完了文（空なら既定のまま）</label>
-          <textarea id="ticket-complete-text" class="textarea" rows="2" placeholder="予約しました..."></textarea>
-        </div>
-        <div class="subsection">
-          <h3>Ticket Page（表示項目）</h3>
-          <div class="checkbox-group">
-            <input type="checkbox" id="ticket-field-quantity">
-            <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
-          </div>
-          <div class="form-group">
-            <label>枚数 ラベル（空なら既定のまま）</label>
-            <input type="text" id="ticket-field-label-quantity" class="text-input" placeholder="枚数">
+
+        <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+          <div id="live-page-primary">
+            <div class="live-page-toolbar">
+              <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+              </div>
+              <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+            </div>
+
+            <div class="live-master-detail" id="live-master-detail">
+              <div class="live-master-pane" id="live-master-pane">
+                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                  <div class="items-list" id="live-upcoming-list"></div>
+                </section>
+                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                  <div class="items-list" id="live-past-list"></div>
+                </section>
+              </div>
+
+              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                <header class="live-editor-header">
+                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                  <div class="live-editor-title-group">
+                    <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
+                    <h3 id="live-editor-heading">Liveを選択</h3>
+                  </div>
+                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                </header>
+                <div class="live-editor-body" id="live-editor-body">
+                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                </div>
+              </section>
+            </div>
           </div>
 
-          <div class="checkbox-group">
-            <input type="checkbox" id="ticket-field-message">
-            <label for="ticket-field-message">備考（任意）を表示</label>
-          </div>
-          <div class="form-group">
-            <label>備考 ラベル（空なら既定のまま）</label>
-            <input type="text" id="ticket-field-label-message" class="text-input" placeholder="備考">
-          </div>
-          <div class="form-group">
-            <label>備考 プレースホルダ（空なら既定のまま）</label>
-            <input type="text" id="ticket-field-placeholder-message" class="text-input" placeholder="例: 取り置き名義が別の場合など">
-          </div>
+          <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+            <div class="section-header compact">
+              <div>
+                <p class="live-workspace-eyebrow">Liveページ共通</p>
+                <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+              </div>
+              <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+            </div>
+            <div class="subsection">
+              <h3>Ticket Page（表示文言）</h3>
+              <div class="form-group">
+                <label>導入文（空なら既定のまま）</label>
+                <textarea id="ticket-intro-text" class="textarea" rows="2" placeholder="ライブを選択して..."></textarea>
+              </div>
+              <div class="form-group">
+                <label>注意文（空なら既定のまま）</label>
+                <textarea id="ticket-notice-text" class="textarea" rows="2" placeholder="送信後..."></textarea>
+              </div>
+              <div class="form-group">
+                <label>完了文（空なら既定のまま）</label>
+                <textarea id="ticket-complete-text" class="textarea" rows="2" placeholder="予約しました..."></textarea>
+              </div>
+            </div>
+            <div class="subsection">
+              <h3>Ticket Page（表示項目）</h3>
+              <div class="checkbox-group">
+                <input type="checkbox" id="ticket-field-quantity">
+                <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+              </div>
+              <div class="form-group">
+                <label>枚数 ラベル（空なら既定のまま）</label>
+                <input type="text" id="ticket-field-label-quantity" class="text-input" placeholder="枚数">
+              </div>
 
-          <div class="form-group">
-            <label>送信ボタン文言（空なら既定のまま）</label>
-            <input type="text" id="ticket-field-submit-label" class="text-input" placeholder="予約する">
-          </div>
-        </div>
-        </div>
-      </details>
-      <details class="live-secondary">
-        <summary>予約一覧（全Live）</summary>
-        <div class="live-secondary-body">
+              <div class="checkbox-group">
+                <input type="checkbox" id="ticket-field-message">
+                <label for="ticket-field-message">備考（任意）を表示</label>
+              </div>
+              <div class="form-group">
+                <label>備考 ラベル（空なら既定のまま）</label>
+                <input type="text" id="ticket-field-label-message" class="text-input" placeholder="備考">
+              </div>
+              <div class="form-group">
+                <label>備考 プレースホルダ（空なら既定のまま）</label>
+                <input type="text" id="ticket-field-placeholder-message" class="text-input" placeholder="例: 取り置き名義が別の場合など">
+              </div>
+
+              <div class="form-group">
+                <label>送信ボタン文言（空なら既定のまま）</label>
+                <input type="text" id="ticket-field-submit-label" class="text-input" placeholder="予約する">
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+          <div class="live-reservations-panel">
           <div class="section-header compact">
             <h3>横断予約台帳</h3>
             <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
@@ -175,8 +216,9 @@
             </div>
           </div>
           <div class="items-list" id="tickets-list"></div>
-        </div>
-      </details>
+          </div>
+        </section>
+      </div>
     </section>
 
     <!-- YouTubeタブ -->
@@ -282,6 +324,6 @@
 </script>
 <script src="config.js?v=20260216-2001"></script>
 <script src="../assets/js/live-operations.js?v=20260804-2"></script>
-<script src="app.js?v=20260804-2"></script>
+<script src="app.js?v=20260816-22"></script>
 </body>
 </html>

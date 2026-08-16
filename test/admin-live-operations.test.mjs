@@ -8,6 +8,7 @@ import vm from 'node:vm';
 const repoRoot = process.cwd();
 const adminHtml = readFileSync(join(repoRoot, 'admin/index.html'), 'utf8');
 const adminJs = readFileSync(join(repoRoot, 'admin/app.js'), 'utf8');
+const adminCss = readFileSync(join(repoRoot, 'admin/style.css'), 'utf8');
 const require = createRequire(import.meta.url);
 const LiveOperations = require(join(repoRoot, 'assets/js/live-operations.js'));
 
@@ -23,6 +24,7 @@ function decodeHtml(value) {
 function createElement(id, ownerDocument = null, tagName = 'div') {
   const listeners = new Map();
   const classes = new Set();
+  const attributes = new Map();
   let html = '';
   const element = {
     id,
@@ -32,6 +34,8 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
     value: '',
     checked: false,
     disabled: false,
+    hidden: false,
+    tabIndex: 0,
     textContent: '',
     parentElement: null,
     style: {},
@@ -46,6 +50,14 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
       const group = listeners.get(type) || [];
       group.push(listener);
       listeners.set(type, group);
+    },
+    getAttribute(name) {
+      return attributes.get(name) ?? null;
+    },
+    setAttribute(name, value) {
+      const normalized = String(value);
+      attributes.set(name, normalized);
+      if (name === 'tabindex') this.tabIndex = Number(normalized);
     },
     appendChild(child) {
       child.parentElement = this;
@@ -62,6 +74,11 @@ function createElement(id, ownerDocument = null, tagName = 'div') {
     },
     click() {},
     focus() {
+      let focusTarget = this;
+      while (focusTarget) {
+        if (!focusTarget.isConnected || focusTarget.hidden) return;
+        focusTarget = focusTarget.parentElement;
+      }
       this.focusCount += 1;
       if (ownerDocument) ownerDocument.activeElement = this;
     },
@@ -89,6 +106,8 @@ function createDomHarness() {
   const documentListeners = new Map();
   const modalOwnedIds = new Set();
   const modalOrder = [];
+  const modalOwnedElements = new Map();
+  const liveEditorOwnedElements = new Map();
   const createdAnchors = [];
   const objectUrls = [];
   const revokedObjectUrls = [];
@@ -116,13 +135,29 @@ function createDomHarness() {
     },
     execCommand: () => true,
     getElementById(id) {
+      // The Live editor precedes the generic modal in the real document. Keep
+      // that lookup order when duplicate edit-* IDs expose an ownership bug.
+      if (liveEditorOwnedElements.has(id) && modalOwnedElements.has(id)) {
+        return liveEditorOwnedElements.get(id);
+      }
       return elements.get(id) || null;
     },
     querySelectorAll(selector) {
-      if (selector !== '[data-live-edit]') return [];
-      return ['live-upcoming-list', 'live-past-list']
-        .flatMap((id) => elements.get(id)?.children || [])
-        .filter((element) => element.dataset?.liveEdit !== undefined);
+      if (selector === '.tab-btn') {
+        return [...elements.values()].filter((element) => element.classList.contains('tab-btn'));
+      }
+      if (selector === '.tab-content') {
+        return [...elements.values()].filter((element) => element.classList.contains('tab-content'));
+      }
+      if (selector === '[data-live-edit]') {
+        return ['live-upcoming-list', 'live-past-list']
+          .flatMap((id) => elements.get(id)?.children || [])
+          .filter((element) => element.dataset?.liveEdit !== undefined);
+      }
+      const dataSelector = selector.match(/^\[data-([\w-]+)\]$/);
+      if (!dataSelector) return [];
+      const dataKey = dataSelector[1].replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
+      return [...elements.values()].filter((element) => element.dataset?.[dataKey] !== undefined);
     },
     contains(element) { return Boolean(element?.isConnected); },
   };
@@ -167,6 +202,10 @@ function createDomHarness() {
           trigger.dataset.liveEdit = '';
           trigger.dataset.liveId = decodeHtml(liveId);
           trigger.dataset.liveCategory = decodeHtml(category);
+          const classAttr = attrs.match(/\bclass="([^"]*)"/i)?.[1] || '';
+          trigger.classList.add(...classAttr.split(/\s+/).filter(Boolean));
+          const ariaCurrent = attrs.match(/\baria-current="([^"]*)"/i)?.[1];
+          if (ariaCurrent !== undefined) trigger.setAttribute('aria-current', ariaCurrent);
           trigger.closest = (selector) => selector === '[data-live-edit]' ? trigger : null;
           list.appendChild(trigger);
         }
@@ -174,50 +213,65 @@ function createDomHarness() {
     });
   }
 
-  const modalBody = addStatic('modal-body');
-  Object.defineProperty(modalBody, 'innerHTML', {
-    configurable: true,
-    get() { return modalBody._html || ''; },
-    set(value) {
-      for (const id of modalOwnedIds) {
-        const prior = elements.get(id);
-        if (prior) prior.isConnected = false;
-        elements.delete(id);
-      }
-      modalOwnedIds.clear();
-      modalOrder.length = 0;
-      modalBody._html = String(value);
+  function installOwnedHtmlBehavior(root, ownedIds, order, ownedElements = new Map()) {
+    Object.defineProperty(root, 'innerHTML', {
+      configurable: true,
+      get() { return root._html || ''; },
+      set(value) {
+        for (const id of ownedIds) {
+          const prior = ownedElements.get(id);
+          if (prior) prior.isConnected = false;
+          if (elements.get(id) === prior) elements.delete(id);
+          ownedElements.delete(id);
+        }
+        ownedIds.clear();
+        order.length = 0;
+        root._html = String(value);
 
-      const openingTag = /<([a-z][\w-]*)\b([^>]*\bid="([^"]+)"[^>]*)>/gi;
-      for (const match of modalBody._html.matchAll(openingTag)) {
-        const [, tagName, attrs, id] = match;
-        const element = createElement(id, document, tagName);
-        element.parentElement = modalBody;
-        element.disabled = /\bdisabled(?:\s|>|$)/i.test(attrs);
-        element.checked = /\bchecked(?:\s|>|$)/i.test(attrs);
-        const valueAttr = attrs.match(/\bvalue="([^"]*)"/i);
-        if (valueAttr) element.value = decodeHtml(valueAttr[1]);
-        for (const dataAttr of attrs.matchAll(/\bdata-([\w-]+)="([^"]*)"/gi)) {
-          const key = dataAttr[1].replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
-          element.dataset[key] = decodeHtml(dataAttr[2]);
+        const openingTag = /<([a-z][\w-]*)\b([^>]*\bid="([^"]+)"[^>]*)>/gi;
+        for (const match of root._html.matchAll(openingTag)) {
+          const [, tagName, attrs, id] = match;
+          const element = createElement(id, document, tagName);
+          element.parentElement = root;
+          element.disabled = /\bdisabled(?:\s|>|$)/i.test(attrs);
+          element.checked = /\bchecked(?:\s|>|$)/i.test(attrs);
+          element.hidden = /\bhidden(?:\s|>|$)/i.test(attrs);
+          const classAttr = attrs.match(/\bclass="([^"]*)"/i)?.[1] || '';
+          element.classList.add(...classAttr.split(/\s+/).filter(Boolean));
+          const valueAttr = attrs.match(/\bvalue="([^"]*)"/i);
+          if (valueAttr) element.value = decodeHtml(valueAttr[1]);
+          for (const dataAttr of attrs.matchAll(/\bdata-([\w-]+)="([^"]*)"/gi)) {
+            const key = dataAttr[1].replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
+            element.dataset[key] = decodeHtml(dataAttr[2]);
+          }
+          for (const ariaAttr of attrs.matchAll(/\b(aria-[\w-]+)="([^"]*)"/gi)) {
+            element.setAttribute(ariaAttr[1], decodeHtml(ariaAttr[2]));
+          }
+          if (tagName.toLowerCase() === 'textarea') {
+            const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const body = root._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
+            element.value = decodeHtml(body || '');
+          }
+          if (tagName.toLowerCase() === 'select') installSelectHtmlBehavior(element);
+          elements.set(id, element);
+          ownedElements.set(id, element);
+          ownedIds.add(id);
+          order.push(element);
         }
-        if (tagName.toLowerCase() === 'textarea') {
-          const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          const body = modalBody._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
-          element.value = decodeHtml(body || '');
-        }
-        if (tagName.toLowerCase() === 'select') installSelectHtmlBehavior(element);
-        elements.set(id, element);
-        modalOwnedIds.add(id);
-        modalOrder.push(element);
-      }
-    },
-  });
-  modalBody.querySelector = () => modalOrder.find((element) => {
-    if (element.disabled) return false;
-    if (element.tagName === 'INPUT' && element.type === 'hidden') return false;
-    return ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName);
-  }) || null;
+      },
+    });
+    root.querySelector = () => order.find((element) => {
+      if (element.disabled) return false;
+      if (element.tagName === 'INPUT' && element.type === 'hidden') return false;
+      return ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName);
+    }) || null;
+    root.querySelectorAll = () => order.filter((element) => (
+      ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName)
+    ));
+  }
+
+  const modalBody = addStatic('modal-body');
+  installOwnedHtmlBehavior(modalBody, modalOwnedIds, modalOrder, modalOwnedElements);
 
   addStatic('modal-title');
   addStatic('modal-overlay');
@@ -225,14 +279,83 @@ function createDomHarness() {
   addStatic('delete-btn', 'button');
   addStatic('toast');
   addStatic('saveBtn', 'button');
+  addStatic('live-add-btn', 'button');
+  addStatic('modeBadge');
+  addStatic('connectionBanner');
+  addStatic('news-list');
+  const siteGlobalTab = addStatic('global-tab-site', 'button');
+  siteGlobalTab.dataset.tab = 'site';
+  siteGlobalTab.classList.add('tab-btn');
+  const liveGlobalTab = addStatic('global-tab-live', 'button');
+  liveGlobalTab.dataset.tab = 'live';
+  liveGlobalTab.classList.add('tab-btn', 'active');
+  const newsGlobalTab = addStatic('global-tab-news', 'button');
+  newsGlobalTab.dataset.tab = 'news';
+  newsGlobalTab.classList.add('tab-btn');
+  const liveGlobalPanel = addStatic('live-tab', 'section');
+  liveGlobalPanel.classList.add('tab-content', 'active');
+  const newsGlobalPanel = addStatic('news-tab', 'section');
+  newsGlobalPanel.classList.add('tab-content');
+  const siteGlobalPanel = addStatic('site-tab', 'section');
+  siteGlobalPanel.classList.add('tab-content');
   addStatic('tickets-list');
   const liveFilter = addStatic('tickets-live-filter', 'select');
   installSelectHtmlBehavior(liveFilter);
   const statusFilter = addStatic('tickets-status-filter', 'select');
   statusFilter.value = 'pending';
+  const liveWorkspace = addStatic('live-workspace');
+  const livePageTab = addStatic('live-workspace-page-tab', 'button');
+  livePageTab.dataset.liveWorkspaceView = 'page';
+  const liveReservationsTab = addStatic('live-workspace-reservations-tab', 'button');
+  liveReservationsTab.dataset.liveWorkspaceView = 'reservations';
+  const livePagePanel = addStatic('live-workspace-page-panel', 'section');
+  livePagePanel.dataset.liveWorkspacePanel = 'page';
+  livePagePanel.parentElement = liveWorkspace;
+  const liveReservationsPanel = addStatic('live-workspace-reservations-panel', 'section');
+  liveReservationsPanel.dataset.liveWorkspacePanel = 'reservations';
+  liveReservationsPanel.parentElement = liveWorkspace;
+  const upcomingTab = addStatic('live-list-upcoming-tab', 'button');
+  upcomingTab.dataset.liveListView = 'upcoming';
+  const pastTab = addStatic('live-list-past-tab', 'button');
+  pastTab.dataset.liveListView = 'past';
+  const upcomingPanel = addStatic('live-list-upcoming-panel', 'section');
+  upcomingPanel.dataset.liveListPanel = 'upcoming';
+  const pastPanel = addStatic('live-list-past-panel', 'section');
+  pastPanel.dataset.liveListPanel = 'past';
+  const livePagePrimary = addStatic('live-page-primary');
+  livePagePrimary.parentElement = livePagePanel;
+  const liveMasterDetail = addStatic('live-master-detail');
+  liveMasterDetail.parentElement = livePagePrimary;
+  const liveMasterPane = addStatic('live-master-pane');
+  liveMasterPane.parentElement = liveMasterDetail;
+  const liveEditorPane = addStatic('live-editor-pane', 'section');
+  liveEditorPane.parentElement = liveMasterDetail;
+  const liveEditorBack = addStatic('live-editor-back', 'button');
+  liveEditorBack.parentElement = liveEditorPane;
+  const liveEditorContext = addStatic('live-editor-context', 'p');
+  liveEditorContext.parentElement = liveEditorPane;
+  const liveEditorHeading = addStatic('live-editor-heading', 'h3');
+  liveEditorHeading.parentElement = liveEditorPane;
+  const liveEditorSaveStatus = addStatic('live-editor-save-status', 'span');
+  liveEditorSaveStatus.parentElement = liveEditorPane;
+  const liveEditorBody = addStatic('live-editor-body');
+  liveEditorBody.parentElement = liveEditorPane;
+  const liveEditorOwnedIds = new Set();
+  const liveEditorOrder = [];
+  installOwnedHtmlBehavior(liveEditorBody, liveEditorOwnedIds, liveEditorOrder, liveEditorOwnedElements);
+  upcomingPanel.parentElement = livePagePrimary;
+  pastPanel.parentElement = livePagePrimary;
+  const liveTicketSettingsOpen = addStatic('live-ticket-settings-open', 'button');
+  liveTicketSettingsOpen.parentElement = livePagePrimary;
+  const liveTicketSettingsPanel = addStatic('live-ticket-settings-panel', 'section');
+  liveTicketSettingsPanel.parentElement = livePagePanel;
+  const liveTicketSettingsClose = addStatic('live-ticket-settings-close', 'button');
+  liveTicketSettingsClose.parentElement = liveTicketSettingsPanel;
   const upcomingList = addStatic('live-upcoming-list');
+  upcomingList.parentElement = upcomingPanel;
   installLiveListHtmlBehavior(upcomingList);
   const pastList = addStatic('live-past-list');
+  pastList.parentElement = pastPanel;
   installLiveListHtmlBehavior(pastList);
 
   class TestURL extends URL {}
@@ -266,7 +389,6 @@ function loadAdminApp(options = {}) {
   const networkFetchCalls = [];
   const clipboardWrites = [];
   const openedUrls = [];
-  let saveCalls = 0;
 
   const context = {
     Blob,
@@ -301,12 +423,19 @@ function loadAdminApp(options = {}) {
       prompt: () => '',
     },
   };
+  context.__adminSaveCalls = 0;
   context.globalThis = context;
 
   vm.runInNewContext(`${adminJs}
-globalThis.__adminLiveTest = {
-  addLive,
-  editLive,
+	globalThis.__adminLiveTest = {
+	  addNews,
+	  editNews,
+	  addLive,
+	  editLive,
+	  closeLiveEditor: typeof closeLiveEditor === 'function' ? closeLiveEditor : null,
+	  saveLiveWorkspace: typeof saveLiveWorkspace === 'function' ? saveLiveWorkspace : null,
+	  deleteLiveFromWorkspace: typeof deleteLiveFromWorkspace === 'function' ? deleteLiveFromWorkspace : null,
+	  requestLiveEditorTransition: typeof requestLiveEditorTransition === 'function' ? requestLiveEditorTransition : null,
   handleLiveSourceParse,
   saveLiveItem,
   updateXPreviewInModal: typeof updateXPreviewInModal === 'function' ? updateXPreviewInModal : null,
@@ -326,14 +455,33 @@ globalThis.__adminLiveTest = {
   saveModal,
   deleteItem,
   closeModal,
-  ensureNoActiveImageUploads,
+	  setupLiveWorkspace: typeof setupLiveWorkspace === 'function' ? setupLiveWorkspace : null,
+	  setupTabs: typeof setupTabs === 'function' ? setupTabs : null,
+	  loadData: typeof loadData === 'function' ? loadData : null,
+	  renderModeBadge: typeof renderModeBadge === 'function' ? renderModeBadge : null,
+  setLiveWorkspaceView: typeof setLiveWorkspaceView === 'function' ? setLiveWorkspaceView : null,
+  setLiveListView: typeof setLiveListView === 'function' ? setLiveListView : null,
+	  setTicketSettingsOpen: typeof setTicketSettingsOpen === 'function' ? setTicketSettingsOpen : null,
+	  setLiveEditorTask: typeof setLiveEditorTask === 'function' ? setLiveEditorTask : null,
+	  ensureNoActiveImageUploads,
   handleTicketStatusAction: typeof handleTicketStatusAction === 'function' ? handleTicketStatusAction : null,
   setApiMode(value) { IS_API_MODE = value; },
   setSiteData(value) { siteData = value; },
   getSiteData() { return siteData; },
-  getModalState() { return { currentEditId, currentEditType, isNewItem }; },
+	  getModalState() { return { currentEditId, currentEditType, isNewItem }; },
+	  getLiveEditorState() {
+	    return typeof liveEditorGeneration === 'number'
+	      ? {
+	          generation: liveEditorGeneration,
+	          dirty: Boolean(liveEditorDirty),
+	          readOnly: typeof isApiFallbackReadOnly === 'boolean' ? isApiFallbackReadOnly : false,
+	        }
+	      : null;
+	  },
   setAdminFetch(fn) { adminFetch = async (...args) => { const result = await fn(...args); return result; }; },
-  setSaveSpy() { saveData = async () => { saveCalls += 1; return true; }; },
+	  setSaveSpy() { saveData = async () => { globalThis.__adminSaveCalls += 1; return true; }; },
+  setSaveFunction(fn) { saveData = fn; },
+  invokeSaveData(options) { return saveData(options); },
   setConfirm(fn) { confirm = fn; },
 };`, context);
 
@@ -344,7 +492,7 @@ globalThis.__adminLiveTest = {
     fetchCalls,
     networkFetchCalls,
     openedUrls,
-    getSaveCalls: () => saveCalls,
+    getSaveCalls: () => context.__adminSaveCalls,
     useAdminFetch(fn) {
       context.__adminLiveTest.setAdminFetch(async (path, options = {}, policy = {}) => {
         fetchCalls.push({ path, options, policy });
@@ -444,16 +592,778 @@ async function flushAsync() {
   await new Promise((resolve) => setImmediate(resolve));
 }
 
-test('Live is the initial primary tab and Tickets remains only as secondary Live operations', () => {
+test('Live is the initial primary tab and Tickets is not a global tab', () => {
   const primaryNav = adminHtml.match(/<nav class="tab-nav">([\s\S]*?)<\/nav>/)?.[1] || '';
   assert.match(primaryNav, /class="tab-btn active" data-tab="live"/);
   assert.doesNotMatch(primaryNav, /data-tab="tickets"/);
   assert.match(adminHtml, /id="live-tab"[^>]*class="tab-content active"|class="tab-content active"[^>]*id="live-tab"/);
-  assert.match(adminHtml, /<details[^>]*class="live-secondary"[\s\S]*Ticket Page（表示文言）/);
-  assert.match(adminHtml, /<details[^>]*class="live-secondary"[\s\S]*予約一覧（全Live）/);
-  assert.match(adminHtml, /id="tickets-list"/);
-  assert.match(adminHtml, /id="ticket-intro-text"/);
-  assert.match(adminHtml, /downloadTicketsCsv\(\)/);
+});
+
+test('Live workspace has semantic Liveページ and 予約管理 tabs', () => {
+  assert.match(adminHtml, /class="live-workspace-tabs"[^>]*role="tablist"/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-workspace-view="page"[^>]*>Liveページ<\/button>/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-workspace-view="reservations"[^>]*>予約管理<\/button>/);
+});
+
+test('Live workspace Liveページ has semantic 開催予定 and 公演終了 filters', () => {
+  assert.match(adminHtml, /class="live-list-tabs"[^>]*role="tablist"/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-list-view="upcoming"[^>]*>開催予定<\/button>/);
+  assert.match(adminHtml, /role="tab"[^>]*data-live-list-view="past"[^>]*>公演終了<\/button>/);
+});
+
+test('Live workspace separates reservations and Ticket Page共通設定 from Live list details', () => {
+  assert.match(adminHtml, /id="live-workspace-reservations-panel"[^>]*role="tabpanel"/);
+  assert.match(adminHtml, /id="live-workspace-reservations-panel"[\s\S]*id="tickets-list"/);
+  assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*>Ticket Page共通設定<\/button>/);
+  assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*aria-controls="live-ticket-settings-panel"/);
+  assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*aria-expanded="false"/);
+  assert.match(adminHtml, /id="live-ticket-settings-panel"[^>]*role="region"/);
+  assert.match(adminHtml, /id="live-ticket-settings-close"[^>]*>Liveページへ戻る<\/button>/);
+  assert.doesNotMatch(adminHtml, /<details[^>]*[\s\S]*?(?:Ticket Page|予約一覧（全Live）)[\s\S]*?<\/details>/);
+});
+
+test('Live workspace Ticket Page settings moves focus and synchronizes disclosure state', async () => {
+  const app = loadAdminApp();
+  app.setupLiveWorkspace();
+  const openButton = app.elements.get('live-ticket-settings-open');
+  const closeButton = app.elements.get('live-ticket-settings-close');
+  const primaryPanel = app.elements.get('live-page-primary');
+  const settingsPanel = app.elements.get('live-ticket-settings-panel');
+
+  openButton.focus();
+  await openButton.dispatch('click');
+  assert.equal(openButton.getAttribute('aria-expanded'), 'true');
+  assert.equal(primaryPanel.hidden, true);
+  assert.equal(settingsPanel.hidden, false);
+  assert.equal(app.document.activeElement, closeButton);
+
+  await closeButton.dispatch('click');
+  assert.equal(openButton.getAttribute('aria-expanded'), 'false');
+  assert.equal(primaryPanel.hidden, false);
+  assert.equal(settingsPanel.hidden, true);
+  assert.equal(app.document.activeElement, openButton);
+});
+
+test('Live workspace initial state is Liveページ and 開催予定', () => {
+  assert.match(adminHtml, /id="live-workspace-page-tab"[^>]*aria-selected="true"[^>]*tabindex="0"/);
+  assert.match(adminHtml, /id="live-workspace-reservations-tab"[^>]*aria-selected="false"[^>]*tabindex="-1"/);
+  assert.match(adminHtml, /id="live-workspace-reservations-panel"[^>]*hidden/);
+  assert.match(adminHtml, /id="live-list-upcoming-tab"[^>]*aria-selected="true"[^>]*tabindex="0"/);
+  assert.match(adminHtml, /id="live-list-past-tab"[^>]*aria-selected="false"[^>]*tabindex="-1"/);
+  assert.match(adminHtml, /id="live-list-past-panel"[^>]*hidden/);
+});
+
+test('Live workspace tablists support ArrowLeft ArrowRight Home and End movement', async () => {
+  const app = loadAdminApp();
+  assert.equal(typeof app.setupLiveWorkspace, 'function');
+  app.setupLiveWorkspace();
+
+  const pageTab = app.elements.get('live-workspace-page-tab');
+  const reservationsTab = app.elements.get('live-workspace-reservations-tab');
+  await pageTab.dispatch('keydown', { key: 'ArrowRight' });
+  assert.equal(reservationsTab.getAttribute('aria-selected'), 'true');
+  assert.equal(reservationsTab.focusCount, 1);
+  assert.equal(app.elements.get('live-workspace-page-panel').hidden, true);
+  assert.equal(app.elements.get('live-workspace-reservations-panel').hidden, false);
+  await reservationsTab.dispatch('keydown', { key: 'Home' });
+  assert.equal(pageTab.getAttribute('aria-selected'), 'true');
+
+  const upcomingTab = app.elements.get('live-list-upcoming-tab');
+  const pastTab = app.elements.get('live-list-past-tab');
+  await upcomingTab.dispatch('keydown', { key: 'End' });
+  assert.equal(pastTab.getAttribute('aria-selected'), 'true');
+  assert.equal(app.elements.get('live-list-upcoming-panel').hidden, true);
+  assert.equal(app.elements.get('live-list-past-panel').hidden, false);
+  await pastTab.dispatch('keydown', { key: 'ArrowLeft' });
+  assert.equal(upcomingTab.getAttribute('aria-selected'), 'true');
+});
+
+test('master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid', () => {
+  assert.match(adminHtml, /id="live-master-detail"/);
+  assert.match(adminHtml, /id="live-master-pane"/);
+  assert.match(adminHtml, /id="live-editor-pane"/);
+  assert.match(adminHtml, /id="live-editor-body"[\s\S]*Liveを選択/);
+  assert.match(adminCss, /@media\s*\(min-width:\s*900px\)/);
+  assert.match(adminCss, /grid-template-columns:\s*320px\s+minmax\(0,\s*1fr\)/);
+});
+
+test('Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog', () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    news: [],
+    live: {
+      upcoming: [{ id: 'detail-live', date: '2026-08-10', title: '山頂', venue: '下北沢おてまえ', image: '' }],
+      past: [],
+    },
+  });
+  app.renderLive();
+  const trigger = app.elements.get('live-upcoming-list').children[0];
+  trigger.focus();
+
+  app.editLive('detail-live', 'upcoming');
+
+  assert.match(adminHtml, /id="live-editor-context"/);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-sourceText"/);
+  assert.equal(app.elements.get('modal-body').innerHTML, '');
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+  assert.equal(app.elements.get('live-editor-context').textContent, '選択中Live・開催予定');
+  assert.equal(app.elements.get('live-editor-heading').textContent, '2026.08.10(Mon) 下北沢おてまえ — 山頂');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
+  assert.equal(app.elements.get('live-editor-back').hidden, false);
+  assert.equal(trigger.getAttribute('aria-current'), 'true');
+  assert.equal(trigger.classList.contains('is-selected'), true);
+  assert.match(app.elements.get('live-editor-body').innerHTML, />保存して公開<\/button>/);
+  assert.match(app.elements.get('live-editor-body').innerHTML, />削除<\/button>/);
+
+  app.closeLiveEditor();
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+  assert.equal(app.getModalState().currentEditId, null);
+
+  app.addLive();
+  assert.equal(app.elements.get('live-editor-heading').textContent, '新規Live');
+  assert.match(app.elements.get('live-editor-body').innerHTML, /id="live-editor-delete-btn"[^>]*hidden/);
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+
+  app.setConfirm(() => true);
+  assert.equal(app.closeLiveEditor(), true);
+  assert.equal(app.addNews(), true);
+  assert.equal(app.elements.get('modal').classList.contains('active'), true);
+  assert.match(app.elements.get('modal-body').innerHTML, /ニュースタイトル/);
+});
+
+test('master-detail marks only the first upcoming card as Next Live', () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [
+        { id: 'next', date: '2026-08-10', title: 'Next', venue: 'A', image: '' },
+        { id: 'later', date: '2026-08-20', title: 'Later', venue: 'B', image: '' },
+      ],
+      past: [{ id: 'past', date: '2026-07-01', title: 'Past', venue: 'C', image: '' }],
+    },
+  });
+
+  app.renderLive();
+
+  const upcomingHtml = app.elements.get('live-upcoming-list').innerHTML;
+  assert.equal((upcomingHtml.match(/aria-label="Next Live"/g) || []).length, 1);
+  assert.match(upcomingHtml, /data-live-id="next"[\s\S]*aria-label="Next Live"/);
+  assert.doesNotMatch(app.elements.get('live-past-list').innerHTML, /Next Live/);
+});
+
+test('Live task tabs are semantic, keyboard operable, and preserve mounted input', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'task-live', date: '2026-08-10', title: 'Task', venue: 'Venue', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('task-live', 'upcoming');
+
+  const editorHtml = app.elements.get('live-editor-body').innerHTML;
+  assert.match(editorHtml, /class="live-editor-task-tabs"[^>]*role="tablist"/);
+  assert.match(editorHtml, /role="tab"[^>]*data-live-editor-task="public"[^>]*aria-selected="true"/);
+  assert.match(editorHtml, /role="tab"[^>]*data-live-editor-task="announcement"[^>]*>告知<\/button>/);
+  assert.match(editorHtml, /role="tab"[^>]*data-live-editor-task="reservation"[^>]*>予約<\/button>/);
+  assert.match(editorHtml, /role="tabpanel"[^>]*data-live-editor-task-panel="public"/);
+  assert.equal(typeof app.setLiveEditorTask, 'function');
+
+  const title = app.elements.get('edit-title');
+  title.value = '入力保持';
+  const publicTab = app.elements.get('live-editor-task-public');
+  const announcementTab = app.elements.get('live-editor-task-announcement');
+  await publicTab.dispatch('keydown', { key: 'ArrowRight' });
+  assert.equal(announcementTab.getAttribute('aria-selected'), 'true');
+  assert.equal(app.elements.get('live-editor-panel-public').hidden, true);
+  assert.equal(app.elements.get('live-editor-panel-announcement').hidden, false);
+  assert.equal(title.value, '入力保持');
+
+  await announcementTab.dispatch('keydown', { key: 'Home' });
+  assert.equal(publicTab.getAttribute('aria-selected'), 'true');
+  assert.equal(title.value, '入力保持');
+});
+
+test('new Live prioritizes source intake and gates post-save tasks until first save', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({ live: { upcoming: [], past: [] } });
+
+  app.addLive();
+
+  const newHtml = app.elements.get('live-editor-body').innerHTML;
+  assert.match(newHtml, /<details[^>]*class="live-source-intake"[^>]*open/);
+  assert.match(newHtml, /id="live-source-parse-btn"[^>]*>AIで下書きを作る<\/button>/);
+  assert.match(newHtml, /id="live-manual-entry-btn"[^>]*>手入力で作成<\/button>/);
+  assert.match(newHtml, /id="live-public-fields"[^>]*hidden/);
+  assert.equal(app.elements.get('live-editor-task-announcement').disabled, true);
+  assert.equal(app.elements.get('live-editor-task-reservation').disabled, true);
+  assert.ok(app.elements.get('edit-date'), 'hidden public inputs stay mounted for AI intake');
+
+  await app.elements.get('live-manual-entry-btn').dispatch('click');
+  assert.equal(app.elements.get('live-public-fields').hidden, false);
+  assert.equal(app.elements.get('edit-date').focusCount, 1);
+
+  setLiveForm(app.elements);
+  assert.equal(await app.saveLiveWorkspace(), true);
+  assert.equal(app.elements.get('live-editor-task-announcement').disabled, false);
+  assert.equal(app.elements.get('live-editor-task-reservation').disabled, false);
+
+  app.editLive(app.getSiteData().live.upcoming[0].id, 'upcoming');
+  const existingHtml = app.elements.get('live-editor-body').innerHTML;
+  assert.match(existingHtml, /<details[^>]*class="live-source-intake"/);
+  assert.doesNotMatch(existingHtml, /<details[^>]*class="live-source-intake"[^>]*open/);
+  assert.doesNotMatch(existingHtml, /id="live-public-fields"[^>]*hidden/);
+});
+
+test('Live validation blocks missing date and venue before changing data or saving', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({ live: { upcoming: [], past: [] } });
+  app.setSaveSpy();
+  app.addLive();
+  await app.elements.get('live-manual-entry-btn').dispatch('click');
+  setLiveForm(app.elements, { 'edit-date': '', 'edit-venue': '' });
+
+  const saved = await app.saveLiveWorkspace();
+
+  assert.equal(saved, false);
+  assert.equal(app.getSiteData().live.upcoming.length, 0);
+  assert.equal(app.getSaveCalls(), 0);
+  assert.equal(app.elements.get('edit-date').getAttribute('aria-invalid'), 'true');
+  assert.equal(app.elements.get('edit-venue').getAttribute('aria-invalid'), 'true');
+  assert.match(app.elements.get('edit-date-error').textContent, /日付/);
+  assert.match(app.elements.get('edit-venue-error').textContent, /会場/);
+  assert.equal(app.document.activeElement, app.elements.get('edit-date'));
+});
+
+test('Live category mismatch warns but saves without automatically moving collection', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'mismatch-live', date: '2000-01-01', title: 'Past date', venue: 'Venue', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('mismatch-live', 'upcoming');
+  setLiveForm(app.elements, { 'edit-date': '2000-01-01', 'edit-venue': 'Venue', isPast: false });
+
+  const saved = await app.saveLiveWorkspace();
+
+  assert.equal(saved, true);
+  assert.equal(app.getSiteData().live.upcoming[0].id, 'mismatch-live');
+  assert.equal(app.getSiteData().live.past.length, 0);
+  assert.equal(app.getModalState().currentEditType, 'live-upcoming');
+  assert.match(app.elements.get('live-category-warning').textContent, /開催予定.*過去の日付/);
+});
+
+test('Live API save reports saving, saved, and failed states around the existing save route', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'state-live', date: '2026-08-20', title: 'State', venue: 'Venue', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('state-live', 'upcoming');
+  setLiveForm(app.elements, { 'edit-date': '2026-08-20', 'edit-venue': 'Venue' });
+  const response = deferred();
+  app.useAdminFetch(() => response.promise);
+
+  const pendingSave = app.saveLiveWorkspace();
+  await flushAsync();
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存中');
+  response.resolve(jsonResponse({ data: app.getSiteData() }));
+  assert.equal(await pendingSave, true);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
+
+  app.elements.get('edit-title').value = 'Retry';
+  app.useAdminFetch(async () => jsonResponse({ error: 'failed' }, { ok: false, status: 500 }));
+  assert.equal(await app.saveLiveWorkspace(), false);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+});
+
+test('Live dirty guard blocks and then discards navigation to another Live, list, and global tab', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [
+        { id: 'dirty-a', date: '2026-08-20', title: 'A', venue: 'A venue', image: '' },
+        { id: 'dirty-b', date: '2026-08-21', title: 'B', venue: 'B venue', image: '' },
+      ],
+      past: [],
+    },
+  });
+  app.setupLiveWorkspace();
+  app.setupTabs();
+  app.renderLive();
+  app.editLive('dirty-a', 'upcoming');
+  app.elements.get('edit-title').value = 'Unsaved A';
+  await app.elements.get('edit-title').dispatch('input');
+  let confirmations = 0;
+  app.setConfirm(() => { confirmations += 1; return false; });
+
+  assert.equal(app.editLive('dirty-b', 'upcoming'), false);
+  assert.equal(app.getModalState().currentEditId, 'dirty-a');
+  assert.equal(app.elements.get('edit-title').value, 'Unsaved A');
+  assert.equal(app.closeLiveEditor(), false);
+  assert.equal(app.getModalState().currentEditId, 'dirty-a');
+  assert.equal(app.setLiveWorkspaceView('reservations'), false);
+  assert.equal(app.elements.get('live-workspace-page-panel').hidden, false);
+  await app.elements.get('global-tab-news').dispatch('click');
+  assert.equal(app.elements.get('global-tab-live').classList.contains('active'), true);
+  assert.equal(app.elements.get('global-tab-news').classList.contains('active'), false);
+  assert.equal(confirmations, 4);
+
+  app.setConfirm(() => true);
+  assert.equal(app.editLive('dirty-b', 'upcoming'), true);
+  assert.equal(app.getModalState().currentEditId, 'dirty-b');
+  app.elements.get('edit-title').value = 'Unsaved B';
+  await app.elements.get('edit-title').dispatch('input');
+  await app.elements.get('global-tab-news').dispatch('click');
+  assert.equal(app.elements.get('global-tab-news').classList.contains('active'), true);
+  assert.equal(app.getModalState().currentEditId, null);
+});
+
+test('Live internal task switching preserves dirty input without discard confirmation', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: { upcoming: [{ id: 'internal-task', date: '2026-08-20', title: 'Before', venue: 'Venue', image: '' }], past: [] },
+  });
+  app.editLive('internal-task', 'upcoming');
+  app.elements.get('edit-title').value = 'Still here';
+  await app.elements.get('edit-title').dispatch('input');
+  let confirmations = 0;
+  app.setConfirm(() => { confirmations += 1; return false; });
+
+  app.setLiveEditorTask('announcement');
+
+  assert.equal(confirmations, 0);
+  assert.equal(app.elements.get('edit-title').value, 'Still here');
+  assert.equal(app.elements.get('live-editor-panel-announcement').hidden, false);
+  assert.equal(app.getLiveEditorState().dirty, true);
+});
+
+test('API fallback is read-only while keeping Live navigation available', async () => {
+  const fallbackData = {
+    live: { upcoming: [{ id: 'fallback-live', date: '2026-08-20', title: 'Fallback', venue: 'Venue', image: '' }], past: [] },
+  };
+  const app = loadAdminApp({
+    adminConfig: { apiBaseUrl: 'https://custom-admin.example.test', adminToken: 'test-token' },
+    networkFetch: async (url) => {
+      if (url === 'data/site-data.json') return jsonResponse(fallbackData);
+      return jsonResponse({ error: 'offline' }, { ok: false, status: 503 });
+    },
+  });
+
+  await app.loadData();
+  app.renderModeBadge();
+  app.editLive('fallback-live', 'upcoming');
+
+  assert.equal(app.getLiveEditorState().readOnly, true);
+  assert.match(app.elements.get('connectionBanner').textContent, /読み取り専用/);
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  assert.equal(app.elements.get('live-editor-save-btn').disabled, true);
+  assert.equal(app.elements.get('live-editor-delete-btn').disabled, true);
+  assert.equal(app.elements.get('live-source-parse-btn').disabled, true);
+  assert.equal(app.elements.get('manual-reservation-submit').disabled, true);
+  assert.equal(app.elements.get('edit-date').disabled, true);
+  app.setLiveEditorTask('announcement');
+  assert.equal(app.elements.get('live-editor-panel-announcement').hidden, false, 'read-only navigation remains available');
+
+  app.useAdminFetch(async () => { throw new Error('read-only mutation must not call API'); });
+  app.setConfirm(() => true);
+  assert.equal(await app.saveLiveWorkspace(), false);
+  assert.equal(await app.handleLiveSourceParse(), false);
+  assert.equal(await app.submitManualReservation(), false);
+  assert.equal(await app.markTicketStatus('reservation-1', 'handled'), false);
+  assert.equal(await app.deleteLiveFromWorkspace(), false);
+  assert.equal(await app.saveData(), false);
+  assert.equal(app.fetchCalls.length, 0);
+  assert.equal(app.getSiteData().live.upcoming[0].id, 'fallback-live');
+});
+
+test('explicit Local Mode labels the header action as JSON export', () => {
+  const app = loadAdminApp();
+  app.renderModeBadge();
+
+  assert.match(app.elements.get('modeBadge').textContent, /Local Mode/);
+  assert.equal(app.elements.get('saveBtn').textContent, 'JSONを書き出す');
+});
+
+test('responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically', () => {
+  assert.match(adminCss, /@media\s*\(min-width:\s*900px\)[\s\S]*grid-template-columns:\s*320px\s+minmax\(0,\s*1fr\)/);
+  assert.match(adminCss, /\.live-master-detail\.has-live-selection\s+\.live-master-pane\s*\{[\s\S]*display:\s*none/);
+  assert.match(adminCss, /\.live-editor-task-tabs\s*\{[\s\S]*position:\s*sticky/);
+  assert.match(adminCss, /\.live-editor-footer\s*\{[\s\S]*position:\s*sticky/);
+  assert.match(adminCss, /\.live-editor-task-tab\s*\{[\s\S]*min-height:\s*44px/);
+  assert.match(adminCss, /\.live-editor-task-tab:focus-visible/);
+  assert.match(adminCss, /\.live-editor-body\s*\{[\s\S]*overflow-wrap:\s*anywhere/);
+  assert.match(adminCss, /@supports\s*\(padding-bottom:\s*env\(safe-area-inset-bottom\)\)[\s\S]*\.live-editor-footer/);
+  assert.match(adminCss, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
+
+  assert.match(adminHtml, /class="add-btn live-primary-action"[^>]*onclick="addLive\(\)"/);
+  assert.match(adminHtml, /href="style\.css\?v=20260816-22"/);
+  assert.match(adminHtml, /src="app\.js\?v=20260816-22"/);
+
+  const app = loadAdminApp();
+  app.setSiteData({ live: { upcoming: [{ id: 'hierarchy', date: '2026-08-20', venue: 'Venue', image: '' }], past: [] } });
+  app.editLive('hierarchy', 'upcoming');
+  const editorHtml = app.elements.get('live-editor-body').innerHTML;
+  assert.match(editorHtml, /id="live-editor-save-btn"[^>]*class="[^"]*btn-primary[^"]*live-primary-action|class="[^"]*btn-primary[^"]*live-primary-action[^>]*id="live-editor-save-btn"/);
+  assert.doesNotMatch(editorHtml, /class="[^"]*btn-primary[^"]*"[^>]*id="x-intent-btn"/);
+});
+
+test('sticky Live controls have no scrolling mechanism in the complete ancestor chain', () => {
+  assert.match(
+    adminHtml,
+    /<body>[\s\S]*id="app"[\s\S]*id="live-tab"[\s\S]*id="live-workspace"[\s\S]*id="live-workspace-page-panel"[\s\S]*id="live-page-primary"[\s\S]*id="live-master-detail"[\s\S]*id="live-editor-pane"[\s\S]*id="live-editor-body"/,
+  );
+  assert.match(adminJs, /class="live-editor-task-tabs"[\s\S]*class="live-editor-footer"/);
+
+  const directRuleBodies = (selector) => {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return [...adminCss.matchAll(new RegExp(`(?:^|\\n)\\s*${escaped}\\s*\\{([^}]*)\\}`, 'g'))]
+      .map((match) => match[1]);
+  };
+  const stickyAncestorSelectors = [
+    'body',
+    '#app',
+    '.tab-content',
+    '.live-workspace',
+    '.live-workspace-panel',
+    '#live-page-primary',
+    '.live-master-detail',
+    '.live-editor-pane',
+    '.live-editor-body',
+  ];
+  for (const selector of stickyAncestorSelectors) {
+    const bodies = directRuleBodies(selector);
+    assert.doesNotMatch(
+      bodies.join('\n'),
+      /overflow(?:-x|-y)?:\s*(?:hidden|auto|scroll)\s*;/,
+      `${selector} must not create a scrolling mechanism for Live sticky controls`,
+    );
+  }
+  assert.match(directRuleBodies('.live-workspace').join('\n'), /overflow:\s*clip\s*;/);
+  assert.match(directRuleBodies('.live-editor-pane').join('\n'), /overflow:\s*clip\s*;/);
+  assert.match(adminCss, /\.live-editor-task-tabs\s*\{[^}]*position:\s*sticky/s);
+  assert.match(adminCss, /\.live-editor-footer\s*\{[^}]*position:\s*sticky/s);
+});
+
+test('sticky Live task tabs offset below the fixed global header and navigation chrome', () => {
+  assert.match(adminCss, /--admin-header-sticky-height:\s*\d+px\s*;/);
+  assert.match(adminCss, /--admin-tab-nav-sticky-height:\s*\d+px\s*;/);
+  assert.match(
+    adminCss,
+    /--admin-global-chrome-sticky-offset:\s*calc\(\s*var\(--admin-header-sticky-height\)\s*\+\s*var\(--admin-tab-nav-sticky-height\)\s*\)\s*;/,
+  );
+  assert.match(adminCss, /\.header\s*\{[^}]*height:\s*var\(--admin-header-sticky-height\)\s*;[^}]*position:\s*sticky\s*;[^}]*top:\s*0\s*;/s);
+  assert.match(adminCss, /\.tab-nav\s*\{[^}]*height:\s*var\(--admin-tab-nav-sticky-height\)\s*;[^}]*position:\s*sticky\s*;[^}]*top:\s*var\(--admin-header-sticky-height\)\s*;/s);
+  assert.match(adminCss, /\.live-editor-task-tabs\s*\{[^}]*position:\s*sticky\s*;[^}]*top:\s*var\(--admin-global-chrome-sticky-offset\)\s*;/s);
+});
+
+test('essential mobile Live workspace list utility and back controls guarantee 44px targets', () => {
+  assert.match(
+    adminCss,
+    /@media\s*\(max-width:\s*899px\)\s*\{\s*\.live-workspace-tab,\s*\.live-list-tab,\s*\.live-workspace-utility,\s*\.live-editor-back\s*\{[^}]*min-height:\s*44px\s*;/s,
+  );
+});
+
+test('Live edit workspace saves a category move in place and routes Local Mode to JSON export', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'move-live', date: '2026-08-10', title: 'Before', venue: 'Venue', image: '' }],
+      past: [],
+    },
+  });
+  app.setupLiveWorkspace();
+  app.renderLive();
+  app.editLive('move-live', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'After', isPast: true });
+  await app.elements.get('edit-title').dispatch('input');
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '未保存');
+
+  const saved = await app.saveLiveWorkspace();
+
+  assert.equal(saved, true);
+  assert.equal(app.getSiteData().live.upcoming.length, 0);
+  assert.equal(app.getSiteData().live.past[0].id, 'move-live');
+  assert.equal(app.getModalState().currentEditType, 'live-past');
+  assert.equal(app.elements.get('live-list-past-panel').hidden, false);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /value="After"/);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, 'JSON書き出し待ち');
+  assert.equal(app.elements.get('saveBtn').disabled, false);
+  assert.match(app.elements.get('saveBtn').textContent, /JSONを書き出す/);
+  const movedTrigger = app.elements.get('live-past-list').children.find((item) => item.dataset.liveId === 'move-live');
+  assert.equal(movedTrigger?.getAttribute('aria-current'), 'true');
+});
+
+test('Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    live: {
+      upcoming: [
+        { id: 'save-live', date: '2026-08-10', title: 'Save', venue: 'A', image: '' },
+        { id: 'delete-live', date: '2026-08-11', title: 'Delete', venue: 'B', image: '' },
+      ],
+      past: [],
+    },
+  });
+  app.setSaveSpy();
+  app.editLive('save-live', 'upcoming');
+  setLiveForm(app.elements);
+  assert.equal(await app.saveLiveWorkspace(), true);
+  assert.equal(app.getSaveCalls(), 1);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
+
+  app.editLive('delete-live', 'upcoming');
+  app.setConfirm(() => true);
+  assert.equal(await app.deleteLiveFromWorkspace(), true);
+  assert.equal(app.getSiteData().live.upcoming.some((live) => live.id === 'delete-live'), false);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+  assert.equal(app.getSaveCalls(), 1, 'deletion keeps the existing header-save contract');
+});
+
+test('Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    news: [],
+    live: {
+      upcoming: [{ id: 'live-owner', date: '2026-08-10', title: 'LIVE TITLE', venue: 'LIVE VENUE', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('live-owner', 'upcoming');
+  app.elements.get('edit-title').value = 'LIVE UNSAVED';
+  await app.elements.get('edit-title').dispatch('input');
+
+  app.setConfirm(() => false);
+  assert.equal(app.addNews(), false);
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+  assert.equal(app.getModalState().currentEditId, 'live-owner');
+  assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-title"/);
+
+  app.setConfirm(() => true);
+  assert.equal(app.addNews(), true);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+  assert.equal(app.elements.get('modal').classList.contains('active'), true);
+  assert.doesNotMatch(app.elements.get('modal-body').innerHTML, /LIVE UNSAVED/);
+  app.elements.get('edit-date').value = '2026-08-20';
+  app.elements.get('edit-title').value = 'NEWS ONLY';
+  app.elements.get('edit-description').value = 'NEWS DESCRIPTION';
+  app.elements.get('edit-image').value = '';
+  app.elements.get('edit-link').value = 'https://example.com/news';
+  app.elements.get('edit-linkText').value = 'read';
+
+  await app.saveModal();
+
+  assert.equal(app.getSiteData().news[0].title, 'NEWS ONLY');
+  assert.equal(app.getSiteData().news[0].description, 'NEWS DESCRIPTION');
+  assert.equal(app.getSiteData().live.upcoming[0].title, 'LIVE TITLE');
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+  assert.equal(app.getModalState().currentEditId, null);
+});
+
+test('Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    live: {
+      upcoming: [
+        { id: 'pending-live', date: '2026-08-10', title: 'Before', venue: 'A', image: '' },
+        { id: 'other-live', date: '2026-08-11', title: 'Other', venue: 'B', image: '' },
+      ],
+      past: [],
+    },
+  });
+  app.renderLive();
+  const cardsBeforePublish = [...app.elements.get('live-upcoming-list').children];
+  app.editLive('pending-live', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'Pending save' });
+  const pendingAi = deferred();
+  app.useAdminFetch(() => pendingAi.promise);
+  const aiOperation = app.elements.get('live-source-parse-btn').dispatch('click');
+  await flushAsync();
+  const pendingSave = deferred();
+  let saveCalls = 0;
+  app.setSaveFunction(() => {
+    saveCalls += 1;
+    return pendingSave.promise;
+  });
+
+  const firstSave = app.saveLiveWorkspace();
+  await flushAsync();
+  const secondSave = app.saveLiveWorkspace();
+
+  assert.equal(saveCalls, 1);
+  assert.equal(await secondSave, false);
+  assert.equal(app.elements.get('edit-title').disabled, true);
+  assert.equal(app.elements.get('live-editor-task-public').disabled, true);
+  assert.equal(app.elements.get('live-editor-back').disabled, true);
+  assert.equal(app.elements.get('live-editor-delete-btn').disabled, true);
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  assert.equal(app.elements.get('live-add-btn').disabled, true);
+  assert.equal(app.elements.get('edit-title').getAttribute('aria-disabled'), 'true');
+  assert.equal(app.elements.get('live-editor-back').getAttribute('aria-disabled'), 'true');
+  assert.equal(app.elements.get('live-editor-pane').getAttribute('aria-busy'), 'true');
+  const replacementCards = [...app.elements.get('live-upcoming-list').children];
+  assert.equal(replacementCards.length, 2);
+  assert.notEqual(replacementCards[0], cardsBeforePublish[0], 'publish render must replace the list fixture');
+  assert.equal(replacementCards.every((card) => card.disabled), true);
+  assert.equal(replacementCards.every((card) => card.getAttribute('aria-disabled') === 'true'), true);
+  const replacementOtherCard = replacementCards.find((card) => card.dataset.liveId === 'other-live');
+  await app.dispatchDocument('click', { target: replacementOtherCard, preventDefault() {} });
+  assert.equal(app.getModalState().currentEditId, 'pending-live');
+  app.setConfirm(() => true);
+  assert.equal(app.editLive('other-live', 'upcoming'), false);
+  assert.equal(app.getModalState().currentEditId, 'pending-live');
+  assert.equal(app.closeLiveEditor(), false);
+  assert.equal(app.setLiveWorkspaceView('reservations'), false);
+  assert.equal(app.setLiveListView('past'), false);
+  assert.equal(app.setTicketSettingsOpen(true), false);
+  assert.equal(app.setLiveEditorTask('announcement'), false);
+  assert.equal(await app.deleteLiveFromWorkspace(), false);
+
+  pendingAi.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft({ title: 'LATE AI' }) }));
+  assert.equal(await aiOperation, false);
+  assert.equal(app.elements.get('edit-title').value, 'Pending save');
+  assert.equal(app.elements.get('live-source-parse-btn').disabled, true);
+
+  pendingSave.resolve(true);
+  assert.equal(await firstSave, true);
+  assert.equal(app.getModalState().currentEditId, 'pending-live');
+  assert.equal(app.elements.get('edit-title').disabled, false);
+  assert.equal(app.elements.get('live-add-btn').disabled, false);
+  assert.equal(replacementCards.every((card) => !card.disabled), true);
+  assert.equal(replacementCards.every((card) => card.getAttribute('aria-disabled') === 'false'), true);
+  assert.notEqual(app.elements.get('edit-title').getAttribute('aria-disabled'), 'true');
+  assert.equal(app.elements.get('live-editor-back').getAttribute('aria-disabled'), 'false');
+  assert.equal(app.elements.get('live-editor-pane').getAttribute('aria-busy'), 'false');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
+});
+
+test('Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({
+    news: [],
+    live: {
+      upcoming: [{ id: 'rollback-live', date: '2026-08-10', title: 'Stored title', venue: 'Stored venue', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('rollback-live', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'FAILED TITLE', 'edit-venue': 'FAILED VENUE', isPast: true });
+  const failedSave = deferred();
+  app.setSaveFunction(() => failedSave.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  assert.equal(app.getSiteData().live.upcoming.length, 0, 'candidate mutation stays isolated to the pending transaction');
+  failedSave.resolve(false);
+  assert.equal(await save, false);
+
+  assert.equal(app.getSiteData().live.upcoming[0].title, 'Stored title');
+  assert.equal(app.getSiteData().live.upcoming[0].venue, 'Stored venue');
+  assert.equal(app.getSiteData().live.past.length, 0);
+  assert.equal(app.elements.get('edit-title').value, 'FAILED TITLE');
+  assert.equal(app.elements.get('edit-venue').value, 'FAILED VENUE');
+  assert.equal(app.elements.get('edit-isPast').checked, true);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+
+  app.setConfirm(() => true);
+  assert.equal(app.addNews(), true);
+  let persistedData = null;
+  app.setSaveFunction(async () => {
+    persistedData = structuredClone(app.getSiteData());
+    return true;
+  });
+  assert.equal(await app.invokeSaveData({ silent: true }), true);
+  assert.equal(persistedData.live.upcoming[0].title, 'Stored title');
+  assert.equal(persistedData.live.past.length, 0);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
+});
+
+test('Live API publish blocks global tab navigation and marks every global tab disabled while pending', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({ live: { upcoming: [{ id: 'nav-pending', date: '2026-08-10', title: 'Before', venue: 'A', image: '' }], past: [] } });
+  app.setupTabs();
+  app.editLive('nav-pending', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'Publishing' });
+  const pending = deferred();
+  app.setSaveFunction(() => pending.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  const tabs = ['site', 'news', 'live'].map((name) => app.elements.get(`global-tab-${name}`));
+  assert.equal(tabs.every((tab) => tab.disabled), true);
+  assert.equal(tabs.every((tab) => tab.getAttribute('aria-disabled') === 'true'), true);
+
+  await app.elements.get('global-tab-site').dispatch('click');
+  assert.equal(app.elements.get('global-tab-live').classList.contains('active'), true);
+  assert.equal(app.elements.get('global-tab-site').classList.contains('active'), false);
+  assert.equal(app.elements.get('live-tab').classList.contains('active'), true);
+  assert.equal(app.elements.get('site-tab').classList.contains('active'), false);
+
+  pending.resolve(true);
+  assert.equal(await save, true);
+});
+
+test('global tabs re-enable and navigate normally after Live API publish succeeds', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({ live: { upcoming: [{ id: 'nav-success', date: '2026-08-10', title: 'Before', venue: 'A', image: '' }], past: [] } });
+  app.setupTabs();
+  app.editLive('nav-success', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'Published' });
+  const pending = deferred();
+  app.setSaveFunction(() => pending.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  pending.resolve(true);
+  assert.equal(await save, true);
+
+  const tabs = ['site', 'news', 'live'].map((name) => app.elements.get(`global-tab-${name}`));
+  assert.equal(tabs.every((tab) => !tab.disabled), true);
+  assert.equal(tabs.every((tab) => tab.getAttribute('aria-disabled') === 'false'), true);
+  await app.elements.get('global-tab-site').dispatch('click');
+  assert.equal(app.elements.get('global-tab-site').classList.contains('active'), true);
+  assert.equal(app.elements.get('site-tab').classList.contains('active'), true);
+  assert.equal(app.elements.get('live-tab').classList.contains('active'), false);
+});
+
+test('global tabs re-enable after Live API publish rollback while the failed Live form stays dirty', async () => {
+  const app = loadAdminApp();
+  app.setApiMode(true);
+  app.setSiteData({ live: { upcoming: [{ id: 'nav-failure', date: '2026-08-10', title: 'Stored', venue: 'A', image: '' }], past: [] } });
+  app.setupTabs();
+  app.editLive('nav-failure', 'upcoming');
+  setLiveForm(app.elements, { 'edit-title': 'FAILED VALUE' });
+  const pending = deferred();
+  app.setSaveFunction(() => pending.promise);
+
+  const save = app.saveLiveWorkspace();
+  await flushAsync();
+  pending.resolve(false);
+  assert.equal(await save, false);
+
+  const tabs = ['site', 'news', 'live'].map((name) => app.elements.get(`global-tab-${name}`));
+  assert.equal(tabs.every((tab) => !tab.disabled), true);
+  assert.equal(tabs.every((tab) => tab.getAttribute('aria-disabled') === 'false'), true);
+  assert.equal(app.elements.get('edit-title').value, 'FAILED VALUE');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  app.setConfirm(() => true);
+  await app.elements.get('global-tab-news').dispatch('click');
+  assert.equal(app.elements.get('global-tab-news').classList.contains('active'), true);
+  assert.equal(app.elements.get('news-tab').classList.contains('active'), true);
 });
 
 test('shared LiveOperations script is loaded before the admin application', () => {
@@ -461,7 +1371,7 @@ test('shared LiveOperations script is loaded before the admin application', () =
   const appIndex = adminHtml.indexOf('app.js');
   assert.ok(sharedIndex >= 0);
   assert.ok(sharedIndex < appIndex);
-  assert.match(adminHtml, /href="style\.css\?v=20260804-2"/);
+  assert.match(adminHtml, /href="style\.css\?v=20260816-22"/);
 });
 
 test('AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves', async () => {
@@ -524,8 +1434,8 @@ test('AIで整理 source intake posts the exact source once, replaces all ten fi
     },
   }));
 
-  const editorHtml = app.elements.get('modal-body').innerHTML;
-  assert.match(editorHtml, /id="live-source-parse-btn"[^>]*>AIで整理<\/button>/);
+  const editorHtml = app.elements.get('live-editor-body').innerHTML;
+  assert.match(editorHtml, /id="live-source-parse-btn"[^>]*>AIで下書きを作る<\/button>/);
   await app.elements.get('live-source-parse-btn').dispatch('click');
 
   assert.equal(app.fetchCalls.length, 1);
@@ -546,6 +1456,26 @@ test('AIで整理 source intake posts the exact source once, replaces all ten fi
   assert.deepEqual(app.getSiteData(), initial);
   assert.equal(app.getSaveCalls(), 0);
   assert.deepEqual(app.openedUrls, []);
+});
+
+test('Live edit workspace marks an applied AI draft dirty and routes saving to the editor', async () => {
+  const app = loadAdminApp();
+  app.setSiteData({
+    live: {
+      upcoming: [{ id: 'ai-dirty-live', date: '2026-08-19', title: 'Before', venue: 'Before venue', image: '' }],
+      past: [],
+    },
+  });
+  app.editLive('ai-dirty-live', 'upcoming');
+  app.setApiMode(true);
+  app.elements.get('edit-sourceText').value = 'AI draft source';
+  app.useAdminFetch(async () => jsonResponse({ draft: validLiveSourceIntakeDraft() }));
+  assert.equal(app.elements.get('saveBtn').disabled, false);
+
+  await app.elements.get('live-source-parse-btn').dispatch('click');
+
+  assert.equal(app.elements.get('saveBtn').disabled, true);
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '未保存');
 });
 
 test('AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button', async () => {
@@ -570,7 +1500,7 @@ test('AIで整理 source intake disables while pending, blocks duplicate submiss
   response.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft() }));
   await Promise.all([first, second]);
   assert.equal(button.disabled, false);
-  assert.equal(button.textContent, 'AIで整理');
+  assert.equal(button.textContent, 'AIで下書きを作る');
 });
 
 test('AIで整理 source intake discards a stale response when source text changes while pending', async () => {
@@ -650,7 +1580,8 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
   await flushAsync();
   assert.equal(buttonA.disabled, true);
 
-  app.closeModal();
+  app.setConfirm(() => true);
+  app.closeLiveEditor();
   app.addLive();
   setLiveForm(app.elements, {
     'edit-sourceText': 'source B',
@@ -706,7 +1637,7 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
   assert.equal(app.fetchCalls.length, 2);
   assert.deepEqual(app.fetchCalls.map((call) => JSON.parse(call.options.body).sourceText), ['source A', 'source B']);
   assert.equal(buttonB.disabled, false);
-  assert.equal(buttonB.textContent, 'AIで整理');
+  assert.equal(buttonB.textContent, 'AIで下書きを作る');
   assert.equal(app.elements.get('edit-sourceText').value, 'source B');
   assert.equal(app.elements.get('edit-date').value, '2026-09-09');
   assert.equal(app.elements.get('edit-title').value, 'CURRENT B');
@@ -771,7 +1702,7 @@ test('AIで整理 source intake keeps every field and preview unchanged for HTTP
       assertLiveSourceIntakeUnchanged(app.elements, snapshot);
       assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
       assert.equal(app.elements.get('live-source-parse-btn').disabled, false);
-      assert.equal(app.elements.get('live-source-parse-btn').textContent, 'AIで整理');
+      assert.equal(app.elements.get('live-source-parse-btn').textContent, 'AIで下書きを作る');
       assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
       assert.doesNotMatch(app.elements.get('live-source-warnings').textContent, /provider-secret|<img/);
       assert.equal(app.getSaveCalls(), 0);
@@ -904,7 +1835,7 @@ test('Live editor exposes new fields and conservatively infers only a missing le
   });
 
   app.editLive('legacy', 'upcoming');
-  const legacyHtml = app.elements.get('modal-body').innerHTML;
+  const legacyHtml = app.elements.get('live-editor-body').innerHTML;
   assert.match(legacyHtml, /id="edit-sourceText"/);
   assert.match(legacyHtml, /id="live-source-parse-btn"/);
   assert.match(legacyHtml, /id="edit-ticketUrl"[^>]*value="https:\/\/tiget\.net\/events\/legacy"/);
@@ -914,10 +1845,10 @@ test('Live editor exposes new fields and conservatively infers only a missing le
   assert.match(legacyHtml, /詳細・SNSリンク/);
 
   app.editLive('explicit-empty', 'upcoming');
-  assert.match(app.elements.get('modal-body').innerHTML, /id="edit-ticketUrl"[^>]*value=""/);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-ticketUrl"[^>]*value=""/);
 
   app.addLive();
-  const newHtml = app.elements.get('modal-body').innerHTML;
+  const newHtml = app.elements.get('live-editor-body').innerHTML;
   assert.doesNotMatch(newHtml, /id="edit-reservationClosed"[^>]*checked/);
 });
 
@@ -939,7 +1870,7 @@ test('structured Live editor normalizes legacy date and saves independent detail
   });
 
   app.editLive('structured-live', 'upcoming');
-  const html = app.elements.get('modal-body').innerHTML;
+  const html = app.elements.get('live-editor-body').innerHTML;
   assert.match(html, /type="date"[^>]*id="edit-date"[^>]*value="2026-09-28"/);
   assert.match(html, /type="time"[^>]*id="edit-openTime"/);
   assert.match(html, /type="time"[^>]*id="edit-startTime"/);
@@ -986,7 +1917,7 @@ test('unparsed legacy Live date is preserved until a valid replacement is entere
   });
 
   app.editLive('unparsed-date', 'upcoming');
-  const html = app.elements.get('modal-body').innerHTML;
+  const html = app.elements.get('live-editor-body').innerHTML;
   assert.match(html, /id="edit-date"[^>]*value=""[^>]*data-original-unparsed-date="date TBA"/);
   assert.match(html, /現在の保存値: <code>date TBA<\/code>/);
   assert.match(app.elements.get('x-post-preview').value, /^date TBA/m);
@@ -1043,7 +1974,7 @@ test('unified X announcement preview drives Intent and copy without save', async
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [{ id: 'live-x' }], past: [] } });
   app.editLive('live-x', 'upcoming');
-  const editorHtml = app.elements.get('modal-body').innerHTML;
+  const editorHtml = app.elements.get('live-editor-body').innerHTML;
   assert.equal((editorHtml.match(/id="x-post-preview"/g) || []).length, 1);
   assert.match(editorHtml, /<label for="x-post-preview">X投稿プレビュー<\/label>/);
   assert.doesNotMatch(editorHtml, /x-parent-preview|x-reply-preview|親投稿プレビュー|返信用 詳細プレビュー/);
@@ -1088,7 +2019,7 @@ test('new Live requires an explicit save before X Intent or reservation operatio
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.addLive();
-  const html = app.elements.get('modal-body').innerHTML;
+  const html = app.elements.get('live-editor-body').innerHTML;
   assert.match(html, /保存後にWeb Intentを利用できます/);
   assert.match(html, /id="x-intent-btn"[^>]*disabled/);
   assert.match(html, /予約台帳はLiveを保存すると利用できます/);
@@ -1510,7 +2441,7 @@ test('reservation status actions use escaped data attributes and delegated event
   assert.ok(app.fetchCalls.some((call) => call.path === `/api/admin/ticket-reservations/${encodeURIComponent(dangerousId)}/status`));
 });
 
-test('edit modal is an accessible dialog with Escape close, initial focus, and focus restoration', async () => {
+test('generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration', async () => {
   assert.match(adminHtml, /id="modal"[^>]*role="dialog"/);
   assert.match(adminHtml, /id="modal"[^>]*aria-modal="true"/);
   assert.match(adminHtml, /id="modal"[^>]*aria-labelledby="modal-title"/);
@@ -1518,19 +2449,12 @@ test('edit modal is an accessible dialog with Escape close, initial focus, and f
 
   const app = loadAdminApp();
   app.setSiteData({
-    live: {
-      upcoming: [{ id: 'focus-live', date: '2026.08.10', title: 'Focus Live', venue: 'Venue', description: '', image: '', link: '' }],
-      past: [],
-    },
+    news: [{ id: 'focus-news', date: '2026.08.10', title: 'Focus News', description: '', image: '', link: '', linkText: '' }],
   });
-  app.renderLive();
-  const trigger = app.elements.get('live-upcoming-list').children[0];
-  assert.equal(trigger?.tagName, 'BUTTON');
-  assert.equal(trigger.dataset.liveId, 'focus-live');
-  assert.equal(trigger.dataset.liveCategory, 'upcoming');
+  const trigger = createElement('news-edit-trigger', app.document, 'button');
   trigger.focus();
-  await app.dispatchDocument('click', { target: trigger, preventDefault() {} });
-  assert.equal(app.document.activeElement?.id, 'edit-sourceText');
+  app.editNews('focus-news');
+  assert.equal(app.document.activeElement?.id, 'edit-date');
   assert.equal(app.elements.get('modal').classList.contains('active'), true);
 
   await app.dispatchDocument('keydown', { key: 'Escape' });
@@ -1542,7 +2466,7 @@ test('edit modal is an accessible dialog with Escape close, initial focus, and f
   assert.equal(trigger.focusCount, 2);
 });
 
-test('saving a rendered Live restores focus to its matching replacement trigger after a category move', async () => {
+test('saving a rendered Live keeps its editor and selected replacement trigger after a category move', async () => {
   const app = loadAdminApp();
   const liveId = `focus-live-\"'\\danger`;
   app.setSiteData({
@@ -1551,12 +2475,13 @@ test('saving a rendered Live restores focus to its matching replacement trigger 
       past: [{ id: 'wrong-live', date: '2026.07.01', title: 'Wrong Live', venue: 'Elsewhere', description: '', image: '', link: '' }],
     },
   });
+  app.setupLiveWorkspace();
   app.renderLive();
   const originalTrigger = app.elements.get('live-upcoming-list').children[0];
   originalTrigger.focus();
 
   await app.dispatchDocument('click', { target: originalTrigger, preventDefault() {} });
-  assert.equal(app.document.activeElement?.id, 'edit-sourceText');
+  assert.equal(app.document.activeElement?.id, 'edit-date');
   setLiveForm(app.elements, { isPast: true });
   await app.saveModal();
 
@@ -1566,9 +2491,29 @@ test('saving a rendered Live restores focus to its matching replacement trigger 
   assert.equal(originalTrigger.isConnected, false, 'renderLive must replace the original trigger');
   assert.ok(replacementTrigger, 'the moved Live must have a newly rendered trigger');
   assert.notEqual(replacementTrigger, originalTrigger);
-  assert.equal(app.document.activeElement, replacementTrigger);
-  assert.equal(replacementTrigger.focusCount, 1);
+  assert.equal(app.elements.get('live-list-upcoming-panel').hidden, true);
+  assert.equal(app.elements.get('live-list-past-panel').hidden, false);
+  assert.equal(app.elements.get('live-list-past-tab').getAttribute('aria-selected'), 'true');
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+  assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-sourceText"/);
+  assert.equal(app.document.activeElement?.id, 'edit-date');
+  assert.equal(replacementTrigger.getAttribute('aria-current'), 'true');
+  assert.equal(replacementTrigger.classList.contains('is-selected'), true);
   assert.equal(wrongTrigger.focusCount, 0, 'focus must not jump to a different Live');
+});
+
+test('saving a new past Live activates its visible destination category', () => {
+  const app = loadAdminApp();
+  app.setSiteData({ live: { upcoming: [], past: [] } });
+  app.setupLiveWorkspace();
+  app.addLive();
+  setLiveForm(app.elements, { isPast: true });
+
+  app.saveLiveItem();
+
+  assert.equal(app.elements.get('live-list-upcoming-panel').hidden, true);
+  assert.equal(app.elements.get('live-list-past-panel').hidden, false);
+  assert.equal(app.elements.get('live-list-past-tab').getAttribute('aria-selected'), 'true');
 });
 
 test('admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes', async (t) => {
