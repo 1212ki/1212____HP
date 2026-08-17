@@ -2448,7 +2448,7 @@ test('unified X announcement preview drives Intent and copy without save', async
     ticketUrl: '',
     reservationClosed: false,
     xComment: 'ぜひ来てください',
-  }, 'ぜひ来てください', 'https://1212hp.com/live/detail/?liveId=live-x'));
+  }, 'ぜひ来てください', 'https://1212hp.itsukimatsumoto.workers.dev/og/live/live-x'));
   assert.match(announcement, /^2026\.8\.10\(月\) 柴崎mod/m);
   assert.match(announcement, /OPEN \/ 18:30 START \/ 19:00/);
   assert.match(announcement, /-act-\n松本一樹\nanother band/);
@@ -2461,9 +2461,38 @@ test('unified X announcement preview drives Intent and copy without save', async
   assert.equal(app.getSaveCalls(), 0);
 });
 
-test('Issue #20 live link actions copy only the saved canonical URL and keep X actions save-free', async () => {
+test('Issue #29 live OGP share URL replaces canonical detail across preview, Intent, and link copy', async () => {
   const liveId = 'live copy/東京?';
+  const shareUrl = `https://1212hp.itsukimatsumoto.workers.dev/og/live/${encodeURIComponent(liveId)}`;
   const canonicalUrl = `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(liveId)}`;
+  const app = loadAdminApp();
+  app.setSiteData({ live: { upcoming: [{ id: liveId }], past: [] } });
+  app.editLive(liveId, 'upcoming');
+  setLiveForm(app.elements);
+  app.setSaveSpy();
+
+  app.updateXPreviewInModal();
+  const firstPreview = app.elements.get('x-post-preview').value;
+  assert.equal(firstPreview.endsWith(shareUrl), true);
+  app.updateXPreviewInModal();
+  const secondPreview = app.elements.get('x-post-preview').value;
+  assert.equal(secondPreview, firstPreview);
+  assert.equal(firstPreview.includes(canonicalUrl), false);
+  assert.equal(new URL(shareUrl).search, '');
+
+  const intent = new URL(app.buildXIntentUrlFromModal());
+  const intentText = intent.searchParams.get('text');
+  assert.equal(intentText, firstPreview);
+  assert.equal(intentText.endsWith(shareUrl), true);
+
+  assert.equal(await app.copyLiveLinkFromModal(), true);
+  assert.deepEqual(app.clipboardWrites, [shareUrl]);
+  assert.equal(app.getSaveCalls(), 0);
+});
+
+test('Issue #20 live link actions copy only the saved stable share URL and keep X actions save-free', async () => {
+  const liveId = 'live copy/東京?';
+  const shareUrl = `https://1212hp.itsukimatsumoto.workers.dev/og/live/${encodeURIComponent(liveId)}`;
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [{ id: liveId }], past: [] } });
   app.editLive(liveId, 'upcoming');
@@ -2478,12 +2507,12 @@ test('Issue #20 live link actions copy only the saved canonical URL and keep X a
   setLiveForm(app.elements);
   app.setSaveSpy();
   assert.equal(await app.elements.get('x-link-copy-btn').dispatch('click'), true);
-  assert.deepEqual(app.clipboardWrites, [canonicalUrl]);
+  assert.deepEqual(app.clipboardWrites, [shareUrl]);
   assert.equal(app.elements.get('toast').textContent, 'リンクをコピーしました');
 
   await app.elements.get('x-intent-btn').dispatch('click');
   const intent = new URL(app.openedUrls[0]);
-  assert.match(intent.searchParams.get('text'), new RegExp(`${canonicalUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`));
+  assert.match(intent.searchParams.get('text'), new RegExp(`${shareUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`));
   assert.equal(app.getSaveCalls(), 0);
 });
 
@@ -2506,7 +2535,7 @@ test('Issue #20 live link actions keep unsaved link copy disabled without clipbo
 });
 
 test('Issue #20 live link actions use the existing clipboard fallback and report both outcomes', async () => {
-  const canonicalUrl = 'https://1212hp.com/live/detail/?liveId=fallback-live';
+  const shareUrl = 'https://1212hp.itsukimatsumoto.workers.dev/og/live/fallback-live';
   const fallbackSuccess = loadAdminApp({
     clipboardWrite: async () => { throw new Error('permission denied'); },
     execCommandResult: true,
@@ -2516,9 +2545,9 @@ test('Issue #20 live link actions use the existing clipboard fallback and report
   fallbackSuccess.setSaveSpy();
 
   assert.equal(await fallbackSuccess.copyLiveLinkFromModal(), true);
-  assert.deepEqual(fallbackSuccess.clipboardWrites, [canonicalUrl]);
+  assert.deepEqual(fallbackSuccess.clipboardWrites, [shareUrl]);
   assert.deepEqual(fallbackSuccess.execCommandCalls, ['copy']);
-  assert.equal(fallbackSuccess.createdTextareas[0]?.value, canonicalUrl);
+  assert.equal(fallbackSuccess.createdTextareas[0]?.value, shareUrl);
   assert.equal(fallbackSuccess.elements.get('toast').textContent, 'リンクをコピーしました');
   assert.equal(fallbackSuccess.getSaveCalls(), 0);
 
@@ -2531,7 +2560,7 @@ test('Issue #20 live link actions use the existing clipboard fallback and report
   fallbackFailure.setSaveSpy();
 
   assert.equal(await fallbackFailure.copyLiveLinkFromModal(), false);
-  assert.deepEqual(fallbackFailure.clipboardWrites, [canonicalUrl]);
+  assert.deepEqual(fallbackFailure.clipboardWrites, [shareUrl]);
   assert.deepEqual(fallbackFailure.execCommandCalls, ['copy']);
   assert.equal(fallbackFailure.elements.get('toast').textContent, 'コピーできませんでした');
   assert.equal(fallbackFailure.getSaveCalls(), 0);

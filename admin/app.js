@@ -3047,9 +3047,10 @@ function readLiveFromModal() {
   };
 }
 
-function getCanonicalLiveUrl(liveId) {
+function getLiveShareUrl(liveId) {
+  const origin = String(CANONICAL_API_BASE_URL || '').replace(/\/+$/, '');
   const id = String(liveId || '').trim();
-  return id ? `https://1212hp.com/live/detail/?liveId=${encodeURIComponent(id)}` : '';
+  return origin && id ? `${origin}/og/live/${encodeURIComponent(id)}` : '';
 }
 
 function updateXPreviewInModal() {
@@ -3061,8 +3062,11 @@ function updateXPreviewInModal() {
     previewEl.value = '';
     return;
   }
-  const canonicalUrl = isNewItem ? '' : getCanonicalLiveUrl(live.id);
-  previewEl.value = operations.buildXAnnouncementText(live, live.xComment, canonicalUrl);
+  previewEl.value = operations.buildXAnnouncementText(
+    live,
+    live.xComment,
+    isNewItem ? '' : getLiveShareUrl(live.id),
+  );
 }
 
 function setLiveSourceIntakeStatus(message) {
@@ -3258,9 +3262,9 @@ async function copyXAnnouncementFromModal() {
 
 async function copyLiveLinkFromModal() {
   if (isNewItem || !currentEditId) return false;
-  const canonicalUrl = getCanonicalLiveUrl(currentEditId);
-  if (!canonicalUrl) return false;
-  const ok = await copyToClipboard(canonicalUrl);
+  const shareUrl = getLiveShareUrl(currentEditId);
+  if (!shareUrl) return false;
+  const ok = await copyToClipboard(shareUrl);
   showToast(ok ? 'リンクをコピーしました' : 'コピーできませんでした', ok ? 'success' : 'error');
   return ok;
 }
