@@ -1,46 +1,33 @@
 # 1212HP Documentation
 
-このディレクトリは、1212HPの設計と実装計画を管理するための正本です。
-コードだけから仕様を推測せず、設計を決めてから実装するために使います。
+`docs/` は 1212HP の current design と、その判断・実装履歴を役割別に管理します。入口は `DOCS_RULES.md`、AI-DLC の実行手順は `operations/AI_DLC_WORKFLOW.md` です。
 
-## 文書体系
+## Source-of-Truth Map
 
-| 場所 | 役割 | 更新タイミング |
+| 場所 | 役割 | 更新条件 |
 |---|---|---|
-| `specs/current/` | 現在参照すべきプロダクト・画面・システム設計 | 仕様判断を変えるとき。実装より先に更新する |
-| `plans/` | 承認済み設計を実装へ分解した日付付き計画 | 実装着手前。設計の正本にはしない |
-| `../documents/requirements/` | 過去に作成した要件資料 | 原則として履歴保持 |
-| `../documents/specs/` | 旧来の構成設計・運用資料 | 原則として履歴保持。現行仕様の正本にはしない |
-| `../documents/usecases/` | 過去に整理したユースケース | 原則として履歴保持 |
-| `../DESIGN_RULES.md` | サイト全体のビジュアルルール | 見た目の共通原則を変えるとき |
+| `specs/current/` | 現在参照する system / product / UX design の正本 | 仕様判断を変えるとき。実装より先に更新 |
+| `../DESIGN_RULES.md` | サイト全体の visual truth | 共通の配色・typography・layout 原則を変えるとき |
+| `product/` | 承認済みの current product guidance のみ | dedicated formal cycle と必要な承認後 |
+| `plans/` | current design を実装へ分解した計画 | 実装着手前。design truth にはしない |
+| `../aidlc-docs/` | isolated worktree 内の mutable active formal cycle | cycle start から close まで |
+| `records/aidlc-cycles/` | accepted closed formal-cycle history | verified transactional close 時。publish 後 append-only |
+| `records/aidlc-bootstrap/` | AI-DLC setup / migration audit | bootstrap 時。accepted cycle や approval evidence にはしない |
+| `records/decisions/` | reusable rationale、代替案、見直し条件 | 判断確定時。append-only |
+| `../documents/` | legacy requirements / specs / use cases | 原則 history として保持。current specs より優先しない |
 
-旧来資料と現在の実装・設計が食い違う場合は、`specs/current/` を優先します。ただし認証、secret、データ移行、production運用は、該当するRunbookと実装も確認します。
+closed cycle trace と decision record は「なぜ」を説明する履歴です。現在の behavior を決めるときは `specs/current/`、`product/`、`../DESIGN_RULES.md` の該当 current canonical を参照します。
 
-## 設計先行ゲート
+## Start Here
 
-1. 課題と対象ユーザー、変えること・変えないことを確認する。
-2. `specs/current/` の該当設計書を新規作成または更新し、状態を `Draft` にする。
-3. 公開画面との対応、主要導線、状態、データ、失敗時挙動、desktop/mobile、受入条件を設計書で決める。
-4. Itsukiの確認を受け、未決事項が実装判断を左右しない状態で `Approved` にする。
-5. 承認済み設計を参照してGitHub Issueと `plans/` の実装計画を作る。
-6. テストを先に追加し、実装・レビュー・検証を行う。
+1. `DOCS_RULES.md`
+2. `operations/AI_DLC_WORKFLOW.md`
+3. `specs/current/README.md`
+4. `product/README.md`
+5. `records/decisions/README.md`
+6. `records/aidlc-cycles/README.md`
+7. `records/aidlc-bootstrap/README.md`
 
-設計変更が必要になった場合は、コードで先に解決せず、設計書を `Draft` に戻して更新します。実装中に新しい判断が発生した場合も同様です。
+## Design Gate
 
-## 設計書の必須項目
-
-- status: `Draft` / `Approved` / `Superseded`
-- ownerと最終更新日
-- 対象範囲と非スコープ
-- 解決する課題
-- 設計原則と判断理由
-- 画面・機能・データの対応関係
-- 主要フローと状態
-- desktop/mobileの振る舞い
-- failure / fallback / rollback
-- 受入条件と検証方法
-- 関連Issue、実装計画、canonical file map
-
-## 現行設計の索引
-
-`specs/current/README.md` を参照してください。
+bootstrap 統合後の次の設計・実装変更から、current canonical や code を変更する前に formal AI-DLC cycle を開始します。要件・計画を承認し、採用内容を current canonical に反映した後で実装します。実装中に新しい判断が発生した場合も、code で先回りせず該当 artifact と approval gate に戻ります。
