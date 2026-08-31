@@ -155,6 +155,7 @@ validate_approval() {
   [[ "${response_at}" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T.+ ]] || fail "response timestamp is missing for ${stage}"
   [[ -n "${prompt}" && "${prompt}" == *"${stage}"* && "${prompt}" == *"aidlc-docs/${artifact_rel}"* && "${prompt}" == *"${recorded_digest}"* ]] || fail "approval prompt is not artifact-bound for ${stage}"
   [[ "${prompt}" == *"${choice_prompt}"* ]] || fail "approval prompt lacks canonical A/B/X choice for ${stage}"
+  [[ "${prompt}" == *"${choice_prompt}" ]] || fail "approval prompt must end with canonical A/B/X choice for ${stage}"
   [[ "${response}" == A ]] || fail "raw human response must be exactly A for ${stage}"
   [[ "${decision}" == APPROVED* ]] || fail "approval decision is not explicit for ${stage}"
 }
@@ -300,7 +301,7 @@ command_start() {
   "${verify_command}" --payload-only "${repo_root}" >/dev/null
   local branch base started_at start_date cycle_id
   branch="$(git -C "${repo_root}" symbolic-ref --quiet --short HEAD 2>/dev/null)" || fail "detached HEAD is not allowed"
-  [[ "${branch}" == "feature/${issue}-"* ]] || fail "branch ${branch} does not match Issue #${issue}"
+  [[ "${branch}" == "feature/${issue}-${topic}" ]] || fail "branch ${branch} does not match requested Issue/topic feature/${issue}-${topic}"
   base="$(git -C "${repo_root}" rev-parse HEAD)"
   started_at="$(date -Iseconds)"
   start_date="${started_at%%T*}"
@@ -347,8 +348,22 @@ command_resume() {
   validate_cycle_id "${cycle_id}" >/dev/null
   [[ "${issue}" =~ ^[0-9]+$ ]] || fail "issue number must be numeric"
   validate_identity "${cycle_id}" "${issue}"
+  [[ -f "${audit_file}" && ! -L "${audit_file}" ]] || fail "missing regular audit trail: aidlc-docs/audit.md"
+  local resumed_at
+  resumed_at="$(date -Iseconds)"
+  cat >> "${audit_file}" <<EOF
+
+## Cycle Resume
+
+- **Timestamp**: ${resumed_at}
+- **Cycle ID**: ${cycle_id}
+- **Issue**: #${issue}
+- **Branch**: $(state_value Branch)
+- **Workspace Root**: ${repo_root}
+- **Event**: Cycle identity revalidated; resume prerequisites and current-stage artifacts before continuing.
+EOF
   command_status
-  echo "Identity verified. Read aidlc-docs/aidlc-state.md, load prerequisite artifacts, and append the resumption event to aidlc-docs/audit.md."
+  echo "Identity verified and Cycle Resume event appended to aidlc-docs/audit.md. Read aidlc-docs/aidlc-state.md and load prerequisite artifacts before continuing."
 }
 
 command_close() {

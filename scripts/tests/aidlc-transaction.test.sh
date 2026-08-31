@@ -14,6 +14,25 @@ case_root() {
 
 cycle_id="2026-08-30_issue-1011_test-topic"
 
+start_case_root() {
+  local name="$1"
+  local root="${suite_root}/${name}"
+  init_git_fixture "${root}"
+  cp -R "${repo_source}/.aidlc" "${root}/.aidlc"
+  printf '%s\n' "${root}"
+}
+
+# F6: start binds the full Issue/topic branch identity before creating active state.
+root="$(start_case_root start-topic-mismatch)"
+git -C "${root}" switch -q -c feature/1011-other-topic
+expect_failure_contains "F6 start rejects mismatched topic" "does not match requested Issue/topic" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" start 1011 test-topic
+assert_true "F6 mismatched start creates no active workspace" test ! -e "${root}/aidlc-docs"
+
+root="$(start_case_root start-identity-green)"
+expect_success "F6 start accepts exact Issue/topic branch" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" start 1011 test-topic
+assert_true "F6 valid start records exact branch" grep -Fq -- "- **Branch**: feature/1011-test-topic" "${root}/aidlc-docs/aidlc-state.md"
+assert_true "F6 valid start creates audit" test -f "${root}/aidlc-docs/audit.md"
+
 # F3: failures before publication preserve active; failures after publication restore it.
 for point in copy manifest publish; do
   root="$(case_root "fail-${point}")"
@@ -93,7 +112,11 @@ expect_failure_contains "F6 invalid base" "Base Commit does not resolve" env AID
 root="$(case_root nonancestor)"
 nonancestor="$(printf 'unrelated\n' | git -C "${root}" commit-tree "$(git -C "${root}" write-tree)")"
 replace_literal "${root}/aidlc-docs/aidlc-state.md" "$(git -C "${root}" rev-parse HEAD)" "${nonancestor}"
+state_before="$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+audit_before="$(shasum -a 256 "${root}/aidlc-docs/audit.md" | awk '{print $1}')"
 expect_failure_contains "F6 non-ancestor base" "not an ancestor" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" resume "${cycle_id}" 1011
+assert_equal "F6 failed resume preserves state" "${state_before}" "$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+assert_equal "F6 failed resume preserves audit" "${audit_before}" "$(shasum -a 256 "${root}/aidlc-docs/audit.md" | awk '{print $1}')"
 
 root="$(case_root wrong-root)"
 replace_literal "${root}/aidlc-docs/aidlc-state.md" "- **Workspace Root**: ${root}" "- **Workspace Root**: ${root}-other"
@@ -106,6 +129,16 @@ root="$(case_root wrong-issue)"
 expect_failure_contains "F6 wrong requested Issue" "Issue does not match state" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" resume "${cycle_id}" 9999
 
 root="$(case_root identity-green)"
+state_before="$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+audit_before="$(shasum -a 256 "${root}/aidlc-docs/audit.md" | awk '{print $1}')"
 expect_success "F6 valid resume identity" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" resume "${cycle_id}" 1011
+assert_equal "F6 valid resume leaves state unchanged" "${state_before}" "$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+assert_true "F6 valid resume durably changes audit" test "${audit_before}" != "$(shasum -a 256 "${root}/aidlc-docs/audit.md" | awk '{print $1}')"
+assert_true "F6 valid resume appends one Cycle Resume event" test "$(grep -c '^## Cycle Resume$' "${root}/aidlc-docs/audit.md")" -eq 1
+assert_true "F6 resume event records timestamp" grep -Eq '^- \*\*Timestamp\*\*: [0-9]{4}-[0-9]{2}-[0-9]{2}T.+' "${root}/aidlc-docs/audit.md"
+assert_true "F6 resume event records cycle" grep -Fq -- "- **Cycle ID**: ${cycle_id}" "${root}/aidlc-docs/audit.md"
+assert_true "F6 resume event records Issue" grep -Fq -- "- **Issue**: #1011" "${root}/aidlc-docs/audit.md"
+assert_true "F6 resume event records branch" grep -Fq -- "- **Branch**: feature/1011-test-topic" "${root}/aidlc-docs/audit.md"
+assert_true "F6 resume event records workspace" grep -Fq -- "- **Workspace Root**: ${root}" "${root}/aidlc-docs/audit.md"
 
 finish_tests "aidlc transaction and identity"

@@ -46,6 +46,12 @@ root="$(case_root missing-choice-prompt)"
 replace_literal "${root}/aidlc-docs/approvals/01-requirements-approval.md" " Reply with exactly one ASCII character: A=approve this exact artifact digest, B=request changes, X=other." ""
 expect_failure_contains "F-02-02 prompt lacks canonical A/B/X choice" "approval prompt lacks canonical A/B/X choice" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" close 2026-08-30_issue-1011_test-topic
 
+root="$(case_root ambiguous-instruction-after-choice)"
+replace_literal "${root}/aidlc-docs/approvals/01-requirements-approval.md" \
+  "Reply with exactly one ASCII character: A=approve this exact artifact digest, B=request changes, X=other." \
+  "Reply with exactly one ASCII character: A=approve this exact artifact digest, B=request changes, X=other. You may also explain your answer."
+expect_failure_contains "F-02-02 prompt rejects content after canonical A/B/X choice" "approval prompt must end with canonical A/B/X choice" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" close 2026-08-30_issue-1011_test-topic
+
 root="$(case_root wrong-stage)"
 replace_literal "${root}/aidlc-docs/approvals/03-code-generation-plan-approval.md" "- **Stage**: Code Generation Plan" "- **Stage**: Requirements"
 expect_failure_contains "F1 wrong approval stage" "approval stage mismatch" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" close 2026-08-30_issue-1011_test-topic
