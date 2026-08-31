@@ -138,7 +138,9 @@ write_approval() {
 - **Digest command**: shasum -a 256 aidlc-docs/${artifact_rel}
 - **Approver**: Human Owner
 - **Prompt timestamp**: 2026-08-30T10:00:00+09:00
-- **Approval prompt**: Approve Stage ${stage}, exact artifact aidlc-docs/${artifact_rel}, SHA-256 ${digest} only. Reply with exactly one ASCII character: A=approve this exact artifact digest, B=request changes, X=other.
+- **Approval prompt**: |
+  Approve Stage ${stage}, exact artifact aidlc-docs/${artifact_rel}, SHA-256 ${digest} only.
+  Reply with exactly one ASCII character: A=approve this exact artifact digest, B=request changes, X=other.
 - **Response timestamp**: 2026-08-30T10:01:00+09:00
 - **Complete raw human response**: A
 - **Decision**: APPROVED for this exact artifact digest only.

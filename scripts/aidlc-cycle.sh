@@ -126,7 +126,7 @@ validate_approval() {
   [[ -f "${artifact}" && ! -L "${artifact}" ]] || fail "missing required artifact for ${stage}: aidlc-docs/${artifact_rel}"
   [[ -f "${record}" && ! -L "${record}" ]] || fail "missing approval record for ${stage}: aidlc-docs/${record_rel}"
 
-  local status record_stage record_path absolute_path recorded_digest actual_digest approver prompt_at prompt response_at response decision choice_prompt
+  local status record_stage record_path absolute_path recorded_digest actual_digest approver prompt_at prompt response_at response decision choice_prompt final_prompt_line
   status="$(md_value "${record}" 'Record status')"
   record_stage="$(md_value "${record}" Stage)"
   record_path="$(md_value "${record}" 'Artifact repository-relative path')"
@@ -139,6 +139,7 @@ validate_approval() {
   response="$(md_text "${record}" 'Complete raw human response')"
   decision="$(md_value "${record}" Decision)"
   choice_prompt='Reply with exactly one ASCII character: A=approve this exact artifact digest, B=request changes, X=other.'
+  final_prompt_line="${prompt##*$'\n'}"
 
   [[ "${status}" == APPROVED ]] || fail "approval record is not APPROVED for ${stage}"
   [[ "${record_stage}" == "${stage}" ]] || fail "approval stage mismatch for ${stage}: ${record_stage}"
@@ -156,6 +157,7 @@ validate_approval() {
   [[ -n "${prompt}" && "${prompt}" == *"${stage}"* && "${prompt}" == *"aidlc-docs/${artifact_rel}"* && "${prompt}" == *"${recorded_digest}"* ]] || fail "approval prompt is not artifact-bound for ${stage}"
   [[ "${prompt}" == *"${choice_prompt}"* ]] || fail "approval prompt lacks canonical A/B/X choice for ${stage}"
   [[ "${prompt}" == *"${choice_prompt}" ]] || fail "approval prompt must end with canonical A/B/X choice for ${stage}"
+  [[ "${final_prompt_line}" == "${choice_prompt}" ]] || fail "approval prompt final line must exactly match canonical A/B/X choice for ${stage}"
   [[ "${response}" == A ]] || fail "raw human response must be exactly A for ${stage}"
   [[ "${decision}" == APPROVED* ]] || fail "approval decision is not explicit for ${stage}"
 }
@@ -345,25 +347,43 @@ EOF
 command_resume() {
   local cycle_id="$1"
   local issue="$2"
+  local resumed_at state_branch resume_temp
   validate_cycle_id "${cycle_id}" >/dev/null
   [[ "${issue}" =~ ^[0-9]+$ ]] || fail "issue number must be numeric"
   validate_identity "${cycle_id}" "${issue}"
   [[ -f "${audit_file}" && ! -L "${audit_file}" ]] || fail "missing regular audit trail: aidlc-docs/audit.md"
-  local resumed_at
   resumed_at="$(date -Iseconds)"
-  cat >> "${audit_file}" <<EOF
+  state_branch="$(state_value Branch)"
+  command_status
+  echo "Identity verified. Read aidlc-docs/aidlc-state.md and load prerequisite artifacts before continuing."
+  resume_temp="$(mktemp "${active_root}/.audit-resume.XXXXXX")" || fail "could not create resume audit temporary file"
+  if [[ ! -f "${resume_temp}" || -L "${resume_temp}" ]]; then
+    rm -f "${resume_temp}"
+    fail "resume audit temporary path is not a regular file"
+  fi
+  if ! cp -p "${audit_file}" "${resume_temp}"; then
+    rm -f "${resume_temp}"
+    fail "could not copy audit trail into resume temporary file"
+  fi
+  if ! cat >> "${resume_temp}" <<EOF
 
 ## Cycle Resume
 
 - **Timestamp**: ${resumed_at}
 - **Cycle ID**: ${cycle_id}
 - **Issue**: #${issue}
-- **Branch**: $(state_value Branch)
+- **Branch**: ${state_branch}
 - **Workspace Root**: ${repo_root}
-- **Event**: Cycle identity revalidated; resume prerequisites and current-stage artifacts before continuing.
+- **Event**: Cycle identity revalidated and resume recorded. This command did not validate prerequisite or current-stage artifact contents.
 EOF
-  command_status
-  echo "Identity verified and Cycle Resume event appended to aidlc-docs/audit.md. Read aidlc-docs/aidlc-state.md and load prerequisite artifacts before continuing."
+  then
+    rm -f "${resume_temp}"
+    fail "could not construct resume audit update"
+  fi
+  if ! mv "${resume_temp}" "${audit_file}"; then
+    rm -f "${resume_temp}"
+    fail "could not commit resume audit update"
+  fi
 }
 
 command_close() {

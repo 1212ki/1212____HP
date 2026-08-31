@@ -128,6 +128,33 @@ expect_failure_contains "F6 wrong requested Cycle ID" "cycle ID does not match s
 root="$(case_root wrong-issue)"
 expect_failure_contains "F6 wrong requested Issue" "Issue does not match state" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" resume "${cycle_id}" 9999
 
+root="$(case_root resume-stdout-failure)"
+state_before="$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+audit_before="$(shasum -a 256 "${root}/aidlc-docs/audit.md" | awk '{print $1}')"
+set +e
+AIDLC_REPO_ROOT="${root}" "${cycle_command}" resume "${cycle_id}" 1011 1>&- 2>"${suite_root}/resume-stdout-failure.stderr"
+resume_status=$?
+set -e
+if [[ ${resume_status} -ne 0 ]]; then
+  record_success "F6 stdout failure makes resume fail"
+else
+  record_failure "F6 stdout failure makes resume fail" "command unexpectedly succeeded"
+fi
+assert_equal "F6 stdout failure preserves state" "${state_before}" "$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+assert_equal "F6 stdout failure preserves audit" "${audit_before}" "$(shasum -a 256 "${root}/aidlc-docs/audit.md" | awk '{print $1}')"
+assert_true "F6 stdout failure leaves no resume temp" test -z "$(find "${root}/aidlc-docs" -maxdepth 1 -name '.audit-resume.*' -print -quit)"
+
+root="$(case_root resume-audit-symlink)"
+external_audit="${suite_root}/resume-external-audit.md"
+mv "${root}/aidlc-docs/audit.md" "${external_audit}"
+ln -s "${external_audit}" "${root}/aidlc-docs/audit.md"
+state_before="$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+audit_before="$(shasum -a 256 "${external_audit}" | awk '{print $1}')"
+expect_failure_contains "F6 resume rejects audit symlink" "missing regular audit trail" env AIDLC_REPO_ROOT="${root}" "${cycle_command}" resume "${cycle_id}" 1011
+assert_equal "F6 audit symlink rejection preserves state" "${state_before}" "$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
+assert_equal "F6 audit symlink rejection preserves target" "${audit_before}" "$(shasum -a 256 "${external_audit}" | awk '{print $1}')"
+assert_true "F6 audit symlink rejection leaves no resume temp" test -z "$(find "${root}/aidlc-docs" -maxdepth 1 -name '.audit-resume.*' -print -quit)"
+
 root="$(case_root identity-green)"
 state_before="$(shasum -a 256 "${root}/aidlc-docs/aidlc-state.md" | awk '{print $1}')"
 audit_before="$(shasum -a 256 "${root}/aidlc-docs/audit.md" | awk '{print $1}')"
@@ -140,5 +167,6 @@ assert_true "F6 resume event records cycle" grep -Fq -- "- **Cycle ID**: ${cycle
 assert_true "F6 resume event records Issue" grep -Fq -- "- **Issue**: #1011" "${root}/aidlc-docs/audit.md"
 assert_true "F6 resume event records branch" grep -Fq -- "- **Branch**: feature/1011-test-topic" "${root}/aidlc-docs/audit.md"
 assert_true "F6 resume event records workspace" grep -Fq -- "- **Workspace Root**: ${root}" "${root}/aidlc-docs/audit.md"
+assert_true "F6 resume event states artifact contents were not validated" grep -Fq -- "- **Event**: Cycle identity revalidated and resume recorded. This command did not validate prerequisite or current-stage artifact contents." "${root}/aidlc-docs/audit.md"
 
 finish_tests "aidlc transaction and identity"
