@@ -8,6 +8,16 @@
 - **Tech Stack**: HTML / CSS / JavaScript + Cloudflare Worker API
 - **Hosting**: Public site（GitHub Pages or Cloudflare Pages）/ Admin & API（Cloudflare）
 
+## Authoritative Documents
+
+- Current system / product / UX design: `docs/specs/current/`
+- Site-wide visual rules: `DESIGN_RULES.md`
+- Approved current product guidance: `docs/product/`
+- Documentation and history map: `docs/README.md`
+- AI-DLC workflow: `docs/operations/AI_DLC_WORKFLOW.md`
+
+`docs/plans/` is implementation planning and `documents/` is legacy/history; neither replaces current specifications. Active AI-DLC work and closed traces explain the path to a decision but do not become current truth by themselves.
+
 ## Design
 
 ### Main Color
@@ -28,6 +38,9 @@
 
 ```
 1212____HP/
+├── .aidlc/            # pinned AI-DLC rules and provenance
+├── aidlc-docs/        # one mutable active formal cycle (idle after setup)
+├── docs/              # current design, workflow, decisions, and accepted history
 ├── index.html          # トップページ（News）
 ├── profile/            # プロフィール
 ├── live/               # ライブ情報
@@ -63,16 +76,24 @@
 ## Development Workflow
 
 この repo の作業管理は GitHub Issue と GitHub Project `1212hp` で行います。
-作業前に Issue を確認または作成し、Project Status を `In Progress` にしてから branch を切ります。
-PR 作成直前は Status を `Review`、完了後は `close` にします。
+作業前に Issue を確認し、Project Status を `In Progress` にして、current `origin/main` から `feature/<issue-number>-<topic>` の isolated worktree を作ります。
 
-実装前に `docs/specs/current/` の該当設計書を確認し、変更がある場合は先に設計書を更新します。
-設計書が `Approved` になるまでは実装を開始しません。
+この AI-DLC bootstrap が統合された後の次の設計・実装変更から、current canonical や code を変える前に formal cycle を開始します。
+
+```bash
+scripts/aidlc-verify.sh --local
+scripts/aidlc-cycle.sh start <issue-number> <topic>
+```
+
+active cycle で要件・計画・承認を記録し、承認された内容を `docs/specs/current/`、必要に応じて `docs/product/` または `DESIGN_RULES.md` へ反映してから実装します。検証と独立 review 後に cycle を close すると、accepted history が `docs/records/aidlc-cycles/` に transactionally archive され、`aidlc-docs/` は idle に戻ります。
+
+今回の setup は formal cycle ではありません。audit は `docs/records/aidlc-bootstrap/` に置かれ、後続変更の承認には使えません。PR 作成直前は Project Status を `Review` にします。merge、production deploy、PR approval は Itsuki の明示承認が必要です。
 
 詳細:
 
 - 文書体系と設計先行ルール: `docs/README.md`
 - 現在有効な設計書: `docs/specs/current/`
+- AI-DLCの開始・承認・close・復旧: `docs/operations/AI_DLC_WORKFLOW.md`
 - GitHub運用: `GITHUB_WORKFLOW.md`
 
 ## Local Development

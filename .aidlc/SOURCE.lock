@@ -1,0 +1,13 @@
+source_repository=https://github.com/awslabs/aidlc-workflows
+release=v1.0.1
+release_url=https://github.com/awslabs/aidlc-workflows/releases/tag/v1.0.1
+published_at=2026-06-30T17:54:27Z
+tag_object=e40f6a93a59d1a22be78314ff32585fdd6b60936
+release_commit=e49341dbeb8af82758dd85e96ed7fe9bcf38a447
+asset_id=462256823
+asset=ai-dlc-rules-v1.0.1.zip
+asset_url=https://github.com/awslabs/aidlc-workflows/releases/download/v1.0.1/ai-dlc-rules-v1.0.1.zip
+asset_sha256=ac0601544b6c7ba41b541a7a96259d6ea3995ea0b94b2a58a333ae7898e22b39
+tag_archive_sha256=4a962cda5a7f3207813a3fd069bca607808a18fc76e64a450386b89f0874e453
+payload_file_count=34
+payload_manifest_sha256=02c49d1de2167f0ed2c90123871bce6d96cf052294672f451df83b1aa5cff9e9
