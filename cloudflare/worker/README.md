@@ -39,7 +39,7 @@
 
 ## Live元情報のAI整理
 
-> Issue #33のprovider自動切替を実装済みです。`docs/specs/current/live-operations-admin-ui.md`はOwner確認済みのApprovedです。Code Generation ResultはOwner承認済み、Build/Test Resultも書式修正後の新digestで再承認済みです。cycle履歴は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`にarchive済みで、`aidlc-docs/`はidleです。本番反映は未実施です。
+> AI整理の現在の設計は`docs/specs/current/live-operations-admin-ui.md`を正本とします。Issue #33のprovider自動切替を保持し、Issue #35ではOpenAIの考える量だけを最小にします。実装・検証・承認・本番反映の状態は各cycleの記録で区別します。
 
 `POST /api/admin/live-source-intake`は、管理画面で貼り付けたLiveの元情報をOpenAI Responses APIで先に整理し、OpenAI側の失敗時は同じ`sourceText`でClaude（Anthropic Messages API）へ切り替えます。既存の管理APIと同じBearer認証が必要です。
 
@@ -69,10 +69,12 @@ OpenAIの認証・クレジット切れ・rate limitを含む全HTTP非2xx、通
 
 ### secretとモデル
 
-| provider | Worker secret | 任意のWorker変数 | 未設定・空白時の既定モデル |
-|---|---|---|---|
-| OpenAI | `OPENAI_API_KEY` | `LIVE_AI_MODEL` | `gpt-5-mini` |
-| Claude | `ANTHROPIC_API_KEY` | `LIVE_AI_CLAUDE_MODEL` | `claude-haiku-5-5` |
+| provider | Worker secret | 任意のWorker変数 | 未設定・空白時の既定モデル | requestで指定する考える量 |
+|---|---|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | `LIVE_AI_MODEL` | `gpt-5-mini` | `reasoning.effort: "minimal"` |
+| Claude | `ANTHROPIC_API_KEY` | `LIVE_AI_CLAUDE_MODEL` | `claude-haiku-5-5` | `output_config.effort: "low"` |
+
+管理者が画面で待つ操作で、元情報から10項目を抽出する処理のため、OpenAIの考える量を`minimal`（最小）に固定する。既定モデル・抽出指示・schema・validator・provider順・各15秒／全体30秒の期限・エラー分類・画面表示は変更しない。`LIVE_AI_MODEL`で上書きしたモデルにも同じ指定を送り、非対応モデルがHTTP 400を返した場合は既存の失敗時切替を使う。Claudeが設定され利用可能ならClaudeの結果を返し、Claude未設定なら既存の失敗応答になる。
 
 両APIキーはWorker secretとしてのみ設定し、コード、HTML、ブラウザ側JavaScript、レスポンスへ置かないでください。既存の`LIVE_AI_MODEL`はOpenAI専用のままです。モデル選択UIは追加しません。本番secret操作とdeployはOwnerの明示承認後に行います。
 

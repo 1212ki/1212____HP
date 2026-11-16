@@ -370,8 +370,11 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
 
     const body = JSON.parse(outbound.options.body);
     assert.equal(body.model, "gpt-5-mini");
+    assert.deepEqual(body.reasoning, { effort: "minimal" });
+    assert.deepEqual(Object.keys(body).sort(), ["input", "instructions", "model", "reasoning", "text"]);
     assert.equal(body.input, "2026/08/20 下北沢 公演情報\n出演：松本一樹 / 共演者A");
     assert.equal(body.text.format.type, "json_schema");
+    assert.equal(body.text.format.name, "live_source_intake");
     assert.equal(body.text.format.strict, true);
     assert.equal(body.text.format.schema.type, "object");
     assert.equal(body.text.format.schema.additionalProperties, false);
@@ -447,7 +450,40 @@ describe("admin Live AI source intake", { concurrency: false }, () => {
     );
 
     assert.equal(requestBody.model, "gpt-5-mini-custom");
+    assert.deepEqual(requestBody.reasoning, { effort: "minimal" });
     assert.equal(requestBody.input.length, 12_000);
+  });
+
+  test("OpenAI minimal reasoning keeps whitespace defaults and trimmed model overrides", async (t) => {
+    const fixtures = [
+      { name: "whitespace default", model: " \n\t ", expectedModel: "gpt-5-mini" },
+      { name: "trimmed override", model: "  gpt-5-mini-custom \t", expectedModel: "gpt-5-mini-custom" },
+    ];
+
+    for (const fixture of fixtures) {
+      await t.test(fixture.name, async () => {
+        let requestBody = null;
+        await withFetchStub(
+          async (_url, options) => {
+            requestBody = JSON.parse(options.body);
+            return openAiJsonResponse(openAiPayload(JSON.stringify(VALID_DRAFT)));
+          },
+          async () => {
+            const response = await worker.fetch(
+              sourceIntakeRequest({ sourceText: "公演情報" }),
+              adminEnv({ LIVE_AI_MODEL: fixture.model }),
+              {},
+            );
+
+            assert.equal(response.status, 200);
+            assert.deepEqual(await response.json(), { draft: VALID_DRAFT, provider: "openai" });
+          },
+        );
+
+        assert.equal(requestBody.model, fixture.expectedModel);
+        assert.deepEqual(requestBody.reasoning, { effort: "minimal" });
+      });
+    }
   });
 
   test("returns a sanitized 502 for invalid draft objects", async () => {
