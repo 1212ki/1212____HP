@@ -36,6 +36,7 @@ const DEFAULT_SITE_DATA = {
 const TOKYO_UTC_OFFSET_MS = 9 * 60 * 60 * 1000;
 const LIVE_AI_SOURCE_MAX_LENGTH = 12_000;
 const LIVE_AI_TIMEOUT_MS = 15_000;
+const LIVE_AI_TOTAL_TIMEOUT_MS = 30_000;
 const LIVE_AI_DRAFT_KEYS = [
   "date",
   "title",
@@ -530,42 +531,30 @@ function extractLiveAiOutputText(payload) {
   return "";
 }
 
-async function requestLiveAiDraft(env, sourceText) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), LIVE_AI_TIMEOUT_MS);
-  let payload;
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: String(env.LIVE_AI_MODEL || "").trim() || "gpt-5-mini",
-        instructions: LIVE_AI_INSTRUCTIONS,
-        input: sourceText,
-        text: {
-          format: {
-            type: "json_schema",
-            name: "live_source_intake",
-            strict: true,
-            schema: LIVE_AI_OUTPUT_SCHEMA,
-          },
+async function requestOpenAiLiveDraft(env, sourceText, signal) {
+  const response = await fetch("https://api.openai.com/v1/responses", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${env.OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: String(env.LIVE_AI_MODEL || "").trim() || "gpt-5-mini",
+      instructions: LIVE_AI_INSTRUCTIONS,
+      input: sourceText,
+      text: {
+        format: {
+          type: "json_schema",
+          name: "live_source_intake",
+          strict: true,
+          schema: LIVE_AI_OUTPUT_SCHEMA,
         },
-      }),
-      signal: controller.signal,
-    });
-    if (!response.ok) throw new LiveAiProviderError();
-    payload = await response.json();
-  } catch (error) {
-    if (controller.signal.aborted) throw new LiveAiTimeoutError();
-    if (error instanceof LiveAiProviderError) throw error;
-    throw new LiveAiProviderError();
-  } finally {
-    clearTimeout(timeout);
-  }
+      },
+    }),
+    signal,
+  });
+  if (!response.ok) throw new LiveAiProviderError();
+  const payload = await response.json();
 
   if (
     !payload ||
@@ -587,6 +576,119 @@ async function requestLiveAiDraft(env, sourceText) {
     throw new LiveAiProviderError();
   }
   return validateLiveAiDraft(parsed);
+}
+
+async function requestClaudeLiveDraft(env, sourceText, signal) {
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": env.ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: String(env.LIVE_AI_CLAUDE_MODEL || "").trim() || "claude-haiku-5-5",
+      max_tokens: 16_384,
+      system: LIVE_AI_INSTRUCTIONS,
+      messages: [{ role: "user", content: sourceText }],
+      output_config: {
+        effort: "low",
+        format: { type: "json_schema", schema: LIVE_AI_OUTPUT_SCHEMA },
+      },
+    }),
+    signal,
+  });
+  if (!response.ok) throw new LiveAiProviderError();
+  const payload = await response.json();
+  if (
+    !payload || typeof payload !== "object" || Array.isArray(payload) || payload.error ||
+    payload.stop_reason !== "end_turn" || !Array.isArray(payload.content)
+  ) {
+    throw new LiveAiProviderError();
+  }
+  const outputText = payload.content
+    .filter((block) => block?.type === "text" && typeof block.text === "string")
+    .map((block) => block.text).join("");
+  if (!outputText.trim()) throw new LiveAiProviderError();
+  return validateLiveAiDraft(JSON.parse(outputText));
+}
+
+function ensureLiveAiDeadline(deadline, controller) {
+  if (controller.signal.aborted || performance.now() >= deadline) {
+    controller.abort();
+    throw new LiveAiTimeoutError();
+  }
+}
+
+async function requestLiveAiAttempt(adapter, env, sourceText, controller, deadline) {
+  let timer;
+  let rejectOnAbort;
+  try {
+    ensureLiveAiDeadline(deadline, controller);
+    const timeout = new Promise((_resolve, reject) => {
+      rejectOnAbort = () => reject(new LiveAiTimeoutError());
+      controller.signal.addEventListener("abort", rejectOnAbort, { once: true });
+      timer = setTimeout(() => controller.abort(), deadline - performance.now());
+    });
+    // The adapter includes body reading, extraction and validation inside this race.
+    const draft = await Promise.race([adapter(env, sourceText, controller.signal), timeout]);
+    ensureLiveAiDeadline(deadline, controller);
+    return draft;
+  } catch (_error) {
+    ensureLiveAiDeadline(deadline, controller);
+    throw new LiveAiProviderError();
+  } finally {
+    clearTimeout(timer);
+    if (rejectOnAbort) controller.signal.removeEventListener("abort", rejectOnAbort);
+  }
+}
+
+async function requestLiveAiDraft(env, sourceText) {
+  const deadline = performance.now() + LIVE_AI_TOTAL_TIMEOUT_MS;
+  const providers = [
+    ["openai", env.OPENAI_API_KEY, requestOpenAiLiveDraft],
+    ["claude", env.ANTHROPIC_API_KEY, requestClaudeLiveDraft],
+  ].filter(([, key]) => String(key || "").trim());
+  let activeController = null;
+  let globalTimer;
+  const timeout = new Promise((_resolve, reject) => {
+    globalTimer = setTimeout(() => {
+      activeController?.abort();
+      reject(new LiveAiTimeoutError());
+    }, deadline - performance.now());
+  });
+  const runProviders = async () => {
+    let lastError = new LiveAiProviderError();
+    for (const [provider, _key, adapter] of providers) {
+      const attemptStart = performance.now();
+      if (attemptStart >= deadline) throw new LiveAiTimeoutError();
+      const controller = new AbortController();
+      const attemptDeadline = Math.min(attemptStart + LIVE_AI_TIMEOUT_MS, deadline);
+      activeController = controller;
+      try {
+        const draft = await requestLiveAiAttempt(
+          adapter, env, sourceText, controller, attemptDeadline,
+        );
+        ensureLiveAiDeadline(attemptDeadline, controller);
+        return { draft, provider };
+      } catch (error) {
+        if (performance.now() >= deadline) {
+          controller.abort();
+          throw new LiveAiTimeoutError();
+        }
+        lastError = error;
+      } finally {
+        activeController = null;
+      }
+    }
+    throw lastError;
+  };
+  try {
+    return await Promise.race([runProviders(), timeout]);
+  } finally {
+    clearTimeout(globalTimer);
+    activeController = null;
+  }
 }
 
 async function serveImage(request, env, key) {
@@ -1742,13 +1844,13 @@ async function handleRequest(request, env, ctx) {
     if (!sourceText || sourceText.length > LIVE_AI_SOURCE_MAX_LENGTH) {
       return jsonResponse({ error: "invalid sourceText" }, request, env, 400);
     }
-    if (!String(env.OPENAI_API_KEY || "").trim()) {
+    if (!String(env.OPENAI_API_KEY || "").trim() && !String(env.ANTHROPIC_API_KEY || "").trim()) {
       return jsonResponse({ error: "AI source intake is not configured" }, request, env, 503);
     }
 
     try {
-      const draft = await requestLiveAiDraft(env, sourceText);
-      return jsonResponse({ draft }, request, env);
+      const result = await requestLiveAiDraft(env, sourceText);
+      return jsonResponse(result, request, env);
     } catch (error) {
       if (error instanceof LiveAiTimeoutError) {
         return jsonResponse({ error: "AI source intake timed out" }, request, env, 504);

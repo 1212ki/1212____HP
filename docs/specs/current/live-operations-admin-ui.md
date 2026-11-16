@@ -2,12 +2,14 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-08-17
-- Related issue: #29
-- Related implementation issues: #19, #20, #21, #22
-- Owner approval: 2026-08-17（Issue #29のstable Worker share URLによるOGP回帰復旧設計）
-- Design review: APPROVED（Issue #22 AC0〜AC9、Issue #29 owner-approved design）
-- Implementation gate: Statusが`Approved`の間はIssue #29の実装入力として利用可
+- Last updated: 2026-11-16
+- Related issues: #33, #29
+- Related implementation issues: #19, #20, #21, #22, #33
+- Owner approval: APPROVED（Itsuki Matsumoto、2026-11-16T13:34:12+09:00、提示された本版のSHA-256 `8c9ceb61cbee4e897f8afad63245410c8bca69f5ea89c8e6a5b57e6f89038864` に対する本人回答 `A`）
+- Prior Owner approval: 2026-08-17（Issue #29のstable Worker share URLによるOGP回帰復旧設計）
+- Design review: APPROVED（review-04、Issue #33の更新内容。blocking findingなし）
+- Prior design review: APPROVED（Issue #22 AC0〜AC9、Issue #29 owner-approved design）
+- Implementation gate: Issue #33の本版確認済み。実装・全回帰・独立review-07を完了し、Code Generation Resultは本人回答`A`で承認済み（2026-11-16T14:29:00+09:00）。Build/Test Resultは書式修正後の新digestに対する本人回答`A`で再承認済み（2026-11-16T14:52:21+09:00）。cycle完了記録は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`。canonical確認原典: context rootの`_scratch/codex-work/20261116-114342_1212hp-ai-provider-fallback/canonical-owner-confirmation.md`（prompt: 2026-11-16T13:33:01+09:00）。本文中の実装未着手という時点記述は確認時点の記録として保持する。本番反映は別のOwner操作
 
 ## 1. 目的
 
@@ -51,7 +53,7 @@
 - adminのグローバルナビゲーションとLive入口
 - Live一覧と開催状態
 - Live新規登録・編集
-- 元情報取込とAI整理の配置
+- 元情報取込とAI整理の配置・provider自動切替（Issue #33）
 - X告知の準備・外部遷移
 - Live単位の予約確認
 - 全Live横断の予約管理
@@ -62,7 +64,7 @@
 
 - Site、News、YouTube、Discography、Profileの各編集画面の詳細再設計
 - X APIによる自動投稿
-- production deploy、認証、secret、DB構成の変更
+- production deploy、認証、本番secret登録操作、DB構成の変更
 - #19、#20、#21の実装そのもの
 
 ## 4. 確定している設計判断
@@ -215,6 +217,65 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 - 抽出結果は保存前に確認でき、失敗しても現在の入力と元情報を失わない。
 - 詳細な抽出・置換仕様はIssue #21で扱う。
 
+Issue #33では、#21の抽出・置換内容を保持したままprovider自動切替を追加する。以下は本版のOwner確認後に実装する契約であり、現時点でcode・testは未変更である。
+
+### 7.1 入力とproviderの順序（R1・R2）
+
+`POST /api/admin/live-source-intake`は管理Bearer認証、request JSON、trim後1〜12,000文字の`sourceText`を検証してからproviderを呼ぶ。認証失敗は`401`、JSONまたは入力不正は`400`で、どちらのproviderも呼ばない。
+
+| 設定されたsecret | 呼出順 |
+|---|---|
+| `OPENAI_API_KEY`と`ANTHROPIC_API_KEY` | OpenAIを1回試し、検証済みdraftなら終了。失敗した時だけClaudeを1回試す |
+| `OPENAI_API_KEY`だけ | OpenAIを1回だけ試す |
+| `ANTHROPIC_API_KEY`だけ | Claudeを1回だけ試す |
+| 両方なし・空・空白のみ | 外部APIを呼ばず`503` |
+
+OpenAI側のHTTP非2xx（認証、クレジット切れ、rate limit、4xx・5xx）、通信失敗、timeout、refusal、incomplete、空出力、上流JSON不正、抽出JSON不正、schema不正、`validateLiveAiDraft`不合格はすべて切替対象とする。HTTP `200`だけでは成功としない。両providerには最初に確定した同じ`sourceText`を送り、既存fieldや途中結果を混ぜない。
+
+各provider最大1回、合計最大2回とする。失敗状態を記憶せず、次の整理でも設定されたOpenAIを先に試す。残高照会、同一providerへのretry、全体期限後の新しい呼出しは行わない。
+
+### 7.2 共通の抽出・検証と一括反映（R3）
+
+- `LIVE_AI_INSTRUCTIONS`と`LIVE_AI_OUTPUT_SCHEMA`は内容を変えず両providerで共有し、どちらの結果も既存の`validateLiveAiDraft`を通す。
+- 抽出対象は`date`、`title`、`venue`、`openTime`、`startTime`、`ticket`、`notes`、`performers`、`ticketUrl`、`link`の10項目だけとする。型、文字数、実在日付、時刻、URLの検証を保持する。不明値は空文字で、空文字も全置換する。
+- #21の内容を保持し、`notes`は`※`なしの1補足1行、`performers`は松本一樹／1212本人を除く共演者だけを`w.`なしの` / `区切りとする。共演者なしは空文字で、`description`は生成しない。
+- 成功時は10項目と告知previewを一括更新し、保存前に管理者が確認する。AI整理は保存・公開・X送信・DB更新を起こさず、元情報と対象外の情報を保持する。
+- 両provider失敗、payload不正、反映途中の例外、待機中の入力変更、別Liveへの移動後の応答は§10.1に従って現在の編集内容を保持する。
+
+### 7.3 待ち時間の上限（R4）
+
+入力検証後のprovider処理開始から、fetch、body受信、JSON解析、draft検証を含め全体`30,000 ms`とする。OpenAIは最大`15,000 ms`、Claudeは最大`15,000 ms`かつ全体の残り時間以内とする。単一keyでもそのproviderは最大15秒で、Claude開始時に全体期限をリセットしない。
+
+既存のOpenAIの15秒枠を保ち、切替先にも同程度の枠を与えつつ、管理者の待機を約30秒以内に収める。期限後の成功は採用せず、外部fetchをabortし、body停止やabortに協調しない処理でも待機を打ち切る。
+
+30秒はWorker内の処理予算で、ブラウザとの通信遅延、入力upload、event loop停止を含む厳密なend-to-end保証ではない。実APIの速度と初回schema compilationによる成功率は未計測である。
+
+### 7.4 成功応答と小さいprovider表示（R6）
+
+新しい成功応答のtop-levelは`draft`と`provider`で、`provider`は`openai`または`claude`だけとする。10項目schemaには追加せず、失敗応答にもprovider、失敗履歴、モデル名を加えない。
+
+管理画面は反映成功後だけ、既存の`live-source-warnings`へ固定の対応表と`textContent`で次を表示する。desktop/mobileとも既存の`.parse-warnings`（`font-size: 0.85em`）を使う。
+
+| 成功応答のprovider | 表示 |
+|---|---|
+| `openai` | OpenAIで整理しました。内容を確認してから更新してください。 |
+| `claude` | Claudeで整理しました。内容を確認してから更新してください。 |
+
+Claude表示は今回成功したproviderを示す。OpenAIのクレジット切れの確定診断には使わない。整理中、失敗、入力変更による未反映、editor切替では今回の成功providerを表示しない。providerは管理用の一時表示とし、Liveデータや公開画面へ保存しない。
+
+新adminは旧Workerの`draft`だけの応答も受理し、「AIで整理しました。内容を確認してから更新してください。」と表示する。providerを推定しない。provider付き応答は上記enum以外の値・型、および余分なtop-level keyを拒否し、全項目を不反映とする。
+
+### 7.5 設定、公開順序、rollback（R7）
+
+| provider | Worker secret | 任意のモデル変数 | 未設定・空白時の既定モデル |
+|---|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | `LIVE_AI_MODEL` | `gpt-5-mini` |
+| Claude | `ANTHROPIC_API_KEY` | `LIVE_AI_CLAUDE_MODEL` | `claude-haiku-5-5` |
+
+新しい設定UI・モデル選択UI・SDK依存は追加しない。API接続先の切替fallbackを追加せず、`allowBaseFallback: false`を維持する。
+
+Ownerが本番反映する際は新admin→新Workerの順にする。既存adminタブを再読込し、新adminが読み込まれ、旧Workerの`draft`だけの応答を受理できることを確認してからWorkerを更新する。旧adminはprovider付き応答を拒否するため、開いたままの旧タブを残すと適用できない。rollbackはWorkerを旧応答へ戻し、その後に必要に応じてadminを戻す。
+
 ## 8. X告知の位置づけ
 
 - 親投稿と詳細投稿を別々の情報として編集しない。
@@ -316,6 +377,20 @@ Live
 - human redirectが実行できない場合はWorker HTML内のcanonical detailリンクを利用できる状態を維持する。
 - X側のplatform cache失敗を理由にshare URLへcache-bustを追加しない。origin responseとplatform cacheを分けて検証する。
 
+### 10.1 AI整理の失敗・応答競合（R3〜R6）
+
+| 条件 | HTTP | 固定の`error` |
+|---|---:|---|
+| 管理認証失敗 | 401 | `unauthorized` |
+| JSONまたは`sourceText`不正 | 400 | `invalid sourceText` |
+| 両providerのsecret未設定 | 503 | `AI source intake is not configured` |
+| 全体期限到達、または最後に試したproviderがtimeout | 504 | `AI source intake timed out` |
+| 利用できるproviderがすべて失敗し、上記timeoutに該当しない | 502 | `AI source intake failed` |
+
+OpenAI timeout→Claude成功は`200`、OpenAI timeout→Claude HTTPエラーなどの失敗は`502`、Claudeもtimeoutなら`504`とする。単一providerでも同じ分類を使う。APIキー、providerのエラー本文、request ID、抽出プロンプトをクライアントへ返さず、新たなrawログへ出力しない。
+
+失敗時は10項目・告知preview・元情報をそのまま保持し、反映途中の例外にもrollbackする。待機中に元情報または対象入力が変わった場合や別Liveへ移った場合は、古い応答を反映せず現在の編集を保つ。逆順応答、重複click、保存中の排他は既存のrequest snapshotとeditor ownershipで扱い、provider成功を誤表示しない。
+
 ## 11. Issue境界
 
 - Issue #22はLive workspace、master-detail、内部タブ、progressive disclosure、保存状態、responsive構造を実装する。
@@ -326,6 +401,9 @@ Live
 - Issue #29は、保存済みLiveのX投稿preview、Web Intent、リンクコピーをstable Worker share URLへ復旧し、既存Worker OGP routeの契約をcharacterization testで固定する。production変更は`admin/app.js`のshare URL helperとそのX／リンクコピーcall siteだけに限定する。
 - Issue #29ではWorker source、公開Live詳細、DNS/CDN/hosting、Issue #19/#21、generic admin UIを変更しない。merge、production deploy、X cache refreshも行わない。
 - Issue #29のowner-approved設計は、`docs/plans/2026-08-16-issue-20-live-link-actions-ogp.md`に残る「canonical detail URLを共有する」「Worker share URLへ戻さない」という過去判断だけをsupersedeする。Issue #20の計画自体は履歴として書き換えず、compact action、unsaved gate、clipboard fallback、save-free behaviorは維持する。
+- Issue #33はAI整理endpoint内のprovider順序・自動切替・期限・成功応答と、adminのpayload互換性・成功provider表示を拡張する。#21の抽出指示・10項目・検証・一括反映と、#29のstable share URL・canonical detail URL・save-free契約は保持する。
+- Issue #33では失敗状態の記憶、残高照会、Claude先行、provider手動切替UI、抽出内容変更、DB・認証・予約・X共有・公開ページの変更を行わない。本番secret登録、production deploy、mergeは別のOwner操作とする。
+- Issue #33の3計画承認と、更新した本設計のOwner確認は別に記録する。本設計と索引が`Draft`の間はcode・test変更を開始しない。
 
 ### 11.1 Issue #22の実装段階
 
@@ -347,12 +425,28 @@ Live
 - 常時表示、タスク選択時表示、条件表示の区別がwireframeで確認できる。
 - `date / venue`の必須validation、開催区分warning、未保存移動guardが定義どおり動く。
 - 保存が`保存して公開`として明示され、外部送信・予約即時操作と混同されない。
-- X告知、詳細URLコピー、AI整理は#19・#20・#21の既存behaviorを維持し、#20の共有URL判断だけが#29によりsupersedeされている。
+- X告知、詳細URLコピーは#19・#20の既存behaviorを維持し、#20の共有URL判断だけが#29によりsupersedeされている。AI整理は#21の抽出・全置換内容を維持し、providerの呼出しと表示だけを#33により拡張する。
 - Itsuki確認後にStatusが`Approved`へ更新されている。
 - 実装Issueとplanがこの設計書を参照している。
 - share URLとcanonical detail URLの責務が分かれ、保存済みLiveのX投稿preview、Web Intent、リンクコピーが同一のstable Worker share URLを使う。
 - Worker HTMLのcanonical、`og:url`、human destinationはcanonical detail URLを維持し、共有文字列にはcanonical detail URLもcache-bustも混入しない。
 - unsaved gate、clipboard fallback、save-free behaviorと既存Workerのmetadata／human fallbackをautomated testで観測できる。
+
+### 12.1 Issue #33の受入条件
+
+以下は実装後の受入条件であり、本版更新時のPASSを意味しない。IDは承認済みRequirementsと対応する。
+
+| ID / 要件 | 合格にする観測 |
+|---|---|
+| AC-01 / R1・R3・R7 | 両keyでOpenAI成功なら`provider=openai`、Claude呼出0回。指示・schema・モデル設定と正規化済み10項目が変わらない |
+| AC-02 / R1・R2・R3 | OpenAIの全失敗分類で同じsourceTextをClaudeへ1回送り、合格時は`provider=claude`。次のrequestは再びOpenAIから始まる |
+| AC-03 / R1 | keyの4構成・空白値が§7.1どおり。両keyなしは503、401/400時は2社とも呼出0回 |
+| AC-04 / R3・R5 | 単一・両provider失敗とtimeoutの組合せが§10.1どおり。10項目・preview・元情報を保持し、反映例外にもrollbackする |
+| AC-05 / R4 | fake clockで単一provider各15秒、全体30秒、残余予算、body停止、abort非協調、期限後成功の棄却、timer/listener解放を確認する |
+| AC-06 / R6・R7 | 小さい固定provider表示が成功時だけ出る。旧応答は中立文言、未知providerは一括不反映。入力変更・editor交代・stale responseで成功を誤表示しない |
+| AC-07 / R5・R6 | 両社の成功・失敗でsecret、providerエラー本文、request ID、promptをresponseへ漏らさず、UIは固定文言だけを使う |
+| AC-08 / R1〜R7 | 共通validator、一括反映、editor ownership、Local Mode、custom API base、`allowBaseFallback: false`、save-freeを含むfocused testと全回帰がPASS |
+| AC-09 / R7・承認境界 | 実装前に本設計・索引・Worker READMEを揃え、変更後canonicalのOwner確認を得る。5 gateは各artifactのexact digestと結び付ける |
 
 ## 13. 検証方法
 
@@ -366,6 +460,26 @@ Live
 - root全test、Worker全test、syntax、diff、scope、secret監査を実行する。
 - owner merge／deploy後にのみ、同じstable share URLへTwitterbot UAとhuman UAでread-only requestを送り、Live固有metadata、canonical、human導線を確認する。origin responseとX platform cacheは別々に判定する。
 
+### 13.1 Issue #33の検証
+
+本版のOwner確認後、承認済みCode Generation Planの順序でfocused testをRED→GREENにし、§12.1をmock API・fake clock・既存DOM testで検証する。実APIやlive secretを使わず、deadlineとbody停止、両社のsanitize、stale/rollback、旧payloadとの互換性を観測する。desktop/mobileのprovider表示は既存markupとCSSの同じstatus欄を確認する。
+
+```bash
+node --test cloudflare/worker/test/live-ai-source-intake.test.js
+node --test --test-name-pattern='AIで整理 source intake' test/admin-live-operations.test.mjs
+node --test test/admin-live-operations.test.mjs
+node --test test/
+npm --prefix cloudflare/worker test
+node --check cloudflare/worker/src/worker.js
+node --check admin/app.js
+scripts/aidlc-verify.sh --local
+git diff --check
+git status --short
+git diff --stat
+```
+
+current canonicalとR1〜R7の整合は独立Reviewerが確認し、Ownerのcanonical確認・Code Generation Result・Build/Test Result・Front受入を区別して記録する。mock PASSは本番key、credit、model entitlement、実速度、初回schema compilationの成功を証明しない。
+
 ## 14. Canonical file map
 
 - 本設計: `docs/specs/current/live-operations-admin-ui.md`
@@ -374,4 +488,9 @@ Live
 - ビジュアルルール: `DESIGN_RULES.md`
 - 関連実装計画: `docs/plans/`
 - Issue #29実装計画: `docs/plans/2026-08-17-issue-29-live-ogp-regression-fix.md`
+- Issue #33 完了cycle: `docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`（以下はclosed traceであり、本設計を置き換えない）
+- Issue #33 Requirements: `docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/_trace/aidlc-docs/inception/requirements/requirements.md`（R1〜R7 / AC-01〜09）
+- Issue #33 Workflow Plan: `docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/_trace/aidlc-docs/inception/plans/execution-plan.md`
+- Issue #33 Code Generation Plan: `docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/_trace/aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md`（§2 Step 1）
+- Issue #33 API・公開手順: `cloudflare/worker/README.md`「Live元情報のAI整理」
 - 旧来の要件・仕様・ユースケース: `documents/`
