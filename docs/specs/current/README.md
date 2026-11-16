@@ -13,6 +13,6 @@
 | 設計書 | Status | 対象 |
 |---|---|---|
 | `system-design-principles.md` | Approved | 1212HP全体の設計・運用原則 |
-| `live-operations-admin-ui.md` | Approved | Live運用のadmin UIと公開画面の対応 |
+| `live-operations-admin-ui.md` | Approved | Live運用のadmin UIと公開画面の対応。Issue #33のAI整理provider自動切替を反映し、Owner確認済み。#21の抽出内容と#29のshare URL契約を保持 |
 
 設計内容を変更したら、この索引の状態と対象も更新します。

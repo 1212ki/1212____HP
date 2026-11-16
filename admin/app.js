@@ -3088,10 +3088,21 @@ const LIVE_SOURCE_INTAKE_FIELD_MAP = {
   link: 'edit-link',
 };
 
+const LIVE_SOURCE_INTAKE_SUCCESS_MESSAGES = {
+  openai: 'OpenAIで整理しました。内容を確認してから更新してください。',
+  claude: 'Claudeで整理しました。内容を確認してから更新してください。',
+};
+
 function normalizeLiveSourceIntakePayload(payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return null;
   const payloadKeys = Object.keys(payload);
-  if (payloadKeys.length !== 1 || payloadKeys[0] !== 'draft') return null;
+  const hasProvider = Object.prototype.hasOwnProperty.call(payload, 'provider');
+  if (
+    !Object.prototype.hasOwnProperty.call(payload, 'draft')
+    || payloadKeys.length !== (hasProvider ? 2 : 1)
+    || payloadKeys.some((key) => key !== 'draft' && key !== 'provider')
+  ) return null;
+  if (hasProvider && payload.provider !== 'openai' && payload.provider !== 'claude') return null;
 
   const draft = payload.draft;
   if (!draft || typeof draft !== 'object' || Array.isArray(draft)) return null;
@@ -3106,7 +3117,7 @@ function normalizeLiveSourceIntakePayload(payload) {
     if (typeof draft[key] !== 'string') return null;
     normalized[key] = draft[key].trim();
   }
-  return normalized;
+  return { draft: normalized, provider: hasProvider ? payload.provider : null };
 }
 
 async function handleLiveSourceParse() {
@@ -3163,8 +3174,9 @@ async function handleLiveSourceParse() {
     }, { allowBaseFallback: false });
     if (!response?.ok) throw new Error('live source intake failed');
     const payload = await response.json();
-    const draft = normalizeLiveSourceIntakePayload(payload);
-    if (!draft) throw new Error('invalid live source intake payload');
+    const intake = normalizeLiveSourceIntakePayload(payload);
+    if (!intake) throw new Error('invalid live source intake payload');
+    const { draft, provider } = intake;
     if (!ownsCurrentEditor()) return false;
     const inputChanged = (
       sourceElement.value !== requestInputSnapshot.sourceText
@@ -3187,7 +3199,9 @@ async function handleLiveSourceParse() {
     updateXPreviewInModal();
     revealNewLivePublicFields();
     markLiveEditorDirty();
-    setLiveSourceIntakeStatus('AIで整理しました。内容を確認してから更新してください。');
+    setLiveSourceIntakeStatus(provider
+      ? LIVE_SOURCE_INTAKE_SUCCESS_MESSAGES[provider]
+      : 'AIで整理しました。内容を確認してから更新してください。');
     return true;
   } catch (_error) {
     if (ownsCurrentEditor()) {

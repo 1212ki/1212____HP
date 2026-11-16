@@ -39,21 +39,68 @@
 
 ## Live元情報のAI整理
 
-`POST /api/admin/live-source-intake`は、管理画面で貼り付けたLiveの元情報をOpenAI Responses APIのStructured Outputsで整理します。既存の管理APIと同じBearer認証が必要です。
+> Issue #33のprovider自動切替を実装済みです。`docs/specs/current/live-operations-admin-ui.md`はOwner確認済みのApprovedです。Code Generation ResultはOwner承認済み、Build/Test Resultも書式修正後の新digestで再承認済みです。cycle履歴は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`にarchive済みで、`aidlc-docs/`はidleです。本番反映は未実施です。
+
+`POST /api/admin/live-source-intake`は、管理画面で貼り付けたLiveの元情報をOpenAI Responses APIで先に整理し、OpenAI側の失敗時は同じ`sourceText`でClaude（Anthropic Messages API）へ切り替えます。既存の管理APIと同じBearer認証が必要です。
 
 - Request: `{ "sourceText": "..." }`
   - `sourceText`はtrim後1〜12,000文字です。範囲外は`400`を返します。
-- Response: `{ "draft": { ... } }`
+- 成功応答: `{ "draft": { ... }, "provider": "openai" }`または`provider: "claude"`
   - `draft`は`date`、`title`、`venue`、`openTime`、`startTime`、`ticket`、`notes`、`performers`、`ticketUrl`、`link`の10項目です。
   - `date`は`YYYY-MM-DD`、時刻は24時間の`HH:mm`です。不明な項目は空文字になります。
   - `notes`は`※`なしの1補足1行、`performers`は松本一樹／1212本人を除いた共演者だけを`w.`なしの` / `区切りで返します。共演者がいなければ空文字です。`description`は生成しません。
-- OpenAI呼び出しは15秒でtimeoutし、`504`を返します。
-- 主なエラーは、入力不正`400`、認証失敗`401`、provider／出力検証失敗`502`、設定不足`503`、timeout`504`です。
-- providerのレスポンス本文、request ID、APIキー、プロンプトなどはクライアントへ返さず、エラー内容をsanitizeします。
+  - `provider`はtop-levelの`openai`／`claude`だけで、10項目schemaやLiveの保存データ・公開画面には追加しません。失敗応答にはprovider、モデル名、失敗履歴を含めません。
+- 新adminは旧Workerの`{ "draft": { ... } }`も受理し、providerを推定せず「AIで整理しました。内容を確認してから更新してください。」と表示します。provider付き応答は上記enumだけを受理し、未知の値・型・余分なtop-level keyを拒否します。
+- 成功したproviderは既存の小さいstatus欄へ「OpenAIで整理しました。内容を確認してから更新してください。」または「Claudeで整理しました。内容を確認してから更新してください。」と固定文言で表示します。Claude表示はOpenAIのクレジット切れの確定診断には使いません。
+- 抽出指示`LIVE_AI_INSTRUCTIONS`、10項目schema`LIVE_AI_OUTPUT_SCHEMA`、`validateLiveAiDraft`は両社共通で、既存の内容・検証制約を保持します。合格した10項目（空文字を含む）とpreviewだけを一括更新し、AI整理では保存・公開・X送信・DB更新を行いません。
 
-`OPENAI_API_KEY`はWorker secretとしてのみ設定し、コード、HTML、ブラウザ側JavaScript、レスポンスへ置かないでください。モデルは任意の`LIVE_AI_MODEL`で変更でき、未設定時は`gpt-5-mini`を使います。
+### providerの順序と切替条件
 
-本番のsecret設定とdeployは、ownerの明示承認後にのみ実施してください。
+| 設定されたsecret | 動作 |
+|---|---|
+| `OPENAI_API_KEY`と`ANTHROPIC_API_KEY` | OpenAIを1回。検証済みdraftなら終了し、失敗時だけClaudeを1回 |
+| `OPENAI_API_KEY`だけ | OpenAIを1回だけ |
+| `ANTHROPIC_API_KEY`だけ | Claudeを1回だけ |
+| 両方なし・空・空白のみ | 外部APIを呼ばず503 |
+
+OpenAIの認証・クレジット切れ・rate limitを含む全HTTP非2xx、通信失敗、timeout、refusal、incomplete、空出力、上流／抽出JSON不正、schema不正、validator不合格をすべて切替対象にします。HTTP 200だけでは成功としません。管理認証・入力の検証はprovider呼出し前に行い、401／400の場合は2社とも呼びません。
+
+各provider最大1回、合計最大2回で、両社には最初にtrimした同じ元情報だけを送ります。失敗状態を記憶せず、次の整理でもOpenAIから始めます。残高照会、同一providerのretry、providerの手動切替UIやSDK依存は追加しません。
+
+### secretとモデル
+
+| provider | Worker secret | 任意のWorker変数 | 未設定・空白時の既定モデル |
+|---|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | `LIVE_AI_MODEL` | `gpt-5-mini` |
+| Claude | `ANTHROPIC_API_KEY` | `LIVE_AI_CLAUDE_MODEL` | `claude-haiku-5-5` |
+
+両APIキーはWorker secretとしてのみ設定し、コード、HTML、ブラウザ側JavaScript、レスポンスへ置かないでください。既存の`LIVE_AI_MODEL`はOpenAI専用のままです。モデル選択UIは追加しません。本番secret操作とdeployはOwnerの明示承認後に行います。
+
+### 期限と固定エラー
+
+入力検証後のprovider処理開始から、fetch・body受信・JSON解析・draft検証を含め全体30,000 msです。各providerは最大15,000 msで、Claudeは全体の残り時間との小さい方を使います。単一keyでも最大15秒で、切替時に全体期限をリセットしません。期限到達時はabortし、body停止・abort非協調でも待機を打ち切り、期限後の成功を採用しません。
+
+既存OpenAIの15秒枠を保ち、切替先にも同程度の枠を与える配分です。Worker内の処理予算であり、ブラウザとの通信時間・upload・event loop停止を含む厳密な30秒保証ではありません。実API速度・初回schema compilationの成功率は未計測です。
+
+| 条件 | HTTP | 固定の`error` |
+|---|---:|---|
+| 管理認証失敗 | 401 | `unauthorized` |
+| JSONまたは`sourceText`不正 | 400 | `invalid sourceText` |
+| 両key未設定 | 503 | `AI source intake is not configured` |
+| 全体期限到達、または最終providerのtimeout | 504 | `AI source intake timed out` |
+| 全provider失敗で、上記timeout以外 | 502 | `AI source intake failed` |
+
+OpenAI timeout→Claude成功は200、→Claude HTTP失敗などは502、→Claudeもtimeoutなら504です。単一providerも同じ分類です。providerのレスポンス本文、request ID、APIキー、プロンプトをクライアントへ返さず、新たなrawログへ出力しません。
+
+失敗・payload不正・反映例外では管理画面の10項目・preview・元情報を保持します。待機中の入力変更、別Liveへの移動、逆順応答も既存snapshot／editor ownershipで扱い、古い応答やprovider成功を反映しません。API接続先のfallbackは追加せず、`allowBaseFallback: false`を維持します。
+
+### Owner向けの公開順序とrollback
+
+1. 新adminを先に公開します。
+2. 既存adminタブを再読込し、新adminが読み込まれたことと、旧Workerの`draft`だけの応答を受理できることを確認します。
+3. その後に新Workerを公開します。
+
+旧adminはprovider付き応答を拒否するため、Workerの先行公開や旧JavaScriptを保持したタブでは整理結果を適用できません。rollbackはWorkerを旧応答へ戻してから、必要に応じてadminを戻します。これらの本番操作は別途Ownerが行います。
 
 公開LiveのOG titleは日付を`YYYY.MM.DD(Day)`へ正規化し、OG descriptionはOpen/Start、ticket、補足、共演者の構造化項目から組み立てます。構造化項目がすべて空の過去Liveだけ、旧`description`へフォールバックします。
 

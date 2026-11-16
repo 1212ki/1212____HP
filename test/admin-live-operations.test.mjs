@@ -1820,7 +1820,12 @@ test('shared LiveOperations script is loaded before the admin application', () =
   assert.match(adminHtml, /href="style\.css\?v=20260816-22"/);
 });
 
-test('AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves', async () => {
+for (const provider of [undefined, 'openai', 'claude']) {
+  const successMessage = `${provider === 'openai' ? 'OpenAI' : provider === 'claude' ? 'Claude' : 'AI'}で整理しました。内容を確認してから更新してください。`;
+  const sourceResponse = (payload, options) => jsonResponse(
+    provider === undefined || !Object.hasOwn(payload, 'draft') ? payload : { ...payload, provider }, options,
+  );
+test(`AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / ${provider ?? 'legacy'}`, async () => {
   let parserCalls = 0;
   const app = loadAdminApp({
     liveOperations: {
@@ -1865,7 +1870,7 @@ test('AIで整理 source intake posts the exact source once, replaces all ten fi
     ticketUrl: '',
     link: 'https://example.com/detail/2',
   };
-  app.useAdminFetch(async () => jsonResponse({
+  app.useAdminFetch(async () => sourceResponse({
     draft: {
       date: ' 2026-08-20 ',
       title: ' AI replacement ',
@@ -1898,13 +1903,13 @@ test('AIで整理 source intake posts the exact source once, replaces all ten fi
   assert.notEqual(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.match(app.elements.get('x-post-preview').value, /AI replacement/);
   assert.doesNotMatch(app.elements.get('x-post-preview').value, /manual venue stays|manual ticket|manual performer/);
-  assert.match(app.elements.get('live-source-warnings').textContent, /整理しました/);
+  assert.equal(app.elements.get('live-source-warnings').textContent, successMessage);
   assert.deepEqual(app.getSiteData(), initial);
   assert.equal(app.getSaveCalls(), 0);
   assert.deepEqual(app.openedUrls, []);
 });
 
-test('Live edit workspace marks an applied AI draft dirty and routes saving to the editor', async () => {
+test(`AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / ${provider ?? 'legacy'}`, async () => {
   const app = loadAdminApp();
   app.setSiteData({
     live: {
@@ -1915,7 +1920,7 @@ test('Live edit workspace marks an applied AI draft dirty and routes saving to t
   app.editLive('ai-dirty-live', 'upcoming');
   app.setApiMode(true);
   app.elements.get('edit-sourceText').value = 'AI draft source';
-  app.useAdminFetch(async () => jsonResponse({ draft: validLiveSourceIntakeDraft() }));
+  app.useAdminFetch(async () => sourceResponse({ draft: validLiveSourceIntakeDraft() }));
   assert.equal(app.elements.get('saveBtn').disabled, false);
 
   await app.elements.get('live-source-parse-btn').dispatch('click');
@@ -1924,7 +1929,7 @@ test('Live edit workspace marks an applied AI draft dirty and routes saving to t
   assert.equal(app.elements.get('live-editor-save-status').textContent, '未保存');
 });
 
-test('AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button', async () => {
+test(`AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / ${provider ?? 'legacy'}`, async () => {
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.addLive();
@@ -1943,13 +1948,13 @@ test('AIで整理 source intake disables while pending, blocks duplicate submiss
   await flushAsync();
   assert.equal(app.fetchCalls.length, 1);
 
-  response.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft() }));
+  response.resolve(sourceResponse({ draft: validLiveSourceIntakeDraft() }));
   await Promise.all([first, second]);
   assert.equal(button.disabled, false);
   assert.equal(button.textContent, 'AIで下書きを作る');
 });
 
-test('AIで整理 source intake discards a stale response when source text changes while pending', async () => {
+test(`AIで整理 source intake discards a stale response when source text changes while pending / ${provider ?? 'legacy'}`, async () => {
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.addLive();
@@ -1964,7 +1969,7 @@ test('AIで整理 source intake discards a stale response when source text chang
   await flushAsync();
   app.elements.get('edit-sourceText').value = 'latest human source edit';
   const latestSnapshot = snapshotLiveSourceIntake(app.elements);
-  response.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft() }));
+  response.resolve(sourceResponse({ draft: validLiveSourceIntakeDraft() }));
 
   const result = await pending;
 
@@ -1976,7 +1981,7 @@ test('AIで整理 source intake discards a stale response when source text chang
   assert.equal(app.getSaveCalls(), 0);
 });
 
-test('AIで整理 source intake discards every AI field when one destination field changes while pending', async () => {
+test(`AIで整理 source intake discards every AI field when one destination field changes while pending / ${provider ?? 'legacy'}`, async () => {
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.addLive();
@@ -1991,7 +1996,7 @@ test('AIで整理 source intake discards every AI field when one destination fie
   await flushAsync();
   app.elements.get('edit-title').value = 'latest human title edit';
   const latestSnapshot = snapshotLiveSourceIntake(app.elements);
-  response.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft() }));
+  response.resolve(sourceResponse({ draft: validLiveSourceIntakeDraft() }));
 
   const result = await pending;
 
@@ -2003,7 +2008,7 @@ test('AIで整理 source intake discards every AI field when one destination fie
   assert.equal(app.getSaveCalls(), 0);
 });
 
-test('AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order', async () => {
+test(`AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / ${provider ?? 'legacy'}`, async () => {
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.setApiMode(true);
@@ -2051,7 +2056,7 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
 
   responseB.resolve({ ok: true, status: 200, json: () => payloadB.promise });
   await flushAsync();
-  responseA.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft({ title: 'STALE A' }) }));
+  responseA.resolve(sourceResponse({ draft: validLiveSourceIntakeDraft({ title: 'STALE A' }) }));
   const resultA = await pendingA;
   const bBusyAfterAResolved = buttonB.disabled && buttonB.textContent === 'AIで整理中...';
   const duplicateB = buttonB.dispatch('click');
@@ -2059,6 +2064,7 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
   const requestCountWhileBBusy = app.fetchCalls.length;
 
   payloadB.resolve({
+    ...(provider === undefined ? {} : { provider }),
     draft: validLiveSourceIntakeDraft({
       date: '2026-09-09',
       title: 'CURRENT B',
@@ -2097,11 +2103,11 @@ test('AIで整理 source intake lets a replacement modal run while the stale req
   assert.equal(app.elements.get('edit-link').value, 'https://b.example/detail');
   assert.doesNotMatch(app.elements.get('x-post-preview').value, /STALE A/);
   assert.match(app.elements.get('x-post-preview').value, /CURRENT B/);
-  assert.match(app.elements.get('live-source-warnings').textContent, /整理しました/);
+  assert.equal(app.elements.get('live-source-warnings').textContent, successMessage);
   assert.equal(app.getSaveCalls(), 0);
 });
 
-test('AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure', async (t) => {
+test(`AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / ${provider ?? 'legacy'}`, async (t) => {
   const failureCases = [
     ['HTTP', async () => ({
       ok: false,
@@ -2110,7 +2116,7 @@ test('AIで整理 source intake keeps every field and preview unchanged for HTTP
     })],
     ['network', async () => { throw new Error('network provider-secret'); }],
     ['JSON', async () => ({ ok: true, status: 200, async json() { throw new SyntaxError('provider-secret'); } })],
-    ['missing draft key', async () => jsonResponse({
+    ['missing draft key', async () => sourceResponse({
       draft: {
         date: '2026-08-20',
         title: 'partial',
@@ -2123,10 +2129,10 @@ test('AIで整理 source intake keeps every field and preview unchanged for HTTP
         ticketUrl: '',
       },
     })],
-    ['extra draft key', async () => jsonResponse({
+    ['extra draft key', async () => sourceResponse({
       draft: { ...validLiveSourceIntakeDraft(), confidence: 'high' },
     })],
-    ['non-string draft value', async () => jsonResponse({
+    ['non-string draft value', async () => sourceResponse({
       draft: validLiveSourceIntakeDraft({ venue: null }),
     })],
   ];
@@ -2156,11 +2162,11 @@ test('AIで整理 source intake keeps every field and preview unchanged for HTTP
   }
 });
 
-test('AIで整理 source intake never falls back from a custom API base to canonical production', async (t) => {
+test(`AIで整理 source intake never falls back from a custom API base to canonical production / ${provider ?? 'legacy'}`, async (t) => {
   const customBase = 'https://custom-ai-dev.example.test';
   const failureCases = [
-    ['502', async () => jsonResponse({ error: 'provider failed' }, { ok: false, status: 502 })],
-    ['504', async () => jsonResponse({ error: 'provider timeout' }, { ok: false, status: 504 })],
+    ['502', async () => sourceResponse({ error: 'provider failed' }, { ok: false, status: 502 })],
+    ['504', async () => sourceResponse({ error: 'provider timeout' }, { ok: false, status: 504 })],
     ['network', async () => { throw new Error('custom dev network failed'); }],
   ];
 
@@ -2191,7 +2197,7 @@ test('AIで整理 source intake never falls back from a custom API base to canon
   }
 });
 
-test('AIで整理 source intake fails atomically when one of the ten destination fields is missing', async () => {
+test(`AIで整理 source intake fails atomically when one of the ten destination fields is missing / ${provider ?? 'legacy'}`, async () => {
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.addLive();
@@ -2201,7 +2207,7 @@ test('AIで整理 source intake fails atomically when one of the ten destination
   app.elements.delete('edit-link');
   app.elements.get('x-post-preview').value = 'POST BEFORE';
   const snapshot = snapshotLiveSourceIntake(app.elements);
-  app.useAdminFetch(async () => jsonResponse({ draft: validLiveSourceIntakeDraft() }));
+  app.useAdminFetch(async () => sourceResponse({ draft: validLiveSourceIntakeDraft() }));
 
   const result = await app.handleLiveSourceParse();
 
@@ -2212,7 +2218,7 @@ test('AIで整理 source intake fails atomically when one of the ten destination
   assert.equal(app.getSaveCalls(), 0);
 });
 
-test('AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails', async () => {
+test(`AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / ${provider ?? 'legacy'}`, async () => {
   let failPreview = false;
   const app = loadAdminApp({
     liveOperations: {
@@ -2231,7 +2237,7 @@ test('AIで整理 source intake rolls back all fields and the unified preview wh
   app.elements.get('x-post-preview').value = 'POST BEFORE';
   const snapshot = snapshotLiveSourceIntake(app.elements);
   failPreview = true;
-  app.useAdminFetch(async () => jsonResponse({ draft: validLiveSourceIntakeDraft() }));
+  app.useAdminFetch(async () => sourceResponse({ draft: validLiveSourceIntakeDraft() }));
 
   const result = await app.handleLiveSourceParse();
 
@@ -2242,7 +2248,7 @@ test('AIで整理 source intake rolls back all fields and the unified preview wh
   assert.equal(app.getSaveCalls(), 0);
 });
 
-test('AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save', async () => {
+test(`AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / ${provider ?? 'legacy'}`, async () => {
   let parserCalls = 0;
   const app = loadAdminApp({
     liveOperations: {
@@ -2266,6 +2272,101 @@ test('AIで整理 source intake stays local-only in Local Mode without calling A
   assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
   assert.match(app.elements.get('live-source-warnings').textContent, /API Modeで利用可能/);
   assert.equal(app.getSaveCalls(), 0);
+});
+}
+
+test('AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details', async (t) => {
+  const invalidPayloads = [
+    ...['unknown', '', null, 5, {}, ['claude'], '<img src=x onerror=alert(1)>', 'toString', 'constructor', '__proto__'].map((provider) => ({ draft: validLiveSourceIntakeDraft(), provider })),
+    { draft: validLiveSourceIntakeDraft(), provider: 'claude', request_id: 'private_request_id' },
+    { draft: validLiveSourceIntakeDraft(), extra: 'private_prompt' },
+    { provider: 'openai' },
+    null,
+    [],
+  ];
+  for (const [index, payload] of invalidPayloads.entries()) await t.test(`invalid payload ${index}`, async () => {
+    const app = loadAdminApp();
+    app.setSiteData({ live: { upcoming: [], past: [] } });
+    app.addLive();
+    app.setApiMode(true);
+    app.setSaveSpy();
+    setLiveForm(app.elements, { 'edit-sourceText': 'private source stays' });
+    app.elements.get('x-post-preview').value = 'POST BEFORE';
+    const before = snapshotLiveSourceIntake(app.elements);
+    const status = app.elements.get('live-source-warnings');
+    Object.defineProperty(status, 'innerHTML', { set() { assert.fail('status must use textContent'); } });
+    app.useAdminFetch(async () => jsonResponse(payload));
+    assert.equal(await app.handleLiveSourceParse(), false);
+    assertLiveSourceIntakeUnchanged(app.elements, before);
+    assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
+    assert.equal(status.textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+    assert.equal(app.getSaveCalls(), 0);
+    assert.deepEqual(app.openedUrls, []);
+  });
+});
+
+for (const provider of ['openai', 'claude']) {
+  test(`AIで整理 source intake cannot apply an older provider result or start another intake during save / ${provider}`, async () => {
+    const app = loadAdminApp();
+    app.setSiteData({ live: { upcoming: [], past: [] } });
+    app.addLive();
+    app.setApiMode(true);
+    setLiveForm(app.elements, { 'edit-sourceText': 'source before publish' });
+    const intakeResponse = deferred();
+    const saveResponse = deferred();
+    app.useAdminFetch((path) => path === '/api/admin/live-source-intake' ? intakeResponse.promise : saveResponse.promise);
+    const intake = app.handleLiveSourceParse();
+    await flushAsync();
+    const saving = app.saveLiveWorkspace();
+    await flushAsync();
+    const before = snapshotLiveSourceIntake(app.elements);
+    const preview = app.elements.get('x-post-preview').value;
+    assert.equal(await app.handleLiveSourceParse(), false);
+    intakeResponse.resolve(jsonResponse({ draft: validLiveSourceIntakeDraft(), provider }));
+    assert.equal(await intake, false);
+    assertLiveSourceIntakeUnchanged(app.elements, before);
+    assert.equal(app.elements.get('x-post-preview').value, preview);
+    assert.doesNotMatch(app.elements.get('live-source-warnings').textContent, /OpenAI|Claude|整理しました/);
+    assert.equal(app.fetchCalls.filter((call) => call.path === '/api/admin/live-source-intake').length, 1);
+    assert.equal(app.elements.get('live-source-parse-btn').disabled, true);
+    saveResponse.resolve(jsonResponse({ ok: true }));
+    assert.equal(await saving, true);
+    assert.deepEqual(app.openedUrls, []);
+  });
+
+  test(`AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / ${provider}`, async () => {
+    const app = loadAdminApp();
+    app.setSiteData({ live: { upcoming: [], past: [] } });
+    app.addLive();
+    app.setApiMode(true);
+    setLiveForm(app.elements, { 'edit-sourceText': 'source stays' });
+    const status = app.elements.get('live-source-warnings');
+    Object.defineProperty(status, 'innerHTML', { set() { assert.fail('status must use textContent'); } });
+    app.useAdminFetch(async () => jsonResponse({ draft: validLiveSourceIntakeDraft(), provider }));
+    assert.equal(await app.handleLiveSourceParse(), true);
+    assert.equal(status.textContent, `${provider === 'openai' ? 'OpenAI' : 'Claude'}で整理しました。内容を確認してから更新してください。`);
+    const before = snapshotLiveSourceIntake(app.elements);
+    const preview = app.elements.get('x-post-preview').value;
+    const response = deferred();
+    app.useAdminFetch(() => response.promise);
+    const pending = app.handleLiveSourceParse();
+    await flushAsync();
+    assert.equal(status.textContent, 'AIで整理しています...');
+    response.resolve(jsonResponse({ error: 'private provider detail request_id prompt' }, { ok: false, status: 504 }));
+    assert.equal(await pending, false);
+    assertLiveSourceIntakeUnchanged(app.elements, before);
+    assert.equal(app.elements.get('x-post-preview').value, preview);
+    assert.equal(status.textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+    app.setConfirm(() => true);
+    app.closeLiveEditor();
+    app.addLive();
+    assert.doesNotMatch(app.elements.get('live-source-warnings').textContent, /OpenAI|Claude|整理しました/);
+  });
+}
+
+test('AIで整理 source intake uses the existing small status markup for desktop and mobile', () => {
+  assert.match(adminJs, /id="live-source-warnings" class="parse-warnings" aria-live="polite"/);
+  assert.match(adminCss, /\.parse-warnings\s*\{[^}]*font-size:\s*0\.85em/s);
 });
 
 test('Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl', () => {
