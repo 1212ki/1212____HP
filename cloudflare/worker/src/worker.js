@@ -540,6 +540,7 @@ async function requestOpenAiLiveDraft(env, sourceText, signal) {
     },
     body: JSON.stringify({
       model: String(env.LIVE_AI_MODEL || "").trim() || "gpt-5-mini",
+      reasoning: { effort: "minimal" },
       instructions: LIVE_AI_INSTRUCTIONS,
       input: sourceText,
       text: {

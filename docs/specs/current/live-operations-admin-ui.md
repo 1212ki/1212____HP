@@ -3,13 +3,15 @@
 - Status: Approved
 - Owner: Itsuki Matsumoto
 - Last updated: 2026-11-16
-- Related issues: #33, #29
-- Related implementation issues: #19, #20, #21, #22, #33
-- Owner approval: APPROVED（Itsuki Matsumoto、2026-11-16T13:34:12+09:00、提示された本版のSHA-256 `8c9ceb61cbee4e897f8afad63245410c8bca69f5ea89c8e6a5b57e6f89038864` に対する本人回答 `A`）
+- Related issues: #35, #33, #29
+- Related implementation issues: #19, #20, #21, #22, #33, #35
+- Owner approval: Issue #35のCode Generation Planに記載した本版の差分に対するItsuki Matsumotoのgate 3承認（本人回答`A`）。根拠はactive時の`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後の`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`。本文反映後に承認済み差分との一致を検証する
+- Prior Owner approval（Issue #33）: APPROVED（Itsuki Matsumoto、2026-11-16T13:34:12+09:00、提示された本版のSHA-256 `8c9ceb61cbee4e897f8afad63245410c8bca69f5ea89c8e6a5b57e6f89038864` に対する本人回答 `A`）
 - Prior Owner approval: 2026-08-17（Issue #29のstable Worker share URLによるOGP回帰復旧設計）
-- Design review: APPROVED（review-04、Issue #33の更新内容。blocking findingなし）
+- Prior design review（Issue #33）: APPROVED（review-04、Issue #33の更新内容。blocking findingなし）
 - Prior design review: APPROVED（Issue #22 AC0〜AC9、Issue #29 owner-approved design）
-- Implementation gate: Issue #33の本版確認済み。実装・全回帰・独立review-07を完了し、Code Generation Resultは本人回答`A`で承認済み（2026-11-16T14:29:00+09:00）。Build/Test Resultは書式修正後の新digestに対する本人回答`A`で再承認済み（2026-11-16T14:52:21+09:00）。cycle完了記録は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`。canonical確認原典: context rootの`_scratch/codex-work/20261116-114342_1212hp-ai-provider-fallback/canonical-owner-confirmation.md`（prompt: 2026-11-16T13:33:01+09:00）。本文中の実装未着手という時点記述は確認時点の記録として保持する。本番反映は別のOwner操作
+- Implementation gate: Issue #35はgate 1〜3の承認と、承認済みCode Generation PlanどおりのDraft→Approved反映を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・production deployは別のOwner承認、本番の速度確認はdeploy後のOwner確認とする
+- Prior implementation gate（Issue #33）: Issue #33の本版確認済み。実装・全回帰・独立review-07を完了し、Code Generation Resultは本人回答`A`で承認済み（2026-11-16T14:29:00+09:00）。Build/Test Resultは書式修正後の新digestに対する本人回答`A`で再承認済み（2026-11-16T14:52:21+09:00）。cycle完了記録は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`。canonical確認原典: context rootの`_scratch/codex-work/20261116-114342_1212hp-ai-provider-fallback/canonical-owner-confirmation.md`（prompt: 2026-11-16T13:33:01+09:00）。本文中の実装未着手という時点記述は確認時点の記録として保持する。本番反映は別のOwner操作
 
 ## 1. 目的
 
@@ -53,7 +55,7 @@
 - adminのグローバルナビゲーションとLive入口
 - Live一覧と開催状態
 - Live新規登録・編集
-- 元情報取込とAI整理の配置・provider自動切替（Issue #33）
+- 元情報取込とAI整理の配置・provider自動切替（Issue #33）・OpenAIの考える量の最小化（Issue #35）
 - X告知の準備・外部遷移
 - Live単位の予約確認
 - 全Live横断の予約管理
@@ -217,7 +219,7 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 - 抽出結果は保存前に確認でき、失敗しても現在の入力と元情報を失わない。
 - 詳細な抽出・置換仕様はIssue #21で扱う。
 
-Issue #33では、#21の抽出・置換内容を保持したままprovider自動切替を追加する。以下は本版のOwner確認後に実装する契約であり、現時点でcode・testは未変更である。
+Issue #33のprovider自動切替と#21の抽出・置換内容を保持し、Issue #35ではOpenAI requestの`reasoning.effort`だけを`minimal`にする。Issue #33の承認・実装経過は完了cycleを参照する。
 
 ### 7.1 入力とproviderの順序（R1・R2）
 
@@ -267,10 +269,12 @@ Claude表示は今回成功したproviderを示す。OpenAIのクレジット切
 
 ### 7.5 設定、公開順序、rollback（R7）
 
-| provider | Worker secret | 任意のモデル変数 | 未設定・空白時の既定モデル |
-|---|---|---|---|
-| OpenAI | `OPENAI_API_KEY` | `LIVE_AI_MODEL` | `gpt-5-mini` |
-| Claude | `ANTHROPIC_API_KEY` | `LIVE_AI_CLAUDE_MODEL` | `claude-haiku-5-5` |
+| provider | Worker secret | 任意のモデル変数 | 未設定・空白時の既定モデル | requestで指定する考える量 |
+|---|---|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | `LIVE_AI_MODEL` | `gpt-5-mini` | `reasoning.effort: "minimal"` |
+| Claude | `ANTHROPIC_API_KEY` | `LIVE_AI_CLAUDE_MODEL` | `claude-haiku-5-5` | `output_config.effort: "low"` |
+
+管理者が画面で待つ操作で、元情報から10項目を抽出する処理のため、OpenAIの考える量を`minimal`（最小）に固定する。既定モデル・抽出指示・schema・validator・provider順・各15秒／全体30秒の期限・エラー分類・画面表示は変更しない。`LIVE_AI_MODEL`で上書きしたモデルにも同じ指定を送り、非対応モデルがHTTP 400を返した場合は既存の失敗時切替を使う。Claudeが設定され利用可能ならClaudeの結果を返し、Claude未設定なら既存の失敗応答になる。
 
 新しい設定UI・モデル選択UI・SDK依存は追加しない。API接続先の切替fallbackを追加せず、`allowBaseFallback: false`を維持する。
 
@@ -448,6 +452,17 @@ OpenAI timeout→Claude成功は`200`、OpenAI timeout→Claude HTTPエラーな
 | AC-08 / R1〜R7 | 共通validator、一括反映、editor ownership、Local Mode、custom API base、`allowBaseFallback: false`、save-freeを含むfocused testと全回帰がPASS |
 | AC-09 / R7・承認境界 | 実装前に本設計・索引・Worker READMEを揃え、変更後canonicalのOwner確認を得る。5 gateは各artifactのexact digestと結び付ける |
 
+### 12.2 Issue #35の受入条件
+
+| ID / Issue本文の受入条件 | 合格にする観測 |
+|---|---|
+| AC-35-01 / 1 | OpenAI outbound bodyに`reasoning: { effort: "minimal" }`があり、既定・上書き・空白モデルでfocused testがPASSする |
+| AC-35-02 / 2 | 他のOpenAI request field、Claude側、provider順、各15秒／全体30秒、エラー分類、管理画面表示、抽出指示・10項目schema・validatorが変わらず、既存testと全回帰がPASSする |
+| AC-35-03 / 3 | 本設計・索引・Worker READMEが承認済みCode Generation Planの差分と一致する。gate 3が本差分のOwner確認を兼ね、別のcanonical確認を挟まない |
+| AC-35-04 / 4 | Ownerがdeploy後に同じ元情報で試し、「OpenAIで整理しました」と表示され、従来より待ちが短いと確認する |
+
+AC-35-04はdeploy後のOwner確認として残す。mock testやcycle closeで本番の成功・速度を証明した扱いにしない。
+
 ## 13. 検証方法
 
 - 現行adminと公開サイトのsource inventoryとの突合
@@ -479,6 +494,12 @@ git diff --stat
 ```
 
 current canonicalとR1〜R7の整合は独立Reviewerが確認し、Ownerのcanonical確認・Code Generation Result・Build/Test Result・Front受入を区別して記録する。mock PASSは本番key、credit、model entitlement、実速度、初回schema compilationの成功を証明しない。
+
+### 13.2 Issue #35の検証
+
+gate 1〜3承認後、Code Generation Planに固定した差分を本設計・索引・Worker READMEへ反映してから、既存Worker focused testにrequest bodyのassertionを加えてRED→GREENを確認する。Node v20.19.4で§13.1のfocused・全回帰・syntax・local integrity・scope確認を行い、実装後の独立Reviewerが設計・実装・承認済み差分の一致をまとめて確認する。Owner確認はgate 1〜3とgate 4〜5の2回にまとめる。
+
+現行のOpenAI公式docsでは`gpt-5-mini`の`minimal`対応・既定effortを再確認できておらず、実APIも未検証である。Claude表示は切替後の成功providerだけを示し、非対応400や遅延原因を確定しない。本番でのOpenAI成功と待ち時間はdeploy後にOwnerが確認する。
 
 ## 14. Canonical file map
 
