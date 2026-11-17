@@ -1,0 +1,118 @@
+TAP version 13
+# worker request error: Error: synthetic read failure
+#     at Object.first (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/cloudflare/worker/test/music-data-fields.test.js:12:155)
+#     at saveSiteData (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/cloudflare/worker/src/worker.js:790:91)
+#     at handleRequest (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/cloudflare/worker/src/worker.js:1917:27)
+#     at async Object.fetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/cloudflare/worker/src/worker.js:2198:14)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/cloudflare/worker/test/music-data-fields.test.js:61:53)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: music fields GET defaults are memory-only and PUT public projection retains all three fields
+ok 1 - music fields GET defaults are memory-only and PUT public projection retains all three fields
+  ---
+  duration_ms: 22.548583
+  ...
+# Subtest: music fields unchanged legacy date 2025.5.5 survives edits and category moves
+ok 2 - music fields unchanged legacy date 2025.5.5 survives edits and category moves
+  ---
+  duration_ms: 0.916875
+  ...
+# Subtest: music fields unchanged legacy date 2025/05/05 survives edits and category moves
+ok 3 - music fields unchanged legacy date 2025/05/05 survives edits and category moves
+  ---
+  duration_ms: 0.937125
+  ...
+# Subtest: music fields unchanged legacy date 2025.05 survives edits and category moves
+ok 4 - music fields unchanged legacy date 2025.05 survives edits and category moves
+  ---
+  duration_ms: 0.823458
+  ...
+# Subtest: music fields unchanged legacy date  survives edits and category moves
+ok 5 - music fields unchanged legacy date  survives edits and category moves
+  ---
+  duration_ms: 0.599791
+  ...
+# Subtest: music fields unchanged legacy date undefined survives edits and category moves
+ok 6 - music fields unchanged legacy date undefined survives edits and category moves
+  ---
+  duration_ms: 0.837208
+  ...
+# Subtest: music fields unchanged legacy date 42 survives edits and category moves
+ok 7 - music fields unchanged legacy date 42 survives edits and category moves
+  ---
+  duration_ms: 0.696666
+  ...
+# Subtest: music fields unchanged legacy date null survives edits and category moves
+ok 8 - music fields unchanged legacy date null survives edits and category moves
+  ---
+  duration_ms: 0.728583
+  ...
+# Subtest: music fields invalid new or changed date 2025.5.05 rejects without DB write
+ok 9 - music fields invalid new or changed date 2025.5.05 rejects without DB write
+  ---
+  duration_ms: 2.067541
+  ...
+# Subtest: music fields invalid new or changed date 2025/05/05 rejects without DB write
+ok 10 - music fields invalid new or changed date 2025/05/05 rejects without DB write
+  ---
+  duration_ms: 1.27675
+  ...
+# Subtest: music fields invalid new or changed date ２０２５.０５.０５ rejects without DB write
+ok 11 - music fields invalid new or changed date ２０２５.０５.０５ rejects without DB write
+  ---
+  duration_ms: 1.398125
+  ...
+# Subtest: music fields invalid new or changed date 2025.05.05\\n rejects without DB write
+ok 12 - music fields invalid new or changed date 2025.05.05\\n rejects without DB write
+  ---
+  duration_ms: 0.682042
+  ...
+# Subtest: music fields invalid new or changed date  2025.05.05 rejects without DB write
+ok 13 - music fields invalid new or changed date  2025.05.05 rejects without DB write
+  ---
+  duration_ms: 0.880917
+  ...
+# Subtest: music fields invalid new or changed date 2025.05.05  rejects without DB write
+ok 14 - music fields invalid new or changed date 2025.05.05  rejects without DB write
+  ---
+  duration_ms: 0.74025
+  ...
+# Subtest: music fields invalid new or changed date 123 rejects without DB write
+ok 15 - music fields invalid new or changed date 123 rejects without DB write
+  ---
+  duration_ms: 0.596209
+  ...
+# Subtest: music fields invalid new or changed date null rejects without DB write
+ok 16 - music fields invalid new or changed date null rejects without DB write
+  ---
+  duration_ms: 0.60125
+  ...
+# Subtest: music fields empty and shaped dates save including first PUT; auth and duplicate Live still reject
+ok 17 - music fields empty and shaped dates save including first PUT; auth and duplicate Live still reject
+  ---
+  duration_ms: 2.365125
+  ...
+# Subtest: music fields old payload omissions preserve by ID across categories, explicit null clears, missing releases never revive
+ok 18 - music fields old payload omissions preserve by ID across categories, explicit null clears, missing releases never revive
+  ---
+  duration_ms: 1.497958
+  ...
+# Subtest: music fields references match local helper for deletion, invalid IDs and moves
+ok 19 - music fields references match local helper for deletion, invalid IDs and moves
+  ---
+  duration_ms: 3.176667
+  ...
+# Subtest: music fields malformed persisted JSON and read failure cannot overwrite existing row
+ok 20 - music fields malformed persisted JSON and read failure cannot overwrite existing row
+  ---
+  duration_ms: 2.586084
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 268.869

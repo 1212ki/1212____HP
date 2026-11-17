@@ -6,7 +6,8 @@
 - Related issues: #39, #40
 - Related implementation issues: #41, #42, #43, #44, #45
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #40）: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 
 ## 1. 目的と範囲
 
@@ -93,14 +94,14 @@ Figma fileは`82QH1c3hUrv1fKCd2AMULK`、pageは[マスタ｜ホームページ `
 
 ## 5. データと管理画面の対応
 
-実装: #41（3項目・日付・共有画像の表示名）、#42〜#45（公開表示）、#47（管理の見え方）。`00cdea5`: 下表の既存データはある。顔にする作品・選択映像・種別の3項目は未実装。新しいkey・保存形式は#41のCode Generation Planで固定する。
+実装: #41（3項目・日付・共有画像の表示名）、#42〜#45（公開表示）、#47（管理の見え方）。`00cdea5`: 下表の既存データはあり、新しい3項目は未実装だった。下表に#41の実装入力として固定する保存先を追記する。#41の実装・試験・独立reviewの成否は、active時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/`内の同pathを参照する。Approvedは実装済みの意味ではない。
 
-| 公開表示・用途 | 管理入口 | `00cdea5`のデータ事実／追加する概念 |
+| 公開表示・用途 | 管理入口 | `00cdea5`のデータ事実／#41の追加契約 |
 |---|---|---|
-| Homeの顔・Ticket完了の「当日までに聴く」 | Site > Home「顔にする作品」 | サイト設定に作品の番号を1つ。空ならDigital Releaseと宅録Demoを合わせてリリース日が最新の作品。 |
-| Home・Musicの「聴く」 | Music > 作品「その場で再生する映像」 | 作品ごとに登録済み映像の番号を1つ。空なら「聴く」を出さない。既存映像は`youtube.musicVideos / liveMovies / demos`、映像IDと`youtubeId`を持つ。 |
-| 作品名と分ける種別 | Music > 作品「種別」 | 作品ごとに文字を1つ。空ならタイトルだけ。既存作品は`discography.digital / demo`に`id / title / releaseDate / description / image / link`を持つ。 |
-| リリース順・最新作品 | Music > 作品「リリース日」 | `releaseDate`の形を`2025.05.05`に揃える。形が違う既存作品は最新候補から外し、並びの最後へ回す。新しく保存する時に形が違えば保存せず項目下へ示す。 |
+| Homeの顔・Ticket完了の「当日までに聴く」 | Site > Home「顔にする作品」 | `site.featuredReleaseId`に作品の`id`を文字列で1つ、空は`""`。空ならDigital Releaseと宅録Demoを合わせてリリース日が最新の作品。 |
+| Home・Musicの「聴く」 | Music > 作品「その場で再生する映像」 | 各作品の`playbackVideoId`に登録済み映像の`id`を文字列で1つ、空は`""`。空なら「聴く」を出さない。既存映像は`youtube.musicVideos / liveMovies / demos`、映像IDと`youtubeId`を持つ。 |
+| 作品名と分ける種別 | Music > 作品「種別」 | 各作品の`releaseType`に任意の文字列、空は`""`。空ならタイトルだけ。既存作品は`discography.digital / demo`に`id / title / releaseDate / description / image / link`を持つ。 |
+| リリース順・最新作品 | Music > 作品「リリース日」 | `releaseDate`の空でない新規入力・変更値をASCII数字の`YYYY.MM.DD`として検査し、空は任意のまま。形が違う既存作品は最新候補から外し、並びの最後へ回す。日付を変えない他項目の保存は既存値を保持する。形が違う新規・変更値はadminと保存APIで保存を拒否し項目下へ示す。 |
 | 共有画像の予備 | Site > Home「共有時の画像」 | 既存`site.heroImage`。Home Heroの表示名を変え、Live共有時の画像の予備としての働きは保つ。Homeの顔の選択とは別。 |
 | 次のライブ・一覧・詳細・予約概要 | Live > 公開内容 | `live.upcoming / past`とLive fields。保存区分を正本とし、日付で勝手に区分を変えない。予約URLと補助リンクを区別する。 |
 | Home newsと外部links、footer | News、Site | `news`、`site.links`（Bandcamp / YouTube / X / Instagram / note）、`site.footerText`。newsは新しい順6件、リンクなしならリンク文言を出さない。 |
@@ -108,7 +109,7 @@ Figma fileは`82QH1c3hUrv1fKCd2AMULK`、pageは[マスタ｜ホームページ `
 | Contactの導入文・送信先 | Site > Contact | `contact.introText / formAction`。#37が削除したTicketの案内文・注意文とは別の設定。 |
 | Ticket表示と受付内容 | Live > Ticket Page共通設定、予約 | 完了文・枚数/備考の表示とラベル・入力例・送信ボタン文言を保持。#37の`introText / noticeText`削除は管理設計§5.2を維持。 |
 
-3項目はどれも空で公開画面が成立する。選んでいた作品が削除されたら選択を空に戻し、自動選択に戻る。選んでいた映像が削除されたら作品の選択を空に戻し、「聴く」を出さない。追加項目を空にした#41単独の段階では、既存の公開表示を変えない。
+3項目はどれも空で公開画面が成立する。選んでいた作品が削除されたら選択を空に戻し、自動選択に戻る。選んでいた映像が削除されたら作品の選択を空に戻し、「聴く」を出さない。追加項目が空でも登録されていても#41単独の段階では既存の公開表示を変えない。公開APIの`data`とLocal ModeのJSONに3項目を出し、表示への適用は#42〜#44へ渡す。自動選択・同日の順・参照削除・保存互換性は管理設計§5.3を正本とし、保存配列を並べ替えない。
 
 ## 6. 主要flowとdesktop / mobile
 

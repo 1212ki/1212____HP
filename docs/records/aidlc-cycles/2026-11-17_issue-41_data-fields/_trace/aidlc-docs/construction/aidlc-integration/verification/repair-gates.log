@@ -1,0 +1,26 @@
+command: node --check admin/app.js
+exit: 0
+
+command: node --check assets/js/music-data.js
+exit: 0
+
+command: node --check cloudflare/worker/src/worker.js
+exit: 0
+
+command: bash /Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/aidlc-docs/construction/aidlc-integration/verification/validate-approvals.sh
+validate_approval: PASS 3/3
+exit: 0
+
+command: scripts/aidlc-cycle.sh status
+Cycle ID: 2026-11-17_issue-41_data-fields
+Issue: #41
+Current Stage: CONSTRUCTION - Code Generation
+Cycle Status: In Progress
+exit: 0
+
+command: scripts/aidlc-verify.sh --local
+AI-DLC local integrity verification passed: v1.0.1, manifest 02c49d1de2167f0ed2c90123871bce6d96cf052294672f451df83b1aa5cff9e9; source authenticity was not checked
+exit: 0
+
+command: git diff --check
+exit: 0

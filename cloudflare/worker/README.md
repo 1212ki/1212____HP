@@ -4,6 +4,23 @@
 
 ※現在の推奨運用は「管理画面 → Web Intentで半自動投稿（X APIを使わない）＋OGPリンクカード」です。X APIを使うエンドポイントは将来拡張として残しています。
 
+
+## 作品データの追加項目（Issue #41）
+
+`site_data`のJSON内に`site.featuredReleaseId`、`discography.digital[*] / demo[*]`の`playbackVideoId`と`releaseType`を保存します。3項目は任意のstringで、欠落・null・他型は空に補います。参照は作品／映像のidで持ち、全カテゴリ確定後に消えた参照を空へ戻します。カテゴリ移動はid不変なら参照を保ちます。種別の文字列はtrim・分割しません。
+
+公開GETは既存の`data / meta` envelopeと3項目を返し、Liveの`sourceText / xComment`は公開しません。読込時の正規化・参照解除はメモリ内だけで、既存行の修復書込は行いません。既存の空行初期化は維持します。共有画像の`site.heroImage`とLive画像優先のOG契約は変更していません。
+
+管理PUTは、副作用のないSELECTで保存前JSONを読み、新規作品または日付変更作品だけを検査してから書き込みます。リリース日は空またはASCII数字の`YYYY.MM.DD`完全一致（10文字）です。実在日の検査は行いません。日付未変更の旧文字列・旧非文字列は保持できます。違反はHTTP 400、`error: "invalid releaseDate"`と`fields`（`id`、`field: "releaseDate"`、`message: "「2025.05.05」の形で入力してください。"`）を返し、DBには書きません。既存のLive ID重複エラーの応答形は維持します。
+
+旧adminのPUTで新keyが省略された場合だけ、保存前JSONの同じ作品idを全カテゴリから探して補います。明示空・null等による解除は尊重します。省略された作品やcollectionを復活させることはありません。保存前行がなければ空を比較元にし、読取失敗・JSON解析失敗なら書込を止めます。解析不能は固定の`invalid stored site data`（400）、DB故障は既存の500経路です。
+
+### #41の反映順序・rollback
+
+公開サイトとadminはGitHub Pagesの`main`配信です。Ownerが試験済みPR最終revisionからWorkerを先にdeployし、Frontの公開GET・OG確認後にmergeします。Pagesの新revision配信確認後にOwnerが管理タブを再読込し、実際に使う1作品の3項目を保存します。Frontが公開GETの値と公開表示を照合します。DB migration・新secret・既存JSON一括更新は不要です。既存AI整理や予約機能の反映手順は各機能の履歴として保持します。
+
+deploy失敗・merge前の不具合・merge見送りは、OwnerがFrontの特定した直前Worker versionへrollbackします。merge後は保存を停止し、#41を戻すPRをOwnerが承認・merge、旧admin配信確認後にWorkerを戻します。Worker障害で先に戻す場合も静的側復旧まで保存を再開しません。旧adminで作品を編集すると新keyが落ちるため、rollback中は作品編集を止めます。通常復旧はcode rollbackで行い、D1全体の復元は実データ破損時の別判断です。詳細は本cycleのCode Generation Plan §8・§9を参照してください。
+
 ## 機能
 
 - `GET /api/public/site-data`

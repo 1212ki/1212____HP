@@ -1,0 +1,22 @@
+ M admin/README.md
+ M admin/app.js
+ M admin/index.html
+ M aidlc-docs/README.md
+ M cloudflare/worker/README.md
+ M cloudflare/worker/src/worker.js
+ M cloudflare/worker/test/og-live.test.js
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+ M test/admin-image-form.test.mjs
+ M test/admin-live-operations.test.mjs
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/
+?? aidlc-docs/cycle-summary.md
+?? aidlc-docs/inception/
+?? assets/js/music-data.js
+?? cloudflare/worker/test/music-data-fields.test.js
+?? test/music-data.test.mjs
+?? test/public-music-data-compatibility.test.mjs

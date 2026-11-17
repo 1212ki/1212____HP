@@ -1,0 +1,17 @@
+aidlc-docs/approvals/01-requirements-approval.md SHA-256 3b5ba0406a61ec4992251c8fb149cc801fef731abf073835a4280cce69aa0ec2 prompt byte restoration PASS / raw A PASS
+aidlc-docs/approvals/02-workflow-plan-approval.md SHA-256 1ce9c61cfbdea85901345d28db9f04e0774b682185ce7d6627d1a98c4f59dd84 prompt byte restoration PASS / raw A PASS
+aidlc-docs/approvals/03-code-generation-plan-approval.md SHA-256 6fb943ef5411fa7f56d006268bc5c1c35e226f97bd826eddefff5c22b7226f3b prompt byte restoration PASS / raw A PASS
+command: bash /Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/aidlc-docs/construction/aidlc-integration/verification/validate-approvals.sh
+validate_approval: PASS 3/3
+exit: 0
+command: scripts/aidlc-cycle.sh status
+Cycle ID: 2026-11-17_issue-41_data-fields
+Issue: #41
+Current Stage: CONSTRUCTION - Code Generation
+Cycle Status: In Progress
+exit: 0
+command: scripts/aidlc-verify.sh --local
+AI-DLC local integrity verification passed: v1.0.1, manifest 02c49d1de2167f0ed2c90123871bce6d96cf052294672f451df83b1aa5cff9e9; source authenticity was not checked
+exit: 0
+command: git diff --check
+exit: 0

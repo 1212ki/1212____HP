@@ -1,0 +1,3 @@
+Allowed scope PASS: 71 files, outside 0
+Production text scan across all changed fixtures/docs/logs: 34 strings >=20 chars, hits 0
+No real gate 4/5 records; no Complete state

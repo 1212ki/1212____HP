@@ -1,0 +1,10 @@
+docs/specs/current/live-operations-admin-ui.md cmp PASS SHA-256 43e4c9f407f26a8a6e2df8fe41636d7c714c03d9ebd83f2d339b5801b5767177
+docs/specs/current/public-site-ui.md cmp PASS SHA-256 8b886e4346c16eaec93ca4c5b76d13285d85c45255d38664ca3f778433bf58a6
+docs/specs/current/README.md cmp PASS SHA-256 6b48f3d983fb4e46073b5a28c29537508156a51a696ab3d448acf2654cc32ac7
+approved inception/requirements/requirements.md: unchanged eb7b688f8e453d679a15ceb635f7e7ccc88080a41dd2a95fe796ea70bfcfd8f8
+approved inception/plans/execution-plan.md: unchanged e9ad4f4ea40f0882eb2e4c5d014681435be8274bcbad909a57cb81ca1bbf55c3
+approved construction/plans/aidlc-integration-code-generation-plan.md: unchanged 48e8840c0a330750509f9c408388663973a3ee3ae703f37c7571a8a169596310
+git scope PASS: 63 files, outside allowlist 0
+production sensitive text scan PASS: 34 strings (20+ characters), hits 0; synthetic fixtures manually inspected
+ui_route=none; browser or new capture not used
+Known differences kept: admin seeded videos / Worker heroImage defaults; public past list hides legacy description while detail retains it.

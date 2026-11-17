@@ -1,0 +1,650 @@
+TAP version 13
+# Subtest: Live is the initial primary tab and Tickets is not a global tab
+ok 1 - Live is the initial primary tab and Tickets is not a global tab # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.884292
+  ...
+# Subtest: Live workspace has semantic Liveページ and 予約管理 tabs
+ok 2 - Live workspace has semantic Liveページ and 予約管理 tabs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.085166
+  ...
+# Subtest: Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 3 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.063375
+  ...
+# Subtest: Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 4 - Live workspace separates reservations and Ticket Page共通設定 from Live list details # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065291
+  ...
+# Subtest: Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 5 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.07025
+  ...
+# Subtest: Live workspace initial state is Liveページ and 開催予定
+ok 6 - Live workspace initial state is Liveページ and 開催予定 # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.057916
+  ...
+# Subtest: Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 7 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.145875
+  ...
+# Subtest: master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 8 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072833
+  ...
+# Subtest: Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+ok 9 - Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.214375
+  ...
+# Subtest: master-detail marks only the first upcoming card as Next Live
+ok 10 - master-detail marks only the first upcoming card as Next Live # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.164083
+  ...
+# Subtest: Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 11 - Live task tabs are semantic, keyboard operable, and preserve mounted input # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.07375
+  ...
+# Subtest: new Live prioritizes source intake and gates post-save tasks until first save
+ok 12 - new Live prioritizes source intake and gates post-save tasks until first save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0585
+  ...
+# Subtest: Live validation blocks missing date and venue before changing data or saving
+ok 13 - Live validation blocks missing date and venue before changing data or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051667
+  ...
+# Subtest: Live category mismatch warns but saves without automatically moving collection
+ok 14 - Live category mismatch warns but saves without automatically moving collection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.135583
+  ...
+# Subtest: Live API save reports saving, saved, and failed states around the existing save route
+ok 15 - Live API save reports saving, saved, and failed states around the existing save route # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.057458
+  ...
+# Subtest: Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 16 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.18125
+  ...
+# Subtest: reselecting the active global Live tab is a no-op for a dirty editor
+ok 17 - reselecting the active global Live tab is a no-op for a dirty editor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.070416
+  ...
+# Subtest: reselecting the active global Live tab is also a no-op for a clean editor
+ok 18 - reselecting the active global Live tab is also a no-op for a clean editor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.227083
+  ...
+# Subtest: Live internal task switching preserves dirty input without discard confirmation
+ok 19 - Live internal task switching preserves dirty input without discard confirmation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.069584
+  ...
+# Subtest: API fallback is read-only while keeping Live navigation available
+ok 20 - API fallback is read-only while keeping Live navigation available # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.130375
+  ...
+# Subtest: API fallback keeps every admin collection immutable while existing details remain viewable
+ok 21 - API fallback keeps every admin collection immutable while existing details remain viewable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.208667
+  ...
+# Subtest: API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 22 - API fallback blocks direct Live item and API save calls before mutation or PUT # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.130291
+  ...
+# Subtest: beforeunload protects global changes and Live dirty or saving states
+ok 23 - beforeunload protects global changes and Live dirty or saving states # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.046875
+  ...
+# Subtest: explicit Local Mode labels the header action as JSON export
+ok 24 - explicit Local Mode labels the header action as JSON export # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042125
+  ...
+# Subtest: responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+ok 25 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041208
+  ...
+# Subtest: sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 26 - sticky Live controls have no scrolling mechanism in the complete ancestor chain # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.066167
+  ...
+# Subtest: sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 27 - sticky Live task tabs offset below the fixed global header and navigation chrome # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0745
+  ...
+# Subtest: essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 28 - essential mobile Live workspace list utility and back controls guarantee 44px targets # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039667
+  ...
+# Subtest: saved header action maintains white text contrast through hover and focus
+ok 29 - saved header action maintains white text contrast through hover and focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040458
+  ...
+# Subtest: sticky Live task tabs and footer have no clipping workspace ancestor
+ok 30 - sticky Live task tabs and footer have no clipping workspace ancestor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040334
+  ...
+# Subtest: production Live lock gives every workspace button a disabled affordance
+ok 31 - production Live lock gives every workspace button a disabled affordance # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040208
+  ...
+# Subtest: admin build marker and operator docs match the merged Live UI assets
+ok 32 - admin build marker and operator docs match the merged Live UI assets # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.118583
+  ...
+# Subtest: Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 33 - Live edit workspace saves a category move in place and routes Local Mode to JSON export # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.137709
+  ...
+# Subtest: Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 34 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.060666
+  ...
+# Subtest: Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 35 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.177417
+  ...
+# Subtest: Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 36 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.113583
+  ...
+# Subtest: Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 37 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065333
+  ...
+# Subtest: Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 38 - Live API publish blocks global tab navigation and marks every global tab disabled while pending # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.530667
+  ...
+# Subtest: global tabs re-enable and navigate normally after Live API publish succeeds
+ok 39 - global tabs re-enable and navigate normally after Live API publish succeeds # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.289708
+  ...
+# Subtest: global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 40 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.078459
+  ...
+# Subtest: shared LiveOperations script is loaded before the admin application
+ok 41 - shared LiveOperations script is loaded before the admin application # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.062875
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 42 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0575
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 43 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.683875
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 44 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.087958
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 45 - AIで整理 source intake discards a stale response when source text changes while pending / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045125
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 46 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036334
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 47 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03225
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+ok 48 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031084
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+ok 49 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030292
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 50 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03225
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 51 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.05825
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 52 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045541
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 53 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034542
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 54 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033792
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 55 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031417
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 56 - AIで整理 source intake discards a stale response when source text changes while pending / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04925
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 57 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034333
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 58 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029708
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+ok 59 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029709
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / openai
+ok 60 - AIで整理 source intake never falls back from a custom API base to canonical production / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043208
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 61 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029792
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 62 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035542
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 63 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029666
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 64 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031792
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 65 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028666
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 66 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030334
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 67 - AIで整理 source intake discards a stale response when source text changes while pending / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031417
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 68 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031583
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 69 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031667
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+ok 70 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035625
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / claude
+ok 71 - AIで整理 source intake never falls back from a custom API base to canonical production / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033542
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 72 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030834
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 73 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031709
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 74 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031291
+  ...
+# Subtest: AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+ok 75 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02925
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 76 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032083
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 77 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032375
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 78 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.140917
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 79 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.102625
+  ...
+# Subtest: AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 80 - AIで整理 source intake uses the existing small status markup for desktop and mobile # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.064667
+  ...
+# Subtest: Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 81 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.08275
+  ...
+# Subtest: structured Live editor normalizes legacy date and saves independent detail fields
+ok 82 - structured Live editor normalizes legacy date and saves independent detail fields # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028916
+  ...
+# Subtest: unparsed legacy Live date is preserved until a valid replacement is entered
+ok 83 - unparsed legacy Live date is preserved until a valid replacement is entered # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031416
+  ...
+# Subtest: saving a Live merges new fields into the original object without dropping unknown properties
+ok 84 - saving a Live merges new fields into the original object without dropping unknown properties # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031666
+  ...
+# Subtest: unified X announcement preview drives Intent and copy without save
+ok 85 - unified X announcement preview drives Intent and copy without save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030417
+  ...
+# Subtest: Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 86 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036042
+  ...
+# Subtest: Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 87 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02975
+  ...
+# Subtest: Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 88 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028834
+  ...
+# Subtest: Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 89 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0295
+  ...
+# Subtest: Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 90 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029666
+  ...
+# Subtest: new Live requires an explicit save before X Intent or reservation operations
+ok 91 - new Live requires an explicit save before X Intent or reservation operations # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0305
+  ...
+# Subtest: saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 92 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028417
+  ...
+# Subtest: manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 93 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029666
+  ...
+# Subtest: active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 94 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030917
+  ...
+# Subtest: CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 95 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030166
+  ...
+# Subtest: CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 96 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027417
+  ...
+# Subtest: reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 97 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029916
+  ...
+# Subtest: reservation loading for a non-current Live cannot mutate the current modal
+ok 98 - reservation loading for a non-current Live cannot mutate the current modal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04475
+  ...
+# Subtest: cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 99 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027791
+  ...
+# Subtest: cross-Live ledger response cannot mutate a disconnected replacement target
+ok 100 - cross-Live ledger response cannot mutate a disconnected replacement target # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0335
+  ...
+# Subtest: cross-Live ledger response requires both current filters to match its snapshot
+ok 101 - cross-Live ledger response requires both current filters to match its snapshot # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042833
+  ...
+# Subtest: cross-Live filters refresh without reloading when the effective selection remains valid
+ok 102 - cross-Live filters refresh without reloading when the effective selection remains valid # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029916
+  ...
+# Subtest: deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 103 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027667
+  ...
+# Subtest: reservation status actions use escaped data attributes and delegated event handling
+ok 104 - reservation status actions use escaped data attributes and delegated event handling # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032583
+  ...
+# Subtest: generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 105 - generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.048209
+  ...
+# Subtest: saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 106 - saving a rendered Live keeps its editor and selected replacement trigger after a category move # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029875
+  ...
+# Subtest: saving a new past Live activates its visible destination category
+ok 107 - saving a new past Live activates its visible destination category # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029375
+  ...
+# Subtest: admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+ok 108 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029209
+  ...
+# Subtest: Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 109 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02975
+  ...
+# Subtest: music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+ok 110 - music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+  ---
+  duration_ms: 29.912083
+  ...
+# Subtest: music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+ok 111 - music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+  ---
+  duration_ms: 3.034208
+  ...
+# Subtest: music data fields API failure keeps editor and baseline, structured errors bind only matching release
+ok 112 - music data fields API failure keeps editor and baseline, structured errors bind only matching release
+  ---
+  duration_ms: 3.335708
+  ...
+# Subtest: music data fields legacy date 2025.5.5 stays on unrelated save and move
+ok 113 - music data fields legacy date 2025.5.5 stays on unrelated save and move
+  ---
+  duration_ms: 2.299333
+  ...
+# Subtest: music data fields legacy date 2025/05/05 stays on unrelated save and move
+ok 114 - music data fields legacy date 2025/05/05 stays on unrelated save and move
+  ---
+  duration_ms: 1.905958
+  ...
+# Subtest: music data fields legacy date 2025.05 stays on unrelated save and move
+ok 115 - music data fields legacy date 2025.05 stays on unrelated save and move
+  ---
+  duration_ms: 5.485709
+  ...
+# Subtest: music data fields legacy date  stays on unrelated save and move
+ok 116 - music data fields legacy date  stays on unrelated save and move
+  ---
+  duration_ms: 2.932208
+  ...
+# Subtest: music data fields legacy date undefined stays on unrelated save and move
+ok 117 - music data fields legacy date undefined stays on unrelated save and move
+  ---
+  duration_ms: 2.960416
+  ...
+# Subtest: music data fields legacy date 42 stays on unrelated save and move
+ok 118 - music data fields legacy date 42 stays on unrelated save and move
+  ---
+  duration_ms: 2.0745
+  ...
+# Subtest: music data fields legacy date null stays on unrelated save and move
+ok 119 - music data fields legacy date null stays on unrelated save and move
+  ---
+  duration_ms: 1.941083
+  ...
+# Subtest: music data fields new release empty or shaped date, header validation and baseline only after success
+ok 120 - music data fields new release empty or shaped date, header validation and baseline only after success
+  ---
+  duration_ms: 2.376291
+  ...
+# Subtest: music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+ok 121 - music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+  ---
+  duration_ms: 3.770959
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through Local JSON
+ok 122 - music data fields deletion clears featured and shared video references through Local JSON
+  ---
+  duration_ms: 5.704542
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through API
+ok 123 - music data fields deletion clears featured and shared video references through API
+  ---
+  duration_ms: 1.937542
+  ...
+# Subtest: music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+ok 124 - music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+  ---
+  duration_ms: 1.819334
+  ...
+# Subtest: music data fields release and video category moves preserve IDs and all selections
+ok 125 - music data fields release and video category moves preserve IDs and all selections
+  ---
+  duration_ms: 2.44725
+  ...
+# Subtest: music data fields successful saves advance date baseline and failures retain the old baseline
+ok 126 - music data fields successful saves advance date baseline and failures retain the old baseline
+  ---
+  duration_ms: 10.113334
+  ...
+# Subtest: music data fields image upload blocks release mutation and JSON failure retains baseline
+ok 127 - music data fields image upload blocks release mutation and JSON failure retains baseline
+  ---
+  duration_ms: 3.782959
+  ...
+# Subtest: music data fields structured API error for another release never marks the active release
+ok 128 - music data fields structured API error for another release never marks the active release
+  ---
+  duration_ms: 1.68125
+  ...
+1..128
+# tests 128
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 109
+# todo 0
+# duration_ms 3380.732708

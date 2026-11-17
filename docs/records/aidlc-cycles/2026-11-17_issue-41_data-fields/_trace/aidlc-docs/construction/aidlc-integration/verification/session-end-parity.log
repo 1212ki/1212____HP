@@ -1,0 +1,12 @@
+Codex / Claude Code session-end parity check (read-only)
+PASS: agents_claude_sync - OK: root AGENTS body / CLAUDE import and nested mirrors are valid (skipped 63 checkout(s) of other repositories)
+PASS: skills_sync - 87 skills mirrored
+PASS: memory_mirror - 171 memory files mirrored
+PASS: codex_hot_trigger_helper - Codex hot trigger helper present
+PASS: codex_required_mcp - 8 required MCP servers configured
+PASS: codex_notion_giftee_oauth_resource - notion-giftee oauth_resource configured
+PASS: codex_approved_prefixes - codex-parity commands allowed by Codex rules
+PASS: gh_pin - /opt/homebrew/Cellar/gh/2.103.3/bin/gh matches the pin
+WORKSPACE_PARITY: pass; TASK_PARITY: not_assessed
+作業完了は独立review・同期後review・Front受入で別に判定。終了/保存を全体PASSへ偽装しない。
+VECTOR self-audit (vector-operating-discipline.md §0-2): 実行判断（既定は自分でやる・分ける理由） / completion-format / VECTOR-boundary / token 最適化（冗長出力・raw data 詰め込み・操作ミス浪費・判断に必要な context の削りすぎ）を 1 問ずつ self-check してから完了報告へ。

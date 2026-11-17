@@ -12,6 +12,7 @@ const adminCss = readFileSync(join(repoRoot, 'admin/style.css'), 'utf8');
 const adminReadme = readFileSync(join(repoRoot, 'admin/README.md'), 'utf8');
 const require = createRequire(import.meta.url);
 const LiveOperations = require(join(repoRoot, 'assets/js/live-operations.js'));
+const musicSource = readFileSync(join(repoRoot, 'assets/js/music-data.js'), 'utf8');
 
 function decodeHtml(value) {
   return String(value || '')
@@ -282,7 +283,11 @@ function createDomHarness(options = {}) {
             const body = root._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
             element.value = decodeHtml(body || '');
           }
-          if (tagName.toLowerCase() === 'select') installSelectHtmlBehavior(element);
+          if (tagName.toLowerCase() === 'select') {
+            installSelectHtmlBehavior(element);
+            const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            element.innerHTML = root._html.match(new RegExp(`<select\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/select>`, 'i'))?.[1] || '';
+          }
           elements.set(id, element);
           ownedElements.set(id, element);
           ownedIds.add(id);
@@ -423,6 +428,7 @@ function createDomHarness(options = {}) {
   const siteHeroForm = addStatic('site-hero-image-form');
   installOwnedHtmlBehavior(siteHeroForm, new Set(), [], new Map());
   [
+    ['site-featured-release-id', 'select'],
     ['site-link-bandcamp', 'input'],
     ['site-link-youtube', 'input'],
     ['site-link-x', 'input'],
@@ -436,6 +442,7 @@ function createDomHarness(options = {}) {
   ].forEach(([id, tagName]) => {
     const control = addStatic(id, tagName);
     control.dataset.adminMutation = '';
+    if (tagName === 'select') installSelectHtmlBehavior(control);
   });
   [
     'youtube-add-musicVideos-btn',
@@ -538,6 +545,8 @@ function loadAdminApp(options = {}) {
   context.__adminSaveCalls = 0;
   context.globalThis = context;
 
+  vm.runInNewContext(musicSource, context);
+  context.window.MusicData = context.MusicData || context.window.MusicData;
   vm.runInNewContext(`${adminJs}
 	globalThis.__adminLiveTest = {
 	  applyApiFallbackReadOnlyState,
@@ -582,6 +591,10 @@ function loadAdminApp(options = {}) {
   renderLive,
   saveData,
   saveModal,
+  saveDiscographyItem,
+  getHasChanges() { return hasChanges; },
+  setSaving(value) { isSaving = value; },
+  setSyntheticImageUpload(value) { if (value) activeImageUploads.add("synthetic-upload"); else activeImageUploads.clear(); },
   deleteItem,
   closeModal,
 	  setupLiveWorkspace: typeof setupLiveWorkspace === 'function' ? setupLiveWorkspace : null,
@@ -1406,7 +1419,7 @@ test('responsive Live workspace fixes overflow, focus, sticky actions, and actio
 
   assert.match(adminHtml, /class="add-btn live-primary-action"[^>]*onclick="addLive\(\)"/);
   assert.match(adminHtml, /href="style\.css\?v=20260816-22"/);
-  assert.match(adminHtml, /src="app\.js\?v=20260816-22"/);
+  assert.match(adminHtml, /src="app\.js\?v=20261117-41"/);
 
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [{ id: 'hierarchy', date: '2026-08-20', venue: 'Venue', image: '' }], past: [] } });
@@ -1511,7 +1524,9 @@ test('admin build marker and operator docs match the merged Live UI assets', () 
   const styleVersion = adminHtml.match(/style\.css\?v=([\w-]+)/)?.[1];
   const scriptVersion = adminHtml.match(/app\.js\?v=([\w-]+)/)?.[1];
   assert.ok(styleVersion);
-  assert.equal(scriptVersion, styleVersion);
+  assert.equal(styleVersion, '20260816-22');
+  assert.equal(scriptVersion, '20261117-41');
+  assert.equal(adminHtml.match(/music-data\.js\?v=([\w-]+)/)?.[1], scriptVersion);
   assert.match(adminReadme, /Live編集の`AIで下書きを作る`/);
   assert.match(adminReadme, /10項目を一括置換/);
 });
@@ -3246,4 +3261,235 @@ test('Ticket settings remove legacy copy and keep completion, field editing and 
   assert.equal(saved.ticket.fields.labelMessage, '備考編集');
   assert.equal(saved.contact.introText, 'contact保持');
   assert.equal(saved.contact.formAction, 'https://example.com/contact');
+});
+
+function musicFixture() {
+  return {site:{featuredReleaseId:'r',heroImage:'assets/images/synthetic.jpg'},discography:{digital:[{id:'r',title:'Synthetic "<& title',releaseDate:'2025.05.05',description:'Synthetic track list',image:'assets/images/synthetic-release.jpg',link:'https://example.test/release',releaseType:'Single',playbackVideoId:'v'}],demo:[{id:'s',title:'Synthetic demo',releaseDate:'2024.01.01'}]},youtube:{musicVideos:[{id:'v',title:'Synthetic "<& video',youtubeId:'abcdefghijk'}],liveMovies:[{id:'w',title:'Synthetic live',youtubeId:'abcdefghijk'}],demos:[{id:'x',title:'Synthetic demo',youtubeId:'abcdefghijk'}]}};
+}
+async function musicApp({data=musicFixture(),api=false,putResponse}={}) {
+  const app=loadAdminApp({networkFetch:async()=>({ok:true,json:async()=>structuredClone(data)})});
+  let saved=structuredClone(data);
+  app.setApiMode(api);
+  app.useAdminFetch(async(path,options)=> {
+    if(options.method==='PUT') {
+      if(putResponse)return putResponse;
+      saved=JSON.parse(options.body); return {ok:true,json:async()=>({ok:true,data:saved})};
+    }
+    return {ok:true,json:async()=>path==='/api/admin/site-data'?{data:structuredClone(saved)}:{tickets:[]}};
+  });
+  await app.loadData(); app.renderAll(); return app;
+}
+function musicEdit(app,id='r',category='digital',values={}) {
+  assert.equal(app.editDiscography(id,category),true);
+  for(const [key,value] of Object.entries(values)) app.elements.get('edit-'+key).value=value;
+}
+test('music data fields Site and modal labels, choices, escaping and Local JSON roundtrip',async()=>{
+  const app=await musicApp();
+  assert.match(adminHtml,/<h3>Home<\/h3>/);assert.match(adminHtml,/顔にする作品/);assert.match(adminHtml,/共有時の画像/);
+  assert.ok(adminHtml.indexOf('music-data.js?v=20261117-41')<adminHtml.indexOf('app.js?v=20261117-41'));
+  const select=app.elements.get('site-featured-release-id');assert.match(select.innerHTML,/自動（最新のリリース）/);assert.match(select.innerHTML,/Digital Release/);assert.match(select.innerHTML,/宅録Demo/);assert.match(select.innerHTML,/&quot;&lt;&amp;/);
+  select.value='s';select.onchange(); assert.equal(app.getSiteData().site.featuredReleaseId,'s');
+  musicEdit(app,'r','digital',{releaseType:'2nd Single',playbackVideoId:'w'});
+  assert.match(app.elements.get('modal-body').innerHTML,/種別/);assert.match(app.elements.get('modal-body').innerHTML,/placeholder="2nd Single"/);
+  const videos=app.elements.get('edit-playbackVideoId'); assert.deepEqual(videos.optionValues,['','v','w','x']);assert.match(videos.innerHTML,/&quot;&lt;&amp;/);
+  assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().discography.digital[0].title,'Synthetic "<& title');assert.equal(app.getSiteData().discography.digital[0].description,'Synthetic track list');assert.equal(app.getSiteData().discography.digital[0].link,'https://example.test/release');
+  assert.equal(await app.saveData(),true);const exported=JSON.parse(await app.objectUrls.at(-1).blob.text());assert.equal(exported.site.featuredReleaseId,'s');assert.equal(exported.discography.digital[0].playbackVideoId,'w');assert.equal(exported.discography.digital[0].releaseType,'2nd Single');assert.equal('data' in exported,false);
+  const reload=await musicApp({data:exported});musicEdit(reload);assert.equal(reload.elements.get('edit-playbackVideoId').value,'w');assert.equal(reload.elements.get('edit-releaseType').value,'2nd Single');
+  reload.elements.get('edit-playbackVideoId').value='';reload.elements.get('edit-releaseType').value='';assert.equal(await reload.saveModal(),true);
+  const featured=reload.elements.get('site-featured-release-id');featured.value='';featured.onchange();assert.equal(reload.getSiteData().site.featuredReleaseId,'');
+});
+test('music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch',async()=>{
+  const app=await musicApp({api:true});musicEdit(app,'r','digital',{releaseDate:'2025.05.05\n'});
+  const before=JSON.stringify(app.getSiteData());const calls=app.fetchCalls.length;
+  assert.equal(app.saveDiscographyItem(),false);assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);assert.equal(app.getHasChanges(),false);assert.equal(app.fetchCalls.length,calls);
+  assert.equal(app.elements.get('modal').classList.contains('active'),true);const date=app.elements.get('edit-releaseDate');assert.equal(date.value,'2025.05.05\n');assert.equal(date.getAttribute('aria-invalid'),'true');assert.equal(date.getAttribute('aria-describedby'),'edit-releaseDate-error');assert.ok(date.focusCount>0);
+  assert.equal(app.elements.get('edit-releaseDate-error').textContent,'「2025.05.05」の形で入力してください。');assert.match(app.elements.get('modal-body').innerHTML,/id="edit-releaseDate"[^>]*>\s*<[^>]*id="edit-releaseDate-error"[^>]*role="alert"/);
+  date.value='2026.01.01';await date.dispatch('input');assert.equal(date.getAttribute('aria-invalid'),'false');assert.equal(app.elements.get('edit-releaseDate-error').textContent,'');assert.equal(await app.saveModal(),true);assert.equal(app.elements.get('modal').classList.contains('active'),false);
+});
+test('music data fields API failure keeps editor and baseline, structured errors bind only matching release',async()=>{
+  const app=await musicApp({api:true,putResponse:{ok:false,json:async()=>({error:'invalid releaseDate',fields:[{id:'r',field:'releaseDate',message:'「2025.05.05」の形で入力してください。'}]})}});
+  musicEdit(app,'r','digital',{releaseDate:'2026.01.01',releaseType:'Draft'});
+  assert.equal(await app.saveModal(),false);assert.equal(app.elements.get('modal').classList.contains('active'),true);assert.equal(app.elements.get('edit-releaseType').value,'Draft');assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'true');assert.equal(app.getHasChanges(),true);
+  app.useAdminFetch(async()=>({ok:true,json:async()=>({ok:true})}));assert.equal(await app.saveModal(),true);await app.loadData();
+});
+for(const oldDate of ['2025.5.5','2025/05/05','2025.05','',undefined,42,null]) test('music data fields legacy date '+String(oldDate)+' stays on unrelated save and move',async()=>{
+  const data=musicFixture();data.discography.digital[0].releaseDate=oldDate;const app=await musicApp({data});musicEdit(app,'r','digital',{releaseType:'Demo',category:'demo'});assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().discography.demo[0].releaseDate,oldDate);assert.equal(await app.saveData(),true);
+});
+test('music data fields new release empty or shaped date, header validation and baseline only after success',async()=>{
+  const app=await musicApp();app.addDiscography();app.elements.get('edit-releaseDate').value='2025/05/05';assert.equal(await app.saveModal(),false);app.elements.get('edit-releaseDate').value='';assert.equal(await app.saveModal(),true);assert.equal(await app.saveData(),true);
+  app.getSiteData().discography.digital[0].releaseDate='bad';assert.equal(await app.saveData(),false);assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'true');assert.equal(app.elements.get('modal').classList.contains('active'),true);
+  app.elements.get('edit-releaseDate').value='0000.99.99';assert.equal(await app.saveModal(),true);assert.equal(await app.saveData(),true);
+});
+test('music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject',async()=>{
+  const app=await musicApp({api:true});musicEdit(app,'r','digital',{releaseType:'Album',playbackVideoId:'x'});assert.equal(await app.saveModal(),true);const put=app.fetchCalls.find(x=>x.options.method==='PUT');assert.equal(JSON.parse(put.options.body).discography.digital[0].releaseType,'Album');await app.loadData();musicEdit(app);assert.equal(app.elements.get('edit-releaseType').value,'Album');
+  app.setApiFallbackReadOnly(true);app.elements.get('edit-releaseType').value='Tamper';app.elements.get('edit-playbackVideoId').value='w';assert.equal(await app.saveModal(),false);assert.equal(app.elements.get('edit-releaseType').value,'Album');assert.equal(app.elements.get('edit-playbackVideoId').value,'x');
+  const featured=app.elements.get('site-featured-release-id');featured.value='s';featured.onchange();assert.equal(featured.value,'r');assert.equal(app.getSiteData().site.featuredReleaseId,'r');
+  app.setApiFallbackReadOnly(false);app.setSaving(true);const before=JSON.stringify(app.getSiteData());musicEdit(app,'r','digital',{releaseType:'Busy'});assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);
+});
+
+for(const api of [false,true]) test('music data fields deletion clears featured and shared video references through '+(api?'API':'Local JSON'),async()=>{
+  const data=musicFixture(); data.discography.demo[0].playbackVideoId='v'; const app=await musicApp({data,api});app.setConfirm(()=>true);
+  app.editYouTubeVideo('v','musicVideos');assert.equal(app.deleteItem(),true);assert.ok([...app.getSiteData().discography.digital,...app.getSiteData().discography.demo].every(x=>x.playbackVideoId===''));
+  musicEdit(app);assert.equal(app.elements.get('edit-playbackVideoId').optionValues.includes('v'),false);assert.equal(app.deleteItem(),true);assert.equal(app.getSiteData().site.featuredReleaseId,'');assert.equal(app.elements.get('site-featured-release-id').optionValues.includes('r'),false);
+  assert.equal(await app.saveData(),true);const out=api?JSON.parse(app.fetchCalls.filter(x=>x.options.method==='PUT').at(-1).options.body):JSON.parse(await app.objectUrls.at(-1).blob.text());assert.equal(out.site.featuredReleaseId,'');assert.equal(out.discography.digital.length,0);assert.equal(out.discography.demo[0].playbackVideoId,'');
+});
+test('music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections',async()=>{
+  const app=await musicApp();musicEdit(app,'s','demo');const before=JSON.stringify(app.getSiteData());assert.equal(app.deleteItem(),false);assert.equal(JSON.stringify(app.getSiteData()),before);
+  app.setConfirm(()=>true);assert.equal(app.deleteItem(),true);assert.equal(app.getSiteData().site.featuredReleaseId,'r');assert.equal(app.getSiteData().discography.digital[0].playbackVideoId,'v');
+  app.editYouTubeVideo('v','musicVideos');app.setApiFallbackReadOnly(true);const readOnly=JSON.stringify(app.getSiteData());assert.equal(app.deleteItem(),false);assert.equal(JSON.stringify(app.getSiteData()),readOnly);
+});
+test('music data fields release and video category moves preserve IDs and all selections',async()=>{
+  const app=await musicApp();musicEdit(app,'r','digital',{category:'demo'});assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().site.featuredReleaseId,'r');assert.equal(app.elements.get('site-featured-release-id').value,'r');
+  app.editYouTubeVideo('v','musicVideos');app.elements.get('edit-category').value='demos';assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().discography.demo[0].playbackVideoId,'v');musicEdit(app,'r','demo');assert.equal(app.elements.get('edit-playbackVideoId').value,'v');assert.equal(await app.saveData(),true);
+});
+
+test('music data fields successful saves advance date baseline and failures retain the old baseline',async()=>{
+  for(const api of [false,true]) {
+    const data=musicFixture();data.discography.digital[0].releaseDate='2025.5.5';const app=await musicApp({data,api});
+    musicEdit(app,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await app.saveModal(),true);
+    if(!api)assert.equal(await app.saveData(),true);
+    musicEdit(app,'r','digital',{releaseDate:'2025.5.5'});const before=JSON.stringify(app.getSiteData());assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);
+  }
+  const data=musicFixture();data.discography.digital[0].releaseDate='2025.5.5';const failed=await musicApp({data,api:true,putResponse:{ok:false,json:async()=>({error:'synthetic failure'})}});
+  musicEdit(failed,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await failed.saveModal(),false);
+  const calls=failed.fetchCalls.length;failed.elements.get('edit-releaseDate').value='2025.5.5';assert.equal(await failed.saveModal(),false);assert.equal(failed.fetchCalls.length,calls+1);assert.equal(failed.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'false');
+});
+test('music data fields image upload blocks release mutation and JSON failure retains baseline',async()=>{
+  const app=await musicApp();musicEdit(app,'r','digital',{releaseType:'Busy upload'});const before=JSON.stringify(app.getSiteData());app.setSyntheticImageUpload(true);assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);assert.equal(await app.saveData(),false);app.setSyntheticImageUpload(false);
+  const data=musicFixture();data.discography.digital[0].releaseDate='2025.5.5';const failed=await musicApp({data});musicEdit(failed,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await failed.saveModal(),true);
+  const count=failed.objectUrls.length;failed.setAnchorClickError(new Error('synthetic download failure'));assert.equal(await failed.saveData(),false);assert.equal(failed.objectUrls.length,count+1);
+  musicEdit(failed,'r','digital',{releaseDate:'2025.5.5'});assert.equal(await failed.saveModal(),true);
+});
+test('music data fields structured API error for another release never marks the active release',async()=>{
+  const app=await musicApp({api:true,putResponse:{ok:false,json:async()=>({error:'invalid releaseDate',fields:[{id:'s',field:'releaseDate',message:'Synthetic other error'}]})}});
+  musicEdit(app,'r','digital',{releaseType:'Draft'});assert.equal(await app.saveModal(),false);assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'false');assert.equal(app.elements.get('edit-releaseDate-error').textContent,'');
+});
+
+for (const retry of ['same category', 'original category', 'other field']) {
+  test('music data fields RV41-01 failed move retry with ' + retry + ' saves one release', async () => {
+    const app = await musicApp({ api: true });
+    let attempts = 0;
+    let persisted;
+    app.useAdminFetch(async (_path, options) => {
+      attempts++;
+      if (attempts === 1) return jsonResponse({ error: 'synthetic save failure' }, { ok: false, status: 500 });
+      persisted = JSON.parse(options.body);
+      return jsonResponse({ ok: true });
+    });
+    musicEdit(app, 'r', 'digital', { category: 'demo', releaseType: 'Draft' });
+    assert.equal(await app.saveModal(), false);
+    assert.equal(app.elements.get('modal').classList.contains('active'), true);
+    assert.equal(app.elements.get('edit-releaseType').value, 'Draft');
+    assert.equal(app.getHasChanges(), true);
+    if (retry === 'original category') app.elements.get('edit-category').value = 'digital';
+    if (retry === 'other field') app.elements.get('edit-title').value = 'Synthetic retry title';
+    assert.equal(await app.saveModal(), true);
+    assert.equal(attempts, 2);
+    assert.equal(app.elements.get('modal').classList.contains('active'), false);
+    assert.equal(app.getHasChanges(), false);
+    for (const data of [app.getSiteData(), persisted]) {
+      const releases = [...data.discography.digital, ...data.discography.demo];
+      assert.equal(releases.filter(item => item.id === 'r').length, 1);
+      const category = retry === 'original category' ? 'digital' : 'demo';
+      const item = data.discography[category].find(item => item.id === 'r');
+      assert.ok(item);
+      assert.equal(item.releaseType, 'Draft');
+      assert.equal(item.playbackVideoId, 'v');
+      assert.equal(item.title, retry === 'other field' ? 'Synthetic retry title' : musicFixture().discography.digital[0].title);
+      assert.equal(data.site.featuredReleaseId, 'r');
+    }
+  });
+}
+
+test('music data fields RV41-01 failed move then delete removes the moved release and featured reference', async () => {
+  const app = await musicApp({ api: true, putResponse: jsonResponse({ error: 'synthetic failure' }, { ok: false, status: 500 }) });
+  musicEdit(app, 'r', 'digital', { category: 'demo' });
+  assert.equal(await app.saveModal(), false);
+  app.setConfirm(() => true);
+  assert.equal(app.deleteItem(), true);
+  let persisted;
+  app.useAdminFetch(async (_path, options) => {
+    persisted = JSON.parse(options.body);
+    return jsonResponse({ ok: true });
+  });
+  assert.equal(await app.saveData(), true);
+  for (const data of [app.getSiteData(), persisted]) {
+    assert.equal([...data.discography.digital, ...data.discography.demo].some(item => item.id === 'r'), false);
+    assert.equal(data.site.featuredReleaseId, '');
+    assert.equal(data.discography.demo.filter(item => item.id === 's').length, 1);
+  }
+});
+
+test('music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases', async () => {
+  const app = await musicApp({ api: true });
+  const featured = app.elements.get('site-featured-release-id');
+  featured.value = 's';
+  featured.onchange();
+  const before = JSON.stringify(app.getSiteData());
+  const payloads = [];
+  app.useAdminFetch(async (_path, options) => {
+    payloads.push(JSON.parse(options.body));
+    return payloads.length === 1 ? jsonResponse({ error: 'synthetic failure' }, { ok: false, status: 500 }) : jsonResponse({ ok: true });
+  });
+  assert.equal(await app.saveData(), false);
+  assert.equal(JSON.stringify(app.getSiteData()), before);
+  assert.equal(app.getHasChanges(), true);
+  assert.equal(await app.saveData(), true);
+  assert.deepEqual(payloads[0], payloads[1]);
+  assert.equal(payloads[1].site.featuredReleaseId, 's');
+  assert.equal([...payloads[1].discography.digital, ...payloads[1].discography.demo].length, 2);
+});
+
+for (const target of ['release', 'shared video']) {
+  test('music data fields RV41-01 ' + target + ' deletion survives header failure and retry', async () => {
+    const data = musicFixture();
+    data.discography.demo[0].playbackVideoId = 'v';
+    const app = await musicApp({ data, api: true });
+    app.setConfirm(() => true);
+    if (target === 'release') musicEdit(app);
+    else app.editYouTubeVideo('v', 'musicVideos');
+    assert.equal(app.deleteItem(), true);
+    assert.equal(app.elements.get('modal').classList.contains('active'), false);
+    const payloads = [];
+    app.useAdminFetch(async (_path, options) => {
+      payloads.push(JSON.parse(options.body));
+      return payloads.length === 1 ? jsonResponse({ error: 'synthetic failure' }, { ok: false }) : jsonResponse({ ok: true });
+    });
+    assert.equal(await app.saveData(), false);
+    assert.equal(await app.saveData(), true);
+    assert.deepEqual(payloads[0], payloads[1]);
+    const releases = [...payloads[1].discography.digital, ...payloads[1].discography.demo];
+    assert.equal(releases.filter(item => item.id === 's').length, 1);
+    if (target === 'release') {
+      assert.equal(releases.some(item => item.id === 'r'), false);
+      assert.equal(payloads[1].site.featuredReleaseId, '');
+    } else {
+      assert.equal(releases.length, 2);
+      assert.ok(releases.every(item => item.playbackVideoId === ''));
+      assert.equal(payloads[1].youtube.musicVideos.some(item => item.id === 'v'), false);
+    }
+  });
+}
+
+test('music data fields RV41-01 new release retry keeps its generated ID after category change', async () => {
+  const app = await musicApp({ api: true });
+  app.addDiscography();
+  const id = app.getModalState().currentEditId;
+  app.elements.get('edit-title').value = 'Synthetic new release';
+  app.elements.get('edit-releaseDate').value = '';
+  let attempts = 0;
+  let persisted;
+  app.useAdminFetch(async (_path, options) => {
+    attempts++;
+    if (attempts === 1) throw new Error('synthetic network failure');
+    persisted = JSON.parse(options.body);
+    return jsonResponse({ ok: true });
+  });
+  assert.equal(await app.saveModal(), false);
+  app.elements.get('edit-category').value = 'demo';
+  assert.equal(await app.saveModal(), true);
+  const releases = [...persisted.discography.digital, ...persisted.discography.demo];
+  assert.equal(releases.filter(item => item.id === id).length, 1);
+  assert.equal(persisted.discography.demo.find(item => item.id === id).title, 'Synthetic new release');
+  assert.equal(releases.length, 3);
 });

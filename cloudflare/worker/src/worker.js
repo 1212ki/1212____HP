@@ -6,6 +6,7 @@ const DEFAULT_SITE_DATA = {
   youtube: { channelUrl: "https://www.youtube.com/@1212____ki", musicVideos: [], liveMovies: [], demos: [] },
   site: {
     heroImage: "assets/images/hero.jpg",
+    featuredReleaseId: "",
     links: {
       bandcamp: "https://1212ki.bandcamp.com/",
       youtube: "https://www.youtube.com/@1212____ki",
@@ -83,9 +84,10 @@ const LIVE_AI_INSTRUCTIONS = [
 ].join("\n");
 
 class SiteDataValidationError extends Error {
-  constructor(message) {
+  constructor(message, fields) {
     super(message);
     this.name = "SiteDataValidationError";
+    if (fields) this.fields = fields;
   }
 }
 
@@ -133,7 +135,7 @@ function percentEncode(value) {
 function normalizeSiteData(input) {
   const base = structuredClone(DEFAULT_SITE_DATA);
   if (!input || typeof input !== "object") return base;
-  const data = { ...base, ...input };
+  const data = { ...base, ...structuredClone(input) };
   data.news = Array.isArray(data.news) ? data.news : [];
   data.live = data.live && typeof data.live === "object" ? data.live : base.live;
   data.live.ticketLink = data.live.ticketLink || "";
@@ -178,7 +180,52 @@ function normalizeSiteData(input) {
   data.contact = data.contact && typeof data.contact === "object" ? data.contact : base.contact;
   data.contact.introText = data.contact.introText || base.contact.introText;
   data.contact.formAction = data.contact.formAction || base.contact.formAction;
+  return clearDanglingMusicReferences(data);
+}
+
+function musicReleases(data) {
+  return ["digital", "demo"].flatMap(key => Array.isArray(data?.discography?.[key]) ? data.discography[key] : []);
+}
+
+function clearDanglingMusicReferences(input) {
+  const data = structuredClone(input);
+  const releases = musicReleases(data);
+  const releaseIds = new Set(releases.map(item => item.id));
+  const videoIds = new Set(["musicVideos", "liveMovies", "demos"].flatMap(key => data.youtube[key].map(item => item.id)));
+  if (typeof data.site.featuredReleaseId !== "string" || !releaseIds.has(data.site.featuredReleaseId)) data.site.featuredReleaseId = "";
+  for (const item of releases) {
+    if (typeof item.releaseType !== "string") item.releaseType = "";
+    if (typeof item.playbackVideoId !== "string" || !videoIds.has(item.playbackVideoId)) item.playbackVideoId = "";
+  }
   return data;
+}
+
+function preserveOmittedMusicFields(input, previous) {
+  const data = structuredClone(input);
+  const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);
+  if (!data.site || typeof data.site !== "object") data.site = {};
+  if (!has(data.site, "featuredReleaseId")) data.site.featuredReleaseId = previous?.site?.featuredReleaseId;
+  const old = new Map(musicReleases(previous).map(item => [item.id, item]));
+  for (const item of musicReleases(data)) {
+    for (const key of ["releaseType", "playbackVideoId"]) {
+      if (!has(item, key)) item[key] = old.get(item.id)?.[key];
+    }
+  }
+  return data;
+}
+
+function validateReleaseDates(data, previous) {
+  const old = new Map(musicReleases(previous).map(item => [item.id, item]));
+  const fields = [];
+  for (const item of musicReleases(data)) {
+    const value = item.releaseDate === undefined ? "" : item.releaseDate;
+    const before = old.get(item.id);
+    const oldValue = before?.releaseDate === undefined ? "" : before.releaseDate;
+    if (before && JSON.stringify(value) === JSON.stringify(oldValue)) continue;
+    if (value === "" || (typeof value === "string" && value.length === 10 && /^[0-9]{4}\.[0-9]{2}\.[0-9]{2}$/.test(value))) continue;
+    fields.push({ id: item.id, field: "releaseDate", message: "「2025.05.05」の形で入力してください。" });
+  }
+  if (fields.length) throw new SiteDataValidationError("invalid releaseDate", fields);
 }
 
 function projectPublicSiteData(data) {
@@ -740,7 +787,14 @@ async function saveSiteData(env, data) {
   if (duplicateLiveIds.length > 0) {
     throw new SiteDataValidationError(`duplicate Live ID: ${duplicateLiveIds.join(", ")}`);
   }
-  const normalized = normalizeSiteData(data);
+  const row = await env.DB.prepare("SELECT data, updated_at FROM site_data WHERE id = 1").first();
+  let previous = {};
+  if (row) {
+    try { previous = JSON.parse(row.data); }
+    catch (_error) { throw new SiteDataValidationError("invalid stored site data"); }
+  }
+  validateReleaseDates(data, previous);
+  const normalized = normalizeSiteData(preserveOmittedMusicFields(data, previous));
   await env.DB.prepare(
     "INSERT OR REPLACE INTO site_data (id, data, updated_at) VALUES (1, ?, ?)"
   ).bind(JSON.stringify(normalized), nowIso()).run();
@@ -1864,7 +1918,7 @@ async function handleRequest(request, env, ctx) {
       return jsonResponse({ ok: true, data: saved }, request, env);
     } catch (error) {
       if (error instanceof SiteDataValidationError) {
-        return jsonResponse({ error: error.message }, request, env, 400);
+        return jsonResponse({ error: error.message, ...(error.fields ? { fields: error.fields } : {}) }, request, env, 400);
       }
       throw error;
     }

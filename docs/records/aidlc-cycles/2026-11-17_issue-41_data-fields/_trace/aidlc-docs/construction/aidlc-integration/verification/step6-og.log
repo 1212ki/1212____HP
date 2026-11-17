@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: Issue \#29 Worker OGP route characterization keeps crawler metadata and human canonical fallback
+ok 1 - Issue \#29 Worker OGP route characterization keeps crawler metadata and human canonical fallback
+  ---
+  duration_ms: 27.188875
+  ...
+# Subtest: OG Live metadata uses the structured date and details contract
+ok 2 - OG Live metadata uses the structured date and details contract
+  ---
+  duration_ms: 0.663958
+  ...
+# Subtest: OG Live metadata keeps legacy description fallback
+ok 3 - OG Live metadata keeps legacy description fallback
+  ---
+  duration_ms: 0.745667
+  ...
+# Subtest: music fields OG keeps Live priority and shared image fallback assets/images/synthetic-live.jpg
+ok 4 - music fields OG keeps Live priority and shared image fallback assets/images/synthetic-live.jpg
+  ---
+  duration_ms: 0.899
+  ...
+# Subtest: music fields OG keeps Live priority and shared image fallback assets/images/synthetic-share.jpg
+ok 5 - music fields OG keeps Live priority and shared image fallback assets/images/synthetic-share.jpg
+  ---
+  duration_ms: 0.952375
+  ...
+# Subtest: music fields OG keeps Live priority and shared image fallback assets/images/hero.jpg
+ok 6 - music fields OG keeps Live priority and shared image fallback assets/images/hero.jpg
+  ---
+  duration_ms: 1.453041
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 258.201708

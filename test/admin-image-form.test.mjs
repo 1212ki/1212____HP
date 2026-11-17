@@ -226,6 +226,8 @@ function loadAdminApp(options = {}) {
   };
   context.globalThis = context;
 
+  vm.runInNewContext(readFileSync(join(repoRoot, 'assets/js/music-data.js'), 'utf8'), context);
+  context.window.MusicData = context.MusicData || context.window.MusicData;
   vm.runInNewContext(
     `${appJs}
 globalThis.__adminTest = {
@@ -681,6 +683,7 @@ test('generic modal close and replacement release abandoned image operations', a
   const app = loadAdminApp();
   app.setSiteData({
     live: { upcoming: [], past: [] },
+    youtube: { musicVideos: [], liveMovies: [], demos: [] },
     news: [{ id: 'news-image', date: '2026-08-10', title: 'News', description: '', image: 'assets/images/news.jpg', link: '', linkText: '' }],
     discography: { digital: [{ id: 'disco-image', title: 'Disco', releaseDate: '2026-08-10', description: '', image: 'assets/images/disco.jpg', link: '' }], demo: [] },
   });
