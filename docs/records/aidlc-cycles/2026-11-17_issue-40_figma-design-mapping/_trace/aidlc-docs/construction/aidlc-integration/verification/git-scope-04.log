@@ -1,0 +1,115 @@
+command: node --version
+v20.19.4
+exit_code: 0
+command: git rev-parse HEAD main origin/main
+00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd
+4defa036f010c1b5eb1cd20755c62a05d50b17f0
+00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd
+exit_code: 0
+command: git branch --show-current
+feature/40-figma-design-mapping
+exit_code: 0
+command: git diff HEAD --name-only
+aidlc-docs/README.md
+docs/specs/current/README.md
+docs/specs/current/live-operations-admin-ui.md
+exit_code: 0
+command: git status --short --untracked-files=all
+ M aidlc-docs/README.md
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/01-requirements-approval.md
+?? aidlc-docs/approvals/02-workflow-plan-approval.md
+?? aidlc-docs/approvals/03-code-generation-plan-approval.md
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md
+?? aidlc-docs/construction/aidlc-integration/proposed/README.md
+?? aidlc-docs/construction/aidlc-integration/proposed/live-operations-admin-ui.md
+?? aidlc-docs/construction/aidlc-integration/proposed/public-site-ui.md
+?? aidlc-docs/construction/aidlc-integration/verification/approvals-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/candidate-checks-01c.log
+?? aidlc-docs/construction/aidlc-integration/verification/candidate-checks-01d.log
+?? aidlc-docs/construction/aidlc-integration/verification/candidate-checks.log
+?? aidlc-docs/construction/aidlc-integration/verification/close-dryrun-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/close-dryrun-04.py
+?? aidlc-docs/construction/aidlc-integration/verification/correction-checks-01c.log
+?? aidlc-docs/construction/aidlc-integration/verification/local-integrity-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/local-integrity.log
+?? aidlc-docs/construction/aidlc-integration/verification/node-tests-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/promoted-checks-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/promotion-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/validate-gates-04.sh
+?? aidlc-docs/construction/aidlc-integration/verification/verify-candidates.py
+?? aidlc-docs/construction/aidlc-integration/verification/worker-tests-04.log
+?? aidlc-docs/construction/build-and-test/build-and-test-summary.md
+?? aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md
+?? aidlc-docs/cycle-summary.md
+?? aidlc-docs/inception/plans/execution-plan.md
+?? aidlc-docs/inception/requirements/requirements.md
+?? aidlc-docs/sources/follow-up-issues.md
+?? docs/specs/current/public-site-ui.md
+exit_code: 0
+command: git diff --check
+exit_code: 0
+command: bash scripts/aidlc-cycle.sh status
+Cycle ID: 2026-11-17_issue-40_figma-design-mapping
+Issue: #40
+Current Stage: CONSTRUCTION - Code Generation Result (Owner approval pending)
+Cycle Status: In Progress
+exit_code: 0
+scope: PASS; only 3 canonical paths and aidlc-docs/
+
+FINAL SCOPE after audit and logs
+command: git status --short --untracked-files=all
+ M aidlc-docs/README.md
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/01-requirements-approval.md
+?? aidlc-docs/approvals/02-workflow-plan-approval.md
+?? aidlc-docs/approvals/03-code-generation-plan-approval.md
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md
+?? aidlc-docs/construction/aidlc-integration/proposed/README.md
+?? aidlc-docs/construction/aidlc-integration/proposed/live-operations-admin-ui.md
+?? aidlc-docs/construction/aidlc-integration/proposed/public-site-ui.md
+?? aidlc-docs/construction/aidlc-integration/verification/approvals-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/candidate-checks-01c.log
+?? aidlc-docs/construction/aidlc-integration/verification/candidate-checks-01d.log
+?? aidlc-docs/construction/aidlc-integration/verification/candidate-checks.log
+?? aidlc-docs/construction/aidlc-integration/verification/close-dryrun-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/close-dryrun-04.py
+?? aidlc-docs/construction/aidlc-integration/verification/correction-checks-01c.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-checks-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/git-scope-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/local-integrity-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/local-integrity.log
+?? aidlc-docs/construction/aidlc-integration/verification/node-tests-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/promoted-checks-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/promotion-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/session-end-parity-04.log
+?? aidlc-docs/construction/aidlc-integration/verification/validate-gates-04.sh
+?? aidlc-docs/construction/aidlc-integration/verification/verify-candidates.py
+?? aidlc-docs/construction/aidlc-integration/verification/worker-tests-04.log
+?? aidlc-docs/construction/build-and-test/build-and-test-summary.md
+?? aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md
+?? aidlc-docs/cycle-summary.md
+?? aidlc-docs/inception/plans/execution-plan.md
+?? aidlc-docs/inception/requirements/requirements.md
+?? aidlc-docs/sources/follow-up-issues.md
+?? docs/specs/current/public-site-ui.md
+exit_code: 0
+command: git diff HEAD --name-only
+aidlc-docs/README.md
+docs/specs/current/README.md
+docs/specs/current/live-operations-admin-ui.md
+exit_code: 0
+command: git diff --check
+exit_code: 0
+command: bash scripts/aidlc-cycle.sh status
+Cycle ID: 2026-11-17_issue-40_figma-design-mapping
+Issue: #40
+Current Stage: CONSTRUCTION - Code Generation Result (Owner approval pending)
+Cycle Status: In Progress
+exit_code: 0

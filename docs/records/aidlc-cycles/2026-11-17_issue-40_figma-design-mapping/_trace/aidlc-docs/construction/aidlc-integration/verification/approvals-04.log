@@ -1,0 +1,6 @@
+command: bash /Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-40-figma-design-mapping/aidlc-docs/construction/aidlc-integration/verification/validate-gates-04.sh
+validate_approval PASS: Requirements
+validate_approval PASS: Workflow Plan
+validate_approval PASS: Code Generation Plan
+
+exit_code: 0

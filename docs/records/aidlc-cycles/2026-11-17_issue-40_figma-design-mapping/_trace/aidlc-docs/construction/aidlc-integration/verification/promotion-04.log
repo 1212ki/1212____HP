@@ -1,0 +1,8 @@
+read_summary: 承認原典・計画・repo規約・validator・base canonicalを照合。
+operation_class: 承認原典のlocal転記とexact bytes昇格
+contract: 1212hp-40-packet-04
+write_plan: gate1〜3転記→validator→3組copy→byte/SHA照合→結果・state/audit→検証
+verification_result: PASS
+public-site-ui.md: byte comparison PASS; plan SHA-256 a551e50c3ff93c4f28665fbb73544e7c23dae7c68e2c8edf0030b78f35846e22 MATCH
+live-operations-admin-ui.md: byte comparison PASS; plan SHA-256 47764d8591dcb3af793935645a5ed5e5c2124d1a94a405159e22c7eb522bf3a6 MATCH
+README.md: byte comparison PASS; plan SHA-256 6190a72a88748e667d6365d64a3a6e139abec2ef5f89dccb5afb0b95f7fd2603 MATCH

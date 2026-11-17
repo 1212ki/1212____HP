@@ -1,0 +1,406 @@
+PASS: HEADが指定baseと一致
+PASS: 指定branch
+PASS: 公開snapshot SHA-256
+PASS: 管理snapshot SHA-256
+PASS: public-site-ui.md: inline node 20:5
+PASS: public-site-ui.md: inline node 25:106
+PASS: public-site-ui.md: inline node 25:91
+PASS: public-site-ui.md: inline node 30:497
+PASS: public-site-ui.md: inline node 28:108
+PASS: public-site-ui.md: inline node 23:13
+PASS: public-site-ui.md: inline node 29:355
+PASS: public-site-ui.md: inline node 29:370
+PASS: public-site-ui.md: inline node 43:509
+PASS: public-site-ui.md: inline node 0:1
+PASS: public-site-ui.md: inline node 23:36
+PASS: public-site-ui.md: inline node 24:43
+PASS: public-site-ui.md: inline node 24:139
+PASS: public-site-ui.md: inline node 25:83
+PASS: public-site-ui.md: inline node 25:91
+PASS: public-site-ui.md: inline node 25:94
+PASS: public-site-ui.md: inline node 25:100
+PASS: public-site-ui.md: inline node 39:850
+PASS: public-site-ui.md: inline node 39:850
+PASS: public-site-ui.md: inline node 24:43
+PASS: public-site-ui.md: inline node 24:139
+PASS: public-site-ui.md: inline node 25:83
+PASS: public-site-ui.md: inline node 25:94
+PASS: public-site-ui.md: inline node 28:111
+PASS: public-site-ui.md: inline node 27:104
+PASS: public-site-ui.md: inline node 27:148
+PASS: public-site-ui.md: inline node 29:249
+PASS: public-site-ui.md: inline node 29:347
+PASS: public-site-ui.md: inline node 29:355
+PASS: public-site-ui.md: inline node 29:364
+PASS: public-site-ui.md: inline node 28:141
+PASS: public-site-ui.md: inline node 29:133
+PASS: public-site-ui.md: inline node 29:249
+PASS: public-site-ui.md: inline node 29:347
+PASS: public-site-ui.md: inline node 29:352
+PASS: public-site-ui.md: inline node 29:355
+PASS: public-site-ui.md: inline node 29:358
+PASS: public-site-ui.md: inline node 29:364
+PASS: public-site-ui.md: inline node 28:182
+PASS: public-site-ui.md: inline node 29:167
+PASS: public-site-ui.md: inline node 29:249
+PASS: public-site-ui.md: inline node 29:347
+PASS: public-site-ui.md: inline node 29:355
+PASS: public-site-ui.md: inline node 29:358
+PASS: public-site-ui.md: inline node 29:364
+PASS: public-site-ui.md: inline node 28:233
+PASS: public-site-ui.md: inline node 29:210
+PASS: public-site-ui.md: inline node 29:249
+PASS: public-site-ui.md: inline node 29:347
+PASS: public-site-ui.md: inline node 29:355
+PASS: public-site-ui.md: inline node 29:364
+PASS: public-site-ui.md: inline node 30:169
+PASS: public-site-ui.md: inline node 30:198
+PASS: public-site-ui.md: inline node 29:249
+PASS: public-site-ui.md: inline node 29:347
+PASS: public-site-ui.md: inline node 29:355
+PASS: public-site-ui.md: inline node 29:364
+PASS: public-site-ui.md: inline node 30:220
+PASS: public-site-ui.md: inline node 30:335
+PASS: public-site-ui.md: inline node 30:446
+PASS: public-site-ui.md: inline node 30:489
+PASS: public-site-ui.md: inline node 30:497
+PASS: public-site-ui.md: inline node 30:500
+PASS: public-site-ui.md: inline node 30:506
+PASS: public-site-ui.md: inline node 31:247
+PASS: public-site-ui.md: inline node 31:294
+PASS: public-site-ui.md: inline node 31:400
+PASS: public-site-ui.md: inline node 31:443
+PASS: public-site-ui.md: inline node 31:451
+PASS: public-site-ui.md: inline node 31:454
+PASS: public-site-ui.md: inline node 31:460
+PASS: public-site-ui.md: inline node 31:336
+PASS: public-site-ui.md: inline node 31:370
+PASS: public-site-ui.md: inline node 31:400
+PASS: public-site-ui.md: inline node 31:443
+PASS: public-site-ui.md: inline node 31:451
+PASS: public-site-ui.md: inline node 31:460
+PASS: public-site-ui.md: inline node 25:100
+PASS: public-site-ui.md: inline node 29:364
+PASS: public-site-ui.md: inline node 30:506
+PASS: public-site-ui.md: inline node 31:460
+PASS: public-site-ui.md: inline node 28:111
+PASS: public-site-ui.md: inline node 25:94
+PASS: public-site-ui.md: inline node 39:850
+PASS: public-site-ui.md: inline node 24:139
+PASS: public-site-ui.md: inline node 29:249
+PASS: public-site-ui.md: inline node 30:446
+PASS: public-site-ui.md: inline node 31:400
+PASS: public-site-ui.md: inline node 24:139
+PASS: public-site-ui.md: inline node 29:249
+PASS: public-site-ui.md: inline node 30:446
+PASS: public-site-ui.md: inline node 31:400
+PASS: public-site-ui.md: inline node 24:179
+PASS: public-site-ui.md: inline node 29:210
+PASS: public-site-ui.md: node名/URL 20:5 / 方針｜誰に・何を・どう見せる
+PASS: public-site-ui.md: node名/URL 28:108 / 全体計画｜残りの画面
+PASS: public-site-ui.md: node名/URL 0:1 / マスタ｜ホームページ
+PASS: public-site-ui.md: node名/URL 23:36 / Home｜1440
+PASS: public-site-ui.md: node名/URL 24:43 / Home｜390
+PASS: public-site-ui.md: node名/URL 24:139 / Home｜状態
+PASS: public-site-ui.md: node名/URL 25:83 / 要件メモ｜Home
+PASS: public-site-ui.md: node名/URL 39:850 / Menu を開いた状態｜390
+PASS: public-site-ui.md: node名/URL 25:83 / 要件メモ｜Home
+PASS: public-site-ui.md: node名/URL 27:104 / Live一覧｜1440
+PASS: public-site-ui.md: node名/URL 27:148 / Live一覧｜390
+PASS: public-site-ui.md: node名/URL 29:249 / 予約の流れ｜状態
+PASS: public-site-ui.md: node名/URL 29:347 / 要件メモ｜予約の流れ
+PASS: public-site-ui.md: node名/URL 28:141 / Live詳細｜1440
+PASS: public-site-ui.md: node名/URL 29:133 / Live詳細｜390
+PASS: public-site-ui.md: node名/URL 29:249 / 予約の流れ｜状態
+PASS: public-site-ui.md: node名/URL 29:347 / 要件メモ｜予約の流れ
+PASS: public-site-ui.md: node名/URL 28:182 / Ticket｜1440
+PASS: public-site-ui.md: node名/URL 29:167 / Ticket｜390
+PASS: public-site-ui.md: node名/URL 29:249 / 予約の流れ｜状態
+PASS: public-site-ui.md: node名/URL 29:347 / 要件メモ｜予約の流れ
+PASS: public-site-ui.md: node名/URL 28:233 / Ticket完了｜1440
+PASS: public-site-ui.md: node名/URL 29:210 / Ticket完了｜390
+PASS: public-site-ui.md: node名/URL 29:249 / 予約の流れ｜状態
+PASS: public-site-ui.md: node名/URL 29:347 / 要件メモ｜予約の流れ
+PASS: public-site-ui.md: node名/URL 30:169 / 終了したライブ（全件）｜1440
+PASS: public-site-ui.md: node名/URL 30:198 / 終了したライブ（全件）｜390
+PASS: public-site-ui.md: node名/URL 29:249 / 予約の流れ｜状態
+PASS: public-site-ui.md: node名/URL 29:347 / 要件メモ｜予約の流れ
+PASS: public-site-ui.md: node名/URL 30:220 / Music｜1440
+PASS: public-site-ui.md: node名/URL 30:335 / Music｜390
+PASS: public-site-ui.md: node名/URL 30:446 / Music｜状態
+PASS: public-site-ui.md: node名/URL 30:489 / 要件メモ｜Music
+PASS: public-site-ui.md: node名/URL 31:247 / Profile｜1440
+PASS: public-site-ui.md: node名/URL 31:294 / Profile｜390
+PASS: public-site-ui.md: node名/URL 31:400 / Profile・Contact｜状態
+PASS: public-site-ui.md: node名/URL 31:443 / 要件メモ｜Profile・Contact
+PASS: public-site-ui.md: node名/URL 31:336 / Contact｜1440
+PASS: public-site-ui.md: node名/URL 31:370 / Contact｜390
+PASS: public-site-ui.md: node名/URL 31:400 / Profile・Contact｜状態
+PASS: public-site-ui.md: node名/URL 31:443 / 要件メモ｜Profile・Contact
+PASS: live-operations-admin-ui.md: inline node 39:825
+PASS: live-operations-admin-ui.md: inline node 39:828
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 39:837
+PASS: live-operations-admin-ui.md: inline node 39:831
+PASS: live-operations-admin-ui.md: inline node 39:840
+PASS: live-operations-admin-ui.md: inline node 1:2
+PASS: live-operations-admin-ui.md: inline node 15:20
+PASS: live-operations-admin-ui.md: inline node 43:491
+PASS: live-operations-admin-ui.md: inline node 39:837
+PASS: live-operations-admin-ui.md: inline node 39:834
+PASS: live-operations-admin-ui.md: inline node 47:582
+PASS: live-operations-admin-ui.md: inline node 44:492
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 47:873
+PASS: live-operations-admin-ui.md: inline node 44:531
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 44:546
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 44:595
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 47:582
+PASS: live-operations-admin-ui.md: inline node 44:610
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 50:634
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 47:688
+PASS: live-operations-admin-ui.md: inline node 44:676
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 47:757
+PASS: live-operations-admin-ui.md: inline node 44:704
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 47:757
+PASS: live-operations-admin-ui.md: inline node 44:755
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 44:786
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 47:926
+PASS: live-operations-admin-ui.md: inline node 44:811
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 50:664
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 38:274
+PASS: live-operations-admin-ui.md: inline node 38:350
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 38:425
+PASS: live-operations-admin-ui.md: inline node 38:500
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 38:425
+PASS: live-operations-admin-ui.md: inline node 38:541
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 39:366
+PASS: live-operations-admin-ui.md: inline node 39:533
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 39:461
+PASS: live-operations-admin-ui.md: inline node 39:533
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: inline node 39:589
+PASS: live-operations-admin-ui.md: inline node 39:664
+PASS: live-operations-admin-ui.md: inline node 39:741
+PASS: live-operations-admin-ui.md: inline node 39:817
+PASS: live-operations-admin-ui.md: node名/URL 1:2 / マスタ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 15:20 / 10｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 43:491 / 方針｜管理画面の目的と利用者
+PASS: live-operations-admin-ui.md: node名/URL 47:582 / 管理 Live 公開内容｜1440
+PASS: live-operations-admin-ui.md: node名/URL 44:492 / 管理 Live一覧｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 47:873 / 管理 新しいライブ｜1440
+PASS: live-operations-admin-ui.md: node名/URL 44:531 / 管理 新しいライブ 元情報｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 44:546 / 管理 新しいライブ 確認｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 44:595 / 管理 保存のあと｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 47:582 / 管理 Live 公開内容｜1440
+PASS: live-operations-admin-ui.md: node名/URL 44:610 / 管理 Live 公開内容｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 50:634 / 管理 Live 予約先・リンクなど｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 47:688 / 管理 Live 告知｜1440
+PASS: live-operations-admin-ui.md: node名/URL 44:676 / 管理 Live 告知｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 47:757 / 管理 Live 予約｜1440
+PASS: live-operations-admin-ui.md: node名/URL 44:704 / 管理 Live 予約｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 47:757 / 管理 Live 予約｜1440
+PASS: live-operations-admin-ui.md: node名/URL 44:755 / 管理 予約1件｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 44:786 / 管理 取り置きを追加｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 47:926 / 管理 予約管理｜1440
+PASS: live-operations-admin-ui.md: node名/URL 44:811 / 管理 予約管理｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 50:664 / 管理 Ticket Page共通設定｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 38:274 / 管理 Site｜1440
+PASS: live-operations-admin-ui.md: node名/URL 38:350 / 管理 Site｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 38:425 / 管理 News｜1440
+PASS: live-operations-admin-ui.md: node名/URL 38:500 / 管理 News 一覧｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 38:425 / 管理 News｜1440
+PASS: live-operations-admin-ui.md: node名/URL 38:541 / 管理 News 編集｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 39:366 / 管理 Music 作品｜1440
+PASS: live-operations-admin-ui.md: node名/URL 39:533 / 管理 Music 一覧｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 39:461 / 管理 Music 映像｜1440
+PASS: live-operations-admin-ui.md: node名/URL 39:533 / 管理 Music 一覧｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+PASS: live-operations-admin-ui.md: node名/URL 39:589 / 管理 Profile｜1440
+PASS: live-operations-admin-ui.md: node名/URL 39:664 / 管理 Profile｜390
+PASS: live-operations-admin-ui.md: node名/URL 39:741 / 管理｜状態
+PASS: live-operations-admin-ui.md: node名/URL 39:817 / 要件メモ｜管理画面
+nodeリンク照合数: 111
+PASS: 公開: 対応表frame 23:36
+PASS: 公開: 対応表frame 24:43
+PASS: 公開: 対応表frame 39:850
+PASS: 公開: 対応表frame 27:104
+PASS: 公開: 対応表frame 27:148
+PASS: 公開: 対応表frame 28:141
+PASS: 公開: 対応表frame 29:133
+PASS: 公開: 対応表frame 28:182
+PASS: 公開: 対応表frame 29:167
+PASS: 公開: 対応表frame 28:233
+PASS: 公開: 対応表frame 29:210
+PASS: 公開: 対応表frame 30:169
+PASS: 公開: 対応表frame 30:198
+PASS: 公開: 対応表frame 30:220
+PASS: 公開: 対応表frame 30:335
+PASS: 公開: 対応表frame 31:247
+PASS: 公開: 対応表frame 31:294
+PASS: 公開: 対応表frame 31:336
+PASS: 公開: 対応表frame 31:370
+PASS: 公開: 対応表の画面行数 10
+PASS: 公開: 全行に実装時点
+PASS: 公開: 全行に受入条件ID
+PASS: 管理: 対応表frame 44:492
+PASS: 管理: 対応表frame 44:531
+PASS: 管理: 対応表frame 44:546
+PASS: 管理: 対応表frame 44:595
+PASS: 管理: 対応表frame 44:610
+PASS: 管理: 対応表frame 50:634
+PASS: 管理: 対応表frame 44:676
+PASS: 管理: 対応表frame 44:704
+PASS: 管理: 対応表frame 44:755
+PASS: 管理: 対応表frame 44:786
+PASS: 管理: 対応表frame 44:811
+PASS: 管理: 対応表frame 50:664
+PASS: 管理: 対応表frame 47:582
+PASS: 管理: 対応表frame 47:688
+PASS: 管理: 対応表frame 47:757
+PASS: 管理: 対応表frame 47:873
+PASS: 管理: 対応表frame 47:926
+PASS: 管理: 対応表frame 38:274
+PASS: 管理: 対応表frame 38:350
+PASS: 管理: 対応表frame 38:425
+PASS: 管理: 対応表frame 38:500
+PASS: 管理: 対応表frame 38:541
+PASS: 管理: 対応表frame 39:366
+PASS: 管理: 対応表frame 39:461
+PASS: 管理: 対応表frame 39:533
+PASS: 管理: 対応表frame 39:589
+PASS: 管理: 対応表frame 39:664
+PASS: 管理: 対応表の画面行数 18
+PASS: 管理: 全行に実装時点
+PASS: 管理: 全行に受入条件ID
+PASS: PS-H: 項目数/一意性
+PASS: 原典AC見出し 25:100
+PASS: PS-H: 全項目の順序・ID・逐語一致
+PASS: PS-L: 項目数/一意性
+PASS: 原典AC見出し 29:364
+PASS: PS-L: 全項目の順序・ID・逐語一致
+PASS: PS-M: 項目数/一意性
+PASS: 原典AC見出し 30:506
+PASS: PS-M: 全項目の順序・ID・逐語一致
+PASS: PS-PC: 項目数/一意性
+PASS: 原典AC見出し 31:460
+PASS: PS-PC: 全項目の順序・ID・逐語一致
+PASS: ADM-40: 項目数/一意性
+PASS: 原典AC見出し 39:837
+PASS: ADM-40: 全項目の順序・ID・逐語一致
+PASS: 管理の未変更節の文面保持 ### 2.1
+PASS: 管理の未変更節の文面保持 ### 2.2
+PASS: 管理の未変更節の文面保持 ### 4.0
+PASS: 管理の未変更節の文面保持 ### 4.3
+PASS: 管理の未変更節の文面保持 ### 4.7
+PASS: 管理の未変更節の文面保持 ### 5.1
+PASS: 管理の未変更節の文面保持 ### 5.2
+PASS: 管理の未変更節の文面保持 ## 7.
+PASS: 管理の未変更節の文面保持 ## 8.
+PASS: 管理の未変更節の文面保持 ## 10.
+PASS: 管理の未変更節の文面保持 ### 11.1
+PASS: 管理の未変更節の文面保持 ### 12.1
+PASS: 管理の未変更節の文面保持 ### 12.2
+PASS: 管理の未変更節の文面保持 ### 13.1
+PASS: 管理の未変更節の文面保持 ### 13.2
+PASS: 5 gate mapping Requirements
+PASS: 5 gate mapping Workflow Plan
+PASS: 5 gate mapping Code Generation Plan
+PASS: 5 gate mapping Code Generation Result
+PASS: 5 gate mapping Build/Test Result
+PASS: 9 SKIPがchecked・理由あり
+PASS: aidlc-docs/inception/plans: 未チェック行なし
+PASS: aidlc-docs/construction/plans: 未チェック行なし
+PASS: planの昇格先/SHA-256 public-site-ui.md
+PASS: 昇格後Status public-site-ui.md
+PASS: active/closed Owner承認参照 public-site-ui.md
+PASS: current公開設計書を未作成
+PASS: planの昇格先/SHA-256 live-operations-admin-ui.md
+PASS: 昇格後Status live-operations-admin-ui.md
+PASS: active/closed Owner承認参照 live-operations-admin-ui.md
+PASS: current未変更 live-operations-admin-ui.md
+PASS: planの昇格先/SHA-256 README.md
+PASS: 昇格後Status README.md
+PASS: active/closed Owner承認参照 README.md
+PASS: current未変更 README.md
+PASS: stateはRequirements承認待ち
+PASS: stateに未チェック行なし
+PASS: 承認record未作成
+PASS: 未実施の結果を作成していない construction/aidlc-integration/code/code-generation-summary.md
+PASS: 未実施の結果を作成していない construction/build-and-test/build-and-test-summary.md
+PASS: auditにIssue #40全文を逐語保存
+PASS: aidlc-cycle status成功
+Cycle ID: 2026-11-17_issue-40_figma-design-mapping
+Issue: #40
+Current Stage: INCEPTION - Requirements Analysis (Owner approval pending)
+Cycle Status: In Progress
+PASS: git statusで許可外repo変更なし: []
+PASS: git diff --check
+verification_result: PASS
+mode: candidate
+scope: 文書候補・source照合のみ。visual/runtime・独立review・Owner承認の証明ではない。

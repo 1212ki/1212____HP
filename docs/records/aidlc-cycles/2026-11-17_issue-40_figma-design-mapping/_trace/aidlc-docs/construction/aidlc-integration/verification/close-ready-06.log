@@ -1,0 +1,3 @@
+command: bash aidlc-docs/construction/aidlc-integration/verification/validate-close-ready-06.sh
+validate_close_ready PASS (real active cycle; exact repository functions)
+exit_code: 0
