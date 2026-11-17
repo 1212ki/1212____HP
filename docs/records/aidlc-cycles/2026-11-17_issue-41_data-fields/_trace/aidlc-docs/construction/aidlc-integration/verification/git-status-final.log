@@ -1,0 +1,71 @@
+ M admin/README.md
+ M admin/app.js
+ M admin/index.html
+ M aidlc-docs/README.md
+ M cloudflare/worker/README.md
+ M cloudflare/worker/src/worker.js
+ M cloudflare/worker/test/og-live.test.js
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+ M test/admin-image-form.test.mjs
+ M test/admin-live-operations.test.mjs
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/01-requirements-approval.md
+?? aidlc-docs/approvals/02-workflow-plan-approval.md
+?? aidlc-docs/approvals/03-code-generation-plan-approval.md
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md
+?? aidlc-docs/construction/aidlc-integration/proposed/README.md
+?? aidlc-docs/construction/aidlc-integration/proposed/live-operations-admin-ui.md
+?? aidlc-docs/construction/aidlc-integration/proposed/public-site-ui.md
+?? aidlc-docs/construction/aidlc-integration/verification/close-dryrun.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-gates.log
+?? aidlc-docs/construction/aidlc-integration/verification/git-status-final.log
+?? aidlc-docs/construction/aidlc-integration/verification/session-end-parity.log
+?? aidlc-docs/construction/aidlc-integration/verification/step1-approvals.log
+?? aidlc-docs/construction/aidlc-integration/verification/step1-promotion.log
+?? aidlc-docs/construction/aidlc-integration/verification/step2-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step2-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-1.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-2.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-3.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-4.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-5.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-6.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-7.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-8.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-all-9.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step3-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step4-green-attempt1.log
+?? aidlc-docs/construction/aidlc-integration/verification/step4-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step4-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step5-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step5-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step5-worker-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step6-og.log
+?? aidlc-docs/construction/aidlc-integration/verification/step6-public.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-admin-edge.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-admin-regression.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-1.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-2.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-3.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-4.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-5.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-6.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-7.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-8.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-all-9.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-canonical-scope-data.log
+?? aidlc-docs/construction/aidlc-integration/verification/step7-recheck-all-1.log
+?? aidlc-docs/construction/aidlc-integration/verification/validate-approvals.sh
+?? aidlc-docs/construction/build-and-test/build-and-test-summary.md
+?? aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md
+?? aidlc-docs/cycle-summary.md
+?? aidlc-docs/inception/plans/execution-plan.md
+?? aidlc-docs/inception/requirements/requirements.md
+?? assets/js/music-data.js
+?? cloudflare/worker/test/music-data-fields.test.js
+?? test/music-data.test.mjs
+?? test/public-music-data-compatibility.test.mjs

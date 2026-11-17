@@ -6,7 +6,8 @@
 - Related issues: #39, #40, #37, #35, #33, #29
 - Related implementation issues: #41, #46, #47（公開側の対応: #42, #43, #44, #45）、既存契約: #19, #20, #21, #22, #33, #35, #37
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する
+- Owner approval: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #40）: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する
 - Prior Owner approval（Issue #37）: Issue #37のCode Generation Planに記載した本版の差分に対するItsuki Matsumotoのgate 3承認（本人回答`A`）。根拠はactive時の`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後の`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`。本文反映後に承認済み差分との一致を検証する
 - Prior Owner approval（Issue #35）: Issue #35のgate 3承認。根拠は`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`
 - Prior Owner approval（Issue #33）: APPROVED（Itsuki Matsumoto、2026-11-16T13:34:12+09:00、提示された本版のSHA-256 `8c9ceb61cbee4e897f8afad63245410c8bca69f5ea89c8e6a5b57e6f89038864` に対する本人回答 `A`）
@@ -241,9 +242,27 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 | Music 映像 | Channel URL、カテゴリ（Music Video／Live Movie／Demo）、タイトル、YouTube URL / IDを保持。 | `youtube.channelUrl`と各映像collectionの既存fields。 |
 | Profile | 写真、プロフィールテキスト、SNSリンク（名前・URL）を保持。 | `profile.image / text / links`。本文は登録文をそのまま表示。 |
 
-3項目はどれも空のままで公開画面が成立する。選んでいた作品・映像が削除された場合は参照を空に戻す。作品の選択が空なら最新のリリースへ戻り、映像の選択が空なら「聴く」を出さない。新しいkey名・保存形式は#41のCode Generation Planで決める。
+3項目はどれも空のままで公開画面が成立する。選んでいた作品・映像が削除された場合は参照を空に戻す。作品の選択が空なら最新のリリースへ戻り、映像の選択が空なら「聴く」を出さない。#41で固定したkey名・保存形式と保存互換性は本節末尾に示す。
 
 「最新のリリース」はリリース日が最も新しい作品。日付の形が`2025.05.05`でない既存作品は最新候補から外し、並びの最後に回す。新しく保存する時に形が違えば保存せず項目下に示す。新しい必須項目は足さず、未入力で成立する条件を保つ。既存の日付を一括書換えする決定はしない。
+
+#### Issue #41の保存契約と実装状態
+
+本節はgate 3承認後の実装入力。`00cdea5`の事実列と§15の実装状況は比較時点の記録として保持する。#41の実装・試験・独立reviewの成否は、active時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/`内の同pathを参照する。本設計のApprovedだけで実装済みとはしない。
+
+| 入力欄 | 保存先と空の表し方 | 参照する範囲 |
+|---|---|---|
+| 顔にする作品 | `site.featuredReleaseId`、作品の`id`を文字列で1つ。空は`""`。 | `discography.digital / demo`を合わせた作品。空は自動（最新のリリース）。 |
+| その場で再生する映像 | 各作品の`playbackVideoId`、映像の`id`を文字列で1つ。空は`""`。 | `youtube.musicVideos / liveMovies / demos`を合わせた登録済み映像。`youtubeId`自体は保存しない。 |
+| 種別 | 各作品の`releaseType`、任意の文字列。空は`""`。 | タイトルとは別の入力。タイトルを分解・移行しない。 |
+
+欠けた新規keyは読込時に空として扱う。通常の保存で新規keyを出力し、既存データの一括移行や読込による既存行の書換えはしない。作品・映像のカテゴリを移しても`id`が同じなら参照を保つ。削除された作品への`featuredReleaseId`と、削除された映像への全作品の`playbackVideoId`は空に戻す。adminの削除直後とWorkerの保存時に参照先を照合する。選択解除は既存の保存操作で永続化し、削除だけを即時保存する型への変更は#47に残す。
+
+日付を新しく保存する範囲は、新規作品と、既存作品の`releaseDate`を変更した時。日付を変えない他項目の保存や作品のカテゴリ移動では、既存の不揃い日付をそのまま保持する。空文字は引き続き任意入力として許可する。新規・変更後の空でない日付はASCII数字の`YYYY.MM.DD`（`^[0-9]{4}\.[0-9]{2}\.[0-9]{2}$`）に合うことをadminと保存APIの両方で検査する。これは形の検査で、実在日・未来日等の新しい制約は加えない。不正なら保存せず、adminでは`「2025.05.05」の形で入力してください。`を対象の直下に表示し、入力を保持する。
+
+自動選択は両作品collectionを合わせ、上の形に合う空でない日付だけを候補にし、日付文字列の降順で先頭を選ぶ。同日は元の配列順（digital、demoの順で連結）を保つ。候補なしは作品なし。並び用の処理は不揃い日付を末尾へ回すが、保存配列は並べ替えない。明示選択した作品は日付の形によらず優先する。#41ではこの選択・並びの共通処理と管理画面の選択肢までを用意し、公開画面へ適用するのは#42・#44（Ticket完了は#43）。
+
+公開APIの`data`とLocal ModeのJSONには上記3項目を出す。`site.heroImage`のkey・画像操作・OG画像fallbackは保持し、表示名だけを「共有時の画像」にする。#41の段階では新規3項目の空／登録ありのどちらでも、既存公開画面の表示・配列順・Homeの画像の使い方を変えない。公開サイトとadminはGitHub Pagesの`main`・`/`配信なので、Itsukiはmerge前にPR最終版のtested revisionから新Workerをdeployし、その後にmergeする。mergeが新adminとhelperの公開を起動し、別の静的反映操作は行わない。新Workerは旧adminが省いた新規keyを既存の同一`id`から補う。明示的な空文字は選択解除として尊重する。mergeを見送る場合のWorker rollbackとmerge後の復旧手順は#41のCode Generation Plan §9に従う。
 
 ## 6. 情報の優先順位
 
@@ -551,6 +570,8 @@ AC-35-04はdeploy後のOwner確認として残す。mock testやcycle closeで�
 | ADM-40-05 | 今の管理画面で編集できる項目が、すべて残っている（Home Heroは「共有時の画像」として残る）。 | #41, #46, #47 |
 | ADM-40-06 | 新しい3項目を空のままにしても、公開画面が今と同じ情報を出せる。 | #41、公開#42〜#45 |
 | ADM-40-07 | 未保存の変更が、確認なしに消えることがない。 | #46, #47 |
+
+ADM-40-05の#41分は既存入力の保持と共有画像の表示名、ADM-40-06の#41分は3項目が空／登録ありでも既存公開表示が変わらないこととする。#46・#47の画面受入や未保存guardの完了は含めない。#41の実装状態は§5.3末尾の結果参照で確認する。
 
 既存§12・§12.1・§12.2の受入条件は維持する。#37のTicketとメールは§5.2、共有URLは§8・§10、AI整理は§7・§10.1に従う。#40の文書確認は本番の成功や画面条件の合格を意味しない。
 

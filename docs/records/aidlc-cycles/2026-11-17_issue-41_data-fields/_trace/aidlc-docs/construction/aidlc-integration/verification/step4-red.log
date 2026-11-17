@@ -1,0 +1,1278 @@
+TAP version 13
+# Subtest: Live is the initial primary tab and Tickets is not a global tab
+ok 1 - Live is the initial primary tab and Tickets is not a global tab # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.99975
+  ...
+# Subtest: Live workspace has semantic Liveページ and 予約管理 tabs
+ok 2 - Live workspace has semantic Liveページ and 予約管理 tabs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.093583
+  ...
+# Subtest: Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 3 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.079959
+  ...
+# Subtest: Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 4 - Live workspace separates reservations and Ticket Page共通設定 from Live list details # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.07725
+  ...
+# Subtest: Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 5 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.079542
+  ...
+# Subtest: Live workspace initial state is Liveページ and 開催予定
+ok 6 - Live workspace initial state is Liveページ and 開催予定 # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.183416
+  ...
+# Subtest: Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 7 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.292166
+  ...
+# Subtest: master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 8 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.109583
+  ...
+# Subtest: Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+ok 9 - Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.323042
+  ...
+# Subtest: master-detail marks only the first upcoming card as Next Live
+ok 10 - master-detail marks only the first upcoming card as Next Live # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.284542
+  ...
+# Subtest: Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 11 - Live task tabs are semantic, keyboard operable, and preserve mounted input # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.116584
+  ...
+# Subtest: new Live prioritizes source intake and gates post-save tasks until first save
+ok 12 - new Live prioritizes source intake and gates post-save tasks until first save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.085375
+  ...
+# Subtest: Live validation blocks missing date and venue before changing data or saving
+ok 13 - Live validation blocks missing date and venue before changing data or saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.079
+  ...
+# Subtest: Live category mismatch warns but saves without automatically moving collection
+ok 14 - Live category mismatch warns but saves without automatically moving collection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.241666
+  ...
+# Subtest: Live API save reports saving, saved, and failed states around the existing save route
+ok 15 - Live API save reports saving, saved, and failed states around the existing save route # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.086167
+  ...
+# Subtest: Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 16 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.288458
+  ...
+# Subtest: reselecting the active global Live tab is a no-op for a dirty editor
+ok 17 - reselecting the active global Live tab is a no-op for a dirty editor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.137458
+  ...
+# Subtest: reselecting the active global Live tab is also a no-op for a clean editor
+ok 18 - reselecting the active global Live tab is also a no-op for a clean editor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.309958
+  ...
+# Subtest: Live internal task switching preserves dirty input without discard confirmation
+ok 19 - Live internal task switching preserves dirty input without discard confirmation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.188791
+  ...
+# Subtest: API fallback is read-only while keeping Live navigation available
+ok 20 - API fallback is read-only while keeping Live navigation available # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.342042
+  ...
+# Subtest: API fallback keeps every admin collection immutable while existing details remain viewable
+ok 21 - API fallback keeps every admin collection immutable while existing details remain viewable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.094208
+  ...
+# Subtest: API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 22 - API fallback blocks direct Live item and API save calls before mutation or PUT # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.067792
+  ...
+# Subtest: beforeunload protects global changes and Live dirty or saving states
+ok 23 - beforeunload protects global changes and Live dirty or saving states # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.052917
+  ...
+# Subtest: explicit Local Mode labels the header action as JSON export
+ok 24 - explicit Local Mode labels the header action as JSON export # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051417
+  ...
+# Subtest: responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+ok 25 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.049542
+  ...
+# Subtest: sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 26 - sticky Live controls have no scrolling mechanism in the complete ancestor chain # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04675
+  ...
+# Subtest: sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 27 - sticky Live task tabs offset below the fixed global header and navigation chrome # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045333
+  ...
+# Subtest: essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 28 - essential mobile Live workspace list utility and back controls guarantee 44px targets # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.086625
+  ...
+# Subtest: saved header action maintains white text contrast through hover and focus
+ok 29 - saved header action maintains white text contrast through hover and focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04625
+  ...
+# Subtest: sticky Live task tabs and footer have no clipping workspace ancestor
+ok 30 - sticky Live task tabs and footer have no clipping workspace ancestor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044166
+  ...
+# Subtest: production Live lock gives every workspace button a disabled affordance
+ok 31 - production Live lock gives every workspace button a disabled affordance # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047083
+  ...
+# Subtest: admin build marker and operator docs match the merged Live UI assets
+ok 32 - admin build marker and operator docs match the merged Live UI assets # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.150791
+  ...
+# Subtest: Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 33 - Live edit workspace saves a category move in place and routes Local Mode to JSON export # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.169958
+  ...
+# Subtest: Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 34 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.049083
+  ...
+# Subtest: Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 35 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04475
+  ...
+# Subtest: Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 36 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06075
+  ...
+# Subtest: Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 37 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041417
+  ...
+# Subtest: Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 38 - Live API publish blocks global tab navigation and marks every global tab disabled while pending # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.155958
+  ...
+# Subtest: global tabs re-enable and navigate normally after Live API publish succeeds
+ok 39 - global tabs re-enable and navigate normally after Live API publish succeeds # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.084209
+  ...
+# Subtest: global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 40 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.060083
+  ...
+# Subtest: shared LiveOperations script is loaded before the admin application
+ok 41 - shared LiveOperations script is loaded before the admin application # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051667
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 42 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.053333
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 43 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.087208
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 44 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.058
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 45 - AIで整理 source intake discards a stale response when source text changes while pending / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 46 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04775
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 47 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045875
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+ok 48 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040708
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+ok 49 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040625
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 50 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043459
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 51 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041583
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 52 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0605
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 53 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041708
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 54 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043208
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 55 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042417
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 56 - AIで整理 source intake discards a stale response when source text changes while pending / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041375
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 57 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.113333
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 58 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.055167
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+ok 59 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040667
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / openai
+ok 60 - AIで整理 source intake never falls back from a custom API base to canonical production / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037125
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 61 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.055666
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 62 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051333
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 63 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036292
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 64 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0365
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 65 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03525
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 66 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039167
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 67 - AIで整理 source intake discards a stale response when source text changes while pending / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06225
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 68 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040708
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 69 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035958
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+ok 70 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034583
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / claude
+ok 71 - AIで整理 source intake never falls back from a custom API base to canonical production / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034084
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 72 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032458
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 73 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 74 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0345
+  ...
+# Subtest: AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+ok 75 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034041
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 76 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0325
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 77 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 78 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034375
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 79 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034917
+  ...
+# Subtest: AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 80 - AIで整理 source intake uses the existing small status markup for desktop and mobile # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032791
+  ...
+# Subtest: Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 81 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032417
+  ...
+# Subtest: structured Live editor normalizes legacy date and saves independent detail fields
+ok 82 - structured Live editor normalizes legacy date and saves independent detail fields # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.074709
+  ...
+# Subtest: unparsed legacy Live date is preserved until a valid replacement is entered
+ok 83 - unparsed legacy Live date is preserved until a valid replacement is entered # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032375
+  ...
+# Subtest: saving a Live merges new fields into the original object without dropping unknown properties
+ok 84 - saving a Live merges new fields into the original object without dropping unknown properties # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033584
+  ...
+# Subtest: unified X announcement preview drives Intent and copy without save
+ok 85 - unified X announcement preview drives Intent and copy without save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034625
+  ...
+# Subtest: Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 86 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037583
+  ...
+# Subtest: Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 87 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03475
+  ...
+# Subtest: Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 88 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031959
+  ...
+# Subtest: Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 89 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031416
+  ...
+# Subtest: Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 90 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03475
+  ...
+# Subtest: new Live requires an explicit save before X Intent or reservation operations
+ok 91 - new Live requires an explicit save before X Intent or reservation operations # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034458
+  ...
+# Subtest: saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 92 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033833
+  ...
+# Subtest: manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 93 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033
+  ...
+# Subtest: active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 94 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030792
+  ...
+# Subtest: CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 95 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033958
+  ...
+# Subtest: CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 96 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038541
+  ...
+# Subtest: reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 97 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033333
+  ...
+# Subtest: reservation loading for a non-current Live cannot mutate the current modal
+ok 98 - reservation loading for a non-current Live cannot mutate the current modal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031417
+  ...
+# Subtest: cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 99 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033084
+  ...
+# Subtest: cross-Live ledger response cannot mutate a disconnected replacement target
+ok 100 - cross-Live ledger response cannot mutate a disconnected replacement target # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033167
+  ...
+# Subtest: cross-Live ledger response requires both current filters to match its snapshot
+ok 101 - cross-Live ledger response requires both current filters to match its snapshot # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034541
+  ...
+# Subtest: cross-Live filters refresh without reloading when the effective selection remains valid
+ok 102 - cross-Live filters refresh without reloading when the effective selection remains valid # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.062
+  ...
+# Subtest: deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 103 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034917
+  ...
+# Subtest: reservation status actions use escaped data attributes and delegated event handling
+ok 104 - reservation status actions use escaped data attributes and delegated event handling # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034333
+  ...
+# Subtest: generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 105 - generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.052167
+  ...
+# Subtest: saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 106 - saving a rendered Live keeps its editor and selected replacement trigger after a category move # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.067083
+  ...
+# Subtest: saving a new past Live activates its visible destination category
+ok 107 - saving a new past Live activates its visible destination category # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043333
+  ...
+# Subtest: admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+ok 108 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041084
+  ...
+# Subtest: Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 109 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04
+  ...
+# Subtest: music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+not ok 110 - music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+  ---
+  duration_ms: 30.52275
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3279:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<h3>Home<\/h3>/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+      '  <title>1212 HP Admin</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="style.css?v=20260816-22">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <div id="app">\n' +
+      '    <!-- ヘッダー -->\n' +
+      '    <header class="header">\n' +
+      '      <div>\n' +
+      '        <h1 class="logo">1212 <span class="accent">Admin</span></h1>\n' +
+      '        <p class="header-meta" id="modeBadge">Local Mode</p>\n' +
+      '      </div>\n' +
+      '      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>\n' +
+      '    </header>\n' +
+      '    <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>\n' +
+      '\n' +
+      '    <!-- タブナビ -->\n' +
+      '    <nav class="tab-nav">\n' +
+      '      <button class="tab-btn" data-tab="site">Site</button>\n' +
+      '      <button class="tab-btn" data-tab="news">News</button>\n' +
+      '      <button class="tab-btn active" data-tab="live">Live</button>\n' +
+      '      <button class="tab-btn" data-tab="youtube">YouTube</button>\n' +
+      '      <button class="tab-btn" data-tab="discography">Disco</button>\n' +
+      '      <button class="tab-btn" data-tab="profile">Profile</button>\n' +
+      '    </nav>\n' +
+      '\n' +
+      '    <!-- Siteタブ -->\n' +
+      '    <section class="tab-content" id="site-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Site</h2>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home Hero</h3>\n' +
+      '        <div id="site-hero-image-form"></div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home Links</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Bandcamp</label>\n' +
+      '          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>YouTube</label>\n' +
+      '          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>X</label>\n' +
+      '          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Instagram</label>\n' +
+      '          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>note</label>\n' +
+      '          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Footer</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>フッター文言（空なら既定のまま）</label>\n' +
+      '          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Contact</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>導入文</label>\n' +
+      '          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Form Action（Formspree URL）</label>\n' +
+      '          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Newsタブ -->\n' +
+      '    <section class="tab-content" id="news-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>News</h2>\n' +
+      '        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>\n' +
+      '      </div>\n' +
+      '      <div class="items-list" id="news-list"></div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Liveタブ -->\n' +
+      '    <section class="tab-content active" id="live-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Live</h2>\n' +
+      '        <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>\n' +
+      '      </div>\n' +
+      '      <div class="live-workspace" id="live-workspace">\n' +
+      '        <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">\n' +
+      '          <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>\n' +
+      '          <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">\n' +
+      '          <div id="live-page-primary">\n' +
+      '            <div class="live-page-toolbar">\n' +
+      '              <div class="live-list-tabs" role="tablist" aria-label="公演一覧">\n' +
+      '                <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>\n' +
+      '                <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>\n' +
+      '            </div>\n' +
+      '\n' +
+      '            <div class="live-master-detail" id="live-master-detail">\n' +
+      '              <div class="live-master-pane" id="live-master-pane">\n' +
+      '                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">\n' +
+      '                  <div class="items-list" id="live-upcoming-list"></div>\n' +
+      '                </section>\n' +
+      '                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>\n' +
+      '                  <div class="items-list" id="live-past-list"></div>\n' +
+      '                </section>\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">\n' +
+      '                <header class="live-editor-header">\n' +
+      '                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>\n' +
+      '                  <div class="live-editor-title-group">\n' +
+      '                    <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>\n' +
+      '                    <h3 id="live-editor-heading">Liveを選択</h3>\n' +
+      '                  </div>\n' +
+      '                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>\n' +
+      '                </header>\n' +
+      '                <div class="live-editor-body" id="live-editor-body">\n' +
+      '                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>\n' +
+      '                </div>\n' +
+      '              </section>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>\n' +
+      '            <div class="section-header compact">\n' +
+      '              <div>\n' +
+      '                <p class="live-workspace-eyebrow">Liveページ共通</p>\n' +
+      '                <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示文言）</h3>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>完了文（空なら既定のまま）</label>\n' +
+      '                <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示項目）</h3>\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>\n' +
+      '                <label for="ticket-field-quantity">Quantity（枚数）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>枚数 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-message" data-admin-mutation>\n' +
+      '                <label for="ticket-field-message">備考（任意）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 プレースホルダ（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="form-group">\n' +
+      '                <label>送信ボタン文言（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '          </section>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>\n' +
+      '          <div class="live-reservations-panel">\n' +
+      '          <div class="section-header compact">\n' +
+      '            <h3>横断予約台帳</h3>\n' +
+      '            <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '        '... 5087 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>1212 HP Admin</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="style.css?v=20260816-22">
+    </head>
+    <body>
+      <div id="app">
+        <!-- ヘッダー -->
+        <header class="header">
+          <div>
+            <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+            <p class="header-meta" id="modeBadge">Local Mode</p>
+          </div>
+          <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
+        </header>
+        <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+    
+        <!-- タブナビ -->
+        <nav class="tab-nav">
+          <button class="tab-btn" data-tab="site">Site</button>
+          <button class="tab-btn" data-tab="news">News</button>
+          <button class="tab-btn active" data-tab="live">Live</button>
+          <button class="tab-btn" data-tab="youtube">YouTube</button>
+          <button class="tab-btn" data-tab="discography">Disco</button>
+          <button class="tab-btn" data-tab="profile">Profile</button>
+        </nav>
+    
+        <!-- Siteタブ -->
+        <section class="tab-content" id="site-tab">
+          <div class="section-header">
+            <h2>Site</h2>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Hero</h3>
+            <div id="site-hero-image-form"></div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Links</h3>
+            <div class="form-group">
+              <label>Bandcamp</label>
+              <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>YouTube</label>
+              <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>X</label>
+              <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>note</label>
+              <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Footer</h3>
+            <div class="form-group">
+              <label>フッター文言（空なら既定のまま）</label>
+              <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Contact</h3>
+            <div class="form-group">
+              <label>導入文</label>
+              <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Form Action（Formspree URL）</label>
+              <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+            </div>
+          </div>
+        </section>
+    
+        <!-- Newsタブ -->
+        <section class="tab-content" id="news-tab">
+          <div class="section-header">
+            <h2>News</h2>
+            <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="items-list" id="news-list"></div>
+        </section>
+    
+        <!-- Liveタブ -->
+        <section class="tab-content active" id="live-tab">
+          <div class="section-header">
+            <h2>Live</h2>
+            <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>
+          </div>
+          <div class="live-workspace" id="live-workspace">
+            <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+              <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+              <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
+            </div>
+    
+            <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+              <div id="live-page-primary">
+                <div class="live-page-toolbar">
+                  <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                    <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                    <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+                  </div>
+                  <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+                </div>
+    
+                <div class="live-master-detail" id="live-master-detail">
+                  <div class="live-master-pane" id="live-master-pane">
+                    <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                      <div class="items-list" id="live-upcoming-list"></div>
+                    </section>
+                    <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                      <div class="items-list" id="live-past-list"></div>
+                    </section>
+                  </div>
+    
+                  <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                    <header class="live-editor-header">
+                      <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                      <div class="live-editor-title-group">
+                        <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
+                        <h3 id="live-editor-heading">Liveを選択</h3>
+                      </div>
+                      <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                    </header>
+                    <div class="live-editor-body" id="live-editor-body">
+                      <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+    
+              <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+                <div class="section-header compact">
+                  <div>
+                    <p class="live-workspace-eyebrow">Liveページ共通</p>
+                    <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+                  </div>
+                  <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示文言）</h3>
+                  <div class="form-group">
+                    <label>完了文（空なら既定のまま）</label>
+                    <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
+                  </div>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示項目）</h3>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
+                    <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>枚数 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
+                  </div>
+    
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-message" data-admin-mutation>
+                    <label for="ticket-field-message">備考（任意）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>備考 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
+                  </div>
+                  <div class="form-group">
+                    <label>備考 プレースホルダ（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
+                  </div>
+    
+                  <div class="form-group">
+                    <label>送信ボタン文言（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
+                  </div>
+                </div>
+              </section>
+            </section>
+    
+            <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+              <div class="live-reservations-panel">
+              <div class="section-header compact">
+                <h3>横断予約台帳</h3>
+                <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+              </div>
+              <div class="form-group">
+                <label for="tickets-live-filter">フィルタ</label>
+                <div class="filters">
+                  <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+                  <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                    <option value="">全ステータス</option>
+                    <option value="pending" selected>未対応</option>
+                    <option value="handled">対応済み</option>
+                    <option value="cancelled">キャンセル</option>
+                  </select>
+                </div>
+              </div>
+              <div class="items-list" id="tickets-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+    
+        <!-- YouTubeタブ -->
+        <section class="tab-content" id="youtube-tab">
+          <div class="section-header">
+            <h2>YouTube</h2>
+            <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Channel URL</h3>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+    
+          <div class="subsection">
+            <h3>Music Video</h3>
+            <div class="items-list" id="youtube-musicVideos-list"></div>
+            <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Live Movie</h3>
+            <div class="items-list" id="youtube-liveMovies-list"></div>
+            <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Demo</h3>
+            <div class="items-list" id="youtube-demos-list"></div>
+            <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+          </div>
+        </section>
+    
+        <!-- Discographyタブ -->
+        <section class="tab-content" id="discography-tab">
+          <div class="section-header">
+            <h2>Discography</h2>
+            <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
+          </div>
+          <div class="subsection">
+            <h3>Digital Release</h3>
+            <div class="items-list" id="disc-digital-list"></div>
+          </div>
+          <div class="subsection">
+            <h3>宅録Demo</h3>
+            <div class="items-list" id="disc-demo-list"></div>
+          </div>
+        </section>
+    
+        <!-- Profileタブ -->
+        <section class="tab-content" id="profile-tab">
+          <div class="section-header">
+            <h2>Profile</h2>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group">
+            <label>プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+          <div class="subsection">
+            <h3>SNSリンク</h3>
+            <div class="items-list" id="profile-links-list"></div>
+            <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+        </section>
+    
+        <!-- モーダル -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+          <div class="modal-header">
+            <h3 id="modal-title">編集</h3>
+            <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+            <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
+          </div>
+        </div>
+    
+        <!-- トースト -->
+        <div class="toast" id="toast"></div>
+      </div>
+      <script>
+      // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+      window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
+      try {
+        var badge = document.getElementById('modeBadge');
+        if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+        var banner0 = document.getElementById('connectionBanner');
+        if (banner0) banner0.textContent = '読み込み中...';
+      } catch (e) {}
+      window.addEventListener('error', function (ev) {
+        try {
+          var banner = document.getElementById('connectionBanner');
+          if (banner) {
+            banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+            banner.classList.add('is-error');
+          }
+        } catch (e) {}
+      });
+    </script>
+    <script src="config.js?v=20260216-2001"></script>
+    <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+    <script src="app.js?v=20260816-22"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3281:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+not ok 111 - music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+  ---
+  duration_ms: 4.078375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3294:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - false
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3297:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields API failure keeps editor and baseline, structured errors bind only matching release
+not ok 112 - music data fields API failure keeps editor and baseline, structured errors bind only matching release
+  ---
+  duration_ms: 2.168333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3302:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3304:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields legacy date 2025.5.5 stays on unrelated save and move
+not ok 113 - music data fields legacy date 2025.5.5 stays on unrelated save and move
+  ---
+  duration_ms: 2.001458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3308:80'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3309:110)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields legacy date 2025/05/05 stays on unrelated save and move
+not ok 114 - music data fields legacy date 2025/05/05 stays on unrelated save and move
+  ---
+  duration_ms: 4.980583
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3308:80'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3309:110)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields legacy date 2025.05 stays on unrelated save and move
+not ok 115 - music data fields legacy date 2025.05 stays on unrelated save and move
+  ---
+  duration_ms: 2.240208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3308:80'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3309:110)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields legacy date  stays on unrelated save and move
+not ok 116 - music data fields legacy date  stays on unrelated save and move
+  ---
+  duration_ms: 1.903125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3308:80'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3309:110)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields legacy date undefined stays on unrelated save and move
+not ok 117 - music data fields legacy date undefined stays on unrelated save and move
+  ---
+  duration_ms: 7.625959
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3308:80'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3309:110)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields legacy date 42 stays on unrelated save and move
+not ok 118 - music data fields legacy date 42 stays on unrelated save and move
+  ---
+  duration_ms: 2.691083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3308:80'
+  failureType: 'testCodeFailure'
+  error: 'str.replace is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    escapeHtml (evalmachine.<anonymous>:3485:6)
+    evalmachine.<anonymous>:1360:31
+    Array.map (<anonymous>)
+    renderDiscography (evalmachine.<anonymous>:1355:58)
+    Object.renderAll (evalmachine.<anonymous>:1001:3)
+    musicApp (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3273:29)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3309:87)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields legacy date null stays on unrelated save and move
+not ok 119 - music data fields legacy date null stays on unrelated save and move
+  ---
+  duration_ms: 2.723333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3308:80'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3309:110)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields new release empty or shaped date, header validation and baseline only after success
+not ok 120 - music data fields new release empty or shaped date, header validation and baseline only after success
+  ---
+  duration_ms: 2.959917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3311:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3312:114)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+not ok 121 - music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+  ---
+  duration_ms: 2.202542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3316:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot set properties of undefined (setting 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    musicEdit (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3277:87)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:3317:40)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..121
+# tests 121
+# suites 0
+# pass 0
+# fail 12
+# cancelled 0
+# skipped 109
+# todo 0
+# duration_ms 3300.598916

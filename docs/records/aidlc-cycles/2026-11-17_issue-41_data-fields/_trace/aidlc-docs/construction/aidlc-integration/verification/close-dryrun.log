@@ -1,0 +1,4 @@
+method: copied aidlc-docs; synthetic records and Complete only in copy; original validator function
+command: AIDLC_REPO_ROOT=/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261117-160800_1212hp-41-data-fields/close-dryrun bash /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261117-160800_1212hp-41-data-fields/close-dryrun/validate-close-ready.sh
+validate_close_ready: PASS (SYNTHETIC COPY ONLY)
+exit: 0

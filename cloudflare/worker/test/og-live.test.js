@@ -3,10 +3,11 @@ import test from "node:test";
 
 import worker from "../src/worker.js";
 
-function createEnv(live) {
+function createEnv(live, extra = {}) {
   const siteData = {
     site: { heroImage: "" },
     live: { ticketLink: "", upcoming: [live], past: [] },
+    ...extra,
   };
   return {
     PUBLIC_ORIGIN: "https://1212hp.com",
@@ -128,4 +129,20 @@ test("OG Live metadata keeps legacy description fallback", async () => {
   assert.equal(response.status, 200);
   assert.match(html, /2026\.09\.28\(Mon\) Hall/);
   assert.match(html, /OPEN 18:30 \/ START 19:00 \/ 出演：旧データ/);
+});
+
+for (const [liveImage, heroImage, expected] of [
+  ['assets/images/synthetic-live.jpg', 'assets/images/synthetic-share.jpg', 'assets/images/synthetic-live.jpg'],
+  ['', 'assets/images/synthetic-share.jpg', 'assets/images/synthetic-share.jpg'],
+  ['', '', 'assets/images/hero.jpg'],
+]) test('music fields OG keeps Live priority and shared image fallback '+expected, async () => {
+  const live={id:'synthetic-og',date:'2026.01.01',title:'Synthetic OG',image:liveImage};
+  let before;
+  for (const populated of [false,true]) {
+    const extra={site:{heroImage},discography:{digital:[{id:'r',releaseDate:'2025.05.05'}],demo:[]},youtube:{musicVideos:[{id:'v',youtubeId:'abcdefghijk'}],liveMovies:[],demos:[]}};
+    if(populated){extra.site.featuredReleaseId='r';extra.discography.digital[0].releaseType='Synthetic';extra.discography.digital[0].playbackVideoId='v';}
+    const response=await worker.fetch(new Request('https://example.test/og/live/synthetic-og'),createEnv(live,extra),{});assert.equal(response.status,200);const html=await response.text();
+    assert.ok(html.includes(`<meta property="og:image" content="https://1212hp.com/${expected}" />`));
+    if(before)assert.equal(html,before);before=html;
+  }
 });

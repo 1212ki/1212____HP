@@ -1,0 +1,1977 @@
+command: node --test test/
+TAP version 13
+# Subtest: default image forms keep the existing path display for non-live images
+ok 1 - default image forms keep the existing path display for non-live images
+  ---
+  duration_ms: 21.708833
+  ...
+# Subtest: default image path display escapes the current image path
+ok 2 - default image path display escapes the current image path
+  ---
+  duration_ms: 1.336958
+  ...
+# Subtest: downloadable live flyer forms hide path text and wrap the preview in a download link
+ok 3 - downloadable live flyer forms hide path text and wrap the preview in a download link
+  ---
+  duration_ms: 1.554417
+  ...
+# Subtest: Live edit workspace uses a downloadable flyer preview without path or URL display
+ok 4 - Live edit workspace uses a downloadable flyer preview without path or URL display
+  ---
+  duration_ms: 4.590125
+  ...
+# Subtest: Live image selection keeps the selected flyer preview inside a download link
+ok 5 - Live image selection keeps the selected flyer preview inside a download link
+  ---
+  duration_ms: 2.46475
+  ...
+# Subtest: Live image clear marks the workspace editor dirty and disables the global save route
+ok 6 - Live image clear marks the workspace editor dirty and disables the global save route
+  ---
+  duration_ms: 2.115334
+  ...
+# Subtest: API fallback disables and runtime-guards Live flyer select and clear mutations
+ok 7 - API fallback disables and runtime-guards Live flyer select and clear mutations
+  ---
+  duration_ms: 2.588291
+  ...
+# Subtest: Live image API upload updates the flyer download link to the uploaded URL
+ok 8 - Live image API upload updates the flyer download link to the uploaded URL
+  ---
+  duration_ms: 1.478417
+  ...
+# Subtest: a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+ok 9 - a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+  ---
+  duration_ms: 13.619959
+  ...
+# Subtest: pending Live image upload protects beforeunload and settles into dirty state on success
+ok 10 - pending Live image upload protects beforeunload and settles into dirty state on success
+  ---
+  duration_ms: 2.730833
+  ...
+# Subtest: failed Live image upload restores its original preview and preserves unrelated dirty input
+ok 11 - failed Live image upload restores its original preview and preserves unrelated dirty input
+  ---
+  duration_ms: 3.755792
+  ...
+# Subtest: Live image overlapping same-ID uploads release the superseded request when latest settles
+ok 12 - Live image overlapping same-ID uploads release the superseded request when latest settles
+  ---
+  duration_ms: 4.18725
+  ...
+# Subtest: latest overlapping upload failure restores the first confirmed image baseline
+ok 13 - latest overlapping upload failure restores the first confirmed image baseline
+  ---
+  duration_ms: 2.589708
+  ...
+# Subtest: Local Live image read blocks transition until confirmed discard releases its owner
+ok 14 - Local Live image read blocks transition until confirmed discard releases its owner
+  ---
+  duration_ms: 3.239459
+  ...
+# Subtest: Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+ok 15 - Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+  ---
+  duration_ms: 1.81775
+  ...
+# Subtest: generic modal close and replacement release abandoned image operations
+not ok 16 - generic modal close and replacement release abandoned image operations
+  ---
+  duration_ms: 4.964917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-image-form.test.mjs:682:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'musicVideos')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    playbackVideoOptions (evalmachine.<anonymous>:1020:57)
+    musicReleaseFields (evalmachine.<anonymous>:1030:58)
+    Object.editDiscography (evalmachine.<anonymous>:2513:7)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-image-form.test.mjs:702:7)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: clearImage is latest across API and Local Live image operations
+    # Subtest: API
+    ok 1 - API
+      ---
+      duration_ms: 5.251208
+      ...
+    # Subtest: Local
+    ok 2 - Local
+      ---
+      duration_ms: 2.214916
+      ...
+    1..2
+ok 17 - clearImage is latest across API and Local Live image operations
+  ---
+  duration_ms: 7.859334
+  ...
+# Subtest: clearImage is latest for generic page images after API success and Local failure
+ok 18 - clearImage is latest for generic page images after API success and Local failure
+  ---
+  duration_ms: 7.898792
+  ...
+# Subtest: a new image selection does not release a parallel operation for another input
+ok 19 - a new image selection does not release a parallel operation for another input
+  ---
+  duration_ms: 2.65525
+  ...
+# Subtest: Live is the initial primary tab and Tickets is not a global tab
+ok 20 - Live is the initial primary tab and Tickets is not a global tab
+  ---
+  duration_ms: 1.168458
+  ...
+# Subtest: Live workspace has semantic Liveページ and 予約管理 tabs
+ok 21 - Live workspace has semantic Liveページ and 予約管理 tabs
+  ---
+  duration_ms: 0.217083
+  ...
+# Subtest: Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 22 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+  ---
+  duration_ms: 0.17425
+  ...
+# Subtest: Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 23 - Live workspace separates reservations and Ticket Page共通設定 from Live list details
+  ---
+  duration_ms: 0.357041
+  ...
+# Subtest: Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 24 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+  ---
+  duration_ms: 20.345875
+  ...
+# Subtest: Live workspace initial state is Liveページ and 開催予定
+ok 25 - Live workspace initial state is Liveページ and 開催予定
+  ---
+  duration_ms: 0.301333
+  ...
+# Subtest: Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 26 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+  ---
+  duration_ms: 2.61525
+  ...
+# Subtest: master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 27 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+  ---
+  duration_ms: 0.327125
+  ...
+# Subtest: Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+ok 28 - Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+  ---
+  duration_ms: 9.332125
+  ...
+# Subtest: master-detail marks only the first upcoming card as Next Live
+ok 29 - master-detail marks only the first upcoming card as Next Live
+  ---
+  duration_ms: 1.515083
+  ...
+# Subtest: Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 30 - Live task tabs are semantic, keyboard operable, and preserve mounted input
+  ---
+  duration_ms: 2.234459
+  ...
+# Subtest: new Live prioritizes source intake and gates post-save tasks until first save
+ok 31 - new Live prioritizes source intake and gates post-save tasks until first save
+  ---
+  duration_ms: 5.8915
+  ...
+# Subtest: Live validation blocks missing date and venue before changing data or saving
+ok 32 - Live validation blocks missing date and venue before changing data or saving
+  ---
+  duration_ms: 3.350708
+  ...
+# Subtest: Live category mismatch warns but saves without automatically moving collection
+ok 33 - Live category mismatch warns but saves without automatically moving collection
+  ---
+  duration_ms: 4.01275
+  ...
+# APIデータ読み込みエラー: Error: offline
+#     at Object.loadData (evalmachine.<anonymous>:796:15)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:1180:3)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: Live API save reports saving, saved, and failed states around the existing save route
+ok 34 - Live API save reports saving, saved, and failed states around the existing save route
+  ---
+  duration_ms: 17.698292
+  ...
+# Subtest: Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 35 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+  ---
+  duration_ms: 3.129917
+  ...
+# Subtest: reselecting the active global Live tab is a no-op for a dirty editor
+ok 36 - reselecting the active global Live tab is a no-op for a dirty editor
+  ---
+  duration_ms: 2.668375
+  ...
+# Subtest: reselecting the active global Live tab is also a no-op for a clean editor
+ok 37 - reselecting the active global Live tab is also a no-op for a clean editor
+  ---
+  duration_ms: 2.157792
+  ...
+# Subtest: Live internal task switching preserves dirty input without discard confirmation
+ok 38 - Live internal task switching preserves dirty input without discard confirmation
+  ---
+  duration_ms: 3.537125
+  ...
+# Subtest: API fallback is read-only while keeping Live navigation available
+ok 39 - API fallback is read-only while keeping Live navigation available
+  ---
+  duration_ms: 5.344834
+  ...
+# Subtest: API fallback keeps every admin collection immutable while existing details remain viewable
+ok 40 - API fallback keeps every admin collection immutable while existing details remain viewable
+  ---
+  duration_ms: 11.353166
+  ...
+# Subtest: API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 41 - API fallback blocks direct Live item and API save calls before mutation or PUT
+  ---
+  duration_ms: 3.510708
+  ...
+# Subtest: beforeunload protects global changes and Live dirty or saving states
+ok 42 - beforeunload protects global changes and Live dirty or saving states
+  ---
+  duration_ms: 9.534
+  ...
+# Subtest: explicit Local Mode labels the header action as JSON export
+ok 43 - explicit Local Mode labels the header action as JSON export
+  ---
+  duration_ms: 2.317291
+  ...
+# Subtest: responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+not ok 44 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+  ---
+  duration_ms: 2.572
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:1409:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /src="app\.js\?v=20260816-22"/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+      '  <title>1212 HP Admin</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="style.css?v=20260816-22">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <div id="app">\n' +
+      '    <!-- ヘッダー -->\n' +
+      '    <header class="header">\n' +
+      '      <div>\n' +
+      '        <h1 class="logo">1212 <span class="accent">Admin</span></h1>\n' +
+      '        <p class="header-meta" id="modeBadge">Local Mode</p>\n' +
+      '      </div>\n' +
+      '      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>\n' +
+      '    </header>\n' +
+      '    <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>\n' +
+      '\n' +
+      '    <!-- タブナビ -->\n' +
+      '    <nav class="tab-nav">\n' +
+      '      <button class="tab-btn" data-tab="site">Site</button>\n' +
+      '      <button class="tab-btn" data-tab="news">News</button>\n' +
+      '      <button class="tab-btn active" data-tab="live">Live</button>\n' +
+      '      <button class="tab-btn" data-tab="youtube">YouTube</button>\n' +
+      '      <button class="tab-btn" data-tab="discography">Disco</button>\n' +
+      '      <button class="tab-btn" data-tab="profile">Profile</button>\n' +
+      '    </nav>\n' +
+      '\n' +
+      '    <!-- Siteタブ -->\n' +
+      '    <section class="tab-content" id="site-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Site</h2>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="site-featured-release-id">顔にする作品</label>\n' +
+      '          <select id="site-featured-release-id" class="select" data-admin-mutation>\n' +
+      '            <option value="">自動（最新のリリース）</option>\n' +
+      '          </select>\n' +
+      '        </div>\n' +
+      '        <label>共有時の画像</label>\n' +
+      '        <div id="site-hero-image-form"></div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home Links</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Bandcamp</label>\n' +
+      '          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>YouTube</label>\n' +
+      '          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>X</label>\n' +
+      '          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Instagram</label>\n' +
+      '          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>note</label>\n' +
+      '          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Footer</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>フッター文言（空なら既定のまま）</label>\n' +
+      '          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Contact</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>導入文</label>\n' +
+      '          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Form Action（Formspree URL）</label>\n' +
+      '          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Newsタブ -->\n' +
+      '    <section class="tab-content" id="news-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>News</h2>\n' +
+      '        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>\n' +
+      '      </div>\n' +
+      '      <div class="items-list" id="news-list"></div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Liveタブ -->\n' +
+      '    <section class="tab-content active" id="live-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Live</h2>\n' +
+      '        <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>\n' +
+      '      </div>\n' +
+      '      <div class="live-workspace" id="live-workspace">\n' +
+      '        <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">\n' +
+      '          <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>\n' +
+      '          <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">\n' +
+      '          <div id="live-page-primary">\n' +
+      '            <div class="live-page-toolbar">\n' +
+      '              <div class="live-list-tabs" role="tablist" aria-label="公演一覧">\n' +
+      '                <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>\n' +
+      '                <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>\n' +
+      '            </div>\n' +
+      '\n' +
+      '            <div class="live-master-detail" id="live-master-detail">\n' +
+      '              <div class="live-master-pane" id="live-master-pane">\n' +
+      '                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">\n' +
+      '                  <div class="items-list" id="live-upcoming-list"></div>\n' +
+      '                </section>\n' +
+      '                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>\n' +
+      '                  <div class="items-list" id="live-past-list"></div>\n' +
+      '                </section>\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">\n' +
+      '                <header class="live-editor-header">\n' +
+      '                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>\n' +
+      '                  <div class="live-editor-title-group">\n' +
+      '                    <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>\n' +
+      '                    <h3 id="live-editor-heading">Liveを選択</h3>\n' +
+      '                  </div>\n' +
+      '                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>\n' +
+      '                </header>\n' +
+      '                <div class="live-editor-body" id="live-editor-body">\n' +
+      '                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>\n' +
+      '                </div>\n' +
+      '              </section>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>\n' +
+      '            <div class="section-header compact">\n' +
+      '              <div>\n' +
+      '                <p class="live-workspace-eyebrow">Liveページ共通</p>\n' +
+      '                <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示文言）</h3>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>完了文（空なら既定のまま）</label>\n' +
+      '                <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示項目）</h3>\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>\n' +
+      '                <label for="ticket-field-quantity">Quantity（枚数）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>枚数 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-message" data-admin-mutation>\n' +
+      '                <label for="ticket-field-message">備考（任意）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 プレースホルダ（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="form-group">\n' +
+      '                <label>送信ボタン文言（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '          </section>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-'... 5442 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>1212 HP Admin</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="style.css?v=20260816-22">
+    </head>
+    <body>
+      <div id="app">
+        <!-- ヘッダー -->
+        <header class="header">
+          <div>
+            <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+            <p class="header-meta" id="modeBadge">Local Mode</p>
+          </div>
+          <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
+        </header>
+        <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+    
+        <!-- タブナビ -->
+        <nav class="tab-nav">
+          <button class="tab-btn" data-tab="site">Site</button>
+          <button class="tab-btn" data-tab="news">News</button>
+          <button class="tab-btn active" data-tab="live">Live</button>
+          <button class="tab-btn" data-tab="youtube">YouTube</button>
+          <button class="tab-btn" data-tab="discography">Disco</button>
+          <button class="tab-btn" data-tab="profile">Profile</button>
+        </nav>
+    
+        <!-- Siteタブ -->
+        <section class="tab-content" id="site-tab">
+          <div class="section-header">
+            <h2>Site</h2>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home</h3>
+            <div class="form-group">
+              <label for="site-featured-release-id">顔にする作品</label>
+              <select id="site-featured-release-id" class="select" data-admin-mutation>
+                <option value="">自動（最新のリリース）</option>
+              </select>
+            </div>
+            <label>共有時の画像</label>
+            <div id="site-hero-image-form"></div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Links</h3>
+            <div class="form-group">
+              <label>Bandcamp</label>
+              <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>YouTube</label>
+              <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>X</label>
+              <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>note</label>
+              <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Footer</h3>
+            <div class="form-group">
+              <label>フッター文言（空なら既定のまま）</label>
+              <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Contact</h3>
+            <div class="form-group">
+              <label>導入文</label>
+              <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Form Action（Formspree URL）</label>
+              <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+            </div>
+          </div>
+        </section>
+    
+        <!-- Newsタブ -->
+        <section class="tab-content" id="news-tab">
+          <div class="section-header">
+            <h2>News</h2>
+            <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="items-list" id="news-list"></div>
+        </section>
+    
+        <!-- Liveタブ -->
+        <section class="tab-content active" id="live-tab">
+          <div class="section-header">
+            <h2>Live</h2>
+            <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>
+          </div>
+          <div class="live-workspace" id="live-workspace">
+            <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+              <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+              <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
+            </div>
+    
+            <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+              <div id="live-page-primary">
+                <div class="live-page-toolbar">
+                  <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                    <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                    <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+                  </div>
+                  <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+                </div>
+    
+                <div class="live-master-detail" id="live-master-detail">
+                  <div class="live-master-pane" id="live-master-pane">
+                    <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                      <div class="items-list" id="live-upcoming-list"></div>
+                    </section>
+                    <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                      <div class="items-list" id="live-past-list"></div>
+                    </section>
+                  </div>
+    
+                  <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                    <header class="live-editor-header">
+                      <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                      <div class="live-editor-title-group">
+                        <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
+                        <h3 id="live-editor-heading">Liveを選択</h3>
+                      </div>
+                      <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                    </header>
+                    <div class="live-editor-body" id="live-editor-body">
+                      <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+    
+              <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+                <div class="section-header compact">
+                  <div>
+                    <p class="live-workspace-eyebrow">Liveページ共通</p>
+                    <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+                  </div>
+                  <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示文言）</h3>
+                  <div class="form-group">
+                    <label>完了文（空なら既定のまま）</label>
+                    <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
+                  </div>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示項目）</h3>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
+                    <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>枚数 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
+                  </div>
+    
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-message" data-admin-mutation>
+                    <label for="ticket-field-message">備考（任意）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>備考 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
+                  </div>
+                  <div class="form-group">
+                    <label>備考 プレースホルダ（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
+                  </div>
+    
+                  <div class="form-group">
+                    <label>送信ボタン文言（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
+                  </div>
+                </div>
+              </section>
+            </section>
+    
+            <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+              <div class="live-reservations-panel">
+              <div class="section-header compact">
+                <h3>横断予約台帳</h3>
+                <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+              </div>
+              <div class="form-group">
+                <label for="tickets-live-filter">フィルタ</label>
+                <div class="filters">
+                  <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+                  <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                    <option value="">全ステータス</option>
+                    <option value="pending" selected>未対応</option>
+                    <option value="handled">対応済み</option>
+                    <option value="cancelled">キャンセル</option>
+                  </select>
+                </div>
+              </div>
+              <div class="items-list" id="tickets-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+    
+        <!-- YouTubeタブ -->
+        <section class="tab-content" id="youtube-tab">
+          <div class="section-header">
+            <h2>YouTube</h2>
+            <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Channel URL</h3>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+    
+          <div class="subsection">
+            <h3>Music Video</h3>
+            <div class="items-list" id="youtube-musicVideos-list"></div>
+            <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Live Movie</h3>
+            <div class="items-list" id="youtube-liveMovies-list"></div>
+            <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Demo</h3>
+            <div class="items-list" id="youtube-demos-list"></div>
+            <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+          </div>
+        </section>
+    
+        <!-- Discographyタブ -->
+        <section class="tab-content" id="discography-tab">
+          <div class="section-header">
+            <h2>Discography</h2>
+            <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
+          </div>
+          <div class="subsection">
+            <h3>Digital Release</h3>
+            <div class="items-list" id="disc-digital-list"></div>
+          </div>
+          <div class="subsection">
+            <h3>宅録Demo</h3>
+            <div class="items-list" id="disc-demo-list"></div>
+          </div>
+        </section>
+    
+        <!-- Profileタブ -->
+        <section class="tab-content" id="profile-tab">
+          <div class="section-header">
+            <h2>Profile</h2>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group">
+            <label>プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+          <div class="subsection">
+            <h3>SNSリンク</h3>
+            <div class="items-list" id="profile-links-list"></div>
+            <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+        </section>
+    
+        <!-- モーダル -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+          <div class="modal-header">
+            <h3 id="modal-title">編集</h3>
+            <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+            <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
+          </div>
+        </div>
+    
+        <!-- トースト -->
+        <div class="toast" id="toast"></div>
+      </div>
+      <script>
+      // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+      window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
+      try {
+        var badge = document.getElementById('modeBadge');
+        if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+        var banner0 = document.getElementById('connectionBanner');
+        if (banner0) banner0.textContent = '読み込み中...';
+      } catch (e) {}
+      window.addEventListener('error', function (ev) {
+        try {
+          var banner = document.getElementById('connectionBanner');
+          if (banner) {
+            banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+            banner.classList.add('is-error');
+          }
+        } catch (e) {}
+      });
+    </script>
+    <script src="config.js?v=20260216-2001"></script>
+    <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+    <script src="../assets/js/music-data.js?v=20261117-41"></script>
+    <script src="app.js?v=20261117-41"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:1422:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 45 - sticky Live controls have no scrolling mechanism in the complete ancestor chain
+  ---
+  duration_ms: 1.657209
+  ...
+# Subtest: sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 46 - sticky Live task tabs offset below the fixed global header and navigation chrome
+  ---
+  duration_ms: 0.404833
+  ...
+# Subtest: essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 47 - essential mobile Live workspace list utility and back controls guarantee 44px targets
+  ---
+  duration_ms: 0.185458
+  ...
+# Subtest: saved header action maintains white text contrast through hover and focus
+ok 48 - saved header action maintains white text contrast through hover and focus
+  ---
+  duration_ms: 0.143083
+  ...
+# Subtest: sticky Live task tabs and footer have no clipping workspace ancestor
+ok 49 - sticky Live task tabs and footer have no clipping workspace ancestor
+  ---
+  duration_ms: 0.215791
+  ...
+# Subtest: production Live lock gives every workspace button a disabled affordance
+ok 50 - production Live lock gives every workspace button a disabled affordance
+  ---
+  duration_ms: 0.251
+  ...
+# Subtest: admin build marker and operator docs match the merged Live UI assets
+not ok 51 - admin build marker and operator docs match the merged Live UI assets
+  ---
+  duration_ms: 1.01
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:1522:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '20261117-41'
+    - '20260816-22'
+           ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '20260816-22'
+  actual: '20261117-41'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-41-data-fields/test/admin-live-operations.test.mjs:1527:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 52 - Live edit workspace saves a category move in place and routes Local Mode to JSON export
+  ---
+  duration_ms: 5.40775
+  ...
+# Subtest: Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 53 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+  ---
+  duration_ms: 8.869292
+  ...
+# Subtest: Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 54 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+  ---
+  duration_ms: 3
+  ...
+# Subtest: Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 55 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+  ---
+  duration_ms: 13.24525
+  ...
+# Subtest: Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 56 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+  ---
+  duration_ms: 2.713209
+  ...
+# Subtest: Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 57 - Live API publish blocks global tab navigation and marks every global tab disabled while pending
+  ---
+  duration_ms: 2.737208
+  ...
+# Subtest: global tabs re-enable and navigate normally after Live API publish succeeds
+ok 58 - global tabs re-enable and navigate normally after Live API publish succeeds
+  ---
+  duration_ms: 2.532084
+  ...
+# Subtest: global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 59 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+  ---
+  duration_ms: 3.810042
+  ...
+# Subtest: shared LiveOperations script is loaded before the admin application
+ok 60 - shared LiveOperations script is loaded before the admin application
+  ---
+  duration_ms: 0.158208
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 61 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+  ---
+  duration_ms: 2.876459
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 62 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+  ---
+  duration_ms: 1.777125
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 63 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+  ---
+  duration_ms: 1.794708
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 64 - AIで整理 source intake discards a stale response when source text changes while pending / legacy
+  ---
+  duration_ms: 2.425875
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 65 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+  ---
+  duration_ms: 3.483083
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 66 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+  ---
+  duration_ms: 3.855291
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 2.1735
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 2.315708
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.831667
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 2.314292
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 2.198083
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 2.12625
+      ...
+    1..6
+ok 67 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+  ---
+  duration_ms: 13.869208
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 6.164417
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 1.826625
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 1.649917
+      ...
+    1..3
+ok 68 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+  ---
+  duration_ms: 9.980125
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 69 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+  ---
+  duration_ms: 1.563917
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 70 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+  ---
+  duration_ms: 1.855167
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 71 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+  ---
+  duration_ms: 1.79
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 72 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+  ---
+  duration_ms: 2.258458
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 73 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+  ---
+  duration_ms: 6.136458
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 74 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+  ---
+  duration_ms: 2.199792
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 75 - AIで整理 source intake discards a stale response when source text changes while pending / openai
+  ---
+  duration_ms: 3.70775
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 76 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+  ---
+  duration_ms: 2.557125
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 77 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+  ---
+  duration_ms: 2.756292
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 1.572166
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 1.393917
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.519834
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 1.491291
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 1.306292
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 1.331
+      ...
+    1..6
+ok 78 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+  ---
+  duration_ms: 8.929375
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / openai
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 1.437709
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 1.734417
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 1.408042
+      ...
+    1..3
+ok 79 - AIで整理 source intake never falls back from a custom API base to canonical production / openai
+  ---
+  duration_ms: 4.719375
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 80 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+  ---
+  duration_ms: 1.82275
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 81 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+  ---
+  duration_ms: 5.602625
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 82 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+  ---
+  duration_ms: 1.613041
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 83 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+  ---
+  duration_ms: 1.802917
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 84 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+  ---
+  duration_ms: 2.68275
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 85 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+  ---
+  duration_ms: 2.221084
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 86 - AIで整理 source intake discards a stale response when source text changes while pending / claude
+  ---
+  duration_ms: 6.02025
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 87 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+  ---
+  duration_ms: 2.0715
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 88 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+  ---
+  duration_ms: 2.559333
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 2.297458
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 2.271708
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.545875
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 1.387875
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 1.477709
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 1.554459
+      ...
+    1..6
+ok 89 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+  ---
+  duration_ms: 11.021334
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / claude
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 1.513959
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 1.346083
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 1.425417
+      ...
+    1..3
+ok 90 - AIで整理 source intake never falls back from a custom API base to canonical production / claude
+  ---
+  duration_ms: 4.436708
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 91 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+  ---
+  duration_ms: 1.690375
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 92 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+  ---
+  duration_ms: 2.260584
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 93 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+  ---
+  duration_ms: 1.460667
+  ...
+# Subtest: AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+    # Subtest: invalid payload 0
+    ok 1 - invalid payload 0
+      ---
+      duration_ms: 1.411291
+      ...
+    # Subtest: invalid payload 1
+    ok 2 - invalid payload 1
+      ---
+      duration_ms: 4.55225
+      ...
+    # Subtest: invalid payload 2
+    ok 3 - invalid payload 2
+      ---
+      duration_ms: 1.567375
+      ...
+    # Subtest: invalid payload 3
+    ok 4 - invalid payload 3
+      ---
+      duration_ms: 1.35625
+      ...
+    # Subtest: invalid payload 4
+    ok 5 - invalid payload 4
+      ---
+      duration_ms: 1.287625
+      ...
+    # Subtest: invalid payload 5
+    ok 6 - invalid payload 5
+      ---
+      duration_ms: 1.296334
+      ...
+    # Subtest: invalid payload 6
+    ok 7 - invalid payload 6
+      ---
+      duration_ms: 1.286958
+      ...
+    # Subtest: invalid payload 7
+    ok 8 - invalid payload 7
+      ---
+      duration_ms: 1.295041
+      ...
+    # Subtest: invalid payload 8
+    ok 9 - invalid payload 8
+      ---
+      duration_ms: 1.271333
+      ...
+    # Subtest: invalid payload 9
+    ok 10 - invalid payload 9
+      ---
+      duration_ms: 4.593583
+      ...
+    # Subtest: invalid payload 10
+    ok 11 - invalid payload 10
+      ---
+      duration_ms: 2.283833
+      ...
+    # Subtest: invalid payload 11
+    ok 12 - invalid payload 11
+      ---
+      duration_ms: 1.367042
+      ...
+    # Subtest: invalid payload 12
+    ok 13 - invalid payload 12
+      ---
+      duration_ms: 1.431292
+      ...
+    # Subtest: invalid payload 13
+    ok 14 - invalid payload 13
+      ---
+      duration_ms: 1.594459
+      ...
+    # Subtest: invalid payload 14
+    ok 15 - invalid payload 14
+      ---
+      duration_ms: 1.796041
+      ...
+    1..15
+ok 94 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+  ---
+  duration_ms: 29.416084
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 95 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+  ---
+  duration_ms: 3.065334
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 96 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+  ---
+  duration_ms: 9.0235
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 97 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+  ---
+  duration_ms: 13.056375
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 98 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+  ---
+  duration_ms: 2.588542
+  ...
+# Subtest: AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 99 - AIで整理 source intake uses the existing small status markup for desktop and mobile
+  ---
+  duration_ms: 0.190416
+  ...
+# Subtest: Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 100 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+  ---
+  duration_ms: 2.432709
+  ...
+# Subtest: structured Live editor normalizes legacy date and saves independent detail fields
+ok 101 - structured Live editor normalizes legacy date and saves independent detail fields
+  ---
+  duration_ms: 1.926667
+  ...
+# Subtest: unparsed legacy Live date is preserved until a valid replacement is entered
+ok 102 - unparsed legacy Live date is preserved until a valid replacement is entered
+  ---
+  duration_ms: 1.58475
+  ...
+# Subtest: saving a Live merges new fields into the original object without dropping unknown properties
+ok 103 - saving a Live merges new fields into the original object without dropping unknown properties
+  ---
+  duration_ms: 1.740792
+  ...
+# Subtest: unified X announcement preview drives Intent and copy without save
+ok 104 - unified X announcement preview drives Intent and copy without save
+  ---
+  duration_ms: 1.951583
+  ...
+# Subtest: Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 105 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+  ---
+  duration_ms: 1.435083
+  ...
+# Subtest: Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 106 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+  ---
+  duration_ms: 1.513416
+  ...
+# Subtest: Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 107 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+  ---
+  duration_ms: 1.337417
+  ...
+# Subtest: Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 108 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+  ---
+  duration_ms: 3.472958
+  ...
+# Subtest: Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 109 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+  ---
+  duration_ms: 0.3085
+  ...
+# Subtest: new Live requires an explicit save before X Intent or reservation operations
+ok 110 - new Live requires an explicit save before X Intent or reservation operations
+  ---
+  duration_ms: 4.030834
+  ...
+# Subtest: saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 111 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+  ---
+  duration_ms: 2.025791
+  ...
+# Subtest: manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 112 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+  ---
+  duration_ms: 1.80875
+  ...
+# Subtest: active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 113 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+  ---
+  duration_ms: 0.941958
+  ...
+# Subtest: CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 114 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+  ---
+  duration_ms: 1.43675
+  ...
+# Subtest: CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 115 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+  ---
+  duration_ms: 2.445833
+  ...
+# Subtest: reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 116 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+  ---
+  duration_ms: 13.978917
+  ...
+# Subtest: reservation loading for a non-current Live cannot mutate the current modal
+ok 117 - reservation loading for a non-current Live cannot mutate the current modal
+  ---
+  duration_ms: 2.455667
+  ...
+# Subtest: cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 118 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+  ---
+  duration_ms: 2.901458
+  ...
+# Subtest: cross-Live ledger response cannot mutate a disconnected replacement target
+ok 119 - cross-Live ledger response cannot mutate a disconnected replacement target
+  ---
+  duration_ms: 0.978333
+  ...
+# Subtest: cross-Live ledger response requires both current filters to match its snapshot
+ok 120 - cross-Live ledger response requires both current filters to match its snapshot
+  ---
+  duration_ms: 1.702208
+  ...
+# Subtest: cross-Live filters refresh without reloading when the effective selection remains valid
+ok 121 - cross-Live filters refresh without reloading when the effective selection remains valid
+  ---
+  duration_ms: 1.619042
+  ...
+# Subtest: deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 122 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+  ---
+  duration_ms: 3.581458
+  ...
+# Subtest: reservation status actions use escaped data attributes and delegated event handling
+ok 123 - reservation status actions use escaped data attributes and delegated event handling
+  ---
+  duration_ms: 1.360208
+  ...
+# Subtest: generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 124 - generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+  ---
+  duration_ms: 1.820458
+  ...
+# Subtest: saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 125 - saving a rendered Live keeps its editor and selected replacement trigger after a category move
+  ---
+  duration_ms: 4.769958
+  ...
+# Subtest: saving a new past Live activates its visible destination category
+ok 126 - saving a new past Live activates its visible destination category
+  ---
+  duration_ms: 1.79025
+  ...
+# Subtest: admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+    # Subtest: cross-collection / API
+    ok 1 - cross-collection / API
+      ---
+      duration_ms: 1.049625
+      ...
+    # Subtest: cross-collection / Local
+    ok 2 - cross-collection / Local
+      ---
+      duration_ms: 1.805666
+      ...
+    # Subtest: same-collection / API
+    ok 3 - same-collection / API
+      ---
+      duration_ms: 1.602
+      ...
+    # Subtest: same-collection / Local
+    ok 4 - same-collection / Local
+      ---
+      duration_ms: 1.848875
+      ...
+    1..4
+ok 127 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+  ---
+  duration_ms: 6.719834
+  ...
+# Subtest: Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 128 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+  ---
+  duration_ms: 2.7985
+  ...
+# Subtest: music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+ok 129 - music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+  ---
+  duration_ms: 10.626375
+  ...
+# Subtest: music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+ok 130 - music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+  ---
+  duration_ms: 4.071667
+  ...
+# Subtest: music data fields API failure keeps editor and baseline, structured errors bind only matching release
+ok 131 - music data fields API failure keeps editor and baseline, structured errors bind only matching release
+  ---
+  duration_ms: 2.738334
+  ...
+# Subtest: music data fields legacy date 2025.5.5 stays on unrelated save and move
+ok 132 - music data fields legacy date 2025.5.5 stays on unrelated save and move
+  ---
+  duration_ms: 1.756542
+  ...
+# Subtest: music data fields legacy date 2025/05/05 stays on unrelated save and move
+ok 133 - music data fields legacy date 2025/05/05 stays on unrelated save and move
+  ---
+  duration_ms: 1.840667
+  ...
+# Subtest: music data fields legacy date 2025.05 stays on unrelated save and move
+ok 134 - music data fields legacy date 2025.05 stays on unrelated save and move
+  ---
+  duration_ms: 2.3755
+  ...
+# Subtest: music data fields legacy date  stays on unrelated save and move
+ok 135 - music data fields legacy date  stays on unrelated save and move
+  ---
+  duration_ms: 2.482125
+  ...
+# Subtest: music data fields legacy date undefined stays on unrelated save and move
+ok 136 - music data fields legacy date undefined stays on unrelated save and move
+  ---
+  duration_ms: 3.307167
+  ...
+# Subtest: music data fields legacy date 42 stays on unrelated save and move
+ok 137 - music data fields legacy date 42 stays on unrelated save and move
+  ---
+  duration_ms: 7.182458
+  ...
+# Subtest: music data fields legacy date null stays on unrelated save and move
+ok 138 - music data fields legacy date null stays on unrelated save and move
+  ---
+  duration_ms: 3.136625
+  ...
+# Subtest: music data fields new release empty or shaped date, header validation and baseline only after success
+ok 139 - music data fields new release empty or shaped date, header validation and baseline only after success
+  ---
+  duration_ms: 2.726792
+  ...
+# Subtest: music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+ok 140 - music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+  ---
+  duration_ms: 4.462375
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through Local JSON
+ok 141 - music data fields deletion clears featured and shared video references through Local JSON
+  ---
+  duration_ms: 2.265
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through API
+ok 142 - music data fields deletion clears featured and shared video references through API
+  ---
+  duration_ms: 1.790625
+  ...
+# Subtest: music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+ok 143 - music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+  ---
+  duration_ms: 1.628417
+  ...
+# Subtest: music data fields release and video category moves preserve IDs and all selections
+ok 144 - music data fields release and video category moves preserve IDs and all selections
+  ---
+  duration_ms: 2.045
+  ...
+# Subtest: music data fields successful saves advance date baseline and failures retain the old baseline
+ok 145 - music data fields successful saves advance date baseline and failures retain the old baseline
+  ---
+  duration_ms: 6.230708
+  ...
+# Subtest: music data fields image upload blocks release mutation and JSON failure retains baseline
+ok 146 - music data fields image upload blocks release mutation and JSON failure retains baseline
+  ---
+  duration_ms: 8.09225
+  ...
+# Subtest: music data fields structured API error for another release never marks the active release
+ok 147 - music data fields structured API error for another release never marks the active release
+  ---
+  duration_ms: 1.970209
+  ...
+# Subtest: browser Live formatters satisfy the shared fixture matrix
+ok 148 - browser Live formatters satisfy the shared fixture matrix
+  ---
+  duration_ms: 2.431625
+  ...
+# Subtest: formatLiveDate normalizes legacy separators and recomputes the weekday
+ok 149 - formatLiveDate normalizes legacy separators and recomputes the weekday
+  ---
+  duration_ms: 0.256833
+  ...
+# Subtest: formatLiveDetails uses canonical order, labels, and normalization
+ok 150 - formatLiveDetails uses canonical order, labels, and normalization
+  ---
+  duration_ms: 0.226958
+  ...
+# Subtest: parseLiveSourceText preserves source text and extracts a conservative draft
+ok 151 - parseLiveSourceText preserves source text and extracts a conservative draft
+  ---
+  duration_ms: 2.48525
+  ...
+# Subtest: empty source text returns an empty draft and a warning
+ok 152 - empty source text returns an empty draft and a warning
+  ---
+  duration_ms: 0.499833
+  ...
+# Subtest: multiple common date styles normalize to the existing YYYY.MM.DD format
+ok 153 - multiple common date styles normalize to the existing YYYY.MM.DD format
+  ---
+  duration_ms: 0.200833
+  ...
+# Subtest: open/start and lineup markers remain structured detail instead of becoming the title
+ok 154 - open/start and lineup markers remain structured detail instead of becoming the title
+  ---
+  duration_ms: 0.645
+  ...
+# Subtest: ticket URL extraction cleans surrounding and trailing punctuation
+ok 155 - ticket URL extraction cleans surrounding and trailing punctuation
+  ---
+  duration_ms: 1.017042
+  ...
+# Subtest: malformed percent-encoding is rejected by the parser without throwing
+ok 156 - malformed percent-encoding is rejected by the parser without throwing
+  ---
+  duration_ms: 0.259583
+  ...
+# Subtest: one-line booking text extracts fields without splitting date and URL slashes
+ok 157 - one-line booking text extracts fields without splitting date and URL slashes
+  ---
+  duration_ms: 0.292959
+  ...
+# Subtest: detail cleanup removes only the selected ticket URL and preserves other HTTPS text
+ok 158 - detail cleanup removes only the selected ticket URL and preserves other HTTPS text
+  ---
+  duration_ms: 0.246375
+  ...
+# Subtest: declared weekday mismatch produces a warning while a matching weekday does not
+ok 159 - declared weekday mismatch produces a warning while a matching weekday does not
+  ---
+  duration_ms: 0.145542
+  ...
+# Subtest: parsing does not mutate input or add save and publish state
+ok 160 - parsing does not mutate input or add save and publish state
+  ---
+  duration_ms: 0.140666
+  ...
+# Subtest: an own ticketUrl property is authoritative, including an explicit empty value
+ok 161 - an own ticketUrl property is authoritative, including an explicit empty value
+  ---
+  duration_ms: 0.227375
+  ...
+# Subtest: legacy link inference accepts known ticket providers and explicit booking paths
+ok 162 - legacy link inference accepts known ticket providers and explicit booking paths
+  ---
+  duration_ms: 0.666
+  ...
+# Subtest: legacy form-mailer inference accepts only the existing fms booking pattern
+ok 163 - legacy form-mailer inference accepts only the existing fms booking pattern
+  ---
+  duration_ms: 1.354
+  ...
+# Subtest: malformed percent-encoding is rejected by legacy inference without throwing
+ok 164 - malformed percent-encoding is rejected by legacy inference without throwing
+  ---
+  duration_ms: 0.368666
+  ...
+# Subtest: legacy link inference rejects social, profile, detail, and arbitrary URLs
+ok 165 - legacy link inference rejects social, profile, detail, and arbitrary URLs
+  ---
+  duration_ms: 0.977917
+  ...
+# Subtest: known ticket providers still reject profile and Live detail URLs
+ok 166 - known ticket providers still reject profile and Live detail URLs
+  ---
+  duration_ms: 0.2605
+  ...
+# Subtest: getTicketCta routes external and explicit-empty tickets deterministically
+ok 167 - getTicketCta routes external and explicit-empty tickets deterministically
+  ---
+  duration_ms: 0.450292
+  ...
+# Subtest: invalid authoritative ticketUrl values stay authoritative but produce an inactive CTA
+ok 168 - invalid authoritative ticketUrl values stay authoritative but produce an inactive CTA
+  ---
+  duration_ms: 0.301709
+  ...
+# Subtest: getTicketCta is inactive for past and reservation-closed Lives
+ok 169 - getTicketCta is inactive for past and reservation-closed Lives
+  ---
+  duration_ms: 0.671875
+  ...
+# Subtest: getTicketCta changes business date exactly at Asia/Tokyo midnight on a UTC-like host
+ok 170 - getTicketCta changes business date exactly at Asia/Tokyo midnight on a UTC-like host
+  ---
+  duration_ms: 0.176042
+  ...
+# Subtest: resolveLiveById returns one canonical record/category and fails closed for duplicate IDs
+ok 171 - resolveLiveById returns one canonical record/category and fails closed for duplicate IDs
+  ---
+  duration_ms: 0.259
+  ...
+# Subtest: buildXParentText contains only owner framing, hashtag, and canonical Live URL
+ok 172 - buildXParentText contains only owner framing, hashtag, and canonical Live URL
+  ---
+  duration_ms: 0.168333
+  ...
+# Subtest: buildXReplyText contains structured Live details
+ok 173 - buildXReplyText contains structured Live details
+  ---
+  duration_ms: 0.373083
+  ...
+# Subtest: X announcement emits the unified Live post in canonical order
+ok 174 - X announcement emits the unified Live post in canonical order
+  ---
+  duration_ms: 0.280041
+  ...
+# Subtest: X announcement recomputes Japanese weekday and omits empty blocks
+ok 175 - X announcement recomputes Japanese weekday and omits empty blocks
+  ---
+  duration_ms: 0.135209
+  ...
+# Subtest: the dependency-free module exposes the same API to a browser global
+ok 176 - the dependency-free module exposes the same API to a browser global
+  ---
+  duration_ms: 1.333916
+  ...
+# Subtest: requiring the CommonJS module does not publish a Node global
+ok 177 - requiring the CommonJS module does not publish a Node global
+  ---
+  duration_ms: 0.058666
+  ...
+# Subtest: music date format uses exactly ten ASCII characters without calendar restrictions
+ok 178 - music date format uses exactly ten ASCII characters without calendar restrictions
+  ---
+  duration_ms: 1.179
+  ...
+# Subtest: music stable sorting, automatic and explicit selection do not mutate inputs
+ok 179 - music stable sorting, automatic and explicit selection do not mutate inputs
+  ---
+  duration_ms: 0.735792
+  ...
+# Subtest: music references clear after deletion, retain category moves and normalize only new keys
+ok 180 - music references clear after deletion, retain category moves and normalize only new keys
+  ---
+  duration_ms: 0.472959
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields / body
+ok 181 - music fields public DOM unchanged for missing, empty and populated fields / body
+  ---
+  duration_ms: 14.593
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /discography/ body
+ok 182 - music fields public DOM unchanged for missing, empty and populated fields /discography/ body
+  ---
+  duration_ms: 4.014083
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 183 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 3.316916
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields / envelope
+ok 184 - music fields public DOM unchanged for missing, empty and populated fields / envelope
+  ---
+  duration_ms: 3.712958
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /discography/ envelope
+ok 185 - music fields public DOM unchanged for missing, empty and populated fields /discography/ envelope
+  ---
+  duration_ms: 3.218416
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 186 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 3.3655
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 187 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 3.973917
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 188 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 3.06125
+  ...
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 189 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 4.299583
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 190 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 14.9305
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 191 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 2.096333
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 192 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 4.065792
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 193 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 2.717959
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 194 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 7.887792
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 7.095667
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 5.213958
+      ...
+    1..2
+ok 195 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 13.015916
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 196 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 2.905458
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 197 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 1.812833
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 198 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 3.086667
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 199 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 1.882833
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 200 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 5.935791
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 201 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 2.775416
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 202 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 7.852208
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 203 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 3.144833
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 204 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 2.816166
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 205 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 2.75675
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 206 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 2.12875
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 1.553042
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 1.3635
+      ...
+    1..2
+ok 207 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 3.259416
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 1.605834
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 3.302458
+      ...
+    1..2
+ok 208 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 5.220209
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 1.784958
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 2.702375
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 1.703042
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 1.664833
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 1.221209
+      ...
+    1..5
+ok 209 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 10.066666
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 210 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.845375
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 211 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 4.505375
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 212 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 1.705167
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 213 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 1.075667
+  ...
+1..213
+# tests 272
+# suites 0
+# pass 269
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3921.068583
+
+exit: 1

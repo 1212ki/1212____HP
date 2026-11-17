@@ -3,11 +3,12 @@
 - Status: Approved
 - Owner: Itsuki Matsumoto
 - Last updated: 2026-11-17
-- Owner approval: Issue #40のgate 3における、本索引のexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #40）: Issue #40のgate 3における、本索引のexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 
 このフォルダは1212HPで現在参照すべき設計書の正本です。
 
-Approvedは実装の入力としての承認を示します。各設計書の画面対応表に、origin/main `00cdea5`時点の実装状況と後続Issueを示します。#40は設計書の対応づけ、#41〜#47がマスタに沿う実装を担当します。
+Approvedは実装の入力としての承認を示します。各設計書の画面対応表に、origin/main `00cdea5`時点の実装状況と後続Issueを示します。#40は設計書の対応づけ、#41〜#47がマスタに沿う実装を担当します。#41の保存先・日付検査・参照削除・互換性は管理設計§5.3、公開用データは公開設計§5に記載します。実装・試験・独立reviewの成否は各cycleの結果文書を参照し、設計承認と区別します。
 
 ## Status
 

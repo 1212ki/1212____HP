@@ -9,6 +9,24 @@
 - API Mode
   - Cloudflare Worker APIへ保存し、LiveごとにX投稿（Web Intent + OGPリンクカード）可能
 
+## 作品の選択・再生映像・種別（Issue #41）
+
+SiteのHomeで「顔にする作品」を選択できます。Digital Release／宅録Demoの全作品から1件を選び、空の「自動（最新のリリース）」にも戻せます。保存先は`site.featuredReleaseId`です。画像の表示名は「共有時の画像」で、保存先`site.heroImage`とLive共有画像の予備としての働きを保ちます。
+
+作品の編集には「種別」（`releaseType`、任意文字列）と「その場で再生する映像」（`playbackVideoId`、全映像カテゴリ共通のid）を追加しました。どちらも空にできます。従来のタイトル・説明・画像・リンクは保持します。新項目を欠く旧データは読込時にメモリ上で補い、通常保存時に永続化します。Local Modeの書き出しは従来のsite data本体で、APIの`data / meta` envelopeとは異なります。
+
+新規作品と日付を変更した作品だけ、リリース日を空または`2025.05.05`の形で検査します。ASCII数字・ゼロ埋め・区切りの形だけを確認し、実在日や未来日の制約は追加しません。旧日付を変えずに別項目を編集・カテゴリ移動する操作はそのまま保存できます。不正な入力は日付の直下に表示し、入力と編集画面を保持します。API Modeの作品編集画面は保存成功後に閉じます。
+
+選択中の作品を削除すると顔の指定を空に、映像を削除すると参照する全作品の映像指定を空に戻します。カテゴリ移動はidが同じなら参照を保ちます。削除内容は右上の保存（Local ModeではJSON書き出し）で確定します。API接続失敗時のread-onlyでも新項目を変更できません。
+
+公開画面は現在の表示を維持します。新項目を使う公開表示・再生は#42〜#44の範囲です。後続の自動選択用共通処理は、明示idがあれば優先し、それ以外は形の合う日付を持つ最新作品を選びます。同日はdigital→demoの元の順で、候補0件ならnullです。保存配列は並び替えません。
+
+### #41の反映と復旧
+
+GitHub Pagesは`main`の`/`から管理画面も配信します。Ownerが、試験済みPR最終revisionから先にWorkerをdeployし、Frontの公開API確認後にmergeします。Pagesのbuild・配信revision・app/helperの取得をFrontが確認してから管理タブを再読込し、Ownerが実際に使う1作品の3項目を保存して確認します。DB migration・新secret・既存データの一括更新は不要です。
+
+merge前の不具合・merge見送りでは、OwnerがFrontの控えた直前Worker versionへ戻します。merge後は保存を止め、#41差分を戻すPRをOwnerが承認・mergeし、旧adminの配信確認後にWorkerを戻します。復旧中は作品編集を止めます。通常復旧でD1全体を巻き戻さず、実データ破損時だけ別途判断します。詳細は本cycleのCode Generation Plan §8・§9を参照してください。既存AI整理機能の反映順序はその機能の履歴として扱います。
+
 ## 設定
 
 1. `config.example.js` を `config.js` としてコピー

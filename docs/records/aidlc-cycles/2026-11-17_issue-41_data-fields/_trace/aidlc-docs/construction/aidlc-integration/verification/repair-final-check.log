@@ -1,0 +1,36 @@
+aidlc-docs/approvals/01-requirements-approval.md SHA-256 3b5ba0406a61ec4992251c8fb149cc801fef731abf073835a4280cce69aa0ec2 unchanged; exact prompt/response/identity/timestamps/artifact PASS
+aidlc-docs/approvals/02-workflow-plan-approval.md SHA-256 1ce9c61cfbdea85901345d28db9f04e0774b682185ce7d6627d1a98c4f59dd84 unchanged; exact prompt/response/identity/timestamps/artifact PASS
+aidlc-docs/approvals/03-code-generation-plan-approval.md SHA-256 6fb943ef5411fa7f56d006268bc5c1c35e226f97bd826eddefff5c22b7226f3b unchanged; exact prompt/response/identity/timestamps/artifact PASS
+docs/specs/current/live-operations-admin-ui.md SHA-256 43e4c9f407f26a8a6e2df8fe41636d7c714c03d9ebd83f2d339b5801b5767177 plan/canonical/proposed byte match PASS
+docs/specs/current/public-site-ui.md SHA-256 8b886e4346c16eaec93ca4c5b76d13285d85c45255d38664ca3f778433bf58a6 plan/canonical/proposed byte match PASS
+docs/specs/current/README.md SHA-256 6b48f3d983fb4e46073b5a28c29537508156a51a696ab3d448acf2654cc32ac7 plan/canonical/proposed byte match PASS
+aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md SHA-256 c84efefc1e2dc0b266abc4e627c794fa8e89cd0508b2de91ebc3d0059e166f4b close copy byte match PASS
+aidlc-docs/construction/build-and-test/build-and-test-summary.md SHA-256 4cacfbb29788b19bb04dbb87371a9472154b60b64158976e98cf2b14204358b0 close copy byte match PASS
+aidlc-docs/cycle-summary.md SHA-256 60425eb25dc4a8542d54df4cd44e08cbbbdd7b7c3a8f92505f2c59d582efafd3 close copy byte match PASS
+Production content scan: 105 distinct strings; added lines + all untracked files + worker result (if present); hits 0; contents not logged
+Excluded: metadata timestamps (approved provenance); site.heroImage (verified against base Worker default). Initial broad scan matched these 2 baseline/provenance values only; no content matches.
+git diff --check: PASS; allowed scope PASS; real approval records 3 only; real state Pending/In Progress PASS
+git status --short:
+ M admin/README.md
+ M admin/app.js
+ M admin/index.html
+ M aidlc-docs/README.md
+ M cloudflare/worker/README.md
+ M cloudflare/worker/src/worker.js
+ M cloudflare/worker/test/og-live.test.js
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+ M test/admin-image-form.test.mjs
+ M test/admin-live-operations.test.mjs
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/
+?? aidlc-docs/cycle-summary.md
+?? aidlc-docs/inception/
+?? assets/js/music-data.js
+?? cloudflare/worker/test/music-data-fields.test.js
+?? test/music-data.test.mjs
+?? test/public-music-data-compatibility.test.mjs
+

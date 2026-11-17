@@ -1,0 +1,6 @@
+Worker result schema / all recorded result and approval hashes PASS
+Canonical three exact bytes PASS
+Latest full suite logs: root 272/272; Worker 347/347 PASS
+Actual approvals count 3; actual state Code Generation Result / Pending
+git diff --check exit 0
+Reader files inspected; required provenance and pending signals preserved; sanitization PASS

@@ -20,6 +20,7 @@ const DEFAULT_SITE_DATA = {
   },
   site: {
     heroImage: 'assets/images/hero.jpg',
+    featuredReleaseId: '',
     links: {
       bandcamp: 'https://1212ki.bandcamp.com/',
       youtube: 'https://www.youtube.com/@1212____ki',
@@ -75,6 +76,7 @@ function refreshAdminRuntimeConfig() {
 // In case scripts are cached/mis-ordered, compute API mode at runtime too.
 refreshAdminRuntimeConfig();
 let siteData = null;
+let releaseDateBaseline = null;
 let currentEditType = null;
 let currentEditId = null;
 let isNewItem = false;
@@ -259,7 +261,7 @@ function normalizeSiteData(input) {
   const base = structuredClone(DEFAULT_SITE_DATA);
   if (!input || typeof input !== 'object') return base;
 
-  const normalized = { ...base, ...input };
+  const normalized = { ...base, ...structuredClone(input) };
   normalized.news = Array.isArray(normalized.news) ? normalized.news : [];
 
   normalized.live = normalized.live && typeof normalized.live === 'object' ? normalized.live : base.live;
@@ -313,7 +315,7 @@ function normalizeSiteData(input) {
   normalized.contact = normalized.contact && typeof normalized.contact === 'object' ? normalized.contact : base.contact;
   normalized.contact.introText = normalized.contact.introText || '';
   normalized.contact.formAction = normalized.contact.formAction || '';
-  return normalized;
+  return window.MusicData.clearDanglingMusicReferences(normalized);
 }
 
 function findDuplicateLiveIds(input) {
@@ -794,6 +796,7 @@ async function loadData() {
         throw new Error(getErrorMessage(payload, 'APIからデータを取得できませんでした'));
       }
       siteData = normalizeSiteData(payload.data ?? payload);
+      releaseDateBaseline = structuredClone(siteData);
       isApiFallbackReadOnly = false;
       setConnectionBanner('Cloudflare API接続中', 'api');
       await loadTickets();
@@ -814,6 +817,7 @@ async function loadData() {
     console.error('データ読み込みエラー:', e);
     siteData = normalizeSiteData(null);
   }
+  releaseDateBaseline = structuredClone(siteData);
 }
 
 // タブ切り替え
@@ -1002,7 +1006,80 @@ function renderAll() {
   renderProfile();
 }
 
+function musicReleases(data) {
+  return ['digital', 'demo'].flatMap(key => data?.discography?.[key] || []);
+}
+
+function musicOptions(groups, selected, emptyLabel, sorted = false) {
+  const option = item => `<option value="${escapeHtml(item.id)}" ${item.id === selected ? 'selected' : ''}>${escapeHtml(item.title)}</option>`;
+  return `<option value="">${emptyLabel}</option>` + groups.map(([label, items]) =>
+    `<optgroup label="${label}">${(sorted ? window.MusicData.sortReleasesByDate(items) : items).map(option).join('')}</optgroup>`).join('');
+}
+
+function playbackVideoOptions(selected) {
+  return musicOptions([['Music Video', siteData.youtube.musicVideos], ['Live Movie', siteData.youtube.liveMovies], ['Demo', siteData.youtube.demos]], selected, '選ばない');
+}
+
+function musicReleaseFields(item = {}) {
+  return `<div class="form-group">
+      <label for="edit-releaseType">種別</label>
+      <input type="text" id="edit-releaseType" class="text-input" placeholder="2nd Single" value="${escapeHtml(item.releaseType || '')}">
+    </div>
+    <div class="form-group">
+      <label for="edit-playbackVideoId">その場で再生する映像</label>
+      <select id="edit-playbackVideoId" class="select">${playbackVideoOptions(item.playbackVideoId || '')}</select>
+    </div>`;
+}
+
+const RELEASE_DATE_ERROR = '「2025.05.05」の形で入力してください。';
+function releaseDateIsAllowed(item) {
+  const previous = musicReleases(releaseDateBaseline).find(old => old.id === item.id);
+  const value = item.releaseDate === undefined ? '' : item.releaseDate;
+  const old = previous?.releaseDate === undefined ? '' : previous.releaseDate;
+  if (previous && JSON.stringify(value) === JSON.stringify(old)) return true;
+  return value === '' || window.MusicData.isReleaseDateFormat(value);
+}
+
+function showReleaseDateError(message = RELEASE_DATE_ERROR) {
+  const field = document.getElementById('edit-releaseDate');
+  const error = document.getElementById('edit-releaseDate-error');
+  if (field) {
+    field.setAttribute('aria-invalid', 'true');
+    field.setAttribute('aria-describedby', 'edit-releaseDate-error');
+    field.focus();
+  }
+  if (error) error.textContent = message;
+}
+
+function bindReleaseDateError() {
+  const field = document.getElementById('edit-releaseDate');
+  field?.addEventListener('input', () => {
+    const old = musicReleases(siteData).find(item => item.id === currentEditId);
+    const value = old && typeof old.releaseDate !== 'string' && field.value === String(old.releaseDate ?? '') ? old.releaseDate : field.value;
+    if (releaseDateIsAllowed({ id: currentEditId, releaseDate: value })) {
+      field.setAttribute('aria-invalid', 'false');
+      document.getElementById('edit-releaseDate-error').textContent = '';
+    }
+  });
+}
+
+function validateMusicBeforeSave() {
+  const invalid = musicReleases(siteData).find(item => !releaseDateIsAllowed(item));
+  if (!invalid) return true;
+  const category = siteData.discography.digital.includes(invalid) ? 'digital' : 'demo';
+  if (currentEditId !== invalid.id || !currentEditType?.startsWith('discography') || !document.getElementById('modal').classList.contains('active')) editDiscography(invalid.id, category);
+  showReleaseDateError();
+  return false;
+}
+
 function renderSiteSettings() {
+  const featured = document.getElementById('site-featured-release-id');
+  if (featured) {
+    featured.innerHTML = musicOptions([['Digital Release', siteData.discography.digital], ['宅録Demo', siteData.discography.demo]], siteData.site.featuredReleaseId, '自動（最新のリリース）', true);
+    featured.value = siteData.site.featuredReleaseId || '';
+    featured.onchange = () => applyAdminFieldMutation(featured, siteData.site.featuredReleaseId || '', () => { siteData.site.featuredReleaseId = featured.value; });
+  }
+
   const heroForm = document.getElementById('site-hero-image-form');
   if (heroForm) {
     heroForm.innerHTML = getImageFormHtml(siteData.site.heroImage || '', 'site-hero-image');
@@ -1357,7 +1434,7 @@ function renderDiscography() {
         <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
         <div class="info">
           <div class="title">${escapeHtml(item.title)}</div>
-          <div class="meta">${escapeHtml(item.releaseDate)}</div>
+          <div class="meta">${escapeHtml(String(item.releaseDate ?? ''))}</div>
         </div>
         <span class="arrow">›</span>
       </div>
@@ -1372,7 +1449,7 @@ function renderDiscography() {
         <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
         <div class="info">
           <div class="title">${escapeHtml(item.title)}</div>
-          <div class="meta">${escapeHtml(item.releaseDate)}</div>
+          <div class="meta">${escapeHtml(String(item.releaseDate ?? ''))}</div>
         </div>
         <span class="arrow">›</span>
       </div>
@@ -2377,7 +2454,8 @@ function addDiscography() {
     </div>
     <div class="form-group">
       <label>リリース日</label>
-      <input type="text" id="edit-releaseDate" class="text-input" placeholder="2025.01.01">
+      <input type="text" id="edit-releaseDate" class="text-input" placeholder="2025.05.05" aria-invalid="false" aria-describedby="edit-releaseDate-error">
+      <div id="edit-releaseDate-error" class="form-error" role="alert"></div>
     </div>
     <div class="form-group">
       <label>説明（曲リスト等）</label>
@@ -2388,6 +2466,7 @@ function addDiscography() {
       <label>リンクURL</label>
       <input type="url" id="edit-link" class="text-input" placeholder="https://...">
     </div>
+    ${musicReleaseFields()}
     <div class="form-group">
       <label>カテゴリ</label>
       <select id="edit-category" class="select">
@@ -2396,6 +2475,7 @@ function addDiscography() {
       </select>
     </div>
   `);
+  bindReleaseDateError();
   document.getElementById('delete-btn').style.display = 'none';
   return true;
 }
@@ -2418,7 +2498,8 @@ function editDiscography(id, category) {
     </div>
     <div class="form-group">
       <label>リリース日</label>
-      <input type="text" id="edit-releaseDate" class="text-input" value="${escapeHtml(item.releaseDate)}">
+      <input type="text" id="edit-releaseDate" class="text-input" value="${escapeHtml(String(item.releaseDate ?? ''))}" placeholder="2025.05.05" aria-invalid="false" aria-describedby="edit-releaseDate-error">
+      <div id="edit-releaseDate-error" class="form-error" role="alert"></div>
     </div>
     <div class="form-group">
       <label>説明（曲リスト等）</label>
@@ -2429,6 +2510,7 @@ function editDiscography(id, category) {
       <label>リンクURL</label>
       <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link)}">
     </div>
+    ${musicReleaseFields(item)}
     <div class="form-group">
       <label>カテゴリ</label>
       <select id="edit-category" class="select">
@@ -2437,6 +2519,7 @@ function editDiscography(id, category) {
       </select>
     </div>
   `);
+  bindReleaseDateError();
   document.getElementById('delete-btn').style.display = 'block';
   return true;
 }
@@ -2554,6 +2637,8 @@ function restoreGenericModalCanonicalValues() {
       'edit-category': category,
       'edit-title': item.title,
       'edit-releaseDate': item.releaseDate,
+      'edit-releaseType': item.releaseType,
+      'edit-playbackVideoId': item.playbackVideoId,
       'edit-description': item.description,
       'edit-image': item.image,
       'edit-link': item.link,
@@ -2571,6 +2656,7 @@ async function saveModal() {
     return false;
   }
   let ok = true;
+  if (isSaving) return false;
   if (!ensureNoActiveImageUploads()) return false;
   if (currentEditType?.startsWith('live')) return saveLiveWorkspace();
   if (currentEditType === 'news') {
@@ -2578,10 +2664,17 @@ async function saveModal() {
   } else if (currentEditType.startsWith('youtube')) {
     ok = saveYouTubeItem();
   } else if (currentEditType.startsWith('discography')) {
-    saveDiscographyItem();
+    ok = saveDiscographyItem();
   }
 
   if (!ok) return false;
+  if (currentEditType.startsWith('discography')) {
+    markChanged();
+    if (IS_API_MODE && !await saveData({ silent: true })) return false;
+    closeModal();
+    showToast(IS_API_MODE ? '保存しました' : '編集内容を反映しました。右上の「保存」で確定します', 'success');
+    return true;
+  }
   closeModal();
   markChanged();
   if (IS_API_MODE) {
@@ -2617,6 +2710,8 @@ function saveYouTubeItem() {
 
   if (!siteData.youtube[newCategory]) siteData.youtube[newCategory] = [];
   siteData.youtube[newCategory].unshift(item);
+  siteData = window.MusicData.clearDanglingMusicReferences(siteData);
+  renderSiteSettings();
   renderYouTube();
   return true;
 }
@@ -2864,7 +2959,7 @@ async function deleteLiveFromWorkspace() {
 
 // Discography保存
 function saveDiscographyItem() {
-  if (rejectApiFallbackMutation()) return false;
+  if (rejectApiFallbackMutation() || isSaving || !ensureNoActiveImageUploads()) return false;
   const newCategory = document.getElementById('edit-category').value;
   const item = {
     id: currentEditId,
@@ -2872,8 +2967,14 @@ function saveDiscographyItem() {
     releaseDate: document.getElementById('edit-releaseDate').value,
     description: document.getElementById('edit-description').value,
     image: document.getElementById('edit-image').value,
-    link: document.getElementById('edit-link').value
+    link: document.getElementById('edit-link').value,
+    releaseType: document.getElementById('edit-releaseType').value,
+    playbackVideoId: document.getElementById('edit-playbackVideoId').value
   };
+
+  const previous = musicReleases(siteData).find(old => old.id === currentEditId);
+  if (previous && typeof previous.releaseDate !== 'string' && item.releaseDate === String(previous.releaseDate ?? '')) item.releaseDate = previous.releaseDate;
+  if (!releaseDateIsAllowed(item)) { showReleaseDateError(); return false; }
 
   // 元のカテゴリから削除
   const originalCategory = currentEditType.split('-')[1];
@@ -2890,7 +2991,12 @@ function saveDiscographyItem() {
     siteData.discography.demo.unshift(item);
   }
 
+  // API失敗でモーダルが残っても、再保存・削除は移動後の所属を使う。
+  currentEditType = `discography-${newCategory}`;
+  siteData = window.MusicData.clearDanglingMusicReferences(siteData);
   renderDiscography();
+  renderSiteSettings();
+  return true;
 }
 
 // アイテム削除
@@ -2918,6 +3024,8 @@ function deleteItem() {
     renderDiscography();
   }
 
+  siteData = window.MusicData.clearDanglingMusicReferences(siteData);
+  renderSiteSettings();
   closeModal();
   markChanged();
   showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
@@ -2955,21 +3063,29 @@ function setSaveStateSaved(silent = false) {
 
 async function saveToApi() {
   if (rejectApiFallbackMutation()) return false;
+  const snapshot = window.MusicData.clearDanglingMusicReferences(siteData);
   const response = await adminFetch('/api/admin/site-data', {
     method: 'PUT',
-    body: JSON.stringify(siteData)
+    body: JSON.stringify(snapshot)
   });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
+    if (currentEditType?.startsWith('discography')) {
+      const field = payload.fields?.find(item => item.id === currentEditId && item.field === 'releaseDate');
+      if (field) showReleaseDateError(field.message);
+    }
     throw new Error(getErrorMessage(payload, 'API保存に失敗しました'));
   }
+  releaseDateBaseline = structuredClone(snapshot);
 }
+
 
 // データ保存
 async function saveData(options = {}) {
   if (rejectApiFallbackMutation('読み取り専用のため保存できません。')) return false;
   if (isSaving) return false;
   if (!ensureNoActiveImageUploads()) return false;
+  if (!validateMusicBeforeSave()) return false;
   const duplicateLiveIds = findDuplicateLiveIds(siteData);
   if (duplicateLiveIds.length > 0) {
     showToast(`保存できません: Live IDが重複しています: ${duplicateLiveIds.join(', ')}`, 'error');
@@ -3429,7 +3545,8 @@ function wireLiveOperationsModal() {
 
 // JSONダウンロード
 function downloadJson() {
-  const jsonStr = JSON.stringify(siteData, null, 2);
+  const snapshot = window.MusicData.clearDanglingMusicReferences(siteData);
+  const jsonStr = JSON.stringify(snapshot, null, 2);
   const blob = new Blob([jsonStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -3439,6 +3556,7 @@ function downloadJson() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  releaseDateBaseline = structuredClone(snapshot);
 }
 
 // 画像ダウンロード
