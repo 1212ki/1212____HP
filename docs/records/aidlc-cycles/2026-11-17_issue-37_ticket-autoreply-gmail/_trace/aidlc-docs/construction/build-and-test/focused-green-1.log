@@ -1,0 +1,708 @@
+$ node --test cloudflare/worker/test/ticket-autoreply.test.js cloudflare/worker/test/ticket-autoreply-apps-script.test.js cloudflare/worker/test/public-ticket-boundaries.test.js cloudflare/worker/test/manual-ticket-reservations.test.js
+TAP version 13
+# Subtest: manual ticket reservations
+    # Subtest: manual POST rejects unauthenticated requests before touching D1
+    ok 1 - manual POST rejects unauthenticated requests before touching D1
+      ---
+      duration_ms: 12.502833
+      ...
+    # Subtest: manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+    ok 2 - manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+      ---
+      duration_ms: 2.013541
+      ...
+    # Subtest: manual POST accepts omitted contact and note and accepts a past Live
+    ok 3 - manual POST accepts omitted contact and note and accepts a past Live
+      ---
+      duration_ms: 0.496542
+      ...
+    # Subtest: manual POST rejects invalid Live, name, quantity, contact, and internal note
+        # Subtest: missing Live
+        ok 1 - missing Live
+          ---
+          duration_ms: 0.447625
+          ...
+        # Subtest: blank name
+        ok 2 - blank name
+          ---
+          duration_ms: 0.57525
+          ...
+        # Subtest: non-string name
+        ok 3 - non-string name
+          ---
+          duration_ms: 0.477875
+          ...
+        # Subtest: zero quantity
+        ok 4 - zero quantity
+          ---
+          duration_ms: 0.2715
+          ...
+        # Subtest: too many
+        ok 5 - too many
+          ---
+          duration_ms: 0.433459
+          ...
+        # Subtest: fractional
+        ok 6 - fractional
+          ---
+          duration_ms: 0.298084
+          ...
+        # Subtest: string quantity
+        ok 7 - string quantity
+          ---
+          duration_ms: 0.321958
+          ...
+        # Subtest: contact too long
+        ok 8 - contact too long
+          ---
+          duration_ms: 0.24025
+          ...
+        # Subtest: non-string contact
+        ok 9 - non-string contact
+          ---
+          duration_ms: 0.301458
+          ...
+        # Subtest: note too long
+        ok 10 - note too long
+          ---
+          duration_ms: 0.227875
+          ...
+        # Subtest: non-string note
+        ok 11 - non-string note
+          ---
+          duration_ms: 0.247541
+          ...
+        1..11
+    ok 4 - manual POST rejects invalid Live, name, quantity, contact, and internal note
+      ---
+      duration_ms: 4.353875
+      ...
+    # Subtest: manual admin list defaults legacy source to web and returns admin-only fields
+    ok 5 - manual admin list defaults legacy source to web and returns admin-only fields
+      ---
+      duration_ms: 0.439334
+      ...
+    # Subtest: manual CSV appends source, contact, internalNote after the existing eleven columns
+    ok 6 - manual CSV appends source, contact, internalNote after the existing eleven columns
+      ---
+      duration_ms: 0.327875
+      ...
+    # Subtest: authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+    ok 7 - authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+      ---
+      duration_ms: 1.643583
+      ...
+    # Subtest: manual changes preserve the existing authenticated status endpoint
+    ok 8 - manual changes preserve the existing authenticated status endpoint
+      ---
+      duration_ms: 0.402209
+      ...
+    # Subtest: manual changes preserve invalid status rejection without issuing an UPDATE
+    ok 9 - manual changes preserve invalid status rejection without issuing an UPDATE
+      ---
+      duration_ms: 0.597708
+      ...
+    # Subtest: explicit-empty internal reservation remains web and public notifications still run
+    ok 10 - explicit-empty internal reservation remains web and public notifications still run
+      ---
+      duration_ms: 0.740083
+      ...
+    # Subtest: public POST rejects tampered ineligible Live IDs before D1 write and notifications
+        # Subtest: authoritative external ticketUrl
+        ok 1 - authoritative external ticketUrl
+          ---
+          duration_ms: 1.016708
+          ...
+        # Subtest: invalid authoritative ticketUrl
+        ok 2 - invalid authoritative ticketUrl
+          ---
+          duration_ms: 0.285042
+          ...
+        # Subtest: reservation closed
+        ok 3 - reservation closed
+          ---
+          duration_ms: 0.17125
+          ...
+        # Subtest: upcoming collection item dated before today
+        ok 4 - upcoming collection item dated before today
+          ---
+          duration_ms: 0.154833
+          ...
+        # Subtest: past collection item even with a future date
+        ok 5 - past collection item even with a future date
+          ---
+          duration_ms: 0.296458
+          ...
+        # Subtest: legacy recognizable booking link
+        ok 6 - legacy recognizable booking link
+          ---
+          duration_ms: 0.4305
+          ...
+        1..6
+    ok 11 - public POST rejects tampered ineligible Live IDs before D1 write and notifications
+      ---
+      duration_ms: 2.653
+      ...
+    # Subtest: public POST accepts explicit-empty and missing-property non-booking internal routes
+        # Subtest: explicit-empty ticketUrl overrides recognizable booking link
+        ok 1 - explicit-empty ticketUrl overrides recognizable booking link
+          ---
+          duration_ms: 0.254333
+          ...
+        # Subtest: missing ticketUrl with social link
+        ok 2 - missing ticketUrl with social link
+          ---
+          duration_ms: 0.292458
+          ...
+        # Subtest: missing ticketUrl with profile link
+        ok 3 - missing ticketUrl with profile link
+          ---
+          duration_ms: 0.298625
+          ...
+        # Subtest: missing ticketUrl with Live detail link
+        ok 4 - missing ticketUrl with Live detail link
+          ---
+          duration_ms: 0.187834
+          ...
+        # Subtest: missing ticketUrl with ordinary link
+        ok 5 - missing ticketUrl with ordinary link
+          ---
+          duration_ms: 0.328875
+          ...
+        1..5
+    ok 12 - public POST accepts explicit-empty and missing-property non-booking internal routes
+      ---
+      duration_ms: 1.574792
+      ...
+    # Subtest: reservation source changes do not weaken public email validation
+    ok 13 - reservation source changes do not weaken public email validation
+      ---
+      duration_ms: 0.190708
+      ...
+    # Subtest: manual reservation schema and one-time migration are additive and documented
+    ok 14 - manual reservation schema and one-time migration are additive and documented
+      ---
+      duration_ms: 7.933709
+      ...
+    1..14
+ok 1 - manual ticket reservations
+  ---
+  duration_ms: 36.714166
+  type: 'suite'
+  ...
+# Subtest: public ticket boundary hardening
+    # Subtest: public site-data omits Live management fields while admin retains stored values
+    ok 1 - public site-data omits Live management fields while admin retains stored values
+      ---
+      duration_ms: 12.134709
+      ...
+    # Subtest: public reservation rejects non-integer raw quantities before insert and notification scheduling
+        # Subtest: missing
+        ok 1 - missing
+          ---
+          duration_ms: 0.818875
+          ...
+        # Subtest: blank
+        ok 2 - blank
+          ---
+          duration_ms: 0.4095
+          ...
+        # Subtest: numeric string
+        ok 3 - numeric string
+          ---
+          duration_ms: 0.386708
+          ...
+        # Subtest: fractional
+        ok 4 - fractional
+          ---
+          duration_ms: 0.393333
+          ...
+        # Subtest: NaN-like
+        ok 5 - NaN-like
+          ---
+          duration_ms: 0.341791
+          ...
+        # Subtest: null
+        ok 6 - null
+          ---
+          duration_ms: 0.3785
+          ...
+        # Subtest: zero
+        ok 7 - zero
+          ---
+          duration_ms: 0.413666
+          ...
+        # Subtest: above range
+        ok 8 - above range
+          ---
+          duration_ms: 0.338625
+          ...
+        1..8
+    ok 2 - public reservation rejects non-integer raw quantities before insert and notification scheduling
+      ---
+      duration_ms: 3.912791
+      ...
+    # Subtest: public reservation accepts an integer quantity and inserts and schedules once
+    ok 3 - public reservation accepts an integer quantity and inserts and schedules once
+      ---
+      duration_ms: 1.814834
+      ...
+    # Subtest: public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+        # Subtest: immediately before midnight
+        ok 1 - immediately before midnight
+          ---
+          duration_ms: 0.79225
+          ...
+        # Subtest: at midnight
+        ok 2 - at midnight
+          ---
+          duration_ms: 0.455542
+          ...
+        1..2
+    ok 4 - public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+      ---
+      duration_ms: 1.775333
+      ...
+    # Subtest: duplicate Live IDs fail closed for public and manual reservation routes
+        # Subtest: cross-collection public
+        ok 1 - cross-collection public
+          ---
+          duration_ms: 1.187917
+          ...
+        # Subtest: cross-collection manual
+        ok 2 - cross-collection manual
+          ---
+          duration_ms: 1.202209
+          ...
+        # Subtest: same-collection public
+        ok 3 - same-collection public
+          ---
+          duration_ms: 0.26125
+          ...
+        # Subtest: same-collection manual
+        ok 4 - same-collection manual
+          ---
+          duration_ms: 0.296417
+          ...
+        1..4
+    ok 5 - duplicate Live IDs fail closed for public and manual reservation routes
+      ---
+      duration_ms: 3.562792
+      ...
+    # Subtest: legacy ambiguous site data remains readable and is never rewritten by public reads
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 0.341875
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.156042
+          ...
+        1..2
+    ok 6 - legacy ambiguous site data remains readable and is never rewritten by public reads
+      ---
+      duration_ms: 0.603542
+      ...
+    # Subtest: admin site-data PUT rejects duplicate Live IDs before writing D1
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 0.408458
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.181042
+          ...
+        1..2
+    ok 7 - admin site-data PUT rejects duplicate Live IDs before writing D1
+      ---
+      duration_ms: 0.663709
+      ...
+    # Subtest: known recent-duplicate error remains a specific safe 400
+    ok 8 - known recent-duplicate error remains a specific safe 400
+      ---
+      duration_ms: 0.460292
+      ...
+    # Subtest: five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+    ok 9 - five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+      ---
+      duration_ms: 21.39325
+      ...
+    # Subtest: concurrent duplicate requests atomically produce one insert and one known 400
+    ok 10 - concurrent duplicate requests atomically produce one insert and one known 400
+      ---
+      duration_ms: 0.795209
+      ...
+    # Subtest: top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+        # Subtest: /api/public/site-data
+        ok 1 - /api/public/site-data
+          ---
+          duration_ms: 0.193958
+          ...
+        # Subtest: /og/live/live_internal
+        ok 2 - /og/live/live_internal
+          ---
+          duration_ms: 0.21525
+          ...
+        1..2
+    ok 11 - top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+      ---
+      duration_ms: 0.571334
+      ...
+    # Subtest: known admin and ticket route errors remain specific and safe
+    ok 12 - known admin and ticket route errors remain specific and safe
+      ---
+      duration_ms: 0.297083
+      ...
+    # Subtest: unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+        # Subtest: manual reservation insert
+        ok 1 - manual reservation insert
+          ---
+          duration_ms: 1.061375
+          ...
+        # Subtest: ticket status update
+        ok 2 - ticket status update
+          ---
+          duration_ms: 0.957584
+          ...
+        1..2
+    ok 13 - unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+      ---
+      duration_ms: 2.655791
+      ...
+    # Subtest: unexpected X route errors reach the logged generic top-level 500
+        # Subtest: /api/admin/live/live_internal/post-x?dryRun=1
+        ok 1 - /api/admin/live/live_internal/post-x?dryRun=1
+          ---
+          duration_ms: 6.757334
+          ...
+        # Subtest: /api/admin/live/live_internal/post-x
+        ok 2 - /api/admin/live/live_internal/post-x
+          ---
+          duration_ms: 1.058167
+          ...
+        1..2
+    ok 14 - unexpected X route errors reach the logged generic top-level 500
+      ---
+      duration_ms: 8.288875
+      ...
+    # Subtest: unexpected D1 errors are logged and returned as a generic 500 without leakage
+    ok 15 - unexpected D1 errors are logged and returned as a generic 500 without leakage
+      ---
+      duration_ms: 0.244292
+      ...
+    # Subtest: post-insert notification and waitUntil scheduling failures still return 201 with one insert
+    ok 16 - post-insert notification and waitUntil scheduling failures still return 201 with one insert
+      ---
+      duration_ms: 3.480375
+      ...
+    1..16
+ok 2 - public ticket boundary hardening
+  ---
+  duration_ms: 63.373875
+  type: 'suite'
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=false retains 201
+ok 3 - public save sends one receipt after insert; notification failure=false retains 201
+  ---
+  duration_ms: 0.661417
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=true retains 201
+ok 4 - public save sends one receipt after insert; notification failure=true retains 201
+  ---
+  duration_ms: 0.244875
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+ok 5 - legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+  ---
+  duration_ms: 0.420708
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=
+ok 6 - legacy ticket copy is removed on public/admin reads and saves; complete=
+  ---
+  duration_ms: 0.240417
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+ok 7 - legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+  ---
+  duration_ms: 0.604625
+  ...
+# Subtest: Gmail sends exactly one fixed receipt to applicant with owner BCC
+ok 8 - Gmail sends exactly one fixed receipt to applicant with owner BCC
+  ---
+  duration_ms: 1.762458
+  ...
+# Subtest: blank message becomes なし and quantity 10 is valid
+ok 9 - blank message becomes なし and quantity 10 is valid
+  ---
+  duration_ms: 0.394917
+  ...
+# Subtest: rejects wrong token without sending
+ok 10 - rejects wrong token without sending
+  ---
+  duration_ms: 0.26525
+  ...
+# Subtest: rejects token whitespace exact without sending
+ok 11 - rejects token whitespace exact without sending
+  ---
+  duration_ms: 0.546834
+  ...
+# Subtest: rejects unconfigured without sending
+ok 12 - rejects unconfigured without sending
+  ---
+  duration_ms: 0.298542
+  ...
+# Subtest: rejects missing event without sending
+ok 13 - rejects missing event without sending
+  ---
+  duration_ms: 0.312542
+  ...
+# Subtest: rejects wrong MIME without sending
+ok 14 - rejects wrong MIME without sending
+  ---
+  duration_ms: 0.229375
+  ...
+# Subtest: rejects Gmail exception without sending
+ok 15 - rejects Gmail exception without sending
+  ---
+  duration_ms: 0.269708
+  ...
+# Subtest: rejects missing token without sending
+ok 16 - rejects missing token without sending
+  ---
+  duration_ms: 0.404042
+  ...
+# Subtest: rejects missing receipt_id without sending
+ok 17 - rejects missing receipt_id without sending
+  ---
+  duration_ms: 0.333667
+  ...
+# Subtest: rejects missing live without sending
+ok 18 - rejects missing live without sending
+  ---
+  duration_ms: 0.288125
+  ...
+# Subtest: rejects missing name without sending
+ok 19 - rejects missing name without sending
+  ---
+  duration_ms: 0.219125
+  ...
+# Subtest: rejects missing email without sending
+ok 20 - rejects missing email without sending
+  ---
+  duration_ms: 0.20075
+  ...
+# Subtest: rejects missing quantity without sending
+ok 21 - rejects missing quantity without sending
+  ---
+  duration_ms: 0.259833
+  ...
+# Subtest: rejects missing message without sending
+ok 22 - rejects missing message without sending
+  ---
+  duration_ms: 0.203083
+  ...
+# Subtest: rejects blank receipt_id without sending
+ok 23 - rejects blank receipt_id without sending
+  ---
+  duration_ms: 0.250125
+  ...
+# Subtest: rejects blank live without sending
+ok 24 - rejects blank live without sending
+  ---
+  duration_ms: 0.498709
+  ...
+# Subtest: rejects blank name without sending
+ok 25 - rejects blank name without sending
+  ---
+  duration_ms: 0.418292
+  ...
+# Subtest: rejects blank email without sending
+ok 26 - rejects blank email without sending
+  ---
+  duration_ms: 0.876416
+  ...
+# Subtest: rejects blank quantity without sending
+ok 27 - rejects blank quantity without sending
+  ---
+  duration_ms: 0.628209
+  ...
+# Subtest: rejects duplicate token without sending
+ok 28 - rejects duplicate token without sending
+  ---
+  duration_ms: 0.8775
+  ...
+# Subtest: rejects duplicate receipt_id without sending
+ok 29 - rejects duplicate receipt_id without sending
+  ---
+  duration_ms: 0.382917
+  ...
+# Subtest: rejects duplicate live without sending
+ok 30 - rejects duplicate live without sending
+  ---
+  duration_ms: 0.276833
+  ...
+# Subtest: rejects duplicate name without sending
+ok 31 - rejects duplicate name without sending
+  ---
+  duration_ms: 0.225041
+  ...
+# Subtest: rejects duplicate email without sending
+ok 32 - rejects duplicate email without sending
+  ---
+  duration_ms: 0.367166
+  ...
+# Subtest: rejects duplicate quantity without sending
+ok 33 - rejects duplicate quantity without sending
+  ---
+  duration_ms: 0.287917
+  ...
+# Subtest: rejects duplicate message without sending
+ok 34 - rejects duplicate message without sending
+  ---
+  duration_ms: 0.566291
+  ...
+# Subtest: rejects CRLF receipt_id without sending
+ok 35 - rejects CRLF receipt_id without sending
+  ---
+  duration_ms: 0.255375
+  ...
+# Subtest: rejects CRLF live without sending
+ok 36 - rejects CRLF live without sending
+  ---
+  duration_ms: 0.210625
+  ...
+# Subtest: rejects CRLF name without sending
+ok 37 - rejects CRLF name without sending
+  ---
+  duration_ms: 0.21525
+  ...
+# Subtest: rejects email "a@example.com,b@example.com" without sending
+ok 38 - rejects email "a@example.com,b@example.com" without sending
+  ---
+  duration_ms: 0.1995
+  ...
+# Subtest: rejects email "a@example.com;b@example.com" without sending
+ok 39 - rejects email "a@example.com;b@example.com" without sending
+  ---
+  duration_ms: 0.323875
+  ...
+# Subtest: rejects email "Name <a@example.com>" without sending
+ok 40 - rejects email "Name <a@example.com>" without sending
+  ---
+  duration_ms: 0.283166
+  ...
+# Subtest: rejects email "a@example.com\\r\\nb@example.com" without sending
+ok 41 - rejects email "a@example.com\\r\\nb@example.com" without sending
+  ---
+  duration_ms: 0.197
+  ...
+# Subtest: rejects email "invalid" without sending
+ok 42 - rejects email "invalid" without sending
+  ---
+  duration_ms: 0.197625
+  ...
+# Subtest: rejects quantity 0 without sending
+ok 43 - rejects quantity 0 without sending
+  ---
+  duration_ms: 0.19225
+  ...
+# Subtest: rejects quantity 11 without sending
+ok 44 - rejects quantity 11 without sending
+  ---
+  duration_ms: 0.195333
+  ...
+# Subtest: rejects quantity 1.5 without sending
+ok 45 - rejects quantity 1.5 without sending
+  ---
+  duration_ms: 0.192625
+  ...
+# Subtest: payload has exactly seven form-encoded keys and round-trips trimmed special text
+ok 46 - payload has exactly seven form-encoded keys and round-trips trimmed special text
+  ---
+  duration_ms: 1.317541
+  ...
+# Subtest: send uses body-only token, form content type and default redirects
+ok 47 - send uses body-only token, form content type and default redirects
+  ---
+  duration_ms: 12.749375
+  ...
+# Subtest: unconfigured neither skips without fetch
+ok 48 - unconfigured neither skips without fetch
+  ---
+  duration_ms: 0.080708
+  ...
+# Subtest: unconfigured URL missing skips without fetch
+ok 49 - unconfigured URL missing skips without fetch
+  ---
+  duration_ms: 0.130667
+  ...
+# Subtest: unconfigured URL blank skips without fetch
+ok 50 - unconfigured URL blank skips without fetch
+  ---
+  duration_ms: 0.048458
+  ...
+# Subtest: unconfigured token missing skips without fetch
+ok 51 - unconfigured token missing skips without fetch
+  ---
+  duration_ms: 0.038584
+  ...
+# Subtest: unconfigured token blank skips without fetch
+ok 52 - unconfigured token blank skips without fetch
+  ---
+  duration_ms: 0.045541
+  ...
+# Subtest: manual reservation skips even with both secrets
+ok 53 - manual reservation skips even with both secrets
+  ---
+  duration_ms: 0.057375
+  ...
+# Subtest: HTTP failure is sanitized in send and notify
+ok 54 - HTTP failure is sanitized in send and notify
+  ---
+  duration_ms: 0.477042
+  ...
+# Subtest: network failure is sanitized in send and notify
+ok 55 - network failure is sanitized in send and notify
+  ---
+  duration_ms: 0.238916
+  ...
+# Subtest: JSON failure is sanitized in send and notify
+ok 56 - JSON failure is sanitized in send and notify
+  ---
+  duration_ms: 0.286917
+  ...
+# Subtest: false failure is sanitized in send and notify
+ok 57 - false failure is sanitized in send and notify
+  ---
+  duration_ms: 0.280292
+  ...
+# Subtest: missing failure is sanitized in send and notify
+ok 58 - missing failure is sanitized in send and notify
+  ---
+  duration_ms: 0.287667
+  ...
+# Subtest: truthy failure is sanitized in send and notify
+ok 59 - truthy failure is sanitized in send and notify
+  ---
+  duration_ms: 0.407709
+  ...
+# Subtest: null failure is sanitized in send and notify
+ok 60 - null failure is sanitized in send and notify
+  ---
+  duration_ms: 0.312833
+  ...
+1..60
+# tests 134
+# suites 2
+# pass 134
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 429.621792
+
+exit_code: 0

@@ -2,15 +2,17 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-11-16
-- Related issues: #35, #33, #29
-- Related implementation issues: #19, #20, #21, #22, #33, #35
-- Owner approval: Issue #35のCode Generation Planに記載した本版の差分に対するItsuki Matsumotoのgate 3承認（本人回答`A`）。根拠はactive時の`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後の`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`。本文反映後に承認済み差分との一致を検証する
+- Last updated: 2026-11-17
+- Related issues: #37, #35, #33, #29
+- Related implementation issues: #19, #20, #21, #22, #33, #35, #37
+- Owner approval: Issue #37のCode Generation Planに記載した本版の差分に対するItsuki Matsumotoのgate 3承認（本人回答`A`）。根拠はactive時の`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後の`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`。本文反映後に承認済み差分との一致を検証する
+- Prior Owner approval（Issue #35）: Issue #35のgate 3承認。根拠は`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`
 - Prior Owner approval（Issue #33）: APPROVED（Itsuki Matsumoto、2026-11-16T13:34:12+09:00、提示された本版のSHA-256 `8c9ceb61cbee4e897f8afad63245410c8bca69f5ea89c8e6a5b57e6f89038864` に対する本人回答 `A`）
 - Prior Owner approval: 2026-08-17（Issue #29のstable Worker share URLによるOGP回帰復旧設計）
 - Prior design review（Issue #33）: APPROVED（review-04、Issue #33の更新内容。blocking findingなし）
 - Prior design review: APPROVED（Issue #22 AC0〜AC9、Issue #29 owner-approved design）
-- Implementation gate: Issue #35はgate 1〜3の承認と、承認済みCode Generation PlanどおりのDraft→Approved反映を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・production deployは別のOwner承認、本番の速度確認はdeploy後のOwner確認とする
+- Implementation gate: Issue #37はgate 1〜3の承認と、承認済みCode Generation PlanどおりのDraft→Approved反映を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・production deployは別のOwner承認。Apps Script作成・公開とsecret登録はOwnerが行い、本番のメール到達はdeploy後にOwnerが確認する
+- Prior implementation gate（Issue #35）: Issue #35のgate 1〜5、実装・検証・独立reviewの記録は`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/`を参照する。本番の速度確認はdeploy後のOwner確認とする
 - Prior implementation gate（Issue #33）: Issue #33の本版確認済み。実装・全回帰・独立review-07を完了し、Code Generation Resultは本人回答`A`で承認済み（2026-11-16T14:29:00+09:00）。Build/Test Resultは書式修正後の新digestに対する本人回答`A`で再承認済み（2026-11-16T14:52:21+09:00）。cycle完了記録は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`。canonical確認原典: context rootの`_scratch/codex-work/20261116-114342_1212hp-ai-provider-fallback/canonical-owner-confirmation.md`（prompt: 2026-11-16T13:33:01+09:00）。本文中の実装未着手という時点記述は確認時点の記録として保持する。本番反映は別のOwner操作
 
 ## 1. 目的
@@ -59,7 +61,7 @@
 - X告知の準備・外部遷移
 - Live単位の予約確認
 - 全Live横断の予約管理
-- Ticket Page設定への導線
+- Ticket Page設定への導線、案内・注意文の項目削除とGmailによる予約控え（Issue #37）
 - desktop/mobileの情報階層
 
 ### 非スコープ
@@ -160,7 +162,7 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 | Live一覧（公演終了） | `Live > Liveページ > 公演終了` | 過去公演の表示内容 |
 | Live詳細 | 対象Liveの`公開内容` | 日付、曜日、会場、タイトル、OPEN/START、料金、出演、画像、説明、リンク |
 | Live詳細からの予約 | 対象Liveの`公開内容`と`予約` | 予約方式、予約URL、受付状態、対象Liveの受付状況 |
-| Ticket Page | `Live > Liveページ > Ticket Page共通設定` | 内部予約ページの説明・表示設定 |
+| Ticket Page | `Live > Liveページ > Ticket Page共通設定` | 完了文と表示項目。操作案内文・自動返信注意文の設定は持たない |
 | X告知 | 対象Liveの`告知` | 公開内容から生成した告知、任意コメント、詳細URL |
 
 ### 5.1 Field matrix
@@ -183,6 +185,24 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 | `sourceText` | 管理専用 | 任意 | 公開内容 > 元情報から作成 | AI抽出元。public APIへ出さない |
 | `xComment` | 管理専用 | 任意 | 告知 | X用任意コメント。public APIへ出さない |
 | `upcoming / past` | 公開状態 | 必須 | 公開内容 > 公開区分 | Live一覧の開催予定 / 公演終了 |
+
+### 5.2 Ticket Pageと予約控え（Issue #37）
+
+申込者の手元に予約の控えを残し、同じ控えを運営にも届ける。Ticket Pageの案内文`introText`と注意文`noticeText`は項目ごと削除する。公開HTML・JS、admin設定・既定値・正規化、Worker既定値・正規化から外し、旧D1値は読み込み時に除外する。移行SQLで削除しない。完了ページの静的既定文とWorker・adminの既定`completeText`は「予約しました。」とし、保存済み`completeText`は従来どおり表示する。desktop/mobileとも同じ項目を外し、入力・確認・完了の構成と既存の表示項目設定を維持する。contactは変更しない。
+
+公開予約の保存成功後、Workerは`TICKET_AUTOREPLY_FORM_URL`に`application/x-www-form-urlencoded`で`receipt_id`・`live`（日付と会場）・`name`・`email`・`quantity`・`message`・`token`をPOSTする。合言葉は`TICKET_AUTOREPLY_TOKEN`から読みbodyだけに入れる。URLか合言葉が未設定ならskipする。Apps Scriptは`1212ki.info@gmail.com`が所有し、実行者を自分として公開する。Script Propertiesの`TICKET_AUTOREPLY_TOKEN`との一致、6項目の存在（備考のみ空可）、単一e-mail、1〜10枚、重複parameterなしを検証してからGmailで送る。
+
+件名は「ticket予約の控え | 松本一樹」、差出人表示名は「松本一樹 ticket」。宛先は申込者、BCCは固定の`1212ki.info@gmail.com`。本文は受付ID・ライブ・名前・e-mail・枚数・備考を含み、備考空は「なし」。宛先・BCC・件名・本文の任意指定は受け付けない。Apps Scriptの逐語コードと本文は`cloudflare/worker/apps-script/ticket-autoreply.gs`、Owner設定手順は同directoryの`README.md`を参照する。
+
+予約保存と通知は既存の`ctx.waitUntil`で分離する。Workerはredirectの既定追従後、HTTP成功かつJSONの`ok: true`を送信処理の成功とする。通信・HTTP・不正応答・Gmail失敗でも予約APIは201のまま。手動取り置き（`source: manual`）では送らず、LINE処理は変えない。自動再送・送信状態DB・外部送信サービス・DNS設定・`@1212hp.com`差出人は追加しない。
+
+個人Gmailの1日100宛先にはBCCも含まれ、1予約2宛先なら最大50件／日（他の送信分で減る）。超過時はメール失敗、予約成功となる。個人Gmailアドレスは申込者に見える。合言葉漏洩時は任意の宛先への固定書式メールと送信枠消費が可能になるため、OwnerがWebアプリ公開を停止し、Script PropertiesとWorker secretを更新する。合言葉・予約情報・上流応答本文はログや公開APIへ出さない。
+
+検証はfetch stub、Apps Script実fileを読むNode VMとGmail stub、旧値入りD1 stub、公開/adminのHTML・DOM testで行う。受入条件は、公開成功後の6項目＋合言葉POST、合言葉と必須値による送信制御・申込者＋BCC・本文6項目、送信失敗時の予約成功と手動非送信、旧文言の非表示と保存済み完了文保持、canonical整合と全回帰成功である。gate 1〜3とgate 4〜5を2回のOwner確認にまとめ、gate 3が逐語canonical差分の確認を兼ねる。独立reviewは実装後1回で設計と実装を確認する。
+
+Google側のPOST後302と最終応答は未観測で、stubは実到達を証明しない。Apps Script公開・secret登録・deploy後、Ownerが申込者と`1212ki.info@gmail.com`の両方への到達・差出人・内容を確認するまで本番受入は未検証とする。設定と公開はOwner操作。送信停止はWorker URL secretの解除とWebアプリ公開停止、漏洩時は合言葉更新を行う。rollbackはIssue #37の承認差分だけを対象にし、予約データ・LINE・contactを戻さない。
+
+関連Issueは#37、実装計画はactive時の`aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/`を参照する。
 
 ## 6. 情報の優先順位
 
@@ -514,4 +534,7 @@ gate 1〜3承認後、Code Generation Planに固定した差分を本設計・�
 - Issue #33 Workflow Plan: `docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/_trace/aidlc-docs/inception/plans/execution-plan.md`
 - Issue #33 Code Generation Plan: `docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/_trace/aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md`（§2 Step 1）
 - Issue #33 API・公開手順: `cloudflare/worker/README.md`「Live元情報のAI整理」
+- Issue #37 予約控えの実装計画と証拠: active時は`aidlc-docs/`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/`
+- Issue #37 Gmail送信: `cloudflare/worker/apps-script/ticket-autoreply.gs`
+- Issue #37 Owner設定・確認・停止手順: `cloudflare/worker/apps-script/README.md`
 - 旧来の要件・仕様・ユースケース: `documents/`

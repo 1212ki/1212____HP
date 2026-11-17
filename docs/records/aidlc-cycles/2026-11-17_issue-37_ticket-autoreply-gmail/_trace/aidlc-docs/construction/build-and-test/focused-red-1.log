@@ -1,0 +1,1522 @@
+$ node --test cloudflare/worker/test/ticket-autoreply.test.js cloudflare/worker/test/ticket-autoreply-apps-script.test.js cloudflare/worker/test/public-ticket-boundaries.test.js cloudflare/worker/test/manual-ticket-reservations.test.js
+TAP version 13
+# Subtest: manual ticket reservations
+    # Subtest: manual POST rejects unauthenticated requests before touching D1
+    ok 1 - manual POST rejects unauthenticated requests before touching D1
+      ---
+      duration_ms: 12.974833
+      ...
+    # Subtest: manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+    ok 2 - manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+      ---
+      duration_ms: 1.993209
+      ...
+    # Subtest: manual POST accepts omitted contact and note and accepts a past Live
+    ok 3 - manual POST accepts omitted contact and note and accepts a past Live
+      ---
+      duration_ms: 0.47475
+      ...
+    # Subtest: manual POST rejects invalid Live, name, quantity, contact, and internal note
+        # Subtest: missing Live
+        ok 1 - missing Live
+          ---
+          duration_ms: 0.439792
+          ...
+        # Subtest: blank name
+        ok 2 - blank name
+          ---
+          duration_ms: 0.528125
+          ...
+        # Subtest: non-string name
+        ok 3 - non-string name
+          ---
+          duration_ms: 0.4155
+          ...
+        # Subtest: zero quantity
+        ok 4 - zero quantity
+          ---
+          duration_ms: 0.253667
+          ...
+        # Subtest: too many
+        ok 5 - too many
+          ---
+          duration_ms: 0.51
+          ...
+        # Subtest: fractional
+        ok 6 - fractional
+          ---
+          duration_ms: 0.349083
+          ...
+        # Subtest: string quantity
+        ok 7 - string quantity
+          ---
+          duration_ms: 0.327
+          ...
+        # Subtest: contact too long
+        ok 8 - contact too long
+          ---
+          duration_ms: 0.457166
+          ...
+        # Subtest: non-string contact
+        ok 9 - non-string contact
+          ---
+          duration_ms: 0.347375
+          ...
+        # Subtest: note too long
+        ok 10 - note too long
+          ---
+          duration_ms: 0.290666
+          ...
+        # Subtest: non-string note
+        ok 11 - non-string note
+          ---
+          duration_ms: 0.587334
+          ...
+        1..11
+    ok 4 - manual POST rejects invalid Live, name, quantity, contact, and internal note
+      ---
+      duration_ms: 5.10375
+      ...
+    # Subtest: manual admin list defaults legacy source to web and returns admin-only fields
+    ok 5 - manual admin list defaults legacy source to web and returns admin-only fields
+      ---
+      duration_ms: 1.471167
+      ...
+    # Subtest: manual CSV appends source, contact, internalNote after the existing eleven columns
+    ok 6 - manual CSV appends source, contact, internalNote after the existing eleven columns
+      ---
+      duration_ms: 0.820875
+      ...
+    # Subtest: authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+    ok 7 - authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+      ---
+      duration_ms: 1.805459
+      ...
+    # Subtest: manual changes preserve the existing authenticated status endpoint
+    ok 8 - manual changes preserve the existing authenticated status endpoint
+      ---
+      duration_ms: 0.927666
+      ...
+    # Subtest: manual changes preserve invalid status rejection without issuing an UPDATE
+    ok 9 - manual changes preserve invalid status rejection without issuing an UPDATE
+      ---
+      duration_ms: 0.834791
+      ...
+    # Subtest: explicit-empty internal reservation remains web and public notifications still run
+    ok 10 - explicit-empty internal reservation remains web and public notifications still run
+      ---
+      duration_ms: 0.773209
+      ...
+    # Subtest: public POST rejects tampered ineligible Live IDs before D1 write and notifications
+        # Subtest: authoritative external ticketUrl
+        ok 1 - authoritative external ticketUrl
+          ---
+          duration_ms: 0.30425
+          ...
+        # Subtest: invalid authoritative ticketUrl
+        ok 2 - invalid authoritative ticketUrl
+          ---
+          duration_ms: 0.283667
+          ...
+        # Subtest: reservation closed
+        ok 3 - reservation closed
+          ---
+          duration_ms: 0.196375
+          ...
+        # Subtest: upcoming collection item dated before today
+        ok 4 - upcoming collection item dated before today
+          ---
+          duration_ms: 0.34975
+          ...
+        # Subtest: past collection item even with a future date
+        ok 5 - past collection item even with a future date
+          ---
+          duration_ms: 0.398875
+          ...
+        # Subtest: legacy recognizable booking link
+        ok 6 - legacy recognizable booking link
+          ---
+          duration_ms: 0.479958
+          ...
+        1..6
+    ok 11 - public POST rejects tampered ineligible Live IDs before D1 write and notifications
+      ---
+      duration_ms: 2.487708
+      ...
+    # Subtest: public POST accepts explicit-empty and missing-property non-booking internal routes
+        # Subtest: explicit-empty ticketUrl overrides recognizable booking link
+        ok 1 - explicit-empty ticketUrl overrides recognizable booking link
+          ---
+          duration_ms: 0.278042
+          ...
+        # Subtest: missing ticketUrl with social link
+        ok 2 - missing ticketUrl with social link
+          ---
+          duration_ms: 0.331583
+          ...
+        # Subtest: missing ticketUrl with profile link
+        ok 3 - missing ticketUrl with profile link
+          ---
+          duration_ms: 0.442375
+          ...
+        # Subtest: missing ticketUrl with Live detail link
+        ok 4 - missing ticketUrl with Live detail link
+          ---
+          duration_ms: 0.251209
+          ...
+        # Subtest: missing ticketUrl with ordinary link
+        ok 5 - missing ticketUrl with ordinary link
+          ---
+          duration_ms: 0.374042
+          ...
+        1..5
+    ok 12 - public POST accepts explicit-empty and missing-property non-booking internal routes
+      ---
+      duration_ms: 1.926792
+      ...
+    # Subtest: reservation source changes do not weaken public email validation
+    ok 13 - reservation source changes do not weaken public email validation
+      ---
+      duration_ms: 0.16375
+      ...
+    # Subtest: manual reservation schema and one-time migration are additive and documented
+    ok 14 - manual reservation schema and one-time migration are additive and documented
+      ---
+      duration_ms: 9.472209
+      ...
+    1..14
+ok 1 - manual ticket reservations
+  ---
+  duration_ms: 42.128208
+  type: 'suite'
+  ...
+# Subtest: public ticket boundary hardening
+    # Subtest: public site-data omits Live management fields while admin retains stored values
+    ok 1 - public site-data omits Live management fields while admin retains stored values
+      ---
+      duration_ms: 11.598416
+      ...
+    # Subtest: public reservation rejects non-integer raw quantities before insert and notification scheduling
+        # Subtest: missing
+        ok 1 - missing
+          ---
+          duration_ms: 0.702625
+          ...
+        # Subtest: blank
+        ok 2 - blank
+          ---
+          duration_ms: 0.400542
+          ...
+        # Subtest: numeric string
+        ok 3 - numeric string
+          ---
+          duration_ms: 0.378708
+          ...
+        # Subtest: fractional
+        ok 4 - fractional
+          ---
+          duration_ms: 0.471125
+          ...
+        # Subtest: NaN-like
+        ok 5 - NaN-like
+          ---
+          duration_ms: 0.473583
+          ...
+        # Subtest: null
+        ok 6 - null
+          ---
+          duration_ms: 0.497291
+          ...
+        # Subtest: zero
+        ok 7 - zero
+          ---
+          duration_ms: 0.501959
+          ...
+        # Subtest: above range
+        ok 8 - above range
+          ---
+          duration_ms: 0.366542
+          ...
+        1..8
+    ok 2 - public reservation rejects non-integer raw quantities before insert and notification scheduling
+      ---
+      duration_ms: 4.274166
+      ...
+    # Subtest: public reservation accepts an integer quantity and inserts and schedules once
+    ok 3 - public reservation accepts an integer quantity and inserts and schedules once
+      ---
+      duration_ms: 1.76425
+      ...
+    # Subtest: public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+        # Subtest: immediately before midnight
+        ok 1 - immediately before midnight
+          ---
+          duration_ms: 0.503958
+          ...
+        # Subtest: at midnight
+        ok 2 - at midnight
+          ---
+          duration_ms: 0.278542
+          ...
+        1..2
+    ok 4 - public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+      ---
+      duration_ms: 0.925834
+      ...
+    # Subtest: duplicate Live IDs fail closed for public and manual reservation routes
+        # Subtest: cross-collection public
+        ok 1 - cross-collection public
+          ---
+          duration_ms: 0.30275
+          ...
+        # Subtest: cross-collection manual
+        ok 2 - cross-collection manual
+          ---
+          duration_ms: 1.019291
+          ...
+        # Subtest: same-collection public
+        ok 3 - same-collection public
+          ---
+          duration_ms: 1.023
+          ...
+        # Subtest: same-collection manual
+        ok 4 - same-collection manual
+          ---
+          duration_ms: 0.295084
+          ...
+        1..4
+    ok 5 - duplicate Live IDs fail closed for public and manual reservation routes
+      ---
+      duration_ms: 3.111125
+      ...
+    # Subtest: legacy ambiguous site data remains readable and is never rewritten by public reads
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 0.352958
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.157833
+          ...
+        1..2
+    ok 6 - legacy ambiguous site data remains readable and is never rewritten by public reads
+      ---
+      duration_ms: 0.661708
+      ...
+    # Subtest: admin site-data PUT rejects duplicate Live IDs before writing D1
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 0.711958
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.215875
+          ...
+        1..2
+    ok 7 - admin site-data PUT rejects duplicate Live IDs before writing D1
+      ---
+      duration_ms: 1.047875
+      ...
+    # Subtest: known recent-duplicate error remains a specific safe 400
+    ok 8 - known recent-duplicate error remains a specific safe 400
+      ---
+      duration_ms: 0.498458
+      ...
+    # Subtest: five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+    ok 9 - five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+      ---
+      duration_ms: 21.8185
+      ...
+    # Subtest: concurrent duplicate requests atomically produce one insert and one known 400
+    ok 10 - concurrent duplicate requests atomically produce one insert and one known 400
+      ---
+      duration_ms: 1.086708
+      ...
+    # Subtest: top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+        # Subtest: /api/public/site-data
+        ok 1 - /api/public/site-data
+          ---
+          duration_ms: 0.238333
+          ...
+        # Subtest: /og/live/live_internal
+        ok 2 - /og/live/live_internal
+          ---
+          duration_ms: 0.242958
+          ...
+        1..2
+    ok 11 - top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+      ---
+      duration_ms: 0.670042
+      ...
+    # Subtest: known admin and ticket route errors remain specific and safe
+    ok 12 - known admin and ticket route errors remain specific and safe
+      ---
+      duration_ms: 0.351042
+      ...
+    # Subtest: unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+        # Subtest: manual reservation insert
+        ok 1 - manual reservation insert
+          ---
+          duration_ms: 0.3175
+          ...
+        # Subtest: ticket status update
+        ok 2 - ticket status update
+          ---
+          duration_ms: 0.202709
+          ...
+        1..2
+    ok 13 - unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+      ---
+      duration_ms: 0.960541
+      ...
+    # Subtest: unexpected X route errors reach the logged generic top-level 500
+        # Subtest: /api/admin/live/live_internal/post-x?dryRun=1
+        ok 1 - /api/admin/live/live_internal/post-x?dryRun=1
+          ---
+          duration_ms: 11.942375
+          ...
+        # Subtest: /api/admin/live/live_internal/post-x
+        ok 2 - /api/admin/live/live_internal/post-x
+          ---
+          duration_ms: 1.159292
+          ...
+        1..2
+    ok 14 - unexpected X route errors reach the logged generic top-level 500
+      ---
+      duration_ms: 13.372834
+      ...
+    # Subtest: unexpected D1 errors are logged and returned as a generic 500 without leakage
+    ok 15 - unexpected D1 errors are logged and returned as a generic 500 without leakage
+      ---
+      duration_ms: 0.216542
+      ...
+    # Subtest: post-insert notification and waitUntil scheduling failures still return 201 with one insert
+    ok 16 - post-insert notification and waitUntil scheduling failures still return 201 with one insert
+      ---
+      duration_ms: 1.158125
+      ...
+    1..16
+ok 2 - public ticket boundary hardening
+  ---
+  duration_ms: 64.235917
+  type: 'suite'
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=false retains 201
+not ok 3 - public save sends one receipt after insert; notification failure=false retains 201
+  ---
+  duration_ms: 5.733709
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:688:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(outbound[0].options.body instanceof URLSearchParams)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:711:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=true retains 201
+not ok 4 - public save sends one receipt after insert; notification failure=true retains 201
+  ---
+  duration_ms: 0.699917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:688:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(outbound[0].options.body instanceof URLSearchParams)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:711:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+not ok 5 - legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+  ---
+  duration_ms: 0.832334
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:720:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:727:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=
+not ok 6 - legacy ticket copy is removed on public/admin reads and saves; complete=
+  ---
+  duration_ms: 0.240125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:720:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:727:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+not ok 7 - legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+  ---
+  duration_ms: 0.240375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:720:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/public-ticket-boundaries.test.js:727:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Gmail sends exactly one fixed receipt to applicant with owner BCC
+not ok 8 - Gmail sends exactly one fixed receipt to applicant with owner BCC
+  ---
+  duration_ms: 0.818375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:24:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:25:29)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: blank message becomes なし and quantity 10 is valid
+not ok 9 - blank message becomes なし and quantity 10 is valid
+  ---
+  duration_ms: 0.209625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:31:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:32:29)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects wrong token without sending
+not ok 10 - rejects wrong token without sending
+  ---
+  duration_ms: 0.069917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects token whitespace exact without sending
+not ok 11 - rejects token whitespace exact without sending
+  ---
+  duration_ms: 0.100583
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects unconfigured without sending
+not ok 12 - rejects unconfigured without sending
+  ---
+  duration_ms: 0.052
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing event without sending
+not ok 13 - rejects missing event without sending
+  ---
+  duration_ms: 0.1455
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects wrong MIME without sending
+not ok 14 - rejects wrong MIME without sending
+  ---
+  duration_ms: 0.047208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects Gmail exception without sending
+not ok 15 - rejects Gmail exception without sending
+  ---
+  duration_ms: 0.040875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing token without sending
+not ok 16 - rejects missing token without sending
+  ---
+  duration_ms: 0.1605
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing receipt_id without sending
+not ok 17 - rejects missing receipt_id without sending
+  ---
+  duration_ms: 0.263209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing live without sending
+not ok 18 - rejects missing live without sending
+  ---
+  duration_ms: 0.077292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing name without sending
+not ok 19 - rejects missing name without sending
+  ---
+  duration_ms: 0.05925
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing email without sending
+not ok 20 - rejects missing email without sending
+  ---
+  duration_ms: 0.04225
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing quantity without sending
+not ok 21 - rejects missing quantity without sending
+  ---
+  duration_ms: 0.426333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects missing message without sending
+not ok 22 - rejects missing message without sending
+  ---
+  duration_ms: 0.134834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects blank receipt_id without sending
+not ok 23 - rejects blank receipt_id without sending
+  ---
+  duration_ms: 0.099625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects blank live without sending
+not ok 24 - rejects blank live without sending
+  ---
+  duration_ms: 0.052709
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects blank name without sending
+not ok 25 - rejects blank name without sending
+  ---
+  duration_ms: 0.097541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects blank email without sending
+not ok 26 - rejects blank email without sending
+  ---
+  duration_ms: 0.045167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects blank quantity without sending
+not ok 27 - rejects blank quantity without sending
+  ---
+  duration_ms: 0.112125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects duplicate token without sending
+not ok 28 - rejects duplicate token without sending
+  ---
+  duration_ms: 0.064958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects duplicate receipt_id without sending
+not ok 29 - rejects duplicate receipt_id without sending
+  ---
+  duration_ms: 0.038458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects duplicate live without sending
+not ok 30 - rejects duplicate live without sending
+  ---
+  duration_ms: 0.033833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects duplicate name without sending
+not ok 31 - rejects duplicate name without sending
+  ---
+  duration_ms: 0.031583
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects duplicate email without sending
+not ok 32 - rejects duplicate email without sending
+  ---
+  duration_ms: 0.031042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects duplicate quantity without sending
+not ok 33 - rejects duplicate quantity without sending
+  ---
+  duration_ms: 0.036625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects duplicate message without sending
+not ok 34 - rejects duplicate message without sending
+  ---
+  duration_ms: 0.0295
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects CRLF receipt_id without sending
+not ok 35 - rejects CRLF receipt_id without sending
+  ---
+  duration_ms: 0.030125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects CRLF live without sending
+not ok 36 - rejects CRLF live without sending
+  ---
+  duration_ms: 0.043042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects CRLF name without sending
+not ok 37 - rejects CRLF name without sending
+  ---
+  duration_ms: 0.040792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects email "a@example.com,b@example.com" without sending
+not ok 38 - rejects email "a@example.com,b@example.com" without sending
+  ---
+  duration_ms: 0.029708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects email "a@example.com;b@example.com" without sending
+not ok 39 - rejects email "a@example.com;b@example.com" without sending
+  ---
+  duration_ms: 0.094125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects email "Name <a@example.com>" without sending
+not ok 40 - rejects email "Name <a@example.com>" without sending
+  ---
+  duration_ms: 0.08175
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects email "a@example.com\\r\\nb@example.com" without sending
+not ok 41 - rejects email "a@example.com\\r\\nb@example.com" without sending
+  ---
+  duration_ms: 0.033542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects email "invalid" without sending
+not ok 42 - rejects email "invalid" without sending
+  ---
+  duration_ms: 0.033584
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects quantity 0 without sending
+not ok 43 - rejects quantity 0 without sending
+  ---
+  duration_ms: 0.034958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects quantity 11 without sending
+not ok 44 - rejects quantity 11 without sending
+  ---
+  duration_ms: 0.030791
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: rejects quantity 1.5 without sending
+not ok 45 - rejects quantity 1.5 without sending
+  ---
+  duration_ms: 0.029625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:48:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/apps-script/ticket-autoreply.gs'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    run (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:7:18)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply-apps-script.test.js:49:31)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: payload has exactly seven form-encoded keys and round-trips trimmed special text
+not ok 46 - payload has exactly seven form-encoded keys and round-trips trimmed special text
+  ---
+  duration_ms: 1.492208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:18:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: send uses body-only token, form content type and default redirects
+not ok 47 - send uses body-only token, form content type and default redirects
+  ---
+  duration_ms: 9.156209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    -   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        Accept: 'application/json'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    Accept: 'application/json'
+    Content-Type: 'application/x-www-form-urlencoded;charset=UTF-8'
+  actual:
+    Accept: 'application/json'
+  operator: 'deepStrictEqual'
+  stack: |-
+    file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:33:12
+    Module.sendTicketAutoReply (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/src/worker.js:1715:21)
+    file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:38:48
+    withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:15)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:28:9)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+  ...
+# Subtest: unconfigured neither skips without fetch
+ok 48 - unconfigured neither skips without fetch
+  ---
+  duration_ms: 0.11325
+  ...
+# Subtest: unconfigured URL missing skips without fetch
+ok 49 - unconfigured URL missing skips without fetch
+  ---
+  duration_ms: 0.047833
+  ...
+# Subtest: unconfigured URL blank skips without fetch
+ok 50 - unconfigured URL blank skips without fetch
+  ---
+  duration_ms: 0.046083
+  ...
+# Subtest: unconfigured token missing skips without fetch
+not ok 51 - unconfigured token missing skips without fetch
+  ---
+  duration_ms: 0.15425
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:47:3'
+  failureType: 'testCodeFailure'
+  error: 'must skip'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:48:34
+    Module.sendTicketAutoReply (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/src/worker.js:1715:21)
+    file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:49:37
+    withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:15)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:48:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+  ...
+# Subtest: unconfigured token blank skips without fetch
+not ok 52 - unconfigured token blank skips without fetch
+  ---
+  duration_ms: 0.069958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:47:3'
+  failureType: 'testCodeFailure'
+  error: 'must skip'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:48:34
+    Module.sendTicketAutoReply (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/src/worker.js:1715:21)
+    file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:49:37
+    withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:15)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:48:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+  ...
+# Subtest: manual reservation skips even with both secrets
+not ok 53 - manual reservation skips even with both secrets
+  ---
+  duration_ms: 0.133125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:53:1'
+  failureType: 'testCodeFailure'
+  error: 'manual must not send'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    assert.equal.worker.sendTicketAutoReply (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:54:32)
+    Module.sendTicketAutoReply (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/src/worker.js:1715:21)
+    file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:55:32
+    withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:15)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:54:9)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+  ...
+# Subtest: HTTP failure is sanitized in send and notify
+not ok 54 - HTTP failure is sanitized in send and notify
+  ---
+  duration_ms: 1.459833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:66:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /^ticket auto-reply failed(?:: 400)?$/. Input:
+    
+    'ticket auto-reply failed: 400 private upstream body test-token'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'ticket auto-reply failed: 400 private upstream body test-token'
+  operator: 'match'
+  stack: |-
+    Object.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:69:16)
+    expectedException (node:assert:466:17)
+    expectsError (node:assert:589:3)
+    Function.rejects (node:assert:654:3)
+    async file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:68:7
+    async withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:9)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:67:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: network failure is sanitized in send and notify
+not ok 55 - network failure is sanitized in send and notify
+  ---
+  duration_ms: 0.23025
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:66:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /^ticket auto-reply failed(?:: 400)?$/. Input:
+    
+    'private upstream URL test-token'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'private upstream URL test-token'
+  operator: 'match'
+  stack: |-
+    Object.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:69:16)
+    expectedException (node:assert:466:17)
+    expectsError (node:assert:589:3)
+    Function.rejects (node:assert:654:3)
+    async file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:68:7
+    async withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:9)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:67:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: JSON failure is sanitized in send and notify
+not ok 56 - JSON failure is sanitized in send and notify
+  ---
+  duration_ms: 0.1285
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:66:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:68:7
+    async withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:9)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:67:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: false failure is sanitized in send and notify
+not ok 57 - false failure is sanitized in send and notify
+  ---
+  duration_ms: 0.201625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:66:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:68:7
+    async withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:9)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:67:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: missing failure is sanitized in send and notify
+not ok 58 - missing failure is sanitized in send and notify
+  ---
+  duration_ms: 0.146125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:66:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:68:7
+    async withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:9)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:67:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: truthy failure is sanitized in send and notify
+not ok 59 - truthy failure is sanitized in send and notify
+  ---
+  duration_ms: 0.153959
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:66:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:68:7
+    async withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:9)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:67:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: null failure is sanitized in send and notify
+not ok 60 - null failure is sanitized in send and notify
+  ---
+  duration_ms: 0.219458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:66:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:68:7
+    async withFetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:15:9)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/cloudflare/worker/test/ticket-autoreply.test.js:67:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..60
+# tests 134
+# suites 2
+# pass 79
+# fail 55
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 456.296333
+
+exit_code: 1

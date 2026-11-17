@@ -166,16 +166,6 @@
     return `${value}${sep}v=${encodeURIComponent(v)}`;
   }
 
-  function renderTicketCopy(ticket) {
-    const introEl = $("ticket-intro");
-    const noticeEl = $("ticket-notice");
-    const data = ticket && typeof ticket === "object" ? ticket : {};
-    const intro = String(data.introText || "").trim();
-    const notice = String(data.noticeText || "").trim();
-    if (introEl && intro) introEl.textContent = intro;
-    if (noticeEl && notice) noticeEl.textContent = notice;
-  }
-
   function renderTicketFields(ticket) {
     const data = ticket && typeof ticket === "object" ? ticket : {};
     const fields = data.fields && typeof data.fields === "object" ? data.fields : {};
@@ -408,7 +398,6 @@
     try {
       siteData = await fetchSiteData();
       renderSiteFooter(siteData.site || {});
-      renderTicketCopy(siteData.ticket || {});
       renderTicketFields(siteData.ticket || {});
       const options = buildLiveOptions(siteData);
       eligibleLiveIds = new Set(options.map((option) => option.id));

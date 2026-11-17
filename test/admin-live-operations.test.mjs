@@ -401,8 +401,6 @@ function createDomHarness(options = {}) {
   const liveTicketSettingsClose = addStatic('live-ticket-settings-close', 'button');
   liveTicketSettingsClose.parentElement = liveTicketSettingsPanel;
   [
-    ['ticket-intro-text', 'textarea'],
-    ['ticket-notice-text', 'textarea'],
     ['ticket-complete-text', 'textarea'],
     ['ticket-field-quantity', 'input'],
     ['ticket-field-message', 'input'],
@@ -597,6 +595,8 @@ function loadAdminApp(options = {}) {
 	  ensureNoActiveImageUploads,
   handleTicketStatusAction: typeof handleTicketStatusAction === 'function' ? handleTicketStatusAction : null,
   setApiMode(value) { IS_API_MODE = value; },
+  normalizeSiteData,
+  renderTicketSettings,
   setSiteData(value) { siteData = value; },
   getSiteData() { return siteData; },
 	  getModalState() { return { currentEditId, currentEditType, isNewItem }; },
@@ -3212,4 +3212,38 @@ test('admin site-data save rejects cross-collection and same-collection duplicat
       });
     }
   }
+});
+
+test('Ticket settings remove legacy copy and keep completion, field editing and contact in saved data', async () => {
+  assert.doesNotMatch(adminHtml, /id="ticket-(?:intro|notice)-text"/);
+  const app = loadAdminApp();
+  const data = app.normalizeSiteData({ ticket: { introText: '旧案内', noticeText: '旧注意', completeText: '保存済みの完了文' }, contact: { introText: 'contact保持', formAction: 'https://example.com/contact' } });
+  assert.equal('introText' in data.ticket, false);
+  assert.equal('noticeText' in data.ticket, false);
+  assert.equal(data.ticket.completeText, '保存済みの完了文');
+  assert.equal(app.normalizeSiteData({}).ticket.completeText, '予約しました。');
+  app.setSiteData(data);
+  app.renderTicketSettings();
+  const completion = app.elements.get('ticket-complete-text');
+  assert.equal(completion.value, '保存済みの完了文');
+  completion.value = '編集した完了文';
+  completion.onchange();
+  const quantity = app.elements.get('ticket-field-quantity');
+  quantity.checked = false;
+  quantity.onchange();
+  const message = app.elements.get('ticket-field-label-message');
+  message.value = '備考編集';
+  message.onchange();
+  let saved;
+  app.setApiMode(true);
+  app.setAdminFetch(async (_path, options) => { saved = JSON.parse(options.body); return jsonResponse({ ok: true }); });
+  await app.saveToApi();
+  assert.ok(saved);
+  assert.equal('introText' in saved.ticket, false);
+  assert.equal('noticeText' in saved.ticket, false);
+  assert.equal(saved.ticket.completeText, '編集した完了文');
+  assert.equal(saved.ticket.fields.showQuantity, false);
+  assert.equal(saved.ticket.fields.labelMessage, '備考編集');
+  assert.equal(saved.contact.introText, 'contact保持');
+  assert.equal(saved.contact.formAction, 'https://example.com/contact');
 });

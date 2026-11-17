@@ -28,7 +28,9 @@ X_DEFAULT_HASHTAGS = "#松本一樹 #ライブ"
 # 方式B: 任意Webhook（Slack互換など）
 # wrangler secret put LINE_WEBHOOK_URL
 #
-# チケット予約の申込者向け自動返信（任意: FormspreeなどのPOST先）
+# チケット予約の控え（任意: 1212ki.info@gmail.com所有のApps Script Webアプリ）
+# 設定・到達確認・停止手順: apps-script/README.md。値をこのfileへ書かない
 # wrangler secret put TICKET_AUTOREPLY_FORM_URL
+# wrangler secret put TICKET_AUTOREPLY_TOKEN
 
 # 参考: X APIの予約投稿などを使う場合は、ここに crons を追加し、X系のsecretも設定する。

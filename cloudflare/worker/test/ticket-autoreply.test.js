@@ -1,104 +1,75 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-
-import {
-  buildTicketAutoReplyFormData,
-  buildTicketAutoReplyText,
-  notifyTicketAutoReply,
-  sendTicketAutoReply,
-} from "../src/worker.js";
+import * as worker from "../src/worker.js";
 
 const reservation = {
-  id: "ticket_20260502_abcd",
-  liveDate: "2026-06-01",
-  liveVenue: "下北沢Example",
-  name: "山田 太郎",
-  email: "taro@example.com",
-  quantity: 2,
-  message: "友人と行きます",
+  id: " ticket_test ", liveDate: " 2099-06-01 ", liveVenue: " 架空Hall ",
+  name: " 山田 太郎 ", email: " taro@example.com ", quantity: 2,
+  message: " 日本語 &+\n二行目 ",
 };
-
-test("buildTicketAutoReplyText includes reservation details", () => {
-  const text = buildTicketAutoReplyText(reservation);
-
-  assert.match(text, /予約を受け付けました/);
-  assert.match(text, /受付ID: ticket_20260502_abcd/);
-  assert.match(text, /ライブ: 2026-06-01 下北沢Example/);
-  assert.match(text, /名前: 山田 太郎/);
-  assert.match(text, /e-mail: taro@example.com/);
-  assert.match(text, /枚数: 2/);
-  assert.match(text, /備考: 友人と行きます/);
+const env = { TICKET_AUTOREPLY_FORM_URL: " https://script.example/exec ", TICKET_AUTOREPLY_TOKEN: " test-token " };
+const expected = { token: " test-token ", receipt_id: "ticket_test", live: "2099-06-01 架空Hall", name: "山田 太郎", email: "taro@example.com", quantity: "2", message: "日本語 &+\n二行目" };
+async function withFetch(stub, run) {
+  const original = globalThis.fetch;
+  globalThis.fetch = stub;
+  try { await run(); } finally { globalThis.fetch = original; }
+}
+test("payload has exactly seven form-encoded keys and round-trips trimmed special text", () => {
+  assert.equal(typeof worker.buildTicketAutoReplyPayload, "function");
+  const body = worker.buildTicketAutoReplyPayload(reservation, env.TICKET_AUTOREPLY_TOKEN);
+  assert.ok(body instanceof URLSearchParams);
+  assert.deepEqual(Object.fromEntries(new URLSearchParams(body.toString())), expected);
+  assert.equal(worker.buildTicketAutoReplyPayload({ ...reservation, message: " " }, "x").get("message"), "");
+  assert.equal("buildTicketAutoReplyFormData" in worker, false);
+  assert.equal("buildTicketAutoReplyText" in worker, false);
 });
-
-test("buildTicketAutoReplyFormData creates Formspree-compatible payload", () => {
-  const formData = buildTicketAutoReplyFormData(reservation);
-  const entries = Object.fromEntries(formData.entries());
-
-  assert.equal(entries._replyto, "taro@example.com");
-  assert.equal(entries.email, "taro@example.com");
-  assert.equal(entries.name, "山田 太郎");
-  assert.equal(entries.receipt_id, "ticket_20260502_abcd");
-  assert.equal(entries.live, "2026-06-01 下北沢Example");
-  assert.equal(entries.quantity, "2");
-  assert.equal(entries.message, "友人と行きます");
-  assert.match(entries.body, /受付ID: ticket_20260502_abcd/);
+test("send uses body-only token, form content type and default redirects", async () => {
+  let calls = 0;
+  await withFetch(async (url, options) => {
+    calls += 1;
+    assert.equal(url, "https://script.example/exec");
+    assert.equal(new URL(url).search, "");
+    assert.equal(options.method, "POST");
+    assert.deepEqual(options.headers, { Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" });
+    assert.ok(options.body instanceof URLSearchParams);
+    assert.deepEqual(Object.fromEntries(options.body), expected);
+    assert.equal("redirect" in options, false);
+    return Response.json({ ok: true });
+  }, async () => assert.deepEqual(await worker.sendTicketAutoReply(env, reservation), { ok: true }));
+  assert.equal(calls, 1);
 });
-
-test("sendTicketAutoReply skips when endpoint is not configured", async () => {
-  const originalFetch = globalThis.fetch;
-  let called = false;
-  globalThis.fetch = async () => {
-    called = true;
-    return new Response("ok");
-  };
-
-  try {
-    const result = await sendTicketAutoReply({}, reservation);
-    assert.deepEqual(result, { skipped: true, reason: "not configured" });
-    assert.equal(called, false);
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
+for (const [label, config] of [
+  ["neither", {}], ["URL missing", { TICKET_AUTOREPLY_TOKEN: "test" }],
+  ["URL blank", { ...env, TICKET_AUTOREPLY_FORM_URL: " \t" }],
+  ["token missing", { TICKET_AUTOREPLY_FORM_URL: env.TICKET_AUTOREPLY_FORM_URL }],
+  ["token blank", { ...env, TICKET_AUTOREPLY_TOKEN: " \n" }],
+]) {
+  test(`unconfigured ${label} skips without fetch`, async () => {
+    await withFetch(() => assert.fail("must skip"), async () => {
+      assert.deepEqual(await worker.sendTicketAutoReply(config, reservation), { skipped: true, reason: "not configured" });
+    });
+  });
+}
+test("manual reservation skips even with both secrets", async () => {
+  await withFetch(() => assert.fail("manual must not send"), async () => {
+    assert.equal((await worker.sendTicketAutoReply(env, { ...reservation, source: "manual" })).skipped, true);
+  });
 });
-
-test("sendTicketAutoReply posts the payload to the configured endpoint", async () => {
-  const originalFetch = globalThis.fetch;
-  let request = null;
-  globalThis.fetch = async (url, options) => {
-    request = { url, options };
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
-  };
-
-  try {
-    const result = await sendTicketAutoReply(
-      { TICKET_AUTOREPLY_FORM_URL: "https://formspree.io/f/ticket" },
-      reservation
-    );
-    const entries = Object.fromEntries(request.options.body.entries());
-
-    assert.deepEqual(result, { ok: true });
-    assert.equal(request.url, "https://formspree.io/f/ticket");
-    assert.equal(request.options.method, "POST");
-    assert.equal(request.options.headers.Accept, "application/json");
-    assert.equal(entries.email, "taro@example.com");
-    assert.match(entries.body, /ライブ: 2026-06-01 下北沢Example/);
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
-});
-
-test("notifyTicketAutoReply catches send failures", async () => {
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => new Response("bad request", { status: 400 });
-
-  try {
-    const result = await notifyTicketAutoReply(
-      { TICKET_AUTOREPLY_FORM_URL: "https://formspree.io/f/ticket" },
-      reservation
-    );
-    assert.equal(result.ok, false);
-    assert.match(result.error, /ticket auto-reply failed: 400/);
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
-});
+for (const [label, stub] of [
+  ["HTTP", () => new Response("private upstream body test-token", { status: 400 })],
+  ["network", () => { throw new Error("private upstream URL test-token"); }],
+  ["JSON", () => new Response("private HTML test-token")],
+  ["false", () => Response.json({ ok: false, error: "private test-token" })],
+  ["missing", () => Response.json({})], ["truthy", () => Response.json({ ok: "true" })],
+  ["null", () => Response.json(null)],
+]) {
+  test(`${label} failure is sanitized in send and notify`, async () => {
+    await withFetch(stub, async () => {
+      await assert.rejects(worker.sendTicketAutoReply(env, reservation), (error) => {
+        assert.match(error.message, /^ticket auto-reply failed(?:: 400)?$/);
+        return true;
+      });
+      assert.deepEqual(await worker.notifyTicketAutoReply(env, reservation), { ok: false, error: "ticket auto-reply failed" });
+    });
+  });
+}

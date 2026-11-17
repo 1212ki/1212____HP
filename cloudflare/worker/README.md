@@ -130,10 +130,15 @@ OpenAI timeout→Claude成功は200、→Claude HTTP失敗などは502、→Clau
        - `wrangler secret put LINE_TO`（通知先。ユーザーID/グループIDなど）
      - 方式B: 任意Webhook（Slack互換など）
        - `wrangler secret put LINE_WEBHOOK_URL`
-   - （任意）チケット予約の申込者向け自動返信
-     - `wrangler secret put TICKET_AUTOREPLY_FORM_URL`
-     - Formspreeなど、`FormData` のPOSTを受け付ける送信先URLを設定します
-     - 未設定または送信失敗時も、予約APIの成功レスポンスは妨げません
+   - （任意）チケット予約の控えをGmailで送信
+     - Ownerが`1212ki.info@gmail.com`でApps Script Webアプリを作成・公開します。コードと設定・到達確認・停止手順は`apps-script/README.md`、送信コードは`apps-script/ticket-autoreply.gs`を参照してください
+     - `wrangler secret put TICKET_AUTOREPLY_FORM_URL`（Webアプリの`/exec` URL。合言葉をqueryに含めない）
+     - `wrangler secret put TICKET_AUTOREPLY_TOKEN`（Script Propertiesの同名項目と同じ合言葉）
+     - Workerは`application/x-www-form-urlencoded`のbodyに`receipt_id`・`live`・`name`・`email`・`quantity`・`message`・`token`を入れてPOSTします。合言葉はheader・query・公開ブラウザへ渡しません
+     - Apps Scriptは合言葉と項目を検証し、申込者へ控えを送って`1212ki.info@gmail.com`にBCCします。件名は「ticket予約の控え | 松本一樹」、表示名は「松本一樹 ticket」、本文には受付ID・ライブ・名前・e-mail・枚数・備考を入れます
+     - URLまたは合言葉が未設定ならskipします。redirect追従後のHTTP成功かつJSON `ok: true`だけを送信処理の成功とします。通信・HTTP・応答・Gmailの失敗時も予約APIは201のままです。手動取り置きでは送信せず、LINE通知は変更しません
+     - 個人Gmailは1日100宛先にBCCを含むため最大50予約／日（他の送信で減る）です。Gmailアドレスは申込者に見えます。302と最終応答・実到達は公開とdeploy後にOwnerが確認します
+     - 合言葉漏洩時はWebアプリ公開を停止し、Script PropertiesとWorker secretを更新してください。合言葉・予約情報・上流応答本文をログへ出しません。本番操作とdeployはOwnerが行います
 5. デプロイ
    - `wrangler deploy`
 
