@@ -30,9 +30,7 @@ const DEFAULT_SITE_DATA = {
     footerText: '© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.'
   },
   ticket: {
-    introText: 'ライブを選択して、必要事項を入力してください。',
-    noticeText: '送信後、入力したe-mail宛に受付内容の自動返信をお送りします。',
-    completeText: '予約しました。入力したe-mail宛に受付内容の自動返信をお送りします。',
+    completeText: '予約しました。',
     fields: {
       showQuantity: true,
       showMessage: true,
@@ -169,8 +167,6 @@ function setConnectionBanner(text, state = 'normal') {
 const API_FALLBACK_MUTATION_CONTROL_IDS = [
   'saveBtn',
   'live-add-btn',
-  'ticket-intro-text',
-  'ticket-notice-text',
   'ticket-complete-text',
   'ticket-field-quantity',
   'ticket-field-message',
@@ -301,8 +297,8 @@ function normalizeSiteData(input) {
   normalized.site.footerText = normalized.site.footerText || '';
 
   normalized.ticket = normalized.ticket && typeof normalized.ticket === 'object' ? normalized.ticket : base.ticket;
-  normalized.ticket.introText = normalized.ticket.introText || '';
-  normalized.ticket.noticeText = normalized.ticket.noticeText || '';
+  delete normalized.ticket.introText;
+  delete normalized.ticket.noticeText;
   normalized.ticket.completeText = normalized.ticket.completeText || '';
   normalized.ticket.fields = normalized.ticket.fields && typeof normalized.ticket.fields === 'object'
     ? normalized.ticket.fields
@@ -1094,8 +1090,6 @@ function renderSiteSettings() {
 }
 
 function renderTicketSettings() {
-  const intro = document.getElementById('ticket-intro-text');
-  const notice = document.getElementById('ticket-notice-text');
   const complete = document.getElementById('ticket-complete-text');
   const showQuantity = document.getElementById('ticket-field-quantity');
   const showMessage = document.getElementById('ticket-field-message');
@@ -1104,22 +1098,6 @@ function renderTicketSettings() {
   const placeholderMessage = document.getElementById('ticket-field-placeholder-message');
   const submitLabel = document.getElementById('ticket-field-submit-label');
 
-  if (intro) {
-    intro.value = siteData.ticket.introText || '';
-    intro.onchange = () => applyAdminFieldMutation(
-      intro,
-      siteData.ticket.introText || '',
-      () => { siteData.ticket.introText = intro.value; }
-    );
-  }
-  if (notice) {
-    notice.value = siteData.ticket.noticeText || '';
-    notice.onchange = () => applyAdminFieldMutation(
-      notice,
-      siteData.ticket.noticeText || '',
-      () => { siteData.ticket.noticeText = notice.value; }
-    );
-  }
   if (complete) {
     complete.value = siteData.ticket.completeText || '';
     complete.onchange = () => applyAdminFieldMutation(

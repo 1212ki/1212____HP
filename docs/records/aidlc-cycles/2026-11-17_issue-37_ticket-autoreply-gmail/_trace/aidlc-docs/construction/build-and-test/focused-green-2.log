@@ -1,0 +1,985 @@
+$ node --test test/public-ticket-routing.test.mjs test/admin-live-operations.test.mjs
+TAP version 13
+# APIデータ読み込みエラー: Error: offline
+#     at Object.loadData (evalmachine.<anonymous>:794:15)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-37-ticket-autoreply-gmail/test/admin-live-operations.test.mjs:1167:3)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: Live is the initial primary tab and Tickets is not a global tab
+ok 1 - Live is the initial primary tab and Tickets is not a global tab
+  ---
+  duration_ms: 0.582
+  ...
+# Subtest: Live workspace has semantic Liveページ and 予約管理 tabs
+ok 2 - Live workspace has semantic Liveページ and 予約管理 tabs
+  ---
+  duration_ms: 0.10975
+  ...
+# Subtest: Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 3 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+  ---
+  duration_ms: 0.101458
+  ...
+# Subtest: Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 4 - Live workspace separates reservations and Ticket Page共通設定 from Live list details
+  ---
+  duration_ms: 0.1945
+  ...
+# Subtest: Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 5 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+  ---
+  duration_ms: 11.913458
+  ...
+# Subtest: Live workspace initial state is Liveページ and 開催予定
+ok 6 - Live workspace initial state is Liveページ and 開催予定
+  ---
+  duration_ms: 0.449875
+  ...
+# Subtest: Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 7 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+  ---
+  duration_ms: 1.666584
+  ...
+# Subtest: master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 8 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+  ---
+  duration_ms: 0.15525
+  ...
+# Subtest: Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+ok 9 - Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+  ---
+  duration_ms: 4.906833
+  ...
+# Subtest: master-detail marks only the first upcoming card as Next Live
+ok 10 - master-detail marks only the first upcoming card as Next Live
+  ---
+  duration_ms: 0.831042
+  ...
+# Subtest: Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 11 - Live task tabs are semantic, keyboard operable, and preserve mounted input
+  ---
+  duration_ms: 1.073542
+  ...
+# Subtest: new Live prioritizes source intake and gates post-save tasks until first save
+ok 12 - new Live prioritizes source intake and gates post-save tasks until first save
+  ---
+  duration_ms: 2.400125
+  ...
+# Subtest: Live validation blocks missing date and venue before changing data or saving
+ok 13 - Live validation blocks missing date and venue before changing data or saving
+  ---
+  duration_ms: 2.057834
+  ...
+# Subtest: Live category mismatch warns but saves without automatically moving collection
+ok 14 - Live category mismatch warns but saves without automatically moving collection
+  ---
+  duration_ms: 3.198291
+  ...
+# Subtest: Live API save reports saving, saved, and failed states around the existing save route
+ok 15 - Live API save reports saving, saved, and failed states around the existing save route
+  ---
+  duration_ms: 9.118333
+  ...
+# Subtest: Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 16 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+  ---
+  duration_ms: 1.74725
+  ...
+# Subtest: reselecting the active global Live tab is a no-op for a dirty editor
+ok 17 - reselecting the active global Live tab is a no-op for a dirty editor
+  ---
+  duration_ms: 0.998084
+  ...
+# Subtest: reselecting the active global Live tab is also a no-op for a clean editor
+ok 18 - reselecting the active global Live tab is also a no-op for a clean editor
+  ---
+  duration_ms: 4.034625
+  ...
+# Subtest: Live internal task switching preserves dirty input without discard confirmation
+ok 19 - Live internal task switching preserves dirty input without discard confirmation
+  ---
+  duration_ms: 2.048834
+  ...
+# Subtest: API fallback is read-only while keeping Live navigation available
+ok 20 - API fallback is read-only while keeping Live navigation available
+  ---
+  duration_ms: 4.41975
+  ...
+# Subtest: API fallback keeps every admin collection immutable while existing details remain viewable
+ok 21 - API fallback keeps every admin collection immutable while existing details remain viewable
+  ---
+  duration_ms: 3.932833
+  ...
+# Subtest: API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 22 - API fallback blocks direct Live item and API save calls before mutation or PUT
+  ---
+  duration_ms: 1.127
+  ...
+# Subtest: beforeunload protects global changes and Live dirty or saving states
+ok 23 - beforeunload protects global changes and Live dirty or saving states
+  ---
+  duration_ms: 6.566833
+  ...
+# Subtest: explicit Local Mode labels the header action as JSON export
+ok 24 - explicit Local Mode labels the header action as JSON export
+  ---
+  duration_ms: 2.267791
+  ...
+# Subtest: responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+ok 25 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+  ---
+  duration_ms: 2.044667
+  ...
+# Subtest: sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 26 - sticky Live controls have no scrolling mechanism in the complete ancestor chain
+  ---
+  duration_ms: 0.88425
+  ...
+# Subtest: sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 27 - sticky Live task tabs offset below the fixed global header and navigation chrome
+  ---
+  duration_ms: 0.223333
+  ...
+# Subtest: essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 28 - essential mobile Live workspace list utility and back controls guarantee 44px targets
+  ---
+  duration_ms: 0.08625
+  ...
+# Subtest: saved header action maintains white text contrast through hover and focus
+ok 29 - saved header action maintains white text contrast through hover and focus
+  ---
+  duration_ms: 0.068292
+  ...
+# Subtest: sticky Live task tabs and footer have no clipping workspace ancestor
+ok 30 - sticky Live task tabs and footer have no clipping workspace ancestor
+  ---
+  duration_ms: 0.111208
+  ...
+# Subtest: production Live lock gives every workspace button a disabled affordance
+ok 31 - production Live lock gives every workspace button a disabled affordance
+  ---
+  duration_ms: 0.130042
+  ...
+# Subtest: admin build marker and operator docs match the merged Live UI assets
+ok 32 - admin build marker and operator docs match the merged Live UI assets
+  ---
+  duration_ms: 0.134667
+  ...
+# Subtest: Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 33 - Live edit workspace saves a category move in place and routes Local Mode to JSON export
+  ---
+  duration_ms: 2.062209
+  ...
+# Subtest: Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 34 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+  ---
+  duration_ms: 8.099667
+  ...
+# Subtest: Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 35 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+  ---
+  duration_ms: 1.644125
+  ...
+# Subtest: Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 36 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+  ---
+  duration_ms: 9.521125
+  ...
+# Subtest: Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 37 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+  ---
+  duration_ms: 1.47775
+  ...
+# Subtest: Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 38 - Live API publish blocks global tab navigation and marks every global tab disabled while pending
+  ---
+  duration_ms: 4.241042
+  ...
+# Subtest: global tabs re-enable and navigate normally after Live API publish succeeds
+ok 39 - global tabs re-enable and navigate normally after Live API publish succeeds
+  ---
+  duration_ms: 2.083917
+  ...
+# Subtest: global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 40 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+  ---
+  duration_ms: 1.224167
+  ...
+# Subtest: shared LiveOperations script is loaded before the admin application
+ok 41 - shared LiveOperations script is loaded before the admin application
+  ---
+  duration_ms: 0.062417
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 42 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+  ---
+  duration_ms: 1.262167
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 43 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+  ---
+  duration_ms: 0.850041
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 44 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+  ---
+  duration_ms: 1.845375
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 45 - AIで整理 source intake discards a stale response when source text changes while pending / legacy
+  ---
+  duration_ms: 3.635042
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 46 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+  ---
+  duration_ms: 2.477333
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 47 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+  ---
+  duration_ms: 2.943417
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 1.05425
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 0.99375
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 0.811625
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 0.793583
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 0.880875
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 1.08325
+      ...
+    1..6
+ok 48 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+  ---
+  duration_ms: 5.928666
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 6.636417
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 2.276625
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 1.053791
+      ...
+    1..3
+ok 49 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+  ---
+  duration_ms: 10.469625
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 50 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+  ---
+  duration_ms: 0.865792
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 51 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+  ---
+  duration_ms: 1.029875
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 52 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+  ---
+  duration_ms: 0.764875
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 53 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+  ---
+  duration_ms: 0.89825
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 54 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+  ---
+  duration_ms: 4.810167
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 55 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+  ---
+  duration_ms: 5.365541
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 56 - AIで整理 source intake discards a stale response when source text changes while pending / openai
+  ---
+  duration_ms: 1.268459
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 57 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+  ---
+  duration_ms: 1.26925
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 58 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+  ---
+  duration_ms: 1.7215
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 1.089375
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 0.882042
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.45125
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 0.906375
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 0.78925
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 0.726958
+      ...
+    1..6
+ok 59 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+  ---
+  duration_ms: 6.075584
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / openai
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 1.005208
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 2.3825
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 1.051167
+      ...
+    1..3
+ok 60 - AIで整理 source intake never falls back from a custom API base to canonical production / openai
+  ---
+  duration_ms: 4.714375
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 61 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+  ---
+  duration_ms: 3.554125
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 62 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+  ---
+  duration_ms: 0.873292
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 63 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+  ---
+  duration_ms: 0.690208
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 64 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+  ---
+  duration_ms: 0.76425
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 65 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+  ---
+  duration_ms: 0.73125
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 66 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+  ---
+  duration_ms: 7.921625
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 67 - AIで整理 source intake discards a stale response when source text changes while pending / claude
+  ---
+  duration_ms: 2.5085
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 68 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+  ---
+  duration_ms: 1.20875
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 69 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+  ---
+  duration_ms: 1.372375
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 0.849959
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 0.768958
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 0.685292
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 0.710792
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 0.795542
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 1.479792
+      ...
+    1..6
+ok 70 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+  ---
+  duration_ms: 5.534208
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / claude
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 0.964458
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 0.749791
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 0.756375
+      ...
+    1..3
+ok 71 - AIで整理 source intake never falls back from a custom API base to canonical production / claude
+  ---
+  duration_ms: 2.657583
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 72 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+  ---
+  duration_ms: 0.610083
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 73 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+  ---
+  duration_ms: 0.847792
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 74 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+  ---
+  duration_ms: 0.857875
+  ...
+# Subtest: AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+    # Subtest: invalid payload 0
+    ok 1 - invalid payload 0
+      ---
+      duration_ms: 2.943125
+      ...
+    # Subtest: invalid payload 1
+    ok 2 - invalid payload 1
+      ---
+      duration_ms: 0.821292
+      ...
+    # Subtest: invalid payload 2
+    ok 3 - invalid payload 2
+      ---
+      duration_ms: 0.743834
+      ...
+    # Subtest: invalid payload 3
+    ok 4 - invalid payload 3
+      ---
+      duration_ms: 0.694583
+      ...
+    # Subtest: invalid payload 4
+    ok 5 - invalid payload 4
+      ---
+      duration_ms: 0.63775
+      ...
+    # Subtest: invalid payload 5
+    ok 6 - invalid payload 5
+      ---
+      duration_ms: 0.618417
+      ...
+    # Subtest: invalid payload 6
+    ok 7 - invalid payload 6
+      ---
+      duration_ms: 0.645375
+      ...
+    # Subtest: invalid payload 7
+    ok 8 - invalid payload 7
+      ---
+      duration_ms: 0.6805
+      ...
+    # Subtest: invalid payload 8
+    ok 9 - invalid payload 8
+      ---
+      duration_ms: 0.821792
+      ...
+    # Subtest: invalid payload 9
+    ok 10 - invalid payload 9
+      ---
+      duration_ms: 3.195334
+      ...
+    # Subtest: invalid payload 10
+    ok 11 - invalid payload 10
+      ---
+      duration_ms: 1.3325
+      ...
+    # Subtest: invalid payload 11
+    ok 12 - invalid payload 11
+      ---
+      duration_ms: 0.95675
+      ...
+    # Subtest: invalid payload 12
+    ok 13 - invalid payload 12
+      ---
+      duration_ms: 0.928209
+      ...
+    # Subtest: invalid payload 13
+    ok 14 - invalid payload 13
+      ---
+      duration_ms: 0.767583
+      ...
+    # Subtest: invalid payload 14
+    ok 15 - invalid payload 14
+      ---
+      duration_ms: 0.748917
+      ...
+    1..15
+ok 75 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+  ---
+  duration_ms: 17.134792
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 76 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+  ---
+  duration_ms: 4.112834
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 77 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+  ---
+  duration_ms: 1.956167
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 78 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+  ---
+  duration_ms: 5.802167
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 79 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+  ---
+  duration_ms: 1.438625
+  ...
+# Subtest: AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 80 - AIで整理 source intake uses the existing small status markup for desktop and mobile
+  ---
+  duration_ms: 0.131167
+  ...
+# Subtest: Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 81 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+  ---
+  duration_ms: 1.271208
+  ...
+# Subtest: structured Live editor normalizes legacy date and saves independent detail fields
+ok 82 - structured Live editor normalizes legacy date and saves independent detail fields
+  ---
+  duration_ms: 0.936167
+  ...
+# Subtest: unparsed legacy Live date is preserved until a valid replacement is entered
+ok 83 - unparsed legacy Live date is preserved until a valid replacement is entered
+  ---
+  duration_ms: 0.79725
+  ...
+# Subtest: saving a Live merges new fields into the original object without dropping unknown properties
+ok 84 - saving a Live merges new fields into the original object without dropping unknown properties
+  ---
+  duration_ms: 0.923417
+  ...
+# Subtest: unified X announcement preview drives Intent and copy without save
+ok 85 - unified X announcement preview drives Intent and copy without save
+  ---
+  duration_ms: 0.985916
+  ...
+# Subtest: Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 86 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+  ---
+  duration_ms: 0.719167
+  ...
+# Subtest: Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 87 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+  ---
+  duration_ms: 0.764417
+  ...
+# Subtest: Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 88 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+  ---
+  duration_ms: 0.652042
+  ...
+# Subtest: Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 89 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+  ---
+  duration_ms: 2.139708
+  ...
+# Subtest: Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 90 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+  ---
+  duration_ms: 0.45
+  ...
+# Subtest: new Live requires an explicit save before X Intent or reservation operations
+ok 91 - new Live requires an explicit save before X Intent or reservation operations
+  ---
+  duration_ms: 4.856167
+  ...
+# Subtest: saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 92 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+  ---
+  duration_ms: 1.39525
+  ...
+# Subtest: manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 93 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+  ---
+  duration_ms: 1.150792
+  ...
+# Subtest: active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 94 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+  ---
+  duration_ms: 0.54825
+  ...
+# Subtest: CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 95 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+  ---
+  duration_ms: 0.8855
+  ...
+# Subtest: CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 96 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+  ---
+  duration_ms: 1.056625
+  ...
+# Subtest: reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 97 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+  ---
+  duration_ms: 11.371666
+  ...
+# Subtest: reservation loading for a non-current Live cannot mutate the current modal
+ok 98 - reservation loading for a non-current Live cannot mutate the current modal
+  ---
+  duration_ms: 1.127917
+  ...
+# Subtest: cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 99 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+  ---
+  duration_ms: 1.115292
+  ...
+# Subtest: cross-Live ledger response cannot mutate a disconnected replacement target
+ok 100 - cross-Live ledger response cannot mutate a disconnected replacement target
+  ---
+  duration_ms: 0.469875
+  ...
+# Subtest: cross-Live ledger response requires both current filters to match its snapshot
+ok 101 - cross-Live ledger response requires both current filters to match its snapshot
+  ---
+  duration_ms: 0.877625
+  ...
+# Subtest: cross-Live filters refresh without reloading when the effective selection remains valid
+ok 102 - cross-Live filters refresh without reloading when the effective selection remains valid
+  ---
+  duration_ms: 0.888292
+  ...
+# Subtest: deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 103 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+  ---
+  duration_ms: 1.259083
+  ...
+# Subtest: reservation status actions use escaped data attributes and delegated event handling
+ok 104 - reservation status actions use escaped data attributes and delegated event handling
+  ---
+  duration_ms: 0.682333
+  ...
+# Subtest: generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 105 - generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+  ---
+  duration_ms: 0.706333
+  ...
+# Subtest: saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 106 - saving a rendered Live keeps its editor and selected replacement trigger after a category move
+  ---
+  duration_ms: 1.434709
+  ...
+# Subtest: saving a new past Live activates its visible destination category
+ok 107 - saving a new past Live activates its visible destination category
+  ---
+  duration_ms: 0.840292
+  ...
+# Subtest: admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+    # Subtest: cross-collection / API
+    ok 1 - cross-collection / API
+      ---
+      duration_ms: 0.581958
+      ...
+    # Subtest: cross-collection / Local
+    ok 2 - cross-collection / Local
+      ---
+      duration_ms: 0.532458
+      ...
+    # Subtest: same-collection / API
+    ok 3 - same-collection / API
+      ---
+      duration_ms: 0.926916
+      ...
+    # Subtest: same-collection / Local
+    ok 4 - same-collection / Local
+      ---
+      duration_ms: 0.561541
+      ...
+    1..4
+ok 108 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+  ---
+  duration_ms: 2.800625
+  ...
+# Subtest: Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 109 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+  ---
+  duration_ms: 0.748333
+  ...
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 110 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 2.056584
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 111 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 10.871708
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 112 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 1.422916
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 113 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 1.601583
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 114 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 0.879042
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 115 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 2.81775
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 7.753292
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 3.55975
+      ...
+    1..2
+ok 116 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 11.682292
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 117 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 1.064292
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 118 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 0.570708
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 119 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 0.563584
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 120 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 0.56825
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 121 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 5.917708
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 122 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 2.1275
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 123 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 4.39675
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 124 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 0.923333
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 125 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 1.78525
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 126 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 0.986417
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 127 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 1.199458
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 1.136666
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 1.448791
+      ...
+    1..2
+ok 128 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 2.951416
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 1.555959
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 1.5875
+      ...
+    1..2
+ok 129 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 3.566791
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 2.273584
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 1.052542
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 0.748375
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 0.621959
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 0.502625
+      ...
+    1..5
+ok 130 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 5.83
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 131 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.410125
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 132 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 4.328917
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 133 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 1.043958
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 134 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 1.745541
+  ...
+1..134
+# tests 191
+# suites 0
+# pass 191
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3398.730084
+
+exit_code: 0

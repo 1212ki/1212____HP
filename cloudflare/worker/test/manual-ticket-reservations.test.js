@@ -185,6 +185,7 @@ describe("manual ticket reservations", () => {
         adminEnv(d1.DB, {
           LINE_WEBHOOK_URL: "https://notify.invalid",
           TICKET_AUTOREPLY_FORM_URL: "https://autoreply.invalid",
+          TICKET_AUTOREPLY_TOKEN: "test-token",
         }),
         {
           waitUntil() {
@@ -577,6 +578,7 @@ describe("manual ticket reservations", () => {
         adminEnv(d1.DB, {
           LINE_WEBHOOK_URL: "https://notify.example/webhook",
           TICKET_AUTOREPLY_FORM_URL: "https://forms.example/reply",
+          TICKET_AUTOREPLY_TOKEN: "test-token",
         }),
         { waitUntil(promise) { scheduled.push(promise); } }
       );
@@ -648,6 +650,7 @@ describe("manual ticket reservations", () => {
             adminEnv(d1.DB, {
               LINE_WEBHOOK_URL: "https://notify.example/webhook",
               TICKET_AUTOREPLY_FORM_URL: "https://forms.example/reply",
+              TICKET_AUTOREPLY_TOKEN: "test-token",
             }),
             { waitUntil(promise) { scheduled.push(promise); } }
           );

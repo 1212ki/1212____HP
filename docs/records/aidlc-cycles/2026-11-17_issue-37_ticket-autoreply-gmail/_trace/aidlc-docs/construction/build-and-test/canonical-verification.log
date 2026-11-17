@@ -1,0 +1,10 @@
+PASS docs/specs/current/live-operations-admin-ui.md: 6 literal pairs; exact bytes
+PASS docs/specs/current/README.md: 1 literal pairs; exact bytes
+PASS cloudflare/worker/README.md: 1 literal pairs; exact bytes
+PASS cloudflare/worker/wrangler.toml.example: 1 literal pairs; exact bytes
+PASS Apps Script: plan §3 exact bytes
+PASS approved artifact: inception/requirements/requirements.md 094eeeefe460e8329d9c9f2f31e07d8001a7db27078df10d10423ed0972ff833
+PASS approved artifact: inception/plans/execution-plan.md 891951401030004af9beaa60039a1780d12cc891b3a4b9594d51761dd913ab07
+PASS approved artifact: construction/plans/aidlc-integration-code-generation-plan.md de060fea8a26bc2f4267cfdca33303ddd758cb9116279e667e6f4dbfcf74cda1
+PASS approval prompt: all 3 exact source copies; raw response A; 04/05 absent
+PASS changed paths: packet allowlist only

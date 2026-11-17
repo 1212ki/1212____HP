@@ -1,0 +1,5 @@
+$ bash aidlc-docs/construction/build-and-test/validate-approvals.sh
+validate_approval PASS: Requirements
+validate_approval PASS: Workflow Plan
+validate_approval PASS: Code Generation Plan
+exit_code: 0

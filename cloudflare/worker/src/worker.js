@@ -16,9 +16,7 @@ const DEFAULT_SITE_DATA = {
     footerText: "© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.",
   },
   ticket: {
-    introText: "ライブを選択して、必要事項を入力してください。",
-    noticeText: "送信後、入力したe-mail宛に受付内容の自動返信をお送りします。",
-    completeText: "予約しました。入力したe-mail宛に受付内容の自動返信をお送りします。",
+    completeText: "予約しました。",
     fields: {
       showQuantity: true,
       showMessage: true,
@@ -166,8 +164,8 @@ function normalizeSiteData(input) {
   data.site.footerText = data.site.footerText || base.site.footerText;
 
   data.ticket = data.ticket && typeof data.ticket === "object" ? data.ticket : base.ticket;
-  data.ticket.introText = data.ticket.introText || base.ticket.introText;
-  data.ticket.noticeText = data.ticket.noticeText || base.ticket.noticeText;
+  delete data.ticket.introText;
+  delete data.ticket.noticeText;
   data.ticket.completeText = data.ticket.completeText || base.ticket.completeText;
   data.ticket.fields = data.ticket.fields && typeof data.ticket.fields === "object" ? data.ticket.fields : base.ticket.fields;
   data.ticket.fields.showQuantity = data.ticket.fields.showQuantity !== false;
@@ -1672,63 +1670,48 @@ async function notifyTicketReservation(env, reservation) {
   return results;
 }
 
-function buildTicketAutoReplyText(reservation) {
+function buildTicketAutoReplyPayload(reservation, token) {
   const r = reservation && typeof reservation === "object" ? reservation : {};
-  const live = `${String(r.liveDate || "").trim()} ${String(r.liveVenue || "").trim()}`.trim();
-  const message = String(r.message || "").trim() || "なし";
-  const lines = [
-    "ticket予約を受け付けました。",
-    "",
-    `受付ID: ${String(r.id || "").trim()}`,
-    `ライブ: ${live}`,
-    `名前: ${String(r.name || "").trim()}`,
-    `e-mail: ${String(r.email || "").trim()}`,
-    `枚数: ${String(r.quantity || "").trim()}`,
-    `備考: ${message}`,
-    "",
-    "このメールは受付内容の自動返信です。",
-  ];
-  return lines.join("\n");
-}
-
-function buildTicketAutoReplyFormData(reservation) {
-  const r = reservation && typeof reservation === "object" ? reservation : {};
-  const live = `${String(r.liveDate || "").trim()} ${String(r.liveVenue || "").trim()}`.trim();
-  const body = buildTicketAutoReplyText(r);
-  const formData = new FormData();
-  formData.set("_replyto", String(r.email || "").trim());
-  formData.set("_subject", `ticket予約受付: ${String(r.name || "").trim()}`);
-  formData.set("email", String(r.email || "").trim());
-  formData.set("name", String(r.name || "").trim());
-  formData.set("receipt_id", String(r.id || "").trim());
-  formData.set("live", live);
-  formData.set("quantity", String(r.quantity || "").trim());
-  formData.set("message", String(r.message || "").trim());
-  formData.set("body", body);
-  return formData;
+  return new URLSearchParams({
+    token,
+    receipt_id: String(r.id || "").trim(),
+    live: `${String(r.liveDate || "").trim()} ${String(r.liveVenue || "").trim()}`.trim(),
+    name: String(r.name || "").trim(),
+    email: String(r.email || "").trim(),
+    quantity: String(r.quantity || ""),
+    message: String(r.message || "").trim(),
+  });
 }
 
 async function sendTicketAutoReply(env, reservation) {
+  if (reservation?.source === "manual") return { skipped: true, reason: "manual" };
   const url = String(env.TICKET_AUTOREPLY_FORM_URL || "").trim();
-  if (!url) return { skipped: true, reason: "not configured" };
+  const token = String(env.TICKET_AUTOREPLY_TOKEN || "");
+  if (!url || !token.trim()) return { skipped: true, reason: "not configured" };
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { Accept: "application/json" },
-    body: buildTicketAutoReplyFormData(reservation),
-  });
-  if (!res.ok) {
-    const body = await res.text().catch(() => "");
-    throw new Error(`ticket auto-reply failed: ${res.status} ${body}`.trim());
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: buildTicketAutoReplyPayload(reservation, token),
+    });
+    if (!res.ok) throw new Error("ticket auto-reply failed");
+    const result = await res.json();
+    if (result?.ok !== true) throw new Error("ticket auto-reply failed");
+    return { ok: true };
+  } catch (_error) {
+    throw new Error("ticket auto-reply failed");
   }
-  return { ok: true };
 }
 
 async function notifyTicketAutoReply(env, reservation) {
   try {
     return await sendTicketAutoReply(env, reservation);
-  } catch (e) {
-    return { ok: false, error: e.message || String(e) };
+  } catch (_error) {
+    return { ok: false, error: "ticket auto-reply failed" };
   }
 }
 
@@ -2175,8 +2158,7 @@ export default {
 };
 
 export {
-  buildTicketAutoReplyFormData,
-  buildTicketAutoReplyText,
+  buildTicketAutoReplyPayload,
   formatLiveDateForDisplay,
   formatLiveDetailsForDisplay,
   notifyTicketAutoReply,

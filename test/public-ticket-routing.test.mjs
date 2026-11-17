@@ -240,7 +240,7 @@ async function runTicketPage({
   onFormDataConstruct = null,
 }) {
   const ids = [
-    'site-footer', 'ticket-intro', 'ticket-notice', 'ticket-route-message', 'ticket-live-preview',
+    'site-footer', 'ticket-route-message', 'ticket-live-preview',
     'ticket-form', 'liveId', 'name', 'email', 'quantity', 'message', 'company', 'submitBtn', 'ticket-result',
     'ticket-field-quantity', 'ticket-field-message', 'ticket-label-quantity', 'ticket-label-message',
     'ticketConfirmOverlay', 'ticketConfirmModal', 'ticketConfirmError', 'ticketConfirmLead',
@@ -923,4 +923,28 @@ test('public HTML loads the helper in order, removes only global Ticket nav, and
   assert.ok(completeHtml.indexOf('live-operations.js') < completeHtml.indexOf('ticket-complete.js'));
   const liveHtml = readFileSync(join(repoRoot, 'live/index.html'), 'utf8');
   assert.doesNotMatch(liveHtml, /id="ticket-link-anchor"|class="live-application"/);
+});
+
+test('ticket removes both copy elements and ignores legacy payload copy', async () => {
+  const html = readFileSync(join(repoRoot, 'ticket/index.html'), 'utf8');
+  assert.doesNotMatch(html, /id="ticket-(?:intro|notice)"/);
+  const data = structuredClone(siteData);
+  data.ticket = { introText: 'legacy intro sentinel', noticeText: 'legacy notice sentinel' };
+  let reads = 0;
+  for (const key of ['introText', 'noticeText']) {
+    Object.defineProperty(data.ticket, key, { get() { reads += 1; return 'legacy copy'; } });
+  }
+  const page = await runTicketPage({ data });
+  assert.equal(reads, 0);
+  assert.equal(page.elements.has('ticket-intro'), false);
+  assert.equal(page.elements.has('ticket-notice'), false);
+  assert.equal(page.elements.get('submitBtn').disabled, false);
+});
+test('ticket completion has neutral static default and preserves saved completion and receipt', async () => {
+  const html = readFileSync(join(repoRoot, 'ticket/complete/index.html'), 'utf8');
+  assert.match(html, /id="ticket-complete-message"[^>]*>\s*予約しました。\s*<\/p>/);
+  const page = await runTicketCompletePage({ href: 'https://1212hp.com/ticket/complete/?rid=test-id&date=2099-06-01&venue=Hall', data: { ...siteData, ticket: { completeText: '保存済みの完了文' } } });
+  assert.equal(page.elements.get('ticket-complete-message').textContent, '保存済みの完了文');
+  assert.equal(page.elements.get('ticket-receipt-id').textContent, 'test-id');
+  assert.match(page.elements.get('ticket-receipt-live').innerHTML, /Hall/);
 });

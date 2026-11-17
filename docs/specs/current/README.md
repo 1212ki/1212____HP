@@ -13,6 +13,6 @@
 | 設計書 | Status | 対象 |
 |---|---|---|
 | `system-design-principles.md` | Approved | 1212HP全体の設計・運用原則 |
-| `live-operations-admin-ui.md` | Approved | Live運用のadmin UIと公開画面の対応。Issue #33のAI整理provider自動切替とIssue #35のOpenAI reasoning.effort=minimalを反映。Issue #35のgate 3承認を本文差分のOwner確認とし、#21の抽出内容と#29のshare URL契約を保持 |
+| `live-operations-admin-ui.md` | Approved | Live運用のadmin UIと公開画面の対応。Issue #37のGmail予約控えとTicket Pageの案内・注意文削除を反映し、gate 3承認を本文差分のOwner確認とする。#21の抽出内容、#29のshare URL、#33のprovider自動切替、#35のOpenAI reasoning.effort=minimalを保持 |
 
 設計内容を変更したら、この索引の状態と対象も更新します。

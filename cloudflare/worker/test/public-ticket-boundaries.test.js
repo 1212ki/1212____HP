@@ -665,6 +665,7 @@ describe("public ticket boundary hardening", () => {
         envFor(d1.DB, {
           LINE_WEBHOOK_URL: "https://notify.example/webhook",
           TICKET_AUTOREPLY_FORM_URL: "https://forms.example/reply",
+          TICKET_AUTOREPLY_TOKEN: "test-token",
         }),
         { waitUntil() { throw new Error("waitUntil scheduling failed"); } },
       );
@@ -682,3 +683,59 @@ describe("public ticket boundary hardening", () => {
     assert.ok(logs.some((args) => args.some((value) => String(value).includes("waitUntil scheduling failed"))));
   });
 });
+
+for (const failure of [false, true]) {
+  test(`public save sends one receipt after insert; notification failure=${failure} retains 201`, async () => {
+    const d1 = createD1Stub();
+    const pending = [];
+    const outbound = [];
+    const original = globalThis.fetch;
+    globalThis.fetch = async (url, options) => {
+      assert.equal(d1.calls.filter((call) => /INSERT INTO ticket_reservations/i.test(call.sql)).length, 1);
+      outbound.push({ url, options });
+      return failure ? new Response("private upstream", { status: 503 }) : Response.json({ ok: true });
+    };
+    try {
+      const response = await worker.fetch(publicReservationRequest(), envFor(d1.DB, {
+        TICKET_AUTOREPLY_FORM_URL: "https://script.example/exec", TICKET_AUTOREPLY_TOKEN: "test-token",
+      }), { waitUntil(promise) { pending.push(promise); } });
+      await Promise.all(pending);
+      const body = await response.json();
+      assert.equal(response.status, 201);
+      assert.equal(body.ok, true);
+      assert.equal("notification" in body, false);
+      assert.doesNotMatch(JSON.stringify(body), /test-token|private upstream/);
+      assert.equal(d1.calls.filter((call) => /INSERT INTO ticket_reservations/i.test(call.sql)).length, 1);
+      assert.equal(outbound.length, 1);
+      assert.equal(outbound[0].url, "https://script.example/exec");
+      assert.ok(outbound[0].options.body instanceof URLSearchParams);
+      assert.deepEqual(Object.fromEntries(outbound[0].options.body), {
+        token: "test-token", receipt_id: body.reservation.id, live: "2099-08-09 Internal Hall",
+        name: "Web Guest", email: "web@example.com", quantity: "1", message: "",
+      });
+    } finally { globalThis.fetch = original; }
+  });
+}
+for (const completeText of [undefined, "", "保存済みの完了文"]) {
+  test(`legacy ticket copy is removed on public/admin reads and saves; complete=${completeText}`, async () => {
+    const data = { ...makeSiteData(), ticket: { introText: "旧案内", noticeText: "旧注意", completeText }, contact: { introText: "contact保持", formAction: "https://example.com/contact" } };
+    const d1 = createD1Stub({ siteData: data });
+    for (const scope of ["public", "admin"]) {
+      const response = await worker.fetch(new Request(`https://worker.test/api/${scope}/site-data`, { headers: { Authorization: "Bearer test-admin-token" } }), envFor(d1.DB), {});
+      const normalized = (await response.json()).data;
+      assert.equal(response.status, 200);
+      assert.equal("introText" in normalized.ticket, false);
+      assert.equal("noticeText" in normalized.ticket, false);
+      assert.equal(normalized.ticket.completeText, completeText || "予約しました。");
+      assert.deepEqual(normalized.contact, data.contact);
+    }
+    assert.equal(hasSqlCall(d1.calls, /INSERT OR REPLACE INTO site_data/i), false);
+    const response = await worker.fetch(jsonRequest("/api/admin/site-data", data, { method: "PUT", authenticated: true }), envFor(d1.DB), {});
+    assert.equal(response.status, 200);
+    const saved = JSON.parse(d1.calls.find((call) => /INSERT OR REPLACE INTO site_data/i.test(call.sql)).bindings[0]);
+    assert.equal("introText" in saved.ticket, false);
+    assert.equal("noticeText" in saved.ticket, false);
+    assert.equal(saved.ticket.completeText, completeText || "予約しました。");
+    assert.deepEqual(saved.contact, data.contact);
+  });
+}
