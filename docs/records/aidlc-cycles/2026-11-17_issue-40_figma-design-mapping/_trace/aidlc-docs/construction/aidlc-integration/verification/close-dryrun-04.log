@@ -1,0 +1,5 @@
+method: verbatim functions before CLI dispatch; validate_close_ready only
+fixture: /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261117-133000_1212hp-40-figma-design-mapping/close-dryrun/fixture
+source_sha256: 7a2d9b54439212446b26eaed549653a47a323e098a79785a5aa31c2508670f5a
+validate_close_ready PASS (synthetic disposable fixture only; no close)
+exit_code: 0

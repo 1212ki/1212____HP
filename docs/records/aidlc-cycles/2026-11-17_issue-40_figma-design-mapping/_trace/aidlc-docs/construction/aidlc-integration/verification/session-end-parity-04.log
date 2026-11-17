@@ -1,0 +1,5 @@
+command: python3 -B tools/codex-parity/session-end-check.py
+cwd: /Users/itsuki.matsumoto/claude-code
+exit_code: 0
+WORKSPACE_PARITY: pass; TASK_PARITY: not_assessed
+Observed: agents_claude_sync PASS; skills_sync 87 mirrored PASS; memory_mirror 171 mirrored PASS; codex_hot_trigger_helper PASS; codex_required_mcp PASS; codex_notion_giftee_oauth_resource PASS; codex_approved_prefixes PASS; gh_pin PASS.

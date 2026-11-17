@@ -1,0 +1,163 @@
+# 公開サイト UI 設計
+
+- Status: Approved
+- Owner: Itsuki Matsumoto
+- Last updated: 2026-11-17
+- Related issues: #39, #40
+- Related implementation issues: #41, #42, #43, #44, #45
+- Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
+- Owner approval: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+
+## 1. 目的と範囲
+
+ライブなどで松本一樹を知った人が、音源をすぐ聴けて、次のライブに来られる場所をつくる。Homeは作品のジャケットを顔にする新作型とし、音源と映像はMusicへまとめる。
+
+解決する課題は、既存Homeが画像帯を顔とし、作品と映像の入口が別ページに分かれていること、送信の状態が重ねて開く表示に分散していることである。作品を聴く入口と次のライブへの入口を近づけ、受付内容を落ち着いて確認できる構成にする。
+
+本設計は実装の入力である。Approvedは採用する設計の承認を示し、画面の実装完了を示さない。§3の各行に`00cdea5`時点の実装状況と担当Issueを記す。#40は文書の対応づけ、実装は#41〜#45で行う。
+
+対象はHome、Menu、Live一覧・詳細、Ticket・完了、終了したライブ（全件）、Music、Profile、Contactと共通のヘッダー・フッター。管理側の編集・保存とデータの持ち方は`live-operations-admin-ui.md`と対応させる。
+
+対象外は、掲載情報の追加、作品ごとの詳細ページ、配信サービスごとのボタン、Contactの項目追加、予約受付・メール送信の仕組み変更、料金の支払い方の表示、hosting・認証・本番反映である。色・文字・余白は`DESIGN_RULES.md`と`assets/css/1212-music.tokens.css`を使う。
+
+## 2. 判断と根拠
+
+実装: #41（項目）、#42（Home・共通）、#43（予約の流れ）、#44（Music）、#45（Profile・Contact）。`00cdea5`: 掲載データと既存機能はあるが、新作型Home・Music統合・ページ内の送信状態は未実装。
+
+選択肢は、Homeの画像帯を維持する形と作品を顔にする形、音源と映像を別ページに置く形とMusicへまとめる形、予約完了を重ねて示す形と完了ページへ進む形である。要件メモの「今の画面との違い」「案の判断と理由」に沿い、次の採用内容と理由を固定する。
+
+| 判断 | 理由 | Figmaの根拠 |
+|---|---|---|
+| Homeは顔にする作品を1つ選び、直下に「聴く」と次のライブを置く。既定はリリース日が最新の作品。 | 開いた人が音源と次回公演へすぐ進めるようにする。 | [方針｜誰に・何を・どう見せる `20:5`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=20-5)、要件メモ｜Home「情報の優先順位」「振る舞い」 |
+| Homeのnext liveは文字で見せ、newsのサムネイルは出さない。 | 顔をジャケットに絞り、日付の入る部分を飾らない。 | 要件メモ｜Home「案の判断と理由」`25:106` |
+| 「聴く」は作品に選んだYouTubeの映像をその場で再生する。映像未選択なら出さない。外部のリンクは1つで、Digital Releaseは「配信先へ」、宅録Demoは「購入先へ」。 | 入口と動作を揃え、登録されていない操作を出さない。 | 要件メモ｜Home「振る舞い」`25:91`、要件メモ｜Music「振る舞い」`30:497`。 |
+| Home / Live / Music / Profile / Contactの5項目にする。 | 聴く場所をMusicの1か所へまとめる。 | [全体計画｜残りの画面 `28:108`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=28-108)「共通」、要件メモ｜Music「案の判断と理由」 |
+| 物販はHome linksのBandcampとMusicの宅録Demoの購入先を入口にする。noteはHome linksとnewsで扱う。 | 今の情報の範囲を保つ。 | 方針「載せる情報」`23:13`、要件メモ｜Music「振る舞い」 |
+| 送信中・失敗はページ内、予約完了はTicket完了ページで示す。 | 受付内容を確かめ、Liveから聴く体験へつなげる。 | 要件メモ｜予約の流れ「振る舞い」「案の判断と理由」`29:355`・`29:370` |
+| UIには実際の表示文言だけを置く。判断理由と新旧の説明は設計側に持つ。 | 操作する人へ制作上の説明を負わせない。 | 管理方針「画面と説明の分け方」`43:509`、#37の承認済み設計§5.2 |
+
+#42ではMusic完成まで既存6項目のナビを保ち、Homeの「music →」はDiscographyへ向ける。#44で5項目とMusicへの入口・旧URLの行き先を揃える。マスタはこの最終形を示す。
+
+## 3. 画面・マスタ・要件・実装の対応
+
+Figma fileは`82QH1c3hUrv1fKCd2AMULK`、pageは[マスタ｜ホームページ `0:1`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=0-1)。リンク名はマスタのframe名を保つ。「一部実装」は既存ページ・データ・操作がある一方、マスタの構成と追加動作が未実装であることを示す。要件メモ列の受入条件は§4の同IDに対応する。
+
+| 画面 | 1440pxのマスタ | 390pxのマスタ | 状態frame | 要件メモ（node-id・見出し） | 受入条件ID | 実装Issue | `00cdea5`で実装済みか |
+|---|---|---|---|---|---|---|---|
+| Home | [Home｜1440 `23:36`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=23-36) | [Home｜390 `24:43`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=24-43) | [Home｜状態 `24:139`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=24-139)（10状態） | [要件メモ｜Home `25:83`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=25-83)「振る舞い」`25:91`・「狭い幅（390px）」`25:94`・「受入条件」`25:100` | PS-H-01〜06 | #41, #42（5項目化は#44） | 一部実装。`index.html`、`assets/js/site-content.js`にhero・links・next live・newsがある。新作型・選択映像・ほかの作品2件・profile抜粋は未実装。 |
+| Menuを開いた状態 | 専用frameなし。1440pxは上記Homeのナビを表示。 | [Menu を開いた状態｜390 `39:850`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-850) | 開いた状態は`39:850`、閉じた状態はHome｜390 `24:43`。共通読込状態は`24:139`。 | [要件メモ｜Home `25:83`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=25-83)「狭い幅（390px）」`25:94`、全体計画「共通」`28:111` | PS-COM-01、PS-H-02 | #42, #44 | 一部実装。`index.html`・`assets/js/script.js`に既存モバイルナビ。Music統合後の5項目は未実装。 |
+| Live一覧 | [Live一覧｜1440 `27:104`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=27-104) | [Live一覧｜390 `27:148`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=27-148) | [予約の流れ｜状態 `29:249`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-249)（予定なし・過去なし・読込失敗） | [要件メモ｜予約の流れ `29:347`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-347)「振る舞い」`29:355`・「受入条件」`29:364` | PS-L-01, PS-L-05, PS-L-08 | #43（共通は#42） | 一部実装。`live/index.html`・`site-content.js`に一覧・予約導線。表示構成・文言・状態の整備は未実装。 |
+| Live詳細 | [Live詳細｜1440 `28:141`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=28-141) | [Live詳細｜390 `29:133`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-133) | [予約の流れ｜状態 `29:249`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-249)（読込失敗・不明Live・画像なし・予約4分岐） | [要件メモ｜予約の流れ `29:347`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-347)「情報の優先順位」`29:352`・「振る舞い」`29:355`・「狭い幅（390px）」`29:358`・「受入条件」`29:364` | PS-L-05, PS-L-07 | #43 | 一部実装。`live/detail/index.html`・`site-content.js`・`live-operations.js`に詳細と予約判定。日付・会場主見出しとInstagram入口の追加は未実装。 |
+| Ticket | [Ticket｜1440 `28:182`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=28-182) | [Ticket｜390 `29:167`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-167) | [予約の流れ｜状態 `29:249`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-249)（入力誤り・送信中・失敗・外部・受付不可・候補なし・読込失敗・重複・識別不能） | [要件メモ｜予約の流れ `29:347`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-347)「振る舞い」`29:355`・「狭い幅（390px）」`29:358`・「受入条件」`29:364` | PS-L-01〜06 | #43 | 一部実装。`ticket/index.html`・`assets/js/ticket.js`に入力・復元・受付制御。案内文と注意文の項目削除は#37で実装済み。送信状態のページ内表示と完了ページ遷移は未実装。 |
+| Ticket完了 | [Ticket完了｜1440 `28:233`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=28-233) | [Ticket完了｜390 `29:210`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-210) | [予約の流れ｜状態 `29:249`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-249)（受付内容を表示できない時） | [要件メモ｜予約の流れ `29:347`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-347)「振る舞い」`29:355`・「受入条件」`29:364` | PS-L-01, PS-L-04, PS-L-06 | #41, #43 | 一部実装。`ticket/complete/index.html`はあるが`ticket.js`の成功処理から呼ばれない。既定「予約しました。」は#37で実装済み。送った内容・タイトル・「当日までに聴く」は未実装。 |
+| 終了したライブ（全件） | [終了したライブ（全件）｜1440 `30:169`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-169) | [終了したライブ（全件）｜390 `30:198`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-198) | [予約の流れ｜状態 `29:249`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-249)（過去なし・読込失敗を共用。専用frameなし） | [要件メモ｜予約の流れ `29:347`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=29-347)「振る舞い」`29:355`・「受入条件」`29:364` | PS-L-08、PS-L-07（詳細への入口） | #43 | 一部実装。`site-content.js`の`renderLivePastArchive`と詳細ページに既存全件表示。マスタの見出し・行構成へ揃える作業は未実装。 |
+| Music | [Music｜1440 `30:220`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-220) | [Music｜390 `30:335`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-335) | [Music｜状態 `30:446`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-446)（6状態） | [要件メモ｜Music `30:489`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-489)「振る舞い」`30:497`・「狭い幅（390px）」`30:500`・「受入条件」`30:506` | PS-M-01〜04、PS-COM-01 | #41, #44（共通は#42） | 未実装。`discography/index.html`・`youtube/index.html`と各rendererは別々に存在。Music統合・旧URL誘導・作品の選択映像再生は未実装。 |
+| Profile | [Profile｜1440 `31:247`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-247) | [Profile｜390 `31:294`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-294) | [Profile・Contact｜状態 `31:400`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-400)（写真なし・読込失敗） | [要件メモ｜Profile・Contact `31:443`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-443)「振る舞い」`31:451`・「狭い幅（390px）」`31:454`・「受入条件」`31:460` | PS-PC-01 | #45（共通は#42） | 一部実装。`profile/index.html`・`site-content.js`に写真・本文・共通linksとSNS。Contactへの依頼入口とマスタ構成は未実装。 |
+| Contact | [Contact｜1440 `31:336`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-336) | [Contact｜390 `31:370`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-370) | [Profile・Contact｜状態 `31:400`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-400)（入力誤り・送信中・完了・失敗） | [要件メモ｜Profile・Contact `31:443`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-443)「振る舞い」`31:451`・「受入条件」`31:460` | PS-PC-02〜04 | #45 | 一部実装。`contact/index.html`・`assets/js/contact.js`に3項目とFormspree送信、Site設定の反映。送信状態はoverlayで、ページ内表示は未実装。 |
+
+## 4. 受入条件
+
+実装: #42〜#45（データ前提は#41）。`00cdea5`: 既存項目の保持条件は照合対象、マスタに基づく画面受入は未検証。以下22項目は各要件メモの「受入条件」を項目ごとに転記したもの。IDを後続の計画・テスト・検証結果で使い、項目の統合や再採番をしない。
+
+| ID | 受入条件（要件メモ原文） | 元見出し | 実装Issue |
+|---|---|---|---|
+| PS-H-01 | 幅1440pxで開いた最初の画面に、ジャケット、作品名、次のライブの日付と「予約する」が入っている。映像を選んだ作品では「聴く」も入っている。 | Home「受入条件」`25:100` | #42 |
+| PS-H-02 | 幅390pxで、スクロールせずにジャケットと作品名が見える。 | 同上 | #42 |
+| PS-H-03 | 「聴く」が出ている時、押してから1回の操作で音が出る。 | 同上 | #41, #42 |
+| PS-H-04 | 次のライブがない時は予約ボタンを出さず、決まっていないことを文で示す。 | 同上 | #42 |
+| PS-H-05 | 今のHomeで見られる外部リンク5つ、next live、news（6件、説明とリンクの文言つき）が、すべて残っている。 | 同上 | #42 |
+| PS-H-06 | アクセントの赤は「予約する」と見出しの線だけに使う。 | 同上 | #42 |
+| PS-L-01 | Live一覧から予約の完了まで、通る画面は最短3つ（一覧 → Ticket → 完了）。 | 予約の流れ「受入条件」`29:364` | #43 |
+| PS-L-02 | Ticketで、どのライブを予約しようとしているかが、入力中ずっと見えている。 | 同上 | #43 |
+| PS-L-03 | 送信に失敗しても、入力した内容が消えない。 | 同上 | #43 |
+| PS-L-04 | 送信できた時、送った内容を画面で確認できる。 | 同上 | #43 |
+| PS-L-05 | 予約できないライブでは「予約する」を出さず、理由を文で示す。 | 同上 | #43 |
+| PS-L-06 | 今のTicketの入力項目と、管理画面で変えられる文言・表示の設定が、すべて残っている。 | 同上 | #43（#37反映後を基準） |
+| PS-L-07 | 今のLive詳細で見られる項目（画像、タイトル、日付、会場、時間、料金、注記、共演、説明、予約）が、すべて残っている。 | 同上 | #43 |
+| PS-L-08 | 終了したライブの行に、今と同じくタイトルが出る。 | 同上 | #43 |
+| PS-M-01 | 今のDiscographyにある全作品（Digital Release、宅録Demo）と、今のYouTubeにある全映像（Music Video、Live Movie、Demo）とチャンネルへのリンクが、すべてこのページにある。 | Music「受入条件」`30:506` | #44 |
+| PS-M-02 | どの作品からも、1回の操作で聴き始められるか、配信先・購入先へ行ける（リンクも映像も登録がない作品を除く）。 | 同上 | #41, #44 |
+| PS-M-03 | 古いアドレス（/youtube/、/discography/）から来ても、行き止まりにならない。 | 同上 | #44 |
+| PS-M-04 | 赤は見出しの線だけ。このページに「いちばんしてほしい操作」は置かない（どの作品を聴くかは見る人が選ぶ）。 | 同上 | #44 |
+| PS-PC-01 | 今のProfileにある写真、プロフィール文、SNSリンクが、すべて残っている。 | Profile・Contact「受入条件」`31:460` | #45 |
+| PS-PC-02 | 今のContactの入力項目（名前、e-mail、内容）と、管理画面で変えられる導入文・送信先が、すべて残っている。 | 同上 | #45 |
+| PS-PC-03 | 送信に失敗しても、入力した内容が消えない。 | 同上 | #45 |
+| PS-PC-04 | 送信できた時、送った内容を画面で確認できる。 | 同上 | #45 |
+
+上表は22項目。次の2項目は「全体計画」と各メモの状態記述から追記する共通の受入条件で、要件メモの原文転記とは区別する。
+
+| ID | 受入条件 | 根拠 | 実装Issue |
+|---|---|---|---|
+| PS-COM-01 | 390pxのMenuで開閉して各ページへ進める。#44完了時にナビは5項目となり、1440pxのナビと行き先が一致する。 | 全体計画「共通」`28:111`、Home「狭い幅（390px）」`25:94`、Menu frame `39:850` | #42, #44 |
+| PS-COM-02 | 各画面で読み込み中・空・未登録・送信中・失敗を、対応する状態frameと要件メモどおりに扱う。 | 状態frame `24:139`（10）、`29:249`（16）、`30:446`（6）、`31:400`（6） | #42, #43, #44, #45 |
+
+## 5. データと管理画面の対応
+
+実装: #41（3項目・日付・共有画像の表示名）、#42〜#45（公開表示）、#47（管理の見え方）。`00cdea5`: 下表の既存データはある。顔にする作品・選択映像・種別の3項目は未実装。新しいkey・保存形式は#41のCode Generation Planで固定する。
+
+| 公開表示・用途 | 管理入口 | `00cdea5`のデータ事実／追加する概念 |
+|---|---|---|
+| Homeの顔・Ticket完了の「当日までに聴く」 | Site > Home「顔にする作品」 | サイト設定に作品の番号を1つ。空ならDigital Releaseと宅録Demoを合わせてリリース日が最新の作品。 |
+| Home・Musicの「聴く」 | Music > 作品「その場で再生する映像」 | 作品ごとに登録済み映像の番号を1つ。空なら「聴く」を出さない。既存映像は`youtube.musicVideos / liveMovies / demos`、映像IDと`youtubeId`を持つ。 |
+| 作品名と分ける種別 | Music > 作品「種別」 | 作品ごとに文字を1つ。空ならタイトルだけ。既存作品は`discography.digital / demo`に`id / title / releaseDate / description / image / link`を持つ。 |
+| リリース順・最新作品 | Music > 作品「リリース日」 | `releaseDate`の形を`2025.05.05`に揃える。形が違う既存作品は最新候補から外し、並びの最後へ回す。新しく保存する時に形が違えば保存せず項目下へ示す。 |
+| 共有画像の予備 | Site > Home「共有時の画像」 | 既存`site.heroImage`。Home Heroの表示名を変え、Live共有時の画像の予備としての働きは保つ。Homeの顔の選択とは別。 |
+| 次のライブ・一覧・詳細・予約概要 | Live > 公開内容 | `live.upcoming / past`とLive fields。保存区分を正本とし、日付で勝手に区分を変えない。予約URLと補助リンクを区別する。 |
+| Home newsと外部links、footer | News、Site | `news`、`site.links`（Bandcamp / YouTube / X / Instagram / note）、`site.footerText`。newsは新しい順6件、リンクなしならリンク文言を出さない。 |
+| Profile本文・写真・SNS、Homeの短い紹介 | Profile、Site > Home Links | `profile.text / image / links`。Profileは登録文をそのまま、Homeは最初の空行まで。共通linksを先にSNSを続ける。 |
+| Contactの導入文・送信先 | Site > Contact | `contact.introText / formAction`。#37が削除したTicketの案内文・注意文とは別の設定。 |
+| Ticket表示と受付内容 | Live > Ticket Page共通設定、予約 | 完了文・枚数/備考の表示とラベル・入力例・送信ボタン文言を保持。#37の`introText / noticeText`削除は管理設計§5.2を維持。 |
+
+3項目はどれも空で公開画面が成立する。選んでいた作品が削除されたら選択を空に戻し、自動選択に戻る。選んでいた映像が削除されたら作品の選択を空に戻し、「聴く」を出さない。追加項目を空にした#41単独の段階では、既存の公開表示を変えない。
+
+## 6. 主要flowとdesktop / mobile
+
+実装: #42〜#45。`00cdea5`: 既存の閲覧・外部リンク・送信はあるが、以下の構成・完了遷移は未実装。
+
+- Homeは顔の作品→次のライブ→news→ほかの作品2件→profile→linksの順。390pxは縦1列でナビをMenuに畳む。1440pxの初期表示と390pxのジャケット表示はPS-H-01・02で確認する。ロゴの波紋・音符の演出は保持する。
+- Live一覧は開催予定を日付の近い順、終了したライブは新しい順の先頭数件と全件への入口。Live詳細だけで公演の詳細を見せる。390pxの詳細は日付・会場・予約をフライヤーより上に置く。時間・料金・注記・共演がすべて未登録なら説明を出す。
+- 内部予約はTicket、外部予約は別タブ、終了・受付終了・不正な予約URLは予約できない状態を示す。LiveリンクがInstagramなら詳細とTicket概要へ出し、それ以外の補助リンクを同じ入口としては出さない。
+- Ticketは指定Live、なければ入力途中のLive、なければ先頭を初期選択する。1440pxは入力中も対象概要が横に見える。390pxは概要を入力欄の上に小さく置き、送信を全幅にする。入力の復元・枚数1〜10・表示設定を保持する。外部受付の選択時はLive選択だけを残し、他の入力と内部送信を隠す。
+- 予約成功後はTicket完了へ進み、完了文・受付番号・対象Live・送った内容・次の入口・Homeと同じ作品を出す。完了文は管理設定を優先し、既定は「予約しました。」。メールの控えへの言及は置かない。渡す内容の方法は#43の計画で固定する。
+- Musicはrelease→demo→video。作品は区分ごとにリリース日の新しい順で、選択映像は作品直下に開く。別作品を再生したら前のプレーヤーを閉じる。390pxは作品の画像を左、名前と操作を右に置き、映像は1つずつ全幅にする。映像のサムネイルからもその場で再生する。旧URLは該当区分へ送る。
+- Profileは登録内容を保ち、Contactへの依頼入口を出す。390pxは写真を上、本文を下。Contactは既存3項目のまま、送信中・完了・失敗をページ内で示し、送信ボタンを全幅にする。
+
+## 7. 状態・失敗・fallback・rollback
+
+実装: #41〜#45。`00cdea5`: 一部の受付制御・入力復元・既存fallbackはある。状態frameとの一致は後続で検証する。
+
+| 対象 | 状態と対応 | マスタ |
+|---|---|---|
+| Home | 外部予約、受付終了、次回未定、Live読込失敗、再生中、映像未選択、画像なし、作品0、news0、全体読込失敗。作品0は名前と次のライブを広く出し「聴く」を出さずlinksを残す。news0は欄ごと隠す。 | `24:139`の10状態 |
+| Live/Ticket | 予定0、過去0、読込失敗、不明Live、フライヤーなし、予約4分岐、入力誤り、送信中、送信失敗、外部受付選択、予約不可指定、予約候補0、受付内容なし、Ticket読込失敗、重複、識別不能。送信中は入力を保って操作を無効化し、失敗は入力を保って再送できる。 | `29:249`の16状態。予約4分岐は1つの状態見本。 |
+| Music | 再生中、映像未選択、映像サムネイル押下、空の区分、全体0/読込失敗、画像なし。空の区分は見出しとページ内移動から外す。全体0/失敗はマスタどおりの知らせとBandcamp・YouTubeを残す。 | `30:446`の6状態 |
+| Profile/Contact | 写真なしは枠を出さず本文を広げる。読込失敗は再読込入口。Contactは入力誤り・送信中・完了・失敗をページ内で示し、失敗しても入力を保持する。 | `31:400`の6状態 |
+
+読み込み中は見出しと枠を先に出し、中身の場所を淡い面で空ける。Home全体の失敗はヘッダー・フッターを残し、新作・次のライブ・news・musicの場所へ1つの知らせと再読込を出す。画像がない場合の文字と淡い面もマスタを参照する。
+
+TicketでLiveを識別できない場合は「予約情報を確認できません。時間をおいて再度お試しください。」を出す。受付内容がない完了ページでは内容を捏造せず、一覧への入口を出す。予約の保存成功とメール送信成功は分ける。#37の送信失敗時も予約成功を保つ契約は管理設計§5.2を参照する。
+
+#40のrollbackは昇格した設計書・索引だけをbase `00cdea5`の版へ戻し、新設の公開設計書の撤回は明示確認後に行う。後続実装のrollbackは各Issueの承認済み計画で定義し、予約データ・Figma・無関係な設計を戻さない。
+
+## 8. 検証とマスタ更新の手順
+
+実装・検証: #40（文書対応）、#41〜#45（挙動・画面）。`00cdea5`: 本文のマスタ受入は未検証。
+
+1. #40では全frame・要件見出し・AC ID・担当Issueをsnapshotと照合し、Current Specification Gateを満たすことを独立reviewする。Itsukiがgate 3で確認したexact bytesだけを昇格し、SHA-256一致を確認する。
+2. #41〜#45では計画・テストにPS系IDを記し、データ保持・未登録・削除・受付分岐・送信失敗をsourceと決定論的テストで確かめる。1440pxと390pxの初期表示・折返し・読み込み状態・再生は各Issueの画面受入で確かめる。#40の文書照合を実機受入に置き換えない。
+3. 画面・要件メモ・設計が食い違う場合は、node-idと該当節、今の内容、変更案、理由、影響するACを記録する。先にFigmaマスタと要件メモを揃え、該当設計書と索引をDraftに戻す。影響する要件・計画を承認し、Approvedへ戻してから実装する。画面だけ・設計書だけで独断解決しない。
+
+Gap: 現マスタのlive状態・見た目の最終照合と表示・実操作・本番の確認は、本文のsource照合とは別に行う。#40の文書照合ではこれらの検証済みを主張しない。
+
+## 9. 関連Issue・計画・canonical file map
+
+| 対象 | 正本・参照先 |
+|---|---|
+| 公開UI | `docs/specs/current/public-site-ui.md`（本設計） |
+| 管理UI・既存Live契約・3項目 | `docs/specs/current/live-operations-admin-ui.md` |
+| 横断設計・索引 | `docs/specs/current/system-design-principles.md`、`docs/specs/current/README.md` |
+| 色・文字・余白 | `DESIGN_RULES.md`、`assets/css/1212-music.tokens.css` |
+| #40の要件・昇格計画・証拠 | active時は`aidlc-docs/`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/`。Code Generation Planは各root内の`construction/plans/aidlc-integration-code-generation-plan.md`。 |
+| 実装分担 | #41 データと項目、#42 Home・共通、#43 Live・Ticket、#44 Music・5項目ナビ・旧URL、#45 Profile・Contact。各Issueのformal cycleでPS系ACを実装計画へ対応させる。 |
+| 既存予約の承認済み決定 | 管理設計§5.2、`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/` |
+| 文書・変更工程 | `docs/DOCS_RULES.md`、`docs/operations/AI_DLC_WORKFLOW.md`、後続の日付付き計画は`docs/plans/`。計画やclosed traceでcurrent設計を置き換えない。 |

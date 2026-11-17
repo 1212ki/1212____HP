@@ -1,0 +1,30 @@
+PASS: PS-L-01をdelta-02最新原文と直接比較
+PASS: ADM-40-02をdelta-02最新原文と直接比較
+PASS: ### 4.6の幅別保存条件
+PASS: ## 6.の幅別保存条件
+PASS: Desktop wireframeの見出し右に保存
+PASS: Desktop wireframeの旧下部保存を除去
+PASS: Desktop保存の無効状態と対象
+PASS: ### 4.5の右詳細・行内直接操作
+PASS: ## 6.の右詳細・行内直接操作
+PASS: スマホの予約状態変更を保持
+PASS: PC右詳細の専用frame未作成Gapを保持
+PASS: Live予約の1440px対応表にも両経路
+PASS: 予約管理（全Live）の1440px対応表にも両経路
+PASS: 公開候補に解消済み差なし: Home状態frameの埋め込み表記の差
+PASS: 公開候補に解消済み差なし: YouTube / Bandcamp
+PASS: 公開候補に解消済み差なし: 移動は最短3回
+PASS: 公開候補に解消済み差なし: にはメモで要求するLiveタイトルの文言がない
+PASS: requirementsに解消済みGapなし
+PASS: 管理候補の旧Gapを除去
+PASS: 未描画・本番未確認Gapを保持
+PASS: auditの01b旧記録30074 bytesを完全保持
+PASS: 前回worker-01-result.md非変更
+PASS: git scopeはaidlc-docsのみ
+PASS: public-site-ui.mdの末尾空白なし
+PASS: live-operations-admin-ui.mdの末尾空白なし
+PASS: README.mdの末尾空白なし
+PASS: requirements.mdの末尾空白なし
+PASS: execution-plan.mdの末尾空白なし
+PASS: aidlc-integration-code-generation-plan.mdの末尾空白なし
+verification_result: PASS
