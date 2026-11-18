@@ -1,0 +1,2 @@
+PASS capture Python parse, Front clock fix, UTF-8 and installed cleanup API; no browser/server started
+Runtime screenshot assertions and warning-free teardown remain for Front recapture

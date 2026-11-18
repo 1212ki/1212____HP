@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "updatedAt": "2026-11-17T00:00:00Z"
+  },
+  "data": {
+    "site": {
+      "featuredReleaseId": "release-a",
+      "footerText": "Synthetic studio — All rights reserved. 架空の確認用フッターです。",
+      "links": {
+        "bandcamp": "https://example.test/shop",
+        "youtube": "https://example.test/videos",
+        "x": "https://example.test/x",
+        "instagram": "https://example.test/photos",
+        "note": "https://example.test/notes"
+      }
+    },
+    "discography": {
+      "digital": [
+        {
+          "id": "release-a",
+          "title": "架空の作品 A",
+          "releaseType": "Single",
+          "releaseDate": "2026.10.10",
+          "image": "assets/images/album1.jpg",
+          "playbackVideoId": "video-a",
+          "link": "https://example.test/release-a"
+        },
+        {
+          "id": "release-b",
+          "title": "架空の作品 B",
+          "releaseType": "EP",
+          "releaseDate": "2026.09.09",
+          "image": "assets/images/album2.png",
+          "link": "https://example.test/release-b"
+        }
+      ],
+      "demo": [
+        {
+          "id": "release-c",
+          "title": "架空のデモ C",
+          "releaseType": "Demo",
+          "releaseDate": "2026.08.08",
+          "image": "assets/images/album3.jpg",
+          "link": "https://example.test/release-c"
+        }
+      ]
+    },
+    "youtube": {
+      "musicVideos": [
+        {
+          "id": "video-a",
+          "youtubeId": "abcdefghijk",
+          "title": "架空の映像"
+        }
+      ],
+      "liveMovies": [],
+      "demos": []
+    },
+    "live": {
+      "upcoming": [
+        {
+          "id": "live-a",
+          "date": "2099.12.12",
+          "venue": "架空の会場",
+          "title": "架空の公演 A",
+          "openTime": "18:00",
+          "startTime": "18:30",
+          "ticket": "2,000円",
+          "notes": "架空の注記",
+          "performers": "架空の出演者",
+          "ticketUrl": "",
+          "reservationClosed": false
+        }
+      ],
+      "past": []
+    },
+    "news": [
+      {
+        "id": "news-a",
+        "date": "2026.11.01",
+        "title": "架空のお知らせ A",
+        "description": "架空のお知らせの全文です。<br>2行目も表示します。",
+        "link": "https://example.test/news-a",
+        "linkText": "お知らせを読む",
+        "image": "assets/images/album1.jpg"
+      },
+      {
+        "id": "news-b",
+        "date": "2026.10.01",
+        "title": "架空のお知らせ B",
+        "description": "別のお知らせです。",
+        "link": "",
+        "linkText": ""
+      }
+    ],
+    "profile": {
+      "text": "架空の紹介文です。\n音楽についての短い紹介です。\n\nこの段落はHomeに表示しません。",
+      "links": []
+    },
+    "contact": {
+      "introText": "架空のお問い合わせ案内",
+      "formAction": ""
+    }
+  },
+  "scenarios": {
+    "normal": {},
+    "external": {
+      "ticketUrl": "https://example.test/reserve"
+    },
+    "closed": {
+      "reservationClosed": true
+    },
+    "no-live": {
+      "upcoming": []
+    },
+    "invalid-ticket": {
+      "ticketUrl": "javascript:alert(1)"
+    },
+    "live-error": {
+      "upcoming": null
+    },
+    "error": {
+      "httpStatus": 503
+    },
+    "loading": {
+      "pending": true
+    },
+    "player": {
+      "openPlayer": true
+    },
+    "no-video": {
+      "playbackVideoId": ""
+    },
+    "no-image": {
+      "image": ""
+    },
+    "no-release": {
+      "releases": []
+    },
+    "no-news": {
+      "news": []
+    },
+    "freeform-news-dates": {
+      "news": [
+        {
+          "id": "date-0",
+          "date": "2099/1/2(Fri.)",
+          "title": "架空の日付表示 0",
+          "description": "架空のお知らせ本文です。"
+        },
+        {
+          "id": "date-1",
+          "date": "2099/1/3(Sat.) 20:00 out!",
+          "title": "架空の日付表示 1",
+          "description": "架空のお知らせ本文です。"
+        },
+        {
+          "id": "date-2",
+          "date": "2099/1/4(Sun.) Digital Release",
+          "title": "架空の日付表示 2",
+          "description": "架空のお知らせ本文です。"
+        },
+        {
+          "id": "date-3",
+          "date": "2099/1/5",
+          "title": "架空の日付表示 3",
+          "description": "架空のお知らせ本文です。"
+        },
+        {
+          "id": "date-4",
+          "date": "2099.01.06",
+          "title": "架空の日付表示 4",
+          "description": "架空のお知らせ本文です。"
+        },
+        {
+          "id": "date-5",
+          "date": "SyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateToken",
+          "title": "架空の日付表示 5",
+          "description": "架空のお知らせ本文です。"
+        }
+      ]
+    }
+  }
+}

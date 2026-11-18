@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 223, in <module>
+    main()
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 189, in main
+    capture('normal', width, height, filename=f'home-{suffix}-first.png')
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 165, in capture
+    assert all(metrics['first_view'].values()), str(metrics['first_view'])
+AssertionError: {'jacket': True, 'title': True, 'date': True, 'booking': False, 'listen': True}

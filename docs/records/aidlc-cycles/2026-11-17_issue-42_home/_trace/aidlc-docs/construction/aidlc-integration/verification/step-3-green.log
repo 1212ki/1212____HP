@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+ok 1 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 1.172708
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+ok 2 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 0.672417
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 3 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 0.341583
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 4 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 0.372584
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 5 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 0.238292
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 6 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 0.224
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 7 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 0.262
+  ...
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 8 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 0.877167
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 9 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 5.476292
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 10 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 1.415416
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 11 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 0.697083
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 12 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 0.71125
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 13 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 0.692875
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 14 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 3.387
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 15 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 5.111584
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 16 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 0.772584
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 17 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 0.695625
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 18 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 1.343791
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 19 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 0.726792
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 20 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 0.70075
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 21 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 0.580791
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 22 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 0.583875
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 23 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 3.91375
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 24 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 2.301084
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 25 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 1.918208
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 26 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 0.801
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 27 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 0.598083
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 28 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 0.497459
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 29 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 0.588583
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 30 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 0.557292
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 292.154458

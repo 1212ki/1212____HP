@@ -1,0 +1,5215 @@
+{
+  "ui_route": "ui_route=headless_acceptance:PS-H-01,PS-H-02,PS-H-04,PS-H-06,PS-COM-01,PS-COM-02",
+  "fixture": "test/fixtures/home-states.json",
+  "captures": [
+    {
+      "image": "screenshots/home-1440-first.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1608.375,
+            "top": 1608.375,
+            "bottom": 1691.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 342,
+            "bodyWidth": 380,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 342,
+            "bodyWidth": 380,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {
+          "jacket": true,
+          "title": true,
+          "date": true,
+          "booking": true,
+          "listen": true
+        }
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-1440-full.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1608.375,
+            "top": 1608.375,
+            "bottom": 1691.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 342,
+            "bodyWidth": 380,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 342,
+            "bodyWidth": 380,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {
+          "jacket": true,
+          "title": true,
+          "date": true,
+          "booking": true,
+          "listen": true
+        }
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-390-first.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2223.375,
+            "top": 2223.375,
+            "bottom": 2308.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {
+          "jacket": true,
+          "title": true
+        }
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-390-full.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2223.375,
+            "top": 2223.375,
+            "bottom": 2308.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {
+          "jacket": true,
+          "title": true
+        }
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-390-667-first.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 667
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2223.375,
+            "top": 2223.375,
+            "bottom": 2308.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {
+          "jacket": true,
+          "title": true
+        }
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/menu-390-open.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 499,
+            "top": 499,
+            "bottom": 857,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 911,
+            "top": 911,
+            "bottom": 953,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 1181,
+            "top": 1181,
+            "bottom": 1223,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 1392,
+            "top": 1392,
+            "bottom": 1438,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 1011,
+            "top": 1011,
+            "bottom": 1057,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 475,
+            "right": 390,
+            "width": 390,
+            "height": 475
+          },
+          "footer": {
+            "x": 0,
+            "y": 2617.375,
+            "top": 2617.375,
+            "bottom": 2702.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": {
+            "x": 16,
+            "y": 64,
+            "top": 64,
+            "bottom": 458,
+            "right": 374,
+            "width": 358,
+            "height": 394
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/menu-390-closed.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2223.375,
+            "top": 2223.375,
+            "bottom": 2308.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {
+          "jacket": true,
+          "title": true
+        }
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/menu-390-short.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 320
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 344,
+            "top": 344,
+            "bottom": 702,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 756,
+            "top": 756,
+            "bottom": 798,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 1026,
+            "top": 1026,
+            "bottom": 1068,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 1237,
+            "top": 1237,
+            "bottom": 1283,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 856,
+            "top": 856,
+            "bottom": 902,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 320,
+            "right": 390,
+            "width": 390,
+            "height": 320
+          },
+          "footer": {
+            "x": 0,
+            "y": 2462.375,
+            "top": 2462.375,
+            "bottom": 2547.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": {
+            "x": 16,
+            "y": 64,
+            "top": 64,
+            "bottom": 303,
+            "right": 374,
+            "width": 358,
+            "height": 239
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 128,
+            "bodyWidth": 246,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-external-1440.png",
+      "scenario": "external",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 925.75,
+            "width": 207.75,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1608.375,
+            "top": 1608.375,
+            "bottom": 1691.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-external-390.png",
+      "scenario": "external",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 223.75,
+            "width": 207.75,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2263.5625,
+            "top": 2263.5625,
+            "bottom": 2348.5625,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-closed-1440.png",
+      "scenario": "closed",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": null,
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1608.375,
+            "top": 1608.375,
+            "bottom": 1691.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-closed-390.png",
+      "scenario": "closed",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": null,
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2223.375,
+            "top": 2223.375,
+            "bottom": 2308.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-live-1440.png",
+      "scenario": "no-live",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": null,
+          "booking": null,
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1459.375,
+            "top": 1459.375,
+            "bottom": 1542.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-live-390.png",
+      "scenario": "no-live",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": null,
+          "booking": null,
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2062.9375,
+            "top": 2062.9375,
+            "bottom": 2147.9375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-invalid-ticket-1440.png",
+      "scenario": "invalid-ticket",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": null,
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1608.375,
+            "top": 1608.375,
+            "bottom": 1691.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-invalid-ticket-390.png",
+      "scenario": "invalid-ticket",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": null,
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2223.375,
+            "top": 2223.375,
+            "bottom": 2308.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-live-error-1440.png",
+      "scenario": "live-error",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": null,
+          "booking": null,
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1459.375,
+            "top": 1459.375,
+            "bottom": 1542.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-live-error-390.png",
+      "scenario": "live-error",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": null,
+          "booking": null,
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2040.5625,
+            "top": 2040.5625,
+            "bottom": 2125.5625,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-error-1440.png",
+      "scenario": "error",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 360.1875,
+            "top": 360.1875,
+            "bottom": 443.1875,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-error-390.png",
+      "scenario": "error",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 362.1875,
+            "top": 362.1875,
+            "bottom": 447.1875,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-loading-1440.png",
+      "scenario": "loading",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1143.375,
+            "top": 1143.375,
+            "bottom": 1226.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-loading-390.png",
+      "scenario": "loading",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 1355.375,
+            "top": 1355.375,
+            "bottom": 1440.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-player-1440.png",
+      "scenario": "player",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 714.75,
+            "top": 714.75,
+            "bottom": 756.75,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 925.75,
+            "top": 925.75,
+            "bottom": 971.75,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 575.75,
+            "top": 575.75,
+            "bottom": 623.75,
+            "right": 811.6875,
+            "width": 93.6875,
+            "height": 48
+          },
+          "player": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 563.75,
+            "right": 1210,
+            "width": 492,
+            "height": 276.75
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1849.125,
+            "top": 1849.125,
+            "bottom": 1932.125,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 1,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-player-390.png",
+      "scenario": "player",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 952.375,
+            "top": 952.375,
+            "bottom": 994.375,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 1163.375,
+            "top": 1163.375,
+            "bottom": 1209.375,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 830.375,
+            "top": 830.375,
+            "bottom": 878.375,
+            "right": 109.6875,
+            "width": 93.6875,
+            "height": 48
+          },
+          "player": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 818.375,
+            "right": 374,
+            "width": 358,
+            "height": 201.375
+          },
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2388.75,
+            "top": 2388.75,
+            "bottom": 2473.75,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 1,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-video-1440.png",
+      "scenario": "no-video",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 416,
+            "top": 416,
+            "bottom": 458,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 627,
+            "top": 627,
+            "bottom": 673,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1550.375,
+            "top": 1550.375,
+            "bottom": 1633.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-video-390.png",
+      "scenario": "no-video",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 729,
+            "top": 729,
+            "bottom": 771,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 940,
+            "top": 940,
+            "bottom": 986,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2165.375,
+            "top": 2165.375,
+            "bottom": 2250.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-image-1440.png",
+      "scenario": "no-image",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1608.375,
+            "top": 1608.375,
+            "bottom": 1691.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-image-390.png",
+      "scenario": "no-image",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2223.375,
+            "top": 2223.375,
+            "bottom": 2308.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-release-1440.png",
+      "scenario": "no-release",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": {
+            "x": 230,
+            "y": 276,
+            "top": 276,
+            "bottom": 318,
+            "right": 1210,
+            "width": 980,
+            "height": 42
+          },
+          "booking": {
+            "x": 230,
+            "y": 487,
+            "top": 487,
+            "bottom": 533,
+            "right": 336.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1308.1875,
+            "top": 1308.1875,
+            "bottom": 1391.1875,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-release-390.png",
+      "scenario": "no-release",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": {
+            "x": 16,
+            "y": 221,
+            "top": 221,
+            "bottom": 263,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 432,
+            "top": 432,
+            "bottom": 478,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 1497.375,
+            "top": 1497.375,
+            "bottom": 1582.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-news-1440.png",
+      "scenario": "no-news",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1634.375,
+            "top": 1634.375,
+            "bottom": 1717.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-no-news-390.png",
+      "scenario": "no-news",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 1873.375,
+            "top": 1873.375,
+            "bottom": 1958.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-freeform-news-dates-1440.png",
+      "scenario": "freeform-news-dates",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1210,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 718,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1834.1875,
+            "top": 1834.1875,
+            "bottom": 1917.1875,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2099.01.06",
+            "width": 240,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 494,
+            "bodyWidth": 228,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099.01.06",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/5",
+            "width": 240,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 494,
+            "bodyWidth": 228,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/5",
+                "width": 68.46875,
+                "naturalWidth": 54.49609375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/4(Sun.) Digital Release",
+            "width": 240,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 494,
+            "bodyWidth": 228,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/4(Sun.)",
+                "width": 108.515625,
+                "naturalWidth": 92.6201171875,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "Digital",
+                "width": 43.046875,
+                "naturalWidth": 38.9033203125,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "Release",
+                "width": 53.6875,
+                "naturalWidth": 51.365234375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/3(Sat.) 20:00 out!",
+            "width": 240,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 494,
+            "bodyWidth": 228,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/3(Sat.)",
+                "width": 104.703125,
+                "naturalWidth": 88.7236328125,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "20:00",
+                "width": 40.15625,
+                "naturalWidth": 35.0341796875,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "out!",
+                "width": 27.25,
+                "naturalWidth": 23.3515625,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/2(Fri.)",
+            "width": 240,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 494,
+            "bodyWidth": 228,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/2(Fri.)",
+                "width": 99.578125,
+                "naturalWidth": 84.0341796875,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "SyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateToken",
+            "width": 240,
+            "lines": 4,
+            "boxLines": 4,
+            "bodyLeft": 494,
+            "bodyWidth": 228,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "SyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateToken",
+                "width": 240,
+                "naturalWidth": 740.87890625,
+                "lines": 4,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-freeform-news-dates-390.png",
+      "scenario": "freeform-news-dates",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 559,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "date": {
+            "x": 16,
+            "y": 787,
+            "top": 787,
+            "bottom": 829,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 998,
+            "top": 998,
+            "bottom": 1044,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 617,
+            "top": 617,
+            "bottom": 663,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2627.375,
+            "top": 2627.375,
+            "bottom": 2712.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2099.01.06",
+            "width": 154,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 194,
+            "bodyWidth": 180,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099.01.06",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/5",
+            "width": 154,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 194,
+            "bodyWidth": 180,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/5",
+                "width": 68.46875,
+                "naturalWidth": 54.49609375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/4(Sun.) Digital Release",
+            "width": 154,
+            "lines": 2,
+            "boxLines": 2,
+            "bodyLeft": 194,
+            "bodyWidth": 180,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/4(Sun.)",
+                "width": 108.515625,
+                "naturalWidth": 92.6201171875,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "Digital",
+                "width": 43.046875,
+                "naturalWidth": 38.9033203125,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "Release",
+                "width": 53.6875,
+                "naturalWidth": 51.365234375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/3(Sat.) 20:00 out!",
+            "width": 154,
+            "lines": 2,
+            "boxLines": 2,
+            "bodyLeft": 194,
+            "bodyWidth": 180,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/3(Sat.)",
+                "width": 104.703125,
+                "naturalWidth": 88.7236328125,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "20:00",
+                "width": 40.15625,
+                "naturalWidth": 35.0341796875,
+                "lines": 1,
+                "fits": true
+              },
+              {
+                "text": "out!",
+                "width": 27.25,
+                "naturalWidth": 23.3515625,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2099/1/2(Fri.)",
+            "width": 154,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 194,
+            "bodyWidth": 180,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2099/1/2(Fri.)",
+                "width": 99.578125,
+                "naturalWidth": 84.0341796875,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "SyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateToken",
+            "width": 154,
+            "lines": 6,
+            "boxLines": 6,
+            "bodyLeft": 194,
+            "bodyWidth": 180,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "SyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateTokenSyntheticUnbrokenDateToken",
+                "width": 154,
+                "naturalWidth": 740.87890625,
+                "lines": 6,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-821.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 821,
+        "viewport": {
+          "width": 821,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 143,
+            "top": 143,
+            "bottom": 498.046875,
+            "right": 371.046875,
+            "width": 355.046875,
+            "height": 355.046875
+          },
+          "title": {
+            "x": 419.046875,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 805,
+            "width": 385.953125,
+            "height": 56
+          },
+          "date": {
+            "x": 419.046875,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 805,
+            "width": 385.953125,
+            "height": 42
+          },
+          "booking": {
+            "x": 419.046875,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 525.296875,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 419.046875,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 520.171875,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 821,
+            "width": 821,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1563.296875,
+            "top": 1563.296875,
+            "bottom": 1646.296875,
+            "right": 821,
+            "width": 821,
+            "height": 83
+          },
+          "nav": {
+            "x": 307.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 805,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 128,
+            "bodyWidth": 279.15625,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 128,
+            "bodyWidth": 279.15625,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {}
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-1024.png",
+      "scenario": "normal",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1024,
+        "viewport": {
+          "width": 1024,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 22,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 462,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 510,
+            "y": 173,
+            "top": 173,
+            "bottom": 229,
+            "right": 1002,
+            "width": 492,
+            "height": 56
+          },
+          "date": {
+            "x": 510,
+            "y": 474,
+            "top": 474,
+            "bottom": 516,
+            "right": 1002,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 510,
+            "y": 685,
+            "top": 685,
+            "bottom": 731,
+            "right": 616.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 510,
+            "y": 287,
+            "top": 287,
+            "bottom": 333,
+            "right": 611.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1024,
+            "width": 1024,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1608.375,
+            "top": 1608.375,
+            "bottom": 1691.375,
+            "right": 1024,
+            "width": 1024,
+            "height": 83
+          },
+          "nav": {
+            "x": 504.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1002,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "news_dates": [
+          {
+            "text": "2026.11.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 5,
+            "bodyLeft": 134,
+            "bodyWidth": 380,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.11.01",
+                "width": 80.3125,
+                "naturalWidth": 69.0361328125,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          },
+          {
+            "text": "2026.10.01",
+            "width": 88,
+            "lines": 1,
+            "boxLines": 2,
+            "bodyLeft": 134,
+            "bodyWidth": 380,
+            "gap": 24,
+            "fits": true,
+            "words": [
+              {
+                "text": "2026.10.01",
+                "width": 80.3125,
+                "naturalWidth": 70.068359375,
+                "lines": 1,
+                "fits": true
+              }
+            ]
+          }
+        ],
+        "horizontal_fit": true,
+        "first_view": {}
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-live-1440.png",
+      "scenario": "normal",
+      "route": "/live/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 952.5,
+            "top": 952.5,
+            "bottom": 1035.5,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-live-390.png",
+      "scenario": "normal",
+      "route": "/live/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 915.390625,
+            "top": 915.390625,
+            "bottom": 1000.390625,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-live-detail-1440.png",
+      "scenario": "normal",
+      "route": "/live/detail/?liveId=live-a",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1220.109375,
+            "top": 1220.109375,
+            "bottom": 1303.109375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-live-detail-390.png",
+      "scenario": "normal",
+      "route": "/live/detail/?liveId=live-a",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 1207.546875,
+            "top": 1207.546875,
+            "bottom": 1292.546875,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-ticket-1440.png",
+      "scenario": "normal",
+      "route": "/ticket/?liveId=live-a",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1179.21875,
+            "top": 1179.21875,
+            "bottom": 1262.21875,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-ticket-390.png",
+      "scenario": "normal",
+      "route": "/ticket/?liveId=live-a",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 1161.078125,
+            "top": 1161.078125,
+            "bottom": 1246.078125,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-ticket-complete-1440.png",
+      "scenario": "normal",
+      "route": "/ticket/complete/?rid=synthetic&date=2099.12.12&venue=Fixture",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 505.890625,
+            "top": 505.890625,
+            "bottom": 588.890625,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-ticket-complete-390.png",
+      "scenario": "normal",
+      "route": "/ticket/complete/?rid=synthetic&date=2099.12.12&venue=Fixture",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 487.75,
+            "top": 487.75,
+            "bottom": 572.75,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-discography-1440.png",
+      "scenario": "normal",
+      "route": "/discography/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1655.15625,
+            "top": 1655.15625,
+            "bottom": 1738.15625,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-discography-390.png",
+      "scenario": "normal",
+      "route": "/discography/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 1657.4375,
+            "top": 1657.4375,
+            "bottom": 1742.4375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-youtube-1440.png",
+      "scenario": "normal",
+      "route": "/youtube/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1083.09375,
+            "top": 1083.09375,
+            "bottom": 1166.09375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-youtube-390.png",
+      "scenario": "normal",
+      "route": "/youtube/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 715.515625,
+            "top": 715.515625,
+            "bottom": 800.515625,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-profile-1440.png",
+      "scenario": "normal",
+      "route": "/profile/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 464.421875,
+            "top": 464.421875,
+            "bottom": 547.421875,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-profile-390.png",
+      "scenario": "normal",
+      "route": "/profile/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 650.40625,
+            "top": 650.40625,
+            "bottom": 735.40625,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-contact-1440.png",
+      "scenario": "normal",
+      "route": "/contact/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 812.484375,
+            "top": 812.484375,
+            "bottom": 895.484375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/shell-contact-390.png",
+      "scenario": "normal",
+      "route": "/contact/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "boxes": {
+          "jacket": null,
+          "title": null,
+          "date": null,
+          "booking": null,
+          "listen": null,
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 794.34375,
+            "top": 794.34375,
+            "bottom": 879.34375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\"",
+        "zenFontLoaded": false,
+        "headingFont": null,
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-long-title-1440.png",
+      "scenario": "long-title",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 1440,
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "boxes": {
+          "jacket": {
+            "x": 230,
+            "y": 143,
+            "top": 143,
+            "bottom": 583,
+            "right": 670,
+            "width": 440,
+            "height": 440
+          },
+          "title": {
+            "x": 718,
+            "y": 173,
+            "top": 173,
+            "bottom": 341,
+            "right": 1210,
+            "width": 492,
+            "height": 168
+          },
+          "date": {
+            "x": 718,
+            "y": 586,
+            "top": 586,
+            "bottom": 628,
+            "right": 1210,
+            "width": 492,
+            "height": 42
+          },
+          "booking": {
+            "x": 718,
+            "y": 797,
+            "top": 797,
+            "bottom": 843,
+            "right": 824.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 718,
+            "y": 399,
+            "top": 399,
+            "bottom": 445,
+            "right": 819.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 79,
+            "right": 1440,
+            "width": 1440,
+            "height": 79
+          },
+          "footer": {
+            "x": 0,
+            "y": 1720.375,
+            "top": 1720.375,
+            "bottom": 1803.375,
+            "right": 1440,
+            "width": 1440,
+            "height": 83
+          },
+          "nav": {
+            "x": 712.78125,
+            "y": 28,
+            "top": 28,
+            "bottom": 50,
+            "right": 1210,
+            "width": 497.21875,
+            "height": 22
+          }
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 40px / 56px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    },
+    {
+      "image": "screenshots/home-long-title-390.png",
+      "scenario": "long-title",
+      "route": "/",
+      "metrics": {
+        "scrollY": 0,
+        "scrollWidth": 390,
+        "viewport": {
+          "width": 390,
+          "height": 667
+        },
+        "boxes": {
+          "jacket": {
+            "x": 16,
+            "y": 105,
+            "top": 105,
+            "bottom": 463,
+            "right": 374,
+            "width": 358,
+            "height": 358
+          },
+          "title": {
+            "x": 16,
+            "y": 517,
+            "top": 517,
+            "bottom": 643,
+            "right": 374,
+            "width": 358,
+            "height": 126
+          },
+          "date": {
+            "x": 16,
+            "y": 871,
+            "top": 871,
+            "bottom": 913,
+            "right": 374,
+            "width": 358,
+            "height": 42
+          },
+          "booking": {
+            "x": 16,
+            "y": 1082,
+            "top": 1082,
+            "bottom": 1128,
+            "right": 122.25,
+            "width": 106.25,
+            "height": 46
+          },
+          "listen": {
+            "x": 16,
+            "y": 701,
+            "top": 701,
+            "bottom": 747,
+            "right": 117.125,
+            "width": 101.125,
+            "height": 46
+          },
+          "player": null,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "bottom": 81,
+            "right": 390,
+            "width": 390,
+            "height": 81
+          },
+          "footer": {
+            "x": 0,
+            "y": 2307.375,
+            "top": 2307.375,
+            "bottom": 2392.375,
+            "right": 390,
+            "width": 390,
+            "height": 85
+          },
+          "nav": null
+        },
+        "font": "\"Zen Kaku Gothic New\", sans-serif",
+        "zenFontLoaded": false,
+        "headingFont": "500 28px / 42px \"Zen Kaku Gothic New\", sans-serif",
+        "headerColor": "rgb(255, 255, 255)",
+        "iframeCount": 0,
+        "horizontal_fit": true
+      },
+      "blocked_external_requests": [
+        "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "unexpected_console_errors": [],
+      "pageerrors": [],
+      "failed_script_responses": [],
+      "unexpected_requests": []
+    }
+  ],
+  "real_audio": "未実施・確認2で行う",
+  "production_data": "未実施・確認2で行う",
+  "font_acceptance": "外部font遮断。厳密な字形と折返しは未確認",
+  "browser": "145.0.7632.6",
+  "status": "captured; visual inspection required"
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 274, in <module>
+    main()
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 240, in main
+    capture('normal', width, height, filename=f'home-{suffix}-first.png')
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 187, in capture
+    assert date['lines'] >= 1 and date['lines'] <= sum(word['lines'] for word in date['words']), str(date)
+AssertionError: {'text': '2026.11.01', 'width': 88, 'lines': 5, 'bodyWidth': 380, 'gap': 24, 'fits': True, 'words': [{'text': '2026.11.01', 'width': 80.3125, 'naturalWidth': 69.0361328125, 'lines': 1, 'fits': True}]}

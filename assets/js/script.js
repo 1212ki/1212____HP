@@ -31,25 +31,34 @@ document.addEventListener("DOMContentLoaded", function(){
   const navToggle = document.querySelector(".nav-toggle");
 
   if (navToggle && header) {
+    const nav = document.getElementById("global-nav");
+    const text = document.querySelector(".nav-toggle-text");
+    const setMenu = (open, restoreFocus = false) => {
+      const narrow = window.innerWidth <= 820;
+      const expanded = narrow && open;
+      header.classList.toggle("nav-open", expanded);
+      navToggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (text) text.textContent = expanded ? "閉じる" : "Menu";
+      if (nav) nav.hidden = narrow && !expanded;
+      if (restoreFocus) navToggle.focus();
+    };
+    setMenu(false);
     navToggle.addEventListener("click", () => {
-      const isOpen = header.classList.toggle("nav-open");
-      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      const wasOpen = header.classList.contains("nav-open");
+      setMenu(!wasOpen, wasOpen);
     });
 
     document.querySelectorAll("nav a").forEach((link) => {
       link.addEventListener("click", () => {
-        if (header.classList.contains("nav-open")) {
-          header.classList.remove("nav-open");
-          navToggle.setAttribute("aria-expanded", "false");
-        }
+        setMenu(false);
       });
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 820 && header.classList.contains("nav-open")) {
-        header.classList.remove("nav-open");
-        navToggle.setAttribute("aria-expanded", "false");
-      }
+      setMenu(window.innerWidth <= 820 && header.classList.contains("nav-open"));
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && header.classList.contains("nav-open")) setMenu(false, true);
     });
   }
 
@@ -109,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function(){
     setTimeout(() => particle.remove(), 1200);
   }
 
-  const fadeTargets = document.querySelectorAll(
+  const fadeTargets = document.getElementById("home-content") ? [] : document.querySelectorAll(
     ".news-item, .live-event, .discography-item, .section-title, .hero-band, .artist-photo, .video-container, .intro, .live-application, .channel-application"
   );
 

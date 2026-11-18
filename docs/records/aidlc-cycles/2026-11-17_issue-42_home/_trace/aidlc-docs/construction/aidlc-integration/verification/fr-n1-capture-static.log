@@ -1,0 +1,3 @@
+PASS Python AST and 10 embedded browser JS expressions parse
+PASS freeform-news-dates scenario projects six synthetic news rows without mutating normal fixture
+PASS static only; browser/server not launched; actual layout assertions pending Front capture

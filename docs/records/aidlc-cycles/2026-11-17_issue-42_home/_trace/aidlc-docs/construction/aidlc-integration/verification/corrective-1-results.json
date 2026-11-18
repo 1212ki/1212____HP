@@ -1,0 +1,93 @@
+[
+  {
+    "name": "focused",
+    "command": [
+      "node",
+      "--test",
+      "test/home-rendering.test.mjs",
+      "test/home-player.test.mjs",
+      "test/site-shell.test.mjs"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-focused.log"
+  },
+  {
+    "name": "node",
+    "command": [
+      "node",
+      "--test",
+      "test/"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-node.log"
+  },
+  {
+    "name": "worker",
+    "command": [
+      "npm",
+      "--prefix",
+      "cloudflare/worker",
+      "test"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-worker.log"
+  },
+  {
+    "name": "site-check",
+    "command": [
+      "node",
+      "--check",
+      "assets/js/site-content.js"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-site-check.log"
+  },
+  {
+    "name": "player-check",
+    "command": [
+      "node",
+      "--check",
+      "assets/js/home-player.js"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-player-check.log"
+  },
+  {
+    "name": "script-check",
+    "command": [
+      "node",
+      "--check",
+      "assets/js/script.js"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-script-check.log"
+  },
+  {
+    "name": "local-verify",
+    "command": [
+      "scripts/aidlc-verify.sh",
+      "--local"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-local-verify.log"
+  },
+  {
+    "name": "status",
+    "command": [
+      "scripts/aidlc-cycle.sh",
+      "status"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-status.log"
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/corrective-1-diff-check.log"
+  }
+]

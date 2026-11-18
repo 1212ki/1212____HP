@@ -1,0 +1,531 @@
+TAP version 13
+# Subtest: default image forms keep the existing path display for non-live images
+ok 1 - default image forms keep the existing path display for non-live images
+  ---
+  duration_ms: 14.440958
+  ...
+# Subtest: default image path display escapes the current image path
+ok 2 - default image path display escapes the current image path
+  ---
+  duration_ms: 0.82175
+  ...
+# Subtest: downloadable live flyer forms hide path text and wrap the preview in a download link
+ok 3 - downloadable live flyer forms hide path text and wrap the preview in a download link
+  ---
+  duration_ms: 1.029209
+  ...
+# Subtest: Live edit workspace uses a downloadable flyer preview without path or URL display
+ok 4 - Live edit workspace uses a downloadable flyer preview without path or URL display
+  ---
+  duration_ms: 3.651041
+  ...
+# Subtest: Live image selection keeps the selected flyer preview inside a download link
+ok 5 - Live image selection keeps the selected flyer preview inside a download link
+  ---
+  duration_ms: 1.621042
+  ...
+# Subtest: Live image clear marks the workspace editor dirty and disables the global save route
+ok 6 - Live image clear marks the workspace editor dirty and disables the global save route
+  ---
+  duration_ms: 1.3275
+  ...
+# Subtest: API fallback disables and runtime-guards Live flyer select and clear mutations
+ok 7 - API fallback disables and runtime-guards Live flyer select and clear mutations
+  ---
+  duration_ms: 1.31525
+  ...
+# Subtest: Live image API upload updates the flyer download link to the uploaded URL
+ok 8 - Live image API upload updates the flyer download link to the uploaded URL
+  ---
+  duration_ms: 0.617167
+  ...
+# Subtest: a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+ok 9 - a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+  ---
+  duration_ms: 7.334292
+  ...
+# Subtest: pending Live image upload protects beforeunload and settles into dirty state on success
+ok 10 - pending Live image upload protects beforeunload and settles into dirty state on success
+  ---
+  duration_ms: 2.970791
+  ...
+# Subtest: failed Live image upload restores its original preview and preserves unrelated dirty input
+ok 11 - failed Live image upload restores its original preview and preserves unrelated dirty input
+  ---
+  duration_ms: 1.440084
+  ...
+# Subtest: Live image overlapping same-ID uploads release the superseded request when latest settles
+ok 12 - Live image overlapping same-ID uploads release the superseded request when latest settles
+  ---
+  duration_ms: 2.867209
+  ...
+# Subtest: latest overlapping upload failure restores the first confirmed image baseline
+ok 13 - latest overlapping upload failure restores the first confirmed image baseline
+  ---
+  duration_ms: 1.98125
+  ...
+# Subtest: Local Live image read blocks transition until confirmed discard releases its owner
+ok 14 - Local Live image read blocks transition until confirmed discard releases its owner
+  ---
+  duration_ms: 1.147959
+  ...
+# Subtest: Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+ok 15 - Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+  ---
+  duration_ms: 1.320083
+  ...
+# Subtest: generic modal close and replacement release abandoned image operations
+ok 16 - generic modal close and replacement release abandoned image operations
+  ---
+  duration_ms: 3.400291
+  ...
+# Subtest: clearImage is latest across API and Local Live image operations
+    # Subtest: API
+    ok 1 - API
+      ---
+      duration_ms: 2.98625
+      ...
+    # Subtest: Local
+    ok 2 - Local
+      ---
+      duration_ms: 1.569459
+      ...
+    1..2
+ok 17 - clearImage is latest across API and Local Live image operations
+  ---
+  duration_ms: 5.428917
+  ...
+# Subtest: clearImage is latest for generic page images after API success and Local failure
+ok 18 - clearImage is latest for generic page images after API success and Local failure
+  ---
+  duration_ms: 6.936167
+  ...
+# Subtest: a new image selection does not release a parallel operation for another input
+ok 19 - a new image selection does not release a parallel operation for another input
+  ---
+  duration_ms: 6.442125
+  ...
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+ok 20 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 1.216875
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+ok 21 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 0.6635
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 22 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 0.312625
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 23 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 0.293375
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 24 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 0.241917
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 25 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 0.272833
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 26 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 1.35775
+  ...
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 27 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 0.600875
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 28 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 9.801458
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 29 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 1.147625
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 30 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 0.938375
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 31 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 0.816792
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 32 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 1.097542
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 33 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 0.701667
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 34 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 3.810875
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 35 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 6.154167
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 36 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 1.574041
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 37 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 1.202125
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 38 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 0.64775
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 39 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 0.809125
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 40 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 0.710209
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 41 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 0.603125
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 42 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 0.71675
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 43 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 0.628208
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 44 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 0.730458
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 45 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 6.410375
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 46 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 1.74625
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 47 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 2.509917
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 48 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 0.833292
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 49 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 0.747584
+  ...
+# Subtest: T42-LIVE booking internal
+ok 50 - T42-LIVE booking internal
+  ---
+  duration_ms: 0.869375
+  ...
+# Subtest: T42-LIVE booking external
+ok 51 - T42-LIVE booking external
+  ---
+  duration_ms: 0.757834
+  ...
+# Subtest: T42-LIVE booking closed
+ok 52 - T42-LIVE booking closed
+  ---
+  duration_ms: 0.684625
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 53 - T42-LIVE booking invalid
+  ---
+  duration_ms: 0.791583
+  ...
+# Subtest: T42-LIVE booking past
+ok 54 - T42-LIVE booking past
+  ---
+  duration_ms: 0.687209
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 55 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 2.108708
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 56 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 1.87375
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 57 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 0.891125
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 58 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 4.457833
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 59 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 1.020458
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 60 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 0.712542
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 61 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 0.86425
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 62 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 2.233042
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 63 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 0.792583
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 64 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 0.779459
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 65 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 0.729417
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 66 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 1.651542
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 67 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 1.604209
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 68 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 1.418667
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 69 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 0.785542
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 70 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 1.630166
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 71 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 0.77575
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 72 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 0.508375
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 73 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 0.479792
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 74 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 0.455333
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 75 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 0.533708
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 76 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 0.682625
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 77 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 1.086833
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 78 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 1.081042
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 79 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 0.611875
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 80 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 0.667792
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 81 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 0.723583
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 82 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 2.141833
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 83 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 3.051875
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 84 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 2.731083
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 85 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 0.784084
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs index.html
+ok 86 - T42-SHELL 9 route shell and six original nav URLs index.html
+  ---
+  duration_ms: 18.934292
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/index.html
+ok 87 - T42-SHELL 9 route shell and six original nav URLs live/index.html
+  ---
+  duration_ms: 12.316375
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/detail/index.html
+ok 88 - T42-SHELL 9 route shell and six original nav URLs live/detail/index.html
+  ---
+  duration_ms: 12.897166
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/index.html
+ok 89 - T42-SHELL 9 route shell and six original nav URLs ticket/index.html
+  ---
+  duration_ms: 9.974917
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html
+ok 90 - T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 14.275083
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs discography/index.html
+ok 91 - T42-SHELL 9 route shell and six original nav URLs discography/index.html
+  ---
+  duration_ms: 14.839125
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs youtube/index.html
+ok 92 - T42-SHELL 9 route shell and six original nav URLs youtube/index.html
+  ---
+  duration_ms: 15.098375
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs profile/index.html
+ok 93 - T42-SHELL 9 route shell and six original nav URLs profile/index.html
+  ---
+  duration_ms: 11.662209
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs contact/index.html
+ok 94 - T42-SHELL 9 route shell and six original nav URLs contact/index.html
+  ---
+  duration_ms: 11.877792
+  ...
+# Subtest: T42-SHELL shared style and script cache version aligned for every consumer
+ok 95 - T42-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 5.010667
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 96 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 19.658208
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 97 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 29.107416
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 98 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 0.995417
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 99 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 1.097416
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 100 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 2.932417
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 101 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 1.381667
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 102 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 0.539667
+  ...
+1..102
+# tests 104
+# suites 0
+# pass 104
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3216.96

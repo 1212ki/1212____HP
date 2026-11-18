@@ -1,0 +1,29 @@
+ M admin/README.md
+ M admin/index.html
+ M aidlc-docs/README.md
+ M assets/css/style.css
+ M assets/js/script.js
+ M assets/js/site-content.js
+ M contact/index.html
+ M discography/index.html
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+ M index.html
+ M live/detail/index.html
+ M live/index.html
+ M profile/index.html
+ M test/public-music-data-compatibility.test.mjs
+ M ticket/complete/index.html
+ M ticket/index.html
+ M youtube/index.html
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/
+?? aidlc-docs/inception/
+?? assets/js/home-player.js
+?? test/fixtures/home-states.json
+?? test/home-player.test.mjs
+?? test/home-rendering.test.mjs
+?? test/site-shell.test.mjs

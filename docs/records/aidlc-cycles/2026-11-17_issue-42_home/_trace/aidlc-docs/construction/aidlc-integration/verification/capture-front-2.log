@@ -1,0 +1,56 @@
+home-1440-first.png
+home-1440-full.png
+home-390-first.png
+home-390-full.png
+home-390-667-first.png
+menu-390-open.png
+menu-390-closed.png
+menu-390-short.png
+home-external-1440.png
+home-external-390.png
+home-closed-1440.png
+home-closed-390.png
+home-no-live-1440.png
+home-no-live-390.png
+home-invalid-ticket-1440.png
+home-invalid-ticket-390.png
+home-live-error-1440.png
+home-live-error-390.png
+home-error-1440.png
+home-error-390.png
+home-loading-1440.png
+home-loading-390.png
+home-player-1440.png
+Task was destroyed but it is pending!
+task: <Task pending name='Task-1215' coro=<BrowserContext._on_route() running at /Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_browser_context.py:246> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x10666f640>()]> cb=[Connection.dispatch.<locals>._done_callback() at /Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_connection.py:466]>
+home-player-390.png
+home-no-video-1440.png
+home-no-video-390.png
+home-no-image-1440.png
+home-no-image-390.png
+home-no-release-1440.png
+home-no-release-390.png
+home-no-news-1440.png
+home-no-news-390.png
+home-821.png
+home-1024.png
+shell-live-1440.png
+shell-live-390.png
+shell-live-detail-1440.png
+shell-live-detail-390.png
+shell-ticket-1440.png
+shell-ticket-390.png
+shell-ticket-complete-1440.png
+shell-ticket-complete-390.png
+shell-discography-1440.png
+shell-discography-390.png
+shell-youtube-1440.png
+shell-youtube-390.png
+shell-profile-1440.png
+shell-profile-390.png
+shell-contact-1440.png
+shell-contact-390.png
+Task was destroyed but it is pending!
+task: <Task pending name='Task-1172' coro=<BrowserContext._on_route() running at /Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_browser_context.py:246> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x10652a640>()]> cb=[Connection.dispatch.<locals>._done_callback() at /Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_connection.py:466]>
+home-long-title-1440.png
+home-long-title-390.png

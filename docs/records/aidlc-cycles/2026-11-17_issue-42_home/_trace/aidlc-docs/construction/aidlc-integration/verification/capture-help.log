@@ -1,0 +1,12 @@
+usage: capture-home.py [-h] [--serve] [--chromium CHROMIUM]
+
+Fixture-only #42 acceptance capture. No external request is sent. From the
+execution target: /usr/bin/python3 aidlc-docs/construction/aidlc-
+integration/verification/capture-home.py --serve Or start `/usr/bin/python3 -m
+http.server 8888 --bind 127.0.0.1` first, then invoke this script without
+--serve. --chromium accepts an installed executable.
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --serve
+  --chromium CHROMIUM  Existing Chromium executable only; never downloads

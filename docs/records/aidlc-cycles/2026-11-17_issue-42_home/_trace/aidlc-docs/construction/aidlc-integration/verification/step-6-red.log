@@ -1,0 +1,2792 @@
+TAP version 13
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 1 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 3.311875
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 2 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 9.753125
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 3 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 3.487833
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 4 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 6.721958
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 5 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 1.121542
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 6 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 4.331
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 7.275833
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 2.284709
+      ...
+    1..2
+ok 7 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 9.968416
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 8 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 1.066125
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 9 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 0.621833
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 10 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 3.590042
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 11 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 0.584375
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 12 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 2.516083
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 13 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 0.751958
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 14 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 4.383875
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 15 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 1.367042
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 16 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 0.912416
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 17 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 0.897416
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 18 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 0.649084
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 0.638791
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 0.593333
+      ...
+    1..2
+ok 19 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 1.44725
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 0.753375
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 6.965834
+      ...
+    1..2
+ok 20 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 7.897708
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 1.091583
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 0.623375
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 0.529125
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 0.578291
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 1.920042
+      ...
+    1..5
+ok 21 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 5.117708
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 22 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.408
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 23 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 3.050042
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 24 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 0.756541
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 25 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 0.44775
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs index.html
+not ok 26 - T42-SHELL 9 route shell and six original nav URLs index.html
+  ---
+  duration_ms: 54.463208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : home</title>\n' +
+      '  <link rel="stylesheet" href="assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="assets/css/style.css">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body class="site-home">\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '        <h1 class="logo">\n' +
+      '          松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        </h1>\n' +
+      '\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="">Home</a></li>\n' +
+      '          <li><a href="profile/">Profile</a></li>\n' +
+      '          <li><a href="live/">Live</a></li>\n' +
+      '          <li><a href="youtube/">YouTube</a></li>\n' +
+      '          <li><a href="discography/">Discography</a></li>\n' +
+      '          <li><a href="contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main id="home-content" aria-busy="true" data-state="loading">\n' +
+      '    <div id="home-load-error" class="home-container home-error" role="status" hidden></div>\n' +
+      '    <div class="home-top home-container" id="home-top">\n' +
+      '      <div id="home-artwork" class="home-artwork"><div class="home-skeleton" role="status">読み込み中</div></div>\n' +
+      '      <div class="home-top-content">\n' +
+      '        <section class="home-release" aria-labelledby="home-release-caption">\n' +
+      '          <h2 class="home-caption" id="home-release-caption">new release</h2>\n' +
+      '          <div id="home-featured-release"></div>\n' +
+      '          <div id="home-player" class="home-player" hidden></div>\n' +
+      '        </section>\n' +
+      '        <section class="home-next-live" aria-labelledby="home-next-live-title">\n' +
+      '          <h2 class="home-caption" id="home-next-live-title">next live</h2>\n' +
+      '          <div id="home-next-live-events"><div class="home-skeleton" role="status">読み込み中</div></div>\n' +
+      '          <div id="home-next-live-empty" hidden><p>次のライブは、決まり次第ここでお知らせします。</p><a class="site-text-link" href="live/detail/?view=past">これまでのライブ →</a></div>\n' +
+      '        </section>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '    <div class="home-bands" id="home-bands">\n' +
+      '      <div class="home-container home-columns">\n' +
+      '        <section id="home-news" aria-labelledby="home-news-title"><h2 class="site-section-title" id="home-news-title">news</h2><div id="news-items"></div></section>\n' +
+      '        <section class="home-music" aria-labelledby="home-music-title"><h2 class="site-section-title" id="home-music-title">music</h2><div id="home-music-items" class="home-music-items"></div><a class="site-text-link" href="discography/">music →</a></section>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '    <div class="home-container home-columns home-about" id="home-about">\n' +
+      '      <section aria-labelledby="home-profile-title"><h2 class="site-section-title" id="home-profile-title">profile</h2><div id="home-profile-text"></div><a class="site-text-link" href="profile/">profile →</a></section>\n' +
+      '      <section aria-labelledby="home-links-title"><h2 class="site-section-title" id="home-links-title">links</h2><div id="home-link-list" class="home-links"></div></section>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="assets/js/site-config.js"></script>\n' +
+      '  <script src="assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="assets/js/music-data.js"></script>\n' +
+      '  <script src="assets/js/home-player.js?v=20261117-42"></script>\n' +
+      '  <script src="assets/js/site-content.js?v=20260804-2"></script>\n' +
+      '  <script src="assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : home</title>
+      <link rel="stylesheet" href="assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    
+    <body class="site-home">
+      <!-- ヘッダー -->
+      <header>
+        <div class="container header-container">
+            <h1 class="logo">
+              松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            </h1>
+    
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+    
+          <nav id="global-nav">
+            <ul>
+              <li><a href="">Home</a></li>
+              <li><a href="profile/">Profile</a></li>
+              <li><a href="live/">Live</a></li>
+              <li><a href="youtube/">YouTube</a></li>
+              <li><a href="discography/">Discography</a></li>
+              <li><a href="contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main id="home-content" aria-busy="true" data-state="loading">
+        <div id="home-load-error" class="home-container home-error" role="status" hidden></div>
+        <div class="home-top home-container" id="home-top">
+          <div id="home-artwork" class="home-artwork"><div class="home-skeleton" role="status">読み込み中</div></div>
+          <div class="home-top-content">
+            <section class="home-release" aria-labelledby="home-release-caption">
+              <h2 class="home-caption" id="home-release-caption">new release</h2>
+              <div id="home-featured-release"></div>
+              <div id="home-player" class="home-player" hidden></div>
+            </section>
+            <section class="home-next-live" aria-labelledby="home-next-live-title">
+              <h2 class="home-caption" id="home-next-live-title">next live</h2>
+              <div id="home-next-live-events"><div class="home-skeleton" role="status">読み込み中</div></div>
+              <div id="home-next-live-empty" hidden><p>次のライブは、決まり次第ここでお知らせします。</p><a class="site-text-link" href="live/detail/?view=past">これまでのライブ →</a></div>
+            </section>
+          </div>
+        </div>
+        <div class="home-bands" id="home-bands">
+          <div class="home-container home-columns">
+            <section id="home-news" aria-labelledby="home-news-title"><h2 class="site-section-title" id="home-news-title">news</h2><div id="news-items"></div></section>
+            <section class="home-music" aria-labelledby="home-music-title"><h2 class="site-section-title" id="home-music-title">music</h2><div id="home-music-items" class="home-music-items"></div><a class="site-text-link" href="discography/">music →</a></section>
+          </div>
+        </div>
+        <div class="home-container home-columns home-about" id="home-about">
+          <section aria-labelledby="home-profile-title"><h2 class="site-section-title" id="home-profile-title">profile</h2><div id="home-profile-text"></div><a class="site-text-link" href="profile/">profile →</a></section>
+          <section aria-labelledby="home-links-title"><h2 class="site-section-title" id="home-links-title">links</h2><div id="home-link-list" class="home-links"></div></section>
+        </div>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="assets/js/site-config.js"></script>
+      <script src="assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="assets/js/music-data.js"></script>
+      <script src="assets/js/home-player.js?v=20261117-42"></script>
+      <script src="assets/js/site-content.js?v=20260804-2"></script>
+      <script src="assets/js/script.js"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/index.html
+not ok 27 - T42-SHELL 9 route shell and six original nav URLs live/index.html
+  ---
+  duration_ms: 12.2605
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : live</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body class="live-page">\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="live">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">live</h2>\n' +
+      '        <div class="live-events" id="live-upcoming-events"></div>\n' +
+      '        <br><br>\n' +
+      '        <h3 id="live-past-heading">↓公演終了</h3>\n' +
+      '        <div class="live-events" id="live-past-events"></div>\n' +
+      '        <div id="live-past-more" style="display:none;">\n' +
+      '          <a class="application-link" href="./detail/?view=past">▷終了公演をもっと見る</a>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Live detail modal -->\n' +
+      '    <div class="ticket-modal-overlay" id="liveDetailOverlay" aria-hidden="true"></div>\n' +
+      '    <div class="ticket-modal" id="liveDetailModal" role="dialog" aria-modal="true" aria-labelledby="liveDetailTitle" aria-hidden="true">\n' +
+      '      <div class="ticket-modal-header">\n' +
+      '        <h3 id="liveDetailTitle" class="ticket-modal-title">live detail</h3>\n' +
+      '        <button type="button" class="ticket-modal-close" id="liveDetailCloseBtn" aria-label="Close">×</button>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-body">\n' +
+      '        <div id="liveDetailBody"></div>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-footer">\n' +
+      '        <a class="ticket-modal-btn ghost" id="liveDetailCloseLink" href="#">閉じる</a>\n' +
+      '        <a class="ticket-modal-btn primary" id="liveDetailExternalLink" href="#" target="_blank" rel="noopener" style="display:none;">instagram</a>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20260804-2"></script>\n' +
+      '  <script src="../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : live</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css">
+    </head>
+    
+    <body class="live-page">
+      <!-- ヘッダー -->
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="live">
+          <div class="container">
+            <h2 class="section-title">live</h2>
+            <div class="live-events" id="live-upcoming-events"></div>
+            <br><br>
+            <h3 id="live-past-heading">↓公演終了</h3>
+            <div class="live-events" id="live-past-events"></div>
+            <div id="live-past-more" style="display:none;">
+              <a class="application-link" href="./detail/?view=past">▷終了公演をもっと見る</a>
+            </div>
+          </div>
+        </section>
+    
+        <!-- Live detail modal -->
+        <div class="ticket-modal-overlay" id="liveDetailOverlay" aria-hidden="true"></div>
+        <div class="ticket-modal" id="liveDetailModal" role="dialog" aria-modal="true" aria-labelledby="liveDetailTitle" aria-hidden="true">
+          <div class="ticket-modal-header">
+            <h3 id="liveDetailTitle" class="ticket-modal-title">live detail</h3>
+            <button type="button" class="ticket-modal-close" id="liveDetailCloseBtn" aria-label="Close">×</button>
+          </div>
+          <div class="ticket-modal-body">
+            <div id="liveDetailBody"></div>
+          </div>
+          <div class="ticket-modal-footer">
+            <a class="ticket-modal-btn ghost" id="liveDetailCloseLink" href="#">閉じる</a>
+            <a class="ticket-modal-btn primary" id="liveDetailExternalLink" href="#" target="_blank" rel="noopener" style="display:none;">instagram</a>
+          </div>
+        </div>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="../assets/js/site-content.js?v=20260804-2"></script>
+      <script src="../assets/js/script.js"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/detail/index.html
+not ok 28 - T42-SHELL 9 route shell and six original nav URLs live/detail/index.html
+  ---
+  duration_ms: 11.408292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : live detail</title>\n' +
+      '  <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../../assets/css/style.css">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../../">Home</a></li>\n' +
+      '          <li><a href="../../profile/">Profile</a></li>\n' +
+      '          <li><a href="../">Live</a></li>\n' +
+      '          <li><a href="../../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../../discography/">Discography</a></li>\n' +
+      '          <li><a href="../../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="live" id="live-detail">\n' +
+      '      <div class="container">\n' +
+      '        <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">\n' +
+      '          <h2 class="section-title" style="margin-bottom: 0;">live detail</h2>\n' +
+      '          <a id="live-detail-back-link" class="application-link" href="../">▷back</a>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <div id="live-detail-notfound" style="display:none; margin-top: 18px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);"></div>\n' +
+      '\n' +
+      '        <div id="live-detail-single" style="margin-top: 18px; display:flex; gap: 18px; align-items:flex-start; flex-wrap: wrap;">\n' +
+      '          <div id="live-detail-visual" style="width: min(420px, 100%); align-self: flex-start;">\n' +
+      '            <img id="live-detail-image" alt="" style="width: 100%; max-height: min(74vh, 760px); object-fit: contain; border-radius: var(--radius-md); border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,245,0.92)); padding: 10px; display:none;" />\n' +
+      '            <div id="live-detail-placeholder" class="live-flyer-placeholder" style="width: 100%; min-height: min(74vh, 760px); border-radius: var(--radius-md); border: 1px solid var(--line); display:none;">Coming Soon</div>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div style="flex: 1; min-width: 240px;">\n' +
+      '            <div id="live-detail-title" style="font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.08em;"></div>\n' +
+      '            <div id="live-detail-heading" style="margin-top: 10px; color: var(--ink-muted);"></div>\n' +
+      '            <pre id="live-detail-description" style="margin-top: 14px; white-space: pre-wrap; color: var(--ink); line-height: 1.8; font-family: var(--font-body);"></pre>\n' +
+      '\n' +
+      '            <div style="margin-top: 16px; display:flex; gap: 10px; flex-wrap: wrap;">\n' +
+      '              <a id="live-detail-ticket-link" class="live-detail-reservation-cta" hidden></a>\n' +
+      '              <a class="application-link" href="../../">▷home</a>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <div id="live-archive" style="display:none; margin-top: 18px;">\n' +
+      '          <h3>公演終了（全件）</h3>\n' +
+      '          <div id="live-archive-events" class="live-events"></div>\n' +
+      '          <p id="live-archive-empty" style="display:none; margin-top: 14px; color: var(--ink-muted);">公開中の終了公演はありません。</p>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../../assets/js/site-config.js"></script>\n' +
+      '  <script src="../../assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="../../assets/js/site-content.js?v=20260804-2"></script>\n' +
+      '  <script src="../../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : live detail</title>
+      <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../../assets/css/style.css">
+    </head>
+    
+    <body>
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../profile/">Profile</a></li>
+              <li><a href="../">Live</a></li>
+              <li><a href="../../youtube/">YouTube</a></li>
+              <li><a href="../../discography/">Discography</a></li>
+              <li><a href="../../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="live" id="live-detail">
+          <div class="container">
+            <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+              <h2 class="section-title" style="margin-bottom: 0;">live detail</h2>
+              <a id="live-detail-back-link" class="application-link" href="../">▷back</a>
+            </div>
+    
+            <div id="live-detail-notfound" style="display:none; margin-top: 18px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);"></div>
+    
+            <div id="live-detail-single" style="margin-top: 18px; display:flex; gap: 18px; align-items:flex-start; flex-wrap: wrap;">
+              <div id="live-detail-visual" style="width: min(420px, 100%); align-self: flex-start;">
+                <img id="live-detail-image" alt="" style="width: 100%; max-height: min(74vh, 760px); object-fit: contain; border-radius: var(--radius-md); border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,245,0.92)); padding: 10px; display:none;" />
+                <div id="live-detail-placeholder" class="live-flyer-placeholder" style="width: 100%; min-height: min(74vh, 760px); border-radius: var(--radius-md); border: 1px solid var(--line); display:none;">Coming Soon</div>
+              </div>
+    
+              <div style="flex: 1; min-width: 240px;">
+                <div id="live-detail-title" style="font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.08em;"></div>
+                <div id="live-detail-heading" style="margin-top: 10px; color: var(--ink-muted);"></div>
+                <pre id="live-detail-description" style="margin-top: 14px; white-space: pre-wrap; color: var(--ink); line-height: 1.8; font-family: var(--font-body);"></pre>
+    
+                <div style="margin-top: 16px; display:flex; gap: 10px; flex-wrap: wrap;">
+                  <a id="live-detail-ticket-link" class="live-detail-reservation-cta" hidden></a>
+                  <a class="application-link" href="../../">▷home</a>
+                </div>
+              </div>
+            </div>
+    
+            <div id="live-archive" style="display:none; margin-top: 18px;">
+              <h3>公演終了（全件）</h3>
+              <div id="live-archive-events" class="live-events"></div>
+              <p id="live-archive-empty" style="display:none; margin-top: 14px; color: var(--ink-muted);">公開中の終了公演はありません。</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../../assets/js/site-config.js"></script>
+      <script src="../../assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="../../assets/js/site-content.js?v=20260804-2"></script>
+      <script src="../../assets/js/script.js"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/index.html
+not ok 29 - T42-SHELL 9 route shell and six original nav URLs ticket/index.html
+  ---
+  duration_ms: 13.93125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : ticket</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="contact">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">ticket</h2>\n' +
+      '\n' +
+      '        <p id="ticket-route-message" class="ticket-route-message" role="status" aria-live="polite" hidden></p>\n' +
+      '\n' +
+      '        <div id="ticket-live-preview" style="margin-top: 18px;"></div>\n' +
+      '\n' +
+      '        <form id="ticket-form">\n' +
+      '          <div id="ticket-field-live">\n' +
+      '            <label id="ticket-label-live" for="liveId">ライブ</label>\n' +
+      '            <select id="liveId" name="liveId" required></select>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-name">\n' +
+      '            <label id="ticket-label-name" for="name">名前</label>\n' +
+      '            <input id="name" name="name" type="text" autocomplete="name" required>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-email">\n' +
+      '            <label id="ticket-label-email" for="email">e-mail</label>\n' +
+      '            <input id="email" name="email" type="email" autocomplete="email" required>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-quantity">\n' +
+      '            <label id="ticket-label-quantity" for="quantity">枚数</label>\n' +
+      '            <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-message">\n' +
+      '            <label id="ticket-label-message" for="message">備考</label>\n' +
+      '            <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <!-- Honeypot -->\n' +
+      '          <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">\n' +
+      '\n' +
+      '          <button type="submit" id="submitBtn">予約する</button>\n' +
+      '        </form>\n' +
+      '\n' +
+      '        <div id="ticket-result" style="margin-top: 18px;"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <div class="ticket-modal-overlay" id="ticketConfirmOverlay" aria-hidden="true"></div>\n' +
+      '    <div class="ticket-modal" id="ticketConfirmModal" role="dialog" aria-modal="true" aria-labelledby="ticketConfirmTitle" aria-hidden="true">\n' +
+      '      <div class="ticket-modal-header">\n' +
+      '        <h3 id="ticketConfirmTitle" class="ticket-modal-title">送信中...</h3>\n' +
+      '        <button type="button" class="ticket-modal-close" id="ticketConfirmCloseBtn" aria-label="Close">×</button>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-body">\n' +
+      '        <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">予約を送信しています。</p>\n' +
+      '        <div class="ticket-confirm-summary" id="ticketConfirmSummary"></div>\n' +
+      '        <div id="ticketConfirmError" class="ticket-confirm-error" style="display:none;"></div>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-footer">\n' +
+      '        <a class="ticket-modal-btn ghost" id="ticketModalBackLink" href="./">もう一度</a>\n' +
+      '        <a class="ticket-modal-btn primary" id="ticketModalHomeLink" href="../">home</a>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="../assets/js/ticket.js?v=20260804-2"></script>\n' +
+      '  <script src="../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : ticket</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css">
+    </head>
+    <body>
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="contact">
+          <div class="container">
+            <h2 class="section-title">ticket</h2>
+    
+            <p id="ticket-route-message" class="ticket-route-message" role="status" aria-live="polite" hidden></p>
+    
+            <div id="ticket-live-preview" style="margin-top: 18px;"></div>
+    
+            <form id="ticket-form">
+              <div id="ticket-field-live">
+                <label id="ticket-label-live" for="liveId">ライブ</label>
+                <select id="liveId" name="liveId" required></select>
+              </div>
+    
+              <div id="ticket-field-name">
+                <label id="ticket-label-name" for="name">名前</label>
+                <input id="name" name="name" type="text" autocomplete="name" required>
+              </div>
+    
+              <div id="ticket-field-email">
+                <label id="ticket-label-email" for="email">e-mail</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+              </div>
+    
+              <div id="ticket-field-quantity">
+                <label id="ticket-label-quantity" for="quantity">枚数</label>
+                <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
+              </div>
+    
+              <div id="ticket-field-message">
+                <label id="ticket-label-message" for="message">備考</label>
+                <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>
+              </div>
+    
+              <!-- Honeypot -->
+              <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">
+    
+              <button type="submit" id="submitBtn">予約する</button>
+            </form>
+    
+            <div id="ticket-result" style="margin-top: 18px;"></div>
+          </div>
+        </section>
+    
+        <div class="ticket-modal-overlay" id="ticketConfirmOverlay" aria-hidden="true"></div>
+        <div class="ticket-modal" id="ticketConfirmModal" role="dialog" aria-modal="true" aria-labelledby="ticketConfirmTitle" aria-hidden="true">
+          <div class="ticket-modal-header">
+            <h3 id="ticketConfirmTitle" class="ticket-modal-title">送信中...</h3>
+            <button type="button" class="ticket-modal-close" id="ticketConfirmCloseBtn" aria-label="Close">×</button>
+          </div>
+          <div class="ticket-modal-body">
+            <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">予約を送信しています。</p>
+            <div class="ticket-confirm-summary" id="ticketConfirmSummary"></div>
+            <div id="ticketConfirmError" class="ticket-confirm-error" style="display:none;"></div>
+          </div>
+          <div class="ticket-modal-footer">
+            <a class="ticket-modal-btn ghost" id="ticketModalBackLink" href="./">もう一度</a>
+            <a class="ticket-modal-btn primary" id="ticketModalHomeLink" href="../">home</a>
+          </div>
+        </div>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="../assets/js/ticket.js?v=20260804-2"></script>
+      <script src="../assets/js/script.js"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html
+not ok 30 - T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 11.212291
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : ticket</title>\n' +
+      '  <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../../assets/css/style.css">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../../">Home</a></li>\n' +
+      '          <li><a href="../../profile/">Profile</a></li>\n' +
+      '          <li><a href="../../live/">Live</a></li>\n' +
+      '          <li><a href="../../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../../discography/">Discography</a></li>\n' +
+      '          <li><a href="../../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="contact">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">ticket</h2>\n' +
+      '        <p id="ticket-complete-message" style="margin-top: 12px; color: var(--ink-muted);">\n' +
+      '          予約しました。\n' +
+      '        </p>\n' +
+      '\n' +
+      '        <div id="ticket-complete-card" style="margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">\n' +
+      '          <div style="display:flex; flex-direction:column; gap: 8px;">\n' +
+      '            <div style="display:flex; gap: 10px; align-items: baseline; flex-wrap: wrap;">\n' +
+      '              <span style="font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);">Receipt ID</span>\n' +
+      '              <code id="ticket-receipt-id" style="font-size: 0.95rem;">-</code>\n' +
+      '            </div>\n' +
+      '            <div id="ticket-receipt-live" style="color: var(--ink);"></div>\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <div style="margin-top: 18px; display:flex; gap: 10px; flex-wrap: wrap;">\n' +
+      '          <a class="application-link" href="../">▷Back</a>\n' +
+      '          <a class="application-link" href="../../live/">▷Live</a>\n' +
+      '          <a class="application-link" href="../../">▷Home</a>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../../assets/js/site-config.js"></script>\n' +
+      '  <script src="../../assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="../../assets/js/ticket-complete.js?v=20260804-2"></script>\n' +
+      '  <script src="../../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : ticket</title>
+      <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../../assets/css/style.css">
+    </head>
+    <body>
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../profile/">Profile</a></li>
+              <li><a href="../../live/">Live</a></li>
+              <li><a href="../../youtube/">YouTube</a></li>
+              <li><a href="../../discography/">Discography</a></li>
+              <li><a href="../../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="contact">
+          <div class="container">
+            <h2 class="section-title">ticket</h2>
+            <p id="ticket-complete-message" style="margin-top: 12px; color: var(--ink-muted);">
+              予約しました。
+            </p>
+    
+            <div id="ticket-complete-card" style="margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">
+              <div style="display:flex; flex-direction:column; gap: 8px;">
+                <div style="display:flex; gap: 10px; align-items: baseline; flex-wrap: wrap;">
+                  <span style="font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);">Receipt ID</span>
+                  <code id="ticket-receipt-id" style="font-size: 0.95rem;">-</code>
+                </div>
+                <div id="ticket-receipt-live" style="color: var(--ink);"></div>
+              </div>
+            </div>
+    
+            <div style="margin-top: 18px; display:flex; gap: 10px; flex-wrap: wrap;">
+              <a class="application-link" href="../">▷Back</a>
+              <a class="application-link" href="../../live/">▷Live</a>
+              <a class="application-link" href="../../">▷Home</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../../assets/js/site-config.js"></script>
+      <script src="../../assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="../../assets/js/ticket-complete.js?v=20260804-2"></script>
+      <script src="../../assets/js/script.js"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs discography/index.html
+not ok 31 - T42-SHELL 9 route shell and six original nav URLs discography/index.html
+  ---
+  duration_ms: 14.057375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <!-- ビューポート設定 -->\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : discography</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <!-- ディスコグラフィセクション -->\n' +
+      '    <section class="discography">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">discography</h2>\n' +
+      '        <!-- ディスコグラフィ情報をここに記載-->\n' +
+      '        <!-- 公式リリース-->\n' +
+      '        <br>\n' +
+      '        <h3>■Digital Release</h3>\n' +
+      '        <div class="discography-items" id="disc-digital-items"></div><br><br>\n' +
+      '        <h3>■宅録Demo ※手売り/Bandcampにて販売中。</h3>\n' +
+      '        <div class="discography-items" id="disc-demo-items"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js"></script>\n' +
+      '  <script src="../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <!-- ビューポート設定 -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : discography</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <!-- ディスコグラフィセクション -->
+        <section class="discography">
+          <div class="container">
+            <h2 class="section-title">discography</h2>
+            <!-- ディスコグラフィ情報をここに記載-->
+            <!-- 公式リリース-->
+            <br>
+            <h3>■Digital Release</h3>
+            <div class="discography-items" id="disc-digital-items"></div><br><br>
+            <h3>■宅録Demo ※手売り/Bandcampにて販売中。</h3>
+            <div class="discography-items" id="disc-demo-items"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js"></script>
+      <script src="../assets/js/script.js"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs youtube/index.html
+not ok 32 - T42-SHELL 9 route shell and six original nav URLs youtube/index.html
+  ---
+  duration_ms: 13.648916
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : youtube</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="channel-application">\n' +
+      '      <div class="container">\n' +
+      '        <h3>\n' +
+      '          <a id="youtube-channel-link" href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank" rel="noopener">▷Channel</a>\n' +
+      '        </h3>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section class="youtube">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">youtube</h2>\n' +
+      '        <div id="youtube-content"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js"></script>\n' +
+      '  <script src="../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : youtube</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="channel-application">
+          <div class="container">
+            <h3>
+              <a id="youtube-channel-link" href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank" rel="noopener">▷Channel</a>
+            </h3>
+          </div>
+        </section>
+    
+        <section class="youtube">
+          <div class="container">
+            <h2 class="section-title">youtube</h2>
+            <div id="youtube-content"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js"></script>
+      <script src="../assets/js/script.js"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs profile/index.html
+not ok 33 - T42-SHELL 9 route shell and six original nav URLs profile/index.html
+  ---
+  duration_ms: 12.395416
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : profile</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="profile">\n' +
+      '      <div class="container">\n' +
+      '        <img id="profile-image" src="" alt="Artist Photo" class="artist-photo" style="display:none">\n' +
+      '        <h2 class="section-title">profile</h2>\n' +
+      '        <p id="profile-text"></p>\n' +
+      '        <div class="profile-links" id="profile-links"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js"></script>\n' +
+      '  <script src="../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : profile</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="profile">
+          <div class="container">
+            <img id="profile-image" src="" alt="Artist Photo" class="artist-photo" style="display:none">
+            <h2 class="section-title">profile</h2>
+            <p id="profile-text"></p>
+            <div class="profile-links" id="profile-links"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js"></script>
+      <script src="../assets/js/script.js"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs contact/index.html
+not ok 34 - T42-SHELL 9 route shell and six original nav URLs contact/index.html
+  ---
+  duration_ms: 11.720958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="site-header">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <!-- ビューポート設定 -->\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : contact</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '  \n' +
+      '  <main>\n' +
+      '    <!-- お問い合わせセクション -->\n' +
+      '    <section class="contact">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">contact</h2>\n' +
+      '        <p id="contact-intro">お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。</p>\n' +
+      '         <form id="contact-form" action="https://formspree.io/f/xqaeddgj" method="POST">\n' +
+      '          <label for="name">名前</label>\n' +
+      '          <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>\n' +
+      '          \n' +
+      '          <label for="email">e-mail</label>\n' +
+      '          <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>\n' +
+      '          \n' +
+      '          <label for="message">内容</label>\n' +
+      '          <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>\n' +
+      '          \n' +
+      '          <button type="submit">送信する</button>\n' +
+      '        </form>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  \n' +
+      '    <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>\n' +
+      '    <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">\n' +
+      '      <div class="ticket-modal-header">\n' +
+      '        <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>\n' +
+      '        <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-body">\n' +
+      '        <p id="contactConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">送信しています。</p>\n' +
+      '        <div class="ticket-confirm-summary" id="contactConfirmSummary"></div>\n' +
+      '        <div id="contactConfirmError" class="ticket-confirm-error" style="display:none;"></div>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-footer">\n' +
+      '        <a class="ticket-modal-btn ghost" id="contactModalBackLink" href="./">もう一度</a>\n' +
+      '        <a class="ticket-modal-btn primary" id="contactModalHomeLink" href="../">home</a>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '  \n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '  \n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js"></script>\n' +
+      '  <script src="../assets/js/contact.js"></script>\n' +
+      '  <script src="../assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <!-- ビューポート設定 -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : contact</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css">
+    </head>
+    <body>
+      <!-- ヘッダー -->
+      <header>
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      
+      <main>
+        <!-- お問い合わせセクション -->
+        <section class="contact">
+          <div class="container">
+            <h2 class="section-title">contact</h2>
+            <p id="contact-intro">お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。</p>
+             <form id="contact-form" action="https://formspree.io/f/xqaeddgj" method="POST">
+              <label for="name">名前</label>
+              <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>
+              
+              <label for="email">e-mail</label>
+              <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>
+              
+              <label for="message">内容</label>
+              <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+              
+              <button type="submit">送信する</button>
+            </form>
+          </div>
+        </section>
+      
+        <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>
+        <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">
+          <div class="ticket-modal-header">
+            <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>
+            <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>
+          </div>
+          <div class="ticket-modal-body">
+            <p id="contactConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">送信しています。</p>
+            <div class="ticket-confirm-summary" id="contactConfirmSummary"></div>
+            <div id="contactConfirmError" class="ticket-confirm-error" style="display:none;"></div>
+          </div>
+          <div class="ticket-modal-footer">
+            <a class="ticket-modal-btn ghost" id="contactModalBackLink" href="./">もう一度</a>
+            <a class="ticket-modal-btn primary" id="contactModalHomeLink" href="../">home</a>
+          </div>
+        </div>
+      </main>
+      
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+      
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js"></script>
+      <script src="../assets/js/contact.js"></script>
+      <script src="../assets/js/script.js"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL shared style and script cache version aligned for every consumer
+not ok 35 - T42-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 0.339208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /css\/style.css\?v=20261117-42/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : home</title>\n' +
+      '  <link rel="stylesheet" href="assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="assets/css/style.css">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body class="site-home">\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header>\n' +
+      '    <div class="container header-container">\n' +
+      '        <h1 class="logo">\n' +
+      '          松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        </h1>\n' +
+      '\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="">Home</a></li>\n' +
+      '          <li><a href="profile/">Profile</a></li>\n' +
+      '          <li><a href="live/">Live</a></li>\n' +
+      '          <li><a href="youtube/">YouTube</a></li>\n' +
+      '          <li><a href="discography/">Discography</a></li>\n' +
+      '          <li><a href="contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main id="home-content" aria-busy="true" data-state="loading">\n' +
+      '    <div id="home-load-error" class="home-container home-error" role="status" hidden></div>\n' +
+      '    <div class="home-top home-container" id="home-top">\n' +
+      '      <div id="home-artwork" class="home-artwork"><div class="home-skeleton" role="status">読み込み中</div></div>\n' +
+      '      <div class="home-top-content">\n' +
+      '        <section class="home-release" aria-labelledby="home-release-caption">\n' +
+      '          <h2 class="home-caption" id="home-release-caption">new release</h2>\n' +
+      '          <div id="home-featured-release"></div>\n' +
+      '          <div id="home-player" class="home-player" hidden></div>\n' +
+      '        </section>\n' +
+      '        <section class="home-next-live" aria-labelledby="home-next-live-title">\n' +
+      '          <h2 class="home-caption" id="home-next-live-title">next live</h2>\n' +
+      '          <div id="home-next-live-events"><div class="home-skeleton" role="status">読み込み中</div></div>\n' +
+      '          <div id="home-next-live-empty" hidden><p>次のライブは、決まり次第ここでお知らせします。</p><a class="site-text-link" href="live/detail/?view=past">これまでのライブ →</a></div>\n' +
+      '        </section>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '    <div class="home-bands" id="home-bands">\n' +
+      '      <div class="home-container home-columns">\n' +
+      '        <section id="home-news" aria-labelledby="home-news-title"><h2 class="site-section-title" id="home-news-title">news</h2><div id="news-items"></div></section>\n' +
+      '        <section class="home-music" aria-labelledby="home-music-title"><h2 class="site-section-title" id="home-music-title">music</h2><div id="home-music-items" class="home-music-items"></div><a class="site-text-link" href="discography/">music →</a></section>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '    <div class="home-container home-columns home-about" id="home-about">\n' +
+      '      <section aria-labelledby="home-profile-title"><h2 class="site-section-title" id="home-profile-title">profile</h2><div id="home-profile-text"></div><a class="site-text-link" href="profile/">profile →</a></section>\n' +
+      '      <section aria-labelledby="home-links-title"><h2 class="site-section-title" id="home-links-title">links</h2><div id="home-link-list" class="home-links"></div></section>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="assets/js/site-config.js"></script>\n' +
+      '  <script src="assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="assets/js/music-data.js"></script>\n' +
+      '  <script src="assets/js/home-player.js?v=20261117-42"></script>\n' +
+      '  <script src="assets/js/site-content.js?v=20260804-2"></script>\n' +
+      '  <script src="assets/js/script.js"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : home</title>
+      <link rel="stylesheet" href="assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    
+    <body class="site-home">
+      <!-- ヘッダー -->
+      <header>
+        <div class="container header-container">
+            <h1 class="logo">
+              松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            </h1>
+    
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="Toggle navigation">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+    
+          <nav id="global-nav">
+            <ul>
+              <li><a href="">Home</a></li>
+              <li><a href="profile/">Profile</a></li>
+              <li><a href="live/">Live</a></li>
+              <li><a href="youtube/">YouTube</a></li>
+              <li><a href="discography/">Discography</a></li>
+              <li><a href="contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main id="home-content" aria-busy="true" data-state="loading">
+        <div id="home-load-error" class="home-container home-error" role="status" hidden></div>
+        <div class="home-top home-container" id="home-top">
+          <div id="home-artwork" class="home-artwork"><div class="home-skeleton" role="status">読み込み中</div></div>
+          <div class="home-top-content">
+            <section class="home-release" aria-labelledby="home-release-caption">
+              <h2 class="home-caption" id="home-release-caption">new release</h2>
+              <div id="home-featured-release"></div>
+              <div id="home-player" class="home-player" hidden></div>
+            </section>
+            <section class="home-next-live" aria-labelledby="home-next-live-title">
+              <h2 class="home-caption" id="home-next-live-title">next live</h2>
+              <div id="home-next-live-events"><div class="home-skeleton" role="status">読み込み中</div></div>
+              <div id="home-next-live-empty" hidden><p>次のライブは、決まり次第ここでお知らせします。</p><a class="site-text-link" href="live/detail/?view=past">これまでのライブ →</a></div>
+            </section>
+          </div>
+        </div>
+        <div class="home-bands" id="home-bands">
+          <div class="home-container home-columns">
+            <section id="home-news" aria-labelledby="home-news-title"><h2 class="site-section-title" id="home-news-title">news</h2><div id="news-items"></div></section>
+            <section class="home-music" aria-labelledby="home-music-title"><h2 class="site-section-title" id="home-music-title">music</h2><div id="home-music-items" class="home-music-items"></div><a class="site-text-link" href="discography/">music →</a></section>
+          </div>
+        </div>
+        <div class="home-container home-columns home-about" id="home-about">
+          <section aria-labelledby="home-profile-title"><h2 class="site-section-title" id="home-profile-title">profile</h2><div id="home-profile-text"></div><a class="site-text-link" href="profile/">profile →</a></section>
+          <section aria-labelledby="home-links-title"><h2 class="site-section-title" id="home-links-title">links</h2><div id="home-link-list" class="home-links"></div></section>
+        </div>
+      </main>
+    
+      <footer>
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="assets/js/site-config.js"></script>
+      <script src="assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="assets/js/music-data.js"></script>
+      <script src="assets/js/home-player.js?v=20261117-42"></script>
+      <script src="assets/js/site-content.js?v=20260804-2"></script>
+      <script src="assets/js/script.js"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:26:57)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+not ok 36 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 12.185708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:28:1'
+  failureType: 'testCodeFailure'
+  error: 'site-header'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:30:174)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 37 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 35.206916
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+not ok 38 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 0.760791
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:42:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+      '  <title>1212 HP Admin</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="style.css?v=20260816-22">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <div id="app">\n' +
+      '    <!-- ヘッダー -->\n' +
+      '    <header class="header">\n' +
+      '      <div>\n' +
+      '        <h1 class="logo">1212 <span class="accent">Admin</span></h1>\n' +
+      '        <p class="header-meta" id="modeBadge">Local Mode</p>\n' +
+      '      </div>\n' +
+      '      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>\n' +
+      '    </header>\n' +
+      '    <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>\n' +
+      '\n' +
+      '    <!-- タブナビ -->\n' +
+      '    <nav class="tab-nav">\n' +
+      '      <button class="tab-btn" data-tab="site">Site</button>\n' +
+      '      <button class="tab-btn" data-tab="news">News</button>\n' +
+      '      <button class="tab-btn active" data-tab="live">Live</button>\n' +
+      '      <button class="tab-btn" data-tab="youtube">YouTube</button>\n' +
+      '      <button class="tab-btn" data-tab="discography">Disco</button>\n' +
+      '      <button class="tab-btn" data-tab="profile">Profile</button>\n' +
+      '    </nav>\n' +
+      '\n' +
+      '    <!-- Siteタブ -->\n' +
+      '    <section class="tab-content" id="site-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Site</h2>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="site-featured-release-id">顔にする作品</label>\n' +
+      '          <select id="site-featured-release-id" class="select" data-admin-mutation>\n' +
+      '            <option value="">自動（最新のリリース）</option>\n' +
+      '          </select>\n' +
+      '        </div>\n' +
+      '        <label>共有時の画像</label>\n' +
+      '        <div id="site-hero-image-form"></div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home Links</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Bandcamp</label>\n' +
+      '          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>YouTube</label>\n' +
+      '          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>X</label>\n' +
+      '          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Instagram</label>\n' +
+      '          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>note</label>\n' +
+      '          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Footer</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>フッター文言（空なら既定のまま）</label>\n' +
+      '          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Contact</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>導入文</label>\n' +
+      '          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Form Action（Formspree URL）</label>\n' +
+      '          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Newsタブ -->\n' +
+      '    <section class="tab-content" id="news-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>News</h2>\n' +
+      '        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>\n' +
+      '      </div>\n' +
+      '      <div class="items-list" id="news-list"></div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Liveタブ -->\n' +
+      '    <section class="tab-content active" id="live-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Live</h2>\n' +
+      '        <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>\n' +
+      '      </div>\n' +
+      '      <div class="live-workspace" id="live-workspace">\n' +
+      '        <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">\n' +
+      '          <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>\n' +
+      '          <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">\n' +
+      '          <div id="live-page-primary">\n' +
+      '            <div class="live-page-toolbar">\n' +
+      '              <div class="live-list-tabs" role="tablist" aria-label="公演一覧">\n' +
+      '                <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>\n' +
+      '                <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>\n' +
+      '            </div>\n' +
+      '\n' +
+      '            <div class="live-master-detail" id="live-master-detail">\n' +
+      '              <div class="live-master-pane" id="live-master-pane">\n' +
+      '                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">\n' +
+      '                  <div class="items-list" id="live-upcoming-list"></div>\n' +
+      '                </section>\n' +
+      '                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>\n' +
+      '                  <div class="items-list" id="live-past-list"></div>\n' +
+      '                </section>\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">\n' +
+      '                <header class="live-editor-header">\n' +
+      '                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>\n' +
+      '                  <div class="live-editor-title-group">\n' +
+      '                    <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>\n' +
+      '                    <h3 id="live-editor-heading">Liveを選択</h3>\n' +
+      '                  </div>\n' +
+      '                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>\n' +
+      '                </header>\n' +
+      '                <div class="live-editor-body" id="live-editor-body">\n' +
+      '                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>\n' +
+      '                </div>\n' +
+      '              </section>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>\n' +
+      '            <div class="section-header compact">\n' +
+      '              <div>\n' +
+      '                <p class="live-workspace-eyebrow">Liveページ共通</p>\n' +
+      '                <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示文言）</h3>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>完了文（空なら既定のまま）</label>\n' +
+      '                <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示項目）</h3>\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>\n' +
+      '                <label for="ticket-field-quantity">Quantity（枚数）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>枚数 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-message" data-admin-mutation>\n' +
+      '                <label for="ticket-field-message">備考（任意）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 プレースホルダ（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="form-group">\n' +
+      '                <label>送信ボタン文言（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '          </section>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-'... 5442 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>1212 HP Admin</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="style.css?v=20260816-22">
+    </head>
+    <body>
+      <div id="app">
+        <!-- ヘッダー -->
+        <header class="header">
+          <div>
+            <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+            <p class="header-meta" id="modeBadge">Local Mode</p>
+          </div>
+          <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
+        </header>
+        <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+    
+        <!-- タブナビ -->
+        <nav class="tab-nav">
+          <button class="tab-btn" data-tab="site">Site</button>
+          <button class="tab-btn" data-tab="news">News</button>
+          <button class="tab-btn active" data-tab="live">Live</button>
+          <button class="tab-btn" data-tab="youtube">YouTube</button>
+          <button class="tab-btn" data-tab="discography">Disco</button>
+          <button class="tab-btn" data-tab="profile">Profile</button>
+        </nav>
+    
+        <!-- Siteタブ -->
+        <section class="tab-content" id="site-tab">
+          <div class="section-header">
+            <h2>Site</h2>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home</h3>
+            <div class="form-group">
+              <label for="site-featured-release-id">顔にする作品</label>
+              <select id="site-featured-release-id" class="select" data-admin-mutation>
+                <option value="">自動（最新のリリース）</option>
+              </select>
+            </div>
+            <label>共有時の画像</label>
+            <div id="site-hero-image-form"></div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Links</h3>
+            <div class="form-group">
+              <label>Bandcamp</label>
+              <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>YouTube</label>
+              <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>X</label>
+              <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>note</label>
+              <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Footer</h3>
+            <div class="form-group">
+              <label>フッター文言（空なら既定のまま）</label>
+              <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Contact</h3>
+            <div class="form-group">
+              <label>導入文</label>
+              <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Form Action（Formspree URL）</label>
+              <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+            </div>
+          </div>
+        </section>
+    
+        <!-- Newsタブ -->
+        <section class="tab-content" id="news-tab">
+          <div class="section-header">
+            <h2>News</h2>
+            <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="items-list" id="news-list"></div>
+        </section>
+    
+        <!-- Liveタブ -->
+        <section class="tab-content active" id="live-tab">
+          <div class="section-header">
+            <h2>Live</h2>
+            <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>
+          </div>
+          <div class="live-workspace" id="live-workspace">
+            <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+              <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+              <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
+            </div>
+    
+            <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+              <div id="live-page-primary">
+                <div class="live-page-toolbar">
+                  <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                    <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                    <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+                  </div>
+                  <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+                </div>
+    
+                <div class="live-master-detail" id="live-master-detail">
+                  <div class="live-master-pane" id="live-master-pane">
+                    <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                      <div class="items-list" id="live-upcoming-list"></div>
+                    </section>
+                    <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                      <div class="items-list" id="live-past-list"></div>
+                    </section>
+                  </div>
+    
+                  <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                    <header class="live-editor-header">
+                      <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                      <div class="live-editor-title-group">
+                        <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
+                        <h3 id="live-editor-heading">Liveを選択</h3>
+                      </div>
+                      <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                    </header>
+                    <div class="live-editor-body" id="live-editor-body">
+                      <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+    
+              <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+                <div class="section-header compact">
+                  <div>
+                    <p class="live-workspace-eyebrow">Liveページ共通</p>
+                    <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+                  </div>
+                  <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示文言）</h3>
+                  <div class="form-group">
+                    <label>完了文（空なら既定のまま）</label>
+                    <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
+                  </div>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示項目）</h3>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
+                    <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>枚数 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
+                  </div>
+    
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-message" data-admin-mutation>
+                    <label for="ticket-field-message">備考（任意）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>備考 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
+                  </div>
+                  <div class="form-group">
+                    <label>備考 プレースホルダ（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
+                  </div>
+    
+                  <div class="form-group">
+                    <label>送信ボタン文言（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
+                  </div>
+                </div>
+              </section>
+            </section>
+    
+            <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+              <div class="live-reservations-panel">
+              <div class="section-header compact">
+                <h3>横断予約台帳</h3>
+                <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+              </div>
+              <div class="form-group">
+                <label for="tickets-live-filter">フィルタ</label>
+                <div class="filters">
+                  <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+                  <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                    <option value="">全ステータス</option>
+                    <option value="pending" selected>未対応</option>
+                    <option value="handled">対応済み</option>
+                    <option value="cancelled">キャンセル</option>
+                  </select>
+                </div>
+              </div>
+              <div class="items-list" id="tickets-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+    
+        <!-- YouTubeタブ -->
+        <section class="tab-content" id="youtube-tab">
+          <div class="section-header">
+            <h2>YouTube</h2>
+            <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Channel URL</h3>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+    
+          <div class="subsection">
+            <h3>Music Video</h3>
+            <div class="items-list" id="youtube-musicVideos-list"></div>
+            <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Live Movie</h3>
+            <div class="items-list" id="youtube-liveMovies-list"></div>
+            <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Demo</h3>
+            <div class="items-list" id="youtube-demos-list"></div>
+            <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+          </div>
+        </section>
+    
+        <!-- Discographyタブ -->
+        <section class="tab-content" id="discography-tab">
+          <div class="section-header">
+            <h2>Discography</h2>
+            <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
+          </div>
+          <div class="subsection">
+            <h3>Digital Release</h3>
+            <div class="items-list" id="disc-digital-list"></div>
+          </div>
+          <div class="subsection">
+            <h3>宅録Demo</h3>
+            <div class="items-list" id="disc-demo-list"></div>
+          </div>
+        </section>
+    
+        <!-- Profileタブ -->
+        <section class="tab-content" id="profile-tab">
+          <div class="section-header">
+            <h2>Profile</h2>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group">
+            <label>プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+          <div class="subsection">
+            <h3>SNSリンク</h3>
+            <div class="items-list" id="profile-links-list"></div>
+            <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+        </section>
+    
+        <!-- モーダル -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+          <div class="modal-header">
+            <h3 id="modal-title">編集</h3>
+            <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+            <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
+          </div>
+        </div>
+    
+        <!-- トースト -->
+        <div class="toast" id="toast"></div>
+      </div>
+      <script>
+      // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+      window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
+      try {
+        var badge = document.getElementById('modeBadge');
+        if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+        var banner0 = document.getElementById('connectionBanner');
+        if (banner0) banner0.textContent = '読み込み中...';
+      } catch (e) {}
+      window.addEventListener('error', function (ev) {
+        try {
+          var banner = document.getElementById('connectionBanner');
+          if (banner) {
+            banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+            banner.classList.add('is-error');
+          }
+        } catch (e) {}
+      });
+    </script>
+    <script src="config.js?v=20260216-2001"></script>
+    <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+    <script src="../assets/js/music-data.js?v=20261117-41"></script>
+    <script src="app.js?v=20261117-41"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:44:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+not ok 39 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 1.484083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:59:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:60:26)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+not ok 40 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 0.684333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:62:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:63:103)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 41 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 1.135625
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+not ok 42 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 0.328209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:71:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/site-shell.test.mjs:72:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..42
+# tests 53
+# suites 0
+# pass 38
+# fail 15
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 491.07725

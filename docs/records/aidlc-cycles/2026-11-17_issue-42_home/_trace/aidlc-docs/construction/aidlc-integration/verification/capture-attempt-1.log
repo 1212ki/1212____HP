@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 220, in <module>
+    main()
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/aidlc-docs/construction/aidlc-integration/verification/capture-home.py", line 72, in main
+    raise RuntimeError('localhost server failed; see http-server.log')
+RuntimeError: localhost server failed; see http-server.log

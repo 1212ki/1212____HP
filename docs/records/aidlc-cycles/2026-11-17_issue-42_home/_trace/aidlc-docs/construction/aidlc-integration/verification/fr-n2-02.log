@@ -1,0 +1,1811 @@
+
+> itsuki-homepage-worker@1.0.0 test
+> node --test
+
+TAP version 13
+# (node:27953) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: admin Live AI source intake
+    # Subtest: rejects unauthenticated requests before calling OpenAI
+    ok 1 - rejects unauthenticated requests before calling OpenAI
+      ---
+      duration_ms: 14.7785
+      ...
+    # Subtest: rejects invalid sourceText before calling OpenAI
+    ok 2 - rejects invalid sourceText before calling OpenAI
+      ---
+      duration_ms: 2.605375
+      ...
+    # Subtest: returns 503 without calling OpenAI when OPENAI_API_KEY is missing
+    ok 3 - returns 503 without calling OpenAI when OPENAI_API_KEY is missing
+      ---
+      duration_ms: 0.396292
+      ...
+    # Subtest: calls Responses API with the strict extraction contract and returns a normalized draft
+    ok 4 - calls Responses API with the strict extraction contract and returns a normalized draft
+      ---
+      duration_ms: 1.351583
+      ...
+    # Subtest: maps the real announcement format to draft fields in extraction instructions
+    ok 5 - maps the real announcement format to draft fields in extraction instructions
+      ---
+      duration_ms: 0.489375
+      ...
+    # Subtest: accepts the 12,000 character boundary, model override, and standard nested output text
+    ok 6 - accepts the 12,000 character boundary, model override, and standard nested output text
+      ---
+      duration_ms: 0.906625
+      ...
+    # Subtest: OpenAI minimal reasoning keeps whitespace defaults and trimmed model overrides
+        # Subtest: whitespace default
+        ok 1 - whitespace default
+          ---
+          duration_ms: 0.495875
+          ...
+        # Subtest: trimmed override
+        ok 2 - trimmed override
+          ---
+          duration_ms: 0.359
+          ...
+        1..2
+    ok 7 - OpenAI minimal reasoning keeps whitespace defaults and trimmed model overrides
+      ---
+      duration_ms: 1.100041
+      ...
+    # Subtest: returns a sanitized 502 for invalid draft objects
+    ok 8 - returns a sanitized 502 for invalid draft objects
+      ---
+      duration_ms: 7.850084
+      ...
+    # Subtest: returns a sanitized 502 for refusal, missing output, invalid JSON, and incomplete responses
+    ok 9 - returns a sanitized 502 for refusal, missing output, invalid JSON, and incomplete responses
+      ---
+      duration_ms: 3.551166
+      ...
+    # Subtest: hides provider body and API key when Responses API returns non-2xx
+    ok 10 - hides provider body and API key when Responses API returns non-2xx
+      ---
+      duration_ms: 0.927458
+      ...
+    # Subtest: returns a sanitized 502 when the provider request fails
+    ok 11 - returns a sanitized 502 when the provider request fails
+      ---
+      duration_ms: 0.409334
+      ...
+    # Subtest: aborts Responses API after 15 seconds and returns a sanitized 504
+    ok 12 - aborts Responses API after 15 seconds and returns a sanitized 504
+      ---
+      duration_ms: 1.16475
+      ...
+    1..12
+ok 1 - admin Live AI source intake
+  ---
+  duration_ms: 36.4675
+  type: 'suite'
+  ...
+# Subtest: provider fallback contract
+    # Subtest: key combinations skip unconfigured providers and prefer OpenAI without calling Claude
+        # Subtest: both
+        ok 1 - both
+          ---
+          duration_ms: 0.289375
+          ...
+        # Subtest: OpenAI only
+        ok 2 - OpenAI only
+          ---
+          duration_ms: 0.343
+          ...
+        # Subtest: Claude only
+        ok 3 - Claude only
+          ---
+          duration_ms: 0.229167
+          ...
+        # Subtest: whitespace OpenAI
+        ok 4 - whitespace OpenAI
+          ---
+          duration_ms: 0.1725
+          ...
+        # Subtest: whitespace Claude
+        ok 5 - whitespace Claude
+          ---
+          duration_ms: 0.147917
+          ...
+        # Subtest: neither
+        ok 6 - neither
+          ---
+          duration_ms: 0.082375
+          ...
+        # Subtest: empty
+        ok 7 - empty
+          ---
+          duration_ms: 0.118542
+          ...
+        # Subtest: whitespace both
+        ok 8 - whitespace both
+          ---
+          duration_ms: 0.077083
+          ...
+        1..8
+    ok 1 - key combinations skip unconfigured providers and prefer OpenAI without calling Claude
+      ---
+      duration_ms: 1.832334
+      ...
+    # Subtest: every OpenAI failure falls back once to Claude with the same source and retries OpenAI on the next request
+        # Subtest: HTTP 400
+        ok 1 - HTTP 400
+          ---
+          duration_ms: 0.442375
+          ...
+        # Subtest: HTTP 401
+        ok 2 - HTTP 401
+          ---
+          duration_ms: 0.385875
+          ...
+        # Subtest: HTTP 403
+        ok 3 - HTTP 403
+          ---
+          duration_ms: 0.674791
+          ...
+        # Subtest: HTTP 429
+        ok 4 - HTTP 429
+          ---
+          duration_ms: 0.467875
+          ...
+        # Subtest: HTTP 500
+        ok 5 - HTTP 500
+          ---
+          duration_ms: 0.375625
+          ...
+        # Subtest: HTTP 503
+        ok 6 - HTTP 503
+          ---
+          duration_ms: 0.342875
+          ...
+        # Subtest: network throw
+        ok 7 - network throw
+          ---
+          duration_ms: 0.328791
+          ...
+        # Subtest: invalid provider JSON
+        ok 8 - invalid provider JSON
+          ---
+          duration_ms: 0.345958
+          ...
+        # Subtest: envelope null
+        ok 9 - envelope null
+          ---
+          duration_ms: 0.311041
+          ...
+        # Subtest: envelope []
+        ok 10 - envelope []
+          ---
+          duration_ms: 0.589084
+          ...
+        # Subtest: envelope "invalid"
+        ok 11 - envelope "invalid"
+          ---
+          duration_ms: 0.317208
+          ...
+        # Subtest: error envelope
+        ok 12 - error envelope
+          ---
+          duration_ms: 0.3905
+          ...
+        # Subtest: refusal
+        ok 13 - refusal
+          ---
+          duration_ms: 0.352792
+          ...
+        # Subtest: top-level refusal
+        ok 14 - top-level refusal
+          ---
+          duration_ms: 0.36175
+          ...
+        # Subtest: incomplete
+        ok 15 - incomplete
+          ---
+          duration_ms: 0.862583
+          ...
+        # Subtest: output undefined
+        ok 16 - output undefined
+          ---
+          duration_ms: 1.021917
+          ...
+        # Subtest: output 
+        ok 17 - output 
+          ---
+          duration_ms: 1.851666
+          ...
+        # Subtest: output {not-json
+        ok 18 - output {not-json
+          ---
+          duration_ms: 0.37825
+          ...
+        # Subtest: draft missing required key
+        ok 19 - draft missing required key
+          ---
+          duration_ms: 0.374
+          ...
+        # Subtest: draft extra key
+        ok 20 - draft extra key
+          ---
+          duration_ms: 0.399834
+          ...
+        # Subtest: draft non-object
+        ok 21 - draft non-object
+          ---
+          duration_ms: 0.454917
+          ...
+        # Subtest: draft null
+        ok 22 - draft null
+          ---
+          duration_ms: 1.116208
+          ...
+        # Subtest: draft wrong field type
+        ok 23 - draft wrong field type
+          ---
+          duration_ms: 0.564583
+          ...
+        # Subtest: draft wrong date format
+        ok 24 - draft wrong date format
+          ---
+          duration_ms: 0.466875
+          ...
+        # Subtest: draft impossible calendar date
+        ok 25 - draft impossible calendar date
+          ---
+          duration_ms: 0.396666
+          ...
+        # Subtest: draft non-leap February 29
+        ok 26 - draft non-leap February 29
+          ---
+          duration_ms: 0.39875
+          ...
+        # Subtest: draft invalid open time
+        ok 27 - draft invalid open time
+          ---
+          duration_ms: 0.3745
+          ...
+        # Subtest: draft invalid start time
+        ok 28 - draft invalid start time
+          ---
+          duration_ms: 0.371917
+          ...
+        # Subtest: draft long title
+        ok 29 - draft long title
+          ---
+          duration_ms: 0.386833
+          ...
+        # Subtest: draft long venue
+        ok 30 - draft long venue
+          ---
+          duration_ms: 0.789666
+          ...
+        # Subtest: draft long ticket
+        ok 31 - draft long ticket
+          ---
+          duration_ms: 0.38475
+          ...
+        # Subtest: draft long notes
+        ok 32 - draft long notes
+          ---
+          duration_ms: 0.438958
+          ...
+        # Subtest: draft long performers
+        ok 33 - draft long performers
+          ---
+          duration_ms: 0.475542
+          ...
+        # Subtest: draft unsafe ticket URL
+        ok 34 - draft unsafe ticket URL
+          ---
+          duration_ms: 0.35275
+          ...
+        # Subtest: draft ticket URL credentials
+        ok 35 - draft ticket URL credentials
+          ---
+          duration_ms: 0.34025
+          ...
+        # Subtest: draft link credentials
+        ok 36 - draft link credentials
+          ---
+          duration_ms: 0.399292
+          ...
+        # Subtest: draft long ticket URL
+        ok 37 - draft long ticket URL
+          ---
+          duration_ms: 0.37475
+          ...
+        # Subtest: draft long link URL
+        ok 38 - draft long link URL
+          ---
+          duration_ms: 0.379583
+          ...
+        1..38
+    ok 2 - every OpenAI failure falls back once to Claude with the same source and retries OpenAI on the next request
+      ---
+      duration_ms: 20.011042
+      ...
+    # Subtest: Claude wire contract shares instructions and schema, reads text blocks, and uses only supported fields
+        # Subtest: model undefined
+        ok 1 - model undefined
+          ---
+          duration_ms: 0.534625
+          ...
+        # Subtest: model  \\t 
+        ok 2 - model  \\t 
+          ---
+          duration_ms: 2.447375
+          ...
+        # Subtest: model  custom-claude-model 
+        ok 3 - model  custom-claude-model 
+          ---
+          duration_ms: 0.329916
+          ...
+        1..3
+    ok 3 - Claude wire contract shares instructions and schema, reads text blocks, and uses only supported fields
+      ---
+      duration_ms: 3.458
+      ...
+    # Subtest: every Claude failure returns a sanitized 502 for single and dual providers
+        # Subtest: HTTP 400 / single
+        ok 1 - HTTP 400 / single
+          ---
+          duration_ms: 0.188958
+          ...
+        # Subtest: HTTP 400 / dual
+        ok 2 - HTTP 400 / dual
+          ---
+          duration_ms: 0.153417
+          ...
+        # Subtest: HTTP 401 / single
+        ok 3 - HTTP 401 / single
+          ---
+          duration_ms: 0.114708
+          ...
+        # Subtest: HTTP 401 / dual
+        ok 4 - HTTP 401 / dual
+          ---
+          duration_ms: 0.141875
+          ...
+        # Subtest: HTTP 403 / single
+        ok 5 - HTTP 403 / single
+          ---
+          duration_ms: 0.1115
+          ...
+        # Subtest: HTTP 403 / dual
+        ok 6 - HTTP 403 / dual
+          ---
+          duration_ms: 0.137
+          ...
+        # Subtest: HTTP 429 / single
+        ok 7 - HTTP 429 / single
+          ---
+          duration_ms: 0.162792
+          ...
+        # Subtest: HTTP 429 / dual
+        ok 8 - HTTP 429 / dual
+          ---
+          duration_ms: 0.173
+          ...
+        # Subtest: HTTP 500 / single
+        ok 9 - HTTP 500 / single
+          ---
+          duration_ms: 0.127875
+          ...
+        # Subtest: HTTP 500 / dual
+        ok 10 - HTTP 500 / dual
+          ---
+          duration_ms: 0.660084
+          ...
+        # Subtest: HTTP 503 / single
+        ok 11 - HTTP 503 / single
+          ---
+          duration_ms: 0.779833
+          ...
+        # Subtest: HTTP 503 / dual
+        ok 12 - HTTP 503 / dual
+          ---
+          duration_ms: 0.405542
+          ...
+        # Subtest: network throw / single
+        ok 13 - network throw / single
+          ---
+          duration_ms: 0.153375
+          ...
+        # Subtest: network throw / dual
+        ok 14 - network throw / dual
+          ---
+          duration_ms: 0.214458
+          ...
+        # Subtest: invalid provider JSON / single
+        ok 15 - invalid provider JSON / single
+          ---
+          duration_ms: 0.156625
+          ...
+        # Subtest: invalid provider JSON / dual
+        ok 16 - invalid provider JSON / dual
+          ---
+          duration_ms: 0.16725
+          ...
+        # Subtest: envelope null / single
+        ok 17 - envelope null / single
+          ---
+          duration_ms: 0.136292
+          ...
+        # Subtest: envelope null / dual
+        ok 18 - envelope null / dual
+          ---
+          duration_ms: 0.3825
+          ...
+        # Subtest: envelope [] / single
+        ok 19 - envelope [] / single
+          ---
+          duration_ms: 0.123
+          ...
+        # Subtest: envelope [] / dual
+        ok 20 - envelope [] / dual
+          ---
+          duration_ms: 0.152917
+          ...
+        # Subtest: envelope "invalid" / single
+        ok 21 - envelope "invalid" / single
+          ---
+          duration_ms: 0.136167
+          ...
+        # Subtest: envelope "invalid" / dual
+        ok 22 - envelope "invalid" / dual
+          ---
+          duration_ms: 0.143125
+          ...
+        # Subtest: error envelope / single
+        ok 23 - error envelope / single
+          ---
+          duration_ms: 0.138042
+          ...
+        # Subtest: error envelope / dual
+        ok 24 - error envelope / dual
+          ---
+          duration_ms: 0.147458
+          ...
+        # Subtest: stop refusal / single
+        ok 25 - stop refusal / single
+          ---
+          duration_ms: 0.145667
+          ...
+        # Subtest: stop refusal / dual
+        ok 26 - stop refusal / dual
+          ---
+          duration_ms: 0.160625
+          ...
+        # Subtest: stop max_tokens / single
+        ok 27 - stop max_tokens / single
+          ---
+          duration_ms: 0.12525
+          ...
+        # Subtest: stop max_tokens / dual
+        ok 28 - stop max_tokens / dual
+          ---
+          duration_ms: 0.139917
+          ...
+        # Subtest: stop tool_use / single
+        ok 29 - stop tool_use / single
+          ---
+          duration_ms: 0.11
+          ...
+        # Subtest: stop tool_use / dual
+        ok 30 - stop tool_use / dual
+          ---
+          duration_ms: 0.144125
+          ...
+        # Subtest: stop null / single
+        ok 31 - stop null / single
+          ---
+          duration_ms: 0.117833
+          ...
+        # Subtest: stop null / dual
+        ok 32 - stop null / dual
+          ---
+          duration_ms: 2.496542
+          ...
+        # Subtest: stop undefined / single
+        ok 33 - stop undefined / single
+          ---
+          duration_ms: 0.169625
+          ...
+        # Subtest: stop undefined / dual
+        ok 34 - stop undefined / dual
+          ---
+          duration_ms: 0.1865
+          ...
+        # Subtest: content undefined / single
+        ok 35 - content undefined / single
+          ---
+          duration_ms: 0.147833
+          ...
+        # Subtest: content undefined / dual
+        ok 36 - content undefined / dual
+          ---
+          duration_ms: 0.154292
+          ...
+        # Subtest: content null / single
+        ok 37 - content null / single
+          ---
+          duration_ms: 0.126167
+          ...
+        # Subtest: content null / dual
+        ok 38 - content null / dual
+          ---
+          duration_ms: 0.160167
+          ...
+        # Subtest: content {} / single
+        ok 39 - content {} / single
+          ---
+          duration_ms: 0.129166
+          ...
+        # Subtest: content {} / dual
+        ok 40 - content {} / dual
+          ---
+          duration_ms: 0.138917
+          ...
+        # Subtest: content [] / single
+        ok 41 - content [] / single
+          ---
+          duration_ms: 0.130583
+          ...
+        # Subtest: content [] / dual
+        ok 42 - content [] / dual
+          ---
+          duration_ms: 0.1425
+          ...
+        # Subtest: content [{"type":"thinking","thinking":"private thinking"}] / single
+        ok 43 - content [{"type":"thinking","thinking":"private thinking"}] / single
+          ---
+          duration_ms: 0.117916
+          ...
+        # Subtest: content [{"type":"thinking","thinking":"private thinking"}] / dual
+        ok 44 - content [{"type":"thinking","thinking":"private thinking"}] / dual
+          ---
+          duration_ms: 0.428834
+          ...
+        # Subtest: content [{"type":"text","text":5}] / single
+        ok 45 - content [{"type":"text","text":5}] / single
+          ---
+          duration_ms: 0.135709
+          ...
+        # Subtest: content [{"type":"text","text":5}] / dual
+        ok 46 - content [{"type":"text","text":5}] / dual
+          ---
+          duration_ms: 0.151459
+          ...
+        # Subtest: content [{"type":"text","text":""}] / single
+        ok 47 - content [{"type":"text","text":""}] / single
+          ---
+          duration_ms: 0.122666
+          ...
+        # Subtest: content [{"type":"text","text":""}] / dual
+        ok 48 - content [{"type":"text","text":""}] / dual
+          ---
+          duration_ms: 0.164
+          ...
+        # Subtest: content [{"type":"text","text":"{not-json"}] / single
+        ok 49 - content [{"type":"text","text":"{not-json"}] / single
+          ---
+          duration_ms: 0.123833
+          ...
+        # Subtest: content [{"type":"text","text":"{not-json"}] / dual
+        ok 50 - content [{"type":"text","text":"{not-json"}] / dual
+          ---
+          duration_ms: 0.148833
+          ...
+        # Subtest: draft missing required key / single
+        ok 51 - draft missing required key / single
+          ---
+          duration_ms: 0.150375
+          ...
+        # Subtest: draft missing required key / dual
+        ok 52 - draft missing required key / dual
+          ---
+          duration_ms: 0.153084
+          ...
+        # Subtest: draft extra key / single
+        ok 53 - draft extra key / single
+          ---
+          duration_ms: 0.13875
+          ...
+        # Subtest: draft extra key / dual
+        ok 54 - draft extra key / dual
+          ---
+          duration_ms: 0.157166
+          ...
+        # Subtest: draft non-object / single
+        ok 55 - draft non-object / single
+          ---
+          duration_ms: 0.12825
+          ...
+        # Subtest: draft non-object / dual
+        ok 56 - draft non-object / dual
+          ---
+          duration_ms: 0.145042
+          ...
+        # Subtest: draft null / single
+        ok 57 - draft null / single
+          ---
+          duration_ms: 0.128417
+          ...
+        # Subtest: draft null / dual
+        ok 58 - draft null / dual
+          ---
+          duration_ms: 0.145542
+          ...
+        # Subtest: draft wrong field type / single
+        ok 59 - draft wrong field type / single
+          ---
+          duration_ms: 0.135125
+          ...
+        # Subtest: draft wrong field type / dual
+        ok 60 - draft wrong field type / dual
+          ---
+          duration_ms: 0.155125
+          ...
+        # Subtest: draft wrong date format / single
+        ok 61 - draft wrong date format / single
+          ---
+          duration_ms: 0.130334
+          ...
+        # Subtest: draft wrong date format / dual
+        ok 62 - draft wrong date format / dual
+          ---
+          duration_ms: 0.162459
+          ...
+        # Subtest: draft impossible calendar date / single
+        ok 63 - draft impossible calendar date / single
+          ---
+          duration_ms: 0.125625
+          ...
+        # Subtest: draft impossible calendar date / dual
+        ok 64 - draft impossible calendar date / dual
+          ---
+          duration_ms: 0.148833
+          ...
+        # Subtest: draft non-leap February 29 / single
+        ok 65 - draft non-leap February 29 / single
+          ---
+          duration_ms: 1.440333
+          ...
+        # Subtest: draft non-leap February 29 / dual
+        ok 66 - draft non-leap February 29 / dual
+          ---
+          duration_ms: 0.171583
+          ...
+        # Subtest: draft invalid open time / single
+        ok 67 - draft invalid open time / single
+          ---
+          duration_ms: 0.140125
+          ...
+        # Subtest: draft invalid open time / dual
+        ok 68 - draft invalid open time / dual
+          ---
+          duration_ms: 0.156
+          ...
+        # Subtest: draft invalid start time / single
+        ok 69 - draft invalid start time / single
+          ---
+          duration_ms: 0.129125
+          ...
+        # Subtest: draft invalid start time / dual
+        ok 70 - draft invalid start time / dual
+          ---
+          duration_ms: 0.151584
+          ...
+        # Subtest: draft long title / single
+        ok 71 - draft long title / single
+          ---
+          duration_ms: 0.126333
+          ...
+        # Subtest: draft long title / dual
+        ok 72 - draft long title / dual
+          ---
+          duration_ms: 0.149042
+          ...
+        # Subtest: draft long venue / single
+        ok 73 - draft long venue / single
+          ---
+          duration_ms: 0.131167
+          ...
+        # Subtest: draft long venue / dual
+        ok 74 - draft long venue / dual
+          ---
+          duration_ms: 0.153667
+          ...
+        # Subtest: draft long ticket / single
+        ok 75 - draft long ticket / single
+          ---
+          duration_ms: 0.136375
+          ...
+        # Subtest: draft long ticket / dual
+        ok 76 - draft long ticket / dual
+          ---
+          duration_ms: 0.175167
+          ...
+        # Subtest: draft long notes / single
+        ok 77 - draft long notes / single
+          ---
+          duration_ms: 0.209667
+          ...
+        # Subtest: draft long notes / dual
+        ok 78 - draft long notes / dual
+          ---
+          duration_ms: 0.225708
+          ...
+        # Subtest: draft long performers / single
+        ok 79 - draft long performers / single
+          ---
+          duration_ms: 0.310667
+          ...
+        # Subtest: draft long performers / dual
+        ok 80 - draft long performers / dual
+          ---
+          duration_ms: 0.684542
+          ...
+        # Subtest: draft unsafe ticket URL / single
+        ok 81 - draft unsafe ticket URL / single
+          ---
+          duration_ms: 0.161875
+          ...
+        # Subtest: draft unsafe ticket URL / dual
+        ok 82 - draft unsafe ticket URL / dual
+          ---
+          duration_ms: 0.175958
+          ...
+        # Subtest: draft ticket URL credentials / single
+        ok 83 - draft ticket URL credentials / single
+          ---
+          duration_ms: 0.142292
+          ...
+        # Subtest: draft ticket URL credentials / dual
+        ok 84 - draft ticket URL credentials / dual
+          ---
+          duration_ms: 0.172958
+          ...
+        # Subtest: draft link credentials / single
+        ok 85 - draft link credentials / single
+          ---
+          duration_ms: 0.138584
+          ...
+        # Subtest: draft link credentials / dual
+        ok 86 - draft link credentials / dual
+          ---
+          duration_ms: 0.167333
+          ...
+        # Subtest: draft long ticket URL / single
+        ok 87 - draft long ticket URL / single
+          ---
+          duration_ms: 0.154
+          ...
+        # Subtest: draft long ticket URL / dual
+        ok 88 - draft long ticket URL / dual
+          ---
+          duration_ms: 0.860625
+          ...
+        # Subtest: draft long link URL / single
+        ok 89 - draft long link URL / single
+          ---
+          duration_ms: 0.415208
+          ...
+        # Subtest: draft long link URL / dual
+        ok 90 - draft long link URL / dual
+          ---
+          duration_ms: 0.748542
+          ...
+        1..90
+    ok 4 - every Claude failure returns a sanitized 502 for single and dual providers
+      ---
+      duration_ms: 22.787625
+      ...
+    # Subtest: success and failure responses and logs omit secrets, provider errors, request IDs and prompt sentinels
+        # Subtest: openai
+        ok 1 - openai
+          ---
+          duration_ms: 0.301084
+          ...
+        # Subtest: claude
+        ok 2 - claude
+          ---
+          duration_ms: 0.215167
+          ...
+        # Subtest: failure
+        ok 3 - failure
+          ---
+          duration_ms: 0.208334
+          ...
+        1..3
+    ok 5 - success and failure responses and logs omit secrets, provider errors, request IDs and prompt sentinels
+      ---
+      duration_ms: 0.863792
+      ...
+    1..5
+ok 2 - provider fallback contract
+  ---
+  duration_ms: 49.04775
+  type: 'suite'
+  ...
+# Subtest: provider deadlines with a monotonic fake clock
+    # Subtest: openai alone aborts an uncooperative fetch at 15000ms
+    ok 1 - openai alone aborts an uncooperative fetch at 15000ms
+      ---
+      duration_ms: 0.464375
+      ...
+    # Subtest: claude alone aborts an uncooperative fetch at 15000ms
+    ok 2 - claude alone aborts an uncooperative fetch at 15000ms
+      ---
+      duration_ms: 0.232333
+      ...
+    # Subtest: OpenAI 15s timeout then Claude success respects the 30s deadline and final error classification
+    ok 3 - OpenAI 15s timeout then Claude success respects the 30s deadline and final error classification
+      ---
+      duration_ms: 1.072
+      ...
+    # Subtest: OpenAI 15s timeout then Claude HTTP failure respects the 30s deadline and final error classification
+    ok 4 - OpenAI 15s timeout then Claude HTTP failure respects the 30s deadline and final error classification
+      ---
+      duration_ms: 0.506542
+      ...
+    # Subtest: OpenAI 15s timeout then Claude timeout respects the 30s deadline and final error classification
+    ok 5 - OpenAI 15s timeout then Claude timeout respects the 30s deadline and final error classification
+      ---
+      duration_ms: 0.422917
+      ...
+    # Subtest: immediate OpenAI failure gives Claude at most 15s rather than waiting for the global timer
+    ok 6 - immediate OpenAI failure gives Claude at most 15s rather than waiting for the global timer
+      ---
+      duration_ms: 0.348875
+      ...
+    # Subtest: response body stalls inside the attempt deadline / single
+    ok 7 - response body stalls inside the attempt deadline / single
+      ---
+      duration_ms: 0.270208
+      ...
+    # Subtest: response body stalls inside the attempt deadline / fallback
+    ok 8 - response body stalls inside the attempt deadline / fallback
+      ---
+      duration_ms: 0.350084
+      ...
+    # Subtest: synchronous processing consumes the overall budget and caps Claude at the 10s remainder
+    ok 9 - synchronous processing consumes the overall budget and caps Claude at the 10s remainder
+      ---
+      duration_ms: 0.340292
+      ...
+    # Subtest: no Claude call begins after synchronous work exhausts the global deadline
+    ok 10 - no Claude call begins after synchronous work exhausts the global deadline
+      ---
+      duration_ms: 0.212208
+      ...
+    # Subtest: openai success at 14999ms is accepted only before the attempt deadline even with delayed timers
+    ok 11 - openai success at 14999ms is accepted only before the attempt deadline even with delayed timers
+      ---
+      duration_ms: 0.25225
+      ...
+    # Subtest: openai success at 15000ms is accepted only before the attempt deadline even with delayed timers
+    ok 12 - openai success at 15000ms is accepted only before the attempt deadline even with delayed timers
+      ---
+      duration_ms: 0.172125
+      ...
+    # Subtest: openai success at 15001ms is accepted only before the attempt deadline even with delayed timers
+    ok 13 - openai success at 15001ms is accepted only before the attempt deadline even with delayed timers
+      ---
+      duration_ms: 0.167625
+      ...
+    # Subtest: claude success at 14999ms is accepted only before the attempt deadline even with delayed timers
+    ok 14 - claude success at 14999ms is accepted only before the attempt deadline even with delayed timers
+      ---
+      duration_ms: 0.160834
+      ...
+    # Subtest: claude success at 15000ms is accepted only before the attempt deadline even with delayed timers
+    ok 15 - claude success at 15000ms is accepted only before the attempt deadline even with delayed timers
+      ---
+      duration_ms: 0.228416
+      ...
+    # Subtest: claude success at 15001ms is accepted only before the attempt deadline even with delayed timers
+    ok 16 - claude success at 15001ms is accepted only before the attempt deadline even with delayed timers
+      ---
+      duration_ms: 0.356208
+      ...
+    # Subtest: openai validation finishing at the deadline is discarded
+    ok 17 - openai validation finishing at the deadline is discarded
+      ---
+      duration_ms: 0.341167
+      ...
+    # Subtest: claude validation finishing at the deadline is discarded
+    ok 18 - claude validation finishing at the deadline is discarded
+      ---
+      duration_ms: 0.2085
+      ...
+    # Subtest: Claude success at global time 29999ms cannot reset the overall deadline
+    ok 19 - Claude success at global time 29999ms cannot reset the overall deadline
+      ---
+      duration_ms: 0.339042
+      ...
+    # Subtest: Claude success at global time 30000ms cannot reset the overall deadline
+    ok 20 - Claude success at global time 30000ms cannot reset the overall deadline
+      ---
+      duration_ms: 0.95025
+      ...
+    # Subtest: Claude success at global time 30001ms cannot reset the overall deadline
+    ok 21 - Claude success at global time 30001ms cannot reset the overall deadline
+      ---
+      duration_ms: 0.273333
+      ...
+    # Subtest: all timers and abort listeners are released after status 200
+    ok 22 - all timers and abort listeners are released after status 200
+      ---
+      duration_ms: 0.292416
+      ...
+    # Subtest: all timers and abort listeners are released after status 502
+    ok 23 - all timers and abort listeners are released after status 502
+      ---
+      duration_ms: 0.197083
+      ...
+    # Subtest: all timers and abort listeners are released after status 504
+    ok 24 - all timers and abort listeners are released after status 504
+      ---
+      duration_ms: 0.197125
+      ...
+    1..24
+ok 3 - provider deadlines with a monotonic fake clock
+  ---
+  duration_ms: 8.557125
+  type: 'suite'
+  ...
+# Subtest: Worker Live formatters satisfy the shared fixture matrix
+ok 4 - Worker Live formatters satisfy the shared fixture matrix
+  ---
+  duration_ms: 1.922625
+  ...
+# Subtest: manual ticket reservations
+    # Subtest: manual POST rejects unauthenticated requests before touching D1
+    ok 1 - manual POST rejects unauthenticated requests before touching D1
+      ---
+      duration_ms: 17.537
+      ...
+    # Subtest: manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+    ok 2 - manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+      ---
+      duration_ms: 2.267
+      ...
+    # Subtest: manual POST accepts omitted contact and note and accepts a past Live
+    ok 3 - manual POST accepts omitted contact and note and accepts a past Live
+      ---
+      duration_ms: 0.522334
+      ...
+    # Subtest: manual POST rejects invalid Live, name, quantity, contact, and internal note
+        # Subtest: missing Live
+        ok 1 - missing Live
+          ---
+          duration_ms: 0.481708
+          ...
+        # Subtest: blank name
+        ok 2 - blank name
+          ---
+          duration_ms: 0.544917
+          ...
+        # Subtest: non-string name
+        ok 3 - non-string name
+          ---
+          duration_ms: 0.425625
+          ...
+        # Subtest: zero quantity
+        ok 4 - zero quantity
+          ---
+          duration_ms: 0.258166
+          ...
+        # Subtest: too many
+        ok 5 - too many
+          ---
+          duration_ms: 0.449458
+          ...
+        # Subtest: fractional
+        ok 6 - fractional
+          ---
+          duration_ms: 0.374833
+          ...
+        # Subtest: string quantity
+        ok 7 - string quantity
+          ---
+          duration_ms: 0.468167
+          ...
+        # Subtest: contact too long
+        ok 8 - contact too long
+          ---
+          duration_ms: 0.271333
+          ...
+        # Subtest: non-string contact
+        ok 9 - non-string contact
+          ---
+          duration_ms: 0.2765
+          ...
+        # Subtest: note too long
+        ok 10 - note too long
+          ---
+          duration_ms: 0.263458
+          ...
+        # Subtest: non-string note
+        ok 11 - non-string note
+          ---
+          duration_ms: 0.247417
+          ...
+        1..11
+    ok 4 - manual POST rejects invalid Live, name, quantity, contact, and internal note
+      ---
+      duration_ms: 4.758041
+      ...
+    # Subtest: manual admin list defaults legacy source to web and returns admin-only fields
+    ok 5 - manual admin list defaults legacy source to web and returns admin-only fields
+      ---
+      duration_ms: 0.425708
+      ...
+    # Subtest: manual CSV appends source, contact, internalNote after the existing eleven columns
+    ok 6 - manual CSV appends source, contact, internalNote after the existing eleven columns
+      ---
+      duration_ms: 0.665458
+      ...
+    # Subtest: authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+    ok 7 - authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+      ---
+      duration_ms: 1.076666
+      ...
+    # Subtest: manual changes preserve the existing authenticated status endpoint
+    ok 8 - manual changes preserve the existing authenticated status endpoint
+      ---
+      duration_ms: 0.352958
+      ...
+    # Subtest: manual changes preserve invalid status rejection without issuing an UPDATE
+    ok 9 - manual changes preserve invalid status rejection without issuing an UPDATE
+      ---
+      duration_ms: 0.408167
+      ...
+    # Subtest: explicit-empty internal reservation remains web and public notifications still run
+    ok 10 - explicit-empty internal reservation remains web and public notifications still run
+      ---
+      duration_ms: 0.650583
+      ...
+    # Subtest: public POST rejects tampered ineligible Live IDs before D1 write and notifications
+        # Subtest: authoritative external ticketUrl
+        ok 1 - authoritative external ticketUrl
+          ---
+          duration_ms: 0.274417
+          ...
+        # Subtest: invalid authoritative ticketUrl
+        ok 2 - invalid authoritative ticketUrl
+          ---
+          duration_ms: 0.204916
+          ...
+        # Subtest: reservation closed
+        ok 3 - reservation closed
+          ---
+          duration_ms: 0.403375
+          ...
+        # Subtest: upcoming collection item dated before today
+        ok 4 - upcoming collection item dated before today
+          ---
+          duration_ms: 0.831667
+          ...
+        # Subtest: past collection item even with a future date
+        ok 5 - past collection item even with a future date
+          ---
+          duration_ms: 0.495292
+          ...
+        # Subtest: legacy recognizable booking link
+        ok 6 - legacy recognizable booking link
+          ---
+          duration_ms: 0.50225
+          ...
+        1..6
+    ok 11 - public POST rejects tampered ineligible Live IDs before D1 write and notifications
+      ---
+      duration_ms: 3.113916
+      ...
+    # Subtest: public POST accepts explicit-empty and missing-property non-booking internal routes
+        # Subtest: explicit-empty ticketUrl overrides recognizable booking link
+        ok 1 - explicit-empty ticketUrl overrides recognizable booking link
+          ---
+          duration_ms: 0.291125
+          ...
+        # Subtest: missing ticketUrl with social link
+        ok 2 - missing ticketUrl with social link
+          ---
+          duration_ms: 0.311791
+          ...
+        # Subtest: missing ticketUrl with profile link
+        ok 3 - missing ticketUrl with profile link
+          ---
+          duration_ms: 0.296667
+          ...
+        # Subtest: missing ticketUrl with Live detail link
+        ok 4 - missing ticketUrl with Live detail link
+          ---
+          duration_ms: 0.208708
+          ...
+        # Subtest: missing ticketUrl with ordinary link
+        ok 5 - missing ticketUrl with ordinary link
+          ---
+          duration_ms: 0.650833
+          ...
+        1..5
+    ok 12 - public POST accepts explicit-empty and missing-property non-booking internal routes
+      ---
+      duration_ms: 1.976333
+      ...
+    # Subtest: reservation source changes do not weaken public email validation
+    ok 13 - reservation source changes do not weaken public email validation
+      ---
+      duration_ms: 0.138792
+      ...
+    # Subtest: manual reservation schema and one-time migration are additive and documented
+    ok 14 - manual reservation schema and one-time migration are additive and documented
+      ---
+      duration_ms: 8.024375
+      ...
+    1..14
+ok 5 - manual ticket reservations
+  ---
+  duration_ms: 42.650208
+  type: 'suite'
+  ...
+# worker request error: Error: synthetic read failure
+#     at Object.first (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/cloudflare/worker/test/music-data-fields.test.js:12:155)
+#     at saveSiteData (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/cloudflare/worker/src/worker.js:790:91)
+#     at handleRequest (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/cloudflare/worker/src/worker.js:1917:27)
+#     at async Object.fetch (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/cloudflare/worker/src/worker.js:2198:14)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/cloudflare/worker/test/music-data-fields.test.js:61:53)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: music fields GET defaults are memory-only and PUT public projection retains all three fields
+ok 6 - music fields GET defaults are memory-only and PUT public projection retains all three fields
+  ---
+  duration_ms: 12.315875
+  ...
+# Subtest: music fields unchanged legacy date 2025.5.5 survives edits and category moves
+ok 7 - music fields unchanged legacy date 2025.5.5 survives edits and category moves
+  ---
+  duration_ms: 0.430666
+  ...
+# Subtest: music fields unchanged legacy date 2025/05/05 survives edits and category moves
+ok 8 - music fields unchanged legacy date 2025/05/05 survives edits and category moves
+  ---
+  duration_ms: 0.459833
+  ...
+# Subtest: music fields unchanged legacy date 2025.05 survives edits and category moves
+ok 9 - music fields unchanged legacy date 2025.05 survives edits and category moves
+  ---
+  duration_ms: 0.430125
+  ...
+# Subtest: music fields unchanged legacy date  survives edits and category moves
+ok 10 - music fields unchanged legacy date  survives edits and category moves
+  ---
+  duration_ms: 0.308334
+  ...
+# Subtest: music fields unchanged legacy date undefined survives edits and category moves
+ok 11 - music fields unchanged legacy date undefined survives edits and category moves
+  ---
+  duration_ms: 3.702917
+  ...
+# Subtest: music fields unchanged legacy date 42 survives edits and category moves
+ok 12 - music fields unchanged legacy date 42 survives edits and category moves
+  ---
+  duration_ms: 0.551708
+  ...
+# Subtest: music fields unchanged legacy date null survives edits and category moves
+ok 13 - music fields unchanged legacy date null survives edits and category moves
+  ---
+  duration_ms: 0.434
+  ...
+# Subtest: music fields invalid new or changed date 2025.5.05 rejects without DB write
+ok 14 - music fields invalid new or changed date 2025.5.05 rejects without DB write
+  ---
+  duration_ms: 0.9575
+  ...
+# Subtest: music fields invalid new or changed date 2025/05/05 rejects without DB write
+ok 15 - music fields invalid new or changed date 2025/05/05 rejects without DB write
+  ---
+  duration_ms: 0.62
+  ...
+# Subtest: music fields invalid new or changed date ２０２５.０５.０５ rejects without DB write
+ok 16 - music fields invalid new or changed date ２０２５.０５.０５ rejects without DB write
+  ---
+  duration_ms: 0.804292
+  ...
+# Subtest: music fields invalid new or changed date 2025.05.05\\n rejects without DB write
+ok 17 - music fields invalid new or changed date 2025.05.05\\n rejects without DB write
+  ---
+  duration_ms: 0.572208
+  ...
+# Subtest: music fields invalid new or changed date  2025.05.05 rejects without DB write
+ok 18 - music fields invalid new or changed date  2025.05.05 rejects without DB write
+  ---
+  duration_ms: 0.469416
+  ...
+# Subtest: music fields invalid new or changed date 2025.05.05  rejects without DB write
+ok 19 - music fields invalid new or changed date 2025.05.05  rejects without DB write
+  ---
+  duration_ms: 1.661167
+  ...
+# Subtest: music fields invalid new or changed date 123 rejects without DB write
+ok 20 - music fields invalid new or changed date 123 rejects without DB write
+  ---
+  duration_ms: 0.359667
+  ...
+# Subtest: music fields invalid new or changed date null rejects without DB write
+ok 21 - music fields invalid new or changed date null rejects without DB write
+  ---
+  duration_ms: 0.33075
+  ...
+# Subtest: music fields empty and shaped dates save including first PUT; auth and duplicate Live still reject
+ok 22 - music fields empty and shaped dates save including first PUT; auth and duplicate Live still reject
+  ---
+  duration_ms: 1.592625
+  ...
+# Subtest: music fields old payload omissions preserve by ID across categories, explicit null clears, missing releases never revive
+ok 23 - music fields old payload omissions preserve by ID across categories, explicit null clears, missing releases never revive
+  ---
+  duration_ms: 0.596209
+  ...
+# Subtest: music fields references match local helper for deletion, invalid IDs and moves
+ok 24 - music fields references match local helper for deletion, invalid IDs and moves
+  ---
+  duration_ms: 1.7515
+  ...
+# Subtest: music fields malformed persisted JSON and read failure cannot overwrite existing row
+ok 25 - music fields malformed persisted JSON and read failure cannot overwrite existing row
+  ---
+  duration_ms: 3.549292
+  ...
+# Subtest: Issue \#29 Worker OGP route characterization keeps crawler metadata and human canonical fallback
+ok 26 - Issue \#29 Worker OGP route characterization keeps crawler metadata and human canonical fallback
+  ---
+  duration_ms: 14.779166
+  ...
+# Subtest: OG Live metadata uses the structured date and details contract
+ok 27 - OG Live metadata uses the structured date and details contract
+  ---
+  duration_ms: 0.313208
+  ...
+# Subtest: OG Live metadata keeps legacy description fallback
+ok 28 - OG Live metadata keeps legacy description fallback
+  ---
+  duration_ms: 0.398
+  ...
+# Subtest: music fields OG keeps Live priority and shared image fallback assets/images/synthetic-live.jpg
+ok 29 - music fields OG keeps Live priority and shared image fallback assets/images/synthetic-live.jpg
+  ---
+  duration_ms: 0.463625
+  ...
+# Subtest: music fields OG keeps Live priority and shared image fallback assets/images/synthetic-share.jpg
+ok 30 - music fields OG keeps Live priority and shared image fallback assets/images/synthetic-share.jpg
+  ---
+  duration_ms: 0.48625
+  ...
+# Subtest: music fields OG keeps Live priority and shared image fallback assets/images/hero.jpg
+ok 31 - music fields OG keeps Live priority and shared image fallback assets/images/hero.jpg
+  ---
+  duration_ms: 0.766291
+  ...
+# Subtest: public ticket boundary hardening
+    # Subtest: public site-data omits Live management fields while admin retains stored values
+    ok 1 - public site-data omits Live management fields while admin retains stored values
+      ---
+      duration_ms: 12.49975
+      ...
+    # Subtest: public reservation rejects non-integer raw quantities before insert and notification scheduling
+        # Subtest: missing
+        ok 1 - missing
+          ---
+          duration_ms: 0.695958
+          ...
+        # Subtest: blank
+        ok 2 - blank
+          ---
+          duration_ms: 0.389084
+          ...
+        # Subtest: numeric string
+        ok 3 - numeric string
+          ---
+          duration_ms: 0.369
+          ...
+        # Subtest: fractional
+        ok 4 - fractional
+          ---
+          duration_ms: 0.372375
+          ...
+        # Subtest: NaN-like
+        ok 5 - NaN-like
+          ---
+          duration_ms: 0.326375
+          ...
+        # Subtest: null
+        ok 6 - null
+          ---
+          duration_ms: 0.3
+          ...
+        # Subtest: zero
+        ok 7 - zero
+          ---
+          duration_ms: 0.402083
+          ...
+        # Subtest: above range
+        ok 8 - above range
+          ---
+          duration_ms: 0.322208
+          ...
+        1..8
+    ok 2 - public reservation rejects non-integer raw quantities before insert and notification scheduling
+      ---
+      duration_ms: 3.594959
+      ...
+    # Subtest: public reservation accepts an integer quantity and inserts and schedules once
+    ok 3 - public reservation accepts an integer quantity and inserts and schedules once
+      ---
+      duration_ms: 1.66925
+      ...
+    # Subtest: public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+        # Subtest: immediately before midnight
+        ok 1 - immediately before midnight
+          ---
+          duration_ms: 0.469167
+          ...
+        # Subtest: at midnight
+        ok 2 - at midnight
+          ---
+          duration_ms: 0.262083
+          ...
+        1..2
+    ok 4 - public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+      ---
+      duration_ms: 0.864583
+      ...
+    # Subtest: duplicate Live IDs fail closed for public and manual reservation routes
+        # Subtest: cross-collection public
+        ok 1 - cross-collection public
+          ---
+          duration_ms: 0.291084
+          ...
+        # Subtest: cross-collection manual
+        ok 2 - cross-collection manual
+          ---
+          duration_ms: 1.324709
+          ...
+        # Subtest: same-collection public
+        ok 3 - same-collection public
+          ---
+          duration_ms: 0.916333
+          ...
+        # Subtest: same-collection manual
+        ok 4 - same-collection manual
+          ---
+          duration_ms: 1.781875
+          ...
+        1..4
+    ok 5 - duplicate Live IDs fail closed for public and manual reservation routes
+      ---
+      duration_ms: 4.829916
+      ...
+    # Subtest: legacy ambiguous site data remains readable and is never rewritten by public reads
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 0.706917
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.215916
+          ...
+        1..2
+    ok 6 - legacy ambiguous site data remains readable and is never rewritten by public reads
+      ---
+      duration_ms: 1.194417
+      ...
+    # Subtest: admin site-data PUT rejects duplicate Live IDs before writing D1
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 0.455333
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.185167
+          ...
+        1..2
+    ok 7 - admin site-data PUT rejects duplicate Live IDs before writing D1
+      ---
+      duration_ms: 0.733542
+      ...
+    # Subtest: known recent-duplicate error remains a specific safe 400
+    ok 8 - known recent-duplicate error remains a specific safe 400
+      ---
+      duration_ms: 0.576417
+      ...
+    # Subtest: five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+    ok 9 - five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+      ---
+      duration_ms: 19.490667
+      ...
+    # Subtest: concurrent duplicate requests atomically produce one insert and one known 400
+    ok 10 - concurrent duplicate requests atomically produce one insert and one known 400
+      ---
+      duration_ms: 0.80425
+      ...
+    # Subtest: top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+        # Subtest: /api/public/site-data
+        ok 1 - /api/public/site-data
+          ---
+          duration_ms: 0.196292
+          ...
+        # Subtest: /og/live/live_internal
+        ok 2 - /og/live/live_internal
+          ---
+          duration_ms: 0.222
+          ...
+        1..2
+    ok 11 - top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+      ---
+      duration_ms: 0.58375
+      ...
+    # Subtest: known admin and ticket route errors remain specific and safe
+    ok 12 - known admin and ticket route errors remain specific and safe
+      ---
+      duration_ms: 0.32175
+      ...
+    # Subtest: unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+        # Subtest: manual reservation insert
+        ok 1 - manual reservation insert
+          ---
+          duration_ms: 0.220166
+          ...
+        # Subtest: ticket status update
+        ok 2 - ticket status update
+          ---
+          duration_ms: 0.164416
+          ...
+        1..2
+    ok 13 - unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+      ---
+      duration_ms: 0.629292
+      ...
+    # Subtest: unexpected X route errors reach the logged generic top-level 500
+        # Subtest: /api/admin/live/live_internal/post-x?dryRun=1
+        ok 1 - /api/admin/live/live_internal/post-x?dryRun=1
+          ---
+          duration_ms: 14.311375
+          ...
+        # Subtest: /api/admin/live/live_internal/post-x
+        ok 2 - /api/admin/live/live_internal/post-x
+          ---
+          duration_ms: 0.775666
+          ...
+        1..2
+    ok 14 - unexpected X route errors reach the logged generic top-level 500
+      ---
+      duration_ms: 15.224
+      ...
+    # Subtest: unexpected D1 errors are logged and returned as a generic 500 without leakage
+    ok 15 - unexpected D1 errors are logged and returned as a generic 500 without leakage
+      ---
+      duration_ms: 0.17875
+      ...
+    # Subtest: post-insert notification and waitUntil scheduling failures still return 201 with one insert
+    ok 16 - post-insert notification and waitUntil scheduling failures still return 201 with one insert
+      ---
+      duration_ms: 0.651709
+      ...
+    1..16
+ok 32 - public ticket boundary hardening
+  ---
+  duration_ms: 64.462458
+  type: 'suite'
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=false retains 201
+ok 33 - public save sends one receipt after insert; notification failure=false retains 201
+  ---
+  duration_ms: 0.487459
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=true retains 201
+ok 34 - public save sends one receipt after insert; notification failure=true retains 201
+  ---
+  duration_ms: 0.21675
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+ok 35 - legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+  ---
+  duration_ms: 0.504166
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=
+ok 36 - legacy ticket copy is removed on public/admin reads and saves; complete=
+  ---
+  duration_ms: 0.277458
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+ok 37 - legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+  ---
+  duration_ms: 0.262125
+  ...
+# Subtest: Gmail sends exactly one fixed receipt to applicant with owner BCC
+ok 38 - Gmail sends exactly one fixed receipt to applicant with owner BCC
+  ---
+  duration_ms: 2.334375
+  ...
+# Subtest: blank message becomes なし and quantity 10 is valid
+ok 39 - blank message becomes なし and quantity 10 is valid
+  ---
+  duration_ms: 0.406458
+  ...
+# Subtest: rejects wrong token without sending
+ok 40 - rejects wrong token without sending
+  ---
+  duration_ms: 0.254542
+  ...
+# Subtest: rejects token whitespace exact without sending
+ok 41 - rejects token whitespace exact without sending
+  ---
+  duration_ms: 0.620875
+  ...
+# Subtest: rejects unconfigured without sending
+ok 42 - rejects unconfigured without sending
+  ---
+  duration_ms: 0.624
+  ...
+# Subtest: rejects missing event without sending
+ok 43 - rejects missing event without sending
+  ---
+  duration_ms: 0.9065
+  ...
+# Subtest: rejects wrong MIME without sending
+ok 44 - rejects wrong MIME without sending
+  ---
+  duration_ms: 5.021208
+  ...
+# Subtest: rejects Gmail exception without sending
+ok 45 - rejects Gmail exception without sending
+  ---
+  duration_ms: 1.178834
+  ...
+# Subtest: rejects missing token without sending
+ok 46 - rejects missing token without sending
+  ---
+  duration_ms: 0.535666
+  ...
+# Subtest: rejects missing receipt_id without sending
+ok 47 - rejects missing receipt_id without sending
+  ---
+  duration_ms: 1.262375
+  ...
+# Subtest: rejects missing live without sending
+ok 48 - rejects missing live without sending
+  ---
+  duration_ms: 0.690792
+  ...
+# Subtest: rejects missing name without sending
+ok 49 - rejects missing name without sending
+  ---
+  duration_ms: 0.289
+  ...
+# Subtest: rejects missing email without sending
+ok 50 - rejects missing email without sending
+  ---
+  duration_ms: 0.209209
+  ...
+# Subtest: rejects missing quantity without sending
+ok 51 - rejects missing quantity without sending
+  ---
+  duration_ms: 0.406334
+  ...
+# Subtest: rejects missing message without sending
+ok 52 - rejects missing message without sending
+  ---
+  duration_ms: 0.219042
+  ...
+# Subtest: rejects blank receipt_id without sending
+ok 53 - rejects blank receipt_id without sending
+  ---
+  duration_ms: 0.265708
+  ...
+# Subtest: rejects blank live without sending
+ok 54 - rejects blank live without sending
+  ---
+  duration_ms: 0.563625
+  ...
+# Subtest: rejects blank name without sending
+ok 55 - rejects blank name without sending
+  ---
+  duration_ms: 0.337917
+  ...
+# Subtest: rejects blank email without sending
+ok 56 - rejects blank email without sending
+  ---
+  duration_ms: 0.254958
+  ...
+# Subtest: rejects blank quantity without sending
+ok 57 - rejects blank quantity without sending
+  ---
+  duration_ms: 0.273375
+  ...
+# Subtest: rejects duplicate token without sending
+ok 58 - rejects duplicate token without sending
+  ---
+  duration_ms: 0.216958
+  ...
+# Subtest: rejects duplicate receipt_id without sending
+ok 59 - rejects duplicate receipt_id without sending
+  ---
+  duration_ms: 0.1925
+  ...
+# Subtest: rejects duplicate live without sending
+ok 60 - rejects duplicate live without sending
+  ---
+  duration_ms: 0.200708
+  ...
+# Subtest: rejects duplicate name without sending
+ok 61 - rejects duplicate name without sending
+  ---
+  duration_ms: 0.187334
+  ...
+# Subtest: rejects duplicate email without sending
+ok 62 - rejects duplicate email without sending
+  ---
+  duration_ms: 0.247333
+  ...
+# Subtest: rejects duplicate quantity without sending
+ok 63 - rejects duplicate quantity without sending
+  ---
+  duration_ms: 0.195209
+  ...
+# Subtest: rejects duplicate message without sending
+ok 64 - rejects duplicate message without sending
+  ---
+  duration_ms: 0.182167
+  ...
+# Subtest: rejects CRLF receipt_id without sending
+ok 65 - rejects CRLF receipt_id without sending
+  ---
+  duration_ms: 0.194625
+  ...
+# Subtest: rejects CRLF live without sending
+ok 66 - rejects CRLF live without sending
+  ---
+  duration_ms: 0.185208
+  ...
+# Subtest: rejects CRLF name without sending
+ok 67 - rejects CRLF name without sending
+  ---
+  duration_ms: 0.191208
+  ...
+# Subtest: rejects email "a@example.com,b@example.com" without sending
+ok 68 - rejects email "a@example.com,b@example.com" without sending
+  ---
+  duration_ms: 0.182667
+  ...
+# Subtest: rejects email "a@example.com;b@example.com" without sending
+ok 69 - rejects email "a@example.com;b@example.com" without sending
+  ---
+  duration_ms: 3.111208
+  ...
+# Subtest: rejects email "Name <a@example.com>" without sending
+ok 70 - rejects email "Name <a@example.com>" without sending
+  ---
+  duration_ms: 0.258917
+  ...
+# Subtest: rejects email "a@example.com\\r\\nb@example.com" without sending
+ok 71 - rejects email "a@example.com\\r\\nb@example.com" without sending
+  ---
+  duration_ms: 0.181542
+  ...
+# Subtest: rejects email "invalid" without sending
+ok 72 - rejects email "invalid" without sending
+  ---
+  duration_ms: 0.193208
+  ...
+# Subtest: rejects quantity 0 without sending
+ok 73 - rejects quantity 0 without sending
+  ---
+  duration_ms: 0.208708
+  ...
+# Subtest: rejects quantity 11 without sending
+ok 74 - rejects quantity 11 without sending
+  ---
+  duration_ms: 0.196042
+  ...
+# Subtest: rejects quantity 1.5 without sending
+ok 75 - rejects quantity 1.5 without sending
+  ---
+  duration_ms: 0.182833
+  ...
+# Subtest: payload has exactly seven form-encoded keys and round-trips trimmed special text
+ok 76 - payload has exactly seven form-encoded keys and round-trips trimmed special text
+  ---
+  duration_ms: 1.322375
+  ...
+# Subtest: send uses body-only token, form content type and default redirects
+ok 77 - send uses body-only token, form content type and default redirects
+  ---
+  duration_ms: 14.77125
+  ...
+# Subtest: unconfigured neither skips without fetch
+ok 78 - unconfigured neither skips without fetch
+  ---
+  duration_ms: 0.077584
+  ...
+# Subtest: unconfigured URL missing skips without fetch
+ok 79 - unconfigured URL missing skips without fetch
+  ---
+  duration_ms: 0.117917
+  ...
+# Subtest: unconfigured URL blank skips without fetch
+ok 80 - unconfigured URL blank skips without fetch
+  ---
+  duration_ms: 0.050917
+  ...
+# Subtest: unconfigured token missing skips without fetch
+ok 81 - unconfigured token missing skips without fetch
+  ---
+  duration_ms: 0.042166
+  ...
+# Subtest: unconfigured token blank skips without fetch
+ok 82 - unconfigured token blank skips without fetch
+  ---
+  duration_ms: 0.042125
+  ...
+# Subtest: manual reservation skips even with both secrets
+ok 83 - manual reservation skips even with both secrets
+  ---
+  duration_ms: 0.056584
+  ...
+# Subtest: HTTP failure is sanitized in send and notify
+ok 84 - HTTP failure is sanitized in send and notify
+  ---
+  duration_ms: 0.462292
+  ...
+# Subtest: network failure is sanitized in send and notify
+ok 85 - network failure is sanitized in send and notify
+  ---
+  duration_ms: 0.235083
+  ...
+# Subtest: JSON failure is sanitized in send and notify
+ok 86 - JSON failure is sanitized in send and notify
+  ---
+  duration_ms: 0.293792
+  ...
+# Subtest: false failure is sanitized in send and notify
+ok 87 - false failure is sanitized in send and notify
+  ---
+  duration_ms: 0.26825
+  ...
+# Subtest: missing failure is sanitized in send and notify
+ok 88 - missing failure is sanitized in send and notify
+  ---
+  duration_ms: 0.281708
+  ...
+# Subtest: truthy failure is sanitized in send and notify
+ok 89 - truthy failure is sanitized in send and notify
+  ---
+  duration_ms: 0.390625
+  ...
+# Subtest: null failure is sanitized in send and notify
+ok 90 - null failure is sanitized in send and notify
+  ---
+  duration_ms: 0.303209
+  ...
+# Subtest: fallback X preview, schedule, and dry-run post preserve structured Live fields
+ok 91 - fallback X preview, schedule, and dry-run post preserve structured Live fields
+  ---
+  duration_ms: 24.211583
+  ...
+1..91
+# tests 347
+# suites 5
+# pass 347
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1004.558375

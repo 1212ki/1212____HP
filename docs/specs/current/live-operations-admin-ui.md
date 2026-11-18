@@ -6,7 +6,8 @@
 - Related issues: #39, #40, #37, #35, #33, #29
 - Related implementation issues: #41, #46, #47（公開側の対応: #42, #43, #44, #45）、既存契約: #19, #20, #21, #22, #33, #35, #37
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #40）: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する
 - Prior Owner approval（Issue #37）: Issue #37のCode Generation Planに記載した本版の差分に対するItsuki Matsumotoのgate 3承認（本人回答`A`）。根拠はactive時の`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後の`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`。本文反映後に承認済み差分との一致を検証する
 - Prior Owner approval（Issue #35）: Issue #35のgate 3承認。根拠は`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`
@@ -235,7 +236,7 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 | Site > Home「顔にする作品」 | サイト設定に作品の番号を1つ。空は自動（最新のリリース）。Digital Releaseと宅録Demoから選べる。HomeとTicket完了で同じ作品を出す。 | 未実装。作品の既存collectionは`discography.digital / demo`。 |
 | Music > 作品「その場で再生する映像」 | 作品ごとに登録済み映像の番号を1つ。空なら「聴く」を出さない。 | 未実装。登録済み映像は`youtube.musicVideos / liveMovies / demos`、`id`と`youtubeId`を持つ。 |
 | Music > 作品「種別」 | 作品ごとに文字を1つ。任意入力で、公開画面ではタイトルと分ける。 | 未実装。タイトル内の文字を自動で分解・移行する決定はしない。 |
-| Site > Home「共有時の画像」 | Home Heroの表示名を変えて残す。Homeでは顔にした作品のジャケットを使う。Live共有時の画像の予備としての働きは維持する。 | `site.heroImage`、WorkerのOG画像fallbackに使用。key名を変える決定ではない。 |
+| Site > Home「共有時の画像」 | `site.heroImage`を保持する。#42以降のHomeは作品のジャケットを使い、この画像は表示しない。Live共有時の画像の予備としての働きは維持する。 | `site.heroImage`、WorkerのOG画像fallbackに使用。key名を変える決定ではない。 |
 | Siteの既存項目 | Home Links（Bandcamp、YouTube、X、Instagram、note）、フッター文言、Contact導入文とForm Actionを保持。 | `site.links / footerText`、`contact.introText / formAction`。Ticketの削除済み項目とは別。 |
 | News | 日付、タイトル、説明、画像、詳細リンクURL、リンクテキストを保持。 | `news`の既存項目。編集面・保存方式の統一は#47。 |
 | Music 作品 | カテゴリ（Digital Release／宅録Demo）、タイトル、リリース日、説明（曲リスト等）、画像、リンクURLを保持。 | 作品の既存fieldsは`id / title / releaseDate / description / image / link`。 |
@@ -263,6 +264,12 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 自動選択は両作品collectionを合わせ、上の形に合う空でない日付だけを候補にし、日付文字列の降順で先頭を選ぶ。同日は元の配列順（digital、demoの順で連結）を保つ。候補なしは作品なし。並び用の処理は不揃い日付を末尾へ回すが、保存配列は並べ替えない。明示選択した作品は日付の形によらず優先する。#41ではこの選択・並びの共通処理と管理画面の選択肢までを用意し、公開画面へ適用するのは#42・#44（Ticket完了は#43）。
 
 公開APIの`data`とLocal ModeのJSONには上記3項目を出す。`site.heroImage`のkey・画像操作・OG画像fallbackは保持し、表示名だけを「共有時の画像」にする。#41の段階では新規3項目の空／登録ありのどちらでも、既存公開画面の表示・配列順・Homeの画像の使い方を変えない。公開サイトとadminはGitHub Pagesの`main`・`/`配信なので、Itsukiはmerge前にPR最終版のtested revisionから新Workerをdeployし、その後にmergeする。mergeが新adminとhelperの公開を起動し、別の静的反映操作は行わない。新Workerは旧adminが省いた新規keyを既存の同一`id`から補う。明示的な空文字は選択解除として尊重する。mergeを見送る場合のWorker rollbackとmerge後の復旧手順は#41のCode Generation Plan §9に従う。
+
+#### Issue #42公開時の説明
+
+上の#41単独時の公開表示維持・deploy順序は#41の履歴である。#42はHomeで顔・種別・選択映像を使い始める。管理画面の共有時の画像はLive共有画像の予備で、Homeの帯を兼ねない。表示名・説明・READMEをこの実際の働きに揃える。key・画像操作・保存・Workerは変更しない。管理の6タブと作品modalは#47まで現状を保ち、公開ナビも#44まで6項目とする。#42はGitHub Pagesへの単独mergeで公開し、Worker deployは不要。失敗時は#42の静的変更と対応説明を同じrevertで戻し、#41の保存契約を維持する。
+
+確認2の前にFrontがItsukiへ実際の1作品の種別・映像を選ぶ保存と、Siteの顔にその作品を選ぶ保存を頼む（保存済みなら入れ直さない）。#41の公開互換試験は3項目で現公開画面が変わらないことを保護するため、merge前に保存できる。確認2では本番公開データを直接読むbranchの新HomeをPC・スマホ用URLで出し、Itsukiが顔・種別・「聴く」の実音・「閉じる」を確認する。fixture撮影と分け、本番データをrepoへ保存しない。merge後はFrontがPages buildと公開Homeの新版配信をread-only確認し、差がある時だけItsukiへ返す。同じデータ・画面の2回目の本人確認は頼まない。保存した3項目はmerge見送り時もrollback時もそのまま保持する。
 
 ## 6. 情報の優先順位
 

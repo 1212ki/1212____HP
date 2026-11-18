@@ -166,14 +166,11 @@
   function renderHomeLinks(siteLinks, profileLinks) {
     const container = document.getElementById("home-link-list");
     if (!container) return;
-    const links = buildSharedLinks(siteLinks, profileLinks);
+    const links = buildSharedLinks(siteLinks, profileLinks).filter(link => safeHomeUrl(link.url, false));
     container.innerHTML = links
       .map(
         (link) => `
-          <a href="${escapeHtml(link.url)}" class="cta ${escapeHtml(link.tone)}" target="_blank" rel="noopener">
-            ${getSharedLinkIcon(link.iconSlug, link.label)}
-            <span class="cta-label">${escapeHtml(link.label)}</span>
-          </a>
+          <a href="${escapeHtml(link.url)}" class="site-chip" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(link.key === "bandcamp" ? "Bandcamp（音源・物販）" : link.label)}（外部サイト・別タブ）">${escapeHtml(link.key === "bandcamp" ? "Bandcamp（音源・物販）" : link.label)}</a>
         `,
       )
       .join("");
@@ -241,21 +238,9 @@
   }
 
   function renderSite(site, version) {
-    const heroImg = document.getElementById("home-hero-image");
     const footer = document.getElementById("site-footer");
 
     const data = site && typeof site === "object" ? site : {};
-
-    if (heroImg) {
-      const src = resolveImageSrc(data.heroImage || "", version);
-      if (src) {
-        heroImg.src = src;
-        heroImg.style.display = "";
-      } else {
-        heroImg.removeAttribute("src");
-        heroImg.style.display = "none";
-      }
-    }
 
     if (footer) {
       const text = String(data.footerText || "").trim();
@@ -865,7 +850,195 @@
     if (html) container.innerHTML = html;
   }
 
+  function homeReleaseMeta(item) {
+    return [item.releaseType, item.releaseDate].map(value => String(value || "").trim()).filter(Boolean).join(" ／ ");
+  }
+
+  function safeHomeUrl(value, allowRelative) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    try {
+      const url = allowRelative ? new URL(raw, window.location.href || "http://localhost/") : new URL(raw);
+      return url.protocol === "http:" || url.protocol === "https:" ? raw : "";
+    } catch (_error) { return ""; }
+  }
+
+  function homeArtwork(item, version) {
+    const image = safeHomeUrl(item.image, true);
+    const fallback = `<div class="home-artwork-fallback"><span>${escapeHtml(item.title || "")}</span><span>松本一樹</span></div>`;
+    return image ? `<img data-home-image="true" src="${escapeHtml(resolveImageSrc(image, version))}" alt="${escapeHtml(item.title || "")}" width="440" height="440">${fallback.replace('class="home-artwork-fallback"', 'class="home-artwork-fallback" hidden')}` : fallback;
+  }
+
+  let homePlayback = null;
+
+  function renderHomeLive(live) {
+    const container = document.getElementById("home-next-live-events");
+    const empty = document.getElementById("home-next-live-empty");
+    const next = sortUpcomingLives(live.upcoming)[0];
+    empty.hidden = Boolean(next);
+    if (!next) { container.innerHTML = ""; return; }
+    const id = String(next.id || "").trim();
+    const resolved = resolveSharedLive(live, id);
+    const unique = resolved.status === "unique";
+    const cta = getSharedResolvedTicketCta(live, id, `ticket/?liveId=${encodeURIComponent(id)}`);
+    let reservation;
+    if (cta.active) {
+      const label = cta.external ? "予約する（外部サイト）" : "予約する";
+      reservation = `<a class="site-button site-button--primary" href="${escapeHtml(cta.url)}"${cta.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${label}</a>`;
+    } else {
+      const label = ["reservationClosed", "past"].includes(cta.reason) ? "予約受付終了" : cta.reason === "invalidTicketUrl" ? "予約URLが無効です" : "予約情報を確認できません";
+      reservation = `<span class="home-reservation-status">${label}</span>`;
+    }
+    container.innerHTML = `<p class="home-live-date">${escapeHtml(formatSharedLiveDate(next.date))}</p><p class="home-live-venue">${escapeHtml(next.venue || "")}</p><p class="home-live-title">${escapeHtml(next.title || "")}</p><p class="home-live-details">${escapeHtml(formatSharedLiveDetails(next)).replace(/\n/g, "<br>")}</p><div class="home-live-actions">${reservation}<a class="site-button site-button--secondary" href="${unique ? `live/detail/?liveId=${encodeURIComponent(id)}` : "live/"}">詳細</a></div><a class="site-text-link" href="live/">all live →</a>`;
+  }
+
+  function renderHomeNews(news) {
+    const list = sortLivesByDate(news, "desc").slice(0, 6);
+    document.getElementById("home-news").hidden = list.length === 0;
+    document.getElementById("news-items").innerHTML = list.map(item => {
+      const description = String(item.description || "").replace(/<br\s*\/?>/gi, "\n");
+      const label = (String(item.linkText || "").trim() || "view...").replace(/^▷\s*/, "").replace(/(?:\s*[→↗])+\s*$/, "").trim();
+      const link = safeHomeUrl(item.link, true);
+      const date = String(item.date || "").split(/(\s+)/).map(word => /\S/.test(word) ? `<span class="site-news-date-word">${escapeHtml(word)}</span>` : word).join("");
+      return `<article class="site-news-item"><p class="site-news-date">${date}</p><div class="site-news-content"><h3>${escapeHtml(item.title || "")}</h3>${description ? `<p>${escapeHtml(description).replace(/\n/g, "<br>")}</p>` : ""}${link ? `<a class="site-text-link" href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} →</a>` : ""}</div></article>`;
+    }).join("");
+  }
+
+  function renderHome(data, version) {
+    if (window.HomePlayer) window.HomePlayer.close({ restoreFocus: false });
+    const music = window.MusicData;
+    if (!music || typeof music.resolveFeaturedRelease !== "function") throw new Error("Music helper unavailable");
+    const face = music.resolveFeaturedRelease(data);
+    const releases = ["digital", "demo"].flatMap(key => Array.isArray(data.discography && data.discography[key]) ? data.discography[key] : []);
+    const others = music.sortReleasesByDate(releases.filter(item => !face || item.id !== face.id)).slice(0, 2);
+    const featured = document.getElementById("home-featured-release");
+    const videos = ["musicVideos", "liveMovies", "demos"].flatMap(key => Array.isArray(data.youtube && data.youtube[key]) ? data.youtube[key] : []);
+    const selected = face && face.playbackVideoId ? videos.find(item => item.id === face.playbackVideoId) : null;
+    const youtubeId = String(selected && selected.youtubeId || "").trim();
+    homePlayback = /^[A-Za-z0-9_-]{11}$/.test(youtubeId) ? { youtubeId, title: face.title || "" } : null;
+    const link = face && safeHomeUrl(face.link, false);
+    const isDemo = face && Array.isArray(data.discography.demo) && data.discography.demo.includes(face);
+    const linkLabel = isDemo ? "購入先へ" : "配信先へ";
+    const actions = face ? `<div class="home-release-actions">${homePlayback ? '<button type="button" id="home-listen" data-testid="home-listen" data-home-action="play" class="site-button site-button--play" aria-expanded="false" aria-controls="home-player">聴く</button>' : ""}${link ? `<a class="site-chip" href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" aria-label="${linkLabel}（外部サイト・別タブ）">${linkLabel}</a>` : ""}</div>` : "";
+    featured.innerHTML = face ? `<h1 class="home-release-title">${escapeHtml(face.title || "")}</h1><p class="home-release-meta">${escapeHtml(homeReleaseMeta(face))}</p>${actions}` : '<h1 id="home-artist-name" class="home-artist-name">松本一樹</h1>';
+    const caption = document.getElementById("home-release-caption");
+    caption.hidden = !face;
+    caption.parentNode.setAttribute("aria-labelledby", face ? "home-release-caption" : "home-artist-name");
+    const artwork = document.getElementById("home-artwork");
+    if (artwork) { artwork.hidden = !face; artwork.innerHTML = face ? homeArtwork(face, version) : ""; }
+    document.getElementById("home-content").classList.toggle("home-without-release", !face);
+    document.getElementById("home-music-items").innerHTML = others.map(item => `<article class="site-release-card"><div class="site-release-image">${homeArtwork(item, version)}</div><div><h3>${escapeHtml(item.title || "")}</h3><p>${escapeHtml(homeReleaseMeta(item))}</p></div></article>`).join("");
+    const liveContainer = document.getElementById("home-next-live-events");
+    try {
+      if (!data.live || !Array.isArray(data.live.upcoming)) throw new Error("Invalid Live data");
+      renderHomeLive(data.live);
+    } catch (_error) {
+      document.getElementById("home-next-live-empty").hidden = true;
+      liveContainer.innerHTML = `<p>ライブ情報を読み込めませんでした。</p>${homeRetryButton()}`;
+    }
+    liveContainer.setAttribute("aria-busy", "false");
+    renderHomeNews(Array.isArray(data.news) ? data.news : []);
+    const profile = data.profile || {};
+    const paragraph = String(profile.text || "").replace(/\r\n?/g, "\n").replace(/<br\s*\/?>/gi, "\n").trim().split(/\n[\t ]*\n/)[0];
+    document.getElementById("home-profile-text").innerHTML = paragraph ? `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>` : "";
+    renderHomeLinks(data.site && data.site.links || {}, profile.links || []);
+  }
+
+  let homeRequestSerial = 0;
+  let homeRequestPending = false;
+  let homeHasData = false;
+  let homeInterruptedRequest = null;
+
+  function homeRetryButton() {
+    return '<button type="button" id="home-retry" data-testid="home-retry" data-home-action="retry" class="site-button site-button--secondary">もう一度読み込む</button>';
+  }
+
+  async function bootHome(localRetry) {
+    if (homeRequestPending) return;
+    homeRequestPending = true;
+    const serial = ++homeRequestSerial;
+    const root = document.getElementById("home-content");
+    const local = Boolean(localRetry && homeHasData);
+    if (window.HomePlayer) window.HomePlayer.close({ restoreFocus: false });
+    if (local) {
+      document.getElementById("home-next-live-events").setAttribute("aria-busy", "true");
+    } else {
+      root.setAttribute("aria-busy", "true");
+      root.dataset.state = "loading";
+      document.getElementById("home-load-error").hidden = true;
+      ["home-top", "home-bands", "home-about"].forEach(id => { document.getElementById(id).hidden = false; });
+      document.getElementById("home-artwork").hidden = false;
+      document.getElementById("home-artwork").innerHTML = '<div class="home-skeleton" role="status">読み込み中</div>';
+      document.getElementById("home-featured-release").innerHTML = "";
+      document.getElementById("home-next-live-events").innerHTML = '<div class="home-skeleton" role="status">読み込み中</div>';
+      document.getElementById("home-next-live-empty").hidden = true;
+    }
+    const payload = await fetchSiteData();
+    if (serial !== homeRequestSerial) return;
+    try {
+      if (!payload || !payload.data || typeof payload.data !== "object" || Array.isArray(payload.data)) throw new Error("Invalid Home data");
+      renderHome(payload.data, payload.meta.updatedAt || "");
+      renderSite(payload.data.site || {});
+      homeHasData = true;
+      root.dataset.state = "ready";
+    } catch (_error) {
+      if (local) {
+        document.getElementById("home-next-live-events").innerHTML = `<p>ライブ情報を読み込めませんでした。</p>${homeRetryButton()}`;
+      } else {
+        homeHasData = false;
+        homePlayback = null;
+        root.dataset.state = "error";
+        ["home-top", "home-bands", "home-about"].forEach(id => { document.getElementById(id).hidden = true; });
+        const error = document.getElementById("home-load-error");
+        error.hidden = false;
+        error.innerHTML = `<p>情報を読み込めませんでした。</p>${homeRetryButton()}<div class="home-links"><a class="site-chip" href="https://1212ki.bandcamp.com/" target="_blank" rel="noopener noreferrer" aria-label="Bandcamp（音源・物販）（外部サイト・別タブ）">Bandcamp（音源・物販）</a><a class="site-chip" href="https://www.youtube.com/@1212____ki" target="_blank" rel="noopener noreferrer" aria-label="YouTube（外部サイト・別タブ）">YouTube</a></div>`;
+      }
+    } finally {
+      homeRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+      document.getElementById("home-next-live-events").setAttribute("aria-busy", "false");
+    }
+  }
+
+  function wireHome() {
+    const root = document.getElementById("home-content");
+    root.addEventListener("click", event => {
+      const button = event.target.closest("[data-home-action]");
+      if (!button || !root.contains(button)) return;
+      if (button.dataset.homeAction === "play" && homePlayback && window.HomePlayer) {
+        if (button.getAttribute("aria-expanded") === "true") window.HomePlayer.close();
+        else window.HomePlayer.open(document.getElementById("home-player"), button, homePlayback.youtubeId, homePlayback.title);
+      }
+      if (button.dataset.homeAction === "retry" && !homeRequestPending) {
+        button.disabled = true;
+        bootHome(homeHasData);
+      }
+    });
+    root.addEventListener("error", event => {
+      const image = event.target;
+      if (!image || image.getAttribute("data-home-image") !== "true") return;
+      image.hidden = true;
+      if (image.nextElementSibling) image.nextElementSibling.hidden = false;
+    }, true);
+    window.addEventListener("pagehide", () => {
+      if (homeRequestPending) homeInterruptedRequest = homeHasData;
+      ++homeRequestSerial;
+      homeRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+      document.getElementById("home-next-live-events").setAttribute("aria-busy", "false");
+      root.querySelectorAll('[data-home-action="retry"]').forEach(button => { button.disabled = false; });
+      if (window.HomePlayer) window.HomePlayer.close({ restoreFocus: false });
+    });
+    window.addEventListener("pageshow", event => {
+      if (!event.persisted || homeInterruptedRequest === null) return;
+      const local = homeInterruptedRequest;
+      homeInterruptedRequest = null;
+      bootHome(local);
+    });
+  }
+
   async function boot() {
+    if (document.getElementById("home-content")) { wireHome(); return bootHome(); }
     const payload = await fetchSiteData();
     if (!payload) return;
     const siteData = payload.data || {};
