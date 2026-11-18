@@ -1,0 +1,16 @@
+ M aidlc-docs/README.md
+ M assets/js/site-content.js
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+ M index.html
+ M test/public-music-data-compatibility.test.mjs
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/
+?? aidlc-docs/inception/
+?? assets/js/home-player.js
+?? test/fixtures/home-states.json
+?? test/home-player.test.mjs
+?? test/home-rendering.test.mjs

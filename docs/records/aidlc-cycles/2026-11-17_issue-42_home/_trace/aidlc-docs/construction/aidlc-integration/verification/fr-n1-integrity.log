@@ -1,0 +1,24 @@
+PASS promotion SHA-256 + cmp -s: public-site-ui.md 62f98fa71d78ba008b25219e57d574d58641ffdf8e8d3e69307c752ffafa9d14
+PASS promotion SHA-256 + cmp -s: live-operations-admin-ui.md 3d2bbcb5556b3cec861812836cc7f7c7cd81b0702fc80f6e5dbd9f8f3ac953a8
+PASS promotion SHA-256 + cmp -s: README.md 542d49ceb65c0aa5ba33ece3e9508d378cd009e1f7a5d9e40008083647467062
+PASS immutable approved input: inception/requirements/requirements.md
+PASS immutable approved input: inception/plans/execution-plan.md
+PASS immutable approved input: construction/plans/aidlc-integration-code-generation-plan.md
+PASS immutable approved input: construction/aidlc-integration/figma-fix-requests.md
+PASS verbatim prompt + raw source: 02-workflow-plan-approval.md
+PASS verbatim prompt + raw source: 01-requirements-approval.md
+PASS verbatim prompt + raw source: 03-code-generation-plan-approval.md
+PASS pre-change main bytes: live/index.html
+PASS pre-change main bytes: live/detail/index.html
+PASS pre-change main bytes: ticket/index.html
+PASS pre-change main bytes: ticket/complete/index.html
+PASS pre-change main bytes: discography/index.html
+PASS pre-change main bytes: youtube/index.html
+PASS pre-change main bytes: profile/index.html
+PASS pre-change main bytes: contact/index.html
+PASS all 9 HTML local href/src targets exist
+PASS allowed write scope: 182 changed files
+PASS protected helper/tokens/admin/Cloudflare byte identity to base (secret files not read)
+PASS production body absent from generated content: 122 files; values not logged
+PASS Python verification/capture scripts parse
+PASS tested implementation manifest written

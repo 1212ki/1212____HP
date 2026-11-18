@@ -1,0 +1,597 @@
+TAP version 13
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+ok 1 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 1.337292
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+ok 2 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 1.162625
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 3 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 0.400583
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 4 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 0.343584
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 5 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 0.255542
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 6 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 0.233583
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 7 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 0.94175
+  ...
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 8 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 1.155333
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 9 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 9.242833
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 10 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 1.347542
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 11 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 1.06475
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 12 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 1.364083
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 13 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 1.178583
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 14 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 0.818583
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 15 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 2.715959
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 16 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 1.826167
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 17 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 2.95925
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 18 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 0.817875
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 19 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 0.935667
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 20 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 0.85125
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 21 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 0.67225
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 22 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 0.579167
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 23 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 0.666458
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 24 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 0.582792
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 25 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 0.875958
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 26 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 0.953959
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 27 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 0.740583
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 28 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 0.769458
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 29 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 1.8085
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 30 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 2.597292
+  ...
+# Subtest: T42-LIVE booking internal
+ok 31 - T42-LIVE booking internal
+  ---
+  duration_ms: 0.882834
+  ...
+# Subtest: T42-LIVE booking external
+ok 32 - T42-LIVE booking external
+  ---
+  duration_ms: 0.813333
+  ...
+# Subtest: T42-LIVE booking closed
+ok 33 - T42-LIVE booking closed
+  ---
+  duration_ms: 0.718917
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 34 - T42-LIVE booking invalid
+  ---
+  duration_ms: 0.6405
+  ...
+# Subtest: T42-LIVE booking past
+ok 35 - T42-LIVE booking past
+  ---
+  duration_ms: 0.60325
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 36 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 0.582333
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 37 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 1.372042
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 38 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 1.132542
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 39 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 2.123459
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 40 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 0.708917
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 41 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 0.504167
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 42 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 0.720167
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 43 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 0.605458
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 44 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 0.986667
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 45 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 2.243125
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 46 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 1.017042
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 47 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 1.747041
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 48 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 1.624583
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 49 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 0.995542
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+not ok 50 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 0.954458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:174:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== 'true'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'true'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:175:67)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+not ok 51 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 1.102208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:177:69'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:179:118)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+not ok 52 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 0.670875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:177:69'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:179:118)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+not ok 53 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 0.5325
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:177:69'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:179:118)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+not ok 54 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 0.566125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:177:69'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:179:118)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+not ok 55 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 0.578833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:177:69'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:179:118)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+not ok 56 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 0.650666
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:177:69'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:179:118)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+not ok 57 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 1.544291
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:182:67'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:183:71)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+not ok 58 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 5.130334
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:182:67'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:183:71)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+not ok 59 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 0.874917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:182:67'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:183:71)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+not ok 60 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 0.851875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:182:67'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:183:71)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+not ok 61 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 1.894083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:185:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /ライブ情報を読み込めませんでした/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:185:132)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+not ok 62 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 0.7175
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:186:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:189:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+not ok 63 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 1.000125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:192:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== 'true'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'true'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:194:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+not ok 64 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 0.433375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:197:1'
+  failureType: 'testCodeFailure'
+  error: 'h.events.get(...) is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:198:102)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+not ok 65 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 1.413417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:200:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:202:117)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 66 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 0.815416
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 50
+# fail 16
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 340.996458

@@ -1,0 +1,2 @@
+PASS Python AST; embedded JS expressions 10 node --check; Front text-node line count retained; bodyLeft spread <= 0.5px assertion present.
+No browser/server/capture executed (ui_route=none).

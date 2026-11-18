@@ -1,0 +1,279 @@
+TAP version 13
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 1 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 2.007416
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 2 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 7.835833
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 3 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 1.133833
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 4 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 4.460208
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 5 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 0.835125
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 6 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 4.945125
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 3.179
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 1.512084
+      ...
+    1..2
+ok 7 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 5.027459
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 8 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 0.947209
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 9 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 0.659792
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 10 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 0.540584
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 11 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 5.682875
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 12 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 4.482375
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 13 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 0.694041
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 14 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 2.737541
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 15 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 1.352916
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 16 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 0.913458
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 17 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 0.846459
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 18 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 0.655375
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 0.7395
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 0.689584
+      ...
+    1..2
+ok 19 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 1.581
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 0.840292
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 3.6305
+      ...
+    1..2
+ok 20 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 4.802125
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 1.502833
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 1.058458
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 0.603958
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 0.614
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 0.509916
+      ...
+    1..5
+ok 21 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 4.818583
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 22 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.494875
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 23 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 2.025291
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 24 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 0.723666
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 25 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 0.44125
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs index.html
+ok 26 - T42-SHELL 9 route shell and six original nav URLs index.html
+  ---
+  duration_ms: 17.986209
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/index.html
+ok 27 - T42-SHELL 9 route shell and six original nav URLs live/index.html
+  ---
+  duration_ms: 10.696958
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/detail/index.html
+ok 28 - T42-SHELL 9 route shell and six original nav URLs live/detail/index.html
+  ---
+  duration_ms: 15.0895
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/index.html
+ok 29 - T42-SHELL 9 route shell and six original nav URLs ticket/index.html
+  ---
+  duration_ms: 10.585667
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html
+ok 30 - T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 13.083583
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs discography/index.html
+ok 31 - T42-SHELL 9 route shell and six original nav URLs discography/index.html
+  ---
+  duration_ms: 10.213792
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs youtube/index.html
+ok 32 - T42-SHELL 9 route shell and six original nav URLs youtube/index.html
+  ---
+  duration_ms: 11.467375
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs profile/index.html
+ok 33 - T42-SHELL 9 route shell and six original nav URLs profile/index.html
+  ---
+  duration_ms: 12.560875
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs contact/index.html
+ok 34 - T42-SHELL 9 route shell and six original nav URLs contact/index.html
+  ---
+  duration_ms: 11.971167
+  ...
+# Subtest: T42-SHELL shared style and script cache version aligned for every consumer
+ok 35 - T42-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 0.622584
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 36 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 15.503458
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 37 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 24.566625
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 38 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 0.66275
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 39 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 1.217958
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 40 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 1.938959
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 41 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 0.971125
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 42 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 0.4505
+  ...
+1..42
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 424.262875

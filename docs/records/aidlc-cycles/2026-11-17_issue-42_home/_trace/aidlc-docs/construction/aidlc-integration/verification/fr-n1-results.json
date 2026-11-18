@@ -1,0 +1,131 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "test/home-rendering.test.mjs",
+      "test/site-shell.test.mjs"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-focused.log"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "test/"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-node.log"
+  },
+  {
+    "command": [
+      "npm",
+      "--prefix",
+      "cloudflare/worker",
+      "test"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-worker.log"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "assets/js/site-content.js"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-site-check.log"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "assets/js/home-player.js"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-player-check.log"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "assets/js/script.js"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-script-check.log"
+  },
+  {
+    "command": [
+      "scripts/aidlc-verify.sh",
+      "--local"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-local-verify.log"
+  },
+  {
+    "command": [
+      "scripts/aidlc-cycle.sh",
+      "status"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-status.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-diff-check.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "aidlc-docs/construction/aidlc-integration/verification/verify-integrity.py"
+    ],
+    "exit": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/fr-n1-integrity.log"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=FR-N1",
+      "test/site-shell.test.mjs",
+      "test/home-rendering.test.mjs"
+    ],
+    "phase": "red",
+    "exit": 1,
+    "log": "fr-n1-red.log"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=FR-N1",
+      "test/site-shell.test.mjs",
+      "test/home-rendering.test.mjs"
+    ],
+    "phase": "green",
+    "exit": 0,
+    "log": "fr-n1-green.log"
+  },
+  {
+    "command": "validate_approval Requirements / Workflow Plan / Code Generation Plan",
+    "exit": 0,
+    "log": "fr-n1-approvals.log"
+  },
+  {
+    "command": "Python AST + embedded JS syntax + scenario projection (no browser)",
+    "exit": 0,
+    "log": "fr-n1-capture-static.log"
+  },
+  {
+    "command": "python3 -B verification/close-dryrun.py (disposable copy only)",
+    "exit": 0,
+    "log": "fr-n1-close-dryrun.log"
+  }
+]

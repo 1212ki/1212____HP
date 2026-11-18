@@ -1,0 +1,86 @@
+TAP version 13
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+not ok 1 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 3.027292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-player.test.mjs:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'home-close'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'home-close'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-player.test.mjs:31:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+not ok 2 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 0.817833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-player.test.mjs:33:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'home-listen'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'home-listen'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-player.test.mjs:36:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 3 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 0.387084
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 4 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 0.301292
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 5 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 0.738625
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 6 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 0.711708
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 7 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 0.461583
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 5
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 142.440708

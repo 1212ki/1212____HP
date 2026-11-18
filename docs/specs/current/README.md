@@ -3,7 +3,8 @@
 - Status: Approved
 - Owner: Itsuki Matsumoto
 - Last updated: 2026-11-17
-- Owner approval: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #40）: Issue #40のgate 3における、本索引のexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 
 このフォルダは1212HPで現在参照すべき設計書の正本です。
@@ -23,6 +24,8 @@ Approvedは実装の入力としての承認を示します。各設計書の画
 | `system-design-principles.md` | Approved | 1212HP全体の設計・運用原則 |
 | [public-site-ui.md](public-site-ui.md) | Approved | Home・Menu・Live・Ticket・Music・Profile・ContactのFigmaマスタ、要件メモ、PS系受入条件と#41〜#45の対応。データ・状態・変更手順と実装時点を示す。 |
 | [live-operations-admin-ui.md](live-operations-admin-ui.md) | Approved | Live運用とSite・News・Music・Profileの全マスタ画面、要件メモ、ADM系受入条件と#41・#46・#47の対応。3項目と共有時の画像の持ち方を含む。#21・#29・#33・#35のAI整理・共有URL、#37のGmail予約控えとTicket案内・注意文削除を保持。 |
+
+#42の入力は公開設計§3の追記・§5〜7と管理設計§5.3の追記に示す。Homeと共通外枠を実装し、既存6項目ナビ・他ページ本文・保存とWorkerを保持する。共有時の画像の説明を実態に揃える。Figmaは公開設計§3の反映済みv2を使い、ロゴの赤いiと押した時の演出は維持する。#41の1作品保存は確認2前に行う（保存済みなら入れ直さない）。本番データを読むbranchでの顔・種別・実音・閉じるは確認2でmerge前に確かめ、fixture撮影は別に保つ。merge後はFrontがPages buildと新版配信をread-only確認し、差がある時だけItsukiへ返す。#42の実装・画面・実音・独立reviewの成否は同cycleの結果文書を参照し、この索引のApprovedを完了としない。
 
 設計内容を変更したら、この索引の状態と対象も更新します。
 

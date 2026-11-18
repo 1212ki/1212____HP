@@ -147,29 +147,35 @@ const fixture = {
   youtube:{musicVideos:[{id:'v',title:'Synthetic video',youtubeId:'abcdefghijk'}],liveMovies:[],demos:[]}
 };
 async function render(data,envelope,helper,pathname,detailId) {
-  const ids=['home-hero-image','site-footer','home-link-list','news-items','home-next-live-events','home-next-live-empty','live-upcoming-events','live-past-events','live-past-heading','live-past-more','disc-digital-items','disc-demo-items','youtube-content','youtube-channel-link'];
+  const page = pathname === '/' ? 'index.html' : pathname.slice(1) + 'index.html';
+  const ids=[...readFileSync(page,'utf8').matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
   if(detailId)ids.push('live-detail','live-detail-title','live-detail-heading','live-detail-description','live-detail-single','live-detail-notfound');
   const {document,elements}=createDom({ids});
   const window={SITE_API_BASE:'',location:{pathname,search:detailId?'?liveId='+detailId:''},addEventListener(){}};
-  const context={document,window,console,URL,URLSearchParams,structuredClone,fetch:async()=>response(envelope?{data,meta:{updatedAt:'fixed-version'}}:data)};
+  const context={document,window,globalThis:window,console,URL,URLSearchParams,structuredClone,fetch:async()=>response(envelope?{data,meta:{updatedAt:'fixed-version'}}:data)};
   vm.runInNewContext(liveHelper,context);
   if(helper)vm.runInNewContext(musicHelper,context);
   vm.runInNewContext(renderer,context);await settle();
   return Object.fromEntries([...elements].map(([id,e])=>[id,{html:e.innerHTML,text:e.textContent,src:e.src,href:e.href,display:e.style.display}]));
 }
-for(const envelope of [false,true]) for(const pathname of ['/','/discography/','/live/']) test('music fields public DOM unchanged for missing, empty and populated fields '+pathname+' '+(envelope?'envelope':'body'),async()=>{
+for(const envelope of [false,true]) for(const pathname of ['/discography/','/live/','/profile/','/youtube/','/contact/']) test('music fields public DOM unchanged for missing, empty and populated fields '+pathname+' '+(envelope?'envelope':'body'),async()=>{
   const base=await render(fixture,envelope,false,pathname);
   for(const populated of [false,true]) {
     const data=structuredClone(fixture);data.site.featuredReleaseId=populated?'s':'';
     for(const item of [...data.discography.digital,...data.discography.demo]){item.playbackVideoId=populated?'v':'';item.releaseType=populated?'Synthetic new type':'';}
     assert.deepEqual(await render(data,envelope,true,pathname),base);
   }
-  assert.match(base['home-hero-image'].src,/synthetic-hero.jpg/);
-  assert.match(base['disc-digital-items'].html,/2025.5.5/);assert.match(base['disc-demo-items'].html,/2025\/05\/05/);
-  assert.ok(base['disc-digital-items'].html.indexOf('Synthetic title')<base['disc-digital-items'].html.indexOf('Second synthetic title'));
-  assert.match(base['disc-digital-items'].html,/Synthetic track list/);assert.match(base['disc-digital-items'].html,/https:\/\/example.test\/r/);
-  assert.match(base['live-upcoming-events'].html,/Synthetic description only Live/);assert.match(base['live-past-events'].html,/liveId=p/);assert.match(base['news-items'].html,/Synthetic news/);
-  assert.doesNotMatch(base['disc-digital-items'].html,/iframe|Synthetic new type|playbackVideoId/);
+  // Home's intentional change is covered by T42-DATA/PLAY/CONTENT. These
+  // routes protect actual page DOM rather than fabricated Home-only hooks.
+  if(pathname==='/discography/') {
+    assert.match(base['disc-digital-items'].html,/2025.5.5/);assert.match(base['disc-demo-items'].html,/2025\/05\/05/);
+    assert.ok(base['disc-digital-items'].html.indexOf('Synthetic title')<base['disc-digital-items'].html.indexOf('Second synthetic title'));
+    assert.match(base['disc-digital-items'].html,/Synthetic track list/);assert.match(base['disc-digital-items'].html,/https:\/\/example.test\/r/);
+    assert.doesNotMatch(base['disc-digital-items'].html,/iframe|Synthetic new type|playbackVideoId/);
+  }
+  if(pathname==='/live/') {
+    assert.match(base['live-upcoming-events'].html,/Synthetic description only Live/);assert.match(base['live-past-events'].html,/liveId=p/);
+  }
 });
 
 for(const id of ['l','p']) test('music fields description-only Live detail keeps legacy text '+id,async()=>{

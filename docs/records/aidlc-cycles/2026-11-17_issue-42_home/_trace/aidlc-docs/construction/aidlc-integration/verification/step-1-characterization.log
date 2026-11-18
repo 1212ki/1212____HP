@@ -1,0 +1,234 @@
+TAP version 13
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields / body
+ok 1 - music fields public DOM unchanged for missing, empty and populated fields / body
+  ---
+  duration_ms: 7.227041
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /discography/ body
+ok 2 - music fields public DOM unchanged for missing, empty and populated fields /discography/ body
+  ---
+  duration_ms: 7.485791
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 3 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 1.816791
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields / envelope
+ok 4 - music fields public DOM unchanged for missing, empty and populated fields / envelope
+  ---
+  duration_ms: 1.964333
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /discography/ envelope
+ok 5 - music fields public DOM unchanged for missing, empty and populated fields /discography/ envelope
+  ---
+  duration_ms: 1.724416
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 6 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 1.821292
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 7 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 1.688
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 8 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 1.702875
+  ...
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 9 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 2.829
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 10 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 7.735625
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 11 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 1.210084
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 12 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 2.582667
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 13 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 2.871875
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 14 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 2.477667
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 5.251208
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 1.992875
+      ...
+    1..2
+ok 15 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 7.559916
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 16 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 0.910667
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 17 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 0.515459
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 18 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 0.600584
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 19 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 0.551542
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 20 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 4.398583
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 21 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 0.772167
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 22 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 4.811416
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 23 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 0.7505
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 24 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 1.451291
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 25 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 0.729208
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 26 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 0.682541
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 0.665084
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 0.591709
+      ...
+    1..2
+ok 27 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 1.3955
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 0.686042
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 0.85475
+      ...
+    1..2
+ok 28 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 1.654583
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 0.724083
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 4.236917
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 2.22875
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 0.918041
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 0.594917
+      ...
+    1..5
+ok 29 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 9.399334
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 30 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.460834
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 31 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 2.933333
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 32 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 0.671625
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 33 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 0.410458
+  ...
+1..33
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 323.391792

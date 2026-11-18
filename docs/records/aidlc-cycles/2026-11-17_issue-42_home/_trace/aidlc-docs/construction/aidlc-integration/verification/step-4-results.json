@@ -1,0 +1,64 @@
+[
+  {
+    "command": "node --test test/",
+    "exit": 0,
+    "counts": {
+      "tests": "333",
+      "pass": "333",
+      "fail": "0"
+    },
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-01.log"
+  },
+  {
+    "command": "npm --prefix cloudflare/worker test",
+    "exit": 0,
+    "counts": {
+      "tests": "347",
+      "pass": "347",
+      "fail": "0"
+    },
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-02.log"
+  },
+  {
+    "command": "node --check assets/js/site-content.js",
+    "exit": 0,
+    "counts": {},
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-03.log"
+  },
+  {
+    "command": "node --check assets/js/home-player.js",
+    "exit": 0,
+    "counts": {},
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-04.log"
+  },
+  {
+    "command": "node --check assets/js/script.js",
+    "exit": 0,
+    "counts": {},
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-05.log"
+  },
+  {
+    "command": "scripts/aidlc-verify.sh --local",
+    "exit": 0,
+    "counts": {},
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-06.log"
+  },
+  {
+    "command": "scripts/aidlc-cycle.sh status",
+    "exit": 0,
+    "counts": {},
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-07.log"
+  },
+  {
+    "command": "git diff --check",
+    "exit": 0,
+    "counts": {},
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-08.log"
+  },
+  {
+    "command": "git status --short",
+    "exit": 0,
+    "counts": {},
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-09.log"
+  }
+]

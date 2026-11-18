@@ -1,0 +1,117 @@
+TAP version 13
+# Subtest: T42-SHELL 9 route shell and six original nav URLs index.html
+ok 1 - T42-SHELL 9 route shell and six original nav URLs index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.521667
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/index.html
+ok 2 - T42-SHELL 9 route shell and six original nav URLs live/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0445
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs live/detail/index.html
+ok 3 - T42-SHELL 9 route shell and six original nav URLs live/detail/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04025
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/index.html
+ok 4 - T42-SHELL 9 route shell and six original nav URLs ticket/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033167
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html
+ok 5 - T42-SHELL 9 route shell and six original nav URLs ticket/complete/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.082625
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs discography/index.html
+ok 6 - T42-SHELL 9 route shell and six original nav URLs discography/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0335
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs youtube/index.html
+ok 7 - T42-SHELL 9 route shell and six original nav URLs youtube/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030375
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs profile/index.html
+ok 8 - T42-SHELL 9 route shell and six original nav URLs profile/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031709
+  ...
+# Subtest: T42-SHELL 9 route shell and six original nav URLs contact/index.html
+ok 9 - T42-SHELL 9 route shell and six original nav URLs contact/index.html # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.132792
+  ...
+# Subtest: T42-SHELL shared style and script cache version aligned for every consumer
+ok 10 - T42-SHELL shared style and script cache version aligned for every consumer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0825
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 11 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035833
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 12 - T42-SHELL logo behavior and animation CSS bytes preserved # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030042
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 13 - T42-SHELL admin share explanation and current Home use, no hero consumer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.064666
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 14 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.062583
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 15 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029208
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 16 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.075875
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 17 - T42-SHELL Home initial content is visible and other pages keep fade-in # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029583
+  ...
+# Subtest: RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+ok 18 - RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.107583
+  ...
+# Subtest: RV42-07 Home caption and news spacing match master without changing shared title gap
+ok 19 - RV42-07 Home caption and news spacing match master without changing shared title gap # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.299584
+  ...
+# Subtest: FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+ok 20 - FR-N1 news date column grows from master 88px within a bounded width and keeps body space # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.060958
+  ...
+# Subtest: FR-N2 all Home news rows share the longest bounded date column and content start
+ok 21 - FR-N2 all Home news rows share the longest bounded date column and content start
+  ---
+  duration_ms: 0.365
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 20
+# todo 0
+# duration_ms 150.044084
+
+COMMAND_EXIT: 0

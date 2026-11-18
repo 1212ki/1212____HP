@@ -1,0 +1,786 @@
+TAP version 13
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 1 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 4.822667
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 2 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 9.476166
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 3 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 1.517875
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 4 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 1.272417
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 5 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 0.87675
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 6 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 0.789625
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 7 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 1.053041
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 8 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 8.411125
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 9 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 1.860208
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 10 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 2.449541
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 11 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 0.975291
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 12 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 1.227042
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 13 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 1.341708
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 14 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 0.813917
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 15 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 5.651041
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 16 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 1.598834
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 17 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 1.17925
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 18 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 1.317
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 19 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 0.768875
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 20 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 0.719875
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 21 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 0.630167
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 22 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 0.639333
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 23 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 0.581167
+  ...
+# Subtest: T42-LIVE booking internal
+not ok 24 - T42-LIVE booking internal
+  ---
+  duration_ms: 1.308792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking external
+not ok 25 - T42-LIVE booking external
+  ---
+  duration_ms: 1.066083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking closed
+not ok 26 - T42-LIVE booking closed
+  ---
+  duration_ms: 4.925875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking invalid
+not ok 27 - T42-LIVE booking invalid
+  ---
+  duration_ms: 1.727708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking past
+not ok 28 - T42-LIVE booking past
+  ---
+  duration_ms: 2.760292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking duplicate
+not ok 29 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 0.828833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking empty-id
+not ok 30 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 0.761834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking no-helper
+not ok 31 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 0.813209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:121:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空の公演 A/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:130:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+not ok 32 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 0.776834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:137:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /First/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:139:82)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+not ok 33 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 7.558958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:141:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(output(h,'home-next-live-events').includes(escaped))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:142:225)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 34 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 5.884
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+not ok 35 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 2.655375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:147:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 6
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 6
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:152:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+not ok 36 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 2.978417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:154:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(html.indexOf('Valid')<html.indexOf('Invalid'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:155:256)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+not ok 37 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 0.783292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:157:108'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + ''
+    - '<p>first<br>line</p>'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '<p>first<br>line</p>'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:158:79)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+not ok 38 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 0.696625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:157:108'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + ''
+    - '<p>first<br>line</p>'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '<p>first<br>line</p>'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:158:79)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+not ok 39 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 0.669042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:157:108'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + ''
+    - '<p>first<br>line</p>'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '<p>first<br>line</p>'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:158:79)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+not ok 40 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 0.705542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:160:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + ''
+    - '<p>&lt;b&gt;artist&lt;/b&gt;<br>next</p>'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '<p>&lt;b&gt;artist&lt;/b&gt;<br>next</p>'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:161:94)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+not ok 41 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 0.698875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:164:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 5
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 5
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/home-rendering.test.mjs:166:71)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 42 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 5.619042
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields / body
+not ok 43 - music fields public DOM unchanged for missing, empty and populated fields / body
+  ---
+  duration_ms: 10.26425
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:160:91'
+  failureType: 'testCodeFailure'
+  error: 'The "string" argument must be of type string. Received type undefined (undefined)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:167:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /discography/ body
+not ok 44 - music fields public DOM unchanged for missing, empty and populated fields /discography/ body
+  ---
+  duration_ms: 2.362625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:160:91'
+  failureType: 'testCodeFailure'
+  error: 'The "string" argument must be of type string. Received type undefined (undefined)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:167:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+not ok 45 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 1.854208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:160:91'
+  failureType: 'testCodeFailure'
+  error: 'The "string" argument must be of type string. Received type undefined (undefined)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:167:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields / envelope
+not ok 46 - music fields public DOM unchanged for missing, empty and populated fields / envelope
+  ---
+  duration_ms: 2.006541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:160:91'
+  failureType: 'testCodeFailure'
+  error: 'The "string" argument must be of type string. Received type undefined (undefined)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:167:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /discography/ envelope
+not ok 47 - music fields public DOM unchanged for missing, empty and populated fields /discography/ envelope
+  ---
+  duration_ms: 1.804791
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:160:91'
+  failureType: 'testCodeFailure'
+  error: 'The "string" argument must be of type string. Received type undefined (undefined)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:167:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+not ok 48 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 2.032458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:160:91'
+  failureType: 'testCodeFailure'
+  error: 'The "string" argument must be of type string. Received type undefined (undefined)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-42-home/test/public-music-data-compatibility.test.mjs:167:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 49 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 4.734709
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 50 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 1.358792
+  ...
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 51 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 1.710292
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 52 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 7.369958
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 53 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 1.019333
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 54 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 1.484875
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 55 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 0.772584
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 56 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 2.741291
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 2.539667
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 4.62825
+      ...
+    1..2
+ok 57 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 7.535625
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 58 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 1.1375
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 59 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 0.610834
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 60 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 1.080208
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 61 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 0.603167
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 62 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 3.668083
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 63 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 0.604291
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 64 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 2.394625
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 65 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 1.863291
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 66 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 2.533458
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 67 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 1.88775
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 68 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 1.402375
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 0.690125
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 0.627666
+      ...
+    1..2
+ok 69 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 1.470458
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 0.6905
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 1.418666
+      ...
+    1..2
+ok 70 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 2.240917
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 0.753584
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 0.586458
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 0.53575
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 0.574542
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 1.434417
+      ...
+    1..5
+ok 71 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 4.2375
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 72 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.432709
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 73 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 3.277125
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 74 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 1.399
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 75 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 1.581
+  ...
+1..75
+# tests 86
+# suites 0
+# pass 63
+# fail 23
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 415.298417
