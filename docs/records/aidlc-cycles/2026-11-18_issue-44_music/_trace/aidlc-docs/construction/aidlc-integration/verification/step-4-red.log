@@ -1,0 +1,768 @@
+TAP version 13
+# Subtest: T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+ok 1 - T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+  ---
+  duration_ms: 10.180709
+  ...
+# Subtest: T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+ok 2 - T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+  ---
+  duration_ms: 1.585
+  ...
+# Subtest: T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+ok 3 - T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+  ---
+  duration_ms: 1.734417
+  ...
+# Subtest: T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+ok 4 - T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.201542
+  ...
+# Subtest: T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+ok 5 - T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.604625
+  ...
+# Subtest: T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+ok 6 - T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.638875
+  ...
+# Subtest: T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+ok 7 - T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 12.563458
+  ...
+# Subtest: T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+ok 8 - T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+  ---
+  duration_ms: 1.442166
+  ...
+# Subtest: T44-PLAY refuses invalid id 
+ok 9 - T44-PLAY refuses invalid id 
+  ---
+  duration_ms: 0.689292
+  ...
+# Subtest: T44-PLAY refuses invalid id bad
+ok 10 - T44-PLAY refuses invalid id bad
+  ---
+  duration_ms: 0.614
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghij!
+ok 11 - T44-PLAY refuses invalid id abcdefghij!
+  ---
+  duration_ms: 0.534166
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghijk/evil
+ok 12 - T44-PLAY refuses invalid id abcdefghijk/evil
+  ---
+  duration_ms: 0.63425
+  ...
+# Subtest: T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+ok 13 - T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+  ---
+  duration_ms: 1.581584
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 14 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 5.715875
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 15 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 21.260792
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 16 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 4.556292
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 17 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 8.369709
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 18 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 2.578292
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 19 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 8.250042
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 20 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 29.912709
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 21 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 5.950958
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+ok 22 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 2.81775
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+not ok 23 - T44-STATE loading leaves one status, skeleton and busy until success
+  ---
+  duration_ms: 9.068959
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:128:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /読み込み中/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:130:111)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+not ok 24 - T44-STATE partial/empty successful data all-empty
+  ---
+  duration_ms: 4.093458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:133:149'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'empty'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'empty'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:142:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+not ok 25 - T44-STATE partial/empty successful data missing-collections
+  ---
+  duration_ms: 1.847417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:133:149'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'empty'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'empty'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:142:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+not ok 26 - T44-STATE partial/empty successful data channel-only
+  ---
+  duration_ms: 8.663125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:133:149'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'empty'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'empty'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:142:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 27 - T44-STATE partial/empty successful data only-videos
+  ---
+  duration_ms: 5.466875
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 28 - T44-STATE partial/empty successful data only-releases
+  ---
+  duration_ms: 2.524
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 29 - T44-STATE partial/empty successful data empty-demo
+  ---
+  duration_ms: 2.087209
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 30 - T44-STATE partial/empty successful data empty-live-movie
+  ---
+  duration_ms: 16.44175
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 31 - T44-STATE partial/empty successful data empty-video
+  ---
+  duration_ms: 2.679708
+  ...
+# Subtest: T44-STATE malformed input is error null
+not ok 32 - T44-STATE malformed input is error null
+  ---
+  duration_ms: 1.742083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'unhandledRejection'
+  error: "Cannot read properties of null (reading 'discography')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    renderMusic (evalmachine.<anonymous>:1058:30)
+    bootMusic (evalmachine.<anonymous>:1112:5)
+  ...
+# Subtest: T44-STATE malformed input is error []
+not ok 33 - T44-STATE malformed input is error []
+  ---
+  duration_ms: 1.927417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:151:37)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+not ok 34 - T44-STATE malformed input is error {"discography":[]}
+  ---
+  duration_ms: 11.465625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:151:37)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+not ok 35 - T44-STATE malformed input is error {"discography":null}
+  ---
+  duration_ms: 2.657667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:151:37)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+not ok 36 - T44-STATE malformed input is error {"discography":{"digital":null}}
+  ---
+  duration_ms: 1.8265
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:151:37)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+not ok 37 - T44-STATE malformed input is error {"discography":{"digital":{}}}
+  ---
+  duration_ms: 8.16175
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'unhandledRejection'
+  error: 'items.slice is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.sortReleasesByDate (evalmachine.<anonymous>:13:18)
+    renderMusic (evalmachine.<anonymous>:1067:29)
+    bootMusic (evalmachine.<anonymous>:1112:5)
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+not ok 38 - T44-STATE malformed input is error {"discography":{"digital":[null]}}
+  ---
+  duration_ms: 1.280542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'unhandledRejection'
+  error: "Cannot read properties of null (reading 'playbackVideoId')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    evalmachine.<anonymous>:1073:31
+    Array.map (<anonymous>)
+    renderMusic (evalmachine.<anonymous>:1070:28)
+    bootMusic (evalmachine.<anonymous>:1112:5)
+    process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+not ok 39 - T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+  ---
+  duration_ms: 2.941875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:151:37)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+not ok 40 - T44-STATE malformed input is error {"youtube":[]}
+  ---
+  duration_ms: 2.155916
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:151:37)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+not ok 41 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+  ---
+  duration_ms: 1.523625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'unhandledRejection'
+  error: 'items.map is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    evalmachine.<anonymous>:1089:27
+    Array.map (<anonymous>)
+    renderMusic (evalmachine.<anonymous>:1086:35)
+    bootMusic (evalmachine.<anonymous>:1112:5)
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+not ok 42 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+  ---
+  duration_ms: 8.495292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:150:33'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ready'
+    - 'error'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'error'
+  actual: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:151:37)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+not ok 43 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+  ---
+  duration_ms: 2.112292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:153:57'
+  failureType: 'unhandledRejection'
+  error: "Cannot read properties of null (reading 'data')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    bootMusic (evalmachine.<anonymous>:1112:25)
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+not ok 44 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+  ---
+  duration_ms: 10.846292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:153:57'
+  failureType: 'unhandledRejection'
+  error: "Cannot read properties of null (reading 'data')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    bootMusic (evalmachine.<anonymous>:1112:25)
+    process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+not ok 45 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+  ---
+  duration_ms: 2.492042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:153:57'
+  failureType: 'unhandledRejection'
+  error: "Cannot read properties of null (reading 'data')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    bootMusic (evalmachine.<anonymous>:1112:25)
+    process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+not ok 46 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+  ---
+  duration_ms: 1.539458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:153:57'
+  failureType: 'unhandledRejection'
+  error: 'Music helper unavailable'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    renderMusic (evalmachine.<anonymous>:1056:75)
+    bootMusic (evalmachine.<anonymous>:1112:5)
+    process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+not ok 47 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+  ---
+  duration_ms: 1.66075
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:158:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /href="https:\/\/example.test\/shop"/. Input:
+    
+    '<div class="music-heading"><h1 class="site-section-title">music</h1><nav class="music-jumps" aria-label="ページ内の移動"></nav><a class="site-text-link" href="https://example.test/channel" target="_blank" rel="noopener noreferrer" aria-label="YouTubeチャンネル →（外部サイト・別タブ）">YouTubeチャンネル →</a></div>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '<div class="music-heading"><h1 class="site-section-title">music</h1><nav class="music-jumps" aria-label="ページ内の移動"></nav><a class="site-text-link" href="https://example.test/channel" target="_blank" rel="noopener noreferrer" aria-label="YouTubeチャンネル →（外部サイト・別タブ）">YouTubeチャンネル →</a></div>'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:160:43)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+not ok 48 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+  ---
+  duration_ms: 1.997542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:163:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:165:114)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+not ok 49 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+  ---
+  duration_ms: 7.244209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:168:1'
+  failureType: 'unhandledRejection'
+  error: "Cannot read properties of null (reading 'data')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    bootMusic (evalmachine.<anonymous>:1112:25)
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+not ok 50 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+  ---
+  duration_ms: 1.832042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:174:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:176:159)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+not ok 51 - T44-STATE pagehide after ready stops player without extra GET on bfcache return
+  ---
+  duration_ms: 12.850625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:179:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:180:147)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+not ok 52 - T44-STATE async hash after ready and hashchange \#release
+  ---
+  duration_ms: 7.741792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:182:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'release'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'release'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:184:59)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+not ok 53 - T44-STATE async hash after ready and hashchange \#demo
+  ---
+  duration_ms: 3.276667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:182:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'demo'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'demo'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:184:59)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+not ok 54 - T44-STATE async hash after ready and hashchange \#video
+  ---
+  duration_ms: 2.255417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:182:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'video'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'video'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:184:59)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+not ok 55 - T44-STATE async hash after ready and hashchange \#unknown
+  ---
+  duration_ms: 16.234917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:182:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:184:148)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+not ok 56 - T44-STATE async hash after ready and hashchange \#missing%20stuff
+  ---
+  duration_ms: 3.191875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:182:79'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:184:148)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+not ok 57 - T44-STATE empty section hash is removed by replace without adding history and top remains usable
+  ---
+  duration_ms: 1.974
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:187:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:188:96)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+not ok 58 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+  ---
+  duration_ms: 11.477375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:190:34'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'release'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'release'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:193:185)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+not ok 59 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+  ---
+  duration_ms: 3.269667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:190:34'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'release'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'release'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:193:185)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..59
+# tests 59
+# suites 0
+# pass 27
+# fail 32
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 936.03875

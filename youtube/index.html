@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>松本一樹 -itsuki matsumoto- : youtube</title>
+  <title>松本一樹 -itsuki matsumoto- : musicへの案内</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://1212hp.com/music/">
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
 </head>
 
-<body>
+<body data-music-destination="video">
   <!-- ヘッダー -->
   <header class="site-header">
     <div class="container header-container">
@@ -28,13 +30,10 @@
       </button>
       <nav id="global-nav">
         <ul>
-          <!-- 1つ上の階層にあるindex.htmlをHomeに -->
           <li><a href="../">Home</a></li>
-          <!-- profileディレクトリへ移動する場合、../profile/ -->
-          <li><a href="../profile/">Profile</a></li>
           <li><a href="../live/">Live</a></li>
-          <li><a href="../youtube/">YouTube</a></li>
-          <li><a href="../discography/">Discography</a></li>
+          <li><a href="../music/">Music</a></li>
+          <li><a href="../profile/">Profile</a></li>
           <li><a href="../contact/">Contact</a></li>
         </ul>
       </nav>
@@ -42,19 +41,10 @@
   </header>
 
   <main>
-    <section class="channel-application">
-      <div class="container">
-        <h3>
-          <a id="youtube-channel-link" href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank" rel="noopener">▷Channel</a>
-        </h3>
-      </div>
-    </section>
-
-    <section class="youtube">
-      <div class="container">
-        <h2 class="section-title">youtube</h2>
-        <div id="youtube-content"></div>
-      </div>
+    <section class="container">
+      <h2 class="site-section-title">music</h2>
+      <p>映像はMusicにまとめました。</p>
+      <a class="site-text-link" href="../music/#video">Musicの映像へ →</a>
     </section>
   </main>
 
@@ -64,9 +54,8 @@
     </div>
   </footer>
 
-  <script src="../assets/js/site-config.js"></script>
-  <script src="../assets/js/site-content.js?v=20261117-42"></script>
-  <script src="../assets/js/script.js?v=20261117-42"></script>
+  <script src="../assets/js/music-redirect.js?v=20261118-44" defer></script>
+  <script src="../assets/js/script.js?v=20261118-44"></script>
 </body>
 
 </html>

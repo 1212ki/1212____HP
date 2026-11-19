@@ -1,0 +1,21 @@
+# round2 capture contract check 2026-11-18T14:21:28+0900 cwd=/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music
+$ /usr/bin/python3 -m py_compile capture-music.py
+exit=0
+expected_images 56 unique 56
+inventory == expected_images: True
+360px image: True | PLAYER_MIN_HEIGHT 200
+fixture variants 12 ['release-playing', 'no-selection', 'video-playing', 'empty-demo', 'empty-live-movie', 'empty-video', 'all-empty', 'error', 'loading', 'no-image', 'broken-image', 'long-title']
+
+$ check_metrics self-test (synthetic metrics, no browser)
+合格するはずの値: []
+小さいプレーヤー -> ['player/映像は16:9、高さ200px未満にならない', 'player/映像の高さが200px以上', 'PCの聴くのプレーヤー480x270']
+並びの上に出る -> ['聴くのプレーヤーは押した作品の並びのすぐ下', '重なり: 作品music-release-digital-0 と プレーヤーmusic-release-digital-0-player', '重なり: 作品music-release-digital-1 と プレーヤーmusic-release-digital-0-player']
+下に離れすぎ -> ['聴くのプレーヤーは押した作品の並びのすぐ下']
+1列の映像 -> ['PCの映像は2列']
+映像の高さ -> ['player/映像は16:9、高さ200px未満にならない', 'player/映像の高さが200px以上', 'player/映像は16:9、高さ200px未満にならない', 'player/映像の高さが200px以上', 'サムネイルの高さ267/201', 'サムネイルの高さ267/201']
+重なり -> ['次の並びはプレーヤーの下', '重なり: 作品music-release-digital-0 と 作品music-release-digital-1', '重なり: 作品music-release-digital-1 と プレーヤーmusic-release-digital-0-player']
+self-test ok
+exit=0
+
+Front command: /usr/bin/python3 aidlc-docs/construction/aidlc-integration/verification/capture-music.py --serve
+Worker: localhost bind is blocked in this sandbox (PermissionError EPERM on 127.0.0.1:8899), so the browser capture was not run. No image was produced or overwritten.

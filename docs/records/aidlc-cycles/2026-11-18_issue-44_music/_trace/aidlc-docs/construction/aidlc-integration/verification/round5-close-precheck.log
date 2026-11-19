@@ -1,0 +1,36 @@
+# close の書式事前検査（DRYRUN ONLY。承認ではない）
+copy: /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-06b-tmp/precheck
+script_sha256(real == copy): 7a2d9b54439212446b26eaed549653a47a323e098a79785a5aa31c2508670f5a == 7a2d9b54439212446b26eaed549653a47a323e098a79785a5aa31c2508670f5a
+
+## 対照（仮の記録を置く前。第1版の記録03と第2版のplanの不一致で止まるはず）
+AI-DLC cycle command failed: approval digest mismatch for Code Generation Plan
+exit_code: 1
+
+## 事前検査（copy の中だけに、仮の03（第2版のdigest）・04・05とComplete stateを置いた）
+command: AIDLC_REPO_ROOT=/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-06b-tmp/precheck bash /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-06b-tmp/precheck/validate-close-ready.sh
+validate_close_ready: PASS (DRYRUN ONLY)
+exit_code: 0
+
+## 本物の worktree の確認
+real state / approvals / 結果文書 / plan / Requirements / Workflow Plan のSHA-256は、事前検査の前後で一致: PASS
+  146641c630534d9829dc2ba8fddb49cc0df3b49f48a66ca07edef6ca4b5df80e  aidlc-docs/aidlc-state.md
+  251c245e65189d2c7c6ae9ae985c106b4cb944030825f5cafdaf58feaa8b38c1  aidlc-docs/audit.md
+  6f662b4a1ebe602438c591c09a967afe96a987f2a204ab31ffb993767a807bc7  aidlc-docs/cycle-summary.md
+  7cbb16f1671de8d64d4bbb001ebe3476d6f7e452c0a2ed1f787c6a91c0fef473  aidlc-docs/approvals/01-requirements-approval.md
+  bf3c9068c7d619cace52cf42eaa2d9f6c2cdcbcc853bbae146b6887c39eba728  aidlc-docs/approvals/02-workflow-plan-approval.md
+  4b211d1ff03e34592cb379fef3d4f2c109122867712972a356bdd74b9aa2d644  aidlc-docs/approvals/03-code-generation-plan-approval.md
+  5751641557852624a5189c40352bdd4537c5fc8322b299a4ba1ca376b8124c6d  aidlc-docs/inception/requirements/requirements.md
+  1f511514eeb5f38c4246b572c802b6ee4f02eaf320f7efb988eaf81bc282937a  aidlc-docs/inception/plans/execution-plan.md
+  e9ce7059c877f2c9dcdb46906db48cd9a691054a20181cb19560b540f1c65f9a  aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md
+  3c292f72e3b3e7522b775b02a0e5ff2cc42ec98abc3e78822197e9176f00f918  aidlc-docs/construction/aidlc-integration/figma-fix-requests.md
+  cb0b8e009d2085d3be3d6632dd06b2373ae84fefe84c1e02ffba67a18332b525  aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md
+  248114b0dcf6106ec2f4a067128108ff0d9f6fd6ce6e4146b3d63f2a9f473248  aidlc-docs/construction/build-and-test/build-and-test-summary.md
+real gate 4・5 の承認記録が存在しない: PASS
+real state の Cycle Status は In Progress のまま: PASS
+real approvals/ と aidlc-state.md に DRYRUN の仮記録・仮stateが無い: PASS
+scripts/aidlc-cycle.sh close: NOT RUN
+
+copy 内の SHA-256（仮の記録が束縛した値）
+  plan: e9ce7059c877f2c9dcdb46906db48cd9a691054a20181cb19560b540f1c65f9a
+  code-generation-summary: cb0b8e009d2085d3be3d6632dd06b2373ae84fefe84c1e02ffba67a18332b525
+  build-and-test-summary: 248114b0dcf6106ec2f4a067128108ff0d9f6fd6ce6e4146b3d63f2a9f473248

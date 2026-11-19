@@ -17,13 +17,16 @@ document.addEventListener("DOMContentLoaded", function(){
       return path;
     };
 
-    const normCurrent = normalize(currentPath);
+    let normCurrent = normalize(currentPath);
+    if (normCurrent.startsWith("/ticket/")) normCurrent = "/live/";
+    if (normCurrent.startsWith("/discography/") || normCurrent.startsWith("/youtube/")) normCurrent = "/music/";
     const normLink = normalize(linkPath);
 
-    // Mark as active on exact match, or when the current path is a child route
-    // (e.g. /ticket/complete/ should highlight /ticket/).
+    link.classList.remove("active");
+    link.removeAttribute("aria-current");
     if (normCurrent === normLink || (normLink !== "/" && normCurrent.startsWith(normLink))) {
       link.classList.add("active");
+      link.setAttribute("aria-current", "page");
     }
   });
 
@@ -145,6 +148,8 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    const musicRoot = document.getElementById("music-content");
+    if (musicRoot && musicRoot.contains(anchor)) return;
     anchor.addEventListener("click", function(e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute("href"));

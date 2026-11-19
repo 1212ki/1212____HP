@@ -2,11 +2,12 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-11-17
+- Last updated: 2026-11-18
 - Related issues: #39, #40, #37, #35, #33, #29
 - Related implementation issues: #41, #46, #47（公開側の対応: #42, #43, #44, #45）、既存契約: #19, #20, #21, #22, #33, #35, #37
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #44のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #40）: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する
 - Prior Owner approval（Issue #37）: Issue #37のCode Generation Planに記載した本版の差分に対するItsuki Matsumotoのgate 3承認（本人回答`A`）。根拠はactive時の`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後の`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`。本文反映後に承認済み差分との一致を検証する
@@ -270,6 +271,12 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 上の#41単独時の公開表示維持・deploy順序は#41の履歴である。#42はHomeで顔・種別・選択映像を使い始める。管理画面の共有時の画像はLive共有画像の予備で、Homeの帯を兼ねない。表示名・説明・READMEをこの実際の働きに揃える。key・画像操作・保存・Workerは変更しない。管理の6タブと作品modalは#47まで現状を保ち、公開ナビも#44まで6項目とする。#42はGitHub Pagesへの単独mergeで公開し、Worker deployは不要。失敗時は#42の静的変更と対応説明を同じrevertで戻し、#41の保存契約を維持する。
 
 確認2の前にFrontがItsukiへ実際の1作品の種別・映像を選ぶ保存と、Siteの顔にその作品を選ぶ保存を頼む（保存済みなら入れ直さない）。#41の公開互換試験は3項目で現公開画面が変わらないことを保護するため、merge前に保存できる。確認2では本番公開データを直接読むbranchの新HomeをPC・スマホ用URLで出し、Itsukiが顔・種別・「聴く」の実音・「閉じる」を確認する。fixture撮影と分け、本番データをrepoへ保存しない。merge後はFrontがPages buildと公開Homeの新版配信をread-only確認し、差がある時だけItsukiへ返す。同じデータ・画面の2回目の本人確認は頼まない。保存した3項目はmerge見送り時もrollback時もそのまま保持する。
+
+#### Issue #44と公開側まとめ出し時の対応
+
+#44の公開Musicは`/music/`で作品と映像を統合する。管理の実タブは#47までSite / News / Live / YouTube / Disco / Profileを保つ。作品の種別・再生映像はDiscoで作品カードを押した「Discography編集」、映像とChannel URLはYouTubeから編集する。上の表のMusic > 作品/映像は最終形の設計上の名称であり、#47前の実タブ名ではない。`admin/README.md`の案内をこの実態へ揃え、タブ・入力・保存・key・Workerは#44で変更しない。
+
+公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約してからmainへ1回で出す。#44のPR mergeでは本番も管理のタブも変わらない。公開ナビ5項目と管理6タブが併存する状態で文言と働きを照合する。#42の単独公開手順は履歴として保持する。#44の確認2前にはFrontが本番公開データでMusicの表示・再生を確認し、Itsukiの追加保存を不要とする。復旧は#44の公開差分と説明を同じ単位で戻し、保存済みデータは保持する。
 
 ## 6. 情報の優先順位
 

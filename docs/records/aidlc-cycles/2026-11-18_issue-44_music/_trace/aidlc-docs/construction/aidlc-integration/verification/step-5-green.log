@@ -1,0 +1,275 @@
+TAP version 13
+# Subtest: T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+ok 1 - T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 1.660166
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/
+ok 2 - T44-LEGACY replace fixed destination discography/
+  ---
+  duration_ms: 1.539833
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#old
+ok 3 - T44-LEGACY replace fixed destination discography/\#old
+  ---
+  duration_ms: 5.867583
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#video
+ok 4 - T44-LEGACY replace fixed destination discography/\#video
+  ---
+  duration_ms: 3.407667
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+ok 5 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+  ---
+  duration_ms: 1.328625
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+ok 6 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.8245
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+ok 7 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.765916
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+ok 8 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.612
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+ok 9 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 0.65825
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+ok 10 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.640958
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html
+ok 11 - T44-LEGACY replace fixed destination discography/index.html
+  ---
+  duration_ms: 0.649
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#old
+ok 12 - T44-LEGACY replace fixed destination discography/index.html\#old
+  ---
+  duration_ms: 0.461667
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#video
+ok 13 - T44-LEGACY replace fixed destination discography/index.html\#video
+  ---
+  duration_ms: 0.430541
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+ok 14 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+  ---
+  duration_ms: 0.497917
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+ok 15 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.43025
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+ok 16 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.490833
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+ok 17 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.42425
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+ok 18 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 7.609375
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+ok 19 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 2.927375
+  ...
+# Subtest: T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+ok 20 - T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 0.340791
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/
+ok 21 - T44-LEGACY replace fixed destination youtube/
+  ---
+  duration_ms: 0.908375
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#old
+ok 22 - T44-LEGACY replace fixed destination youtube/\#old
+  ---
+  duration_ms: 1.0225
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#video
+ok 23 - T44-LEGACY replace fixed destination youtube/\#video
+  ---
+  duration_ms: 0.796666
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+ok 24 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+  ---
+  duration_ms: 0.816709
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+ok 25 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.809541
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+ok 26 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.596875
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+ok 27 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.597417
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+ok 28 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 0.506042
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+ok 29 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.42425
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html
+ok 30 - T44-LEGACY replace fixed destination youtube/index.html
+  ---
+  duration_ms: 8.379792
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#old
+ok 31 - T44-LEGACY replace fixed destination youtube/index.html\#old
+  ---
+  duration_ms: 0.434583
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#video
+ok 32 - T44-LEGACY replace fixed destination youtube/index.html\#video
+  ---
+  duration_ms: 2.479541
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+ok 33 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+  ---
+  duration_ms: 0.837916
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+ok 34 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 1.127166
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+ok 35 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.45925
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+ok 36 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.407875
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+ok 37 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 0.429666
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+ok 38 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.608333
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects 
+ok 39 - T44-LEGACY invalid destination never redirects 
+  ---
+  duration_ms: 0.616
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects other
+ok 40 - T44-LEGACY invalid destination never redirects other
+  ---
+  duration_ms: 0.444083
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects https://evil.test/
+ok 41 - T44-LEGACY invalid destination never redirects https://evil.test/
+  ---
+  duration_ms: 0.441083
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects ../video
+ok 42 - T44-LEGACY invalid destination never redirects ../video
+  ---
+  duration_ms: 0.426875
+  ...
+# Subtest: T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+ok 43 - T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+  ---
+  duration_ms: 1.738083
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 44 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 21.357542
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 45 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 13.719375
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 46 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 3.7135
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 47 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 13.669792
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 48 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 4.220125
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 49 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 8.609209
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 50 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 4.569417
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 51 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 2.756291
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 52 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 0.467375
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 53 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 0.243833
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 800.047125

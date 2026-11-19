@@ -1,0 +1,305 @@
+TAP version 13
+# Subtest: T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+ok 1 - T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+  ---
+  duration_ms: 9.464458
+  ...
+# Subtest: T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+ok 2 - T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+  ---
+  duration_ms: 6.357875
+  ...
+# Subtest: T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+ok 3 - T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+  ---
+  duration_ms: 0.943625
+  ...
+# Subtest: T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+ok 4 - T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.245208
+  ...
+# Subtest: T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+ok 5 - T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.134333
+  ...
+# Subtest: T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+ok 6 - T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.796084
+  ...
+# Subtest: T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+ok 7 - T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.956417
+  ...
+# Subtest: T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+ok 8 - T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+  ---
+  duration_ms: 8.196083
+  ...
+# Subtest: T44-PLAY refuses invalid id 
+ok 9 - T44-PLAY refuses invalid id 
+  ---
+  duration_ms: 1.117208
+  ...
+# Subtest: T44-PLAY refuses invalid id bad
+ok 10 - T44-PLAY refuses invalid id bad
+  ---
+  duration_ms: 0.787292
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghij!
+ok 11 - T44-PLAY refuses invalid id abcdefghij!
+  ---
+  duration_ms: 0.667209
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghijk/evil
+ok 12 - T44-PLAY refuses invalid id abcdefghijk/evil
+  ---
+  duration_ms: 0.504209
+  ...
+# Subtest: T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+ok 13 - T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+  ---
+  duration_ms: 9.041917
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 14 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 2.288291
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 15 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 32.018583
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 16 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 6.536458
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 17 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 10.093958
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 18 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 2.640416
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 19 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 14.973125
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 20 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 28.62575
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 21 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 17.828334
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+ok 22 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 4.524959
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+ok 23 - T44-STATE loading leaves one status, skeleton and busy until success
+  ---
+  duration_ms: 2.92425
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+ok 24 - T44-STATE partial/empty successful data all-empty
+  ---
+  duration_ms: 3.055333
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+ok 25 - T44-STATE partial/empty successful data missing-collections
+  ---
+  duration_ms: 3.252167
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+ok 26 - T44-STATE partial/empty successful data channel-only
+  ---
+  duration_ms: 4.199042
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 27 - T44-STATE partial/empty successful data only-videos
+  ---
+  duration_ms: 2.333375
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 28 - T44-STATE partial/empty successful data only-releases
+  ---
+  duration_ms: 16.076625
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 29 - T44-STATE partial/empty successful data empty-demo
+  ---
+  duration_ms: 19.873208
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 30 - T44-STATE partial/empty successful data empty-live-movie
+  ---
+  duration_ms: 4.024208
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 31 - T44-STATE partial/empty successful data empty-video
+  ---
+  duration_ms: 3.047792
+  ...
+# Subtest: T44-STATE malformed input is error null
+ok 32 - T44-STATE malformed input is error null
+  ---
+  duration_ms: 7.140667
+  ...
+# Subtest: T44-STATE malformed input is error []
+ok 33 - T44-STATE malformed input is error []
+  ---
+  duration_ms: 2.686
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+ok 34 - T44-STATE malformed input is error {"discography":[]}
+  ---
+  duration_ms: 3.017791
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+ok 35 - T44-STATE malformed input is error {"discography":null}
+  ---
+  duration_ms: 2.011375
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+ok 36 - T44-STATE malformed input is error {"discography":{"digital":null}}
+  ---
+  duration_ms: 1.974375
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+ok 37 - T44-STATE malformed input is error {"discography":{"digital":{}}}
+  ---
+  duration_ms: 6.89625
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+ok 38 - T44-STATE malformed input is error {"discography":{"digital":[null]}}
+  ---
+  duration_ms: 2.895667
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+ok 39 - T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+  ---
+  duration_ms: 3.542417
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+ok 40 - T44-STATE malformed input is error {"youtube":[]}
+  ---
+  duration_ms: 4.581875
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+ok 41 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+  ---
+  duration_ms: 2.416083
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+ok 42 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+  ---
+  duration_ms: 2.503875
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+ok 43 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+  ---
+  duration_ms: 19.028292
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+ok 44 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+  ---
+  duration_ms: 3.787208
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+ok 45 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+  ---
+  duration_ms: 2.235042
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+ok 46 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+  ---
+  duration_ms: 21.731833
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+ok 47 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+  ---
+  duration_ms: 5.002584
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+ok 48 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+  ---
+  duration_ms: 3.298625
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+ok 49 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+  ---
+  duration_ms: 18.919291
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+ok 50 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+  ---
+  duration_ms: 3.711875
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+ok 51 - T44-STATE pagehide after ready stops player without extra GET on bfcache return
+  ---
+  duration_ms: 24.300209
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+ok 52 - T44-STATE async hash after ready and hashchange \#release
+  ---
+  duration_ms: 3.643417
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+ok 53 - T44-STATE async hash after ready and hashchange \#demo
+  ---
+  duration_ms: 2.558625
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+ok 54 - T44-STATE async hash after ready and hashchange \#video
+  ---
+  duration_ms: 8.51975
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+ok 55 - T44-STATE async hash after ready and hashchange \#unknown
+  ---
+  duration_ms: 3.776291
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+ok 56 - T44-STATE async hash after ready and hashchange \#missing%20stuff
+  ---
+  duration_ms: 2.405375
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+ok 57 - T44-STATE empty section hash is removed by replace without adding history and top remains usable
+  ---
+  duration_ms: 1.970667
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+ok 58 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+  ---
+  duration_ms: 13.159042
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+ok 59 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+  ---
+  duration_ms: 2.924
+  ...
+1..59
+# tests 59
+# suites 0
+# pass 59
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1101.707375

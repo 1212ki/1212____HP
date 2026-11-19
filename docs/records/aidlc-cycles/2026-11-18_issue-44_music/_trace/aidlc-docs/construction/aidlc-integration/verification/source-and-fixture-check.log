@@ -1,0 +1,10 @@
+live/index.html main_sha256=9b1d0308042420d4e489a49dab6a4999c51c31d376fdfce03da4a1834842de8b base_bytes=PASS
+live/detail/index.html main_sha256=ec06d17fa642da178c437eb72222409d469fa2123b554e2f1e9ac20dcad8ba50 base_bytes=PASS
+ticket/index.html main_sha256=21052f7bdb3c106c7bc4f43b87dd0274478546d1948107fb8a6284c3e52dd45e base_bytes=PASS
+ticket/complete/index.html main_sha256=35e145e4cacb30ace009620f4588231715533ef98bbd47591d1a564bf0b1761a base_bytes=PASS
+profile/index.html main_sha256=a4759f14cfa08cc1e784f517c32672bee332ed02b72f464c0aa5d320b36325b3 base_bytes=PASS
+contact/index.html main_sha256=84a7205bc221b35f8458bc378148243020dd8155fa865ab4800740694b61f53d base_bytes=PASS
+02-workflow-plan-approval.md prompt_bytes=PASS raw_source=PASS
+01-requirements-approval.md prompt_bytes=PASS raw_source=PASS
+03-code-generation-plan-approval.md prompt_bytes=PASS raw_source=PASS
+fixture provenance: home-states synthetic data + newly authored synthetic records/videos; classification shape only; production raw values/network not used. PASS

@@ -1,0 +1,948 @@
+TAP version 13
+# Subtest: default image forms keep the existing path display for non-live images
+ok 1 - default image forms keep the existing path display for non-live images
+  ---
+  duration_ms: 46.75225
+  ...
+# Subtest: default image path display escapes the current image path
+ok 2 - default image path display escapes the current image path
+  ---
+  duration_ms: 2.040125
+  ...
+# Subtest: downloadable live flyer forms hide path text and wrap the preview in a download link
+ok 3 - downloadable live flyer forms hide path text and wrap the preview in a download link
+  ---
+  duration_ms: 1.283125
+  ...
+# Subtest: Live edit workspace uses a downloadable flyer preview without path or URL display
+ok 4 - Live edit workspace uses a downloadable flyer preview without path or URL display
+  ---
+  duration_ms: 7.973167
+  ...
+# Subtest: Live image selection keeps the selected flyer preview inside a download link
+ok 5 - Live image selection keeps the selected flyer preview inside a download link
+  ---
+  duration_ms: 12.028375
+  ...
+# Subtest: Live image clear marks the workspace editor dirty and disables the global save route
+ok 6 - Live image clear marks the workspace editor dirty and disables the global save route
+  ---
+  duration_ms: 3.617084
+  ...
+# Subtest: API fallback disables and runtime-guards Live flyer select and clear mutations
+ok 7 - API fallback disables and runtime-guards Live flyer select and clear mutations
+  ---
+  duration_ms: 3.509958
+  ...
+# Subtest: Live image API upload updates the flyer download link to the uploaded URL
+ok 8 - Live image API upload updates the flyer download link to the uploaded URL
+  ---
+  duration_ms: 1.847166
+  ...
+# Subtest: a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+ok 9 - a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+  ---
+  duration_ms: 42.831083
+  ...
+# Subtest: pending Live image upload protects beforeunload and settles into dirty state on success
+ok 10 - pending Live image upload protects beforeunload and settles into dirty state on success
+  ---
+  duration_ms: 10.622958
+  ...
+# Subtest: failed Live image upload restores its original preview and preserves unrelated dirty input
+ok 11 - failed Live image upload restores its original preview and preserves unrelated dirty input
+  ---
+  duration_ms: 4.58075
+  ...
+# Subtest: Live image overlapping same-ID uploads release the superseded request when latest settles
+ok 12 - Live image overlapping same-ID uploads release the superseded request when latest settles
+  ---
+  duration_ms: 8.935
+  ...
+# Subtest: latest overlapping upload failure restores the first confirmed image baseline
+ok 13 - latest overlapping upload failure restores the first confirmed image baseline
+  ---
+  duration_ms: 24.800292
+  ...
+# Subtest: Local Live image read blocks transition until confirmed discard releases its owner
+ok 14 - Local Live image read blocks transition until confirmed discard releases its owner
+  ---
+  duration_ms: 5.870125
+  ...
+# Subtest: Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+ok 15 - Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+  ---
+  duration_ms: 4.495417
+  ...
+# Subtest: generic modal close and replacement release abandoned image operations
+ok 16 - generic modal close and replacement release abandoned image operations
+  ---
+  duration_ms: 10.017458
+  ...
+# Subtest: clearImage is latest across API and Local Live image operations
+    # Subtest: API
+    ok 1 - API
+      ---
+      duration_ms: 17.009667
+      ...
+    # Subtest: Local
+    ok 2 - Local
+      ---
+      duration_ms: 4.083875
+      ...
+    1..2
+ok 17 - clearImage is latest across API and Local Live image operations
+  ---
+  duration_ms: 22.381375
+  ...
+# Subtest: clearImage is latest for generic page images after API success and Local failure
+ok 18 - clearImage is latest for generic page images after API success and Local failure
+  ---
+  duration_ms: 32.900708
+  ...
+# Subtest: a new image selection does not release a parallel operation for another input
+ok 19 - a new image selection does not release a parallel operation for another input
+  ---
+  duration_ms: 19.624792
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 20 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 3.13775
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 21 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 33.8195
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 22 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 4.873583
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 23 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 38.072375
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 24 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 3.224292
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 25 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 13.824584
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 26 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 23.738208
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 27 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 24.122125
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+ok 28 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 17.188666
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+ok 29 - T44-STATE loading leaves one status, skeleton and busy until success
+  ---
+  duration_ms: 3.339041
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+ok 30 - T44-STATE partial/empty successful data all-empty
+  ---
+  duration_ms: 2.020375
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+ok 31 - T44-STATE partial/empty successful data missing-collections
+  ---
+  duration_ms: 6.390458
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+ok 32 - T44-STATE partial/empty successful data channel-only
+  ---
+  duration_ms: 10.509542
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 33 - T44-STATE partial/empty successful data only-videos
+  ---
+  duration_ms: 2.624167
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 34 - T44-STATE partial/empty successful data only-releases
+  ---
+  duration_ms: 2.13775
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 35 - T44-STATE partial/empty successful data empty-demo
+  ---
+  duration_ms: 21.444167
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 36 - T44-STATE partial/empty successful data empty-live-movie
+  ---
+  duration_ms: 3.570791
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 37 - T44-STATE partial/empty successful data empty-video
+  ---
+  duration_ms: 2.682167
+  ...
+# Subtest: T44-STATE malformed input is error null
+ok 38 - T44-STATE malformed input is error null
+  ---
+  duration_ms: 13.083333
+  ...
+# Subtest: T44-STATE malformed input is error []
+ok 39 - T44-STATE malformed input is error []
+  ---
+  duration_ms: 3.268
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+ok 40 - T44-STATE malformed input is error {"discography":[]}
+  ---
+  duration_ms: 2.128917
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+ok 41 - T44-STATE malformed input is error {"discography":null}
+  ---
+  duration_ms: 3.147875
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+ok 42 - T44-STATE malformed input is error {"discography":{"digital":null}}
+  ---
+  duration_ms: 4.882917
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+ok 43 - T44-STATE malformed input is error {"discography":{"digital":{}}}
+  ---
+  duration_ms: 1.5885
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+ok 44 - T44-STATE malformed input is error {"discography":{"digital":[null]}}
+  ---
+  duration_ms: 2.095875
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+ok 45 - T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+  ---
+  duration_ms: 5.758917
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+ok 46 - T44-STATE malformed input is error {"youtube":[]}
+  ---
+  duration_ms: 2.594958
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+ok 47 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+  ---
+  duration_ms: 3.960708
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+ok 48 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+  ---
+  duration_ms: 4.913667
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+ok 49 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+  ---
+  duration_ms: 15.124666
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+ok 50 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+  ---
+  duration_ms: 2.89975
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+ok 51 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+  ---
+  duration_ms: 1.890042
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+ok 52 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+  ---
+  duration_ms: 4.763459
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+ok 53 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+  ---
+  duration_ms: 9.760667
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+ok 54 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+  ---
+  duration_ms: 3.868333
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+ok 55 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+  ---
+  duration_ms: 23.676208
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+ok 56 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+  ---
+  duration_ms: 3.291125
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+ok 57 - T44-STATE pagehide after ready stops player without extra GET on bfcache return
+  ---
+  duration_ms: 24.109584
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+ok 58 - T44-STATE async hash after ready and hashchange \#release
+  ---
+  duration_ms: 3.822958
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+ok 59 - T44-STATE async hash after ready and hashchange \#demo
+  ---
+  duration_ms: 8.960416
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+ok 60 - T44-STATE async hash after ready and hashchange \#video
+  ---
+  duration_ms: 2.774208
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+ok 61 - T44-STATE async hash after ready and hashchange \#unknown
+  ---
+  duration_ms: 4.907917
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+ok 62 - T44-STATE async hash after ready and hashchange \#missing%20stuff
+  ---
+  duration_ms: 13.1795
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+ok 63 - T44-STATE empty section hash is removed by replace without adding history and top remains usable
+  ---
+  duration_ms: 4.048625
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+ok 64 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+  ---
+  duration_ms: 22.022
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+ok 65 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+  ---
+  duration_ms: 4.100083
+  ...
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 66 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 4.513833
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 67 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 26.406292
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 68 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 2.673667
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 69 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 8.399959
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 70 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 2.17825
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 71 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 9.63575
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 8.739375
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 3.312334
+      ...
+    1..2
+ok 72 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 12.787208
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 73 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 13.266709
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 74 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 2.830917
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 75 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 1.571917
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 76 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 2.775833
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 77 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 22.950084
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 78 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 1.959417
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 79 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 13.918292
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 80 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 6.5055
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 81 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 2.113166
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 82 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 1.864917
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 83 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 1.786833
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 2.701792
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 2.058583
+      ...
+    1..2
+ok 84 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 5.236416
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 3.861125
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 4.500542
+      ...
+    1..2
+ok 85 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 9.779917
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 1.77925
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 1.277958
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 1.137333
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 1.27775
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 1.076167
+      ...
+    1..5
+ok 86 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 7.282417
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 87 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.79225
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 88 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 7.200833
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 89 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 2.704375
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 90 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 1.920333
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs index.html
+not ok 91 - T44-SHELL ten routes and five shared nav URLs index.html
+  ---
+  duration_ms: 71.875708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      [
+    +   '/index.html',
+    -   '/',
+        '/live/',
+    ...
+        '/profile/',
+        '/contact/'
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '/'
+    1: '/live/'
+    2: '/music/'
+    3: '/profile/'
+    4: '/contact/'
+  actual:
+    0: '/index.html'
+    1: '/live/'
+    2: '/music/'
+    3: '/profile/'
+    4: '/contact/'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:20:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/index.html
+ok 92 - T44-SHELL ten routes and five shared nav URLs live/index.html
+  ---
+  duration_ms: 41.508084
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+ok 93 - T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+  ---
+  duration_ms: 27.025917
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/index.html
+ok 94 - T44-SHELL ten routes and five shared nav URLs ticket/index.html
+  ---
+  duration_ms: 30.212708
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+ok 95 - T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 53.445708
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs discography/index.html
+ok 96 - T44-SHELL ten routes and five shared nav URLs discography/index.html
+  ---
+  duration_ms: 48.193167
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs youtube/index.html
+ok 97 - T44-SHELL ten routes and five shared nav URLs youtube/index.html
+  ---
+  duration_ms: 43.868
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs profile/index.html
+ok 98 - T44-SHELL ten routes and five shared nav URLs profile/index.html
+  ---
+  duration_ms: 42.732042
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs contact/index.html
+ok 99 - T44-SHELL ten routes and five shared nav URLs contact/index.html
+  ---
+  duration_ms: 68.948167
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs music/index.html
+ok 100 - T44-SHELL ten routes and five shared nav URLs music/index.html
+  ---
+  duration_ms: 0.861959
+  ...
+# Subtest: T44-SHELL shared style and script cache version aligned for every consumer
+ok 101 - T44-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 1.401541
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 102 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 43.110333
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 103 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 89.582625
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 104 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 1.695792
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 105 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 2.951166
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 106 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 5.370292
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 107 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 2.588959
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 108 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 9.582292
+  ...
+# Subtest: RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+ok 109 - RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+  ---
+  duration_ms: 3.9295
+  ...
+# Subtest: RV42-07 Home caption and news spacing match master without changing shared title gap
+ok 110 - RV42-07 Home caption and news spacing match master without changing shared title gap
+  ---
+  duration_ms: 0.866584
+  ...
+# Subtest: FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+ok 111 - FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+  ---
+  duration_ms: 0.647416
+  ...
+# Subtest: FR-N2 all Home news rows share the longest bounded date column and content start
+ok 112 - FR-N2 all Home news rows share the longest bounded date column and content start
+  ---
+  duration_ms: 0.586208
+  ...
+# Subtest: T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+not ok 113 - T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+  ---
+  duration_ms: 41.404542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:112:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    /* Issue #44: Music variants of the shared components. */
+    body.site-music
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    /* Issue #44: Music variants of the shared components. */
+    body.site-music
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:120:50)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+ok 114 - T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+  ---
+  duration_ms: 372.778208
+  ...
+# Subtest: T44-SHELL current mapping/aria /
+ok 115 - T44-SHELL current mapping/aria /
+  ---
+  duration_ms: 1.404791
+  ...
+# Subtest: T44-SHELL current mapping/aria /index.html
+ok 116 - T44-SHELL current mapping/aria /index.html
+  ---
+  duration_ms: 0.607333
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/
+not ok 117 - T44-SHELL current mapping/aria /music/
+  ---
+  duration_ms: 0.70825
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:195)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/index.html
+not ok 118 - T44-SHELL current mapping/aria /music/index.html
+  ---
+  duration_ms: 0.746208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:195)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/
+not ok 119 - T44-SHELL current mapping/aria /ticket/
+  ---
+  duration_ms: 7.34425
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:105)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/complete/
+not ok 120 - T44-SHELL current mapping/aria /ticket/complete/
+  ---
+  duration_ms: 0.562292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:105)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /live/detail/
+not ok 121 - T44-SHELL current mapping/aria /live/detail/
+  ---
+  duration_ms: 0.503458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:195)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /discography/index.html
+not ok 122 - T44-SHELL current mapping/aria /discography/index.html
+  ---
+  duration_ms: 0.595209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:105)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /youtube/
+not ok 123 - T44-SHELL current mapping/aria /youtube/
+  ---
+  duration_ms: 0.664041
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:105)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /profile/
+not ok 124 - T44-SHELL current mapping/aria /profile/
+  ---
+  duration_ms: 1.240167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:195)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL current mapping/aria /contact/
+not ok 125 - T44-SHELL current mapping/aria /contact/
+  ---
+  duration_ms: 0.838917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:299'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 4
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:131:195)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+ok 126 - T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+  ---
+  duration_ms: 7.8925
+  ...
+1..126
+# tests 139
+# suites 0
+# pass 128
+# fail 11
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3687.818125

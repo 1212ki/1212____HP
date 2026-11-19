@@ -1,0 +1,1513 @@
+# round2 final focused 2026-11-18T14:20:51+0900
+$ node --test (10 focused files)
+TAP version 13
+# Subtest: default image forms keep the existing path display for non-live images
+ok 1 - default image forms keep the existing path display for non-live images
+  ---
+  duration_ms: 66.003
+  ...
+# Subtest: default image path display escapes the current image path
+ok 2 - default image path display escapes the current image path
+  ---
+  duration_ms: 1.879875
+  ...
+# Subtest: downloadable live flyer forms hide path text and wrap the preview in a download link
+ok 3 - downloadable live flyer forms hide path text and wrap the preview in a download link
+  ---
+  duration_ms: 1.108167
+  ...
+# Subtest: Live edit workspace uses a downloadable flyer preview without path or URL display
+ok 4 - Live edit workspace uses a downloadable flyer preview without path or URL display
+  ---
+  duration_ms: 9.461125
+  ...
+# Subtest: Live image selection keeps the selected flyer preview inside a download link
+ok 5 - Live image selection keeps the selected flyer preview inside a download link
+  ---
+  duration_ms: 31.954625
+  ...
+# Subtest: Live image clear marks the workspace editor dirty and disables the global save route
+ok 6 - Live image clear marks the workspace editor dirty and disables the global save route
+  ---
+  duration_ms: 9.510375
+  ...
+# Subtest: API fallback disables and runtime-guards Live flyer select and clear mutations
+ok 7 - API fallback disables and runtime-guards Live flyer select and clear mutations
+  ---
+  duration_ms: 13.453833
+  ...
+# Subtest: Live image API upload updates the flyer download link to the uploaded URL
+ok 8 - Live image API upload updates the flyer download link to the uploaded URL
+  ---
+  duration_ms: 2.138042
+  ...
+# Subtest: a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+ok 9 - a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+  ---
+  duration_ms: 33.696833
+  ...
+# Subtest: pending Live image upload protects beforeunload and settles into dirty state on success
+ok 10 - pending Live image upload protects beforeunload and settles into dirty state on success
+  ---
+  duration_ms: 15.73575
+  ...
+# Subtest: failed Live image upload restores its original preview and preserves unrelated dirty input
+ok 11 - failed Live image upload restores its original preview and preserves unrelated dirty input
+  ---
+  duration_ms: 27.100625
+  ...
+# Subtest: Live image overlapping same-ID uploads release the superseded request when latest settles
+ok 12 - Live image overlapping same-ID uploads release the superseded request when latest settles
+  ---
+  duration_ms: 14.922542
+  ...
+# Subtest: latest overlapping upload failure restores the first confirmed image baseline
+ok 13 - latest overlapping upload failure restores the first confirmed image baseline
+  ---
+  duration_ms: 17.826833
+  ...
+# Subtest: Local Live image read blocks transition until confirmed discard releases its owner
+ok 14 - Local Live image read blocks transition until confirmed discard releases its owner
+  ---
+  duration_ms: 6.746167
+  ...
+# Subtest: Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+ok 15 - Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+  ---
+  duration_ms: 2.8765
+  ...
+# Subtest: generic modal close and replacement release abandoned image operations
+ok 16 - generic modal close and replacement release abandoned image operations
+  ---
+  duration_ms: 6.155292
+  ...
+# Subtest: clearImage is latest across API and Local Live image operations
+    # Subtest: API
+    ok 1 - API
+      ---
+      duration_ms: 6.836209
+      ...
+    # Subtest: Local
+    ok 2 - Local
+      ---
+      duration_ms: 4.024083
+      ...
+    1..2
+ok 17 - clearImage is latest across API and Local Live image operations
+  ---
+  duration_ms: 11.788542
+  ...
+# Subtest: clearImage is latest for generic page images after API success and Local failure
+ok 18 - clearImage is latest for generic page images after API success and Local failure
+  ---
+  duration_ms: 52.98175
+  ...
+# Subtest: a new image selection does not release a parallel operation for another input
+ok 19 - a new image selection does not release a parallel operation for another input
+  ---
+  duration_ms: 4.668459
+  ...
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+ok 20 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 38.589625
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+ok 21 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 2.661125
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 22 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 0.709375
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 23 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 0.548917
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 24 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 0.578541
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 25 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 0.45975
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 26 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 1.20525
+  ...
+# Subtest: RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+ok 27 - RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+  ---
+  duration_ms: 1.242625
+  ...
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 28 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 15.879625
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 29 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 75.405208
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 30 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 7.635375
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 31 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 4.163541
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 32 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 4.449667
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 33 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 1.906167
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 34 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 3.545333
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 35 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 14.867667
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 36 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 1.608916
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 37 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 1.520167
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 38 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 11.057416
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 39 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 1.406583
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 40 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 2.288875
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 41 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 1.597167
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 42 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 10.455583
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 43 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 7.078375
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 44 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 12.306125
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 45 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 6.391625
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 46 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 14.579209
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 47 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 1.965958
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 48 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 1.394125
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 49 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 2.749083
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 50 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 2.31025
+  ...
+# Subtest: T42-LIVE booking internal
+ok 51 - T42-LIVE booking internal
+  ---
+  duration_ms: 9.539417
+  ...
+# Subtest: T42-LIVE booking external
+ok 52 - T42-LIVE booking external
+  ---
+  duration_ms: 3.347708
+  ...
+# Subtest: T42-LIVE booking closed
+ok 53 - T42-LIVE booking closed
+  ---
+  duration_ms: 39.326375
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 54 - T42-LIVE booking invalid
+  ---
+  duration_ms: 31.0775
+  ...
+# Subtest: T42-LIVE booking past
+ok 55 - T42-LIVE booking past
+  ---
+  duration_ms: 1.69175
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 56 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 1.46875
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 57 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 1.253958
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 58 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 3.09025
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 59 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 2.13425
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 60 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 4.793958
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 61 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 8.34025
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 62 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 4.201666
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 63 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 32.445916
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 64 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 23.473375
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 65 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 28.2915
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 66 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 3.758916
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 67 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 115.453958
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 68 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 13.293917
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 69 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 9.080917
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 70 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 1.160667
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 71 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 3.073542
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 72 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 12.504125
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 73 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 3.016208
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 74 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 97.887208
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 75 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 4.178708
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 76 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 3.937042
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 77 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 2.771208
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 78 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 7.394083
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 79 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 4.182084
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 80 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 9.46775
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 81 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 4.040042
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 82 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 27.3595
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 83 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 3.4825
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 84 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 1.31125
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 85 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 9.607417
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 86 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 2.770458
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 87 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 13.254125
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 88 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 4.3765
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 89 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 4.059083
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 90 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 7.21425
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 91 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 5.658416
+  ...
+# Subtest: music date format uses exactly ten ASCII characters without calendar restrictions
+ok 92 - music date format uses exactly ten ASCII characters without calendar restrictions
+  ---
+  duration_ms: 2.685167
+  ...
+# Subtest: music stable sorting, automatic and explicit selection do not mutate inputs
+ok 93 - music stable sorting, automatic and explicit selection do not mutate inputs
+  ---
+  duration_ms: 3.1475
+  ...
+# Subtest: music references clear after deletion, retain category moves and normalize only new keys
+ok 94 - music references clear after deletion, retain category moves and normalize only new keys
+  ---
+  duration_ms: 1.068125
+  ...
+# Subtest: T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+ok 95 - T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+  ---
+  duration_ms: 4.299875
+  ...
+# Subtest: T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+ok 96 - T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+  ---
+  duration_ms: 1.086334
+  ...
+# Subtest: T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+ok 97 - T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+  ---
+  duration_ms: 0.641125
+  ...
+# Subtest: T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+ok 98 - T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.005875
+  ...
+# Subtest: T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+ok 99 - T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.80575
+  ...
+# Subtest: T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+ok 100 - T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.680708
+  ...
+# Subtest: T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+ok 101 - T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.334417
+  ...
+# Subtest: T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+ok 102 - T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+  ---
+  duration_ms: 0.801958
+  ...
+# Subtest: T44-PLAY refuses invalid id 
+ok 103 - T44-PLAY refuses invalid id 
+  ---
+  duration_ms: 0.785416
+  ...
+# Subtest: T44-PLAY refuses invalid id bad
+ok 104 - T44-PLAY refuses invalid id bad
+  ---
+  duration_ms: 1.271542
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghij!
+ok 105 - T44-PLAY refuses invalid id abcdefghij!
+  ---
+  duration_ms: 2.061916
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghijk/evil
+ok 106 - T44-PLAY refuses invalid id abcdefghijk/evil
+  ---
+  duration_ms: 0.622333
+  ...
+# Subtest: T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+ok 107 - T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+  ---
+  duration_ms: 5.987375
+  ...
+# Subtest: T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+ok 108 - T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 4.159333
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/
+ok 109 - T44-LEGACY replace fixed destination discography/
+  ---
+  duration_ms: 2.054584
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#old
+ok 110 - T44-LEGACY replace fixed destination discography/\#old
+  ---
+  duration_ms: 41.693042
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#video
+ok 111 - T44-LEGACY replace fixed destination discography/\#video
+  ---
+  duration_ms: 14.949083
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+ok 112 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+  ---
+  duration_ms: 17.391542
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+ok 113 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+  ---
+  duration_ms: 1.858458
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+ok 114 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+  ---
+  duration_ms: 1.908375
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+ok 115 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 1.668292
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+ok 116 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 1.307041
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+ok 117 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 7.298166
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html
+ok 118 - T44-LEGACY replace fixed destination discography/index.html
+  ---
+  duration_ms: 1.312875
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#old
+ok 119 - T44-LEGACY replace fixed destination discography/index.html\#old
+  ---
+  duration_ms: 1.574417
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#video
+ok 120 - T44-LEGACY replace fixed destination discography/index.html\#video
+  ---
+  duration_ms: 2.091166
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+ok 121 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+  ---
+  duration_ms: 2.690584
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+ok 122 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 2.326083
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+ok 123 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 1.181333
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+ok 124 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 5.40775
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+ok 125 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 21.241
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+ok 126 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 3.824459
+  ...
+# Subtest: T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+ok 127 - T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 1.236625
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/
+ok 128 - T44-LEGACY replace fixed destination youtube/
+  ---
+  duration_ms: 10.791167
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#old
+ok 129 - T44-LEGACY replace fixed destination youtube/\#old
+  ---
+  duration_ms: 4.681375
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#video
+ok 130 - T44-LEGACY replace fixed destination youtube/\#video
+  ---
+  duration_ms: 1.249042
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+ok 131 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+  ---
+  duration_ms: 1.73325
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+ok 132 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+  ---
+  duration_ms: 5.440375
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+ok 133 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+  ---
+  duration_ms: 7.138916
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+ok 134 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 2.322459
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+ok 135 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 1.634333
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+ok 136 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.660917
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html
+ok 137 - T44-LEGACY replace fixed destination youtube/index.html
+  ---
+  duration_ms: 0.758375
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#old
+ok 138 - T44-LEGACY replace fixed destination youtube/index.html\#old
+  ---
+  duration_ms: 1.328291
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#video
+ok 139 - T44-LEGACY replace fixed destination youtube/index.html\#video
+  ---
+  duration_ms: 0.73575
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+ok 140 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+  ---
+  duration_ms: 0.761875
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+ok 141 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.5185
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+ok 142 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.768166
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+ok 143 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.708833
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+ok 144 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 1.165416
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+ok 145 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.572958
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects 
+ok 146 - T44-LEGACY invalid destination never redirects 
+  ---
+  duration_ms: 1.977292
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects other
+ok 147 - T44-LEGACY invalid destination never redirects other
+  ---
+  duration_ms: 1.489875
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects https://evil.test/
+ok 148 - T44-LEGACY invalid destination never redirects https://evil.test/
+  ---
+  duration_ms: 0.720667
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects ../video
+ok 149 - T44-LEGACY invalid destination never redirects ../video
+  ---
+  duration_ms: 0.588708
+  ...
+# Subtest: T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+ok 150 - T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+  ---
+  duration_ms: 3.216917
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 151 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 4.117958
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 152 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 34.558291
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 153 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 13.3505
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 154 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 64.213708
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 155 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 5.916667
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 156 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 22.300875
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 157 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 56.430166
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 158 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 9.525375
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+ok 159 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 5.578833
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+ok 160 - T44-STATE loading leaves one status, skeleton and busy until success
+  ---
+  duration_ms: 5.252541
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+ok 161 - T44-STATE partial/empty successful data all-empty
+  ---
+  duration_ms: 9.848
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+ok 162 - T44-STATE partial/empty successful data missing-collections
+  ---
+  duration_ms: 135.594916
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+ok 163 - T44-STATE partial/empty successful data channel-only
+  ---
+  duration_ms: 9.487792
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 164 - T44-STATE partial/empty successful data only-videos
+  ---
+  duration_ms: 23.643833
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 165 - T44-STATE partial/empty successful data only-releases
+  ---
+  duration_ms: 4.603625
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 166 - T44-STATE partial/empty successful data empty-demo
+  ---
+  duration_ms: 11.101416
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 167 - T44-STATE partial/empty successful data empty-live-movie
+  ---
+  duration_ms: 8.972541
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 168 - T44-STATE partial/empty successful data empty-video
+  ---
+  duration_ms: 27.85325
+  ...
+# Subtest: T44-STATE malformed input is error null
+ok 169 - T44-STATE malformed input is error null
+  ---
+  duration_ms: 39.082167
+  ...
+# Subtest: T44-STATE malformed input is error []
+ok 170 - T44-STATE malformed input is error []
+  ---
+  duration_ms: 27.972542
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+ok 171 - T44-STATE malformed input is error {"discography":[]}
+  ---
+  duration_ms: 2.335584
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+ok 172 - T44-STATE malformed input is error {"discography":null}
+  ---
+  duration_ms: 5.107709
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+ok 173 - T44-STATE malformed input is error {"discography":{"digital":null}}
+  ---
+  duration_ms: 7.322875
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+ok 174 - T44-STATE malformed input is error {"discography":{"digital":{}}}
+  ---
+  duration_ms: 2.674916
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+ok 175 - T44-STATE malformed input is error {"discography":{"digital":[null]}}
+  ---
+  duration_ms: 3.651709
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+ok 176 - T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+  ---
+  duration_ms: 4.214542
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+ok 177 - T44-STATE malformed input is error {"youtube":[]}
+  ---
+  duration_ms: 2.941792
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+ok 178 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+  ---
+  duration_ms: 11.586167
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+ok 179 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+  ---
+  duration_ms: 5.415042
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+ok 180 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+  ---
+  duration_ms: 2.643709
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+ok 181 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+  ---
+  duration_ms: 2.686625
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+ok 182 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+  ---
+  duration_ms: 4.193
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+ok 183 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+  ---
+  duration_ms: 3.299917
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+ok 184 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+  ---
+  duration_ms: 18.026084
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+ok 185 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+  ---
+  duration_ms: 11.173458
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+ok 186 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+  ---
+  duration_ms: 19.4525
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+ok 187 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+  ---
+  duration_ms: 27.5975
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+ok 188 - T44-STATE pagehide after ready stops player without extra GET on bfcache return
+  ---
+  duration_ms: 41.15575
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+ok 189 - T44-STATE async hash after ready and hashchange \#release
+  ---
+  duration_ms: 15.54575
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+ok 190 - T44-STATE async hash after ready and hashchange \#demo
+  ---
+  duration_ms: 4.827833
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+ok 191 - T44-STATE async hash after ready and hashchange \#video
+  ---
+  duration_ms: 8.428208
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+ok 192 - T44-STATE async hash after ready and hashchange \#unknown
+  ---
+  duration_ms: 15.127584
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+ok 193 - T44-STATE async hash after ready and hashchange \#missing%20stuff
+  ---
+  duration_ms: 4.128917
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+ok 194 - T44-STATE empty section hash is removed by replace without adding history and top remains usable
+  ---
+  duration_ms: 2.958875
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+ok 195 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+  ---
+  duration_ms: 21.480375
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+ok 196 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+  ---
+  duration_ms: 18.444083
+  ...
+# Subtest: T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+ok 197 - T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+  ---
+  duration_ms: 6.910625
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+ok 198 - T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 14.641584
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+ok 199 - T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 2.99725
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+ok 200 - T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 31.167875
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+ok 201 - T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 8.461708
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+ok 202 - T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 11.896292
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+ok 203 - T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 3.869208
+  ...
+# Subtest: T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+ok 204 - T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+  ---
+  duration_ms: 2.847875
+  ...
+# Subtest: T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+ok 205 - T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 2.358084
+  ...
+# Subtest: T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+ok 206 - T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+  ---
+  duration_ms: 20.548625
+  ...
+# Subtest: T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+ok 207 - T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+  ---
+  duration_ms: 8.974375
+  ...
+# Subtest: T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+ok 208 - T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+  ---
+  duration_ms: 27.434
+  ...
+# Subtest: T44-FOCUS retry that fails again moves focus to the new retry button, not body
+ok 209 - T44-FOCUS retry that fails again moves focus to the new retry button, not body
+  ---
+  duration_ms: 2.145208
+  ...
+# Subtest: T44-FOCUS empty result after retry keeps focus on the retry still shown
+ok 210 - T44-FOCUS empty result after retry keeps focus on the retry still shown
+  ---
+  duration_ms: 4.8225
+  ...
+# Subtest: T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+ok 211 - T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+  ---
+  duration_ms: 25.096834
+  ...
+# Subtest: T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+ok 212 - T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+  ---
+  duration_ms: 47.166583
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 213 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 43.17975
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 214 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 17.507042
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 215 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 5.315416
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 216 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 5.043375
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 217 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 5.88925
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 218 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 7.308958
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 219 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 5.258584
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 220 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 3.709708
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 221 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 1.738042
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 222 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 0.312625
+  ...
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 223 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 11.365458
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 224 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 19.131166
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 225 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 5.944083
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 226 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 4.694334
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 227 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 2.013417
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 228 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 16.378792
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 16.981792
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 12.003292
+      ...
+    1..2
+ok 229 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 30.375833
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 230 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 6.582
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 231 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 2.472792
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 232 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 3.365542
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 233 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 4.382666
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 234 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 24.196291
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 235 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 6.458458
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 236 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 41.801334
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 237 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 8.418458
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 238 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 5.434125
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 239 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 4.132541
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 240 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 2.495791
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 3.191541
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 4.861792
+      ...
+    1..2
+ok 241 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 9.190333
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 6.462625
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 2.807666
+      ...
+    1..2
+ok 242 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 10.725709
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 31.089625
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 2.999709
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 1.41075
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 2.0835
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 1.299667
+      ...
+    1..5
+ok 243 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 40.359875
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 244 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 0.920834
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 245 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 15.513583
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 246 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 2.221
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 247 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 1.532875
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs index.html
+ok 248 - T44-SHELL ten routes and five shared nav URLs index.html
+  ---
+  duration_ms: 161.496792
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/index.html
+ok 249 - T44-SHELL ten routes and five shared nav URLs live/index.html
+  ---
+  duration_ms: 123.511875
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+ok 250 - T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+  ---
+  duration_ms: 77.700375
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/index.html
+ok 251 - T44-SHELL ten routes and five shared nav URLs ticket/index.html
+  ---
+  duration_ms: 75.589209
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+ok 252 - T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 78.602917
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs discography/index.html
+ok 253 - T44-SHELL ten routes and five shared nav URLs discography/index.html
+  ---
+  duration_ms: 87.553208
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs youtube/index.html
+ok 254 - T44-SHELL ten routes and five shared nav URLs youtube/index.html
+  ---
+  duration_ms: 90.28475
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs profile/index.html
+ok 255 - T44-SHELL ten routes and five shared nav URLs profile/index.html
+  ---
+  duration_ms: 74.711542
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs contact/index.html
+ok 256 - T44-SHELL ten routes and five shared nav URLs contact/index.html
+  ---
+  duration_ms: 152.016834
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs music/index.html
+ok 257 - T44-SHELL ten routes and five shared nav URLs music/index.html
+  ---
+  duration_ms: 2.880334
+  ...
+# Subtest: T44-SHELL shared style and script cache version aligned for every consumer
+ok 258 - T44-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 2.906
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 259 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 158.487833
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 260 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 200.364208
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 261 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 9.156375
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 262 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 9.899167
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 263 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 43.21525
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 264 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 4.661708
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 265 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 4.239083
+  ...
+# Subtest: RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+ok 266 - RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+  ---
+  duration_ms: 5.346708
+  ...
+# Subtest: RV42-07 Home caption and news spacing match master without changing shared title gap
+ok 267 - RV42-07 Home caption and news spacing match master without changing shared title gap
+  ---
+  duration_ms: 1.550458
+  ...
+# Subtest: FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+ok 268 - FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+  ---
+  duration_ms: 1.590542
+  ...
+# Subtest: FR-N2 all Home news rows share the longest bounded date column and content start
+ok 269 - FR-N2 all Home news rows share the longest bounded date column and content start
+  ---
+  duration_ms: 26.722625
+  ...
+# Subtest: T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+ok 270 - T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+  ---
+  duration_ms: 1059.0385
+  ...
+# Subtest: T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+ok 271 - T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+  ---
+  duration_ms: 46.752041
+  ...
+# Subtest: T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+ok 272 - T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+  ---
+  duration_ms: 223.492291
+  ...
+# Subtest: T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+ok 273 - T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+  ---
+  duration_ms: 164.328792
+  ...
+# Subtest: T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+ok 274 - T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+  ---
+  duration_ms: 1076.071875
+  ...
+# Subtest: T44-SHELL current mapping/aria /
+ok 275 - T44-SHELL current mapping/aria /
+  ---
+  duration_ms: 1.82875
+  ...
+# Subtest: T44-SHELL current mapping/aria /index.html
+ok 276 - T44-SHELL current mapping/aria /index.html
+  ---
+  duration_ms: 6.903
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/
+ok 277 - T44-SHELL current mapping/aria /music/
+  ---
+  duration_ms: 2.776375
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/index.html
+ok 278 - T44-SHELL current mapping/aria /music/index.html
+  ---
+  duration_ms: 0.810292
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/
+ok 279 - T44-SHELL current mapping/aria /ticket/
+  ---
+  duration_ms: 1.0845
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/complete/
+ok 280 - T44-SHELL current mapping/aria /ticket/complete/
+  ---
+  duration_ms: 0.795542
+  ...
+# Subtest: T44-SHELL current mapping/aria /live/detail/
+ok 281 - T44-SHELL current mapping/aria /live/detail/
+  ---
+  duration_ms: 0.605125
+  ...
+# Subtest: T44-SHELL current mapping/aria /discography/index.html
+ok 282 - T44-SHELL current mapping/aria /discography/index.html
+  ---
+  duration_ms: 0.534208
+  ...
+# Subtest: T44-SHELL current mapping/aria /youtube/
+ok 283 - T44-SHELL current mapping/aria /youtube/
+  ---
+  duration_ms: 1.947
+  ...
+# Subtest: T44-SHELL current mapping/aria /profile/
+ok 284 - T44-SHELL current mapping/aria /profile/
+  ---
+  duration_ms: 0.827542
+  ...
+# Subtest: T44-SHELL current mapping/aria /contact/
+ok 285 - T44-SHELL current mapping/aria /contact/
+  ---
+  duration_ms: 18.917917
+  ...
+# Subtest: T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+ok 286 - T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+  ---
+  duration_ms: 0.574958
+  ...
+1..286
+# tests 299
+# suites 0
+# pass 299
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8870.302208
+exit=0

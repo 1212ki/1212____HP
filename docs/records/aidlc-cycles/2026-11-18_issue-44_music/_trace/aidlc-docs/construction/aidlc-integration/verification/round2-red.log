@@ -1,0 +1,1117 @@
+# round2 RED 2026-11-18T14:13:43+0900 cwd=/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music
+$ node --test test/music-rendering.test.mjs test/site-shell.test.mjs test/music-player.test.mjs
+TAP version 13
+# Subtest: T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+ok 1 - T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+  ---
+  duration_ms: 27.888042
+  ...
+# Subtest: T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+ok 2 - T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+  ---
+  duration_ms: 1.43525
+  ...
+# Subtest: T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+ok 3 - T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+  ---
+  duration_ms: 0.595208
+  ...
+# Subtest: T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+ok 4 - T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.777708
+  ...
+# Subtest: T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+ok 5 - T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.496083
+  ...
+# Subtest: T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+ok 6 - T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.564667
+  ...
+# Subtest: T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+ok 7 - T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.130542
+  ...
+# Subtest: T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+ok 8 - T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+  ---
+  duration_ms: 0.601625
+  ...
+# Subtest: T44-PLAY refuses invalid id 
+ok 9 - T44-PLAY refuses invalid id 
+  ---
+  duration_ms: 1.630791
+  ...
+# Subtest: T44-PLAY refuses invalid id bad
+ok 10 - T44-PLAY refuses invalid id bad
+  ---
+  duration_ms: 0.612542
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghij!
+ok 11 - T44-PLAY refuses invalid id abcdefghij!
+  ---
+  duration_ms: 12.312416
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghijk/evil
+ok 12 - T44-PLAY refuses invalid id abcdefghijk/evil
+  ---
+  duration_ms: 2.502083
+  ...
+# Subtest: T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+ok 13 - T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+  ---
+  duration_ms: 2.537416
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 14 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 2.869458
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 15 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 108.556208
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 16 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 3.902292
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 17 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 17.695459
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 18 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 3.718583
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 19 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 4.651708
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 20 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 29.632458
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 21 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 7.545042
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+ok 22 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 10.091459
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+ok 23 - T44-STATE loading leaves one status, skeleton and busy until success
+  ---
+  duration_ms: 17.966583
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+ok 24 - T44-STATE partial/empty successful data all-empty
+  ---
+  duration_ms: 3.144583
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+ok 25 - T44-STATE partial/empty successful data missing-collections
+  ---
+  duration_ms: 1.690375
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+ok 26 - T44-STATE partial/empty successful data channel-only
+  ---
+  duration_ms: 10.346958
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 27 - T44-STATE partial/empty successful data only-videos
+  ---
+  duration_ms: 19.7035
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 28 - T44-STATE partial/empty successful data only-releases
+  ---
+  duration_ms: 3.45925
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 29 - T44-STATE partial/empty successful data empty-demo
+  ---
+  duration_ms: 2.574708
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 30 - T44-STATE partial/empty successful data empty-live-movie
+  ---
+  duration_ms: 8.053834
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 31 - T44-STATE partial/empty successful data empty-video
+  ---
+  duration_ms: 15.659875
+  ...
+# Subtest: T44-STATE malformed input is error null
+ok 32 - T44-STATE malformed input is error null
+  ---
+  duration_ms: 5.455791
+  ...
+# Subtest: T44-STATE malformed input is error []
+ok 33 - T44-STATE malformed input is error []
+  ---
+  duration_ms: 6.053791
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+ok 34 - T44-STATE malformed input is error {"discography":[]}
+  ---
+  duration_ms: 2.578833
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+ok 35 - T44-STATE malformed input is error {"discography":null}
+  ---
+  duration_ms: 38.49775
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+ok 36 - T44-STATE malformed input is error {"discography":{"digital":null}}
+  ---
+  duration_ms: 3.302875
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+ok 37 - T44-STATE malformed input is error {"discography":{"digital":{}}}
+  ---
+  duration_ms: 2.357917
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+ok 38 - T44-STATE malformed input is error {"discography":{"digital":[null]}}
+  ---
+  duration_ms: 20.436459
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+ok 39 - T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+  ---
+  duration_ms: 2.82625
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+ok 40 - T44-STATE malformed input is error {"youtube":[]}
+  ---
+  duration_ms: 2.491958
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+ok 41 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+  ---
+  duration_ms: 1.800708
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+ok 42 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+  ---
+  duration_ms: 16.259542
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+ok 43 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+  ---
+  duration_ms: 15.196792
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+ok 44 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+  ---
+  duration_ms: 4.277125
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+ok 45 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+  ---
+  duration_ms: 3.067833
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+ok 46 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+  ---
+  duration_ms: 2.879084
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+ok 47 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+  ---
+  duration_ms: 22.703833
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+ok 48 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+  ---
+  duration_ms: 6.072708
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+ok 49 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+  ---
+  duration_ms: 10.349708
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+ok 50 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+  ---
+  duration_ms: 11.159667
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+ok 51 - T44-STATE pagehide after ready stops player without extra GET on bfcache return
+  ---
+  duration_ms: 5.946709
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+ok 52 - T44-STATE async hash after ready and hashchange \#release
+  ---
+  duration_ms: 13.313292
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+ok 53 - T44-STATE async hash after ready and hashchange \#demo
+  ---
+  duration_ms: 3.323709
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+ok 54 - T44-STATE async hash after ready and hashchange \#video
+  ---
+  duration_ms: 4.813
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+ok 55 - T44-STATE async hash after ready and hashchange \#unknown
+  ---
+  duration_ms: 3.754417
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+ok 56 - T44-STATE async hash after ready and hashchange \#missing%20stuff
+  ---
+  duration_ms: 6.036125
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+ok 57 - T44-STATE empty section hash is removed by replace without adding history and top remains usable
+  ---
+  duration_ms: 2.994708
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+ok 58 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+  ---
+  duration_ms: 7.764125
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+ok 59 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+  ---
+  duration_ms: 14.635625
+  ...
+# Subtest: T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+not ok 60 - T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+  ---
+  duration_ms: 62.399292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:203:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected ... Lines skipped
+    
+    + <ref *2> {
+    - <ref *5> {
+        addEventListener: [Function: addEventListener],
+        appendChild: [Function: appendChild],
+        children: [
+    +     <ref *1> {
+    -     <ref *2> {
+            addEventListener: [Function: addEventListener],
+            appendChild: [Function: appendChild],
+            children: [
+    +         {
+    -         <ref *1> {
+                addEventListener: [Function: addEventListener],
+                appendChild: [Function: appendChild],
+    +           children: [],
+    +           classList: {
+    +             add: [Function: add],
+    +             contains: [Function: contains],
+    +             remove: [Function: remove],
+    +             toggle: [Function: toggle]
+    +           },
+    +           closest: [Function: closest],
+    +           contains: [Function: contains],
+    +           dataset: {
+    +             musicImage: 'true'
+    +           },
+    +           disabled: false,
+    +           dispatch: [Function: dispatch],
+    +           focus: [Function: focus],
+    +           getAttribute: [Function: getAttribute],
+    +           getBoundingClientRect: [Function: getBoundingClientRect],
+    +           hidden: false,
+    +           id: '',
+    ...
+    -           children: [
+    -             {
+    -               addEventListener: [Function: addEventListener],
+    -               appendChild: [Function: appendChild],
+    -               children: [],
+    -               classList: {
+    -                 add: [Function: add],
+    -                 contains: [Function: contains],
+    -                 remove: [Function: remove],
+    -                 toggle: [Function: toggle]
+    -               },
+    -               closest: [Function: closest],
+    -               contains: [Function: contains],
+    -               dataset: {
+    -                 musicImage: 'true'
+    -               },
+    -               disabled: false,
+    -               dispatch: [Function: dispatch],
+    -               focus: [Function: focus],
+    ...
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+not ok 61 - T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 24.023125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '2'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+not ok 62 - T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 27.885833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '2'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+not ok 63 - T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 34.818167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '3'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '3'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+not ok 64 - T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 10.894166
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '3'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '3'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+not ok 65 - T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 4.184417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '2'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+not ok 66 - T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 2.580333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '3'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '3'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+not ok 67 - T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+  ---
+  duration_ms: 2.314167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '4'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '4'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+not ok 68 - T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 17.562833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:211:100'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '2'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:213:125)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+not ok 69 - T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+  ---
+  duration_ms: 9.226833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:215:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '3'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '3'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:217:46)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+ok 70 - T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+  ---
+  duration_ms: 7.311833
+  ...
+# Subtest: T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+not ok 71 - T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+  ---
+  duration_ms: 15.957541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:227:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== '-1'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '-1'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:230:115)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-FOCUS retry that fails again moves focus to the new retry button, not body
+not ok 72 - T44-FOCUS retry that fails again moves focus to the new retry button, not body
+  ---
+  duration_ms: 30.757541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:232:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected ... Lines skipped
+    
+      <ref *2> {
+        addEventListener: [Function: addEventListener],
+    ...
+          testid: 'music-retry'
+        },
+    +   disabled: true,
+    -   disabled: false,
+        dispatch: [Function: dispatch],
+        focus: [Function: focus],
+    ...
+                textContent: ''
+              },
+    +         <ref *6> {
+    +           addEventListener: [Function: addEventListener],
+    +           appendChild: [Function: appendChild],
+    +           children: [
+    +             {
+    +               addEventListener: [Function: addEventListener],
+    +               appendChild: [Function: appendChild],
+    +               children: [],
+    +               classList: {
+    +                 add: [Function: add],
+    +                 contains: [Function: contains],
+    +                 remove: [Function: remove],
+    +                 toggle: [Function: toggle]
+    +               },
+    +               closest: [Function: closest],
+    +               contains: [Function: contains],
+    +               dataset: {},
+    +               disabled: false,
+    +               dispatch: [Function: dispatch],
+    +               focus: [Function: focus],
+    +               getAttribute: [Function: getAttribute],
+    ...
+    -         [Circular *1]
+    -       ],
+    -       classList: {
+    -         add: [Function: add],
+    -         contains: [Function: contains],
+    -         remove: [Function: remove],
+    -         toggle: [Function: toggle]
+    -       },
+    -       closest: [Function: closest],
+    -       contains: [Function: contains],
+    -       dataset: {
+    -         state: 'error'
+    -       },
+    -       disabled: false,
+    -       dispatch: [Function: dispatch],
+    -       focus: [Function: focus],
+    -       getAttribute: [Function: getAttribute],
+    -       getBoundingClientRect: [Function: getBoundingClientRect],
+    -       hidden: false,
+    -       id: 'music-content',
+    -       insertBefore: [Function: insertBefore],
+    ...
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: T44-FOCUS empty result after retry keeps focus on the retry still shown
+not ok 73 - T44-FOCUS empty result after retry keeps focus on the retry still shown
+  ---
+  duration_ms: 16.884667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:237:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected ... Lines skipped
+    
+      <ref *2> {
+        addEventListener: [Function: addEventListener],
+    ...
+          testid: 'music-retry'
+        },
+    +   disabled: true,
+    -   disabled: false,
+        dispatch: [Function: dispatch],
+        focus: [Function: focus],
+    ...
+                textContent: ''
+              },
+    +         <ref *6> {
+    +           addEventListener: [Function: addEventListener],
+    +           appendChild: [Function: appendChild],
+    +           children: [
+    +             {
+    +               addEventListener: [Function: addEventListener],
+    +               appendChild: [Function: appendChild],
+    +               children: [],
+    +               classList: {
+    +                 add: [Function: add],
+    +                 contains: [Function: contains],
+    +                 remove: [Function: remove],
+    +                 toggle: [Function: toggle]
+    +               },
+    +               closest: [Function: closest],
+    +               contains: [Function: contains],
+    +               dataset: {},
+    +               disabled: false,
+    +               dispatch: [Function: dispatch],
+    +               focus: [Function: focus],
+    +               getAttribute: [Function: getAttribute],
+    ...
+    -         [Circular *1]
+    -       ],
+    -       classList: {
+    -         add: [Function: add],
+    -         contains: [Function: contains],
+    -         remove: [Function: remove],
+    -         toggle: [Function: toggle]
+    -       },
+    -       closest: [Function: closest],
+    -       contains: [Function: contains],
+    -       dataset: {
+    -         state: 'empty'
+    -       },
+    -       disabled: false,
+    -       dispatch: [Function: dispatch],
+    -       focus: [Function: focus],
+    -       getAttribute: [Function: getAttribute],
+    -       getBoundingClientRect: [Function: getBoundingClientRect],
+    -       hidden: false,
+    -       id: 'music-content',
+    -       insertBefore: [Function: insertBefore],
+    ...
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+ok 74 - T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+  ---
+  duration_ms: 7.23325
+  ...
+# Subtest: T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+not ok 75 - T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+  ---
+  duration_ms: 4.078584
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:252:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /aria-label="配信先へ（架空の作品 &quot;Synthetic \/ Alpha&quot; &lt;&gt;&amp; の長いタイトル・外部サイト・別タブ）"[^>]*>配信先へ<\/a>/. Input:
+    
+    '<div class="music-heading"><h1 class="site-section-title">music</h1><nav class="music-jumps" aria-label="ページ内の移動"><a class="site-chip" href="#release">release</a><a class="site-chip" href="#demo">demo</a><a class="site-chip" href="#video">video</a></nav></div><section id="release" class="music-section" aria-labelledby="release-title"><div class="music-section-heading"><h2 id="release-title">release</h2></div><div class="music-release-list"><article id="music-release-digital-0" class="site-release-card music-release-card" data-music-release="music-release-digital-0"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album1.jpg?v=2026-11-17T00%3A00%3A00Z" alt="架空の作品 &quot;Synthetic / Alpha&quot; &lt;&gt;&amp; の長いタイトル" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空の作品 &quot;Synthetic / Alpha&quot; &lt;&gt;&amp; の長いタイトル</h3><p class="music-release-meta">Single ／ 2026.10.12</p><div class="music-actions"><button type="button" class="site-button site-button--play" data-testid="music-listen" data-music-action="play" data-music-key="music-release-digital-0" aria-expanded="false" aria-controls="music-release-digital-0-player">聴く</button><a class="site-chip" href="https://example.test/record-alpha" target="_blank" rel="noopener noreferrer" aria-label="配信先へ（外部サイト・別タブ）">配信先へ</a></div></div><div id="music-release-digital-0-player" class="music-player" hidden></div></article><article id="music-release-digital-1" class="site-release-card music-release-card" data-music-release="music-release-digital-1"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album2.png?v=2026-11-17T00%3A00%3A00Z" alt="架空の作品 Beta" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空の作品 Beta</h3><p class="music-release-meta">2026.09.11</p><p class="music-release-description">架空の説明です。</p><div class="music-actions"><a class="site-chip" href="https://example.test/record-beta" target="_blank" rel="noopener noreferrer" aria-label="配信先へ（外部サイト・別タブ）">配信先へ</a></div></div><div id="music-release-digital-1-player" class="music-player" hidden></div></article></div></section><section id="demo" class="music-section" aria-labelledby="demo-title"><div class="music-section-heading"><h2 id="demo-title">demo</h2><p class="music-demo-intro">宅録のデモ。ライブ会場とBandcampで販売しています。</p></div><div class="music-release-list"><article id="music-release-demo-0" class="site-release-card music-release-card" data-music-release="music-release-demo-0"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album3.jpg?v=2026-11-17T00%3A00%3A00Z" alt="架空のデモ Gamma" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空のデモ Gamma</h3><p class="music-release-meta">2026.08.10</p><p class="music-release-description">1. 架空の曲 Gamma<br>2. 架空の曲 Delta<br>3. 架空の曲 Epsilon<br>4. 架空の曲 Zeta</p><div class="music-actions"><a class="site-button site-button--secondary" href="https://example.test/record-gamma" target="_blank" rel="noopener noreferrer" aria-label="購入先へ（外部サイト・別タブ）">購入先へ</a></div></div><div id="music-release-demo-0-player" class="music-player" hidden></div></article><article id="music-release-demo-1" class="site-release-card music-release-card" data-music-release="music-release-demo-1"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album1.jpg?v=2026-11-17T00%3A00%3A00Z" alt="架空のデモ Delta" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空のデモ Delta</h3><p class="music-release-meta">2026.07.09</p><p class="music-release-description">1. 架空の曲 Eta<br>2. 架空の曲 Theta</p><div class="music-actions"><a class="site-button site-button--secondary" href="https://example.test/record-delta" target="_blank" rel="noopener noreferrer" aria-label="購入先へ（外部サイト・別タブ）">購入先へ</a></div></div><div id="music-release-demo-1-player" class="music-player" hidden></div></article></div></section><section id="video" class="music-section" aria-labelledby="video-title"><div class="music-video-heading"><h2 id="video-title">video</h2><a class="site-text-link" href="https://example.test/channel" target="_blank" rel="noopener noreferrer" aria-label="YouTubeチャンネル →（外部サイト・別タブ）">YouTubeチャンネル →</a></div><div class="music-video-group"><h3 class="home-caption">music video</h3><div class="music-video-list"><article id="music-video-musicVideos-0" class="music-video-card" data-music-video="music-video-musicVideos-0"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-musicVideos-0" aria-label="架空の映像 Alphaを再生" aria-expanded="false" aria-controls="music-video-musicVideos-0-player"><img data-music-image="true" src="https://img.youtube.com/vi/abcdefghijk/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-musicVideos-0-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空の映像 Alpha</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-musicVideos-0" aria-controls="music-video-musicVideos-0-player" hidden>閉じる</button></article><article id="music-video-musicVideos-1" class="music-video-card" data-music-video="music-video-musicVideos-1"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-musicVideos-1" aria-label="架空の映像 Betaを再生" aria-expanded="false" aria-controls="music-video-musicVideos-1-player"><img data-music-image="true" src="https://img.youtube.com/vi/lmnopqrstuv/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-musicVideos-1-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空の映像 Beta</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-musicVideos-1" aria-controls="music-video-musicVideos-1-player" hidden>閉じる</button></article></div></div><div class="music-video-group"><h3 class="home-caption">live movie</h3><div class="music-video-list"><article id="music-video-liveMovies-0" class="music-video-card" data-music-video="music-video-liveMovies-0"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-liveMovies-0" aria-label="架空のライブ Gammaを再生" aria-expanded="false" aria-controls="music-video-liveMovies-0-player"><img data-music-image="true" src="https://img.youtube.com/vi/ABCD1234_-x/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-liveMovies-0-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空のライブ Gamma</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-liveMovies-0" aria-controls="music-video-liveMovies-0-player" hidden>閉じる</button></article><article id="music-video-liveMovies-1" class="music-video-card" data-music-video="music-video-liveMovies-1"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-liveMovies-1" aria-label="架空のライブ Deltaを再生" aria-expanded="false" aria-controls="music-video-liveMovies-1-player"><img data-music-image="true" src="https://img.youtube.com/vi/LMNO5678_-y/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-liveMovies-1-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空のライブ Delta</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-liveMovies-1" aria-controls="music-video-liveMovies-1-player" hidden>閉じる</button></article></div></div><div class="music-video-group"><h3 class="home-caption">demo</h3><div class="music-video-list"><article id="music-video-demos-0" class="music-video-card" data-music-video="music-video-demos-0"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-demos-0" aria-label="架空のデモ Epsilonを再生" aria-expanded="false" aria-controls="music-video-demos-0-player"><img data-music-image="true" src="https://img.youtube.com/vi/WXYZ9012_-z/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-demos-0-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空のデモ Epsilon</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-demos-0" aria-controls="music-video-demos-0-player" hidden>閉じる</button></article></div></div></section>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '<div class="music-heading"><h1 class="site-section-title">music</h1><nav class="music-jumps" aria-label="ページ内の移動"><a class="site-chip" href="#release">release</a><a class="site-chip" href="#demo">demo</a><a class="site-chip" href="#video">video</a></nav></div><section id="release" class="music-section" aria-labelledby="release-title"><div class="music-section-heading"><h2 id="release-title">release</h2></div><div class="music-release-list"><article id="music-release-digital-0" class="site-release-card music-release-card" data-music-release="music-release-digital-0"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album1.jpg?v=2026-11-17T00%3A00%3A00Z" alt="架空の作品 &quot;Synthetic / Alpha&quot; &lt;&gt;&amp; の長いタイトル" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空の作品 &quot;Synthetic / Alpha&quot; &lt;&gt;&amp; の長いタイトル</h3><p class="music-release-meta">Single ／ 2026.10.12</p><div class="music-actions"><button type="button" class="site-button site-button--play" data-testid="music-listen" data-music-action="play" data-music-key="music-release-digital-0" aria-expanded="false" aria-controls="music-release-digital-0-player">聴く</button><a class="site-chip" href="https://example.test/record-alpha" target="_blank" rel="noopener noreferrer" aria-label="配信先へ（外部サイト・別タブ）">配信先へ</a></div></div><div id="music-release-digital-0-player" class="music-player" hidden></div></article><article id="music-release-digital-1" class="site-release-card music-release-card" data-music-release="music-release-digital-1"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album2.png?v=2026-11-17T00%3A00%3A00Z" alt="架空の作品 Beta" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空の作品 Beta</h3><p class="music-release-meta">2026.09.11</p><p class="music-release-description">架空の説明です。</p><div class="music-actions"><a class="site-chip" href="https://example.test/record-beta" target="_blank" rel="noopener noreferrer" aria-label="配信先へ（外部サイト・別タブ）">配信先へ</a></div></div><div id="music-release-digital-1-player" class="music-player" hidden></div></article></div></section><section id="demo" class="music-section" aria-labelledby="demo-title"><div class="music-section-heading"><h2 id="demo-title">demo</h2><p class="music-demo-intro">宅録のデモ。ライブ会場とBandcampで販売しています。</p></div><div class="music-release-list"><article id="music-release-demo-0" class="site-release-card music-release-card" data-music-release="music-release-demo-0"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album3.jpg?v=2026-11-17T00%3A00%3A00Z" alt="架空のデモ Gamma" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空のデモ Gamma</h3><p class="music-release-meta">2026.08.10</p><p class="music-release-description">1. 架空の曲 Gamma<br>2. 架空の曲 Delta<br>3. 架空の曲 Epsilon<br>4. 架空の曲 Zeta</p><div class="music-actions"><a class="site-button site-button--secondary" href="https://example.test/record-gamma" target="_blank" rel="noopener noreferrer" aria-label="購入先へ（外部サイト・別タブ）">購入先へ</a></div></div><div id="music-release-demo-0-player" class="music-player" hidden></div></article><article id="music-release-demo-1" class="site-release-card music-release-card" data-music-release="music-release-demo-1"><div class="site-release-image music-release-image"><img data-music-image="true" src="../assets/images/album1.jpg?v=2026-11-17T00%3A00%3A00Z" alt="架空のデモ Delta" width="220" height="220"><span class="music-artwork-fallback" hidden>松本一樹</span></div><div class="music-release-text"><h3 class="music-release-title">架空のデモ Delta</h3><p class="music-release-meta">2026.07.09</p><p class="music-release-description">1. 架空の曲 Eta<br>2. 架空の曲 Theta</p><div class="music-actions"><a class="site-button site-button--secondary" href="https://example.test/record-delta" target="_blank" rel="noopener noreferrer" aria-label="購入先へ（外部サイト・別タブ）">購入先へ</a></div></div><div id="music-release-demo-1-player" class="music-player" hidden></div></article></div></section><section id="video" class="music-section" aria-labelledby="video-title"><div class="music-video-heading"><h2 id="video-title">video</h2><a class="site-text-link" href="https://example.test/channel" target="_blank" rel="noopener noreferrer" aria-label="YouTubeチャンネル →（外部サイト・別タブ）">YouTubeチャンネル →</a></div><div class="music-video-group"><h3 class="home-caption">music video</h3><div class="music-video-list"><article id="music-video-musicVideos-0" class="music-video-card" data-music-video="music-video-musicVideos-0"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-musicVideos-0" aria-label="架空の映像 Alphaを再生" aria-expanded="false" aria-controls="music-video-musicVideos-0-player"><img data-music-image="true" src="https://img.youtube.com/vi/abcdefghijk/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-musicVideos-0-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空の映像 Alpha</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-musicVideos-0" aria-controls="music-video-musicVideos-0-player" hidden>閉じる</button></article><article id="music-video-musicVideos-1" class="music-video-card" data-music-video="music-video-musicVideos-1"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-musicVideos-1" aria-label="架空の映像 Betaを再生" aria-expanded="false" aria-controls="music-video-musicVideos-1-player"><img data-music-image="true" src="https://img.youtube.com/vi/lmnopqrstuv/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-musicVideos-1-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空の映像 Beta</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-musicVideos-1" aria-controls="music-video-musicVideos-1-player" hidden>閉じる</button></article></div></div><div class="music-video-group"><h3 class="home-caption">live movie</h3><div class="music-video-list"><article id="music-video-liveMovies-0" class="music-video-card" data-music-video="music-video-liveMovies-0"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-liveMovies-0" aria-label="架空のライブ Gammaを再生" aria-expanded="false" aria-controls="music-video-liveMovies-0-player"><img data-music-image="true" src="https://img.youtube.com/vi/ABCD1234_-x/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-liveMovies-0-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空のライブ Gamma</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-liveMovies-0" aria-controls="music-video-liveMovies-0-player" hidden>閉じる</button></article><article id="music-video-liveMovies-1" class="music-video-card" data-music-video="music-video-liveMovies-1"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-liveMovies-1" aria-label="架空のライブ Deltaを再生" aria-expanded="false" aria-controls="music-video-liveMovies-1-player"><img data-music-image="true" src="https://img.youtube.com/vi/LMNO5678_-y/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-liveMovies-1-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空のライブ Delta</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-liveMovies-1" aria-controls="music-video-liveMovies-1-player" hidden>閉じる</button></article></div></div><div class="music-video-group"><h3 class="home-caption">demo</h3><div class="music-video-list"><article id="music-video-demos-0" class="music-video-card" data-music-video="music-video-demos-0"><div class="music-video-stage"><button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="music-video-demos-0" aria-label="架空のデモ Epsilonを再生" aria-expanded="false" aria-controls="music-video-demos-0-player"><img data-music-image="true" src="https://img.youtube.com/vi/WXYZ9012_-z/hqdefault.jpg" alt="" width="310" height="174"><span class="music-video-fallback" hidden>video</span></button><div id="music-video-demos-0-player" class="music-player" hidden></div></div><h4 class="music-video-title">架空のデモ Epsilon</h4><button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="music-video-demos-0" aria-controls="music-video-demos-0-player" hidden>閉じる</button></article></div></div></section>'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:254:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs index.html
+ok 76 - T44-SHELL ten routes and five shared nav URLs index.html
+  ---
+  duration_ms: 182.346709
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/index.html
+ok 77 - T44-SHELL ten routes and five shared nav URLs live/index.html
+  ---
+  duration_ms: 104.47375
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+ok 78 - T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+  ---
+  duration_ms: 44.937833
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/index.html
+ok 79 - T44-SHELL ten routes and five shared nav URLs ticket/index.html
+  ---
+  duration_ms: 135.003667
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+ok 80 - T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 93.064459
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs discography/index.html
+ok 81 - T44-SHELL ten routes and five shared nav URLs discography/index.html
+  ---
+  duration_ms: 90.800083
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs youtube/index.html
+ok 82 - T44-SHELL ten routes and five shared nav URLs youtube/index.html
+  ---
+  duration_ms: 139.109834
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs profile/index.html
+ok 83 - T44-SHELL ten routes and five shared nav URLs profile/index.html
+  ---
+  duration_ms: 62.785333
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs contact/index.html
+ok 84 - T44-SHELL ten routes and five shared nav URLs contact/index.html
+  ---
+  duration_ms: 348.718833
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs music/index.html
+ok 85 - T44-SHELL ten routes and five shared nav URLs music/index.html
+  ---
+  duration_ms: 6.559792
+  ...
+# Subtest: T44-SHELL shared style and script cache version aligned for every consumer
+ok 86 - T44-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 87.277625
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 87 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 271.472875
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 88 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 288.278667
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 89 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 6.590667
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 90 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 4.252625
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 91 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 29.53975
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 92 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 12.497208
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 93 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 3.528917
+  ...
+# Subtest: RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+ok 94 - RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+  ---
+  duration_ms: 1.597167
+  ...
+# Subtest: RV42-07 Home caption and news spacing match master without changing shared title gap
+ok 95 - RV42-07 Home caption and news spacing match master without changing shared title gap
+  ---
+  duration_ms: 1.855791
+  ...
+# Subtest: FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+ok 96 - FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+  ---
+  duration_ms: 2.532875
+  ...
+# Subtest: FR-N2 all Home news rows share the longest bounded date column and content start
+ok 97 - FR-N2 all Home news rows share the longest bounded date column and content start
+  ---
+  duration_ms: 3.470833
+  ...
+# Subtest: T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+not ok 98 - T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+  ---
+  duration_ms: 95.361583
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:113:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /310px|\b24px\b|height: 174px/. Input:
+    
+    '\n' +
+      '/* Issue #44: Music variants of the shared components. */\n' +
+      'body.site-music { font-family: var(--font-body), sans-serif; background: var(--paper); letter-spacing: 0; }\n' +
+      'body.site-music::before { display: none; }\n' +
+      'body.site-music::selection, .site-music ::selection { background: var(--paper-deep); color: var(--ink); }\n' +
+      'body.site-music::-webkit-scrollbar-thumb { background: var(--ink-muted); }\n' +
+      'body.site-music::-webkit-scrollbar-thumb:hover { background: var(--ink); }\n' +
+      'body.site-music::-webkit-scrollbar-track { background: var(--paper-deep); }\n' +
+      '.site-music :focus-visible { outline-color: var(--ink); }\n' +
+      '.site-music [hidden] { display: none !important; }\n' +
+      '.site-music section { padding: 0; }\n' +
+      '.site-music .music-container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; padding: var(--space-64) 0; display: flex; flex-direction: column; gap: var(--space-64); }\n' +
+      '.site-music .music-heading { display: flex; flex-direction: column; gap: var(--space-16); align-items: flex-start; }\n' +
+      '.site-music .site-section-title { margin-bottom: 0; }\n' +
+      '.site-music .music-jumps { display: flex; flex-wrap: wrap; gap: var(--space-8); width: auto; order: initial; max-height: none; opacity: 1; overflow: visible; pointer-events: auto; transition: none; }\n' +
+      '.site-music .music-section { display: flex; flex-direction: column; gap: var(--space-24); scroll-margin-top: calc(81px + var(--space-24)); min-width: 0; }\n' +
+      '.site-music .music-section h2 { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; }\n' +
+      '.site-music .music-section-heading { display: flex; flex-direction: column; gap: var(--space-4); }\n' +
+      '.site-music .music-demo-intro { font: 400 14px/22px var(--font-body), sans-serif; color: var(--ink-muted); overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-32); }\n' +
+      '.site-music .music-release-card { width: 220px; gap: var(--space-12); align-items: stretch; }\n' +
+      '.site-music .music-release-image { width: 220px; height: 220px; flex: none; }\n' +
+      '.site-music .music-artwork-fallback { display: flex; align-items: center; justify-content: center; padding: var(--space-8); width: 100%; height: 100%; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; text-align: center; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-text { min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); }\n' +
+      '.site-music .music-release-title { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-meta, .site-music .music-release-description { font: 400 14px/22px var(--font-body), sans-serif; letter-spacing: 0; margin: 0; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-meta { color: var(--ink-muted); }\n' +
+      '.site-music .music-release-description { color: var(--ink); }\n' +
+      '.site-music .music-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-8); padding-top: var(--space-8); }\n' +
+      '.site-music .music-player { width: 100%; aspect-ratio: 16 / 9; background: var(--paper-deep); border-radius: 12px; overflow: hidden; }\n' +
+      '.site-music .music-player iframe { display: block; width: 100%; height: 100%; border: 0; }\n' +
+      '.site-music .music-video-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8); }\n' +
+      '.site-music .music-video-group { display: flex; flex-direction: column; gap: var(--space-12); min-width: 0; }\n' +
+      '.site-music .music-video-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-24); }\n' +
+      '.site-music .music-video-card { width: 310px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; }\n' +
+      '.site-music .music-video-stage { width: 100%; min-width: 0; }\n' +
+      '.site-music .music-video-thumbnail { display: block; position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; padding: 0; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; }\n' +
+      '.site-music button.music-video-thumbnail { cursor: pointer; }\n' +
+      '.site-music button.music-video-thumbnail:hover { opacity: .8; }\n' +
+      '.site-music .music-video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }\n' +
+      '.site-music .music-video-fallback { width: 100%; height: 100%; display: grid; place-items: center; }\n' +
+      '.site-music .music-video-title { font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-links { display: flex; flex-wrap: wrap; gap: var(--space-8); }\n' +
+      '.site-music .music-error { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-8); font: 400 14px/22px var(--font-body), sans-serif; }\n' +
+      '.site-music .music-error > .site-button { margin-top: var(--space-8); }\n' +
+      '.site-music .music-loading { display: flex; flex-direction: column; gap: var(--space-16); color: var(--ink-muted); font: 400 14px/22px var(--font-body), sans-serif; }\n' +
+      '.site-music .music-skeleton { width: 220px; max-width: 100%; aspect-ratio: 1; border-radius: 12px; background: var(--paper-deep); }\n' +
+      '.site-music .music-noscript { padding-top: 0; gap: var(--space-16); }\n' +
+      '\n' +
+      '@media (max-width: 820px) {\n' +
+      '  .site-music .music-container { padding: var(--space-32) 0; gap: var(--space-48); }\n' +
+      '  .site-music .music-release-list { flex-direction: column; gap: var(--space-24); }\n' +
+      '  .site-music .music-release-card { display: grid; grid-template-columns: 120px minmax(0, 1fr); column-gap: var(--space-16); row-gap: var(--space-12); width: 100%; align-items: start; }\n' +
+      '  .site-music .music-release-image { width: 120px; height: 120px; }\n' +
+      '  .site-music .music-release-card > .music-player { grid-column: 1 / -1; }\n' +
+      '  .site-music .music-video-list { flex-direction: column; gap: var(--space-16); }\n' +
+      '  .site-music .music-video-card { width: 100%; }\n' +
+      '  .site-music .music-skeleton { width: 120px; }\n' +
+      '  .site-music .music-noscript { padding-top: 0; gap: var(--space-16); }\n' +
+      '}\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+    /* Issue #44: Music variants of the shared components. */
+    body.site-music { font-family: var(--font-body), sans-serif; background: var(--paper); letter-spacing: 0; }
+    body.site-music::before { display: none; }
+    body.site-music::selection, .site-music ::selection { background: var(--paper-deep); color: var(--ink); }
+    body.site-music::-webkit-scrollbar-thumb { background: var(--ink-muted); }
+    body.site-music::-webkit-scrollbar-thumb:hover { background: var(--ink); }
+    body.site-music::-webkit-scrollbar-track { background: var(--paper-deep); }
+    .site-music :focus-visible { outline-color: var(--ink); }
+    .site-music [hidden] { display: none !important; }
+    .site-music section { padding: 0; }
+    .site-music .music-container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; padding: var(--space-64) 0; display: flex; flex-direction: column; gap: var(--space-64); }
+    .site-music .music-heading { display: flex; flex-direction: column; gap: var(--space-16); align-items: flex-start; }
+    .site-music .site-section-title { margin-bottom: 0; }
+    .site-music .music-jumps { display: flex; flex-wrap: wrap; gap: var(--space-8); width: auto; order: initial; max-height: none; opacity: 1; overflow: visible; pointer-events: auto; transition: none; }
+    .site-music .music-section { display: flex; flex-direction: column; gap: var(--space-24); scroll-margin-top: calc(81px + var(--space-24)); min-width: 0; }
+    .site-music .music-section h2 { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; }
+    .site-music .music-section-heading { display: flex; flex-direction: column; gap: var(--space-4); }
+    .site-music .music-demo-intro { font: 400 14px/22px var(--font-body), sans-serif; color: var(--ink-muted); overflow-wrap: anywhere; }
+    .site-music .music-release-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-32); }
+    .site-music .music-release-card { width: 220px; gap: var(--space-12); align-items: stretch; }
+    .site-music .music-release-image { width: 220px; height: 220px; flex: none; }
+    .site-music .music-artwork-fallback { display: flex; align-items: center; justify-content: center; padding: var(--space-8); width: 100%; height: 100%; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; text-align: center; overflow-wrap: anywhere; }
+    .site-music .music-release-text { min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); }
+    .site-music .music-release-title { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; overflow-wrap: anywhere; }
+    .site-music .music-release-meta, .site-music .music-release-description { font: 400 14px/22px var(--font-body), sans-serif; letter-spacing: 0; margin: 0; overflow-wrap: anywhere; }
+    .site-music .music-release-meta { color: var(--ink-muted); }
+    .site-music .music-release-description { color: var(--ink); }
+    .site-music .music-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-8); padding-top: var(--space-8); }
+    .site-music .music-player { width: 100%; aspect-ratio: 16 / 9; background: var(--paper-deep); border-radius: 12px; overflow: hidden; }
+    .site-music .music-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .site-music .music-video-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8); }
+    .site-music .music-video-group { display: flex; flex-direction: column; gap: var(--space-12); min-width: 0; }
+    .site-music .music-video-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-24); }
+    .site-music .music-video-card { width: 310px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; }
+    .site-music .music-video-stage { width: 100%; min-width: 0; }
+    .site-music .music-video-thumbnail { display: block; position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; padding: 0; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; }
+    .site-music button.music-video-thumbnail { cursor: pointer; }
+    .site-music button.music-video-thumbnail:hover { opacity: .8; }
+    .site-music .music-video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+    .site-music .music-video-fallback { width: 100%; height: 100%; display: grid; place-items: center; }
+    .site-music .music-video-title { font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; overflow-wrap: anywhere; }
+    .site-music .music-links { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+    .site-music .music-error { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-8); font: 400 14px/22px var(--font-body), sans-serif; }
+    .site-music .music-error > .site-button { margin-top: var(--space-8); }
+    .site-music .music-loading { display: flex; flex-direction: column; gap: var(--space-16); color: var(--ink-muted); font: 400 14px/22px var(--font-body), sans-serif; }
+    .site-music .music-skeleton { width: 220px; max-width: 100%; aspect-ratio: 1; border-radius: 12px; background: var(--paper-deep); }
+    .site-music .music-noscript { padding-top: 0; gap: var(--space-16); }
+    
+    @media (max-width: 820px) {
+      .site-music .music-container { padding: var(--space-32) 0; gap: var(--space-48); }
+      .site-music .music-release-list { flex-direction: column; gap: var(--space-24); }
+      .site-music .music-release-card { display: grid; grid-template-columns: 120px minmax(0, 1fr); column-gap: var(--space-16); row-gap: var(--space-12); width: 100%; align-items: start; }
+      .site-music .music-release-image { width: 120px; height: 120px; }
+      .site-music .music-release-card > .music-player { grid-column: 1 / -1; }
+      .site-music .music-video-list { flex-direction: column; gap: var(--space-16); }
+      .site-music .music-video-card { width: 100%; }
+      .site-music .music-skeleton { width: 120px; }
+      .site-music .music-noscript { padding-top: 0; gap: var(--space-16); }
+    }
+    
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:116:157)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+not ok 99 - T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+  ---
+  duration_ms: 72.132917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:128:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /display: grid/. Input:
+    
+    ' display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-32); '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ' display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-32); '
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:130:69)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+not ok 100 - T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+  ---
+  duration_ms: 49.387125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:137:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /display: grid/. Input:
+    
+    ' display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-24); '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ' display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-24); '
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:139:67)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+ok 101 - T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+  ---
+  duration_ms: 45.772916
+  ...
+# Subtest: T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+ok 102 - T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+  ---
+  duration_ms: 623.529667
+  ...
+# Subtest: T44-SHELL current mapping/aria /
+ok 103 - T44-SHELL current mapping/aria /
+  ---
+  duration_ms: 1.615459
+  ...
+# Subtest: T44-SHELL current mapping/aria /index.html
+ok 104 - T44-SHELL current mapping/aria /index.html
+  ---
+  duration_ms: 0.886125
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/
+ok 105 - T44-SHELL current mapping/aria /music/
+  ---
+  duration_ms: 0.760292
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/index.html
+ok 106 - T44-SHELL current mapping/aria /music/index.html
+  ---
+  duration_ms: 0.697042
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/
+ok 107 - T44-SHELL current mapping/aria /ticket/
+  ---
+  duration_ms: 1.231958
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/complete/
+ok 108 - T44-SHELL current mapping/aria /ticket/complete/
+  ---
+  duration_ms: 1.20225
+  ...
+# Subtest: T44-SHELL current mapping/aria /live/detail/
+ok 109 - T44-SHELL current mapping/aria /live/detail/
+  ---
+  duration_ms: 1.485916
+  ...
+# Subtest: T44-SHELL current mapping/aria /discography/index.html
+ok 110 - T44-SHELL current mapping/aria /discography/index.html
+  ---
+  duration_ms: 9.62525
+  ...
+# Subtest: T44-SHELL current mapping/aria /youtube/
+ok 111 - T44-SHELL current mapping/aria /youtube/
+  ---
+  duration_ms: 3.674084
+  ...
+# Subtest: T44-SHELL current mapping/aria /profile/
+ok 112 - T44-SHELL current mapping/aria /profile/
+  ---
+  duration_ms: 1.666042
+  ...
+# Subtest: T44-SHELL current mapping/aria /contact/
+ok 113 - T44-SHELL current mapping/aria /contact/
+  ---
+  duration_ms: 1.08375
+  ...
+# Subtest: T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+ok 114 - T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+  ---
+  duration_ms: 1.743834
+  ...
+1..114
+# tests 114
+# suites 0
+# pass 97
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4985.45925
+exit=1

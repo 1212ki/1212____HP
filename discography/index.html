@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <!-- ビューポート設定 -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>松本一樹 -itsuki matsumoto- : discography</title>
+  <title>松本一樹 -itsuki matsumoto- : musicへの案内</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://1212hp.com/music/">
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
 </head>
 
-<body>
+<body data-music-destination="release">
   <!-- ヘッダー -->
   <header class="site-header">
     <div class="container header-container">
@@ -29,13 +31,10 @@
       </button>
       <nav id="global-nav">
         <ul>
-          <!-- 1つ上の階層にあるindex.htmlをHomeに -->
           <li><a href="../">Home</a></li>
-          <!-- profileディレクトリへ移動する場合、../profile/ -->
-          <li><a href="../profile/">Profile</a></li>
           <li><a href="../live/">Live</a></li>
-          <li><a href="../youtube/">YouTube</a></li>
-          <li><a href="../discography/">Discography</a></li>
+          <li><a href="../music/">Music</a></li>
+          <li><a href="../profile/">Profile</a></li>
           <li><a href="../contact/">Contact</a></li>
         </ul>
       </nav>
@@ -43,18 +42,10 @@
   </header>
 
   <main>
-    <!-- ディスコグラフィセクション -->
-    <section class="discography">
-      <div class="container">
-        <h2 class="section-title">discography</h2>
-        <!-- ディスコグラフィ情報をここに記載-->
-        <!-- 公式リリース-->
-        <br>
-        <h3>■Digital Release</h3>
-        <div class="discography-items" id="disc-digital-items"></div><br><br>
-        <h3>■宅録Demo ※手売り/Bandcampにて販売中。</h3>
-        <div class="discography-items" id="disc-demo-items"></div>
-      </div>
+    <section class="container">
+      <h2 class="site-section-title">music</h2>
+      <p>作品はMusicにまとめました。</p>
+      <a class="site-text-link" href="../music/#release">Musicの作品へ →</a>
     </section>
   </main>
 
@@ -64,9 +55,8 @@
     </div>
   </footer>
 
-  <script src="../assets/js/site-config.js"></script>
-  <script src="../assets/js/site-content.js?v=20261117-42"></script>
-  <script src="../assets/js/script.js?v=20261117-42"></script>
+  <script src="../assets/js/music-redirect.js?v=20261118-44" defer></script>
+  <script src="../assets/js/script.js?v=20261118-44"></script>
 </body>
 
 </html>

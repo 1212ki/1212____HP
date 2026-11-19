@@ -1,0 +1,8 @@
+command: AIDLC_REPO_ROOT=/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/close-dryrun bash /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/close-dryrun/validate-close-ready.sh
+validate_close_ready: PASS (DRYRUN ONLY)
+exit_code: 0
+real state/approvals unchanged: PASS
+real gate4/gate5 absent: PASS
+close command: NOT RUN
+code_sha256: 446651e6588c8f95bff594d07d6279e35d0968074f92b5658657b56981a0a0c2
+build_sha256: a91677e846ca7d6ab371de2701d05b5d998f71b0f3414ebe59ac7736b90614c0

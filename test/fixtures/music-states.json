@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "updatedAt": "2026-11-17T00:00:00Z"
+  },
+  "data": {
+    "site": {
+      "featuredReleaseId": "record-alpha",
+      "footerText": "Synthetic studio — All rights reserved. 架空の確認用フッターです。",
+      "links": {
+        "bandcamp": "https://example.test/shop",
+        "youtube": "https://example.test/videos",
+        "x": "https://example.test/x",
+        "instagram": "https://example.test/photos",
+        "note": "https://example.test/notes"
+      }
+    },
+    "discography": {
+      "digital": [
+        {
+          "id": "record-alpha",
+          "title": "架空の作品 \"Synthetic / Alpha\" <>& の長いタイトル",
+          "releaseType": "Single",
+          "releaseDate": "2026.10.12",
+          "image": "assets/images/album1.jpg",
+          "playbackVideoId": "clip-alpha",
+          "link": "https://example.test/record-alpha",
+          "description": ""
+        },
+        {
+          "id": "record-beta",
+          "title": "架空の作品 Beta",
+          "releaseType": "",
+          "releaseDate": "2026.09.11",
+          "image": "assets/images/album2.png",
+          "playbackVideoId": "",
+          "link": "https://example.test/record-beta",
+          "description": "架空の説明です。"
+        }
+      ],
+      "demo": [
+        {
+          "id": "record-gamma",
+          "title": "架空のデモ Gamma",
+          "releaseType": "",
+          "releaseDate": "2026.08.10",
+          "image": "assets/images/album3.jpg",
+          "playbackVideoId": "",
+          "link": "https://example.test/record-gamma",
+          "description": "1. 架空の曲 Gamma\n2. 架空の曲 Delta\n3. 架空の曲 Epsilon\n4. 架空の曲 Zeta"
+        },
+        {
+          "id": "record-delta",
+          "title": "架空のデモ Delta",
+          "releaseType": "",
+          "releaseDate": "2026.07.09",
+          "image": "assets/images/album1.jpg",
+          "playbackVideoId": "",
+          "link": "https://example.test/record-delta",
+          "description": "1. 架空の曲 Eta<br>2. 架空の曲 Theta"
+        }
+      ]
+    },
+    "youtube": {
+      "channelUrl": "https://example.test/channel",
+      "musicVideos": [
+        {
+          "id": "clip-alpha",
+          "title": "架空の映像 Alpha",
+          "youtubeId": "abcdefghijk"
+        },
+        {
+          "id": "clip-beta",
+          "title": "架空の映像 Beta",
+          "youtubeId": "lmnopqrstuv"
+        }
+      ],
+      "liveMovies": [
+        {
+          "id": "clip-gamma",
+          "title": "架空のライブ Gamma",
+          "youtubeId": "ABCD1234_-x"
+        },
+        {
+          "id": "clip-delta",
+          "title": "架空のライブ Delta",
+          "youtubeId": "LMNO5678_-y"
+        }
+      ],
+      "demos": [
+        {
+          "id": "clip-epsilon",
+          "title": "架空のデモ Epsilon",
+          "youtubeId": "WXYZ9012_-z"
+        }
+      ]
+    },
+    "live": {
+      "upcoming": [
+        {
+          "id": "live-a",
+          "date": "2099.12.12",
+          "venue": "架空の会場",
+          "title": "架空の公演 A",
+          "openTime": "18:00",
+          "startTime": "18:30",
+          "ticket": "2,000円",
+          "notes": "架空の注記",
+          "performers": "架空の出演者",
+          "ticketUrl": "",
+          "reservationClosed": false
+        }
+      ],
+      "past": []
+    },
+    "news": [
+      {
+        "id": "news-a",
+        "date": "2026.11.01",
+        "title": "架空のお知らせ A",
+        "description": "架空のお知らせの全文です。<br>2行目も表示します。",
+        "link": "https://example.test/news-a",
+        "linkText": "お知らせを読む",
+        "image": "assets/images/album1.jpg"
+      },
+      {
+        "id": "news-b",
+        "date": "2026.10.01",
+        "title": "架空のお知らせ B",
+        "description": "別のお知らせです。",
+        "link": "",
+        "linkText": ""
+      }
+    ],
+    "profile": {
+      "text": "架空の紹介文です。\n音楽についての短い紹介です。\n\nこの段落はHomeに表示しません。",
+      "links": []
+    },
+    "contact": {
+      "introText": "架空のお問い合わせ案内",
+      "formAction": ""
+    }
+  },
+  "scenarios": {
+    "base": {},
+    "release-playing": {
+      "openRelease": true
+    },
+    "no-selection": {
+      "noSelection": true
+    },
+    "video-playing": {
+      "openVideo": true
+    },
+    "empty-demo": {
+      "emptyDemo": true
+    },
+    "empty-live-movie": {
+      "emptyLiveMovie": true
+    },
+    "empty-video": {
+      "emptyVideo": true
+    },
+    "all-empty": {
+      "allEmpty": true
+    },
+    "error": {
+      "httpStatus": 503
+    },
+    "loading": {
+      "pending": true
+    },
+    "no-image": {
+      "image": ""
+    },
+    "broken-image": {
+      "image": "assets/images/synthetic-missing.jpg"
+    },
+    "long-title": {
+      "longTitle": true
+    }
+  }
+}

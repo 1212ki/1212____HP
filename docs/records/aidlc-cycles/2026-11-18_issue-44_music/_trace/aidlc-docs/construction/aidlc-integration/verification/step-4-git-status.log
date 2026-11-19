@@ -1,0 +1,20 @@
+command: git status --short
+ M aidlc-docs/README.md
+ M assets/js/home-player.js
+ M assets/js/script.js
+ M assets/js/site-content.js
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/
+?? aidlc-docs/inception/
+?? music/
+?? test/fixtures/music-states.json
+?? test/music-player.test.mjs
+?? test/music-rendering.test.mjs
+
+exit_code: 0
+elapsed_seconds: 0.122
