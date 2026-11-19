@@ -2,11 +2,12 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-11-17
+- Last updated: 2026-11-18
 - Related issues: #39, #40
 - Related implementation issues: #41, #42, #43, #44, #45
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #44のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #40）: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 
@@ -38,7 +39,7 @@
 | 送信中・失敗はページ内、予約完了はTicket完了ページで示す。 | 受付内容を確かめ、Liveから聴く体験へつなげる。 | 要件メモ｜予約の流れ「振る舞い」「案の判断と理由」`29:355`・`29:370` |
 | UIには実際の表示文言だけを置く。判断理由と新旧の説明は設計側に持つ。 | 操作する人へ制作上の説明を負わせない。 | 管理方針「画面と説明の分け方」`43:509`、#37の承認済み設計§5.2 |
 
-#42ではMusic完成まで既存6項目のナビを保ち、Homeの「music →」はDiscographyへ向ける。#44で5項目とMusicへの入口・旧URLの行き先を揃える。マスタはこの最終形を示す。
+#42公開時はMusic完成まで既存6項目のナビを保ち、Homeの「music →」はDiscographyへ向けた。#44は5項目と`/music/`への入口・旧URLの行き先を揃える。公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約し、最後にmainへまとめて出す。#44の統合では本番配信は変わらず、管理画面は#47までYouTube・Discoタブを維持する。
 
 ## 3. 画面・マスタ・要件・実装の対応
 
@@ -62,6 +63,19 @@ Figma fileは`82QH1c3hUrv1fKCd2AMULK`、pageは[マスタ｜ホームページ `
 | Music | [Music｜1440 `30:220`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-220) | [Music｜390 `30:335`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-335) | [Music｜状態 `30:446`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-446)（6状態） | [要件メモ｜Music `30:489`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=30-489)「振る舞い」`30:497`・「狭い幅（390px）」`30:500`・「受入条件」`30:506` | PS-M-01〜04、PS-COM-01 | #41, #44（共通は#42） | 未実装。`discography/index.html`・`youtube/index.html`と各rendererは別々に存在。Music統合・旧URL誘導・作品の選択映像再生は未実装。 |
 | Profile | [Profile｜1440 `31:247`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-247) | [Profile｜390 `31:294`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-294) | [Profile・Contact｜状態 `31:400`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-400)（写真なし・読込失敗） | [要件メモ｜Profile・Contact `31:443`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-443)「振る舞い」`31:451`・「狭い幅（390px）」`31:454`・「受入条件」`31:460` | PS-PC-01 | #45（共通は#42） | 一部実装。`profile/index.html`・`site-content.js`に写真・本文・共通linksとSNS。Contactへの依頼入口とマスタ構成は未実装。 |
 | Contact | [Contact｜1440 `31:336`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-336) | [Contact｜390 `31:370`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-370) | [Profile・Contact｜状態 `31:400`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-400)（入力誤り・送信中・完了・失敗） | [要件メモ｜Profile・Contact `31:443`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=31-443)「振る舞い」`31:451`・「受入条件」`31:460` | PS-PC-02〜04 | #45 | 一部実装。`contact/index.html`・`assets/js/contact.js`に3項目とFormspree送信、Site設定の反映。送信状態はoverlayで、ページ内表示は未実装。 |
+
+### Issue #44のMusic・ナビの実装入力と比較時点
+
+上表の`00cdea5`列と#42の記録は比較履歴として保持する。#44着手時点は`080325887576655f27461cb15f28a3c590a292ee`で、Homeと全9ページの共通外枠は#42の受入済み。Music本文と5項目化・旧URL誘導はここから実装する。Approvedは入力の承認であり、下の対象の実装完了を意味しない。
+
+| 対象 | #44の対象と結果の参照 |
+|---|---|
+| Music | 新規`music/index.html`でrelease・demo・video、6状態と読込、全作品と全映像、選択映像のその場再生。旧2HTMLは誘導ページにする。 |
+| Menu・全公開ナビ | 既存9HTML＋MusicをHome / Live / Music / Profile / Contactに揃える。Homeのmusic →もMusicへ向ける。Ticket系の現在地はLive、旧2URLはMusic。 |
+
+結果はactive時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/`内の同pathを参照する。#43・#45の本文には変更を広げない。
+
+FigmaのMusic入力は`/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/figma-snapshot/`。文言取得2026-11-18T11:31:33+09:00、`page-0-1_master-home.md` SHA-256 `9e694cf09a238dabb044f0752c981733b3c1d638a07f5ae47e84599471936679`、`music-layout-spec.md` SHA-256 `bfff4827b9852b3a3c4831edf060823ab677c2d9f16cafbad3329b2c63ee3ab5`。今回のrender PNGはなく、数値・文言を根拠にする。nav32、再生/外部ボタンの区別、16:9のplayerとPC幅の寸法（作品の聴く480×270、映像474×267）、Music用カードvariant、tokensの間隔、ロゴ例外の整合案は同cycleの`construction/aidlc-integration/figma-fix-requests.md` F44-01〜07とgate 3の記録に対応する。意味が変わる別案は先に再承認する。
 
 ## 4. 受入条件
 
@@ -126,16 +140,22 @@ Homeは`site.heroImage`を表示しない。Live共有時の予備画像とし�
 
 newsは新しい順で6件、同日は元順、不正・空日付は末尾。画像なしで日付・タイトル・説明・登録リンク文言を保持し、リンクなしではその文言も出さない。Home profileは最初の空行まで（空白だけの行も空行、単一改行は保持）。
 
+### Issue #44のMusic表示契約
+
+Musicも既存`MusicData.sortReleasesByDate`を使い、digitalとdemoをそれぞれ新しい順に表示する。同日・日付不正・空の順序と非破壊性を保つ。タイトルは登録どおり、種別と日付はHomeと同じ` ／ `結合の別表示。説明は両区分とも全文・改行を保持する。リンクが有効ならdigitalは「配信先へ」、demoは「購入先へ」。選択映像は全3映像配列の`id`から解決し、有効なyoutubeIdがある作品だけ「聴く」を出す。映像配列内は登録順、music video→live movie→demoの順を保つ。作品に選ばれた映像もvideoから除かない。「YouTubeチャンネル →」は`youtube.channelUrl`を使う。
+
+公開Musicの作品は現管理画面のDisco、映像とChannel URLはYouTubeで編集する。#44はタブ・modal名・保存・データの形を変えず、5タブ化は#47。`admin/README.md`はこの対応を記し、未来の管理Musicタブが現在使えるようには書かない。
+
 ## 6. 主要flowとdesktop / mobile
 
 実装: #42〜#45。`00cdea5`: 既存の閲覧・外部リンク・送信はあるが、以下の構成・完了遷移は未実装。
 
-- Homeは顔の作品→次のライブ→news→ほかの作品2件→profile→linksの順。390pxは縦1列でナビをMenuに畳む。1440pxの初期表示と390pxのジャケット表示はPS-H-01・02で確認する。ロゴの波紋・音符の演出は保持する。 #42のナビは既存6項目・順序・行き先を保つ。Homeのmusic →は`discography/`、all live →は`live/`、次回未定のこれまでのライブ →は`live/detail/?view=past`。外枠だけを全ページへ適用し、本文を一括変更しない。Menuは開くと閉じるに替わり、Escape・リンク選択・desktop幅へのresizeで閉じる。ロゴの赤いiと、押した時の波紋・音符の色・動き・タイミングは今のまま、reduced-motionも保つ。ナビ・リンクのhover/focus、選択色、scrollbar、背景、ロゴhoverの線には赤を使わない。全体計画`28:111`のv2は「・主な見出し（news、music、profile、links など）は小文字の英語と短い赤い線。new release・next live のような小さなラベルには線を付けない。本文と操作は日本語。」「・赤は、その画面でいちばんしてほしい操作1つと、見出しの線だけに使う。ロゴは今のまま。」とする。
+- Homeは顔の作品→次のライブ→news→ほかの作品2件→profile→linksの順。390pxは縦1列でナビをMenuに畳む。1440pxの初期表示と390pxのジャケット表示はPS-H-01・02で確認する。ロゴの波紋・音符の演出は保持する。 #42公開時のナビは既存6項目だった。#44ではHome / Live / Music / Profile / Contactの5項目にし、Homeのmusic →は`music/`、all live →は`live/`、次回未定のこれまでのライブ →は`live/detail/?view=past`。外枠だけを全ページへ適用し、本文を一括変更しない。Menuは開くと閉じるに替わり、Escape・リンク選択・desktop幅へのresizeで閉じる。ロゴの赤いiと、押した時の波紋・音符の色・動き・タイミングは今のまま、reduced-motionも保つ。ナビ・リンクのhover/focus、選択色、scrollbar、背景、ロゴhoverの線には赤を使わない。全体計画`28:111`のv2は「・主な見出し（news、music、profile、links など）は小文字の英語と短い赤い線。new release・next live のような小さなラベルには線を付けない。本文と操作は日本語。」「・赤は、その画面でいちばんしてほしい操作1つと、見出しの線だけに使う。ロゴは今のまま。」とする。
 - Live一覧は開催予定を日付の近い順、終了したライブは新しい順の先頭数件と全件への入口。Live詳細だけで公演の詳細を見せる。390pxの詳細は日付・会場・予約をフライヤーより上に置く。時間・料金・注記・共演がすべて未登録なら説明を出す。Homeの次のライブにも同じformatterを使う（v2の`25:91`は「時間・料金・注記・共演の文字は、Liveのページと同じ書き方で出す。」）。
 - 内部予約はTicket、外部予約は別タブ、終了・受付終了・不正な予約URLは予約できない状態を示す。LiveリンクがInstagramなら詳細とTicket概要へ出し、それ以外の補助リンクを同じ入口としては出さない。
 - Ticketは指定Live、なければ入力途中のLive、なければ先頭を初期選択する。1440pxは入力中も対象概要が横に見える。390pxは概要を入力欄の上に小さく置き、送信を全幅にする。入力の復元・枚数1〜10・表示設定を保持する。外部受付の選択時はLive選択だけを残し、他の入力と内部送信を隠す。
 - 予約成功後はTicket完了へ進み、完了文・受付番号・対象Live・送った内容・次の入口・Homeと同じ作品を出す。完了文は管理設定を優先し、既定は「予約しました。」。メールの控えへの言及は置かない。渡す内容の方法は#43の計画で固定する。
-- Musicはrelease→demo→video。作品は区分ごとにリリース日の新しい順で、選択映像は作品直下に開く。別作品を再生したら前のプレーヤーを閉じる。390pxは作品の画像を左、名前と操作を右に置き、映像は1つずつ全幅にする。映像のサムネイルからもその場で再生する。旧URLは該当区分へ送る。
+- Musicのpathは`/music/`、release→demo→video、ページ内移動は`#release / #demo / #video`。作品は区分ごとにリリース日の新しい順。作品の再生は押した作品を含む並びのすぐ下、映像はサムネイルの場所に開く。ページ内のplayerは最大1つで、別の作品・映像・同じ映像の別の起点を開いたら前を破棄し、新しい場所で最初から再生する。閉じる・再描画・離脱でも停止する。1440pxは作品画像220角、カード幅220で、作品の「聴く」のplayerは押した作品を含む並びのすぐ下に480×270で開き、ほかの作品のカードに重ならず左右にはみ出さない。映像は2列・間隔32で、サムネイルとplayerは474×267（本文幅980の時）、題名の幅も同じ。390pxは画像120角を左、名前と操作を右、playerは作品行全幅の358×201、映像も1つずつ全幅の358×201。幅が足りない時、playerの幅は置ける幅に合わせて16:9を保ち、Musicのplayerの高さは200pxを下回らない（置ける幅が356px未満では高さ200pxを保つ）。映像の列は、1列あたりの幅で高さ200pxを保てなくなる前に1列にする（YouTubeの埋め込みは高さ200px以上、16:9は480×270以上が推奨）。playerは16:9、既存Homeの再生と停止を保持し、iPhoneで追加tapを要する場合は受入済みQ42-01を引き継ぐ。`/discography/`は`/music/#release`、`/youtube/`は`/music/#video`へ`location.replace`で送り、query・旧hashは破棄する。JSなし・失敗でも常時表示リンクから進める。Music自身もJS無効時にBandcamp・YouTubeの静的入口を残す。旧HTMLのcanonicalはMusic、robotsはnoindex, follow。空の区分のhashは読込後にMusic上部へ戻し、見出しと移動には空の区分を残さない。
 - Profileは登録内容を保ち、Contactへの依頼入口を出す。390pxは写真を上、本文を下。Contactは既存3項目のまま、送信中・完了・失敗をページ内で示し、送信ボタンを全幅にする。
 
 ## 7. 状態・失敗・fallback・rollback
@@ -166,6 +186,14 @@ TicketでLiveを識別できない場合は「予約情報を確認できませ�
 ### Issue #42の確認2と公開
 
 確認2の前にFrontがItsukiへ実際の1作品の種別・映像とSiteの顔の選択の通常保存を頼む（保存済みなら入れ直さない）。#41の公開互換試験が旧公開画面は3項目を使わないことを保護するため、merge前に保存できる。Frontが本番公開APIを直接読むbranchの新HomeをPC・スマホから開けるURLで示し、確認2でItsukiが同じ作品の顔・種別・1操作実音・閉じるを確かめる。fixtureの撮影は別に維持し、本番データをrepoやfixtureへ保存しない。手元配信は公開用ファイルだけとし、管理画面・token・private fileとrepo全体を外に出さない。merge後はFrontがPages buildと公開Homeの新版配信・確認2との一致をread-only確認し、差が見つかった時だけItsukiへ返す。同じデータ・画面の2回目の本人確認は頼まない。確認2前に保存した作品設定は、merge見送り時もrollback時も保持する。
+
+### Issue #44の状態とまとめ出し
+
+Musicの状態は同cycle RequirementsのS44-01〜06・Lへ対応する。全体0と取得失敗は内部の状態を分けつつ、ともに「音源の情報を読み込めませんでした。」「もう一度読み込む」「Bandcamp」「YouTube」を出す。読込中は見出し・枠・淡い面を先に出す。画像なし・load errorは通常の画像寸法の淡い面に「松本一樹」だけを出し、作品名は本来の位置に保持する。空の区分・映像小区分は見出しごと隠す。映像0でも有効なチャンネルはmusic見出し側へ残す。retryは二重要求・古い応答の上書きを防ぎ、離脱後の応答を無視する。公開本文の赤は見出しの線だけとし、共通ロゴの赤いiと押下演出は既存の例外を維持する。
+
+確認1はgate 1〜3、確認2はgate 4〜5で、すべてItsuki本人のAを記録する。Frontはfixture画像とは別に、確認2前に本番公開データでbranchのMusic・Home・旧URLをPCとスマホから確認する。公開ファイルだけを手元配信し、`http://localhost:8888/`は許可リスト内の公開APIを読む。スマホは公開データのscratch上の写しを読む。公開APIは許可リストのオリジンだけに応える。repo・fixture・承認の提示文へ本番の値を入れない。設定は保存済みなら入れ直さない。毎回PC/スマホURLを渡し、確認2のItsukiの閲覧は任意、本人が必ず見るのはまとめ出し前の公開全ページ1回である。実音・画像・本番表示・独立reviewの成否は結果文書に分ける。
+
+Owner決定（2026-11-18）により#44を先に`feature/39-public-pages`へ統合し、#43・#45はそれを取り込んで本文を実装する。PR base mainという通常規則への例外であり、最後はmainへまとめて出す。#44のmergeでは本番は変わらず、Worker deployも本番配信確認も行わない。Issue/ProjectはReviewを保ち、まとめ出しのmain merge時にcloseする。まとめ用branchで戻す場合は#44のmerge差分だけをrevertし、後続本文と整合を確認する。本番公開後に旧6項目へ戻す場合はmainのまとめ出し差分をrevertし、旧2ページとHome入口・説明を同じ復旧単位で戻す。いずれもItsukiの明示承認で実行し、保存データ・#41 Worker・Figmaを戻さない。具体手順と衝突範囲は#44のCode Generation Planを参照する。
 
 ## 8. 検証とマスタ更新の手順
 

@@ -158,7 +158,7 @@ async function render(data,envelope,helper,pathname,detailId) {
   vm.runInNewContext(renderer,context);await settle();
   return Object.fromEntries([...elements].map(([id,e])=>[id,{html:e.innerHTML,text:e.textContent,src:e.src,href:e.href,display:e.style.display}]));
 }
-for(const envelope of [false,true]) for(const pathname of ['/discography/','/live/','/profile/','/youtube/','/contact/']) test('music fields public DOM unchanged for missing, empty and populated fields '+pathname+' '+(envelope?'envelope':'body'),async()=>{
+for(const envelope of [false,true]) for(const pathname of ['/live/','/profile/','/contact/']) test('music fields public DOM unchanged for missing, empty and populated fields '+pathname+' '+(envelope?'envelope':'body'),async()=>{
   const base=await render(fixture,envelope,false,pathname);
   for(const populated of [false,true]) {
     const data=structuredClone(fixture);data.site.featuredReleaseId=populated?'s':'';
@@ -167,12 +167,6 @@ for(const envelope of [false,true]) for(const pathname of ['/discography/','/liv
   }
   // Home's intentional change is covered by T42-DATA/PLAY/CONTENT. These
   // routes protect actual page DOM rather than fabricated Home-only hooks.
-  if(pathname==='/discography/') {
-    assert.match(base['disc-digital-items'].html,/2025.5.5/);assert.match(base['disc-demo-items'].html,/2025\/05\/05/);
-    assert.ok(base['disc-digital-items'].html.indexOf('Synthetic title')<base['disc-digital-items'].html.indexOf('Second synthetic title'));
-    assert.match(base['disc-digital-items'].html,/Synthetic track list/);assert.match(base['disc-digital-items'].html,/https:\/\/example.test\/r/);
-    assert.doesNotMatch(base['disc-digital-items'].html,/iframe|Synthetic new type|playbackVideoId/);
-  }
   if(pathname==='/live/') {
     assert.match(base['live-upcoming-events'].html,/Synthetic description only Live/);assert.match(base['live-past-events'].html,/liveId=p/);
   }
@@ -183,4 +177,11 @@ for(const id of ['l','p']) test('music fields description-only Live detail keeps
   const data=structuredClone(fixture);data.site.featuredReleaseId='r';data.discography.digital[0].releaseType='Single';data.discography.digital[0].playbackVideoId='v';
   assert.deepEqual(await render(data,true,true,'/live/detail/',id),before);
   assert.match(before['live-detail-description'].html+before['live-detail-description'].text,id==='p'?/Synthetic past description only/:/Synthetic description only Live/);
+});
+
+for(const route of ['discography','youtube']) test('music compatibility legacy route retains static link and drops old data renderer '+route,()=>{
+  const html=readFileSync(route+'/index.html','utf8');
+  assert.match(html,/href="..\/music\/#(?:release|video)"/);
+  assert.match(html,/music-redirect.js/);assert.doesNotMatch(html,/site-content.js|disc-digital-items|youtube-content/);
+  // Exact replacement, query/hash disposal and JS-disabled arrival are T44-LEGACY.
 });

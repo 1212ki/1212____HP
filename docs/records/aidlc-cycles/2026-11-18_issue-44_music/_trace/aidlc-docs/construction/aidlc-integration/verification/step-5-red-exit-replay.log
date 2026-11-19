@@ -1,0 +1,1577 @@
+command: node --test test/music-redirect.test.mjs test/public-music-data-compatibility.test.mjs
+cwd: /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5
+provenance: final tests replayed on an isolated copy with the pre-feature boundary restored; original chronological RED logs retained separately.
+TAP version 13
+# Subtest: T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+not ok 1 - T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 39.32975
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:19:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /name="robots" content="noindex, follow"/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <!-- ビューポート設定 -->\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : discography</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <!-- ディスコグラフィセクション -->\n' +
+      '    <section class="discography">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">discography</h2>\n' +
+      '        <!-- ディスコグラフィ情報をここに記載-->\n' +
+      '        <!-- 公式リリース-->\n' +
+      '        <br>\n' +
+      '        <h3>■Digital Release</h3>\n' +
+      '        <div class="discography-items" id="disc-digital-items"></div><br><br>\n' +
+      '        <h3>■宅録Demo ※手売り/Bandcampにて販売中。</h3>\n' +
+      '        <div class="discography-items" id="disc-demo-items"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20261117-42"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261117-42"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <!-- ビューポート設定 -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : discography</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <!-- ディスコグラフィセクション -->
+        <section class="discography">
+          <div class="container">
+            <h2 class="section-title">discography</h2>
+            <!-- ディスコグラフィ情報をここに記載-->
+            <!-- 公式リリース-->
+            <br>
+            <h3>■Digital Release</h3>
+            <div class="discography-items" id="disc-digital-items"></div><br><br>
+            <h3>■宅録Demo ※手売り/Bandcampにて販売中。</h3>
+            <div class="discography-items" id="disc-demo-items"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js?v=20261117-42"></script>
+      <script src="../assets/js/script.js?v=20261117-42"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:20:49)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/
+not ok 2 - T44-LEGACY replace fixed destination discography/
+  ---
+  duration_ms: 0.800292
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#old
+not ok 3 - T44-LEGACY replace fixed destination discography/\#old
+  ---
+  duration_ms: 0.264333
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#video
+not ok 4 - T44-LEGACY replace fixed destination discography/\#video
+  ---
+  duration_ms: 1.112917
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+not ok 5 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+  ---
+  duration_ms: 0.454917
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+not ok 6 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.219125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+not ok 7 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.182333
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+not ok 8 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.305417
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+not ok 9 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 0.526583
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+not ok 10 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 9.29075
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html
+not ok 11 - T44-LEGACY replace fixed destination discography/index.html
+  ---
+  duration_ms: 42.918334
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#old
+not ok 12 - T44-LEGACY replace fixed destination discography/index.html\#old
+  ---
+  duration_ms: 1.454417
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#video
+not ok 13 - T44-LEGACY replace fixed destination discography/index.html\#video
+  ---
+  duration_ms: 0.533
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+not ok 14 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+  ---
+  duration_ms: 0.934667
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+not ok 15 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.510667
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+not ok 16 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.338292
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+not ok 17 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.192542
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+not ok 18 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 0.747708
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+not ok 19 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.600292
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+not ok 20 - T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 3.162625
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:19:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /name="robots" content="noindex, follow"/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : youtube</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="channel-application">\n' +
+      '      <div class="container">\n' +
+      '        <h3>\n' +
+      '          <a id="youtube-channel-link" href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank" rel="noopener">▷Channel</a>\n' +
+      '        </h3>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section class="youtube">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">youtube</h2>\n' +
+      '        <div id="youtube-content"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20261117-42"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261117-42"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : youtube</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="channel-application">
+          <div class="container">
+            <h3>
+              <a id="youtube-channel-link" href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank" rel="noopener">▷Channel</a>
+            </h3>
+          </div>
+        </section>
+    
+        <section class="youtube">
+          <div class="container">
+            <h2 class="section-title">youtube</h2>
+            <div id="youtube-content"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js?v=20261117-42"></script>
+      <script src="../assets/js/script.js?v=20261117-42"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:20:49)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/
+not ok 21 - T44-LEGACY replace fixed destination youtube/
+  ---
+  duration_ms: 5.62675
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#old
+not ok 22 - T44-LEGACY replace fixed destination youtube/\#old
+  ---
+  duration_ms: 0.811375
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#video
+not ok 23 - T44-LEGACY replace fixed destination youtube/\#video
+  ---
+  duration_ms: 0.226292
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+not ok 24 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+  ---
+  duration_ms: 1.448333
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+not ok 25 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.465709
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+not ok 26 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.428125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+not ok 27 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.202
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+not ok 28 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 0.157
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+not ok 29 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.154333
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html
+not ok 30 - T44-LEGACY replace fixed destination youtube/index.html
+  ---
+  duration_ms: 0.186292
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#old
+not ok 31 - T44-LEGACY replace fixed destination youtube/index.html\#old
+  ---
+  duration_ms: 0.233542
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#video
+not ok 32 - T44-LEGACY replace fixed destination youtube/index.html\#video
+  ---
+  duration_ms: 0.293584
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+not ok 33 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+  ---
+  duration_ms: 0.350875
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+not ok 34 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.167084
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+not ok 35 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 0.161125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+not ok 36 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 0.154208
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+not ok 37 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 1.337875
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+not ok 38 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 0.556833
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:26:165'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:27:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects 
+not ok 39 - T44-LEGACY invalid destination never redirects 
+  ---
+  duration_ms: 0.266208
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:72'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:161)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects other
+not ok 40 - T44-LEGACY invalid destination never redirects other
+  ---
+  duration_ms: 0.830542
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:72'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:161)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects https://evil.test/
+not ok 41 - T44-LEGACY invalid destination never redirects https://evil.test/
+  ---
+  duration_ms: 0.234667
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:72'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:161)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects ../video
+not ok 42 - T44-LEGACY invalid destination never redirects ../video
+  ---
+  duration_ms: 3.772333
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:72'
+  failureType: 'testCodeFailure'
+  error: 'legacy page loads redirect script'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    run (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:11:10)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/music-redirect.test.mjs:30:161)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+ok 43 - T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+  ---
+  duration_ms: 41.872333
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 44 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 25.965
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 45 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 21.426917
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 46 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 8.370916
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 47 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 14.385875
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 48 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 11.254875
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 49 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 15.12425
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 50 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 10.732375
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 51 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 11.622417
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+not ok 52 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 4.484083
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/public-music-data-compatibility.test.mjs:182:47'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /href="..\/music\/#(?:release|video)"/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <!-- ビューポート設定 -->\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : discography</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <!-- ディスコグラフィセクション -->\n' +
+      '    <section class="discography">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">discography</h2>\n' +
+      '        <!-- ディスコグラフィ情報をここに記載-->\n' +
+      '        <!-- 公式リリース-->\n' +
+      '        <br>\n' +
+      '        <h3>■Digital Release</h3>\n' +
+      '        <div class="discography-items" id="disc-digital-items"></div><br><br>\n' +
+      '        <h3>■宅録Demo ※手売り/Bandcampにて販売中。</h3>\n' +
+      '        <div class="discography-items" id="disc-demo-items"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20261117-42"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261117-42"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <!-- ビューポート設定 -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : discography</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <!-- ディスコグラフィセクション -->
+        <section class="discography">
+          <div class="container">
+            <h2 class="section-title">discography</h2>
+            <!-- ディスコグラフィ情報をここに記載-->
+            <!-- 公式リリース-->
+            <br>
+            <h3>■Digital Release</h3>
+            <div class="discography-items" id="disc-digital-items"></div><br><br>
+            <h3>■宅録Demo ※手売り/Bandcampにて販売中。</h3>
+            <div class="discography-items" id="disc-demo-items"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js?v=20261117-42"></script>
+      <script src="../assets/js/script.js?v=20261117-42"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/public-music-data-compatibility.test.mjs:184:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+not ok 53 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 0.974583
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/public-music-data-compatibility.test.mjs:182:47'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /href="..\/music\/#(?:release|video)"/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : youtube</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <!-- 1つ上の階層にあるindex.htmlをHomeに -->\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <!-- profileディレクトリへ移動する場合、../profile/ -->\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../youtube/">YouTube</a></li>\n' +
+      '          <li><a href="../discography/">Discography</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="channel-application">\n' +
+      '      <div class="container">\n' +
+      '        <h3>\n' +
+      '          <a id="youtube-channel-link" href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank" rel="noopener">▷Channel</a>\n' +
+      '        </h3>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section class="youtube">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">youtube</h2>\n' +
+      '        <div id="youtube-content"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20261117-42"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261117-42"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : youtube</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <!-- 1つ上の階層にあるindex.htmlをHomeに -->
+              <li><a href="../">Home</a></li>
+              <!-- profileディレクトリへ移動する場合、../profile/ -->
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../youtube/">YouTube</a></li>
+              <li><a href="../discography/">Discography</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="channel-application">
+          <div class="container">
+            <h3>
+              <a id="youtube-channel-link" href="https://www.youtube.com/@1212____ki" class="application-link" target="_blank" rel="noopener">▷Channel</a>
+            </h3>
+          </div>
+        </section>
+    
+        <section class="youtube">
+          <div class="container">
+            <h2 class="section-title">youtube</h2>
+            <div id="youtube-content"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js?v=20261117-42"></script>
+      <script src="../assets/js/script.js?v=20261117-42"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-5/test/public-music-data-compatibility.test.mjs:184:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 9
+# fail 44
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1631.428333
+
+exit_code: 1

@@ -1,0 +1,330 @@
+TAP version 13
+# Subtest: T44-SHELL ten routes and five shared nav URLs index.html
+ok 1 - T44-SHELL ten routes and five shared nav URLs index.html
+  ---
+  duration_ms: 246.477791
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/index.html
+ok 2 - T44-SHELL ten routes and five shared nav URLs live/index.html
+  ---
+  duration_ms: 49.3925
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+ok 3 - T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+  ---
+  duration_ms: 72.694917
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/index.html
+ok 4 - T44-SHELL ten routes and five shared nav URLs ticket/index.html
+  ---
+  duration_ms: 94.823166
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+ok 5 - T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 91.660917
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs discography/index.html
+ok 6 - T44-SHELL ten routes and five shared nav URLs discography/index.html
+  ---
+  duration_ms: 168.879583
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs youtube/index.html
+ok 7 - T44-SHELL ten routes and five shared nav URLs youtube/index.html
+  ---
+  duration_ms: 73.3665
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs profile/index.html
+ok 8 - T44-SHELL ten routes and five shared nav URLs profile/index.html
+  ---
+  duration_ms: 265.618625
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs contact/index.html
+ok 9 - T44-SHELL ten routes and five shared nav URLs contact/index.html
+  ---
+  duration_ms: 773.668959
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs music/index.html
+ok 10 - T44-SHELL ten routes and five shared nav URLs music/index.html
+  ---
+  duration_ms: 2.676625
+  ...
+# Subtest: T44-SHELL shared style and script cache version aligned for every consumer
+ok 11 - T44-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 2.196542
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 12 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 113.926042
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 13 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 208.424125
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 14 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 13.177084
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 15 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 6.044417
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 16 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 20.563292
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 17 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 4.682
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 18 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 8.903916
+  ...
+# Subtest: RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+ok 19 - RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+  ---
+  duration_ms: 0.986208
+  ...
+# Subtest: RV42-07 Home caption and news spacing match master without changing shared title gap
+ok 20 - RV42-07 Home caption and news spacing match master without changing shared title gap
+  ---
+  duration_ms: 1.028583
+  ...
+# Subtest: FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+ok 21 - FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+  ---
+  duration_ms: 0.739166
+  ...
+# Subtest: FR-N2 all Home news rows share the longest bounded date column and content start
+ok 22 - FR-N2 all Home news rows share the longest bounded date column and content start
+  ---
+  duration_ms: 0.689083
+  ...
+# Subtest: T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+not ok 23 - T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+  ---
+  duration_ms: 77.659417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:113:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /\.site-music \.music-jumps\s*\{[^}]*max-height: none;[^}]*opacity: 1;[^}]*overflow: visible;[^}]*pointer-events: auto/. Input:
+    
+    '\n' +
+      '/* Issue #44: Music variants of the shared components. */\n' +
+      'body.site-music { font-family: var(--font-body), sans-serif; background: var(--paper); letter-spacing: 0; }\n' +
+      'body.site-music::before { display: none; }\n' +
+      'body.site-music::selection, .site-music ::selection { background: var(--paper-deep); color: var(--ink); }\n' +
+      'body.site-music::-webkit-scrollbar-thumb { background: var(--ink-muted); }\n' +
+      'body.site-music::-webkit-scrollbar-thumb:hover { background: var(--ink); }\n' +
+      'body.site-music::-webkit-scrollbar-track { background: var(--paper-deep); }\n' +
+      '.site-music :focus-visible { outline-color: var(--ink); }\n' +
+      '.site-music [hidden] { display: none !important; }\n' +
+      '.site-music section { padding: 0; }\n' +
+      '.site-music .music-container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; padding: var(--space-64) 0; display: flex; flex-direction: column; gap: var(--space-64); }\n' +
+      '.site-music .music-heading { display: flex; flex-direction: column; gap: var(--space-16); align-items: flex-start; }\n' +
+      '.site-music .site-section-title { margin-bottom: 0; }\n' +
+      '.site-music .music-jumps { display: flex; flex-wrap: wrap; gap: var(--space-8); }\n' +
+      '.site-music .music-section { display: flex; flex-direction: column; gap: var(--space-24); scroll-margin-top: calc(81px + var(--space-24)); min-width: 0; }\n' +
+      '.site-music .music-section h2 { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; }\n' +
+      '.site-music .music-section-heading { display: flex; flex-direction: column; gap: var(--space-4); }\n' +
+      '.site-music .music-demo-intro { font: 400 14px/22px var(--font-body), sans-serif; color: var(--ink-muted); overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-32); }\n' +
+      '.site-music .music-release-card { width: 220px; gap: var(--space-12); align-items: stretch; }\n' +
+      '.site-music .music-release-image { width: 220px; height: 220px; flex: none; }\n' +
+      '.site-music .music-artwork-fallback { display: flex; align-items: center; justify-content: center; padding: var(--space-8); width: 100%; height: 100%; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; text-align: center; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-text { min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); }\n' +
+      '.site-music .music-release-title { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-meta, .site-music .music-release-description { font: 400 14px/22px var(--font-body), sans-serif; letter-spacing: 0; margin: 0; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-release-meta { color: var(--ink-muted); }\n' +
+      '.site-music .music-release-description { color: var(--ink); }\n' +
+      '.site-music .music-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-8); padding-top: var(--space-8); }\n' +
+      '.site-music .music-player { width: 100%; aspect-ratio: 16 / 9; background: var(--paper-deep); border-radius: 12px; overflow: hidden; }\n' +
+      '.site-music .music-player iframe { display: block; width: 100%; height: 100%; border: 0; }\n' +
+      '.site-music .music-video-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8); }\n' +
+      '.site-music .music-video-group { display: flex; flex-direction: column; gap: var(--space-12); min-width: 0; }\n' +
+      '.site-music .music-video-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-24); }\n' +
+      '.site-music .music-video-card { width: 310px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; }\n' +
+      '.site-music .music-video-stage { width: 100%; min-width: 0; }\n' +
+      '.site-music .music-video-thumbnail { display: block; position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; padding: 0; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; }\n' +
+      '.site-music button.music-video-thumbnail { cursor: pointer; }\n' +
+      '.site-music button.music-video-thumbnail:hover { opacity: .8; }\n' +
+      '.site-music .music-video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }\n' +
+      '.site-music .music-video-fallback { width: 100%; height: 100%; display: grid; place-items: center; }\n' +
+      '.site-music .music-video-title { font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; overflow-wrap: anywhere; }\n' +
+      '.site-music .music-links { display: flex; flex-wrap: wrap; gap: var(--space-8); }\n' +
+      '.site-music .music-error { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-8); font: 400 14px/22px var(--font-body), sans-serif; }\n' +
+      '.site-music .music-error > .site-button { margin-top: var(--space-8); }\n' +
+      '.site-music .music-loading { display: flex; flex-direction: column; gap: var(--space-16); color: var(--ink-muted); font: 400 14px/22px var(--font-body), sans-serif; }\n' +
+      '.site-music .music-skeleton { width: 220px; max-width: 100%; aspect-ratio: 1; border-radius: 12px; background: var(--paper-deep); }\n' +
+      '.site-music .music-noscript { padding-top: 0; gap: var(--space-16); }\n' +
+      '\n' +
+      '@media (max-width: 820px) {\n' +
+      '  .site-music .music-container { padding: var(--space-32) 0; gap: var(--space-48); }\n' +
+      '  .site-music .music-release-list { flex-direction: column; gap: var(--space-24); }\n' +
+      '  .site-music .music-release-card { display: grid; grid-template-columns: 120px minmax(0, 1fr); column-gap: var(--space-16); row-gap: var(--space-12); width: 100%; align-items: start; }\n' +
+      '  .site-music .music-release-image { width: 120px; height: 120px; }\n' +
+      '  .site-music .music-release-card > .music-player { grid-column: 1 / -1; }\n' +
+      '  .site-music .music-video-list { flex-direction: column; gap: var(--space-16); }\n' +
+      '  .site-music .music-video-card { width: 100%; }\n' +
+      '  .site-music .music-skeleton { width: 120px; }\n' +
+      '  .site-music .music-noscript { padding-top: 0; gap: var(--space-16); }\n' +
+      '}\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+    /* Issue #44: Music variants of the shared components. */
+    body.site-music { font-family: var(--font-body), sans-serif; background: var(--paper); letter-spacing: 0; }
+    body.site-music::before { display: none; }
+    body.site-music::selection, .site-music ::selection { background: var(--paper-deep); color: var(--ink); }
+    body.site-music::-webkit-scrollbar-thumb { background: var(--ink-muted); }
+    body.site-music::-webkit-scrollbar-thumb:hover { background: var(--ink); }
+    body.site-music::-webkit-scrollbar-track { background: var(--paper-deep); }
+    .site-music :focus-visible { outline-color: var(--ink); }
+    .site-music [hidden] { display: none !important; }
+    .site-music section { padding: 0; }
+    .site-music .music-container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; padding: var(--space-64) 0; display: flex; flex-direction: column; gap: var(--space-64); }
+    .site-music .music-heading { display: flex; flex-direction: column; gap: var(--space-16); align-items: flex-start; }
+    .site-music .site-section-title { margin-bottom: 0; }
+    .site-music .music-jumps { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+    .site-music .music-section { display: flex; flex-direction: column; gap: var(--space-24); scroll-margin-top: calc(81px + var(--space-24)); min-width: 0; }
+    .site-music .music-section h2 { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; }
+    .site-music .music-section-heading { display: flex; flex-direction: column; gap: var(--space-4); }
+    .site-music .music-demo-intro { font: 400 14px/22px var(--font-body), sans-serif; color: var(--ink-muted); overflow-wrap: anywhere; }
+    .site-music .music-release-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-32); }
+    .site-music .music-release-card { width: 220px; gap: var(--space-12); align-items: stretch; }
+    .site-music .music-release-image { width: 220px; height: 220px; flex: none; }
+    .site-music .music-artwork-fallback { display: flex; align-items: center; justify-content: center; padding: var(--space-8); width: 100%; height: 100%; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; text-align: center; overflow-wrap: anywhere; }
+    .site-music .music-release-text { min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); }
+    .site-music .music-release-title { font: 500 20px/30px var(--font-body), sans-serif; letter-spacing: 0; overflow-wrap: anywhere; }
+    .site-music .music-release-meta, .site-music .music-release-description { font: 400 14px/22px var(--font-body), sans-serif; letter-spacing: 0; margin: 0; overflow-wrap: anywhere; }
+    .site-music .music-release-meta { color: var(--ink-muted); }
+    .site-music .music-release-description { color: var(--ink); }
+    .site-music .music-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-8); padding-top: var(--space-8); }
+    .site-music .music-player { width: 100%; aspect-ratio: 16 / 9; background: var(--paper-deep); border-radius: 12px; overflow: hidden; }
+    .site-music .music-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .site-music .music-video-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-8); }
+    .site-music .music-video-group { display: flex; flex-direction: column; gap: var(--space-12); min-width: 0; }
+    .site-music .music-video-list { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-24); }
+    .site-music .music-video-card { width: 310px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; }
+    .site-music .music-video-stage { width: 100%; min-width: 0; }
+    .site-music .music-video-thumbnail { display: block; position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; padding: 0; background: var(--paper-deep); color: var(--ink-muted); font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; }
+    .site-music button.music-video-thumbnail { cursor: pointer; }
+    .site-music button.music-video-thumbnail:hover { opacity: .8; }
+    .site-music .music-video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+    .site-music .music-video-fallback { width: 100%; height: 100%; display: grid; place-items: center; }
+    .site-music .music-video-title { font: 500 14px/22px var(--font-body), sans-serif; letter-spacing: .04em; overflow-wrap: anywhere; }
+    .site-music .music-links { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+    .site-music .music-error { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-8); font: 400 14px/22px var(--font-body), sans-serif; }
+    .site-music .music-error > .site-button { margin-top: var(--space-8); }
+    .site-music .music-loading { display: flex; flex-direction: column; gap: var(--space-16); color: var(--ink-muted); font: 400 14px/22px var(--font-body), sans-serif; }
+    .site-music .music-skeleton { width: 220px; max-width: 100%; aspect-ratio: 1; border-radius: 12px; background: var(--paper-deep); }
+    .site-music .music-noscript { padding-top: 0; gap: var(--space-16); }
+    
+    @media (max-width: 820px) {
+      .site-music .music-container { padding: var(--space-32) 0; gap: var(--space-48); }
+      .site-music .music-release-list { flex-direction: column; gap: var(--space-24); }
+      .site-music .music-release-card { display: grid; grid-template-columns: 120px minmax(0, 1fr); column-gap: var(--space-16); row-gap: var(--space-12); width: 100%; align-items: start; }
+      .site-music .music-release-image { width: 120px; height: 120px; }
+      .site-music .music-release-card > .music-player { grid-column: 1 / -1; }
+      .site-music .music-video-list { flex-direction: column; gap: var(--space-16); }
+      .site-music .music-video-card { width: 100%; }
+      .site-music .music-skeleton { width: 120px; }
+      .site-music .music-noscript { padding-top: 0; gap: var(--space-16); }
+    }
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/site-shell.test.mjs:119:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+ok 24 - T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+  ---
+  duration_ms: 1008.646709
+  ...
+# Subtest: T44-SHELL current mapping/aria /
+ok 25 - T44-SHELL current mapping/aria /
+  ---
+  duration_ms: 9.86425
+  ...
+# Subtest: T44-SHELL current mapping/aria /index.html
+ok 26 - T44-SHELL current mapping/aria /index.html
+  ---
+  duration_ms: 1.868375
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/
+ok 27 - T44-SHELL current mapping/aria /music/
+  ---
+  duration_ms: 2.249791
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/index.html
+ok 28 - T44-SHELL current mapping/aria /music/index.html
+  ---
+  duration_ms: 1.598333
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/
+ok 29 - T44-SHELL current mapping/aria /ticket/
+  ---
+  duration_ms: 2.554458
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/complete/
+ok 30 - T44-SHELL current mapping/aria /ticket/complete/
+  ---
+  duration_ms: 8.92975
+  ...
+# Subtest: T44-SHELL current mapping/aria /live/detail/
+ok 31 - T44-SHELL current mapping/aria /live/detail/
+  ---
+  duration_ms: 2.385334
+  ...
+# Subtest: T44-SHELL current mapping/aria /discography/index.html
+ok 32 - T44-SHELL current mapping/aria /discography/index.html
+  ---
+  duration_ms: 2.830042
+  ...
+# Subtest: T44-SHELL current mapping/aria /youtube/
+ok 33 - T44-SHELL current mapping/aria /youtube/
+  ---
+  duration_ms: 2.314292
+  ...
+# Subtest: T44-SHELL current mapping/aria /profile/
+ok 34 - T44-SHELL current mapping/aria /profile/
+  ---
+  duration_ms: 2.085
+  ...
+# Subtest: T44-SHELL current mapping/aria /contact/
+ok 35 - T44-SHELL current mapping/aria /contact/
+  ---
+  duration_ms: 1.626417
+  ...
+# Subtest: T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+ok 36 - T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+  ---
+  duration_ms: 1.31
+  ...
+1..36
+# tests 36
+# suites 0
+# pass 35
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4321.281209

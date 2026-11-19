@@ -1,0 +1,10 @@
+command: PYTHONPYCACHEPREFIX=<allowed worker-02-tmp/pycache> /usr/bin/python3 -m py_compile aidlc-docs/construction/aidlc-integration/verification/capture-music.py
+exit_code: 0
+import/ROOT/API signatures: PASS
+13 variants / 55 unique image names: PASS
+fixture 4=2+2 / 5=2+2+1 / releaseType1 / playbackVideoId1 / title>=24 quotes slash / empty and 2/4 lines: PASS
+embedded JS extracted for node --check: 12 expressions
+same-version font cache: None (existing assets and #42 cache inspected; fallback acceptance pending)
+initial default py_compile cache write was denied by sandbox; redirected PYTHONPYCACHEPREFIX into authorized temp and passed. No capture/bind/browser launch was attempted.
+final capture script SHA-256: bb1013368cbf1ebcac2a3d56e666af0027e6a981564f57e5ef956f32235b53ef
+final compile/import/55 names and node --check embedded JS: PASS (no bind)

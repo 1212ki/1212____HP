@@ -1,0 +1,65 @@
+TAP version 13
+# Subtest: music date format uses exactly ten ASCII characters without calendar restrictions
+ok 1 - music date format uses exactly ten ASCII characters without calendar restrictions
+  ---
+  duration_ms: 6.777708
+  ...
+# Subtest: music stable sorting, automatic and explicit selection do not mutate inputs
+ok 2 - music stable sorting, automatic and explicit selection do not mutate inputs
+  ---
+  duration_ms: 0.875125
+  ...
+# Subtest: music references clear after deletion, retain category moves and normalize only new keys
+ok 3 - music references clear after deletion, retain category moves and normalize only new keys
+  ---
+  duration_ms: 0.543208
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 4 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 8.305792
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 5 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 22.725042
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 6 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 13.763083
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 7 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 11.931375
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 8 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 3.108916
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 9 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 12.38625
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 10 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 36.016166
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 11 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 6.87
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 776.037958

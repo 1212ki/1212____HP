@@ -1,0 +1,4 @@
+node --check assets/js/site-content.js exit=0
+node --check assets/js/home-player.js exit=0
+node --check assets/js/music-redirect.js exit=0
+node --check assets/js/script.js exit=0
