@@ -1,0 +1,105 @@
+TAP version 13
+# Subtest: T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+ok 1 - T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+  ---
+  duration_ms: 11.806833
+  ...
+# Subtest: T46-LIST a live without a flyer or a title still has a row with its date and venue
+ok 2 - T46-LIST a live without a flyer or a title still has a row with its date and venue
+  ---
+  duration_ms: 1.595458
+  ...
+# Subtest: T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+ok 3 - T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+  ---
+  duration_ms: 1.2845
+  ...
+# Subtest: T46-LIST while the summary loads no reservation line is shown and no note is shown
+ok 4 - T46-LIST while the summary loads no reservation line is shown and no note is shown
+  ---
+  duration_ms: 1.662459
+  ...
+# Subtest: T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 5 - T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.022291
+  ...
+# Subtest: T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 6 - T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.213
+  ...
+# Subtest: T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 7 - T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 0.906125
+  ...
+# Subtest: T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 8 - T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.43275
+  ...
+# Subtest: T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 9 - T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.189458
+  ...
+# Subtest: T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+ok 10 - T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.598167
+  ...
+# Subtest: T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+ok 11 - T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.003583
+  ...
+# Subtest: T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+ok 12 - T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 0.882125
+  ...
+# Subtest: T46-LIST the API connection failure and Local Mode never call the summary and show no note
+ok 13 - T46-LIST the API connection failure and Local Mode never call the summary and show no note
+  ---
+  duration_ms: 2.584542
+  ...
+# Subtest: T46-LIST an empty list says there is nothing, as it did before
+ok 14 - T46-LIST an empty list says there is nothing, as it did before
+  ---
+  duration_ms: 0.88375
+  ...
+# Subtest: T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+ok 15 - T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+  ---
+  duration_ms: 10.286667
+  ...
+# Subtest: T46-LIST only the latest of overlapping summary requests is applied
+ok 16 - T46-LIST only the latest of overlapping summary requests is applied
+  ---
+  duration_ms: 1.784667
+  ...
+# Subtest: T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+ok 17 - T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+  ---
+  duration_ms: 7.702875
+  ...
+# Subtest: T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+ok 18 - T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+  ---
+  duration_ms: 0.167542
+  ...
+# Subtest: T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+ok 19 - T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+  ---
+  duration_ms: 0.937292
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3177.879833

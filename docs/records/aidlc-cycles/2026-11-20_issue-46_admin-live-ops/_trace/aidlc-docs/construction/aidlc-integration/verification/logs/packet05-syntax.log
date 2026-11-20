@@ -1,0 +1,4 @@
+python syntax ok
+fake_admin_server: OK（bindなし）
+fake_admin_api: OK（14 scenario。bindなし・networkなし）
+契約OK: 150画像 / 16画面 / 14scenario（ブラウザ・bindなし）

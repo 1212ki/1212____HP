@@ -21,6 +21,21 @@
 
 deploy失敗・merge前の不具合・merge見送りは、OwnerがFrontの特定した直前Worker versionへrollbackします。merge後は保存を停止し、#41を戻すPRをOwnerが承認・merge、旧admin配信確認後にWorkerを戻します。Worker障害で先に戻す場合も静的側復旧まで保存を再開しません。旧adminで作品を編集すると新keyが落ちるため、rollback中は作品編集を止めます。通常復旧はcode rollbackで行い、D1全体の復元は実データ破損時の別判断です。詳細は本cycleのCode Generation Plan §8・§9を参照してください。
 
+## 予約の集計（Issue #46）
+
+`GET /api/admin/ticket-reservation-summary`は、管理画面のLive一覧に出す`予約 N枚`と`未対応 N`のための読み取り1つです。既存のAPIの経路・応答・保存の形・認証・CORSの許可元、schema、`wrangler.toml`は変えていません（`src/worker.js`の差分は追加だけ）。
+
+- 認証: 既存の予約の管理APIと同じ（`isAdminAuthorized`）。認証が通る前にDBを読みません。認証なしは`401`（`{"error":"unauthorized"}`）で、DBに問い合わせません。`OPTIONS`は既存の分岐で`204`です
+- 応答: `{ "summaries": [ { "liveId": "...", "seats": 5, "records": 2, "pending": 1 } ] }`。keyは`liveId`・`seats`・`records`・`pending`だけで、氏名・連絡先・備考・内部メモ・日時・予約のidを含めません（SQLも個人の列を読みません）
+- 数え方（`summarizeTicketReservationRows`に1つだけ置いた規則）: `cancelled`を除いて、`records`は行の数、`seats`は`quantity`の合計（数でない値は0）、`pending`は未対応の行の数。`liveId`の昇順。予約のないライブは返さず、管理画面が`予約 0枚`と表示します。管理画面のライブごとの予約の合計（`calculateActiveReservationTotals`）と同じ入力で同じ値になることを試験で確かめています。集計は予約の全件を数え、画面のライブごとの予約の一覧は最大200件の取得の範囲です（1ライブの予約が200件を超えると差が出うる。既知の制限）
+- 新旧の組み合わせ: 新しい管理画面と古いWorkerでは、この経路だけが`404`になり、一覧は予約の数なし＋`予約の数を読み込めませんでした。`の1行になります（保存・予約は変わらず動く）。古い管理画面は新しい経路を呼ばないので、新しいWorkerにつながっても今のまま動きます
+
+### 公開順序とrollback（#46）
+
+1. **先にWorkerをdeployします**（Ownerの明示承認の後。直前のversionを`npx wrangler@4.65.0 deployments list`で控える）。追加の経路だけなので、古い管理画面は今のまま動きます。deploy後は、認証なしの新しい経路が`401`であること、公開GET（`/api/public/site-data`）の状態・形・本文のSHA-256がdeploy前と同じであること（データが書かれていない）を読み取りだけで確かめます。予約・認証付きの応答は取得しません
+2. 本番の古い管理画面（まだ入れ替わっていない）で、Liveの一覧・予約管理が今のとおり動くことを確かめてからmergeします（GitHub Pagesがmainから配信するので、mergeで管理画面が入れ替わります）
+3. rollback: 集計の経路は追加だけなので、Worker自体に不具合がない限り戻さずに残してよい（古い管理画面は呼ばない）。戻す時は控えた直前のversionへ`npx wrangler@4.65.0 rollback <version-id>`。merge後の管理画面の不具合は管理画面側（`admin/`）の差分を戻すPRで戻し、旧管理画面の配信を確かめてから、Worker自体の不具合の時だけWorkerを戻します。D1のdata・予約は巻き戻しません（schema・データの形は変えていません）
+
 ## 機能
 
 - `GET /api/public/site-data`
@@ -39,6 +54,8 @@ deploy失敗・merge前の不具合・merge見送りは、OwnerがFrontの特定
   - X投稿履歴取得
 - `GET /api/admin/ticket-reservations`
   - Web予約と手動取り置きの一覧取得（認証必須）
+- `GET /api/admin/ticket-reservation-summary`
+  - ライブごとの予約の枚数・件数・未対応の件数だけを返す集計（認証必須。個人情報を含まない。下の「予約の集計（Issue #46）」）
 - `POST /api/admin/ticket-reservations`
   - Liveに手動取り置きを追加（認証必須）
   - `liveId`、`name`、1〜10の整数`quantity`、任意の`contact`、`internalNote`を受け付けます

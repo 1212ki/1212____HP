@@ -16,6 +16,8 @@ const liveTicketScripts={
 const before=p=>execFileSync('git',['show',`${base}:${p}`],{encoding:'utf8'});
 // #45 appends its own block after #44's; the #44 CSS checks look only at what #44 added (base 0803258 .. ba12401).
 const base45='ba124011ce5e0ae56ddb1c6ac47d1783600687b4';
+// #46 (admin live operations) starts here; admin/ is compared commit-to-commit up to this point.
+const base46='e191e53ada480014e03ad2fa23835f6178ce371a';
 const added44=css=>css.slice(before('assets/css/style.css').length,execFileSync('git',['show',`${base45}:assets/css/style.css`],{encoding:'utf8'}).length);
 const scripts=html=>[...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m=>m[1].split('?')[0]);
 const normalizedNav=html=>[...html.match(/<nav\b[\s\S]*?<\/nav>/)[0].matchAll(/<a href="([^"]*)"[^>]*>([^<]+)<\/a>/g)];
@@ -132,7 +134,9 @@ test('T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to M
     const selector=match[1].trim();if(selector.startsWith('@'))continue;
     for(const part of selector.split(','))assert.match(part.trim(),/^(?:body)?\.site-music\b/,part);
   }
-  for(const path of ['DESIGN_RULES.md','assets/css/1212-music.tokens.css','assets/js/music-data.js','assets/js/live-operations.js','assets/js/site-config.js','admin/index.html','admin/app.js','admin/style.css'])assert.equal(read(path),before(path),path);
+  for(const path of ['DESIGN_RULES.md','assets/css/1212-music.tokens.css','assets/js/music-data.js','assets/js/live-operations.js','assets/js/site-config.js'])assert.equal(read(path),before(path),path);
+  // Issue #46 changes admin/ after #44. What #44 must hold is that admin/ is the same at its base and at #46's base commit (commit vs commit).
+  for(const path of ['admin/index.html','admin/app.js','admin/style.css'])assert.equal(execFileSync('git',['show',`${base46}:${path}`],{encoding:'utf8',maxBuffer:16*1024*1024}),before(path),path);
 });
 // Owner decision 2026-11-18 (round 2): YouTube asks embeds to be at least 200px tall and recommends 480x270 for 16:9.
 const rule=(css,selector)=>{const m=css.replace(/\/\*[^]*?\*\//g,'').match(new RegExp('(?:^|\\})\\s*'+selector.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\{([^{}]*)\\}'));return m?m[1]:null;};

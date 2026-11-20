@@ -1,0 +1,301 @@
+{
+  "meta": {
+    "updatedAt": "2026-11-20T00:00:00Z",
+    "today": "2026-11-20",
+    "note": "Every value is synthetic (Issue #46). Venues are 'テスト会場', URLs use example.test, people are made up. Nothing is copied from production."
+  },
+  "data": {
+    "site": {
+      "featuredReleaseId": "fx-release-a",
+      "heroImage": "assets/images/fixture-hero.jpg",
+      "footerText": "架空のフッターです。",
+      "links": {
+        "bandcamp": "https://example.test/shop",
+        "youtube": "https://example.test/videos",
+        "x": "https://example.test/x",
+        "instagram": "https://example.test/photos",
+        "note": "https://example.test/notes"
+      }
+    },
+    "discography": {
+      "digital": [
+        {
+          "id": "fx-release-a",
+          "title": "架空の作品 A",
+          "releaseDate": "2025.05.05",
+          "description": "架空の収録曲の説明です。",
+          "image": "assets/images/fixture-release-a.jpg",
+          "link": "https://example.test/release-a",
+          "releaseType": "Single",
+          "playbackVideoId": "fx-video-a"
+        }
+      ],
+      "demo": [
+        { "id": "fx-demo-a", "title": "架空のデモ A", "releaseDate": "2024.01.01" }
+      ]
+    },
+    "youtube": {
+      "channelUrl": "https://example.test/channel",
+      "musicVideos": [{ "id": "fx-video-a", "title": "架空の動画 A", "youtubeId": "abcdefghijk" }],
+      "liveMovies": [{ "id": "fx-video-b", "title": "架空のライブ動画", "youtubeId": "abcdefghijl" }],
+      "demos": [{ "id": "fx-video-c", "title": "架空のデモ動画", "youtubeId": "abcdefghijm" }]
+    },
+    "live": {
+      "ticketLink": "https://forms.example.test/shared-ticket?utm=fixture",
+      "upcoming": [
+        {
+          "id": "fx-live-today",
+          "date": "2026-11-20",
+          "title": "架空の公演 今日",
+          "venue": "テスト会場A",
+          "openTime": "18:00",
+          "startTime": "18:30",
+          "ticket": "",
+          "notes": "再入場不可",
+          "performers": "架空の出演者A / 架空の出演者B",
+          "description": "",
+          "image": "https://img.example.test/uploads/fixture-today.jpg",
+          "link": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-live-long",
+          "date": "2099.12.12",
+          "title": "架空の公演 長い文",
+          "venue": "テスト会場B",
+          "openTime": "17:30",
+          "startTime": "18:00",
+          "ticket": "¥3,000 + 1D",
+          "notes": "※ 入場時にドリンク代が必要です\n※ 未就学児の入場はできません",
+          "performers": "テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ",
+          "description": "架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。\n\n二つ目の段落です。",
+          "image": "assets/images/fixture-long.jpg",
+          "link": "https://example.test/live/long",
+          "ticketUrl": "https://tickets.example.test/long",
+          "reservationClosed": false
+        }
+      ],
+      "past": [
+        {
+          "id": "fx-live-past-1",
+          "date": "2026.8.9 (日)",
+          "title": "架空の公演 重複タイトル",
+          "venue": "テスト会場C",
+          "openTime": "18:00",
+          "startTime": "19:00",
+          "ticket": "¥1,500",
+          "notes": "",
+          "performers": "架空の出演者A",
+          "description": "架空の説明文です。",
+          "image": "assets/images/fixture-past-1.jpg",
+          "link": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-live-past-2",
+          "date": "2026-07-04",
+          "title": "架空の公演 時刻なし",
+          "venue": "テスト会場D",
+          "openTime": "",
+          "startTime": "",
+          "ticket": "3000+1D",
+          "notes": "",
+          "performers": "",
+          "description": "架空の説明文です。",
+          "image": "https://img.example.test/uploads/fixture-past-2.jpg",
+          "link": "",
+          "ticketUrl": "",
+          "reservationClosed": true
+        },
+        {
+          "id": "fx-live-past-3",
+          "date": "2026-06-01",
+          "title": "架空の公演 フライヤーなし",
+          "venue": "テスト会場E",
+          "openTime": "19:00",
+          "startTime": "19:30",
+          "ticket": "free",
+          "notes": "",
+          "performers": "架空の出演者B",
+          "description": "",
+          "image": "",
+          "link": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-live-old-1",
+          "date": "2025.05.05",
+          "title": "",
+          "venue": "テスト会場F",
+          "description": "架空の旧形式の説明です。開場 18:00 / 開演 18:30 / 前売 ¥2,000 + 1D",
+          "image": "assets/images/fixture-old-1.jpg",
+          "link": ""
+        },
+        {
+          "id": "fx-live-old-2",
+          "date": "2025.5.4 (月)",
+          "title": "",
+          "venue": "テスト会場G",
+          "description": "架空の旧形式の説明です。",
+          "image": "assets/images/fixture-old-2.jpg",
+          "link": "https://example.test/old-2"
+        },
+        {
+          "id": "fx-live-old-3",
+          "date": "2025.04.20",
+          "title": "架空の公演 重複タイトル",
+          "venue": "テスト会場H",
+          "description": "架空の旧形式の説明です。",
+          "image": "assets/images/fixture-old-3.jpg",
+          "link": "https://forms.example.test/reserve/old-3"
+        },
+        {
+          "id": "fx-live-old-4",
+          "date": "2025.3.9",
+          "title": "架空の旧形式 タイトルあり",
+          "venue": "テスト会場I",
+          "description": "",
+          "image": "https://img.example.test/uploads/fixture-old-4.jpg",
+          "link": ""
+        }
+      ]
+    },
+    "news": [
+      { "id": "fx-news-a", "date": "2026.11.01", "title": "架空のお知らせ", "body": "架空の本文です。", "link": "" }
+    ],
+    "profile": {
+      "image": "assets/images/fixture-profile.jpg",
+      "text": "架空のプロフィールです。",
+      "links": [{ "label": "架空のリンク", "url": "https://example.test/profile-link" }]
+    },
+    "ticket": {
+      "completeText": "架空の完了文です。",
+      "fields": {
+        "showQuantity": true,
+        "showMessage": true,
+        "labelQuantity": "枚数",
+        "labelMessage": "備考",
+        "placeholderMessage": "架空の入力例",
+        "submitLabel": "予約する"
+      }
+    },
+    "contact": {
+      "introText": "架空のお問い合わせの案内です。",
+      "formAction": "https://forms.example.test/contact"
+    }
+  },
+  "reservations": {
+    "fx-live-today": [],
+    "fx-live-long": [
+      { "id": "fx-res-1", "liveId": "fx-live-long", "liveDate": "2099.12.12", "liveVenue": "テスト会場B", "name": "架空 太郎", "email": "taro@example.test", "quantity": 2, "message": "架空の備考", "status": "pending", "source": "web", "contact": "", "internalNote": "", "createdAt": "2026-11-18T10:00:00.000Z" },
+      { "id": "fx-res-2", "liveId": "fx-live-long", "liveDate": "2099.12.12", "liveVenue": "テスト会場B", "name": "架空 花子", "email": "", "quantity": 3, "message": "", "status": "handled", "source": "manual", "contact": "090-0000-0000", "internalNote": "架空の内部メモ", "createdAt": "2026-11-18T11:00:00.000Z" },
+      { "id": "fx-res-3", "liveId": "fx-live-long", "liveDate": "2099.12.12", "liveVenue": "テスト会場B", "name": "架空 次郎", "email": "jiro@example.test", "quantity": 4, "message": "", "status": "cancelled", "source": "web", "contact": "", "internalNote": "", "createdAt": "2026-11-18T12:00:00.000Z" }
+    ],
+    "fx-live-past-1": [
+      { "id": "fx-res-4", "liveId": "fx-live-past-1", "liveDate": "2026.8.9", "liveVenue": "テスト会場C", "name": "架空 三郎", "email": "saburo@example.test", "quantity": 1, "message": "", "status": "handled", "source": "web", "contact": "", "internalNote": "", "createdAt": "2026-07-01T10:00:00.000Z" }
+    ]
+  },
+  "reservationsMany": {
+    "liveId": "fx-live-long",
+    "count": 14,
+    "pendingEvery": 3,
+    "cancelledEvery": 7
+  },
+  "summary": {
+    "rule": "cancelled rows are excluded. records and seats count the other rows, pending counts status=pending. liveIds ascend. A non-numeric seats value counts as 0.",
+    "groupedRows": [
+      { "liveId": "fx-live-long", "status": "pending", "records": 1, "seats": 2 },
+      { "liveId": "fx-live-long", "status": "handled", "records": 1, "seats": 3 },
+      { "liveId": "fx-live-long", "status": "cancelled", "records": 1, "seats": 4 },
+      { "liveId": "fx-live-past-1", "status": "handled", "records": 1, "seats": 1 },
+      { "liveId": "fx-live-past-3", "status": "cancelled", "records": 2, "seats": 5 }
+    ],
+    "expected": [
+      { "liveId": "fx-live-long", "seats": 5, "records": 2, "pending": 1 },
+      { "liveId": "fx-live-past-1", "seats": 1, "records": 1, "pending": 0 }
+    ]
+  },
+  "scenarios": {
+    "base": { "site": "data", "mode": "api", "reservations": "base", "summary": "computed" },
+    "legacy-only": { "site": "legacyOnly", "mode": "api", "reservations": "none", "summary": "computed" },
+    "no-reservations": { "site": "data", "mode": "api", "reservations": "none", "summary": "empty" },
+    "many-reservations": { "site": "data", "mode": "api", "reservations": "many", "summary": "computed" },
+    "summary-404": { "site": "data", "mode": "api", "reservations": "base", "summary": { "status": 404 } },
+    "summary-401": { "site": "data", "mode": "api", "reservations": "base", "summary": { "status": 401 } },
+    "summary-500": { "site": "data", "mode": "api", "reservations": "base", "summary": { "status": 500 } },
+    "api-fallback": { "site": "data", "mode": "api-fallback", "reservations": "none", "summary": "none" },
+    "local-mode": { "site": "data", "mode": "local", "reservations": "none", "summary": "none" },
+    "save-fail": { "site": "data", "mode": "api", "reservations": "base", "summary": "computed", "fail": "save" },
+    "delete-fail": { "site": "data", "mode": "api", "reservations": "base", "summary": "computed", "fail": "delete" },
+    "status-fail": { "site": "data", "mode": "api", "reservations": "base", "summary": "computed", "fail": "status" },
+    "draft-fail": { "site": "data", "mode": "api", "reservations": "base", "summary": "computed", "fail": "draft" },
+    "empty-lists": { "site": "emptyLists", "mode": "api", "reservations": "none", "summary": "empty" }
+  },
+  "sites": {
+    "note": "Whole-site variants for the scenarios that name one: the `live` block replaces data.live, everything else is data. Synthetic.",
+    "legacyOnly": {
+      "live": {
+        "ticketLink": "https://forms.example.test/shared-ticket?utm=fixture",
+        "upcoming": [
+          {
+            "id": "fx-live-legacy-up",
+            "date": "2099.01.10",
+            "title": "",
+            "venue": "テスト会場K",
+            "description": "架空の旧形式の説明です。開場 18:00 / 開演 18:30",
+            "image": "assets/images/fixture-old-1.jpg",
+            "link": ""
+          }
+        ],
+        "past": [
+          {
+            "id": "fx-live-old-1",
+            "date": "2025.05.05",
+            "title": "",
+            "venue": "テスト会場F",
+            "description": "架空の旧形式の説明です。開場 18:00 / 開演 18:30 / 前売 ¥2,000 + 1D",
+            "image": "assets/images/fixture-old-1.jpg",
+            "link": ""
+          },
+          {
+            "id": "fx-live-old-2",
+            "date": "2025.5.4 (月)",
+            "title": "",
+            "venue": "テスト会場G",
+            "description": "架空の旧形式の説明です。",
+            "image": "assets/images/fixture-old-2.jpg",
+            "link": "https://example.test/old-2"
+          },
+          {
+            "id": "fx-live-old-3",
+            "date": "2025.04.20",
+            "title": "架空の公演 重複タイトル",
+            "venue": "テスト会場H",
+            "description": "架空の旧形式の説明です。",
+            "image": "assets/images/fixture-old-3.jpg",
+            "link": "https://forms.example.test/reserve/old-3"
+          },
+          {
+            "id": "fx-live-old-4",
+            "date": "2025.3.9",
+            "title": "架空の旧形式 タイトルあり",
+            "venue": "テスト会場I",
+            "description": "",
+            "image": "https://img.example.test/uploads/fixture-old-4.jpg",
+            "link": ""
+          }
+        ]
+      }
+    },
+    "emptyLists": {
+      "live": {
+        "ticketLink": "https://forms.example.test/shared-ticket?utm=fixture",
+        "upcoming": [],
+        "past": []
+      }
+    }
+  }
+}
