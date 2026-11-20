@@ -1,0 +1,436 @@
+TAP version 13
+# Subtest: T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+ok 1 - T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+  ---
+  duration_ms: 14.0835
+  ...
+# Subtest: T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+ok 2 - T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+  ---
+  duration_ms: 72.119083
+  ...
+# Subtest: T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+ok 3 - T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+  ---
+  duration_ms: 114.623792
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+ok 4 - T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 13.646334
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+ok 5 - T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 38.874042
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+ok 6 - T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 21.262375
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+ok 7 - T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 9.488083
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+ok 8 - T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 21.765042
+  ...
+# Subtest: T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+ok 9 - T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+  ---
+  duration_ms: 22.72025
+  ...
+# Subtest: T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+ok 10 - T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 12.185583
+  ...
+# Subtest: T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+ok 11 - T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 13.225959
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+ok 12 - T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 17.606791
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+ok 13 - T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 28.402667
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+ok 14 - T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 66.878541
+  ...
+# Subtest: T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+ok 15 - T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+  ---
+  duration_ms: 11.687625
+  ...
+# Subtest: T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+ok 16 - T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+  ---
+  duration_ms: 44.804375
+  ...
+# Subtest: T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+ok 17 - T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+  ---
+  duration_ms: 26.390458
+  ...
+# Subtest: T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+ok 18 - T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+  ---
+  duration_ms: 31.557875
+  ...
+# Subtest: T43-STATE-TICKET loading: busy and a status, no fields yet
+ok 19 - T43-STATE-TICKET loading: busy and a status, no fields yet
+  ---
+  duration_ms: 26.881791
+  ...
+# Subtest: T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+ok 20 - T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+  ---
+  duration_ms: 11.523
+  ...
+# Subtest: T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+ok 21 - T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+  ---
+  duration_ms: 7.644709
+  ...
+# Subtest: T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+ok 22 - T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+  ---
+  duration_ms: 9.286084
+  ...
+# Subtest: T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+ok 23 - T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+  ---
+  duration_ms: 13.318292
+  ...
+# Subtest: T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+ok 24 - T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+  ---
+  duration_ms: 45.66375
+  ...
+# Subtest: T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+ok 25 - T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+  ---
+  duration_ms: 8.613125
+  ...
+# Subtest: T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+ok 26 - T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+  ---
+  duration_ms: 39.886958
+  ...
+# Subtest: T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+ok 27 - T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+  ---
+  duration_ms: 59.680458
+  ...
+# Subtest: T43-STATE-TICKET the footer text comes from the site data
+ok 28 - T43-STATE-TICKET the footer text comes from the site data
+  ---
+  duration_ms: 9.379083
+  ...
+# Subtest: T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+ok 29 - T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+  ---
+  duration_ms: 30.064666
+  ...
+# Subtest: T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+ok 30 - T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+  ---
+  duration_ms: 28.417625
+  ...
+# Subtest: T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+ok 31 - T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+  ---
+  duration_ms: 17.703958
+  ...
+# Subtest: T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+ok 32 - T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+  ---
+  duration_ms: 14.22225
+  ...
+# Subtest: T43-TICKET-FORM e-mail checks: required, shape, length
+ok 33 - T43-TICKET-FORM e-mail checks: required, shape, length
+  ---
+  duration_ms: 107.621625
+  ...
+# Subtest: T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+ok 34 - T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+  ---
+  duration_ms: 104.429375
+  ...
+# Subtest: T43-TICKET-FORM fixing a field and typing clears only that field’s error
+ok 35 - T43-TICKET-FORM fixing a field and typing clears only that field’s error
+  ---
+  duration_ms: 19.362125
+  ...
+# Subtest: T43-FIELDS labels, placeholder and submit label come from the admin settings
+ok 36 - T43-FIELDS labels, placeholder and submit label come from the admin settings
+  ---
+  duration_ms: 32.152334
+  ...
+# Subtest: T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+ok 37 - T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 22.462583
+  ...
+# Subtest: T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+ok 38 - T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 23.495458
+  ...
+# Subtest: T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+ok 39 - T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 18.8755
+  ...
+# Subtest: T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+ok 40 - T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+  ---
+  duration_ms: 52.636042
+  ...
+# Subtest: T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+ok 41 - T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+  ---
+  duration_ms: 41.050625
+  ...
+# Subtest: T43-SEND the POST goes to the public endpoint with exactly the six fields, trimmed, quantity as a number
+ok 42 - T43-SEND the POST goes to the public endpoint with exactly the six fields, trimmed, quantity as a number
+  ---
+  duration_ms: 35.935584
+  ...
+# Subtest: T43-SEND the honeypot value is passed through untouched; a hidden quantity sends 1 and a hidden message sends nothing
+ok 43 - T43-SEND the honeypot value is passed through untouched; a hidden quantity sends 1 and a hidden message sends nothing
+  ---
+  duration_ms: 25.299458
+  ...
+# Subtest: T43-SEND only the selected Live id is read from the select, never from another control
+ok 44 - T43-SEND only the selected Live id is read from the select, never from another control
+  ---
+  duration_ms: 43.60425
+  ...
+# Subtest: T43-SEND while sending: the button is disabled and says 送信しています…, inputs keep their values, a second submit sends nothing
+ok 45 - T43-SEND while sending: the button is disabled and says 送信しています…, inputs keep their values, a second submit sends nothing
+  ---
+  duration_ms: 45.288792
+  ...
+# Subtest: T43-SEND the payload is frozen at the moment of sending, even if the form changes while waiting
+ok 46 - T43-SEND the payload is frozen at the moment of sending, even if the form changes while waiting
+  ---
+  duration_ms: 19.477292
+  ...
+# Subtest: T43-SEND S43-09 a network failure: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 47 - T43-SEND S43-09 a network failure: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 26.638625
+  ...
+# Subtest: T43-SEND S43-09 a server error: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 48 - T43-SEND S43-09 a server error: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 17.683333
+  ...
+# Subtest: T43-SEND S43-09 a rejected request: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 49 - T43-SEND S43-09 a rejected request: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 36.297125
+  ...
+# Subtest: T43-SEND S43-09 an unreadable error body: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 50 - T43-SEND S43-09 an unreadable error body: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 17.3965
+  ...
+# Subtest: T43-SEND S43-09 a success without a reservation: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 51 - T43-SEND S43-09 a success without a reservation: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 34.188917
+  ...
+# Subtest: T43-SEND S43-09 a success with an empty receipt number: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 52 - T43-SEND S43-09 a success with an empty receipt number: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 17.017083
+  ...
+# Subtest: T43-SEND S43-09 a success that is not JSON: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 53 - T43-SEND S43-09 a success that is not JSON: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 19.035917
+  ...
+# Subtest: T43-SEND after a failure the same button sends again; the old failure notice is replaced and the retry can succeed
+ok 54 - T43-SEND after a failure the same button sends again; the old failure notice is replaced and the retry can succeed
+  ---
+  duration_ms: 20.641333
+  ...
+# Subtest: T43-SEND S43-15 the server saying "already submitted recently" stops here with its own message and the normal button label
+ok 55 - T43-SEND S43-15 the server saying "already submitted recently" stops here with its own message and the normal button label
+  ---
+  duration_ms: 20.036667
+  ...
+# Subtest: T43-SEND the duplicate message is the Worker’s own text (public contract, not a copy that can drift)
+ok 56 - T43-SEND the duplicate message is the Worker’s own text (public contract, not a copy that can drift)
+  ---
+  duration_ms: 9.174083
+  ...
+# Subtest: T43-SEND success: replaces to complete/?liveId=&rid= with no personal data in the address; draft cleared; receipt in sessionStorage only
+ok 57 - T43-SEND success: replaces to complete/?liveId=&rid= with no personal data in the address; draft cleared; receipt in sessionStorage only
+  ---
+  duration_ms: 18.29025
+  ...
+# Subtest: T43-SEND the saved values are the ones the server accepted (including a trimmed name), and the snapshot keeps the settings of that moment
+ok 58 - T43-SEND the saved values are the ones the server accepted (including a trimmed name), and the snapshot keeps the settings of that moment
+  ---
+  duration_ms: 17.704833
+  ...
+# Subtest: T43-SEND a new send clears the previous receipt first; a blocked storage still moves on (the booking succeeded)
+ok 59 - T43-SEND a new send clears the previous receipt first; a blocked storage still moves on (the booking succeeded)
+  ---
+  duration_ms: 52.681292
+  ...
+# Subtest: T43-SEND ?dryRun=1 never calls the API, saves a dry-run receipt and moves on exactly like a success
+ok 60 - T43-SEND ?dryRun=1 never calls the API, saves a dry-run receipt and moves on exactly like a success
+  ---
+  duration_ms: 15.938792
+  ...
+# Subtest: T43-SEND a failed validation sends nothing and does not clear the previous receipt
+ok 61 - T43-SEND a failed validation sends nothing and does not clear the previous receipt
+  ---
+  duration_ms: 11.798542
+  ...
+# Subtest: T43-FLOW the list reserve link opens Ticket on the same Live and a successful send replaces to the complete page
+ok 62 - T43-FLOW the list reserve link opens Ticket on the same Live and a successful send replaces to the complete page
+  ---
+  duration_ms: 63.886625
+  ...
+# Subtest: T43-FLOW there is no confirmation step: no dialog or overlay on Ticket, and the screens visited are exactly list, Ticket and complete
+ok 63 - T43-FLOW there is no confirmation step: no dialog or overlay on Ticket, and the screens visited are exactly list, Ticket and complete
+  ---
+  duration_ms: 18.104209
+  ...
+# Subtest: T43-RECEIPT exposes window.TicketReceipt with the fixed key, version and 30 minute limit
+ok 64 - T43-RECEIPT exposes window.TicketReceipt with the fixed key, version and 30 minute limit
+  ---
+  duration_ms: 3.405459
+  ...
+# Subtest: T43-RECEIPT saves one entry and reads every field back; reading does not remove it (reload, back and forward show the same content)
+ok 65 - T43-RECEIPT saves one entry and reads every field back; reading does not remove it (reload, back and forward show the same content)
+  ---
+  duration_ms: 2.052459
+  ...
+# Subtest: T43-RECEIPT keeps exactly one entry: a new save replaces the old; clear removes it
+ok 66 - T43-RECEIPT keeps exactly one entry: a new save replaces the old; clear removes it
+  ---
+  duration_ms: 1.119666
+  ...
+# Subtest: T43-RECEIPT a different liveId or receipt number in the address returns nothing and shows nobody else’s content
+ok 67 - T43-RECEIPT a different liveId or receipt number in the address returns nothing and shows nobody else’s content
+  ---
+  duration_ms: 0.916
+  ...
+# Subtest: T43-RECEIPT expires after 30 minutes and an expired entry is removed when read
+ok 68 - T43-RECEIPT expires after 30 minutes and an expired entry is removed when read
+  ---
+  duration_ms: 1.300083
+  ...
+# Subtest: T43-RECEIPT accepts a Date or a number for now
+ok 69 - T43-RECEIPT accepts a Date or a number for now
+  ---
+  duration_ms: 0.698958
+  ...
+# Subtest: T43-RECEIPT an entry with another version is treated as missing
+ok 70 - T43-RECEIPT an entry with another version is treated as missing
+  ---
+  duration_ms: 5.097917
+  ...
+# Subtest: T43-RECEIPT an entry with no version is treated as missing
+ok 71 - T43-RECEIPT an entry with no version is treated as missing
+  ---
+  duration_ms: 0.873584
+  ...
+# Subtest: T43-RECEIPT an entry with no rid is treated as missing
+ok 72 - T43-RECEIPT an entry with no rid is treated as missing
+  ---
+  duration_ms: 1.124583
+  ...
+# Subtest: T43-RECEIPT an entry with no liveId is treated as missing
+ok 73 - T43-RECEIPT an entry with no liveId is treated as missing
+  ---
+  duration_ms: 1.743125
+  ...
+# Subtest: T43-RECEIPT an entry with no savedAt is treated as missing
+ok 74 - T43-RECEIPT an entry with no savedAt is treated as missing
+  ---
+  duration_ms: 0.880166
+  ...
+# Subtest: T43-RECEIPT an entry with no live is treated as missing
+ok 75 - T43-RECEIPT an entry with no live is treated as missing
+  ---
+  duration_ms: 0.615958
+  ...
+# Subtest: T43-RECEIPT an entry with no live.date is treated as missing
+ok 76 - T43-RECEIPT an entry with no live.date is treated as missing
+  ---
+  duration_ms: 0.643375
+  ...
+# Subtest: T43-RECEIPT an entry with no live.venue is treated as missing
+ok 77 - T43-RECEIPT an entry with no live.venue is treated as missing
+  ---
+  duration_ms: 0.682583
+  ...
+# Subtest: T43-RECEIPT an entry with no name is treated as missing
+ok 78 - T43-RECEIPT an entry with no name is treated as missing
+  ---
+  duration_ms: 0.565167
+  ...
+# Subtest: T43-RECEIPT an entry with no email is treated as missing
+ok 79 - T43-RECEIPT an entry with no email is treated as missing
+  ---
+  duration_ms: 1.160959
+  ...
+# Subtest: T43-RECEIPT an entry with no quantity is treated as missing
+ok 80 - T43-RECEIPT an entry with no quantity is treated as missing
+  ---
+  duration_ms: 1.026084
+  ...
+# Subtest: T43-RECEIPT an entry with quantity out of range is treated as missing
+ok 81 - T43-RECEIPT an entry with quantity out of range is treated as missing
+  ---
+  duration_ms: 1.584334
+  ...
+# Subtest: T43-RECEIPT unreadable stored text is treated as missing, never as content
+ok 82 - T43-RECEIPT unreadable stored text is treated as missing, never as content
+  ---
+  duration_ms: 1.651375
+  ...
+# Subtest: T43-RECEIPT blocked or full storage never throws: save returns false, load returns nothing
+ok 83 - T43-RECEIPT blocked or full storage never throws: save returns false, load returns nothing
+  ---
+  duration_ms: 7.868167
+  ...
+# Subtest: T43-RECEIPT uses the window sessionStorage (same tab only) by default and never localStorage
+ok 84 - T43-RECEIPT uses the window sessionStorage (same tab only) by default and never localStorage
+  ---
+  duration_ms: 1.107833
+  ...
+# Subtest: T43-RECEIPT keeps blanks the server may legitimately return (venue, title, image, message, ui) without inventing content
+ok 85 - T43-RECEIPT keeps blanks the server may legitimately return (venue, title, image, message, ui) without inventing content
+  ---
+  duration_ms: 0.599333
+  ...
+1..85
+# tests 85
+# suites 0
+# pass 85
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2855.17575
+exit=0

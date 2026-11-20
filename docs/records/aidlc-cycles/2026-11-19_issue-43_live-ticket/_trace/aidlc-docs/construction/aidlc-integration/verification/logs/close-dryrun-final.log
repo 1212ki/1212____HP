@@ -1,0 +1,16 @@
+command: run-dryrun.sh (final docs). copy of aidlc-docs + temporary gate 4/5 records + Complete state; real aidlc-docs untouched
+validate_close_ready: PASS (DRYRUN ONLY)
+exit_code: 0
+--- real aidlc-docs after the dry run
+01-requirements-approval.md
+02-workflow-plan-approval.md
+03-code-generation-plan-approval.md
+- **Current Stage**: CONSTRUCTION - Code Generation Result
+- **Cycle Status**: In Progress
+- **Approval Gate**: Code Generation Result
+- **Approval Status**: Pending
+- Requirements、Workflow Plan、Code Generation Plan: 未承認候補（第2版。Front判断FD1・FD2を反映、Packet 01b）。gate 1〜3の通過前。Approval GateはRequirements、StatusはPendingのまま。
+gate4/5 records absent in real aidlc-docs: PASS
+close command: NOT RUN
+code_sha256: 2d986b33f2a31e7956b5773229f2e5db2a81047b180af7677325c18746e4d139
+build_sha256: 7e61845095f005cf735123876869bfc79535ae2de33b4fe766c3a652b2d38f89

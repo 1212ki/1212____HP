@@ -1,0 +1,3 @@
+画像 91 件 + flow-log.json。シナリオ 40 件、smoke 5 件。
+fixture: test/fixtures/live-ticket-states.json sha256 ca88ed4899a19e01cc98856dcf037a01a02dbd0dc0fd82b4ae342b09326f4262
+clock: 2026-11-19T12:00:00+09:00 = 1795057200 秒

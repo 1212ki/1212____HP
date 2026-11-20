@@ -7,6 +7,12 @@ import vm from 'node:vm';
 const base='080325887576655f27461cb15f28a3c590a292ee';
 const paths=['index.html','live/index.html','live/detail/index.html','ticket/index.html','ticket/complete/index.html','discography/index.html','youtube/index.html','profile/index.html','contact/index.html','music/index.html'];
 const read=p=>readFileSync(p,'utf8');
+const liveTicketScripts={
+  'live/index.html':['site-config.js','live-operations.js','live-order.js','reservation-cta.js','live-pages.js','script.js'].map(x=>'../assets/js/'+x),
+  'live/detail/index.html':['site-config.js','live-operations.js','live-order.js','reservation-cta.js','live-pages.js','script.js'].map(x=>'../../assets/js/'+x),
+  'ticket/index.html':['site-config.js','live-operations.js','live-order.js','reservation-cta.js','ticket-receipt.js','ticket.js','script.js'].map(x=>'../assets/js/'+x),
+  'ticket/complete/index.html':['site-config.js','live-operations.js','music-data.js','home-player.js','ticket-receipt.js','ticket-complete.js','script.js'].map(x=>'../../assets/js/'+x),
+};
 const before=p=>execFileSync('git',['show',`${base}:${p}`],{encoding:'utf8'});
 const scripts=html=>[...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m=>m[1].split('?')[0]);
 const normalizedNav=html=>[...html.match(/<nav\b[\s\S]*?<\/nav>/)[0].matchAll(/<a href="([^"]*)"[^>]*>([^<]+)<\/a>/g)];
@@ -21,8 +27,10 @@ for(const path of paths)test('T44-SHELL ten routes and five shared nav URLs '+pa
   let expected=scripts(old);
   if(['discography/index.html','youtube/index.html'].includes(path))expected=['../assets/js/music-redirect.js','../assets/js/script.js'];
   if(path==='music/index.html')expected=['site-config.js','music-data.js','home-player.js','site-content.js','script.js'].map(x=>'../assets/js/'+x);
+  // Issue #43: the four Live/Ticket pages have their own bodies and scripts (main bytes and header/nav/footer are covered by T43-SHELL).
+  if(liveTicketScripts[path])expected=liveTicketScripts[path];
   assert.deepEqual(scripts(html),expected);
-  if(!['index.html','music/index.html','discography/index.html','youtube/index.html'].includes(path))assert.equal(html.match(/<main\b[\s\S]*?<\/main>/)[0],old.match(/<main\b[\s\S]*?<\/main>/)[0], 'non-Home main bytes');
+  if(!['index.html','music/index.html','discography/index.html','youtube/index.html',...Object.keys(liveTicketScripts)].includes(path))assert.equal(html.match(/<main\b[\s\S]*?<\/main>/)[0],old.match(/<main\b[\s\S]*?<\/main>/)[0], 'non-Home main bytes');
   for(const src of scripts(html))assert.ok(existsSync(new URL(src,'file://'+process.cwd()+'/'+path)),src);
 });
 test('T44-SHELL shared style and script cache version aligned for every consumer',()=>{

@@ -1,0 +1,20 @@
+test/admin-image-form.test.mjs # tests 21 # pass 21 # fail 0
+test/admin-live-operations.test.mjs # tests 182 # pass 182 # fail 0
+test/home-player.test.mjs # tests 8 # pass 8 # fail 0
+test/home-rendering.test.mjs # tests 64 # pass 64 # fail 0
+test/live-operations.test.mjs # tests 30 # pass 30 # fail 0
+test/live-order.test.mjs # tests 6 # pass 6 # fail 0
+test/live-pages.test.mjs # tests 40 # pass 40 # fail 0
+test/live-ticket-shell.test.mjs # tests 23 # pass 23 # fail 0
+test/music-data.test.mjs # tests 3 # pass 3 # fail 0
+test/music-player.test.mjs # tests 13 # pass 13 # fail 0
+test/music-redirect.test.mjs # tests 43 # pass 43 # fail 0
+test/music-rendering.test.mjs # tests 64 # pass 64 # fail 0
+test/public-music-data-compatibility.test.mjs # tests 11 # pass 11 # fail 0
+test/public-ticket-routing.test.mjs # tests 6 # pass 6 # fail 0
+test/reservation-cta.test.mjs # tests 8 # pass 8 # fail 0
+test/site-shell.test.mjs # tests 39 # pass 39 # fail 0
+test/ticket-complete.test.mjs # tests 26 # pass 26 # fail 0
+test/ticket-flow.test.mjs # tests 70 # pass 70 # fail 0
+test/ticket-receipt.test.mjs # tests 22 # pass 22 # fail 0
+dom-harness (test/support/dom-harness.mjs, run as a test file by node --test test/): # tests 1 # pass 1 # fail 0

@@ -1,0 +1,910 @@
+TAP version 13
+# Subtest: T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+not ok 1 - T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+  ---
+  duration_ms: 17.130125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:55:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<body class="site-ticket">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : ticket</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../music/">Music</a></li>\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="contact">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">ticket</h2>\n' +
+      '\n' +
+      '        <p id="ticket-route-message" class="ticket-route-message" role="status" aria-live="polite" hidden></p>\n' +
+      '\n' +
+      '        <div id="ticket-live-preview" style="margin-top: 18px;"></div>\n' +
+      '\n' +
+      '        <form id="ticket-form">\n' +
+      '          <div id="ticket-field-live">\n' +
+      '            <label id="ticket-label-live" for="liveId">ライブ</label>\n' +
+      '            <select id="liveId" name="liveId" required></select>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-name">\n' +
+      '            <label id="ticket-label-name" for="name">名前</label>\n' +
+      '            <input id="name" name="name" type="text" autocomplete="name" required>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-email">\n' +
+      '            <label id="ticket-label-email" for="email">e-mail</label>\n' +
+      '            <input id="email" name="email" type="email" autocomplete="email" required>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-quantity">\n' +
+      '            <label id="ticket-label-quantity" for="quantity">枚数</label>\n' +
+      '            <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <div id="ticket-field-message">\n' +
+      '            <label id="ticket-label-message" for="message">備考</label>\n' +
+      '            <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <!-- Honeypot -->\n' +
+      '          <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">\n' +
+      '\n' +
+      '          <button type="submit" id="submitBtn">予約する</button>\n' +
+      '        </form>\n' +
+      '\n' +
+      '        <div id="ticket-result" style="margin-top: 18px;"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <div class="ticket-modal-overlay" id="ticketConfirmOverlay" aria-hidden="true"></div>\n' +
+      '    <div class="ticket-modal" id="ticketConfirmModal" role="dialog" aria-modal="true" aria-labelledby="ticketConfirmTitle" aria-hidden="true">\n' +
+      '      <div class="ticket-modal-header">\n' +
+      '        <h3 id="ticketConfirmTitle" class="ticket-modal-title">送信中...</h3>\n' +
+      '        <button type="button" class="ticket-modal-close" id="ticketConfirmCloseBtn" aria-label="Close">×</button>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-body">\n' +
+      '        <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">予約を送信しています。</p>\n' +
+      '        <div class="ticket-confirm-summary" id="ticketConfirmSummary"></div>\n' +
+      '        <div id="ticketConfirmError" class="ticket-confirm-error" style="display:none;"></div>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-footer">\n' +
+      '        <a class="ticket-modal-btn ghost" id="ticketModalBackLink" href="./">もう一度</a>\n' +
+      '        <a class="ticket-modal-btn primary" id="ticketModalHomeLink" href="../">home</a>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="../assets/js/ticket.js?v=20260804-2"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261118-44"></script>\n' +
+      '</body>\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : ticket</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
+    </head>
+    <body>
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../music/">Music</a></li>
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="contact">
+          <div class="container">
+            <h2 class="section-title">ticket</h2>
+    
+            <p id="ticket-route-message" class="ticket-route-message" role="status" aria-live="polite" hidden></p>
+    
+            <div id="ticket-live-preview" style="margin-top: 18px;"></div>
+    
+            <form id="ticket-form">
+              <div id="ticket-field-live">
+                <label id="ticket-label-live" for="liveId">ライブ</label>
+                <select id="liveId" name="liveId" required></select>
+              </div>
+    
+              <div id="ticket-field-name">
+                <label id="ticket-label-name" for="name">名前</label>
+                <input id="name" name="name" type="text" autocomplete="name" required>
+              </div>
+    
+              <div id="ticket-field-email">
+                <label id="ticket-label-email" for="email">e-mail</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+              </div>
+    
+              <div id="ticket-field-quantity">
+                <label id="ticket-label-quantity" for="quantity">枚数</label>
+                <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
+              </div>
+    
+              <div id="ticket-field-message">
+                <label id="ticket-label-message" for="message">備考</label>
+                <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>
+              </div>
+    
+              <!-- Honeypot -->
+              <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">
+    
+              <button type="submit" id="submitBtn">予約する</button>
+            </form>
+    
+            <div id="ticket-result" style="margin-top: 18px;"></div>
+          </div>
+        </section>
+    
+        <div class="ticket-modal-overlay" id="ticketConfirmOverlay" aria-hidden="true"></div>
+        <div class="ticket-modal" id="ticketConfirmModal" role="dialog" aria-modal="true" aria-labelledby="ticketConfirmTitle" aria-hidden="true">
+          <div class="ticket-modal-header">
+            <h3 id="ticketConfirmTitle" class="ticket-modal-title">送信中...</h3>
+            <button type="button" class="ticket-modal-close" id="ticketConfirmCloseBtn" aria-label="Close">×</button>
+          </div>
+          <div class="ticket-modal-body">
+            <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">予約を送信しています。</p>
+            <div class="ticket-confirm-summary" id="ticketConfirmSummary"></div>
+            <div id="ticketConfirmError" class="ticket-confirm-error" style="display:none;"></div>
+          </div>
+          <div class="ticket-modal-footer">
+            <a class="ticket-modal-btn ghost" id="ticketModalBackLink" href="./">もう一度</a>
+            <a class="ticket-modal-btn primary" id="ticketModalHomeLink" href="../">home</a>
+          </div>
+        </div>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="../assets/js/ticket.js?v=20260804-2"></script>
+      <script src="../assets/js/script.js?v=20261118-44"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:57:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+not ok 2 - T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+  ---
+  duration_ms: 47.649208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:77:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   'fx-up-far',
+    +   'fx-up-near',
+    -   'fx-up-near',
+    -   'fx-up-far',
+        'fx-up-social'
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'fx-up-near'
+    1: 'fx-up-far'
+    2: 'fx-up-social'
+  actual:
+    0: 'fx-up-far'
+    1: 'fx-up-near'
+    2: 'fx-up-social'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:79:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+not ok 3 - T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+  ---
+  duration_ms: 75.957542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:88:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'fx-up-far'
+    - 'fx-up-near'
+             ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'fx-up-near'
+  actual: 'fx-up-far'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:92:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+not ok 4 - T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 5.05275
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:104:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:106:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+not ok 5 - T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 47.5825
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:104:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:106:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+not ok 6 - T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 5.004833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:104:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:106:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+not ok 7 - T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 9.413209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:104:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:106:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+not ok 8 - T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 15.812667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:104:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:106:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+not ok 9 - T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+  ---
+  duration_ms: 59.906917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:121:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:123:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+not ok 10 - T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 4.339833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:142:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:144:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+not ok 11 - T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 3.463084
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:142:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:144:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+not ok 12 - T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 3.975083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:142:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:144:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+not ok 13 - T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 14.636291
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:142:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:144:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+not ok 14 - T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 22.993625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:142:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:144:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+not ok 15 - T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+  ---
+  duration_ms: 3.126792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:153:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:155:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+not ok 16 - T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+  ---
+  duration_ms: 1.929917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:158:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:161:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+not ok 17 - T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+  ---
+  duration_ms: 15.747083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:168:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:172:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+not ok 18 - T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+  ---
+  duration_ms: 97.578083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:183:1'
+  failureType: 'testCodeFailure'
+  error: 'FormData is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Element.persistDraft (assets/js/ticket.js:458:18)
+    call (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:69:33)
+    Element.dispatchEvent (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:76:9)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:187:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET loading: busy and a status, no fields yet
+not ok 19 - T43-STATE-TICKET loading: busy and a status, no fields yet
+  ---
+  duration_ms: 2.37875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:197:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'loading'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'loading'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:201:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+not ok 20 - T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+  ---
+  duration_ms: 3.210209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:220:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:222:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+not ok 21 - T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+  ---
+  duration_ms: 2.080333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:220:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:222:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+not ok 22 - T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+  ---
+  duration_ms: 5.941458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:220:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:222:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+not ok 23 - T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+  ---
+  duration_ms: 30.075709
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:220:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:222:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+not ok 24 - T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+  ---
+  duration_ms: 3.65275
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:220:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:222:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+not ok 25 - T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+  ---
+  duration_ms: 4.78675
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:220:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:222:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+not ok 26 - T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+  ---
+  duration_ms: 35.681333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:230:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'click')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:235:48)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+not ok 27 - T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+  ---
+  duration_ms: 3.34825
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:251:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:259:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-TICKET the footer text comes from the site data
+ok 28 - T43-STATE-TICKET the footer text comes from the site data
+  ---
+  duration_ms: 4.585833
+  ...
+# Subtest: T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+not ok 29 - T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+  ---
+  duration_ms: 28.869042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:283:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - '予約するライブ'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '予約するライブ'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:287:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+not ok 30 - T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+  ---
+  duration_ms: 44.535625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:308:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:315:23)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+not ok 31 - T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+  ---
+  duration_ms: 7.028375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:322:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== '← live'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '← live'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:324:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+not ok 32 - T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+  ---
+  duration_ms: 44.328834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:329:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'お名前を入力してください。'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'お名前を入力してください。'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:332:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM e-mail checks: required, shape, length
+not ok 33 - T43-TICKET-FORM e-mail checks: required, shape, length
+  ---
+  duration_ms: 45.787208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:346:1'
+  failureType: 'testCodeFailure'
+  error: 'FormData is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Element.persistDraft (assets/js/ticket.js:458:18)
+    call (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:69:33)
+    Element.dispatchEvent (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:76:9)
+    setValue (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:42:11)
+    fill (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:46:3)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:349:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+not ok 34 - T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+  ---
+  duration_ms: 56.71
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:361:1'
+  failureType: 'testCodeFailure'
+  error: 'FormData is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Element.persistDraft (assets/js/ticket.js:458:18)
+    call (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:69:33)
+    Element.dispatchEvent (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:76:9)
+    setValue (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:42:11)
+    fill (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:46:3)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:364:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM fixing a field and typing clears only that field’s error
+not ok 35 - T43-TICKET-FORM fixing a field and typing clears only that field’s error
+  ---
+  duration_ms: 4.67275
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:378:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:381:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-FIELDS labels, placeholder and submit label come from the admin settings
+ok 36 - T43-FIELDS labels, placeholder and submit label come from the admin settings
+  ---
+  duration_ms: 8.796958
+  ...
+# Subtest: T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+not ok 37 - T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 14.164333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:406:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:408:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+not ok 38 - T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 3.111125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:406:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:409:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+not ok 39 - T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 63.3195
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:406:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:408:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+not ok 40 - T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+  ---
+  duration_ms: 63.872333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:417:1'
+  failureType: 'testCodeFailure'
+  error: 'FormData is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Element.persistDraft (assets/js/ticket.js:458:18)
+    call (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:69:33)
+    Element.dispatchEvent (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/support/dom-harness.mjs:76:9)
+    setValue (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:42:11)
+    fill (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:46:3)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:419:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+not ok 41 - T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+  ---
+  duration_ms: 6.678667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:433:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'fx-up-far'
+    - 'fx-up-near'
+             ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'fx-up-near'
+  actual: 'fx-up-far'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-flow.test.mjs:435:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 2
+# fail 39
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2055.012458
+exit=1

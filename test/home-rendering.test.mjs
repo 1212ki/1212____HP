@@ -132,7 +132,7 @@ for(const mode of ['internal','external','closed','invalid','past','duplicate','
   if(mode==='internal')assert.match(html,/href="ticket\/\?liveId=live-a"[^>]*>予約する<\/a>/);
   if(mode==='external'){assert.match(html,/予約する（外部サイト）/);assert.match(html,/target="_blank" rel="noopener noreferrer"/);assert.match(html,/a=1&amp;b=2/);}
   if(['closed','past'].includes(mode)){assert.match(html,/<span[^>]*>予約受付終了<\/span>/);assert.doesNotMatch(html,/href="ticket\//);}
-  if(mode==='invalid')assert.match(html,/<span[^>]*>予約URLが無効です<\/span>/);
+  if(mode==='invalid')assert.match(html,/<span[^>]*>予約先を確認中<\/span>/);
   if(['duplicate','empty-id','no-helper'].includes(mode)){assert.match(html,/<span[^>]*>予約情報を確認できません<\/span>/);assert.match(html,/href="live\/"[^>]*>詳細/);}
 });
 test('T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives',async()=>{
