@@ -2,11 +2,12 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-11-18
+- Last updated: 2026-11-19
 - Related issues: #39, #40
 - Related implementation issues: #41, #42, #43, #44, #45
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #44のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #44）: Issue #44のgate 3（第2版の再承認）における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #40）: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
@@ -39,7 +40,7 @@
 | 送信中・失敗はページ内、予約完了はTicket完了ページで示す。 | 受付内容を確かめ、Liveから聴く体験へつなげる。 | 要件メモ｜予約の流れ「振る舞い」「案の判断と理由」`29:355`・`29:370` |
 | UIには実際の表示文言だけを置く。判断理由と新旧の説明は設計側に持つ。 | 操作する人へ制作上の説明を負わせない。 | 管理方針「画面と説明の分け方」`43:509`、#37の承認済み設計§5.2 |
 
-#42公開時はMusic完成まで既存6項目のナビを保ち、Homeの「music →」はDiscographyへ向けた。#44は5項目と`/music/`への入口・旧URLの行き先を揃える。公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約し、最後にmainへまとめて出す。#44の統合では本番配信は変わらず、管理画面は#47までYouTube・Discoタブを維持する。
+#42公開時はMusic完成まで既存6項目のナビを保ち、Homeの「music →」はDiscographyへ向けた。#44は5項目と`/music/`への入口・旧URLの行き先を揃える。公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約し、最後にmainへまとめて出す。#44の統合では本番配信は変わらず、管理画面は#47までYouTube・Discoタブを維持する。#44はPR #51でmerge済みで、#43・#45はそのまとめ用branchを取り込んで本文を実装する。
 
 ## 3. 画面・マスタ・要件・実装の対応
 
@@ -76,6 +77,19 @@ Figma fileは`82QH1c3hUrv1fKCd2AMULK`、pageは[マスタ｜ホームページ `
 結果はactive時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/`内の同pathを参照する。#43・#45の本文には変更を広げない。
 
 FigmaのMusic入力は`/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/figma-snapshot/`。文言取得2026-11-18T11:31:33+09:00、`page-0-1_master-home.md` SHA-256 `9e694cf09a238dabb044f0752c981733b3c1d638a07f5ae47e84599471936679`、`music-layout-spec.md` SHA-256 `bfff4827b9852b3a3c4831edf060823ab677c2d9f16cafbad3329b2c63ee3ab5`。今回のrender PNGはなく、数値・文言を根拠にする。nav32、再生/外部ボタンの区別、16:9のplayerとPC幅の寸法（作品の聴く480×270、映像474×267）、Music用カードvariant、tokensの間隔、ロゴ例外の整合案は同cycleの`construction/aidlc-integration/figma-fix-requests.md` F44-01〜07とgate 3の記録に対応する。意味が変わる別案は先に再承認する。
+
+### Issue #43のLive・Ticketの実装入力と比較時点
+
+上表の`00cdea5`列と#42・#44の記録は比較履歴として保持する。#43着手時点は`ba124011ce5e0ae56ddb1c6ac47d1783600687b4`（`origin/feature/39-public-pages`。#44のPR #51がmerge済み）で、全公開ページのヘッダー・ナビ・フッターは#44の受入済み。Live一覧・Live詳細・終了したライブ（全件）・Ticket・Ticket完了の本文はここから実装する。Approvedは入力の承認であり、下の対象の実装完了を意味しない。
+
+| 対象 | #43の対象と結果の参照 |
+|---|---|
+| Live一覧・Live詳細・終了したライブ（全件） | `live/`と`live/detail/`の本文を新しい構成にする。終了したライブ（全件）は`live/detail/?view=past`の入口を保つ。読込中・読込失敗・予定0・過去0・不明Liveを状態として出し分ける。 |
+| Ticket・Ticket完了 | 送信中・失敗をTicketのページ内で示し、成功したらTicket完了へ進む。完了に送った内容と「当日までに聴く」を出す。 |
+
+結果はactive時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/`内の同pathを参照する。ヘッダー・ナビ・フッター、Home・Music・Profile・Contactの本文は変えない。
+
+FigmaのLive・Ticket入力は`/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261119-142640_1212hp-43-live-ticket/figma-snapshot/`。文言取得2026-11-19T14:55:18+09:00、`page-0-1_master-home.md` SHA-256 `4effa73820034a2c18330ea2d17d8c7415fb5e59f2b0f85f9dbb8b0b480a342d`、`live-ticket-layout-spec.md` SHA-256 `4c1d4d2efcda0c30ee973f04990864cc60b430e20188e32211b6af444dd5134b`。#44の書き出しとの文言差は0件。render PNGはなく、数値・文言を根拠にする。マスタと実装入力の食い違いは同cycleの`construction/aidlc-integration/figma-fix-requests.md`のF43-01〜とgate 3の記録に対応する。意味が変わる別案は先に再承認する。
 
 ## 4. 受入条件
 
@@ -146,6 +160,22 @@ Musicも既存`MusicData.sortReleasesByDate`を使い、digitalとdemoをそれ�
 
 公開Musicの作品は現管理画面のDisco、映像とChannel URLはYouTubeで編集する。#44はタブ・modal名・保存・データの形を変えず、5タブ化は#47。`admin/README.md`はこの対応を記し、未来の管理Musicタブが現在使えるようには書かない。
 
+### Issue #43のLive・Ticket表示契約
+
+並び: 開催予定は日付の近い順、終了したライブは新しい順。日付はHomeの次のライブと同じ読み方（`YYYY-MM-DD`・`YYYY.M.D`・`YYYY.MM.DD`、曜日の有無）で解釈し、解析できない値は末尾、同じ日付と解析できない値どうしは保存順にする。保存配列は変えない。Homeの次のライブと一覧の先頭は同じライブになる。保存区分（upcoming / past）を正本とし、日付で区分を変えない。日付を過ぎたupcomingは区分を保ったまま予約できない表示になる。Ticketのライブ選択も同じ順で、指定も下書きもない時は予約できるライブのうち日付が最も近いものを初期選択する。
+
+表記: 日付・時間・料金・注記・共演はHomeの次のライブと同じ`formatLiveDate`・`formatLiveDetails`で出し、書き方を書き直さない。時間・料金・注記・共演がすべて未登録なら説明を出す。タイトルが空でも見出しは日付と会場とし、「Coming Soon」は使わない。フライヤーがない時は淡い面に日付だけを置く。
+
+予約の出し分け: 判定は`LiveOperations.getTicketCta`のまま。Live・Ticketの文言は、このサイトで受け付けるライブ「予約する」、外部の予約先「予約する（外部サイト）」（別タブ）、受付終了・終了したライブは非操作の「予約受付終了」、予約先が正しくない時は非操作の「予約先を確認中」とする。Homeの次のライブの不正URLの文言も同じ「予約先を確認中」に揃え、同じ状態に2つの言い方を置かない（#42の「予約URLが無効です」から#43で改めた。Figma整合案F43-01）。判定の規則は変えない。予約できないライブでは「予約する」を出さず、非操作の理由の文を示す。
+
+Ticket: 入力項目と、管理で変えられる完了文・枚数と備考の表示・ラベル・入力例・送信ボタン文言は保つ。送信前の確認の段は置かない。入力誤りは誤りのある項目の直下に出し、枚数は1〜10。送信中は入力を保ってボタンを押せなくし、失敗は入力を保って同じボタンが「もう一度送信する」になる。同じ内容を続けて送った時は、すでに受け付けていることを伝える。予約の保存とメールの送信は分け、メールの結果で予約を失敗にしない（管理設計§5.2）。
+
+完了ページへ渡す内容: 同じタブの`sessionStorage`の受付内容1件（key `1212hp_ticket_receipt_v1`）。URLに載せるのは`liveId`と受付番号だけで、名前・e-mail・備考を URL・query・hash・localStorageに載せない。内容は、受付番号、対象Liveの日付・会場・タイトル・画像、名前・e-mail・枚数・備考と、送信時点の完了文・ラベル・表示設定。30分で無効とし、新しい送信を始める時に消す。読めない・期限切れ・URLの`liveId`か受付番号と合わない時は内容を作らず、「受付内容なし」を出す。再読み込みは同じ内容を出し、別のタブや直接開いた時は出さない。
+
+当日までに聴く: Homeと同じ`MusicData.resolveFeaturedRelease`の作品を出す。登録映像に有効な`youtubeId`がある時だけ「聴く」を出し、プレーヤーは`home-player.js`を使う。1440pxでは480×270、390pxでは幅いっぱい（高さ200px以上）で、YouTubeの埋め込みの最小（200×200以上、16:9は480×270推奨）を下回らない。映像がなければ「聴く」を出さず、有効な外部リンクがあれば「配信先へ」「購入先へ」を出す。作品が0件なら区画ごと出さない。Musicへの入口は`music →`（`/music/`）。
+
+見られる項目: 今のLive詳細（画像、タイトル、日付、会場、時間、料金、注記、共演、説明、予約）、Ticket（ライブ、名前、e-mail、枚数、備考）、終了したライブの行（日付、会場、タイトル）は、新しい画面のどこかにすべて残る。対応表は#43のRequirements§4にある。
+
 ## 6. 主要flowとdesktop / mobile
 
 実装: #42〜#45。`00cdea5`: 既存の閲覧・外部リンク・送信はあるが、以下の構成・完了遷移は未実装。
@@ -154,7 +184,7 @@ Musicも既存`MusicData.sortReleasesByDate`を使い、digitalとdemoをそれ�
 - Live一覧は開催予定を日付の近い順、終了したライブは新しい順の先頭数件と全件への入口。Live詳細だけで公演の詳細を見せる。390pxの詳細は日付・会場・予約をフライヤーより上に置く。時間・料金・注記・共演がすべて未登録なら説明を出す。Homeの次のライブにも同じformatterを使う（v2の`25:91`は「時間・料金・注記・共演の文字は、Liveのページと同じ書き方で出す。」）。
 - 内部予約はTicket、外部予約は別タブ、終了・受付終了・不正な予約URLは予約できない状態を示す。LiveリンクがInstagramなら詳細とTicket概要へ出し、それ以外の補助リンクを同じ入口としては出さない。
 - Ticketは指定Live、なければ入力途中のLive、なければ先頭を初期選択する。1440pxは入力中も対象概要が横に見える。390pxは概要を入力欄の上に小さく置き、送信を全幅にする。入力の復元・枚数1〜10・表示設定を保持する。外部受付の選択時はLive選択だけを残し、他の入力と内部送信を隠す。
-- 予約成功後はTicket完了へ進み、完了文・受付番号・対象Live・送った内容・次の入口・Homeと同じ作品を出す。完了文は管理設定を優先し、既定は「予約しました。」。メールの控えへの言及は置かない。渡す内容の方法は#43の計画で固定する。
+- 予約成功後はTicket完了へ進み、完了文・受付番号・対象Live・送った内容・次の入口・Homeと同じ作品を出す。完了文は管理設定を優先し、既定は「予約しました。」。メールの控えへの言及は置かない。渡す内容は同じタブの`sessionStorage`に置き、URLには`liveId`と受付番号だけを載せる（§5の#43表示契約）。
 - Musicのpathは`/music/`、release→demo→video、ページ内移動は`#release / #demo / #video`。作品は区分ごとにリリース日の新しい順。作品の再生は押した作品を含む並びのすぐ下、映像はサムネイルの場所に開く。ページ内のplayerは最大1つで、別の作品・映像・同じ映像の別の起点を開いたら前を破棄し、新しい場所で最初から再生する。閉じる・再描画・離脱でも停止する。1440pxは作品画像220角、カード幅220で、作品の「聴く」のplayerは押した作品を含む並びのすぐ下に480×270で開き、ほかの作品のカードに重ならず左右にはみ出さない。映像は2列・間隔32で、サムネイルとplayerは474×267（本文幅980の時）、題名の幅も同じ。390pxは画像120角を左、名前と操作を右、playerは作品行全幅の358×201、映像も1つずつ全幅の358×201。幅が足りない時、playerの幅は置ける幅に合わせて16:9を保ち、Musicのplayerの高さは200pxを下回らない（置ける幅が356px未満では高さ200pxを保つ）。映像の列は、1列あたりの幅で高さ200pxを保てなくなる前に1列にする（YouTubeの埋め込みは高さ200px以上、16:9は480×270以上が推奨）。playerは16:9、既存Homeの再生と停止を保持し、iPhoneで追加tapを要する場合は受入済みQ42-01を引き継ぐ。`/discography/`は`/music/#release`、`/youtube/`は`/music/#video`へ`location.replace`で送り、query・旧hashは破棄する。JSなし・失敗でも常時表示リンクから進める。Music自身もJS無効時にBandcamp・YouTubeの静的入口を残す。旧HTMLのcanonicalはMusic、robotsはnoindex, follow。空の区分のhashは読込後にMusic上部へ戻し、見出しと移動には空の区分を残さない。
 - Profileは登録内容を保ち、Contactへの依頼入口を出す。390pxは写真を上、本文を下。Contactは既存3項目のまま、送信中・完了・失敗をページ内で示し、送信ボタンを全幅にする。
 
@@ -173,7 +203,7 @@ Musicも既存`MusicData.sortReleasesByDate`を使い、digitalとdemoをそれ�
 
 Homeの10状態は外部予約、予約受付終了、upcoming空、Live部分失敗、再生を開いた後、映像未選択／参照無効、画像未登録／load error、顔候補null、news空、全体GET失敗である。Live部分失敗は全体データが取得できてもlive.upcomingが配列でない等の場合とし、空配列と区別する。再試行は同じ公開GETを操作時に呼び、二重要求と古い応答による上書きを防ぐ。全体失敗では新作・次のライブ・news・musicの場所へ知らせを1つ出し、ヘッダー・フッターとBandcamp・YouTubeのfallback入口を残す。
 
-次のライブはupcomingの最も近い1件で、日付を過ぎても区分を変えず表示を残す。予約可否は既存共通処理を使う。内部は「予約する」、外部は「予約する（外部サイト）」、終了は非操作の「予約受付終了」、不正URLは非操作の「予約URLが無効です」。識別不能時も予約操作を出さない。外部／終了の状態でも公演名と一覧への入口を保つ。
+次のライブはupcomingの最も近い1件で、日付を過ぎても区分を変えず表示を残す。予約可否は既存共通処理を使う。内部は「予約する」、外部は「予約する（外部サイト）」、終了は非操作の「予約受付終了」、不正URLは非操作の「予約先を確認中」。識別不能時も予約操作を出さない。外部／終了の状態でも公演名と一覧への入口を保つ。
 
 「聴く」は選択された映像の有効なyoutubeIdがある時だけ表示する。押した場所に有音autoplayを要求するiframeを開き、「閉じる」でiframeを破棄して再生を止め、プレーヤーを閉じて「聴く」に戻す（v2の`25:91`）。別のページへの遷移・Home再描画時にも破棄する。実音が1操作で開始するかはPCとiPhone Safariの実機受入で確かめ、端末制限による追加tapを未受入のままPS-H-03をPASSにしない。画像なしでは通常の画像比率の淡い面に作品タイトルと松本一樹を出す。
 
@@ -194,6 +224,34 @@ Musicの状態は同cycle RequirementsのS44-01〜06・Lへ対応する。全体
 確認1はgate 1〜3、確認2はgate 4〜5で、すべてItsuki本人のAを記録する。Frontはfixture画像とは別に、確認2前に本番公開データでbranchのMusic・Home・旧URLをPCとスマホから確認する。公開ファイルだけを手元配信し、`http://localhost:8888/`は許可リスト内の公開APIを読む。スマホは公開データのscratch上の写しを読む。公開APIは許可リストのオリジンだけに応える。repo・fixture・承認の提示文へ本番の値を入れない。設定は保存済みなら入れ直さない。毎回PC/スマホURLを渡し、確認2のItsukiの閲覧は任意、本人が必ず見るのはまとめ出し前の公開全ページ1回である。実音・画像・本番表示・独立reviewの成否は結果文書に分ける。
 
 Owner決定（2026-11-18）により#44を先に`feature/39-public-pages`へ統合し、#43・#45はそれを取り込んで本文を実装する。PR base mainという通常規則への例外であり、最後はmainへまとめて出す。#44のmergeでは本番は変わらず、Worker deployも本番配信確認も行わない。Issue/ProjectはReviewを保ち、まとめ出しのmain merge時にcloseする。まとめ用branchで戻す場合は#44のmerge差分だけをrevertし、後続本文と整合を確認する。本番公開後に旧6項目へ戻す場合はmainのまとめ出し差分をrevertし、旧2ページとHome入口・説明を同じ復旧単位で戻す。いずれもItsukiの明示承認で実行し、保存データ・#41 Worker・Figmaを戻さない。具体手順と衝突範囲は#44のCode Generation Planを参照する。
+
+### Issue #43の状態とまとめ出し
+
+Live・Ticketの16状態と読込中は、同cycle RequirementsのS43-01〜16・Lへ対応する。
+
+| ID / Figma | 画面 | 条件 | 表示 |
+|---|---|---|---|
+| S43-01 / `29:251` | Live一覧 | 取得でき、upcomingが空配列 | 「開催予定」の見出しと「次のライブは、決まり次第ここでお知らせします。」 |
+| S43-02 / `29:256` | Live一覧 | 取得でき、pastが空配列 | 「終了したライブ」を見出しごと出さず、全件への入口も出さない |
+| S43-03 / `29:260` | Live一覧・Live詳細・終了したライブ（全件） | 取得失敗、またはlive・upcoming・pastの形が不正 | 「ライブ情報を読み込めませんでした。」と「もう一度読み込む」。空配列とは区別する |
+| S43-04 / `29:267` | Live詳細 | `liveId`がない、見つからない、同じ番号が重なっている | 「このライブは見つかりませんでした。」「アドレスが変わったか、掲載が終わった可能性があります。」と「ライブの一覧へ →」 |
+| S43-05 / `29:273` | Live詳細ほか | 画像がない、または読めない | 淡い面に日付だけ（Live詳細・一覧）。Ticketの概要と完了では画像の枠を出さない |
+| S43-06 / `29:279` | Live詳細・一覧 | 予約の4分岐 | 「予約する」「予約する（外部サイト）」「予約受付終了」「予約先を確認中」。後ろの2つは押せない |
+| S43-07 / `29:298` | Ticket | 名前・e-mail・枚数の誤り | 誤りのある項目の直下に直し方。e-mailは「e-mailの形式を確認してください。」 |
+| S43-08 / `29:307` | Ticket | 送信中 | ボタンが「送信しています…」で押せず、入力はそのまま残る |
+| S43-09 / `29:313` | Ticket | 送信失敗 | 「予約を送信できませんでした。入力内容は残っています。時間をおいて、もう一度お試しください。」。ボタンは「もう一度送信する」 |
+| S43-10 / `29:321` | Ticket | 外部で受け付けるライブを指定 | 「このライブの予約は外部サイトで受け付けています。」と「外部サイトで予約」。ライブの選択だけを残し、他の入力欄と送信を隠す |
+| S43-11 / `29:330` | Ticket | 予約できないライブを指定（終了・受付終了・予約先が正しくない・見つからない） | 理由を1か所に出し、別のライブを選べる |
+| S43-12 / `29:336` | Ticket | 予約できるライブが1つもない | 「現在、このサイトで予約できるライブはありません。」と「ライブの一覧へ →」 |
+| S43-13 / `29:341` | Ticket完了 | 受付内容がない・読めない・期限切れ・別のもの | 「予約の受付内容を表示できませんでした。」と「ライブの一覧へ →」。内容は作らない |
+| S43-14 / `42:505` | Ticket | 予約に必要な情報を取得できない | 「予約に必要な情報を読み込めませんでした。」と「もう一度読み込む」。入力欄は出さない |
+| S43-15 / `42:513` | Ticket | 同じ内容を続けて送った（サーバーが受付済みを返した） | 「同じ内容の予約を、すでに受け付けています。」 |
+| S43-16 / `42:517` | Ticket | ライブを特定できない（指定がおかしい、同じ番号が重なっている、補助のscriptがない） | 「予約情報を確認できません。時間をおいて再度お試しください。」と「ライブの一覧へ →」 |
+| S43-L | Live一覧・詳細・Ticket | 取得が未解決 | 見出しと枠を先に出し、中身の場所を淡い面で空ける。件数0とは扱わない |
+
+再読み込みは同じ公開GETを呼び、通信中の二重要求と古い応答・離脱後の応答による上書きを防ぐ。空配列と取得失敗を区別するのはHomeの#42の条件と同じ。公開本文の赤は見出しの線と、その画面でいちばんしてほしい操作1つに限る。
+
+まとめ出し: #43のPR baseはOwner決定（2026-11-18）の`feature/39-public-pages`で、#43のmergeでは本番配信もWorkerも変わらない。Issue/Projectはまとめ出しのmain mergeまでReviewを保つ。まとめ用branchで戻す時は#43のmerge差分だけをrevertし、#44のMusic・ナビを戻さない。本番公開後に戻す時はmainのまとめ出し差分のrevertで#43・#44・#45をまとめて戻す。受付内容はsessionStorageだけにあり、予約データ・Figma・#41のWorkerは戻さない。いずれもItsukiの明示承認で実行する。
 
 ## 8. 検証とマスタ更新の手順
 

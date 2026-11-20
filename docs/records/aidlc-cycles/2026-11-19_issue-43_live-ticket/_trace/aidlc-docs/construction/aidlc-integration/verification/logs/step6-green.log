@@ -1,0 +1,496 @@
+TAP version 13
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+ok 1 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 53.406334
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+ok 2 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 17.069791
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 3 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 2.862542
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 4 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 1.055125
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 5 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 1.200875
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 6 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 1.302833
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 7 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 6.67875
+  ...
+# Subtest: RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+ok 8 - RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+  ---
+  duration_ms: 3.700125
+  ...
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 9 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 10.24475
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 10 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 71.202208
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 11 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 5.412584
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 12 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 8.87125
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 13 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 17.067542
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 14 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 4.047083
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 15 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 6.014709
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 16 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 58.512792
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 17 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 6.827916
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 18 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 8.869667
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 19 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 9.558625
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 20 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 3.409542
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 21 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 6.212459
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 22 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 7.691708
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 23 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 7.825167
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 24 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 5.385375
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 25 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 5.069208
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 26 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 5.079042
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 27 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 7.355292
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 28 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 11.406834
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 29 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 6.63375
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 30 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 6.88475
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 31 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 6.579084
+  ...
+# Subtest: T42-LIVE booking internal
+ok 32 - T42-LIVE booking internal
+  ---
+  duration_ms: 16.338084
+  ...
+# Subtest: T42-LIVE booking external
+ok 33 - T42-LIVE booking external
+  ---
+  duration_ms: 8.938583
+  ...
+# Subtest: T42-LIVE booking closed
+ok 34 - T42-LIVE booking closed
+  ---
+  duration_ms: 12.040084
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 35 - T42-LIVE booking invalid
+  ---
+  duration_ms: 10.5355
+  ...
+# Subtest: T42-LIVE booking past
+ok 36 - T42-LIVE booking past
+  ---
+  duration_ms: 11.554375
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 37 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 5.070125
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 38 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 5.892291
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 39 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 7.202167
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 40 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 6.084209
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 41 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 7.629083
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 42 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 13.618792
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 43 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 13.484083
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 44 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 9.626916
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 45 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 8.301292
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 46 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 13.990292
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 47 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 7.878208
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 48 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 9.256792
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 49 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 9.377708
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 50 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 24.724292
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 51 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 6.941584
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 52 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 3.917416
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 53 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 8.577375
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 54 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 7.043167
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 55 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 10.178583
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 56 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 3.79775
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 57 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 3.779584
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 58 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 5.224958
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 59 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 4.520333
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 60 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 11.067042
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 61 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 9.9175
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 62 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 7.280291
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 63 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 11.267125
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 64 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 7.987125
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 65 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 3.645084
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 66 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 5.350584
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 67 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 2.3715
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 68 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 13.002333
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 69 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 4.642542
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 70 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 4.249792
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 71 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 4.105459
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 72 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 4.250834
+  ...
+# Subtest: T43-COMPLETE real HTML: scripts, hooks, and a static default that never pretends a booking was made
+ok 73 - T43-COMPLETE real HTML: scripts, hooks, and a static default that never pretends a booking was made
+  ---
+  duration_ms: 36.172083
+  ...
+# Subtest: T43-COMPLETE a saved receipt shows the completion text, number, date, venue, title and everything that was sent
+ok 74 - T43-COMPLETE a saved receipt shows the completion text, number, date, venue, title and everything that was sent
+  ---
+  duration_ms: 45.058458
+  ...
+# Subtest: T43-COMPLETE the completion text falls back to 予約しました。; the settings of the moment decide which lines appear; an empty note shows "-"
+ok 75 - T43-COMPLETE the completion text falls back to 予約しました。; the settings of the moment decide which lines appear; an empty note shows "-"
+  ---
+  duration_ms: 45.886667
+  ...
+# Subtest: T43-COMPLETE text is escaped, long values are not cut, and no picture frame is drawn without a picture
+ok 76 - T43-COMPLETE text is escaped, long values are not cut, and no picture frame is drawn without a picture
+  ---
+  duration_ms: 13.074166
+  ...
+# Subtest: T43-COMPLETE a picture that fails to load is dropped with its frame
+ok 77 - T43-COMPLETE a picture that fails to load is dropped with its frame
+  ---
+  duration_ms: 10.168416
+  ...
+# Subtest: T43-COMPLETE next steps: the Live detail, the other Lives and Home
+ok 78 - T43-COMPLETE next steps: the Live detail, the other Lives and Home
+  ---
+  duration_ms: 16.744584
+  ...
+# Subtest: T43-COMPLETE S43-13 nothing saved: only the notice and a way back; no content is made up
+ok 79 - T43-COMPLETE S43-13 nothing saved: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 6.945667
+  ...
+# Subtest: T43-COMPLETE S43-13 another receipt number in the address: only the notice and a way back; no content is made up
+ok 80 - T43-COMPLETE S43-13 another receipt number in the address: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 8.891042
+  ...
+# Subtest: T43-COMPLETE S43-13 another Live in the address: only the notice and a way back; no content is made up
+ok 81 - T43-COMPLETE S43-13 another Live in the address: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 7.201916
+  ...
+# Subtest: T43-COMPLETE S43-13 no query at all (opened directly): only the notice and a way back; no content is made up
+ok 82 - T43-COMPLETE S43-13 no query at all (opened directly): only the notice and a way back; no content is made up
+  ---
+  duration_ms: 15.298375
+  ...
+# Subtest: T43-COMPLETE S43-13 older than 30 minutes: only the notice and a way back; no content is made up
+ok 83 - T43-COMPLETE S43-13 older than 30 minutes: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 15.358416
+  ...
+# Subtest: T43-COMPLETE S43-13 another version: only the notice and a way back; no content is made up
+ok 84 - T43-COMPLETE S43-13 another version: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 17.616792
+  ...
+# Subtest: T43-COMPLETE S43-13 broken JSON: only the notice and a way back; no content is made up
+ok 85 - T43-COMPLETE S43-13 broken JSON: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 8.769917
+  ...
+# Subtest: T43-COMPLETE S43-13 a required value missing: only the notice and a way back; no content is made up
+ok 86 - T43-COMPLETE S43-13 a required value missing: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 8.637834
+  ...
+# Subtest: T43-COMPLETE reading never removes the receipt (reload, Back and Forward show the same content); the listen data does not touch it
+ok 87 - T43-COMPLETE reading never removes the receipt (reload, Back and Forward show the same content); the listen data does not touch it
+  ---
+  duration_ms: 15.551625
+  ...
+# Subtest: T43-COMPLETE the receipt does not wait for the network, and a failing network never hides it (only the listen block is skipped)
+ok 88 - T43-COMPLETE the receipt does not wait for the network, and a failing network never hides it (only the listen block is skipped)
+  ---
+  duration_ms: 40.875917
+  ...
+# Subtest: T43-COMPLETE the footer text comes from the site data and the page asks the public endpoint once
+ok 89 - T43-COMPLETE the footer text comes from the site data and the page asks the public endpoint once
+  ---
+  duration_ms: 10.683875
+  ...
+# Subtest: T43-COMPLETE the old admin copy and query-string receipt are gone: nothing is read from ?date= or ?venue=
+ok 90 - T43-COMPLETE the old admin copy and query-string receipt are gone: nothing is read from ?date= or ?venue=
+  ---
+  duration_ms: 6.439875
+  ...
+# Subtest: T43-LISTEN the featured release of Home appears with its type and date, a 聴く button, the store link and the way to Music
+ok 91 - T43-LISTEN the featured release of Home appears with its type and date, a 聴く button, the store link and the way to Music
+  ---
+  duration_ms: 11.445083
+  ...
+# Subtest: T43-LISTEN it is the same work Home shows, in every featured-release setting
+ok 92 - T43-LISTEN it is the same work Home shows, in every featured-release setting
+  ---
+  duration_ms: 106.652083
+  ...
+# Subtest: T43-LISTEN 聴く appears only for a valid video; otherwise only the external link (配信先へ / 購入先へ) remains
+ok 93 - T43-LISTEN 聴く appears only for a valid video; otherwise only the external link (配信先へ / 購入先へ) remains
+  ---
+  duration_ms: 45.067458
+  ...
+# Subtest: T43-LISTEN no release at all: the whole block is hidden
+ok 94 - T43-LISTEN no release at all: the whole block is hidden
+  ---
+  duration_ms: 4.886167
+  ...
+# Subtest: T43-LISTEN pressing 聴く opens exactly one embedded player; pressing again, pagehide or a second open closes it
+ok 95 - T43-LISTEN pressing 聴く opens exactly one embedded player; pressing again, pagehide or a second open closes it
+  ---
+  duration_ms: 9.190208
+  ...
+# Subtest: T43-LISTEN the jacket falls back to a pale face with the artist name when there is no picture or it fails; the title stays as text
+ok 96 - T43-LISTEN the jacket falls back to a pale face with the artist name when there is no picture or it fails; the title stays as text
+  ---
+  duration_ms: 11.17775
+  ...
+# Subtest: T43-FLOW list → Ticket → complete: the receipt written by Ticket is what the complete page shows, in the same tab
+ok 97 - T43-FLOW list → Ticket → complete: the receipt written by Ticket is what the complete page shows, in the same tab
+  ---
+  duration_ms: 59.907125
+  ...
+1..97
+# tests 97
+# suites 0
+# pass 97
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2481.271125
+exit=0

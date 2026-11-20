@@ -886,7 +886,7 @@
       const label = cta.external ? "予約する（外部サイト）" : "予約する";
       reservation = `<a class="site-button site-button--primary" href="${escapeHtml(cta.url)}"${cta.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${label}</a>`;
     } else {
-      const label = ["reservationClosed", "past"].includes(cta.reason) ? "予約受付終了" : cta.reason === "invalidTicketUrl" ? "予約URLが無効です" : "予約情報を確認できません";
+      const label = ["reservationClosed", "past"].includes(cta.reason) ? "予約受付終了" : cta.reason === "invalidTicketUrl" ? "予約先を確認中" : "予約情報を確認できません";
       reservation = `<span class="home-reservation-status">${label}</span>`;
     }
     container.innerHTML = `<p class="home-live-date">${escapeHtml(formatSharedLiveDate(next.date))}</p><p class="home-live-venue">${escapeHtml(next.venue || "")}</p><p class="home-live-title">${escapeHtml(next.title || "")}</p><p class="home-live-details">${escapeHtml(formatSharedLiveDetails(next)).replace(/\n/g, "<br>")}</p><div class="home-live-actions">${reservation}<a class="site-button site-button--secondary" href="${unique ? `live/detail/?liveId=${encodeURIComponent(id)}` : "live/"}">詳細</a></div><a class="site-text-link" href="live/">all live →</a>`;

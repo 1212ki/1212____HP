@@ -1,0 +1,216 @@
+TAP version 13
+# Subtest: T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+ok 1 - T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+  ---
+  duration_ms: 10.884708
+  ...
+# Subtest: T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+ok 2 - T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+  ---
+  duration_ms: 54.637958
+  ...
+# Subtest: T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+ok 3 - T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+  ---
+  duration_ms: 63.467541
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+ok 4 - T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 5.173792
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+ok 5 - T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 35.193834
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+ok 6 - T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 13.924458
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+ok 7 - T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 8.047166
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+ok 8 - T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 19.95875
+  ...
+# Subtest: T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+ok 9 - T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+  ---
+  duration_ms: 24.1275
+  ...
+# Subtest: T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+ok 10 - T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 22.983375
+  ...
+# Subtest: T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+ok 11 - T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 33.216792
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+ok 12 - T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 3.580084
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+ok 13 - T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 13.264125
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+ok 14 - T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 7.681709
+  ...
+# Subtest: T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+ok 15 - T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+  ---
+  duration_ms: 8.792209
+  ...
+# Subtest: T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+ok 16 - T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+  ---
+  duration_ms: 25.751917
+  ...
+# Subtest: T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+ok 17 - T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+  ---
+  duration_ms: 47.365375
+  ...
+# Subtest: T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+ok 18 - T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+  ---
+  duration_ms: 9.454167
+  ...
+# Subtest: T43-STATE-TICKET loading: busy and a status, no fields yet
+ok 19 - T43-STATE-TICKET loading: busy and a status, no fields yet
+  ---
+  duration_ms: 27.453375
+  ...
+# Subtest: T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+ok 20 - T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+  ---
+  duration_ms: 8.78075
+  ...
+# Subtest: T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+ok 21 - T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+  ---
+  duration_ms: 15.856542
+  ...
+# Subtest: T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+ok 22 - T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+  ---
+  duration_ms: 6.083125
+  ...
+# Subtest: T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+ok 23 - T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+  ---
+  duration_ms: 7.181708
+  ...
+# Subtest: T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+ok 24 - T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+  ---
+  duration_ms: 7.151709
+  ...
+# Subtest: T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+ok 25 - T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+  ---
+  duration_ms: 14.673375
+  ...
+# Subtest: T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+ok 26 - T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+  ---
+  duration_ms: 35.649792
+  ...
+# Subtest: T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+ok 27 - T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+  ---
+  duration_ms: 47.146875
+  ...
+# Subtest: T43-STATE-TICKET the footer text comes from the site data
+ok 28 - T43-STATE-TICKET the footer text comes from the site data
+  ---
+  duration_ms: 70.564083
+  ...
+# Subtest: T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+ok 29 - T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+  ---
+  duration_ms: 10.353542
+  ...
+# Subtest: T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+ok 30 - T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+  ---
+  duration_ms: 31.857917
+  ...
+# Subtest: T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+ok 31 - T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+  ---
+  duration_ms: 14.49575
+  ...
+# Subtest: T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+ok 32 - T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+  ---
+  duration_ms: 26.606792
+  ...
+# Subtest: T43-TICKET-FORM e-mail checks: required, shape, length
+ok 33 - T43-TICKET-FORM e-mail checks: required, shape, length
+  ---
+  duration_ms: 75.629792
+  ...
+# Subtest: T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+ok 34 - T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+  ---
+  duration_ms: 53.247
+  ...
+# Subtest: T43-TICKET-FORM fixing a field and typing clears only that field’s error
+ok 35 - T43-TICKET-FORM fixing a field and typing clears only that field’s error
+  ---
+  duration_ms: 23.588583
+  ...
+# Subtest: T43-FIELDS labels, placeholder and submit label come from the admin settings
+ok 36 - T43-FIELDS labels, placeholder and submit label come from the admin settings
+  ---
+  duration_ms: 36.119333
+  ...
+# Subtest: T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+ok 37 - T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 34.677959
+  ...
+# Subtest: T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+ok 38 - T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 20.954791
+  ...
+# Subtest: T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+ok 39 - T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 22.059458
+  ...
+# Subtest: T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+ok 40 - T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+  ---
+  duration_ms: 31.263958
+  ...
+# Subtest: T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+ok 41 - T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+  ---
+  duration_ms: 63.756958
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1952.676875
+exit=0

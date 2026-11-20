@@ -1,0 +1,12 @@
+# capture-live-ticket.py: checks that need no browser (Worker, 2026-11-19T18:43:30+09:00)
+## --check
+画像 91 件 + flow-log.json。シナリオ 40 件、smoke 5 件。
+fixture: test/fixtures/live-ticket-states.json sha256 e899dfe58923377d93f4c83d1146b09e86e5bbb4ea9eb16135b3ceee41ad549d
+clock: 2026-11-19T12:00:00+09:00 = 1795057200 秒
+exit=0
+## selftest (fake route/request objects drive install_routes; METRICS_JS is exported and checked with node --check; check_metrics is exercised with a bad input)
+selftest ok 91
+exit=0
+METRICS_JS node --check: ok
+## ast
+ast ok

@@ -1,0 +1,764 @@
+TAP version 13
+# Subtest: T43-COMPLETE real HTML: scripts, hooks, and a static default that never pretends a booking was made
+not ok 1 - T43-COMPLETE real HTML: scripts, hooks, and a static default that never pretends a booking was made
+  ---
+  duration_ms: 18.579333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:48:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<body class="site-ticket">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : ticket</title>\n' +
+      '  <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../../assets/css/style.css?v=20261118-44">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../../">Home</a></li>\n' +
+      '          <li><a href="../../live/">Live</a></li>\n' +
+      '          <li><a href="../../music/">Music</a></li>\n' +
+      '          <li><a href="../../profile/">Profile</a></li>\n' +
+      '          <li><a href="../../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="contact">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">ticket</h2>\n' +
+      '        <p id="ticket-complete-message" style="margin-top: 12px; color: var(--ink-muted);">\n' +
+      '          予約しました。\n' +
+      '        </p>\n' +
+      '\n' +
+      '        <div id="ticket-complete-card" style="margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">\n' +
+      '          <div style="display:flex; flex-direction:column; gap: 8px;">\n' +
+      '            <div style="display:flex; gap: 10px; align-items: baseline; flex-wrap: wrap;">\n' +
+      '              <span style="font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);">Receipt ID</span>\n' +
+      '              <code id="ticket-receipt-id" style="font-size: 0.95rem;">-</code>\n' +
+      '            </div>\n' +
+      '            <div id="ticket-receipt-live" style="color: var(--ink);"></div>\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <div style="margin-top: 18px; display:flex; gap: 10px; flex-wrap: wrap;">\n' +
+      '          <a class="application-link" href="../">▷Back</a>\n' +
+      '          <a class="application-link" href="../../live/">▷Live</a>\n' +
+      '          <a class="application-link" href="../../">▷Home</a>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../../assets/js/site-config.js"></script>\n' +
+      '  <script src="../../assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="../../assets/js/ticket-complete.js?v=20260804-2"></script>\n' +
+      '  <script src="../../assets/js/script.js?v=20261118-44"></script>\n' +
+      '</body>\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : ticket</title>
+      <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../../assets/css/style.css?v=20261118-44">
+    </head>
+    <body>
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../../">Home</a></li>
+              <li><a href="../../live/">Live</a></li>
+              <li><a href="../../music/">Music</a></li>
+              <li><a href="../../profile/">Profile</a></li>
+              <li><a href="../../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="contact">
+          <div class="container">
+            <h2 class="section-title">ticket</h2>
+            <p id="ticket-complete-message" style="margin-top: 12px; color: var(--ink-muted);">
+              予約しました。
+            </p>
+    
+            <div id="ticket-complete-card" style="margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">
+              <div style="display:flex; flex-direction:column; gap: 8px;">
+                <div style="display:flex; gap: 10px; align-items: baseline; flex-wrap: wrap;">
+                  <span style="font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);">Receipt ID</span>
+                  <code id="ticket-receipt-id" style="font-size: 0.95rem;">-</code>
+                </div>
+                <div id="ticket-receipt-live" style="color: var(--ink);"></div>
+              </div>
+            </div>
+    
+            <div style="margin-top: 18px; display:flex; gap: 10px; flex-wrap: wrap;">
+              <a class="application-link" href="../">▷Back</a>
+              <a class="application-link" href="../../live/">▷Live</a>
+              <a class="application-link" href="../../">▷Home</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../../assets/js/site-config.js"></script>
+      <script src="../../assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="../../assets/js/ticket-complete.js?v=20260804-2"></script>
+      <script src="../../assets/js/script.js?v=20261118-44"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:50:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T43-COMPLETE a saved receipt shows the completion text, number, date, venue, title and everything that was sent
+not ok 2 - T43-COMPLETE a saved receipt shows the completion text, number, date, venue, title and everything that was sent
+  ---
+  duration_ms: 67.890708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== 'ready'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ready'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:69:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE the completion text falls back to 予約しました。; the settings of the moment decide which lines appear; an empty note shows "-"
+not ok 3 - T43-COMPLETE the completion text falls back to 予約しました。; the settings of the moment decide which lines appear; an empty note shows "-"
+  ---
+  duration_ms: 16.158208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:82:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '予約を受け付けました。当日お待ちしています。（架空）'
+    - '予約しました。'
+         ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '予約しました。'
+  actual: '予約を受け付けました。当日お待ちしています。（架空）'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:84:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE text is escaped, long values are not cut, and no picture frame is drawn without a picture
+not ok 4 - T43-COMPLETE text is escaped, long values are not cut, and no picture frame is drawn without a picture
+  ---
+  duration_ms: 4.322667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:94:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:97:72)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE a picture that fails to load is dropped with its frame
+not ok 5 - T43-COMPLETE a picture that fails to load is dropped with its frame
+  ---
+  duration_ms: 16.2085
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:109:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dispatchEvent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:113:7)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE next steps: the Live detail, the other Lives and Home
+not ok 6 - T43-COMPLETE next steps: the Live detail, the other Lives and Home
+  ---
+  duration_ms: 8.422416
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:117:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'ライブの詳細 →',
+    -   'ほかのライブ →',
+    -   'Home →'
+    - ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'ライブの詳細 →'
+    1: 'ほかのライブ →'
+    2: 'Home →'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:120:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 nothing saved: only the notice and a way back; no content is made up
+not ok 7 - T43-COMPLETE S43-13 nothing saved: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 3.881709
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 another receipt number in the address: only the notice and a way back; no content is made up
+not ok 8 - T43-COMPLETE S43-13 another receipt number in the address: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 5.377208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 another Live in the address: only the notice and a way back; no content is made up
+not ok 9 - T43-COMPLETE S43-13 another Live in the address: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 5.299333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 no query at all (opened directly): only the notice and a way back; no content is made up
+not ok 10 - T43-COMPLETE S43-13 no query at all (opened directly): only the notice and a way back; no content is made up
+  ---
+  duration_ms: 9.626333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 older than 30 minutes: only the notice and a way back; no content is made up
+not ok 11 - T43-COMPLETE S43-13 older than 30 minutes: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 5.32025
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 another version: only the notice and a way back; no content is made up
+not ok 12 - T43-COMPLETE S43-13 another version: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 7.35475
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 broken JSON: only the notice and a way back; no content is made up
+not ok 13 - T43-COMPLETE S43-13 broken JSON: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 15.663209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE S43-13 a required value missing: only the notice and a way back; no content is made up
+not ok 14 - T43-COMPLETE S43-13 a required value missing: only the notice and a way back; no content is made up
+  ---
+  duration_ms: 4.789625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:140:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'missing'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:142:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE reading never removes the receipt (reload, Back and Forward show the same content); the listen data does not touch it
+ok 15 - T43-COMPLETE reading never removes the receipt (reload, Back and Forward show the same content); the listen data does not touch it
+  ---
+  duration_ms: 8.160875
+  ...
+# Subtest: T43-COMPLETE the receipt does not wait for the network, and a failing network never hides it (only the listen block is skipped)
+not ok 16 - T43-COMPLETE the receipt does not wait for the network, and a failing network never hides it (only the listen block is skipped)
+  ---
+  duration_ms: 5.327791
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:160:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== 'ready'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ready'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:164:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-COMPLETE the footer text comes from the site data and the page asks the public endpoint once
+ok 17 - T43-COMPLETE the footer text comes from the site data and the page asks the public endpoint once
+  ---
+  duration_ms: 4.683542
+  ...
+# Subtest: T43-COMPLETE the old admin copy and query-string receipt are gone: nothing is read from ?date= or ?venue=
+not ok 18 - T43-COMPLETE the old admin copy and query-string receipt are gone: nothing is read from ?date= or ?venue=
+  ---
+  duration_ms: 4.78225
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:186:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /Injected|2000/. Input:
+    
+    '\n' +
+      '  \n' +
+      '    \n' +
+      '      \n' +
+      '        松本一樹\n' +
+      '         -itsuki matsumoto-\n' +
+      '         -itsuki matsumoto-\n' +
+      '      \n' +
+      '      \n' +
+      '        Menu\n' +
+      '        \n' +
+      '          \n' +
+      '          \n' +
+      '          \n' +
+      '        \n' +
+      '      \n' +
+      '      \n' +
+      '        \n' +
+      '          Home\n' +
+      '          Live\n' +
+      '          Music\n' +
+      '          Profile\n' +
+      '          Contact\n' +
+      '        \n' +
+      '      \n' +
+      '    \n' +
+      '  \n' +
+      '\n' +
+      '  \n' +
+      '    \n' +
+      '      \n' +
+      '        ticket\n' +
+      '        予約を受け付けました。当日お待ちしています。（架空）\n' +
+      '\n' +
+      '        \n' +
+      '          \n' +
+      '            \n' +
+      '              Receipt ID\n' +
+      '              fixture-ticket-0001\n' +
+      '            \n' +
+      '            2000.01.01(Sat) Injected\n' +
+      '          \n' +
+      '        \n' +
+      '\n' +
+      '        \n' +
+      '          ▷Back\n' +
+      '          ▷Live\n' +
+      '          ▷Home\n' +
+      '        \n' +
+      '      \n' +
+      '    \n' +
+      '  \n' +
+      '\n' +
+      '  \n' +
+      '    \n' +
+      '      Synthetic studio — All rights reserved. 架空の確認用フッターです。\n' +
+      '    \n' +
+      '  \n' +
+      '\n' +
+      '  \n' +
+      '  \n' +
+      '  \n' +
+      '  \n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+      
+        
+          
+            松本一樹
+             -itsuki matsumoto-
+             -itsuki matsumoto-
+          
+          
+            Menu
+            
+              
+              
+              
+            
+          
+          
+            
+              Home
+              Live
+              Music
+              Profile
+              Contact
+            
+          
+        
+      
+    
+      
+        
+          
+            ticket
+            予約を受け付けました。当日お待ちしています。（架空）
+    
+            
+              
+                
+                  Receipt ID
+                  fixture-ticket-0001
+                
+                2000.01.01(Sat) Injected
+              
+            
+    
+            
+              ▷Back
+              ▷Live
+              ▷Home
+            
+          
+        
+      
+    
+      
+        
+          Synthetic studio — All rights reserved. 架空の確認用フッターです。
+        
+      
+    
+      
+      
+      
+      
+    
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:188:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LISTEN the featured release of Home appears with its type and date, a 聴く button, the store link and the way to Music
+not ok 19 - T43-LISTEN the featured release of Home appears with its type and date, a 聴く button, the store link and the way to Music
+  ---
+  duration_ms: 5.827292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:196:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:198:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LISTEN it is the same work Home shows, in every featured-release setting
+not ok 20 - T43-LISTEN it is the same work Home shows, in every featured-release setting
+  ---
+  duration_ms: 43.817458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:217:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    explicit
+    + actual - expected
+    
+    + null
+    - '架空の作品 A'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '架空の作品 A'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:230:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LISTEN 聴く appears only for a valid video; otherwise only the external link (配信先へ / 購入先へ) remains
+not ok 21 - T43-LISTEN 聴く appears only for a valid video; otherwise only the external link (配信先へ / 購入先へ) remains
+  ---
+  duration_ms: 21.245166
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:237:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== '配信先へ'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '配信先へ'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:240:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LISTEN no release at all: the whole block is hidden
+not ok 22 - T43-LISTEN no release at all: the whole block is hidden
+  ---
+  duration_ms: 3.766667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:258:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:260:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LISTEN pressing 聴く opens exactly one embedded player; pressing again, pagehide or a second open closes it
+not ok 23 - T43-LISTEN pressing 聴く opens exactly one embedded player; pressing again, pagehide or a second open closes it
+  ---
+  duration_ms: 11.218
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:264:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'click')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:267:19)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LISTEN the jacket falls back to a pale face with the artist name when there is no picture or it fails; the title stays as text
+not ok 24 - T43-LISTEN the jacket falls back to a pale face with the artist name when there is no picture or it fails; the title stays as text
+  ---
+  duration_ms: 26.022125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:289:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== '松本一樹'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '松本一樹'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:294:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-FLOW list → Ticket → complete: the receipt written by Ticket is what the complete page shows, in the same tab
+not ok 25 - T43-FLOW list → Ticket → complete: the receipt written by Ticket is what the complete page shows, in the same tab
+  ---
+  duration_ms: 101.494958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:306:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/ticket-complete.test.mjs:328:73)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 2
+# fail 23
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1600.684875
+exit=1

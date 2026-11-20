@@ -1,0 +1,33 @@
+ui_route=headless_acceptance:PS-L-01,PS-L-02,PS-L-05,PS-COM-02,AC43-LISTEN,AC43-PROD
+Traceback (most recent call last):
+  File "/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/aidlc-docs/construction/aidlc-integration/verification/capture-live-ticket.py", line 749, in capture_all
+    browser = p.chromium.launch(**launch)
+  File "/Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/sync_api/_generated.py", line 14566, in launch
+    self._sync(
+  File "/Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_browser_type.py", line 97, in launch
+    await self._channel.send(
+  File "/Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+  File "/Users/itsuki.matsumoto/Library/Python/3.9/lib/python/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: BrowserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/itsuki.matsumoto/Library/Caches/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/claude-502/playwright_chromiumdev_profile-OwtiQq --remote-debugging-pipe --no-startup-window
+<launched> pid=30131
+[pid=30131][err] [1119/183017.092987:FATAL:base/apple/mach_port_rendezvous_mac.cc:155] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.30131: Permission denied (1100)
+Call log:
+  - <launching> /Users/itsuki.matsumoto/Library/Caches/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/claude-502/playwright_chromiumdev_profile-OwtiQq --remote-debugging-pipe --no-startup-window
+  - <launched> pid=30131
+  - [pid=30131][err] [1119/183017.092987:FATAL:base/apple/mach_port_rendezvous_mac.cc:155] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.30131: Permission denied (1100)
+  - [pid=30131] <gracefully close start>
+  - [pid=30131] <kill>
+  - [pid=30131] <will force kill>
+  - [pid=30131] exception while trying to kill process: Error: kill EPERM
+  - [pid=30131] <process did exit: exitCode=null, signal=SIGTRAP>
+  - [pid=30131] starting temporary directories cleanup
+  - [pid=30131] finished temporary directories cleanup
+  - [pid=30131] <gracefully close end>
+
