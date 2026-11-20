@@ -1,0 +1,9 @@
+command: AIDLC_REPO_ROOT=<scratch>/close-dryrun bash <scratch>/close-dryrun/validate-close-ready.sh (copy of aidlc-docs with temporary gate 4/5 records and a Complete state; rerun in Packet 04 after the review fixes)
+validate_close_ready: PASS (DRYRUN ONLY)
+exit_code: 0
+real gate4/gate5 absent: PASS
+real state unchanged (Code Generation Result / Pending): PASS
+scripts/aidlc-cycle.sh close: NOT RUN
+code_sha256: 015cc1cfed3855283739a9318534817102bbc5dda69b6d012b831a65ab6e2c70
+build_sha256: 6ecb83d94beabaa04de694442c162c9d558c40ac39b7b11deaa72a794fa7dc7a
+cycle_summary_sha256: 4edd1d7033a79b45f7f04e287ad72e2ab815fd1553d998614ba850a2b40c936f

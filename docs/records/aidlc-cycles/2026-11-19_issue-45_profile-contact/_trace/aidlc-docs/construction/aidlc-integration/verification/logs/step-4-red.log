@@ -1,0 +1,478 @@
+TAP version 13
+# Subtest: T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+not ok 1 - T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+  ---
+  duration_ms: 10.138792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:41:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<body class="site-contact">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <!-- ビューポート設定 -->\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : contact</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../music/">Music</a></li>\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '  \n' +
+      '  <main>\n' +
+      '    <!-- お問い合わせセクション -->\n' +
+      '    <section class="contact">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">contact</h2>\n' +
+      '        <p id="contact-intro"><embedded-intro-sentence></p>\n' +
+      '         <form id="contact-form" action="https://formspree.io/f/<embedded-endpoint-id>" method="POST">\n' +
+      '          <label for="name">名前</label>\n' +
+      '          <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>\n' +
+      '          \n' +
+      '          <label for="email">e-mail</label>\n' +
+      '          <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>\n' +
+      '          \n' +
+      '          <label for="message">内容</label>\n' +
+      '          <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>\n' +
+      '          \n' +
+      '          <button type="submit">送信する</button>\n' +
+      '        </form>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  \n' +
+      '    <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>\n' +
+      '    <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">\n' +
+      '      <div class="ticket-modal-header">\n' +
+      '        <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>\n' +
+      '        <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-body">\n' +
+      '        <p id="contactConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">送信しています。</p>\n' +
+      '        <div class="ticket-confirm-summary" id="contactConfirmSummary"></div>\n' +
+      '        <div id="contactConfirmError" class="ticket-confirm-error" style="display:none;"></div>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-footer">\n' +
+      '        <a class="ticket-modal-btn ghost" id="contactModalBackLink" href="./">もう一度</a>\n' +
+      '        <a class="ticket-modal-btn primary" id="contactModalHomeLink" href="../">home</a>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '  \n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '  \n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20261118-44"></script>\n' +
+      '  <script src="../assets/js/contact.js"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261118-44"></script>\n' +
+      '</body>\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <!-- ビューポート設定 -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : contact</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
+    </head>
+    <body>
+      <!-- ヘッダー -->
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../music/">Music</a></li>
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      
+      <main>
+        <!-- お問い合わせセクション -->
+        <section class="contact">
+          <div class="container">
+            <h2 class="section-title">contact</h2>
+            <p id="contact-intro"><embedded-intro-sentence></p>
+             <form id="contact-form" action="https://formspree.io/f/<embedded-endpoint-id>" method="POST">
+              <label for="name">名前</label>
+              <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>
+              
+              <label for="email">e-mail</label>
+              <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>
+              
+              <label for="message">内容</label>
+              <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+              
+              <button type="submit">送信する</button>
+            </form>
+          </div>
+        </section>
+      
+        <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>
+        <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">
+          <div class="ticket-modal-header">
+            <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>
+            <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>
+          </div>
+          <div class="ticket-modal-body">
+            <p id="contactConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">送信しています。</p>
+            <div class="ticket-confirm-summary" id="contactConfirmSummary"></div>
+            <div id="contactConfirmError" class="ticket-confirm-error" style="display:none;"></div>
+          </div>
+          <div class="ticket-modal-footer">
+            <a class="ticket-modal-btn ghost" id="contactModalBackLink" href="./">もう一度</a>
+            <a class="ticket-modal-btn primary" id="contactModalHomeLink" href="../">home</a>
+          </div>
+        </div>
+      </main>
+      
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+      
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js?v=20261118-44"></script>
+      <script src="../assets/js/contact.js"></script>
+      <script src="../assets/js/script.js?v=20261118-44"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:42:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+not ok 2 - T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+  ---
+  duration_ms: 57.235375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:63:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:65:26)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+not ok 3 - T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+  ---
+  duration_ms: 21.746375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:76:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:78:26)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+not ok 4 - T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+  ---
+  duration_ms: 21.300917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:89:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:93:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+not ok 5 - T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 11.234375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:111:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:113:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+not ok 6 - T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 37.447708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:111:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:113:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+not ok 7 - T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 9.401208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:111:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:113:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+not ok 8 - T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 11.691709
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:111:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:113:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+not ok 9 - T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 8.337958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:111:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:113:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+not ok 10 - T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 9.340334
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:111:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:113:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+not ok 11 - T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 8.168708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:111:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:113:28)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+not ok 12 - T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+  ---
+  duration_ms: 21.471583
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:125:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   8000
+    - ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 8000
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:129:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+not ok 13 - T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+  ---
+  duration_ms: 22.49775
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:144:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:147:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+ok 14 - T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+  ---
+  duration_ms: 28.621125
+  ...
+# Subtest: T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+not ok 15 - T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+  ---
+  duration_ms: 41.250833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:180:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'done'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'done'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:186:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 16 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 80.568084
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 17 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 21.024334
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 18 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 30.662959
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 19 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 16.239292
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 20 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 24.836375
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 21 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 37.118792
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 22 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 12.831792
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 23 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 9.779916
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 24 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 2.21275
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 25 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 1.613083
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 11
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1304.049542

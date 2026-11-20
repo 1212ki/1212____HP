@@ -1,0 +1,355 @@
+TAP version 13
+# Subtest: T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+ok 1 - T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+  ---
+  duration_ms: 25.351208
+  ...
+# Subtest: T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+ok 2 - T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+  ---
+  duration_ms: 47.208583
+  ...
+# Subtest: T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+ok 3 - T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+  ---
+  duration_ms: 15.716875
+  ...
+# Subtest: T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+ok 4 - T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+  ---
+  duration_ms: 43.357583
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+ok 5 - T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 8.477916
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+ok 6 - T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 6.199584
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+ok 7 - T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 17.550334
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+ok 8 - T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 6.911208
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+ok 9 - T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 11.217917
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+ok 10 - T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 8.867791
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+ok 11 - T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 13.310167
+  ...
+# Subtest: T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+ok 12 - T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+  ---
+  duration_ms: 20.565417
+  ...
+# Subtest: T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+ok 13 - T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+  ---
+  duration_ms: 9.720042
+  ...
+# Subtest: T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+ok 14 - T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+  ---
+  duration_ms: 14.7015
+  ...
+# Subtest: T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+ok 15 - T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+  ---
+  duration_ms: 6.851208
+  ...
+# Subtest: T45-CON-VALID empty, whitespace-only and malformed values: no request, in-page sentence per field, aria wiring, first field focused, values kept
+ok 16 - T45-CON-VALID empty, whitespace-only and malformed values: no request, in-page sentence per field, aria wiring, first field focused, values kept
+  ---
+  duration_ms: 105.074416
+  ...
+# Subtest: T45-CON-VALID typing clears only that field error; fixing everything sends; the browser typeMismatch standard decides the format
+ok 17 - T45-CON-VALID typing clears only that field error; fixing everything sends; the browser typeMismatch standard decides the format
+  ---
+  duration_ms: 18.610292
+  ...
+# Subtest: T45-CON-FAIL network exception: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 18 - T45-CON-FAIL network exception: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 35.745375
+  ...
+# Subtest: T45-CON-FAIL HTTP 400: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 19 - T45-CON-FAIL HTTP 400: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 14.797375
+  ...
+# Subtest: T45-CON-FAIL HTTP 500: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 20 - T45-CON-FAIL HTTP 500: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 11.196708
+  ...
+# Subtest: T45-CON-FAIL empty action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 21 - T45-CON-FAIL empty action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 10.511834
+  ...
+# Subtest: T45-CON-FAIL whitespace action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 22 - T45-CON-FAIL whitespace action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 13.727083
+  ...
+# Subtest: T45-CON-FAIL a new attempt hides the previous notice while sending
+ok 23 - T45-CON-FAIL a new attempt hides the previous notice while sending
+  ---
+  duration_ms: 11.219875
+  ...
+# Subtest: T45-CON-DONE ok shows the sent content as text, keeps the heading, moves focus, ignores later edits
+ok 24 - T45-CON-DONE ok shows the sent content as text, keeps the heading, moves focus, ignores later edits
+  ---
+  duration_ms: 14.57275
+  ...
+# Subtest: T45-CON-DOUBLE sending: one request, disabled button 送信しています…, read-only fields keep values, status announced, state restored afterwards
+ok 25 - T45-CON-DOUBLE sending: one request, disabled button 送信しています…, read-only fields keep values, status announced, state restored afterwards
+  ---
+  duration_ms: 11.322125
+  ...
+# Subtest: T45-CON-DOUBLE late settings never re-enable the button during sending nor reopen the intro after completion
+ok 26 - T45-CON-DOUBLE late settings never re-enable the button during sending nor reopen the intro after completion
+  ---
+  duration_ms: 9.543375
+  ...
+# Subtest: T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+ok 27 - T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+  ---
+  duration_ms: 15.593667
+  ...
+# Subtest: T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+ok 28 - T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+  ---
+  duration_ms: 44.279709
+  ...
+# Subtest: T45-PROF-DATA footer text comes from site.footerText
+ok 29 - T45-PROF-DATA footer text comes from site.footerText
+  ---
+  duration_ms: 22.684833
+  ...
+# Subtest: T45-PROF-DATA text normalization: CRLF
+ok 30 - T45-PROF-DATA text normalization: CRLF
+  ---
+  duration_ms: 20.12475
+  ...
+# Subtest: T45-PROF-DATA text normalization: CR
+ok 31 - T45-PROF-DATA text normalization: CR
+  ---
+  duration_ms: 5.348125
+  ...
+# Subtest: T45-PROF-DATA text normalization: literal <br>
+ok 32 - T45-PROF-DATA text normalization: literal <br>
+  ---
+  duration_ms: 7.948417
+  ...
+# Subtest: T45-PROF-DATA text normalization: mixed with blank line
+ok 33 - T45-PROF-DATA text normalization: mixed with blank line
+  ---
+  duration_ms: 5.480834
+  ...
+# Subtest: T45-PROF-DATA text normalization: markup stays literal
+ok 34 - T45-PROF-DATA text normalization: markup stays literal
+  ---
+  duration_ms: 8.143917
+  ...
+# Subtest: T45-PROF-DATA text whitespace only keeps the text element hidden
+ok 35 - T45-PROF-DATA text whitespace only keeps the text element hidden
+  ---
+  duration_ms: 15.71925
+  ...
+# Subtest: T45-PROF-DATA text empty keeps the text element hidden
+ok 36 - T45-PROF-DATA text empty keeps the text element hidden
+  ---
+  duration_ms: 6.869417
+  ...
+# Subtest: T45-PROF-DATA text missing keeps the text element hidden
+ok 37 - T45-PROF-DATA text missing keeps the text element hidden
+  ---
+  duration_ms: 7.912209
+  ...
+# Subtest: T45-PROF-DATA text null keeps the text element hidden
+ok 38 - T45-PROF-DATA text null keeps the text element hidden
+  ---
+  duration_ms: 5.745417
+  ...
+# Subtest: T45-PROF-DATA text number zero keeps the text element hidden
+ok 39 - T45-PROF-DATA text number zero keeps the text element hidden
+  ---
+  duration_ms: 7.59575
+  ...
+# Subtest: T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+ok 40 - T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+  ---
+  duration_ms: 9.583042
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+ok 41 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+  ---
+  duration_ms: 221.456292
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+ok 42 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+  ---
+  duration_ms: 203.349292
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+ok 43 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+  ---
+  duration_ms: 195.270875
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+ok 44 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+  ---
+  duration_ms: 217.536291
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+ok 45 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+  ---
+  duration_ms: 244.940875
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+ok 46 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+  ---
+  duration_ms: 256.621833
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+ok 47 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+  ---
+  duration_ms: 195.135542
+  ...
+# Subtest: T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+ok 48 - T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+  ---
+  duration_ms: 8.183333
+  ...
+# Subtest: T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+ok 49 - T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+  ---
+  duration_ms: 5.559708
+  ...
+# Subtest: T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+ok 50 - T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+  ---
+  duration_ms: 13.826916
+  ...
+# Subtest: T45-PROF-LINKS markup in labels and URLs is escaped
+ok 51 - T45-PROF-LINKS markup in labels and URLs is escaped
+  ---
+  duration_ms: 23.360208
+  ...
+# Subtest: T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+ok 52 - T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+  ---
+  duration_ms: 123.881459
+  ...
+# Subtest: T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+ok 53 - T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+  ---
+  duration_ms: 8.153833
+  ...
+# Subtest: T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+ok 54 - T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+  ---
+  duration_ms: 27.063667
+  ...
+# Subtest: T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+ok 55 - T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+  ---
+  duration_ms: 9.385833
+  ...
+# Subtest: T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+ok 56 - T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 6.482958
+  ...
+# Subtest: T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+ok 57 - T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 7.680792
+  ...
+# Subtest: T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+ok 58 - T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+  ---
+  duration_ms: 6.224208
+  ...
+# Subtest: T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+ok 59 - T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 11.454542
+  ...
+# Subtest: T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+ok 60 - T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 6.718917
+  ...
+# Subtest: T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+ok 61 - T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 7.548333
+  ...
+# Subtest: T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+ok 62 - T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 5.196958
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+ok 63 - T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+  ---
+  duration_ms: 6.573625
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+ok 64 - T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+  ---
+  duration_ms: 7.483459
+  ...
+# Subtest: T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+ok 65 - T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+  ---
+  duration_ms: 24.39675
+  ...
+# Subtest: T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+ok 66 - T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+  ---
+  duration_ms: 11.332917
+  ...
+# Subtest: T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+ok 67 - T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+  ---
+  duration_ms: 9.037916
+  ...
+# Subtest: T45-PROF-STATE retry is not repeated while a request is pending
+ok 68 - T45-PROF-STATE retry is not repeated while a request is pending
+  ---
+  duration_ms: 16.61525
+  ...
+# Subtest: T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+ok 69 - T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+  ---
+  duration_ms: 102.05125
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3246.493584

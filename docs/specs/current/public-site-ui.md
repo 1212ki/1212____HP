@@ -6,7 +6,8 @@
 - Related issues: #39, #40
 - Related implementation issues: #41, #42, #43, #44, #45
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #45のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-45_profile-contact/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #43）: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #44）: Issue #44のgate 3（第2版の再承認）における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
@@ -40,7 +41,7 @@
 | 送信中・失敗はページ内、予約完了はTicket完了ページで示す。 | 受付内容を確かめ、Liveから聴く体験へつなげる。 | 要件メモ｜予約の流れ「振る舞い」「案の判断と理由」`29:355`・`29:370` |
 | UIには実際の表示文言だけを置く。判断理由と新旧の説明は設計側に持つ。 | 操作する人へ制作上の説明を負わせない。 | 管理方針「画面と説明の分け方」`43:509`、#37の承認済み設計§5.2 |
 
-#42公開時はMusic完成まで既存6項目のナビを保ち、Homeの「music →」はDiscographyへ向けた。#44は5項目と`/music/`への入口・旧URLの行き先を揃える。公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約し、最後にmainへまとめて出す。#44の統合では本番配信は変わらず、管理画面は#47までYouTube・Discoタブを維持する。#44はPR #51でmerge済みで、#43・#45はそのまとめ用branchを取り込んで本文を実装する。
+#42公開時はMusic完成まで既存6項目のナビを保ち、Homeの「music →」はDiscographyへ向けた。#44は5項目と`/music/`への入口・旧URLの行き先を揃える。公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約し、最後にmainへまとめて出す。#44の統合では本番配信は変わらず、管理画面は#47までYouTube・Discoタブを維持する。#44はPR #51でmerge済みで、#43・#45はそのまとめ用branchを取り込んで本文を実装する。#45はProfileとContactの本文だけを変え、Contactの送信先・送る項目・送り方は変えない。
 
 ## 3. 画面・マスタ・要件・実装の対応
 
@@ -90,6 +91,19 @@ FigmaのMusic入力は`/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/2
 結果はactive時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/`内の同pathを参照する。ヘッダー・ナビ・フッター、Home・Music・Profile・Contactの本文は変えない。
 
 FigmaのLive・Ticket入力は`/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261119-142640_1212hp-43-live-ticket/figma-snapshot/`。文言取得2026-11-19T14:55:18+09:00、`page-0-1_master-home.md` SHA-256 `4effa73820034a2c18330ea2d17d8c7415fb5e59f2b0f85f9dbb8b0b480a342d`、`live-ticket-layout-spec.md` SHA-256 `4c1d4d2efcda0c30ee973f04990864cc60b430e20188e32211b6af444dd5134b`。#44の書き出しとの文言差は0件。render PNGはなく、数値・文言を根拠にする。マスタと実装入力の食い違いは同cycleの`construction/aidlc-integration/figma-fix-requests.md`のF43-01〜とgate 3の記録に対応する。意味が変わる別案は先に再承認する。
+
+### Issue #45のProfile・Contactの実装入力と比較時点
+
+上表の`00cdea5`列と#42・#44の記録は比較履歴として保持する。#45着手時点は`ba124011ce5e0ae56ddb1c6ac47d1783600687b4`（`origin/feature/39-public-pages`、#44のPR #51をmerge済み）で、全10公開HTMLのヘッダー・ナビ・フッター・Menuは#44の受入済み。Profile・Contactの`main`だけをここから実装する。Approvedは入力の承認であり、下の対象の実装完了を意味しない。
+
+| 対象 | #45の対象と結果の参照 |
+|---|---|
+| Profile | `profile/index.html`の`main`。写真、名前、登録された文章、links、Contactへの依頼入口、読み込み中・写真なし・読み込み失敗。 |
+| Contact | `contact/index.html`の`main`と`assets/js/contact.js`。入力3項目のまま、導入文・送信先の反映、入力誤り・送信中・完了・失敗のページ内表示、送信ボタンの全幅（390px）。重ねて開く表示は使わない。 |
+
+結果はactive時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-19_issue-45_profile-contact/_trace/aidlc-docs/`内の同pathを参照する。Home・Music・Live・Ticketの本文、ヘッダー・ナビ・フッターには変更を広げない。
+
+FigmaのProfile・Contact入力は`/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261119-142659_1212hp-45-profile-contact/figma-snapshot/`。書き出し2026-11-19T14:37〜14:41（JST）、`page-0-1_master-home.md` SHA-256 `bb14bdfd08e96e24337dcb24824b5a14a9bbabe24f8daf147803185bbe21de58`、`profile-contact-layout-spec.md` SHA-256 `cb2ea2961de346def0073dc6f58d5e56edfaf2e47f85a7fed298265b6ed30d7a`。マスタと現行コード・設計の食い違いと採用案は同cycleの`construction/aidlc-integration/figma-fix-requests.md` F45-01〜11とgate 3の記録に対応する。意味が変わる別案は先に再承認する。
 
 ## 4. 受入条件
 
@@ -176,6 +190,12 @@ Ticket: 入力項目と、管理で変えられる完了文・枚数と備考の
 
 見られる項目: 今のLive詳細（画像、タイトル、日付、会場、時間、料金、注記、共演、説明、予約）、Ticket（ライブ、名前、e-mail、枚数、備考）、終了したライブの行（日付、会場、タイトル）は、新しい画面のどこかにすべて残る。対応表は#43のRequirements§4にある。
 
+### Issue #45のProfile・Contact表示契約
+
+Profileは上から写真と名前、登録された文章、links、依頼の入口の順。写真は管理画面のProfileで登録した画像で、未登録、または読み込めなかった時は枠ごと出さず、名前と文章を幅いっぱいに置く。文章は登録どおりに出し、空行の段落の区切りと段落内の改行を保ち、HTMLとして解釈しない。名前（松本一樹・itsuki matsumoto）はHTMLの固定の文字で、`profile`の項目ではない。linksはHomeと同じ判定（Site優先・Profile補完の5種類）を先に出し、続けて5種類に当たらないProfileのリンクを登録順に出す。同じ行き先は1つにまとめ、SiteにあるサービスがProfile側で別の行き先なら、Homeと同じくSiteの行き先だけを出す。表記はBandcampで、Homeの「Bandcamp（音源・物販）」にはしない。リンクは別タブで開き、http(s)以外は出さない。今Profileに出ている5種類のリンクは減らさない。linksの見出しはprofileの中の小さなラベルで、赤い線は付けない。依頼の入口は「出演のご依頼・お問い合わせ」と、Contactへ進む「Contactへ」で、新しい情報は足さない。Homeのprofile欄（最初の空行まで）とHomeのlinks表示は変えない。
+
+Contactは名前・e-mail・内容の3項目のまま。導入文と送信先は`contact.introText / formAction`（管理画面のSite > Contact）を使い、読めなかった時はページに埋め込まれた導入文と送信先で送れる。送る先、送る項目（`name`・`_replyto`・`message`）、送り方（POST、JSONでの受け取り）は変えない。入力誤り・送信中・完了・失敗はページ内に示し、重ねて開く表示は使わない。入力誤りは欄のすぐ下に出して最初の誤りの欄へfocusを移す。送信中は送信ボタンを「送信しています…」にして押せなくし、入力は残す。完了は導入文とフォームを完了の表示に置き換え、送った内容（名前・e-mail・内容）をそのまま（HTMLとして解釈せず）出す。失敗は内容欄と送信ボタンの間に知らせを出し、ボタンを「もう一度送信する」にし、入力は消さない。完了後に続けて送る入口は設けず、再度送る時はContactを開き直す。完了と失敗の文言は固定で、管理画面では変えない。送信ボタンは390pxで幅いっぱい、1440pxは中身に合わせた幅。赤は「送信する」（失敗後の「もう一度送信する」も同じ1つのボタン）と見出しの線だけに使い、例外は作らない。入力誤りの文は`--ink`（誤りのある欄は枠を`--ink`の1px）、送信失敗の知らせは依頼の入口と同じ淡い面、送信中の送信ボタンは共通の`.site-button:disabled`の表示にする。
+
 ## 6. 主要flowとdesktop / mobile
 
 実装: #42〜#45。`00cdea5`: 既存の閲覧・外部リンク・送信はあるが、以下の構成・完了遷移は未実装。
@@ -186,7 +206,7 @@ Ticket: 入力項目と、管理で変えられる完了文・枚数と備考の
 - Ticketは指定Live、なければ入力途中のLive、なければ先頭を初期選択する。1440pxは入力中も対象概要が横に見える。390pxは概要を入力欄の上に小さく置き、送信を全幅にする。入力の復元・枚数1〜10・表示設定を保持する。外部受付の選択時はLive選択だけを残し、他の入力と内部送信を隠す。
 - 予約成功後はTicket完了へ進み、完了文・受付番号・対象Live・送った内容・次の入口・Homeと同じ作品を出す。完了文は管理設定を優先し、既定は「予約しました。」。メールの控えへの言及は置かない。渡す内容は同じタブの`sessionStorage`に置き、URLには`liveId`と受付番号だけを載せる（§5の#43表示契約）。
 - Musicのpathは`/music/`、release→demo→video、ページ内移動は`#release / #demo / #video`。作品は区分ごとにリリース日の新しい順。作品の再生は押した作品を含む並びのすぐ下、映像はサムネイルの場所に開く。ページ内のplayerは最大1つで、別の作品・映像・同じ映像の別の起点を開いたら前を破棄し、新しい場所で最初から再生する。閉じる・再描画・離脱でも停止する。1440pxは作品画像220角、カード幅220で、作品の「聴く」のplayerは押した作品を含む並びのすぐ下に480×270で開き、ほかの作品のカードに重ならず左右にはみ出さない。映像は2列・間隔32で、サムネイルとplayerは474×267（本文幅980の時）、題名の幅も同じ。390pxは画像120角を左、名前と操作を右、playerは作品行全幅の358×201、映像も1つずつ全幅の358×201。幅が足りない時、playerの幅は置ける幅に合わせて16:9を保ち、Musicのplayerの高さは200pxを下回らない（置ける幅が356px未満では高さ200pxを保つ）。映像の列は、1列あたりの幅で高さ200pxを保てなくなる前に1列にする（YouTubeの埋め込みは高さ200px以上、16:9は480×270以上が推奨）。playerは16:9、既存Homeの再生と停止を保持し、iPhoneで追加tapを要する場合は受入済みQ42-01を引き継ぐ。`/discography/`は`/music/#release`、`/youtube/`は`/music/#video`へ`location.replace`で送り、query・旧hashは破棄する。JSなし・失敗でも常時表示リンクから進める。Music自身もJS無効時にBandcamp・YouTubeの静的入口を残す。旧HTMLのcanonicalはMusic、robotsはnoindex, follow。空の区分のhashは読込後にMusic上部へ戻し、見出しと移動には空の区分を残さない。
-- Profileは登録内容を保ち、Contactへの依頼入口を出す。390pxは写真を上、本文を下。Contactは既存3項目のまま、送信中・完了・失敗をページ内で示し、送信ボタンを全幅にする。
+- Profileは登録内容を保ち、Contactへの依頼入口を出す。1440pxは写真364×455（縦長）を左、名前・文章・links・依頼の入口を右（幅560、間隔56）に置く。390pxは縦1列で、写真（358×358）を上、本文を下。Contactは既存3項目のまま、1440pxはフォーム幅560、送信中・完了・失敗をページ内で示し、送信ボタンを390pxで全幅にする。Profile・Contactとも、ヘッダー・ナビ・フッター・Menuは#44のまま変えない。
 
 ## 7. 状態・失敗・fallback・rollback
 
@@ -197,7 +217,7 @@ Ticket: 入力項目と、管理で変えられる完了文・枚数と備考の
 | Home | 外部予約、受付終了、次回未定、Live読込失敗、再生中、映像未選択、画像なし、作品0、news0、全体読込失敗。作品0は名前と次のライブを広く出し「聴く」を出さずlinksを残す。news0は欄ごと隠す。 | `24:139`の10状態 |
 | Live/Ticket | 予定0、過去0、読込失敗、不明Live、フライヤーなし、予約4分岐、入力誤り、送信中、送信失敗、外部受付選択、予約不可指定、予約候補0、受付内容なし、Ticket読込失敗、重複、識別不能。送信中は入力を保って操作を無効化し、失敗は入力を保って再送できる。 | `29:249`の16状態。予約4分岐は1つの状態見本。 |
 | Music | 再生中、映像未選択、映像サムネイル押下、空の区分、全体0/読込失敗、画像なし。空の区分は見出しとページ内移動から外す。全体0/失敗はマスタどおりの知らせとBandcamp・YouTubeを残す。 | `30:446`の6状態 |
-| Profile/Contact | 写真なしは枠を出さず本文を広げる。読込失敗は再読込入口。Contactは入力誤り・送信中・完了・失敗をページ内で示し、失敗しても入力を保持する。 | `31:400`の6状態 |
+| Profile/Contact | 写真なしは枠を出さず本文を広げる。読込失敗は再読込入口。Contactは入力誤り・送信中・完了・失敗をページ内で示し、失敗しても入力を保持する。読み込み中は見出しと枠を先に出し、中身の場所を淡い面で空ける。写真だけが読み込めない時は写真なしと同じ。Contactの設定を読めない時は知らせを出さず、埋め込みの導入文・送信先で送れる。 | `31:400`の6状態と要件メモ`31:451`の読み込み中 |
 
 ### Issue #42の状態の条件
 
@@ -252,6 +272,12 @@ Live・Ticketの16状態と読込中は、同cycle RequirementsのS43-01〜16・
 再読み込みは同じ公開GETを呼び、通信中の二重要求と古い応答・離脱後の応答による上書きを防ぐ。空配列と取得失敗を区別するのはHomeの#42の条件と同じ。公開本文の赤は見出しの線と、その画面でいちばんしてほしい操作1つに限る。
 
 まとめ出し: #43のPR baseはOwner決定（2026-11-18）の`feature/39-public-pages`で、#43のmergeでは本番配信もWorkerも変わらない。Issue/Projectはまとめ出しのmain mergeまでReviewを保つ。まとめ用branchで戻す時は#43のmerge差分だけをrevertし、#44のMusic・ナビを戻さない。本番公開後に戻す時はmainのまとめ出し差分のrevertで#43・#44・#45をまとめて戻す。受付内容はsessionStorageだけにあり、予約データ・Figma・#41のWorkerは戻さない。いずれもItsukiの明示承認で実行する。
+
+### Issue #45の状態とまとめ出し
+
+Profile・Contactの状態は同cycleのRequirementsのS45-01〜06・S45-L・S45-X1〜2へ対応する。Profileの読み込み失敗は、通信・HTTP・JSON・不正な形で出し、「プロフィールを読み込めませんでした。」と「もう一度読み込む」を1組だけ出す。再読込は二重要求・古い応答の上書きを防ぎ、離脱後の応答を無視する。Contactの入力誤りは必須欄が空の時とe-mailの形式の誤りで、ブラウザの標準の知らせではなくページ内に示す。送信中の二重送信を防ぎ、失敗してもフォームの入力を残す。完了では送った内容を画面に残す。
+
+確認1はgate 1〜3、確認2はgate 4〜5で、すべてItsuki本人のAを記録する。Frontはfixture画像とは別に、確認2前に本番公開データでbranchのProfile・Contactを確認する。本番の送信は#45のcycleでは試さない。まとめ出しの後に本番で送信を1回試すかは、まとめ出しでItsukiが決める。Owner決定（2026-11-18）により、#45のPRのbaseは`feature/39-public-pages`で、mergeしても本番は変わらずWorker deployもない。Issue/ProjectはReviewを保ち、まとめ出しのmain merge時にcloseする。まとめ用branchで戻す場合は#45のmerge差分だけをrevertし、まとめ出しの後に戻す場合はmainのまとめ出し差分をrevertする。いずれもItsukiの明示承認で実行し、保存データ・Worker・Figmaを戻さない。具体手順と衝突範囲は#45のCode Generation Planを参照する。
 
 ## 8. 検証とマスタ更新の手順
 

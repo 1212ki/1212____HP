@@ -10,6 +10,19 @@ const BASE = 'ba124011ce5e0ae56ddb1c6ac47d1783600687b4';
 const BASE_SITE_CONTENT_SHA = 'f4136e012985a5fd156a001cdbfd6d5c28b9d69738d4b45d869c0696e2fdd7dd';
 const read = (path) => readFileSync(path, 'utf8');
 const before = (path) => execFileSync('git', ['show', `${BASE}:${path}`], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+// Issue #45 (Profile and Contact) was approved separately and sits on top of #43 in the integrated branch.
+// Its files and its one named block in each shared file are not counted as #43 changes; nothing else is excused.
+const ISSUE45_PAGES = ['profile/index.html', 'contact/index.html'];
+const ISSUE45_DISPATCH = ['    if (document.getElementById("profile-content")) { wireProfile(); return bootProfile(); }\n', '    if (document.getElementById("contact-content")) return bootContact();\n'];
+const withoutIssue45Js = (text) => {
+  const start = text.indexOf('  // Issue #45: Profile.\n');
+  if (start < 0) return text;
+  const end = text.indexOf('  async function boot() {\n');
+  assert.ok(end > start, 'the Issue #45 block sits before boot()');
+  let rest = text.slice(0, start) + text.slice(end);
+  for (const line of ISSUE45_DISPATCH) { assert.equal(rest.split(line).length, 2, line); rest = rest.replace(line, ''); }
+  return rest;
+};
 const sha = (text) => createHash('sha256').update(text).digest('hex');
 const part = (html, tag) => html.match(new RegExp(`<${tag}\\b[\\s\\S]*?</${tag}>`))[0];
 const scripts = (html) => [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map((m) => m[1]);
@@ -55,17 +68,30 @@ test('T43-SHELL new files carry the #43 cache version and nothing else changes t
 });
 
 test('T43-COMPAT Home, Music, Profile, Contact, the two old pages and index.html are byte-identical to the base', () => {
-  for (const path of ['index.html', 'music/index.html', 'profile/index.html', 'contact/index.html', 'discography/index.html', 'youtube/index.html']) {
+  for (const path of ['index.html', 'music/index.html', 'discography/index.html', 'youtube/index.html']) {
     assert.equal(read(path), before(path), path);
     assert.equal(part(read(path), 'main'), part(before(path), 'main'), `${path} main`);
+    assert.doesNotMatch(read(path), /live-ticket\.css/, path);
+  }
+  // Profile and Contact belong to #45: only their main may differ; the frame and head stay the #44 bytes.
+  for (const path of ISSUE45_PAGES) {
+    for (const tag of ['header', 'nav', 'footer']) assert.equal(part(read(path), tag), part(before(path), tag), `${path} ${tag}`);
+    assert.equal(read(path).match(/<head>[\s\S]*?<\/head>/)[0], before(path).match(/<head>[\s\S]*?<\/head>/)[0], `${path} head`);
     assert.doesNotMatch(read(path), /live-ticket\.css/, path);
   }
 });
 
 test('T43-COMPAT shared code, tokens, design rules, admin and the Worker are untouched', () => {
-  for (const path of ['assets/js/live-operations.js', 'assets/js/music-data.js', 'assets/js/home-player.js', 'assets/js/script.js', 'assets/js/site-config.js', 'assets/css/style.css', 'assets/css/1212-music.tokens.css', 'DESIGN_RULES.md']) {
+  for (const path of ['assets/js/live-operations.js', 'assets/js/music-data.js', 'assets/js/home-player.js', 'assets/js/script.js', 'assets/js/site-config.js', 'assets/css/1212-music.tokens.css', 'DESIGN_RULES.md']) {
     assert.equal(read(path), before(path), path);
   }
+  // style.css: the base bytes stay as they were; the only addition is the Issue #45 block appended at the end.
+  const baseCss = before('assets/css/style.css');
+  const nowCss = read('assets/css/style.css');
+  assert.ok(nowCss.startsWith(baseCss), 'style.css keeps every base byte');
+  const addedCss = nowCss.slice(baseCss.length);
+  assert.ok(addedCss === '' || addedCss.trimStart().startsWith('/* Issue #45'), 'anything added to style.css is the Issue #45 block');
+  assert.doesNotMatch(nowCss, /live-ticket|\.live-ticket-/, 'no #43 selector in style.css');
   const unchanged = execFileSync('git', ['diff', '--name-only', BASE, '--', 'admin', 'cloudflare', 'data', 'scripts'], { encoding: 'utf8' }).trim();
   assert.equal(unchanged, '', 'admin/, cloudflare/, data/ and scripts/ have no change');
 });
@@ -76,8 +102,8 @@ test('T43-COMPAT the Worker still answers a repeat send with the exact text the 
   assert.ok(read('assets/js/ticket.js').includes("'reservation already submitted recently'"));
 });
 
-test('T43-COMPAT site-content.js differs from the base in exactly one line: the Home invalid-booking label', () => {
-  const now = read('assets/js/site-content.js');
+test('T43-COMPAT site-content.js differs from the base in exactly one line (the Home invalid-booking label), apart from the Issue #45 block', () => {
+  const now = withoutIssue45Js(read('assets/js/site-content.js'));
   const old = before('assets/js/site-content.js');
   assert.equal(sha(old), BASE_SITE_CONTENT_SHA, 'the base file is the one the plan recorded');
   const a = old.split('\n');
@@ -110,7 +136,12 @@ test('T43-COMPAT the only files changed by #43 are the planned ones (no stray pa
   const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' }).split('\n').filter(Boolean);
   const allowed = [
     /^assets\/js\/(live-order|reservation-cta|live-pages|ticket-receipt|ticket|ticket-complete|site-content)\.js$/,
-    /^assets\/css\/live-ticket\.css$/,
+    /^assets\/css\/(live-ticket|style)\.css$/,
+    /^assets\/js\/contact\.js$/,
+    /^(profile|contact)\/index\.html$/,
+    /^test\/(contact-form|profile-rendering|profile-contact-shell)\.test\.mjs$/,
+    /^test\/profile-contact-dom\.mjs$/,
+    /^test\/fixtures\/profile-contact-states\.json$/,
     /^(live\/index|live\/detail\/index|ticket\/index|ticket\/complete\/index)\.html$/,
     /^test\/(live-order|reservation-cta|live-pages|ticket-flow|ticket-receipt|ticket-complete|live-ticket-shell|home-rendering|public-ticket-routing|site-shell|public-music-data-compatibility)\.test\.mjs$/,
     /^test\/support\/dom-harness\.mjs$/,
@@ -118,6 +149,7 @@ test('T43-COMPAT the only files changed by #43 are the planned ones (no stray pa
     /^docs\/specs\/current\/(public-site-ui|live-operations-admin-ui|README)\.md$/,
     /^aidlc-docs\//,
     /^docs\/records\/aidlc-cycles\/2026-11-19_issue-43_live-ticket\//,
+    /^docs\/records\/aidlc-cycles\/2026-11-19_issue-45_profile-contact\//,
   ];
   for (const path of [...changed, ...untracked]) assert.ok(allowed.some((pattern) => pattern.test(path)), `unexpected change: ${path}`);
 });
