@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>松本一樹 -itsuki matsumoto- : contact</title>
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
 </head>
-<body>
+<body class="site-contact">
   <!-- ヘッダー -->
   <header class="site-header">
     <div class="container header-container">
@@ -27,56 +27,42 @@
       </button>
       <nav id="global-nav">
         <ul>
-          <!-- 1つ上の階層にあるindex.htmlをHomeに -->
           <li><a href="../">Home</a></li>
-          <!-- profileディレクトリへ移動する場合、../profile/ -->
-          <li><a href="../profile/">Profile</a></li>
           <li><a href="../live/">Live</a></li>
-          <li><a href="../youtube/">YouTube</a></li>
-          <li><a href="../discography/">Discography</a></li>
+          <li><a href="../music/">Music</a></li>
+          <li><a href="../profile/">Profile</a></li>
           <li><a href="../contact/">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
   
-  <main>
-    <!-- お問い合わせセクション -->
-    <section class="contact">
-      <div class="container">
-        <h2 class="section-title">contact</h2>
-        <p id="contact-intro">お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。</p>
-         <form id="contact-form" action="https://formspree.io/f/xqaeddgj" method="POST">
+  <main id="contact-content" class="contact-container">
+    <h1 class="site-section-title">contact</h1>
+    <div id="contact-panel" class="contact-panel">
+      <p id="contact-intro" class="contact-intro">お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。</p>
+      <form id="contact-form" class="contact-form" action="https://formspree.io/f/xqaeddgj" method="POST" novalidate>
+        <div class="contact-field">
           <label for="name">名前</label>
           <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>
-          
+          <p class="contact-error" id="name-error" hidden></p>
+        </div>
+        <div class="contact-field">
           <label for="email">e-mail</label>
           <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>
-          
+          <p class="contact-error" id="email-error" hidden></p>
+        </div>
+        <div class="contact-field">
           <label for="message">内容</label>
           <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
-          
-          <button type="submit">送信する</button>
-        </form>
-      </div>
-    </section>
-  
-    <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>
-    <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">
-      <div class="ticket-modal-header">
-        <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>
-        <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>
-      </div>
-      <div class="ticket-modal-body">
-        <p id="contactConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">送信しています。</p>
-        <div class="ticket-confirm-summary" id="contactConfirmSummary"></div>
-        <div id="contactConfirmError" class="ticket-confirm-error" style="display:none;"></div>
-      </div>
-      <div class="ticket-modal-footer">
-        <a class="ticket-modal-btn ghost" id="contactModalBackLink" href="./">もう一度</a>
-        <a class="ticket-modal-btn primary" id="contactModalHomeLink" href="../">home</a>
-      </div>
+          <p class="contact-error" id="message-error" hidden></p>
+        </div>
+        <div id="contact-failure" class="contact-failure" role="alert" hidden>送信できませんでした。入力内容は残っています。時間をおいて、もう一度お試しください。</div>
+        <button id="contact-submit" type="submit" class="site-button site-button--primary">送信する</button>
+      </form>
+      <div id="contact-done" class="contact-done" tabindex="-1" hidden></div>
     </div>
+    <p id="contact-status" class="contact-sr" role="status"></p>
   </main>
   
   <footer class="site-footer">
@@ -86,8 +72,8 @@
   </footer>
   
   <script src="../assets/js/site-config.js"></script>
-  <script src="../assets/js/site-content.js?v=20261117-42"></script>
-  <script src="../assets/js/contact.js"></script>
-  <script src="../assets/js/script.js?v=20261117-42"></script>
+  <script src="../assets/js/site-content.js?v=20261118-44"></script>
+  <script src="../assets/js/contact.js?v=20261119-45"></script>
+  <script src="../assets/js/script.js?v=20261118-44"></script>
 </body>
 </html>

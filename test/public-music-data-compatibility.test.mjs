@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
+import { loadPage, settle as settleDom, jsonResponse } from './support/dom-harness.mjs';
 const renderer=readFileSync('assets/js/site-content.js','utf8');
 const liveHelper=readFileSync('assets/js/live-operations.js','utf8');
 const musicHelper=readFileSync('assets/js/music-data.js','utf8');
@@ -152,13 +153,14 @@ async function render(data,envelope,helper,pathname,detailId) {
   if(detailId)ids.push('live-detail','live-detail-title','live-detail-heading','live-detail-description','live-detail-single','live-detail-notfound');
   const {document,elements}=createDom({ids});
   const window={SITE_API_BASE:'',location:{pathname,search:detailId?'?liveId='+detailId:''},addEventListener(){}};
-  const context={document,window,globalThis:window,console,URL,URLSearchParams,structuredClone,fetch:async()=>response(envelope?{data,meta:{updatedAt:'fixed-version'}}:data)};
+  const context={document,window,globalThis:window,console,URL,URLSearchParams,structuredClone,setTimeout,clearTimeout,fetch:async()=>response(envelope?{data,meta:{updatedAt:'fixed-version'}}:data)};
   vm.runInNewContext(liveHelper,context);
   if(helper)vm.runInNewContext(musicHelper,context);
   vm.runInNewContext(renderer,context);await settle();
   return Object.fromEntries([...elements].map(([id,e])=>[id,{html:e.innerHTML,text:e.textContent,src:e.src,href:e.href,display:e.style.display}]));
 }
-for(const envelope of [false,true]) for(const pathname of ['/discography/','/live/','/profile/','/youtube/','/contact/']) test('music fields public DOM unchanged for missing, empty and populated fields '+pathname+' '+(envelope?'envelope':'body'),async()=>{
+// Issue #43 moved the Live and Live detail checks to the new live-pages.js rendering (below); Profile and Contact keep the shared renderer.
+for(const envelope of [false,true]) for(const pathname of ['/profile/','/contact/']) test('music fields public DOM unchanged for missing, empty and populated fields '+pathname+' '+(envelope?'envelope':'body'),async()=>{
   const base=await render(fixture,envelope,false,pathname);
   for(const populated of [false,true]) {
     const data=structuredClone(fixture);data.site.featuredReleaseId=populated?'s':'';
@@ -167,20 +169,45 @@ for(const envelope of [false,true]) for(const pathname of ['/discography/','/liv
   }
   // Home's intentional change is covered by T42-DATA/PLAY/CONTENT. These
   // routes protect actual page DOM rather than fabricated Home-only hooks.
-  if(pathname==='/discography/') {
-    assert.match(base['disc-digital-items'].html,/2025.5.5/);assert.match(base['disc-demo-items'].html,/2025\/05\/05/);
-    assert.ok(base['disc-digital-items'].html.indexOf('Synthetic title')<base['disc-digital-items'].html.indexOf('Second synthetic title'));
-    assert.match(base['disc-digital-items'].html,/Synthetic track list/);assert.match(base['disc-digital-items'].html,/https:\/\/example.test\/r/);
-    assert.doesNotMatch(base['disc-digital-items'].html,/iframe|Synthetic new type|playbackVideoId/);
-  }
-  if(pathname==='/live/') {
-    assert.match(base['live-upcoming-events'].html,/Synthetic description only Live/);assert.match(base['live-past-events'].html,/liveId=p/);
-  }
 });
 
+// Issue #43: the same compatibility checks, now against the real Live and Live detail pages (live-pages.js).
+async function renderLivePage(data,envelope,file,url){
+  const page=loadPage({file,url:'https://1212hp.example'+url,skip:['script.js'],fetch:async()=>jsonResponse(envelope?{data,meta:{updatedAt:'fixed-version'}}:data)});
+  await settleDom();
+  const main=page.document.querySelector('main');
+  return {html:main.innerHTML,state:main.getAttribute('data-state'),title:page.document.title};
+}
+for(const envelope of [false,true]) test('music fields public DOM unchanged for missing, empty and populated fields /live/ '+(envelope?'envelope':'body'),async()=>{
+  const base=await renderLivePage(fixture,envelope,'live/index.html','/live/');
+  assert.equal(base.state,'ready');
+  for(const populated of [false,true]) {
+    const data=structuredClone(fixture);data.site.featuredReleaseId=populated?'s':'';
+    for(const item of [...data.discography.digital,...data.discography.demo]){item.playbackVideoId=populated?'v':'';item.releaseType=populated?'Synthetic new type':'';}
+    assert.deepEqual(await renderLivePage(data,envelope,'live/index.html','/live/'),base);
+  }
+  assert.match(base.html,/Synthetic description only Live/);
+  assert.match(base.html,/liveId=p/);
+});
 for(const id of ['l','p']) test('music fields description-only Live detail keeps legacy text '+id,async()=>{
-  const before=await render(fixture,true,false,'/live/detail/',id);
+  const before=await renderLivePage(fixture,true,'live/detail/index.html','/live/detail/?liveId='+id);
   const data=structuredClone(fixture);data.site.featuredReleaseId='r';data.discography.digital[0].releaseType='Single';data.discography.digital[0].playbackVideoId='v';
-  assert.deepEqual(await render(data,true,true,'/live/detail/',id),before);
-  assert.match(before['live-detail-description'].html+before['live-detail-description'].text,id==='p'?/Synthetic past description only/:/Synthetic description only Live/);
+  assert.deepEqual(await renderLivePage(data,true,'live/detail/index.html','/live/detail/?liveId='+id),before);
+  assert.equal(before.state,'ready');
+  assert.match(before.html,id==='p'?/Synthetic past description only/:/Synthetic description only Live/);
+  assert.match(before.html,/data-testid="live-detail-description"/);
+});
+test('unaligned legacy dates keep rendering on the Live page and the detail heading',async()=>{
+  const data=structuredClone(fixture);data.live.upcoming[0].date='2099.1.2(Fri.)';
+  const list=await renderLivePage(data,true,'live/index.html','/live/');
+  assert.match(list.html,/2099\.01\.02\(Fri\)/);
+  const detail=await renderLivePage(data,true,'live/detail/index.html','/live/detail/?liveId=l');
+  assert.match(detail.html,/2099\.01\.02\(Fri\)/);
+});
+
+for(const route of ['discography','youtube']) test('music compatibility legacy route retains static link and drops old data renderer '+route,()=>{
+  const html=readFileSync(route+'/index.html','utf8');
+  assert.match(html,/href="..\/music\/#(?:release|video)"/);
+  assert.match(html,/music-redirect.js/);assert.doesNotMatch(html,/site-content.js|disc-digital-items|youtube-content/);
+  // Exact replacement, query/hash disposal and JS-disabled arrival are T44-LEGACY.
 });

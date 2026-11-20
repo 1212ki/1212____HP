@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "updatedAt": "2026-11-17T00:00:00Z"
+  },
+  "data": {
+    "site": {
+      "footerText": "Synthetic studio — All rights reserved. 架空の確認用フッターです。",
+      "links": {
+        "bandcamp": "https://example.test/shop",
+        "youtube": "https://example.test/videos",
+        "x": "https://example.test/x",
+        "instagram": "https://example.test/photos",
+        "note": "https://example.test/notes"
+      }
+    },
+    "profile": {
+      "image": "assets/images/synthetic-profile.JPG",
+      "text": "架空の肩書き / synthetic folk\n東京の架空のスタジオで活動する架空の人物です。\n宅録と弾き語りの確認用データです。\n\n〜活動〜\n・2026年1月: 架空のSingle『Alpha』\n・2026年2月: <b>タグ</b> & \"引用\" を含む1行",
+      "links": [
+        {"name": "X", "url": "https://example.test/x"},
+        {"name": "Instagram", "url": "https://example.test/profile-photos"},
+        {"name": "YouTube", "url": "https://example.test/profile-videos"},
+        {"name": "note", "url": "https://example.test/profile-notes"}
+      ]
+    },
+    "contact": {
+      "introText": "架空のお問い合わせ案内です。管理画面の設定から読み込まれた導入文の確認用で、1段落だけです。",
+      "formAction": "https://forms.example.test/f/synthetic"
+    }
+  },
+  "scenarios": {
+    "base": {},
+    "no-photo": {"set": {"profile.image": ""}},
+    "broken-photo": {"set": {"profile.image": "assets/images/synthetic-missing.JPG"}},
+    "empty-text": {"set": {"profile.text": "  \n "}},
+    "no-links": {"set": {"profile.links": [], "site.links": {}}},
+    "site-links-only": {"set": {"profile.links": []}},
+    "profile-links-only": {"set": {"site.links": {}}},
+    "extra-links": {
+      "set": {
+        "profile.links": [
+          {"name": "X", "url": "https://example.test/x"},
+          {"name": "Synthetic Blog", "url": "https://example.test/blog/"},
+          {"name": "Same Blog Again", "url": "https://example.test/blog"},
+          {"name": "", "url": "https://extra.example.test/pages"},
+          {"name": "Unsafe", "url": "javascript:alert(1)"}
+        ]
+      }
+    },
+    "empty-profile": {"set": {"profile": {}}},
+    "bad-profile": {"set": {"profile": []}},
+    "error": {"response": "http-error", "status": 503},
+    "loading": {"response": "pending"},
+    "contact-empty-settings": {"set": {"contact.introText": "", "contact.formAction": ""}},
+    "contact-unreadable": {"response": "http-error", "status": 503}
+  }
+}

@@ -1,0 +1,19 @@
+# round2 promotion 2026-11-18T14:20:25+0900 cwd=/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music
+## 第1版の写し（superseded）が元のSHA-256と一致
+PASS code-generation-plan.gate3-approved.md f462589ba9beeb9ae381ac3e99cc2d0dba394510e1b00c387079c43ee5c96646
+PASS figma-fix-requests.gate3-approved.md 24c3d070d857f9f8d6e8b895dbea4373d40f389a316736b37ca6f67ad93996e0
+PASS canonical-proposals-public-site-ui.gate3-approved.md 4ab8696607364df31178a78ebe824e50a69c4d71315a7c4343f7ac8fa486ea44
+## 提案版（第2版）と昇格先
+public-site-ui proposal=1aa471ebbb9680f762b4bcd2e97788aedd6f259fe82ad67ebc1f8b9e65e30a56 current=1aa471ebbb9680f762b4bcd2e97788aedd6f259fe82ad67ebc1f8b9e65e30a56 cmp-s=PASS
+live-operations-admin-ui proposal=f031cc243749714ecdbead55ed9e79dd6f33e73c9fd851390346fdcc681c4cb1 current=f031cc243749714ecdbead55ed9e79dd6f33e73c9fd851390346fdcc681c4cb1 cmp-s=PASS
+README proposal=8ecd9e3c00ad1025acf8683417780f7071d8d9d8be29e0bd9a98044c890dea0a current=8ecd9e3c00ad1025acf8683417780f7071d8d9d8be29e0bd9a98044c890dea0a cmp-s=PASS
+## 変えていない文書（Requirements / Workflow Plan / 承認記録01〜03）
+5751641557852624a5189c40352bdd4537c5fc8322b299a4ba1ca376b8124c6d  aidlc-docs/inception/requirements/requirements.md
+1f511514eeb5f38c4246b572c802b6ee4f02eaf320f7efb988eaf81bc282937a  aidlc-docs/inception/plans/execution-plan.md
+7cbb16f1671de8d64d4bbb001ebe3476d6f7e452c0a2ed1f787c6a91c0fef473  aidlc-docs/approvals/01-requirements-approval.md
+bf3c9068c7d619cace52cf42eaa2d9f6c2cdcbcc853bbae146b6887c39eba728  aidlc-docs/approvals/02-workflow-plan-approval.md
+4b211d1ff03e34592cb379fef3d4f2c109122867712972a356bdd74b9aa2d644  aidlc-docs/approvals/03-code-generation-plan-approval.md
+## 改訂した文書（第2版）
+f17b86dc1dddad8908750ec48a98062ffbc40d4ad4745f01b07666cf3ef86014  aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md
+3c292f72e3b3e7522b775b02a0e5ff2cc42ec98abc3e78822197e9176f00f918  aidlc-docs/construction/aidlc-integration/figma-fix-requests.md
+1aa471ebbb9680f762b4bcd2e97788aedd6f259fe82ad67ebc1f8b9e65e30a56  aidlc-docs/construction/aidlc-integration/canonical-proposals/public-site-ui.md

@@ -1,0 +1,570 @@
+{
+  "meta": {
+    "updatedAt": "2026-11-18T00:00:00.000Z",
+    "fixtureNow": "2026-11-19T12:00:00+09:00",
+    "note": "All values are fictional. The shapes follow the Issue #43 production classification (counts and shapes only)."
+  },
+  "data": {
+    "site": {
+      "featuredReleaseId": "release-a",
+      "footerText": "Synthetic studio — All rights reserved. 架空の確認用フッターです。",
+      "links": {}
+    },
+    "ticket": {
+      "completeText": "予約を受け付けました。当日お待ちしています。（架空）",
+      "fields": {
+        "showQuantity": true,
+        "showMessage": true,
+        "labelQuantity": "枚数（架空）",
+        "labelMessage": "ご連絡（架空）",
+        "placeholderMessage": "例: 架空の入力例です",
+        "submitLabel": "この内容で予約する"
+      }
+    },
+    "discography": {
+      "digital": [
+        {
+          "id": "release-a",
+          "title": "架空の作品 A",
+          "releaseType": "Single",
+          "releaseDate": "2026.10.10",
+          "image": "assets/images/fixture-art-a.png",
+          "playbackVideoId": "video-a",
+          "link": "https://music.example.test/release-a"
+        },
+        {
+          "id": "release-b",
+          "title": "架空の作品 B",
+          "releaseType": "EP",
+          "releaseDate": "2026.09.09",
+          "image": "",
+          "link": "https://music.example.test/release-b"
+        }
+      ],
+      "demo": [
+        {
+          "id": "release-c",
+          "title": "架空のデモ C",
+          "releaseType": "Demo",
+          "releaseDate": "2026.08.08",
+          "image": "assets/images/fixture-art-c.png",
+          "playbackVideoId": "",
+          "link": "https://music.example.test/release-c"
+        }
+      ]
+    },
+    "youtube": {
+      "musicVideos": [
+        {
+          "id": "video-a",
+          "youtubeId": "abcdefghijk",
+          "title": "架空の映像 A"
+        }
+      ],
+      "liveMovies": [
+        {
+          "id": "video-b",
+          "youtubeId": "lmnopqrstuv",
+          "title": "架空のライブ映像"
+        }
+      ],
+      "demos": [
+        {
+          "id": "video-c",
+          "youtubeId": "bad/value",
+          "title": "架空のデモ映像（不正なID）"
+        }
+      ]
+    },
+    "live": {
+      "upcoming": [
+        {
+          "id": "fx-up-far",
+          "date": "2026-12-26",
+          "venue": "架空ホールA",
+          "title": "架空の公演 A",
+          "description": "",
+          "image": "https://fixture-images.example/flyer-up-far.png",
+          "link": "https://www.instagram.com/fixture_account/",
+          "openTime": "17:30",
+          "startTime": "18:00",
+          "ticket": "前売 ¥3,000 (+1D)",
+          "notes": "",
+          "performers": "w. 架空の出演者A / 架空の出演者B",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-up-stale",
+          "date": "2026.11.18(Wed)",
+          "venue": "架空ライブハウスB",
+          "title": "",
+          "description": "",
+          "image": "assets/images/fixture-flyer-b.png",
+          "link": "",
+          "openTime": "",
+          "startTime": "19:00",
+          "ticket": "無料",
+          "notes": "※架空の注記",
+          "performers": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        }
+      ],
+      "past": [
+        {
+          "id": "fx-past-03",
+          "date": "2026.9.20",
+          "venue": "架空スタジオ E",
+          "title": "“Quoted” <Title> & 'ends' ",
+          "description": "",
+          "image": "",
+          "link": "",
+          "openTime": "17:00",
+          "startTime": "17:30",
+          "ticket": "adv ¥3,500 / door ¥4,000",
+          "notes": "",
+          "performers": "架空の出演者H / 架空の出演者I / 架空の出演者J / 架空の出演者K / 架空の出演者L / 架空の出演者M / 架空の出演者N / 架空の出演者O（架空の注記）",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-past-01",
+          "date": "2026.10.31(Sat)",
+          "venue": "架空ライブハウス C",
+          "title": "架空の企画「ハロウィン」",
+          "description": "",
+          "image": "https://fixture-images.example/flyer-past-01.png",
+          "link": "",
+          "openTime": "18:00",
+          "startTime": "18:30",
+          "ticket": "無料（1ドリンク別）",
+          "notes": "※撮影不可\n※架空の注記2",
+          "performers": "架空の出演者C/架空の出演者D, 架空の出演者E（架空の注記）",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-past-07",
+          "date": "2025.12.14",
+          "venue": "架空ホール I",
+          "title": "架空の古い公演 7",
+          "description": "OPEN 18:00 / START 18:30\nticket ¥2,000\n\nw. 架空の出演者P / 架空の出演者Q",
+          "image": "https://fixture-images.example/flyer-past-07.png",
+          "link": ""
+        },
+        {
+          "id": "fx-past-04",
+          "date": "2026.09.20",
+          "venue": "架空カフェ F",
+          "title": "同じ日の2本目",
+          "description": "",
+          "image": "https://fixture-images.example/flyer-past-04.png",
+          "link": "",
+          "openTime": "",
+          "startTime": "20:00",
+          "ticket": "",
+          "notes": "",
+          "performers": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-past-11",
+          "date": "2025.06.08(Sun)",
+          "venue": "架空ライブハウス M",
+          "title": "架空の古い公演 11",
+          "description": "料金: 無料\n※架空の注記",
+          "image": "https://fixture-images.example/flyer-past-11.png",
+          "link": ""
+        },
+        {
+          "id": "fx-past-02",
+          "date": "2026-10-12",
+          "venue": "架空クラブ D",
+          "title": "架空のイベント　第3回（昼の部）",
+          "description": "",
+          "image": "assets/images/fixture-flyer-c.png",
+          "link": "https://forms.example.test/r/fixture",
+          "openTime": "",
+          "startTime": "13:00",
+          "ticket": "¥2,500+1d",
+          "notes": "",
+          "performers": "w.\n架空の出演者F\n架空の出演者G",
+          "ticketUrl": "https://forms.example.test/r/fixture",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-past-05",
+          "date": "2026-08-30",
+          "venue": "架空ホール G",
+          "title": "これは非常に長いタイトルの架空の公演名であり四十一文字を確実に超える長さがあります（全角括弧の注記）",
+          "description": "",
+          "image": "https://fixture-images.example/missing-flyer-05.png",
+          "link": "",
+          "openTime": "",
+          "startTime": "18:00",
+          "ticket": "",
+          "notes": "",
+          "performers": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-past-12",
+          "date": "近日発表",
+          "venue": "架空会場 N",
+          "title": "日付が読めない公演",
+          "description": "日付の書き方が読めない行。末尾に並べる。",
+          "image": "https://fixture-images.example/flyer-past-12.png",
+          "link": ""
+        },
+        {
+          "id": "fx-past-08",
+          "date": "2025.11.2(Sun)",
+          "venue": "架空ライブハウス J",
+          "title": "",
+          "description": "1行だけの説明。",
+          "image": "assets/images/fixture-flyer-d.png",
+          "link": ""
+        },
+        {
+          "id": "fx-past-06",
+          "date": "2026.8.2(日)",
+          "venue": "架空ライブハウス H",
+          "title": "",
+          "description": "架空の説明だけのライブ。\n時間や料金は未登録のため、説明を全文で出す。",
+          "image": "https://fixture-images.example/flyer-past-06.png",
+          "link": "",
+          "openTime": "",
+          "startTime": "",
+          "ticket": "",
+          "notes": "",
+          "performers": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        },
+        {
+          "id": "fx-past-09",
+          "date": "2025-10-05",
+          "venue": "架空バー K",
+          "title": "架空の古い公演 9",
+          "description": "1行目\n2行目\n3行目\n4行目\n5行目\n6行目\n\n8行目（空行のあと）\n9行目",
+          "image": "https://fixture-images.example/flyer-past-09.png",
+          "link": "https://www.instagram.com/fixture_account/"
+        },
+        {
+          "id": "fx-past-10",
+          "date": "2025.7.19",
+          "venue": "架空ホール L",
+          "title": "",
+          "description": "w.\n架空の出演者R\n架空の出演者S",
+          "image": "",
+          "link": ""
+        }
+      ]
+    },
+    "news": [],
+    "profile": {},
+    "contact": {}
+  },
+  "scenarios": {
+    "base": {
+      "note": "production-shaped base: 2 upcoming (far-first, one already past the fixture clock), 12 past"
+    },
+    "multi-upcoming": {
+      "note": "adds near internal, external, closed, invalid and legacy-link upcoming",
+      "append": {
+        "live.upcoming": [
+          {
+            "id": "fx-up-near",
+            "date": "2026.12.5(土)",
+            "venue": "架空ホールC",
+            "title": "架空の公演 B",
+            "description": "",
+            "image": "https://fixture-images.example/flyer-up-near.png",
+            "link": "",
+            "openTime": "18:00",
+            "startTime": "18:30",
+            "ticket": "adv ¥2,800 / door ¥3,300",
+            "notes": "※架空の注記",
+            "performers": "w. 架空の出演者T",
+            "ticketUrl": "",
+            "reservationClosed": false
+          },
+          {
+            "id": "fx-up-ext",
+            "date": "2027-01-10",
+            "venue": "架空ホールD",
+            "title": "外部で予約する架空の公演",
+            "description": "",
+            "image": "https://fixture-images.example/flyer-up-ext.png",
+            "link": "",
+            "openTime": "",
+            "startTime": "19:00",
+            "ticket": "¥3,000",
+            "notes": "",
+            "performers": "",
+            "ticketUrl": "https://tickets.example.test/e/100?from=fx&slot=1",
+            "reservationClosed": false
+          },
+          {
+            "id": "fx-up-closed",
+            "date": "2027-01-17",
+            "venue": "架空ホールE",
+            "title": "受付を終えた架空の公演",
+            "description": "",
+            "image": "",
+            "link": "",
+            "openTime": "",
+            "startTime": "19:00",
+            "ticket": "",
+            "notes": "",
+            "performers": "",
+            "ticketUrl": "",
+            "reservationClosed": true
+          },
+          {
+            "id": "fx-up-invalid",
+            "date": "2027-01-24",
+            "venue": "架空ホールF",
+            "title": "予約先が正しくない架空の公演",
+            "description": "",
+            "image": "",
+            "link": "",
+            "openTime": "",
+            "startTime": "19:00",
+            "ticket": "",
+            "notes": "",
+            "performers": "",
+            "ticketUrl": "javascript:alert(1)",
+            "reservationClosed": false
+          },
+          {
+            "id": "fx-up-social",
+            "date": "2027-01-31",
+            "venue": "架空ホールG",
+            "title": "旧い書き方の架空の公演",
+            "description": "",
+            "image": "",
+            "link": "https://instagram.com/fixture_account",
+            "openTime": "",
+            "startTime": "20:00",
+            "ticket": "",
+            "notes": "",
+            "performers": ""
+          }
+        ]
+      }
+    },
+    "internal-only": {
+      "note": "three internal upcoming stored far-first",
+      "set": {
+        "live.upcoming": [
+          {
+            "id": "fx-up-far",
+            "date": "2026-12-26",
+            "venue": "架空ホールA",
+            "title": "架空の公演 A",
+            "description": "",
+            "image": "https://fixture-images.example/flyer-up-far.png",
+            "link": "https://www.instagram.com/fixture_account/",
+            "openTime": "17:30",
+            "startTime": "18:00",
+            "ticket": "前売 ¥3,000 (+1D)",
+            "notes": "",
+            "performers": "w. 架空の出演者A / 架空の出演者B",
+            "ticketUrl": "",
+            "reservationClosed": false
+          },
+          {
+            "id": "fx-up-near",
+            "date": "2026.12.5(土)",
+            "venue": "架空ホールC",
+            "title": "架空の公演 B",
+            "description": "",
+            "image": "https://fixture-images.example/flyer-up-near.png",
+            "link": "",
+            "openTime": "18:00",
+            "startTime": "18:30",
+            "ticket": "adv ¥2,800 / door ¥3,300",
+            "notes": "※架空の注記",
+            "performers": "w. 架空の出演者T",
+            "ticketUrl": "",
+            "reservationClosed": false
+          },
+          {
+            "id": "fx-up-social",
+            "date": "2027-01-31",
+            "venue": "架空ホールG",
+            "title": "旧い書き方の架空の公演",
+            "description": "",
+            "image": "",
+            "link": "https://instagram.com/fixture_account",
+            "openTime": "",
+            "startTime": "20:00",
+            "ticket": "",
+            "notes": "",
+            "performers": ""
+          }
+        ]
+      }
+    },
+    "empty-upcoming": {
+      "note": "S43-01",
+      "set": {
+        "live.upcoming": []
+      }
+    },
+    "empty-past": {
+      "note": "S43-02",
+      "set": {
+        "live.past": []
+      }
+    },
+    "invalid-live": {
+      "note": "S43-03 live is not an object",
+      "set": {
+        "live": null
+      }
+    },
+    "invalid-upcoming": {
+      "note": "S43-03 upcoming is not an array",
+      "set": {
+        "live.upcoming": null
+      }
+    },
+    "invalid-past": {
+      "note": "S43-03 past is not an array",
+      "set": {
+        "live.past": null
+      }
+    },
+    "unknown-live-id": {
+      "note": "S43-04 / S43-11",
+      "query": {
+        "liveId": "fx-does-not-exist"
+      }
+    },
+    "duplicate-id": {
+      "note": "S43-04 / S43-16 same id twice",
+      "append": {
+        "live.upcoming": [
+          {
+            "id": "fx-up-far",
+            "date": "2027-02-01",
+            "venue": "架空ホールH",
+            "title": "同じ番号の架空の公演",
+            "description": "",
+            "image": "",
+            "link": "",
+            "openTime": "",
+            "startTime": "19:00",
+            "ticket": "",
+            "notes": "",
+            "performers": "",
+            "ticketUrl": "",
+            "reservationClosed": false
+          }
+        ]
+      }
+    },
+    "fields-hidden": {
+      "note": "quantity and message hidden",
+      "set": {
+        "ticket.fields.showQuantity": false,
+        "ticket.fields.showMessage": false
+      }
+    },
+    "fields-quantity-only": {
+      "set": {
+        "ticket.fields.showMessage": false
+      }
+    },
+    "fields-message-only": {
+      "set": {
+        "ticket.fields.showQuantity": false
+      }
+    },
+    "no-video": {
+      "note": "featured release without a video",
+      "set": {
+        "site.featuredReleaseId": "release-b"
+      }
+    },
+    "bad-video": {
+      "note": "featured release points at a malformed youtubeId",
+      "set": {
+        "discography.digital.0.playbackVideoId": "video-c"
+      }
+    },
+    "no-release": {
+      "note": "no releases",
+      "set": {
+        "discography": {
+          "digital": [],
+          "demo": []
+        }
+      }
+    },
+    "long-text": {
+      "note": "very long name and message for the complete page",
+      "long": "長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い"
+    },
+    "no-complete-text": {
+      "set": {
+        "ticket.fields": {
+          "showQuantity": true,
+          "showMessage": true
+        },
+        "ticket.completeText": ""
+      }
+    }
+  },
+  "post": {
+    "created": {
+      "status": 201,
+      "body": {
+        "ok": true,
+        "reservation": {
+          "id": "fixture-ticket-0001",
+          "liveId": "",
+          "liveDate": "",
+          "liveVenue": "",
+          "name": "",
+          "email": "",
+          "quantity": 1,
+          "message": "",
+          "status": "pending",
+          "source": "web",
+          "createdAt": "2026-11-19T03:00:00.000Z"
+        },
+        "echoRequest": true
+      }
+    },
+    "duplicate": {
+      "status": 400,
+      "body": {
+        "error": "reservation already submitted recently"
+      }
+    },
+    "failed": {
+      "status": 500,
+      "body": {
+        "error": "internal server error"
+      }
+    },
+    "rejected": {
+      "status": 400,
+      "body": {
+        "error": "live is not available for public reservation"
+      }
+    },
+    "no-reservation": {
+      "status": 201,
+      "body": {
+        "ok": true
+      }
+    }
+  }
+}

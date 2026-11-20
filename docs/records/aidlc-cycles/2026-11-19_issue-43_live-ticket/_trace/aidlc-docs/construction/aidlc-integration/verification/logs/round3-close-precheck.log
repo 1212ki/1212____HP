@@ -1,0 +1,20 @@
+command: worker-06-tmp/run-precheck.sh (copy of aidlc-docs + scripts; TEMPORARY gate 4/5 records and Complete state exist only in the copy)
+scripts/aidlc-cycle.sh sha256 real=7a2d9b54439212446b26eaed549653a47a323e098a79785a5aa31c2508670f5a copy=7a2d9b54439212446b26eaed549653a47a323e098a79785a5aa31c2508670f5a
+docs sha256 used by the pre-check (copy):
+  construction/aidlc-integration/code/code-generation-summary.md e79df44514b9918bcbc3d93aaad1a60ee4c7954249f7b57f54f8ec7470b6d6d2
+  construction/build-and-test/build-and-test-summary.md ecd6de416400e69f520dd19cda582aefd7d9b3ca99a41865c6546eb886411d2b
+  cycle-summary.md e993c18c7e1d2505d2baadf85e08154014ea67d6e5c4cfd852d7a9fd8e9aa9d8
+  aidlc-state.md 097bf6aa43b589e58c151ddf1aae15a7839dc836fbbab64ed415b6cb9d5e1f80
+validate_close_ready: PASS (DRYRUN ONLY, copy at %s) /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261119-142640_1212hp-43-live-ticket/worker-06-tmp/precheck/aidlc-docs
+exit_code: 0
+--- real aidlc-docs after the pre-check
+01-requirements-approval.md
+02-workflow-plan-approval.md
+03-code-generation-plan-approval.md
+- **Current Stage**: CONSTRUCTION - Code Generation Result and Build/Test Result（確認2のItsukiの回答待ち）
+- **Cycle Status**: In Progress
+- **Approval Gate**: Code Generation Result and Build/Test Result（gate 4・5）
+- **Approval Status**: Pending（確認2。承認記録04・05は未作成）
+gate4/5 records absent in real aidlc-docs: PASS
+close command: NOT RUN
+negative control (copy only, Blocking Findings changed to Open): validate_close_ready fails with 'cycle-summary Blocking Findings must be None'

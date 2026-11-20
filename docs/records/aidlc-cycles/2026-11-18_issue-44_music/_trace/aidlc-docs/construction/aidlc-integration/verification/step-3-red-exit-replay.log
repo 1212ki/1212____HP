@@ -1,0 +1,930 @@
+command: node --test --test-name-pattern=T44-PLAY|T42-PLAY|RV42-02 test/music-player.test.mjs test/home-player.test.mjs test/music-rendering.test.mjs test/home-rendering.test.mjs
+cwd: /Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3
+provenance: final tests replayed on an isolated copy with the pre-feature boundary restored; original chronological RED logs retained separately.
+TAP version 13
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+ok 1 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 4.818958
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+ok 2 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 5.542667
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 3 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 3.44875
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 4 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 1.10175
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 5 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 1.1195
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 6 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 0.834458
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 7 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 0.984584
+  ...
+# Subtest: RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+ok 8 - RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+  ---
+  duration_ms: 67.399
+  ...
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 9 - T42-DATA Home root, fixed hooks and scripts exist in real HTML # SKIP test name does not match pattern
+  ---
+  duration_ms: 12.589167
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 10 - T42-DATA featured and music render from envelope # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.25175
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 11 - T42-DATA featured and music render from body # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.129125
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 12 - T42-DATA explicit/automatic/broken reference  # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.130417
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 13 - T42-DATA explicit/automatic/broken reference missing # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.13475
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 14 - T42-DATA explicit/automatic/broken reference release-c # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.170125
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 15 - T42-DATA ties retain digital then demo source order # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.566333
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 16 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.099875
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 17 - T42-DATA three fields missing and original title # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.341292
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 18 - T42-DATA three fields empty and original title # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.255375
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 19 - T42-DATA three fields populated and original title # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.106708
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 20 - T42-DATA missing music helper fails safely # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092542
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 21 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 89.206
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 22 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 4.481584
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 23 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 16.342291
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 24 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 20.62825
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 25 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 3.439459
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 26 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 6.162583
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 27 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 6.668417
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 28 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 4.314458
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 29 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 3.028875
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 30 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 4.610958
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 31 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 2.531125
+  ...
+# Subtest: T42-LIVE booking internal
+ok 32 - T42-LIVE booking internal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.203292
+  ...
+# Subtest: T42-LIVE booking external
+ok 33 - T42-LIVE booking external # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.068625
+  ...
+# Subtest: T42-LIVE booking closed
+ok 34 - T42-LIVE booking closed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04725
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 35 - T42-LIVE booking invalid # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044125
+  ...
+# Subtest: T42-LIVE booking past
+ok 36 - T42-LIVE booking past # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041167
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 37 - T42-LIVE booking duplicate # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037916
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 38 - T42-LIVE booking empty-id # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039125
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 39 - T42-LIVE booking no-helper # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035792
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 40 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.20525
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 41 - T42-LIVE structured detail formatter output preserved # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.24025
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 42 - T42-LIVE successful empty upcoming has archive entry and no reservation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.063
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 43 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04825
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 44 - T42-CONTENT news invalid/empty dates last, link fallback and no-link # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044375
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 45 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond" # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040042
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 46 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second" # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036625
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 47 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond" # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036291
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 48 - T42-CONTENT profile escape, empty paragraph and single line # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.058125
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 49 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035166
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 50 - T42-CONTENT footer displays complete configured text including narrow screens # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041459
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 51 - T42-STATE pending initial fetch is busy and has no fabricated reservation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039166
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 52 - T42-STATE full failure http is one notice, default footer and static links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038208
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 53 - T42-STATE full failure json is one notice, default footer and static links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034584
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 54 - T42-STATE full failure network is one notice, default footer and static links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033542
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 55 - T42-STATE full failure null is one notice, default footer and static links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032458
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 56 - T42-STATE full failure array is one notice, default footer and static links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036917
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 57 - T42-STATE full failure string is one notice, default footer and static links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034417
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 58 - T42-STATE local invalid live isolated null # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035958
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 59 - T42-STATE local invalid live isolated {} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050208
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 60 - T42-STATE local invalid live isolated {"upcoming":null} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.16375
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 61 - T42-STATE local invalid live isolated {"upcoming":"invalid"} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.137042
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 62 - T42-STATE local rendering exception preserves other content # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0725
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 63 - T42-STATE full retry recovers with one request, one listener and closes player # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.126958
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 64 - T42-STATE local retry keeps other sections and only Live busy, then recovers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.060833
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 65 - T42-STATE pagehide invalidates a late fetch response # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.048958
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 66 - T42-STATE no image and actual error event expose title/name fallback without retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.066625
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 67 - T42-STATE news missing or empty hides only news, no releases retains links and Live # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.057417
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 68 - RV42-01 chips have text-only labels and accessible safe external navigation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045208
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 69 - RV42-03 no release hides new release caption and restores it on retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044959
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 70 - RV42-05 bfcache resumes interrupted initial GET and ignores old response # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0455
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 71 - RV42-05 bfcache resumes interrupted Live retry and ignores old response # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045666
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 72 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0455
+  ...
+# Subtest: T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+not ok 73 - T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+  ---
+  duration_ms: 5.253792
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:20:1'
+  failureType: 'testCodeFailure'
+  error: 'MusicPlayer must exist'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:21:26)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+not ok 74 - T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+  ---
+  duration_ms: 13.800792
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:27:40)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+not ok 75 - T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+  ---
+  duration_ms: 10.013208
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:30:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:31:47)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+not ok 76 - T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 4.03575
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:34:101'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:35:68)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+not ok 77 - T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.461167
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:34:101'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:35:68)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+not ok 78 - T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.800416
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:34:101'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:35:68)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+not ok 79 - T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.399042
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:34:101'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:35:68)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+not ok 80 - T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+  ---
+  duration_ms: 2.408708
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:40:26)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY refuses invalid id 
+not ok 81 - T44-PLAY refuses invalid id 
+  ---
+  duration_ms: 2.651375
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:44:64'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:45:26)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY refuses invalid id bad
+not ok 82 - T44-PLAY refuses invalid id bad
+  ---
+  duration_ms: 2.00725
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:44:64'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:45:26)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghij!
+not ok 83 - T44-PLAY refuses invalid id abcdefghij!
+  ---
+  duration_ms: 0.878959
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:44:64'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:45:26)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghijk/evil
+not ok 84 - T44-PLAY refuses invalid id abcdefghijk/evil
+  ---
+  duration_ms: 0.803666
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:44:64'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:45:26)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+not ok 85 - T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+  ---
+  duration_ms: 12.904
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(h.window.MusicPlayer)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-player.test.mjs:48:111)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 86 - T44-DATA Music real HTML hooks, loading status, canonical and script order # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.480041
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 87 - T44-DATA all four releases/five videos, exact title/meta/channel false # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.15475
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 88 - T44-DATA all four releases/five videos, exact title/meta/channel true # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.242959
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 89 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.103291
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 90 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.115375
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 91 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.1215
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 92 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.260166
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 93 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.090042
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+not ok 94 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 28.501834
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-rendering.test.mjs:120:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261118-110045_1212hp-44-music/worker-02-tmp/red-replay-3/test/music-rendering.test.mjs:123:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+ok 95 - T44-STATE loading leaves one status, skeleton and busy until success # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.2355
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+ok 96 - T44-STATE partial/empty successful data all-empty # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.138625
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+ok 97 - T44-STATE partial/empty successful data missing-collections # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.098208
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+ok 98 - T44-STATE partial/empty successful data channel-only # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.083042
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 99 - T44-STATE partial/empty successful data only-videos # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.26
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 100 - T44-STATE partial/empty successful data only-releases # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.088292
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 101 - T44-STATE partial/empty successful data empty-demo # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.221791
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 102 - T44-STATE partial/empty successful data empty-live-movie # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092333
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 103 - T44-STATE partial/empty successful data empty-video # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.347833
+  ...
+# Subtest: T44-STATE malformed input is error null
+ok 104 - T44-STATE malformed input is error null # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.105167
+  ...
+# Subtest: T44-STATE malformed input is error []
+ok 105 - T44-STATE malformed input is error [] # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.460416
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+ok 106 - T44-STATE malformed input is error {"discography":[]} # SKIP test name does not match pattern
+  ---
+  duration_ms: 3.675125
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+ok 107 - T44-STATE malformed input is error {"discography":null} # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.268083
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+ok 108 - T44-STATE malformed input is error {"discography":{"digital":null}} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.569917
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+ok 109 - T44-STATE malformed input is error {"discography":{"digital":{}}} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.116125
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+ok 110 - T44-STATE malformed input is error {"discography":{"digital":[null]}} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.071541
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+ok 111 - T44-STATE malformed input is error {"discography":{"digital":[[]]}} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.079292
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+ok 112 - T44-STATE malformed input is error {"youtube":[]} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065208
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+ok 113 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.073708
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+ok 114 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}} # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065875
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+ok 115 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072167
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+ok 116 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.563834
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+ok 117 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.307958
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+ok 118 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.363417
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+ok 119 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.227833
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+ok 120 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.100375
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+ok 121 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.170041
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+ok 122 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.066
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+ok 123 - T44-STATE pagehide after ready stops player without extra GET on bfcache return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.058583
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+ok 124 - T44-STATE async hash after ready and hashchange \#release # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.064667
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+ok 125 - T44-STATE async hash after ready and hashchange \#demo # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.059958
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+ok 126 - T44-STATE async hash after ready and hashchange \#video # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065167
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+ok 127 - T44-STATE async hash after ready and hashchange \#unknown # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.055208
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+ok 128 - T44-STATE async hash after ready and hashchange \#missing%20stuff # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.062625
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+ok 129 - T44-STATE empty section hash is removed by replace without adding history and top remains usable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.070208
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+ok 130 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065292
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+ok 131 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.056708
+  ...
+1..131
+# tests 131
+# suites 0
+# pass 19
+# fail 14
+# cancelled 0
+# skipped 98
+# todo 0
+# duration_ms 1855.876625
+
+exit_code: 1

@@ -1,0 +1,44 @@
+import importlib.util, json, sys, types
+spec = importlib.util.spec_from_file_location('cap', '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/aidlc-docs/construction/aidlc-integration/verification/capture-live-ticket.py')
+cap = importlib.util.module_from_spec(spec); spec.loader.exec_module(cap)
+open(sys.argv[1], 'w').write('(' + cap.METRICS_JS + ')')
+# fake route/context to drive install_routes
+class Req:
+    def __init__(self, url, method='GET', body=None): self.url=url; self.method=method; self.post_data=body
+class Route:
+    def __init__(self, req): self.request=req; self.out=None
+    def fulfill(self, **kw): self.out=('fulfill', kw)
+    def abort(self): self.out=('abort', None)
+    def continue_(self): self.out=('continue', None)
+class Ctx:
+    def route(self, pattern, fn): self.fn=fn
+def call(spec_name, url, method='GET', body=None, from_disk=False):
+    cap.FROM_DISK = from_disk
+    spec = cap.SCENARIOS[spec_name]
+    ctx = Ctx(); log = cap.install_routes(ctx, spec, cap.scenario_data(spec), spec['state'], {})
+    r = Route(Req(url, method, body)); ctx.fn(r); return r.out, log
+API='https://1212hp.itsukimatsumoto.workers.dev'
+out,_=call('list-base', API+'/api/public/site-data'); body=json.loads(out[1]['body']); assert out[0]=='fulfill' and body['data']['live']['upcoming'][0]['id']=='fx-up-far' and body['meta']['updatedAt']
+out,_=call('list-error', API+'/api/public/site-data'); assert out[1]['status']==503
+out,log=call('list-loading', API+'/api/public/site-data'); assert out is None and len(log['pending'])==1
+out,log=call('complete-base', API+'/api/public/ticket-reservations','POST',json.dumps({'liveId':'fx-up-far','name':'n','email':'e@x.yy','quantity':2,'message':'m','company':''})); b=json.loads(out[1]['body']); assert out[1]['status']==201 and b['reservation']['name']=='n' and b['reservation']['id']=='fixture-ticket-0001' and 'echoRequest' not in b, b
+out,_=call('ticket-duplicate', API+'/api/public/ticket-reservations','POST','{}'); assert out[1]['status']==400 and 'already submitted' in out[1]['body']
+out,_=call('ticket-failed', API+'/api/public/ticket-reservations','POST','{}'); assert out[1]['status']==500
+out,log=call('ticket-sending', API+'/api/public/ticket-reservations','POST','{}'); assert out is None and len(log['pending'])==1
+out,_=call('list-base','https://www.example.com/x'); assert out[0]=='abort'
+out,_=call('list-base','https://fixture-images.example/flyer-up-far.png'); assert out[0]=='fulfill' and 'svg' in out[1]['content_type']
+out,_=call('list-base','https://fixture-images.example/missing-flyer-05.png'); assert out[1]['status']==404
+out,_=call('list-base','http://127.0.0.1:8888/assets/images/fixture-flyer-b.png'); assert out[0]=='fulfill'
+out,_=call('list-base','http://127.0.0.1:8888/live/', from_disk=True); assert out[0]=='fulfill' and b'live-ticket.css' in out[1]['body']
+out,_=call('list-base','http://127.0.0.1:8888/admin/index.html', from_disk=True); assert out[1]['status']==404
+out,_=call('list-base','http://127.0.0.1:8888/assets/js/site-config.js', from_disk=True); assert out[0]=='fulfill'
+out,_=call('list-base','http://127.0.0.1:8888/cloudflare/worker/src/worker.js', from_disk=True); assert out[1]['status']==404
+out,log=call('list-base','https://evil.example/x','POST','{}'); assert out[0]=='abort' and log['unexpected']
+out,_=call('list-base','https://fonts.googleapis.com/css2?x'); assert out[0]=='abort'
+# metrics checker smoke with a synthetic bad input
+m={'scrollWidth':2000,'nav':[],'state':'x','busy':'true','red':[{'a':1}],'dialogs':1,'elements':{},'reserveLabels':[],'texts':''}
+class D(dict):
+    def __missing__(self,k): return []
+m['elements']=D()
+f=cap.check_metrics(m,'x',1440,'live-list','ready'); assert len(f)>=5, f
+print('selftest ok', len(cap.image_names()))

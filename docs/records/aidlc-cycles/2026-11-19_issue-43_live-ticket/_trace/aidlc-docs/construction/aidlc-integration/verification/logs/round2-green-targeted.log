@@ -1,0 +1,475 @@
+TAP version 13
+# Subtest: T43-SHELL live/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 1 - T43-SHELL live/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 67.418792
+  ...
+# Subtest: T43-SHELL live/detail/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 2 - T43-SHELL live/detail/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 35.0245
+  ...
+# Subtest: T43-SHELL ticket/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 3 - T43-SHELL ticket/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 34.226208
+  ...
+# Subtest: T43-SHELL ticket/complete/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 4 - T43-SHELL ticket/complete/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 19.369875
+  ...
+# Subtest: T43-SHELL new files carry the \#43 cache version and nothing else changes the shared versions
+ok 5 - T43-SHELL new files carry the \#43 cache version and nothing else changes the shared versions
+  ---
+  duration_ms: 0.470334
+  ...
+# Subtest: T43-COMPAT Home, Music, Profile, Contact, the two old pages and index.html are byte-identical to the base
+ok 6 - T43-COMPAT Home, Music, Profile, Contact, the two old pages and index.html are byte-identical to the base
+  ---
+  duration_ms: 330.474291
+  ...
+# Subtest: T43-COMPAT shared code, tokens, design rules, admin and the Worker are untouched
+ok 7 - T43-COMPAT shared code, tokens, design rules, admin and the Worker are untouched
+  ---
+  duration_ms: 240.765625
+  ...
+# Subtest: T43-COMPAT the Worker still answers a repeat send with the exact text the Ticket page checks
+ok 8 - T43-COMPAT the Worker still answers a repeat send with the exact text the Ticket page checks
+  ---
+  duration_ms: 0.327667
+  ...
+# Subtest: T43-COMPAT site-content.js differs from the base in exactly one line: the Home invalid-booking label
+ok 9 - T43-COMPAT site-content.js differs from the base in exactly one line: the Home invalid-booking label
+  ---
+  duration_ms: 17.482458
+  ...
+# Subtest: T43-COMPAT the shared query strings of the other pages did not move
+ok 10 - T43-COMPAT the shared query strings of the other pages did not move
+  ---
+  duration_ms: 0.340958
+  ...
+# Subtest: T43-COMPAT the only files changed by \#43 are the planned ones (no stray page, asset or script)
+ok 11 - T43-COMPAT the only files changed by \#43 are the planned ones (no stray page, asset or script)
+  ---
+  duration_ms: 91.504
+  ...
+# Subtest: T43-STYLE every selector is under body.site-live or body.site-ticket
+ok 12 - T43-STYLE every selector is under body.site-live or body.site-ticket
+  ---
+  duration_ms: 0.21075
+  ...
+# Subtest: T43-STYLE no red anywhere: no accent variable, no brand red, no hex literals
+ok 13 - T43-STYLE no red anywhere: no accent variable, no brand red, no hex literals
+  ---
+  duration_ms: 0.198625
+  ...
+# Subtest: T43-STYLE nothing is cut off: no line clamp or ellipsis; long words wrap
+ok 14 - T43-STYLE nothing is cut off: no line clamp or ellipsis; long words wrap
+  ---
+  duration_ms: 0.230666
+  ...
+# Subtest: T43-STYLE hidden elements stay hidden even for .site-button; focus is dark; selection and scrollbars are not red
+ok 15 - T43-STYLE hidden elements stay hidden even for .site-button; focus is dark; selection and scrollbars are not red
+  ---
+  duration_ms: 0.122459
+  ...
+# Subtest: T43-STYLE the player is 480 wide on the desktop (at most the card), 16:9, never under 200px tall; full width on the phone
+ok 16 - T43-STYLE the player is 480 wide on the desktop (at most the card), 16:9, never under 200px tall; full width on the phone
+  ---
+  duration_ms: 0.156
+  ...
+# Subtest: T43-STYLE layout numbers from the master: 980 frames, 420+56+504 detail, 560+56+364 ticket, one column under 820px
+ok 17 - T43-STYLE layout numbers from the master: 980 frames, 420+56+504 detail, 560+56+364 ticket, one column under 820px
+  ---
+  duration_ms: 0.243208
+  ...
+# Subtest: T43-STYLE RV43-01 the Ticket columns can shrink: no fixed-width pair, and the contents may shrink with them
+ok 18 - T43-STYLE RV43-01 the Ticket columns can shrink: no fixed-width pair, and the contents may shrink with them
+  ---
+  duration_ms: 0.296
+  ...
+# Subtest: T43-STYLE RV43-02 on the phone a Live card without a flyer keeps its date on one line (no break inside the digits); desktop and detail faces are untouched
+ok 19 - T43-STYLE RV43-02 on the phone a Live card without a flyer keeps its date on one line (no break inside the digits); desktop and detail faces are untouched
+  ---
+  duration_ms: 0.135042
+  ...
+# Subtest: T43-STYLE RV43-03 on the phone the Live detail children fill the column width; the desktop grid keeps align-items: start
+ok 20 - T43-STYLE RV43-03 on the phone the Live detail children fill the column width; the desktop grid keeps align-items: start
+  ---
+  duration_ms: 0.156084
+  ...
+# Subtest: T43-STYLE the Ticket summary stays in view while typing (sticky below the header) and moves above the form on the phone
+ok 21 - T43-STYLE the Ticket summary stays in view while typing (sticky below the header) and moves above the form on the phone
+  ---
+  duration_ms: 0.083625
+  ...
+# Subtest: T43-STYLE cannot-click reservations and sending look the same: opacity .4, no pointer; errors and notices use ink, not red
+ok 22 - T43-STYLE cannot-click reservations and sending look the same: opacity .4, no pointer; errors and notices use ink, not red
+  ---
+  duration_ms: 0.085
+  ...
+# Subtest: T43-STYLE the stylesheet is loaded by the four pages only, and uses tokens for colour and space
+ok 23 - T43-STYLE the stylesheet is loaded by the four pages only, and uses tokens for colour and space
+  ---
+  duration_ms: 0.809166
+  ...
+# Subtest: T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+ok 24 - T43-TICKET-INIT real HTML: scripts in order, no site-content.js, no confirmation modal, retained ids, novalidate form
+  ---
+  duration_ms: 12.569667
+  ...
+# Subtest: T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+ok 25 - T43-TICKET-INIT options are the bookable internal upcoming Lives, nearest first, and the first one is selected
+  ---
+  duration_ms: 11.515583
+  ...
+# Subtest: T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+ok 26 - T43-TICKET-INIT priority: a valid ?liveId, then the draft, then the nearest
+  ---
+  duration_ms: 11.056042
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+ok 27 - T43-TICKET-INIT S43-11 fx-up-closed: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 2.845791
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+ok 28 - T43-TICKET-INIT S43-11 fx-up-invalid: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 7.884208
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+ok 29 - T43-TICKET-INIT S43-11 fx-up-stale: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 2.465125
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+ok 30 - T43-TICKET-INIT S43-11 fx-past-01: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 2.328916
+  ...
+# Subtest: T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+ok 31 - T43-TICKET-INIT S43-11 fx-does-not-exist: one reason, no fields, another Live can be chosen
+  ---
+  duration_ms: 4.220583
+  ...
+# Subtest: T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+ok 32 - T43-TICKET-INIT S43-10 an external Live shows only the select and a new-tab link
+  ---
+  duration_ms: 4.807459
+  ...
+# Subtest: T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+ok 33 - T43-TICKET-INIT S43-16 an empty id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 10.456333
+  ...
+# Subtest: T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+ok 34 - T43-TICKET-INIT S43-16 spaces only: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 1.858917
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+ok 35 - T43-TICKET-INIT S43-16 a 129-character id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 2.47125
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+ok 36 - T43-TICKET-INIT S43-16 a control character: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 16.43675
+  ...
+# Subtest: T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+ok 37 - T43-TICKET-INIT S43-16 a duplicated id: cannot identify the Live, nothing to submit
+  ---
+  duration_ms: 2.376625
+  ...
+# Subtest: T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+ok 38 - T43-TICKET-INIT a 128-character id is allowed to be looked up (it is simply not found)
+  ---
+  duration_ms: 18.536417
+  ...
+# Subtest: T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+ok 39 - T43-TICKET-INIT S43-16 when a helper script is missing, no field or option is offered
+  ---
+  duration_ms: 6.139167
+  ...
+# Subtest: T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+ok 40 - T43-TICKET-INIT S43-12 no bookable Live and no ?liveId: a sentence and a way back, no fields
+  ---
+  duration_ms: 12.07625
+  ...
+# Subtest: T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+ok 41 - T43-TICKET-INIT choosing another Live from an unavailable state clears the notice and reveals the fields
+  ---
+  duration_ms: 3.129833
+  ...
+# Subtest: T43-STATE-TICKET loading: busy and a status, no fields yet
+ok 42 - T43-STATE-TICKET loading: busy and a status, no fields yet
+  ---
+  duration_ms: 4.02075
+  ...
+# Subtest: T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+ok 43 - T43-STATE-TICKET S43-14 network failure: a retry notice, no fields
+  ---
+  duration_ms: 5.515167
+  ...
+# Subtest: T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+ok 44 - T43-STATE-TICKET S43-14 HTTP failure: a retry notice, no fields
+  ---
+  duration_ms: 1.853917
+  ...
+# Subtest: T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+ok 45 - T43-STATE-TICKET S43-14 invalid JSON: a retry notice, no fields
+  ---
+  duration_ms: 2.077375
+  ...
+# Subtest: T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+ok 46 - T43-STATE-TICKET S43-14 data is not an object: a retry notice, no fields
+  ---
+  duration_ms: 1.412334
+  ...
+# Subtest: T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+ok 47 - T43-STATE-TICKET S43-14 live missing: a retry notice, no fields
+  ---
+  duration_ms: 7.173459
+  ...
+# Subtest: T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+ok 48 - T43-STATE-TICKET S43-14 upcoming is not an array: a retry notice, no fields
+  ---
+  duration_ms: 2.01375
+  ...
+# Subtest: T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+ok 49 - T43-STATE-TICKET retry: one request at a time, focus to the heading on success and to the new button on failure
+  ---
+  duration_ms: 5.118958
+  ...
+# Subtest: T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+ok 50 - T43-STATE-TICKET listeners do not accumulate across retries; pagehide drops a stale response; pageshow reloads once
+  ---
+  duration_ms: 15.714917
+  ...
+# Subtest: T43-STATE-TICKET the footer text comes from the site data
+ok 51 - T43-STATE-TICKET the footer text comes from the site data
+  ---
+  duration_ms: 7.246917
+  ...
+# Subtest: T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+ok 52 - T43-TICKET-FORM the summary shows image, date, venue, title, every detail line and Instagram, and follows the selection
+  ---
+  duration_ms: 2.980584
+  ...
+# Subtest: T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+ok 53 - T43-TICKET-FORM the summary has no picture frame when the image is missing or fails (S43-05)
+  ---
+  duration_ms: 18.250084
+  ...
+# Subtest: T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+ok 54 - T43-TICKET-FORM with no selection the back link goes to the list and the summary is hidden
+  ---
+  duration_ms: 18.673375
+  ...
+# Subtest: T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+ok 55 - T43-TICKET-FORM empty name and e-mail: messages under the fields, aria-invalid, describedby, focus on the first, no request
+  ---
+  duration_ms: 3.12225
+  ...
+# Subtest: T43-TICKET-FORM e-mail checks: required, shape, length
+ok 56 - T43-TICKET-FORM e-mail checks: required, shape, length
+  ---
+  duration_ms: 22.355375
+  ...
+# Subtest: T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+ok 57 - T43-TICKET-FORM quantity must be a whole number from 1 to 10, using the configured label
+  ---
+  duration_ms: 23.554666
+  ...
+# Subtest: T43-TICKET-FORM fixing a field and typing clears only that field’s error
+ok 58 - T43-TICKET-FORM fixing a field and typing clears only that field’s error
+  ---
+  duration_ms: 3.563208
+  ...
+# Subtest: T43-FIELDS labels, placeholder and submit label come from the admin settings
+ok 59 - T43-FIELDS labels, placeholder and submit label come from the admin settings
+  ---
+  duration_ms: 9.408166
+  ...
+# Subtest: T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+ok 60 - T43-FIELDS fields-hidden: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 3.9495
+  ...
+# Subtest: T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+ok 61 - T43-FIELDS fields-quantity-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 7.986916
+  ...
+# Subtest: T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+ok 62 - T43-FIELDS fields-message-only: hidden fields are removed from view and from validation
+  ---
+  duration_ms: 4.612334
+  ...
+# Subtest: T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+ok 63 - T43-TICKET-FORM the draft is saved on input and restored; a ?liveId is not overwritten by the draft
+  ---
+  duration_ms: 28.504792
+  ...
+# Subtest: T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+ok 64 - T43-TICKET-FORM a draft never selects an excluded Live and a broken or blocked storage is ignored
+  ---
+  duration_ms: 9.992166
+  ...
+# Subtest: T43-SEND the POST goes to the public endpoint with exactly the six fields, trimmed, quantity as a number
+ok 65 - T43-SEND the POST goes to the public endpoint with exactly the six fields, trimmed, quantity as a number
+  ---
+  duration_ms: 14.44325
+  ...
+# Subtest: T43-SEND the honeypot value is passed through untouched; a hidden quantity sends 1 and a hidden message sends nothing
+ok 66 - T43-SEND the honeypot value is passed through untouched; a hidden quantity sends 1 and a hidden message sends nothing
+  ---
+  duration_ms: 5.8405
+  ...
+# Subtest: T43-SEND only the selected Live id is read from the select, never from another control
+ok 67 - T43-SEND only the selected Live id is read from the select, never from another control
+  ---
+  duration_ms: 13.197958
+  ...
+# Subtest: T43-SEND while sending: the button is disabled and says 送信しています…, inputs keep their values, a second submit sends nothing
+ok 68 - T43-SEND while sending: the button is disabled and says 送信しています…, inputs keep their values, a second submit sends nothing
+  ---
+  duration_ms: 8.131459
+  ...
+# Subtest: T43-SEND the payload is frozen at the moment of sending, even if the form changes while waiting
+ok 69 - T43-SEND the payload is frozen at the moment of sending, even if the form changes while waiting
+  ---
+  duration_ms: 8.694875
+  ...
+# Subtest: T43-SEND S43-09 a network failure: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 70 - T43-SEND S43-09 a network failure: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 4.522542
+  ...
+# Subtest: T43-SEND S43-09 a server error: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 71 - T43-SEND S43-09 a server error: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 4.468042
+  ...
+# Subtest: T43-SEND S43-09 a rejected request: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 72 - T43-SEND S43-09 a rejected request: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 7.474875
+  ...
+# Subtest: T43-SEND S43-09 an unreadable error body: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 73 - T43-SEND S43-09 an unreadable error body: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 4.444292
+  ...
+# Subtest: T43-SEND S43-09 a success without a reservation: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 74 - T43-SEND S43-09 a success without a reservation: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 9.522458
+  ...
+# Subtest: T43-SEND S43-09 a success with an empty receipt number: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 75 - T43-SEND S43-09 a success with an empty receipt number: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 4.730375
+  ...
+# Subtest: T43-SEND S43-09 a success that is not JSON: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+ok 76 - T43-SEND S43-09 a success that is not JSON: input, draft and selection stay; the same button now says もう一度送信する; nothing is stored or navigated
+  ---
+  duration_ms: 11.424375
+  ...
+# Subtest: T43-SEND after a failure the same button sends again; the old failure notice is replaced and the retry can succeed
+ok 77 - T43-SEND after a failure the same button sends again; the old failure notice is replaced and the retry can succeed
+  ---
+  duration_ms: 8.939708
+  ...
+# Subtest: T43-SEND S43-15 the server saying "already submitted recently" stops here with its own message and the normal button label
+ok 78 - T43-SEND S43-15 the server saying "already submitted recently" stops here with its own message and the normal button label
+  ---
+  duration_ms: 9.977667
+  ...
+# Subtest: T43-SEND the duplicate message is the Worker’s own text (public contract, not a copy that can drift)
+ok 79 - T43-SEND the duplicate message is the Worker’s own text (public contract, not a copy that can drift)
+  ---
+  duration_ms: 5.084791
+  ...
+# Subtest: T43-SEND success: replaces to complete/?liveId=&rid= with no personal data in the address; draft cleared; receipt in sessionStorage only
+ok 80 - T43-SEND success: replaces to complete/?liveId=&rid= with no personal data in the address; draft cleared; receipt in sessionStorage only
+  ---
+  duration_ms: 3.678625
+  ...
+# Subtest: T43-SEND the saved values are the ones the server accepted (including a trimmed name), and the snapshot keeps the settings of that moment
+ok 81 - T43-SEND the saved values are the ones the server accepted (including a trimmed name), and the snapshot keeps the settings of that moment
+  ---
+  duration_ms: 3.701792
+  ...
+# Subtest: T43-SEND a new send clears the previous receipt first; a blocked storage still moves on (the booking succeeded)
+ok 82 - T43-SEND a new send clears the previous receipt first; a blocked storage still moves on (the booking succeeded)
+  ---
+  duration_ms: 10.250333
+  ...
+# Subtest: T43-SEND ?dryRun=1 never calls the API, saves a dry-run receipt and moves on exactly like a success
+ok 83 - T43-SEND ?dryRun=1 never calls the API, saves a dry-run receipt and moves on exactly like a success
+  ---
+  duration_ms: 3.595042
+  ...
+# Subtest: T43-SEND a failed validation sends nothing and does not clear the previous receipt
+ok 84 - T43-SEND a failed validation sends nothing and does not clear the previous receipt
+  ---
+  duration_ms: 13.215125
+  ...
+# Subtest: T43-FLOW the list reserve link opens Ticket on the same Live and a successful send replaces to the complete page
+ok 85 - T43-FLOW the list reserve link opens Ticket on the same Live and a successful send replaces to the complete page
+  ---
+  duration_ms: 9.957166
+  ...
+# Subtest: T43-FLOW there is no confirmation step: no dialog or overlay on Ticket, and the screens visited are exactly list, Ticket and complete
+ok 86 - T43-FLOW there is no confirmation step: no dialog or overlay on Ticket, and the screens visited are exactly list, Ticket and complete
+  ---
+  duration_ms: 16.039666
+  ...
+# Subtest: T43-SEND a Live ID with quotes, ampersands, slashes and angle brackets survives the address, the select, the payload and the receipt
+ok 87 - T43-SEND a Live ID with quotes, ampersands, slashes and angle brackets survives the address, the select, the payload and the receipt
+  ---
+  duration_ms: 14.788458
+  ...
+# Subtest: T43-SEND the selected Live is taken at the moment of submit; reading other fields (even if that changes the select) cannot change it
+ok 88 - T43-SEND the selected Live is taken at the moment of submit; reading other fields (even if that changes the select) cannot change it
+  ---
+  duration_ms: 3.639917
+  ...
+# Subtest: T43-SEND extra same-named controls injected into the form never reach the payload
+ok 89 - T43-SEND extra same-named controls injected into the form never reach the payload
+  ---
+  duration_ms: 4.704917
+  ...
+# Subtest: T43-TICKET-INIT duplicate Live IDs (the same id in upcoming and past): the Ticket page refuses to identify the Live and sends nothing
+ok 90 - T43-TICKET-INIT duplicate Live IDs (the same id in upcoming and past): the Ticket page refuses to identify the Live and sends nothing
+  ---
+  duration_ms: 4.267625
+  ...
+# Subtest: T43-TICKET-INIT duplicate Live IDs (the same id twice in upcoming): the Ticket page refuses to identify the Live and sends nothing
+ok 91 - T43-TICKET-INIT duplicate Live IDs (the same id twice in upcoming): the Ticket page refuses to identify the Live and sends nothing
+  ---
+  duration_ms: 10.496375
+  ...
+# Subtest: T43-TICKET-INIT the old admin copy elements stay removed: introText and noticeText are never read and no intro element exists
+ok 92 - T43-TICKET-INIT the old admin copy elements stay removed: introText and noticeText are never read and no intro element exists
+  ---
+  duration_ms: 1.894208
+  ...
+# Subtest: T43-FIELDS F-13 to F-15: every Ticket input, setting and summary item is on the new page
+ok 93 - T43-FIELDS F-13 to F-15: every Ticket input, setting and summary item is on the new page
+  ---
+  duration_ms: 4.456
+  ...
+1..93
+# tests 93
+# suites 0
+# pass 93
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1377.576167

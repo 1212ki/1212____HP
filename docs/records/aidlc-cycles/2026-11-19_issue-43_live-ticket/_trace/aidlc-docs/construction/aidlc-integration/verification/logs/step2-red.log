@@ -1,0 +1,676 @@
+TAP version 13
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 1 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 1.981541
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 2 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 54.792292
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 3 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 5.248292
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 4 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 6.718958
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 5 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 11.613625
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 6 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 7.2335
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 7 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 22.9775
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 8 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 51.776292
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 9 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 3.418042
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 10 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 8.930875
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 11 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 6.806333
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 12 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 3.2175
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 13 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 6.206833
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 14 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 11.478042
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 15 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 4.754625
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 16 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 7.322416
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 17 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 7.096875
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 18 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 9.243334
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 19 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 5.037792
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 20 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 31.77575
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 21 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 15.041209
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 22 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 4.416875
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 23 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 6.564708
+  ...
+# Subtest: T42-LIVE booking internal
+ok 24 - T42-LIVE booking internal
+  ---
+  duration_ms: 17.728458
+  ...
+# Subtest: T42-LIVE booking external
+ok 25 - T42-LIVE booking external
+  ---
+  duration_ms: 10.069833
+  ...
+# Subtest: T42-LIVE booking closed
+ok 26 - T42-LIVE booking closed
+  ---
+  duration_ms: 5.657375
+  ...
+# Subtest: T42-LIVE booking invalid
+not ok 27 - T42-LIVE booking invalid
+  ---
+  duration_ms: 16.004
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/home-rendering.test.mjs:122:104'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<span[^>]*>予約先を確認中<\/span>/. Input:
+    
+    '<p class="home-live-date">2099.12.12(Sat)</p><p class="home-live-venue">架空の会場</p><p class="home-live-title">架空の公演 A</p><p class="home-live-details">Open/Start: 18:00/18:30<br>ticket: 2,000円<br>※架空の注記<br>w. 架空の出演者</p><div class="home-live-actions"><span class="home-reservation-status">予約URLが無効です</span><a class="site-button site-button--secondary" href="live/detail/?liveId=live-a">詳細</a></div><a class="site-text-link" href="live/">all live →</a>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '<p class="home-live-date">2099.12.12(Sat)</p><p class="home-live-venue">架空の会場</p><p class="home-live-title">架空の公演 A</p><p class="home-live-details">Open/Start: 18:00/18:30<br>ticket: 2,000円<br>※架空の注記<br>w. 架空の出演者</p><div class="home-live-actions"><span class="home-reservation-status">予約URLが無効です</span><a class="site-button site-button--secondary" href="live/detail/?liveId=live-a">詳細</a></div><a class="site-text-link" href="live/">all live →</a>'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/home-rendering.test.mjs:135:30)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T42-LIVE booking past
+ok 28 - T42-LIVE booking past
+  ---
+  duration_ms: 6.190667
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 29 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 3.75025
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 30 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 5.038667
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 31 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 14.714708
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 32 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 4.233958
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 33 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 3.76375
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 34 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 18.981208
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 35 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 11.162625
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 36 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 3.773708
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 37 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 5.247459
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 38 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 12.959875
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 39 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 4.249167
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 40 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 24.827792
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 41 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 18.084
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 42 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 22.40675
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 43 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 1.862125
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 44 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 3.370375
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 45 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 2.516709
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 46 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 2.733708
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 47 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 2.417625
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 48 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 2.150875
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 49 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 2.887291
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 50 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 7.206959
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 51 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 3.460209
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 52 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 5.272917
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 53 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 6.954042
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 54 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 5.466709
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 55 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 6.141875
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 56 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 4.507917
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 57 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 2.61975
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 58 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 13.383417
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 59 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 5.544375
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 60 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 19.623875
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 61 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 34.830375
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 62 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 38.520083
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 63 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 7.7265
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 64 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 6.345542
+  ...
+# Subtest: browser Live formatters satisfy the shared fixture matrix
+ok 65 - browser Live formatters satisfy the shared fixture matrix
+  ---
+  duration_ms: 22.803584
+  ...
+# Subtest: formatLiveDate normalizes legacy separators and recomputes the weekday
+ok 66 - formatLiveDate normalizes legacy separators and recomputes the weekday
+  ---
+  duration_ms: 0.655167
+  ...
+# Subtest: formatLiveDetails uses canonical order, labels, and normalization
+ok 67 - formatLiveDetails uses canonical order, labels, and normalization
+  ---
+  duration_ms: 0.556
+  ...
+# Subtest: parseLiveSourceText preserves source text and extracts a conservative draft
+ok 68 - parseLiveSourceText preserves source text and extracts a conservative draft
+  ---
+  duration_ms: 21.836584
+  ...
+# Subtest: empty source text returns an empty draft and a warning
+ok 69 - empty source text returns an empty draft and a warning
+  ---
+  duration_ms: 1.798334
+  ...
+# Subtest: multiple common date styles normalize to the existing YYYY.MM.DD format
+ok 70 - multiple common date styles normalize to the existing YYYY.MM.DD format
+  ---
+  duration_ms: 0.491333
+  ...
+# Subtest: open/start and lineup markers remain structured detail instead of becoming the title
+ok 71 - open/start and lineup markers remain structured detail instead of becoming the title
+  ---
+  duration_ms: 1.238208
+  ...
+# Subtest: ticket URL extraction cleans surrounding and trailing punctuation
+ok 72 - ticket URL extraction cleans surrounding and trailing punctuation
+  ---
+  duration_ms: 2.019917
+  ...
+# Subtest: malformed percent-encoding is rejected by the parser without throwing
+ok 73 - malformed percent-encoding is rejected by the parser without throwing
+  ---
+  duration_ms: 1.221791
+  ...
+# Subtest: one-line booking text extracts fields without splitting date and URL slashes
+ok 74 - one-line booking text extracts fields without splitting date and URL slashes
+  ---
+  duration_ms: 0.843583
+  ...
+# Subtest: detail cleanup removes only the selected ticket URL and preserves other HTTPS text
+ok 75 - detail cleanup removes only the selected ticket URL and preserves other HTTPS text
+  ---
+  duration_ms: 0.593458
+  ...
+# Subtest: declared weekday mismatch produces a warning while a matching weekday does not
+ok 76 - declared weekday mismatch produces a warning while a matching weekday does not
+  ---
+  duration_ms: 0.373916
+  ...
+# Subtest: parsing does not mutate input or add save and publish state
+ok 77 - parsing does not mutate input or add save and publish state
+  ---
+  duration_ms: 0.342333
+  ...
+# Subtest: an own ticketUrl property is authoritative, including an explicit empty value
+ok 78 - an own ticketUrl property is authoritative, including an explicit empty value
+  ---
+  duration_ms: 0.6335
+  ...
+# Subtest: legacy link inference accepts known ticket providers and explicit booking paths
+ok 79 - legacy link inference accepts known ticket providers and explicit booking paths
+  ---
+  duration_ms: 0.81325
+  ...
+# Subtest: legacy form-mailer inference accepts only the existing fms booking pattern
+ok 80 - legacy form-mailer inference accepts only the existing fms booking pattern
+  ---
+  duration_ms: 1.338416
+  ...
+# Subtest: malformed percent-encoding is rejected by legacy inference without throwing
+ok 81 - malformed percent-encoding is rejected by legacy inference without throwing
+  ---
+  duration_ms: 0.248875
+  ...
+# Subtest: legacy link inference rejects social, profile, detail, and arbitrary URLs
+ok 82 - legacy link inference rejects social, profile, detail, and arbitrary URLs
+  ---
+  duration_ms: 0.880125
+  ...
+# Subtest: known ticket providers still reject profile and Live detail URLs
+ok 83 - known ticket providers still reject profile and Live detail URLs
+  ---
+  duration_ms: 0.5345
+  ...
+# Subtest: getTicketCta routes external and explicit-empty tickets deterministically
+ok 84 - getTicketCta routes external and explicit-empty tickets deterministically
+  ---
+  duration_ms: 0.974916
+  ...
+# Subtest: invalid authoritative ticketUrl values stay authoritative but produce an inactive CTA
+ok 85 - invalid authoritative ticketUrl values stay authoritative but produce an inactive CTA
+  ---
+  duration_ms: 1.186416
+  ...
+# Subtest: getTicketCta is inactive for past and reservation-closed Lives
+ok 86 - getTicketCta is inactive for past and reservation-closed Lives
+  ---
+  duration_ms: 0.299959
+  ...
+# Subtest: getTicketCta changes business date exactly at Asia/Tokyo midnight on a UTC-like host
+ok 87 - getTicketCta changes business date exactly at Asia/Tokyo midnight on a UTC-like host
+  ---
+  duration_ms: 0.251208
+  ...
+# Subtest: resolveLiveById returns one canonical record/category and fails closed for duplicate IDs
+ok 88 - resolveLiveById returns one canonical record/category and fails closed for duplicate IDs
+  ---
+  duration_ms: 1.933709
+  ...
+# Subtest: buildXParentText contains only owner framing, hashtag, and canonical Live URL
+ok 89 - buildXParentText contains only owner framing, hashtag, and canonical Live URL
+  ---
+  duration_ms: 0.34375
+  ...
+# Subtest: buildXReplyText contains structured Live details
+ok 90 - buildXReplyText contains structured Live details
+  ---
+  duration_ms: 0.436042
+  ...
+# Subtest: X announcement emits the unified Live post in canonical order
+ok 91 - X announcement emits the unified Live post in canonical order
+  ---
+  duration_ms: 0.422333
+  ...
+# Subtest: X announcement recomputes Japanese weekday and omits empty blocks
+ok 92 - X announcement recomputes Japanese weekday and omits empty blocks
+  ---
+  duration_ms: 0.221541
+  ...
+# Subtest: the dependency-free module exposes the same API to a browser global
+ok 93 - the dependency-free module exposes the same API to a browser global
+  ---
+  duration_ms: 3.635875
+  ...
+# Subtest: requiring the CommonJS module does not publish a Node global
+ok 94 - requiring the CommonJS module does not publish a Node global
+  ---
+  duration_ms: 0.341958
+  ...
+# node:fs:449
+#     return binding.readFileUtf8(path, stringToFlags(options.flag));
+#                    ^
+# Error: ENOENT: no such file or directory, open 'assets/js/live-order.js'
+#     at readFileSync (node:fs:449:20)
+#     at file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-order.test.mjs:10:21
+#     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+#     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: 'assets/js/live-order.js'
+# }
+# Node.js v20.19.4
+# Subtest: /Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-order.test.mjs
+not ok 3 - /Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-order.test.mjs
+  ---
+  duration_ms: 2424.143333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-order.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: T43-CTA exposes window.ReservationCta and the four fixed labels
+not ok 96 - T43-CTA exposes window.ReservationCta and the four fixed labels
+  ---
+  duration_ms: 3.446
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:20:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:21:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T43-CTA each branch: kind, active, url, external, label, reason
+not ok 97 - T43-CTA each branch: kind, active, url, external, label, reason
+  ---
+  duration_ms: 0.830333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:26:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-CTA the stored category decides past; a past-dated upcoming Live is closed but stays upcoming
+not ok 98 - T43-CTA the stored category decides past; a past-dated upcoming Live is closed but stays upcoming
+  ---
+  duration_ms: 1.063208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:43:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:44:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-CTA unknown, ambiguous and missing helper never offer a reservation
+not ok 99 - T43-CTA unknown, ambiguous and missing helper never offer a reservation
+  ---
+  duration_ms: 26.144042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:59:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:60:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-CTA the decision is getTicketCta; the shared module adds no rule of its own
+not ok 100 - T43-CTA the decision is getTicketCta; the shared module adds no rule of its own
+  ---
+  duration_ms: 2.845958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:74:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:75:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-CTA sentences for the Ticket page (S43-10, S43-11, S43-16)
+not ok 101 - T43-CTA sentences for the Ticket page (S43-10, S43-11, S43-16)
+  ---
+  duration_ms: 1.159291
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:88:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:89:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-CTA isInstagramUrl accepts only instagram.com over http(s)
+not ok 102 - T43-CTA isInstagramUrl accepts only instagram.com over http(s)
+  ---
+  duration_ms: 1.138125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:102:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:103:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-CTA Home four-way labels equal the shared labels; Home never says 予約URLが無効です
+not ok 103 - T43-CTA Home four-way labels equal the shared labels; Home never says 予約URLが無効です
+  ---
+  duration_ms: 1.3375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:124:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'assets/js/reservation-cta.js'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:449:20)
+    load (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:14:19)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/reservation-cta.test.mjs:131:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..103
+# tests 103
+# suites 0
+# pass 93
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2438.191875
+exit=1

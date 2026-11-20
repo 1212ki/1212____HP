@@ -2,11 +2,13 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-11-17
+- Last updated: 2026-11-19
 - Related issues: #39, #40, #37, #35, #33, #29
 - Related implementation issues: #41, #46, #47（公開側の対応: #42, #43, #44, #45）、既存契約: #19, #20, #21, #22, #33, #35, #37
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #44）: Issue #44のgate 3（第2版の再承認）における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #40）: Issue #40のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-17_issue-40_figma-design-mapping/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する
 - Prior Owner approval（Issue #37）: Issue #37のCode Generation Planに記載した本版の差分に対するItsuki Matsumotoのgate 3承認（本人回答`A`）。根拠はactive時の`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後の`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`。本文反映後に承認済み差分との一致を検証する
@@ -211,7 +213,7 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 
 ### 5.2 Ticket Pageと予約控え（Issue #37）
 
-申込者の手元に予約の控えを残し、同じ控えを運営にも届ける。Ticket Pageの案内文`introText`と注意文`noticeText`は項目ごと削除する。公開HTML・JS、admin設定・既定値・正規化、Worker既定値・正規化から外し、旧D1値は読み込み時に除外する。移行SQLで削除しない。完了ページの静的既定文とWorker・adminの既定`completeText`は「予約しました。」とし、保存済み`completeText`は従来どおり表示する。desktop/mobileとも同じ項目を外し、入力・確認・完了の構成と既存の表示項目設定を維持する。contactは変更しない。
+申込者の手元に予約の控えを残し、同じ控えを運営にも届ける。Ticket Pageの案内文`introText`と注意文`noticeText`は項目ごと削除する。公開HTML・JS、admin設定・既定値・正規化、Worker既定値・正規化から外し、旧D1値は読み込み時に除外する。移行SQLで削除しない。完了ページの静的既定文とWorker・adminの既定`completeText`は「予約しました。」とし、保存済み`completeText`は従来どおり表示する。desktop/mobileとも同じ項目を外し、入力・確認・完了の構成と既存の表示項目設定を維持する。contactは変更しない。#43は送信中・失敗をTicketのページ内、完了をTicket完了のページで示す形に替え、送信前の確認の段は置かない。表示項目設定・完了文・ラベル・送信ボタン文言は保ち、予約の保存とメールの送信を分ける契約は変えない。
 
 公開予約の保存成功後、Workerは`TICKET_AUTOREPLY_FORM_URL`に`application/x-www-form-urlencoded`で`receipt_id`・`live`（日付と会場）・`name`・`email`・`quantity`・`message`・`token`をPOSTする。合言葉は`TICKET_AUTOREPLY_TOKEN`から読みbodyだけに入れる。URLか合言葉が未設定ならskipする。Apps Scriptは`1212ki.info@gmail.com`が所有し、実行者を自分として公開する。Script Propertiesの`TICKET_AUTOREPLY_TOKEN`との一致、6項目の存在（備考のみ空可）、単一e-mail、1〜10枚、重複parameterなしを検証してからGmailで送る。
 
@@ -270,6 +272,16 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 上の#41単独時の公開表示維持・deploy順序は#41の履歴である。#42はHomeで顔・種別・選択映像を使い始める。管理画面の共有時の画像はLive共有画像の予備で、Homeの帯を兼ねない。表示名・説明・READMEをこの実際の働きに揃える。key・画像操作・保存・Workerは変更しない。管理の6タブと作品modalは#47まで現状を保ち、公開ナビも#44まで6項目とする。#42はGitHub Pagesへの単独mergeで公開し、Worker deployは不要。失敗時は#42の静的変更と対応説明を同じrevertで戻し、#41の保存契約を維持する。
 
 確認2の前にFrontがItsukiへ実際の1作品の種別・映像を選ぶ保存と、Siteの顔にその作品を選ぶ保存を頼む（保存済みなら入れ直さない）。#41の公開互換試験は3項目で現公開画面が変わらないことを保護するため、merge前に保存できる。確認2では本番公開データを直接読むbranchの新HomeをPC・スマホ用URLで出し、Itsukiが顔・種別・「聴く」の実音・「閉じる」を確認する。fixture撮影と分け、本番データをrepoへ保存しない。merge後はFrontがPages buildと公開Homeの新版配信をread-only確認し、差がある時だけItsukiへ返す。同じデータ・画面の2回目の本人確認は頼まない。保存した3項目はmerge見送り時もrollback時もそのまま保持する。
+
+#### Issue #44と公開側まとめ出し時の対応
+
+#44の公開Musicは`/music/`で作品と映像を統合する。管理の実タブは#47までSite / News / Live / YouTube / Disco / Profileを保つ。作品の種別・再生映像はDiscoで作品カードを押した「Discography編集」、映像とChannel URLはYouTubeから編集する。上の表のMusic > 作品/映像は最終形の設計上の名称であり、#47前の実タブ名ではない。`admin/README.md`の案内をこの実態へ揃え、タブ・入力・保存・key・Workerは#44で変更しない。
+
+公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約してからmainへ1回で出す。#44のPR mergeでは本番も管理のタブも変わらない。公開ナビ5項目と管理6タブが併存する状態で文言と働きを照合する。#42の単独公開手順は履歴として保持する。#44の確認2前にはFrontが本番公開データでMusicの表示・再生を確認し、Itsukiの追加保存を不要とする。復旧は#44の公開差分と説明を同じ単位で戻し、保存済みデータは保持する。
+
+#### Issue #43のLive・Ticket対応
+
+#43の公開側はTicket Page共通設定の項目（`completeText`、`fields.showQuantity`・`showMessage`・`labelQuantity`・`labelMessage`・`placeholderMessage`・`submitLabel`）をそのまま使い、保存先・名前・既定値・Workerを変えない。Ticket完了は送信時点の完了文・ラベル・表示設定を使い、受付内容は同じタブのsessionStorageにだけ置く（公開設計§5）。Ticket完了の「当日までに聴く」はHomeと同じく`site.featuredReleaseId`（空なら最新の作品）と作品の`playbackVideoId`を使う。管理画面の機能・タブ・保存は#43で変更しない。#43のmergeでは本番も管理のタブも変わらず、Worker deployは不要。復旧は#43の公開差分を同じ単位で戻し、保存済みデータと予約を保持する。
 
 ## 6. 情報の優先順位
 

@@ -1,0 +1,33 @@
+$ git status --short
+ M admin/README.md
+ M aidlc-docs/README.md
+ M assets/css/style.css
+ M assets/js/home-player.js
+ M assets/js/script.js
+ M assets/js/site-content.js
+ M contact/index.html
+ M discography/index.html
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+ M index.html
+ M live/detail/index.html
+ M live/index.html
+ M profile/index.html
+ M test/public-music-data-compatibility.test.mjs
+ M test/site-shell.test.mjs
+ M ticket/complete/index.html
+ M ticket/index.html
+ M youtube/index.html
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/
+?? aidlc-docs/cycle-summary.md
+?? aidlc-docs/inception/
+?? assets/js/music-redirect.js
+?? music/
+?? test/fixtures/music-states.json
+?? test/music-player.test.mjs
+?? test/music-redirect.test.mjs
+?? test/music-rendering.test.mjs

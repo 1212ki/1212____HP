@@ -1,0 +1,194 @@
+TAP version 13
+# Subtest: music date format uses exactly ten ASCII characters without calendar restrictions
+ok 1 - music date format uses exactly ten ASCII characters without calendar restrictions
+  ---
+  duration_ms: 3.754417
+  ...
+# Subtest: music stable sorting, automatic and explicit selection do not mutate inputs
+ok 2 - music stable sorting, automatic and explicit selection do not mutate inputs
+  ---
+  duration_ms: 0.991834
+  ...
+# Subtest: music references clear after deletion, retain category moves and normalize only new keys
+ok 3 - music references clear after deletion, retain category moves and normalize only new keys
+  ---
+  duration_ms: 2.38225
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+not ok 4 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 2.131542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:74:1'
+  failureType: 'testCodeFailure'
+  error: 'Music page must exist'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:75:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+not ok 5 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 28.382542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:80:32'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'ready'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:82:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+not ok 6 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 9.704625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:80:32'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'ready'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ready'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:82:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+not ok 7 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 20.182958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:91:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(order[i]>order[i-1])
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:94:41)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+not ok 8 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 2.424458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:97:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /EP &quot;Title \/ Unparsed&quot;/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:99:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+not ok 9 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 2.872208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:101:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /1. &lt;script&gt;<br>2. &quot;quoted&quot;<br>3. &amp;last<br>4. end/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:103:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+not ok 10 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 2.757458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:106:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /src="\.\.\/assets\/images\/album1.jpg\?crop=1&amp;v=2026-11-17T00%3A00%3A00Z"/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:108:49)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+not ok 11 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 2.266292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:113:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 4
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:115:100)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 3
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 802.073208

@@ -1,0 +1,22 @@
+# round3 capture contract check 2026-11-19T11:54:12+0900
+$ /usr/bin/python3 -m py_compile capture-music.py (PYTHONPYCACHEPREFIX=scratch)
+exit=0
+$ round3_selftest.py (playwright import is stubbed; check_metrics only, no browser)
+(a) 今回の失格の行: []
+(b1) 見えるサムネイルの幅: ['player/映像は16:9、高さ200px未満にならない', 'サムネイル・stage・題名の幅474/358']
+(b2) 見えるサムネイルの高さ: ['player/映像は16:9、高さ200px未満にならない', 'サムネイルの高さ267/201']
+(c1) 再生中でない撮影でサムネイルが隠れている: ['隠れたサムネイルの数が再生中の映像playerの数と一致']
+(c2) 再生中でも隠れた数が多い: ['隠れたサムネイルの数が再生中の映像playerの数と一致']
+round3 self-test ok
+exit=0
+$ round2 selftest (worker-02b-tmp/check_metrics_selftest.py, same stub)
+合格するはずの値: []
+小さいプレーヤー -> ['player/映像は16:9、高さ200px未満にならない', 'player/映像の高さが200px以上', 'PCの聴くのプレーヤー480x270']
+並びの上に出る -> ['聴くのプレーヤーは押した作品の並びのすぐ下', '重なり: 作品music-release-digital-0 と プレーヤーmusic-release-digital-0-player', '重なり: 作品music-release-digital-1 と プレーヤーmusic-release-digital-0-player']
+下に離れすぎ -> ['聴くのプレーヤーは押した作品の並びのすぐ下']
+1列の映像 -> ['PCの映像は2列']
+映像の高さ -> ['player/映像は16:9、高さ200px未満にならない', 'player/映像の高さが200px以上', 'player/映像は16:9、高さ200px未満にならない', 'player/映像の高さが200px以上', 'サムネイルの高さ267/201', 'サムネイルの高さ267/201']
+重なり -> ['次の並びはプレーヤーの下', '重なり: 作品music-release-digital-0 と 作品music-release-digital-1', '重なり: 作品music-release-digital-1 と プレーヤーmusic-release-digital-0-player']
+self-test ok
+exit=0
+Worker: localhost bind blocked; capture not run, no image produced or overwritten. Front runs: /usr/bin/python3 aidlc-docs/construction/aidlc-integration/verification/capture-music.py --serve

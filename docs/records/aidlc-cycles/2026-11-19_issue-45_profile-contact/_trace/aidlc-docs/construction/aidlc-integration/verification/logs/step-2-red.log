@@ -1,0 +1,818 @@
+TAP version 13
+# Subtest: T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+not ok 1 - T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+  ---
+  duration_ms: 5.117833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<body class="site-profile">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : profile</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body>\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../music/">Music</a></li>\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="profile">\n' +
+      '      <div class="container">\n' +
+      '        <img id="profile-image" src="" alt="Artist Photo" class="artist-photo" style="display:none">\n' +
+      '        <h2 class="section-title">profile</h2>\n' +
+      '        <p id="profile-text"></p>\n' +
+      '        <div class="profile-links" id="profile-links"></div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20261118-44"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261118-44"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : profile</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
+    </head>
+    
+    <body>
+      <!-- ヘッダー -->
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../music/">Music</a></li>
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="profile">
+          <div class="container">
+            <img id="profile-image" src="" alt="Artist Photo" class="artist-photo" style="display:none">
+            <h2 class="section-title">profile</h2>
+            <p id="profile-text"></p>
+            <div class="profile-links" id="profile-links"></div>
+          </div>
+        </section>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/site-content.js?v=20261118-44"></script>
+      <script src="../assets/js/script.js?v=20261118-44"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:21:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+not ok 2 - T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+  ---
+  duration_ms: 36.606667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:50:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:52:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA footer text comes from site.footerText
+ok 3 - T45-PROF-DATA footer text comes from site.footerText
+  ---
+  duration_ms: 131.533792
+  ...
+# Subtest: T45-PROF-DATA text normalization: CRLF
+not ok 4 - T45-PROF-DATA text normalization: CRLF
+  ---
+  duration_ms: 17.964125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:83:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'a\rb' !== 'a\nb'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    a
+    b
+  actual: 'a\rb'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:86:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text normalization: CR
+not ok 5 - T45-PROF-DATA text normalization: CR
+  ---
+  duration_ms: 17.6545
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:83:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'a\rb' !== 'a\nb'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    a
+    b
+  actual: 'a\rb'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:86:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text normalization: literal <br>
+not ok 6 - T45-PROF-DATA text normalization: literal <br>
+  ---
+  duration_ms: 16.412208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:83:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'abcd'
+    - 'a\nb\nc\nd'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    a
+    b
+    c
+    d
+  actual: 'abcd'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:86:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text normalization: mixed with blank line
+not ok 7 - T45-PROF-DATA text normalization: mixed with blank line
+  ---
+  duration_ms: 49.425459
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:83:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '1\r\r23'
+    - '1\n\n2\n\n3'
+         ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    1
+    
+    2
+    
+    3
+  actual: '1\r\r23'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:86:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text normalization: markup stays literal
+ok 8 - T45-PROF-DATA text normalization: markup stays literal
+  ---
+  duration_ms: 9.486167
+  ...
+# Subtest: T45-PROF-DATA text whitespace only keeps the text element hidden
+not ok 9 - T45-PROF-DATA text whitespace only keeps the text element hidden
+  ---
+  duration_ms: 7.826333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:92:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:95:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text empty keeps the text element hidden
+not ok 10 - T45-PROF-DATA text empty keeps the text element hidden
+  ---
+  duration_ms: 11.504375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:92:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:95:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text missing keeps the text element hidden
+not ok 11 - T45-PROF-DATA text missing keeps the text element hidden
+  ---
+  duration_ms: 20.59925
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:92:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:95:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text null keeps the text element hidden
+not ok 12 - T45-PROF-DATA text null keeps the text element hidden
+  ---
+  duration_ms: 7.639084
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:92:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:95:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-DATA text number zero keeps the text element hidden
+not ok 13 - T45-PROF-DATA text number zero keeps the text element hidden
+  ---
+  duration_ms: 24.754333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:92:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:95:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+not ok 14 - T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+  ---
+  duration_ms: 22.963
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:100:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:105:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+not ok 15 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+  ---
+  duration_ms: 234.392125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:134:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:137:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+not ok 16 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+  ---
+  duration_ms: 234.834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:134:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:137:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+not ok 17 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+  ---
+  duration_ms: 146.639542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:134:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:137:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+not ok 18 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+  ---
+  duration_ms: 150.877375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:134:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:137:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+not ok 19 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+  ---
+  duration_ms: 304.691125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:134:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:137:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+not ok 20 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+  ---
+  duration_ms: 233.705291
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:134:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:137:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+not ok 21 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+  ---
+  duration_ms: 234.805542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:134:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:137:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+not ok 22 - T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+  ---
+  duration_ms: 5.344541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:143:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:145:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+not ok 23 - T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+  ---
+  duration_ms: 7.360708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:150:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:154:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+not ok 24 - T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+  ---
+  duration_ms: 4.79675
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:157:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    chips (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:17:50)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:160:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS markup in labels and URLs is escaped
+not ok 25 - T45-PROF-LINKS markup in labels and URLs is escaped
+  ---
+  duration_ms: 3.404834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:165:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelectorAll')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:169:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+not ok 26 - T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+  ---
+  duration_ms: 7.121375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'error'
+    - 'ready'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ready'
+  actual: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:183:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+not ok 27 - T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+  ---
+  duration_ms: 12.23225
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:188:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:190:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+not ok 28 - T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+  ---
+  duration_ms: 4.444541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:201:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:205:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+not ok 29 - T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+  ---
+  duration_ms: 4.940917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:212:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:214:39)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+not ok 30 - T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 4.674917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+not ok 31 - T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 5.081083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+not ok 32 - T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+  ---
+  duration_ms: 5.208791
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+not ok 33 - T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 7.672875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+not ok 34 - T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 4.5425
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+not ok 35 - T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 4.177583
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+not ok 36 - T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 4.111959
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+not ok 37 - T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+  ---
+  duration_ms: 2.856209
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+not ok 38 - T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+  ---
+  duration_ms: 2.980417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:237:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+not ok 39 - T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+  ---
+  duration_ms: 5.132458
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:251:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:255:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+not ok 40 - T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+  ---
+  duration_ms: 3.221208
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:263:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:266:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+not ok 41 - T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+  ---
+  duration_ms: 4.616459
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:286:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'dataset')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    state (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:18:48)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:290:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE retry is not repeated while a request is pending
+not ok 42 - T45-PROF-STATE retry is not repeated while a request is pending
+  ---
+  duration_ms: 3.906958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:308:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'querySelector')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:312:41)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+not ok 43 - T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+  ---
+  duration_ms: 6.519916
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:322:1'
+  failureType: 'testCodeFailure'
+  error: `Expected "actual" to be strictly unequal to: ''`
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: ''
+  operator: 'notStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:329:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..43
+# tests 43
+# suites 0
+# pass 2
+# fail 41
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3098.072166

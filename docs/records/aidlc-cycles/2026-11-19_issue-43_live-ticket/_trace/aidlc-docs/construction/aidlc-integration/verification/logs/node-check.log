@@ -1,0 +1,6 @@
+node --check live-order: ok
+node --check reservation-cta: ok
+node --check live-pages: ok
+node --check ticket: ok
+node --check ticket-receipt: ok
+node --check ticket-complete: ok

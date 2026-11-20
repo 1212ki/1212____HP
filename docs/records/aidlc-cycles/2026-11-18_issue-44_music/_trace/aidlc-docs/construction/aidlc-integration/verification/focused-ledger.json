@@ -1,0 +1,92 @@
+[
+  {
+    "step": 2,
+    "phase": "red",
+    "pass": 3,
+    "fail": 8,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-2-red.log",
+    "node_exit": 1,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 2,
+    "phase": "green",
+    "pass": 11,
+    "fail": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-2-green.log",
+    "node_exit": 0,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 3,
+    "phase": "red",
+    "pass": 80,
+    "fail": 14,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-3-red.log",
+    "node_exit": 1,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 3,
+    "phase": "green",
+    "pass": 94,
+    "fail": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-3-green.log",
+    "node_exit": 0,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 4,
+    "phase": "red",
+    "pass": 27,
+    "fail": 32,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-red.log",
+    "node_exit": 1,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 4,
+    "phase": "green",
+    "pass": 59,
+    "fail": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-4-green.log",
+    "node_exit": 0,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 5,
+    "phase": "red",
+    "pass": 13,
+    "fail": 42,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-5-red.log",
+    "node_exit": 1,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 5,
+    "phase": "green",
+    "pass": 53,
+    "fail": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-5-green.log",
+    "node_exit": 0,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 6,
+    "phase": "red",
+    "pass": 115,
+    "fail": 24,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-6-red.log",
+    "node_exit": 1,
+    "exit_provenance": "inferred from node:test summary; original shell ended with tail"
+  },
+  {
+    "step": 6,
+    "phase": "green",
+    "pass": 139,
+    "fail": 0,
+    "log": "aidlc-docs/construction/aidlc-integration/verification/step-6-green.log",
+    "node_exit": 0,
+    "exit_provenance": "recorded"
+  }
+]

@@ -1,0 +1,576 @@
+TAP version 13
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 1 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 1.58075
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 2 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 85.347917
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 3 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 2.153292
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 4 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 22.04875
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 5 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 10.565208
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 6 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 10.850209
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 7 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 5.021208
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 8 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 76.576291
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 9 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 2.09
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 10 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 7.137875
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 11 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 16.132459
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 12 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 1.153708
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 13 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 1.520375
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 14 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 1.392792
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 15 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 1.46
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 16 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 1.475541
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 17 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 1.296792
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 18 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 1.389833
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 19 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 5.633708
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 20 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 12.544208
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 21 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 3.795166
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 22 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 1.408041
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 23 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 1.347833
+  ...
+# Subtest: T42-LIVE booking internal
+ok 24 - T42-LIVE booking internal
+  ---
+  duration_ms: 1.346541
+  ...
+# Subtest: T42-LIVE booking external
+ok 25 - T42-LIVE booking external
+  ---
+  duration_ms: 1.411083
+  ...
+# Subtest: T42-LIVE booking closed
+ok 26 - T42-LIVE booking closed
+  ---
+  duration_ms: 10.907208
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 27 - T42-LIVE booking invalid
+  ---
+  duration_ms: 9.038542
+  ...
+# Subtest: T42-LIVE booking past
+ok 28 - T42-LIVE booking past
+  ---
+  duration_ms: 2.69825
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 29 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 1.297125
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 30 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 1.154459
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 31 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 1.043708
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 32 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 1.601
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 33 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 1.437792
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 34 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 21.933333
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 35 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 2.691833
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 36 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 3.628542
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 37 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 9.150125
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 38 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 1.484042
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 39 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 1.269709
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 40 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 7.899333
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 41 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 10.067416
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 42 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 12.524958
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 43 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 2.925541
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 44 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 2.050333
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 45 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 1.125667
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 46 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 0.878333
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 47 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 1.976875
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 48 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 1.716209
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 49 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 0.876792
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 50 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 2.117167
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 51 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 2.736166
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 52 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 12.783584
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 53 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 1.170917
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 54 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 1.295875
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 55 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 1.88125
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 56 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 36.708959
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 57 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 2.154416
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 58 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 12.526666
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 59 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 1.633333
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 60 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 68.94725
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 61 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 45.05325
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 62 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 1.899625
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 63 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 4.666667
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 64 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 1.665917
+  ...
+# Subtest: T43-LIST real HTML: body class, hooks, script order, no site-content.js, new stylesheet
+ok 65 - T43-LIST real HTML: body class, hooks, script order, no site-content.js, new stylesheet
+  ---
+  duration_ms: 4.336958
+  ...
+# Subtest: T43-LIST upcoming cards are in nearest-first order with flyer, date, venue, title, two detail lines, reserve and 詳細
+ok 66 - T43-LIST upcoming cards are in nearest-first order with flyer, date, venue, title, two detail lines, reserve and 詳細
+  ---
+  duration_ms: 68.524292
+  ...
+# Subtest: T43-LIST reservation kinds in the list: closed, invalid and past-dated upcoming show no 予約する; external opens a new tab
+ok 67 - T43-LIST reservation kinds in the list: closed, invalid and past-dated upcoming show no 予約する; external opens a new tab
+  ---
+  duration_ms: 45.087042
+  ...
+# Subtest: T43-LIST past: newest first, only the first three, with date, venue, title and an arrow; whole row is the link
+ok 68 - T43-LIST past: newest first, only the first three, with date, venue, title and an arrow; whole row is the link
+  ---
+  duration_ms: 18.170166
+  ...
+# Subtest: T43-LIST the all-link appears only above three past Lives; three or fewer show every row
+ok 69 - T43-LIST the all-link appears only above three past Lives; three or fewer show every row
+  ---
+  duration_ms: 15.795291
+  ...
+# Subtest: T43-LIST hrefs encode the Live ID once and keep dangerous characters out of markup
+ok 70 - T43-LIST hrefs encode the Live ID once and keep dangerous characters out of markup
+  ---
+  duration_ms: 49.557459
+  ...
+# Subtest: T43-LIST duplicate or empty IDs offer neither reservation nor detail; the helper missing offers none either
+ok 71 - T43-LIST duplicate or empty IDs offer neither reservation nor detail; the helper missing offers none either
+  ---
+  duration_ms: 52.465834
+  ...
+# Subtest: T43-LIST images: relative paths resolve from the site root, a missing image shows the date on a pale face, a broken image swaps in the face
+ok 72 - T43-LIST images: relative paths resolve from the site root, a missing image shows the date on a pale face, a broken image swaps in the face
+  ---
+  duration_ms: 36.610958
+  ...
+# Subtest: T43-LIST sections and headings: 開催予定 and 終了したライブ are headings; the page keeps one live title with the red rule class
+ok 73 - T43-LIST sections and headings: 開催予定 and 終了したライブ are headings; the page keeps one live title with the red rule class
+  ---
+  duration_ms: 85.911708
+  ...
+# Subtest: T43-STATE-LIST loading first: skeleton with role=status 読み込み中 and aria-busy, not an empty list
+ok 74 - T43-STATE-LIST loading first: skeleton with role=status 読み込み中 and aria-busy, not an empty list
+  ---
+  duration_ms: 5.407917
+  ...
+# Subtest: T43-STATE-LIST S43-01 and S43-02: empty arrays are states, not errors
+ok 75 - T43-STATE-LIST S43-01 and S43-02: empty arrays are states, not errors
+  ---
+  duration_ms: 39.397333
+  ...
+# Subtest: T43-STATE-LIST S43-03 network failure shows the load error with a retry
+ok 76 - T43-STATE-LIST S43-03 network failure shows the load error with a retry
+  ---
+  duration_ms: 27.727542
+  ...
+# Subtest: T43-STATE-LIST S43-03 HTTP failure shows the load error with a retry
+ok 77 - T43-STATE-LIST S43-03 HTTP failure shows the load error with a retry
+  ---
+  duration_ms: 3.1315
+  ...
+# Subtest: T43-STATE-LIST S43-03 invalid JSON shows the load error with a retry
+ok 78 - T43-STATE-LIST S43-03 invalid JSON shows the load error with a retry
+  ---
+  duration_ms: 11.438542
+  ...
+# Subtest: T43-STATE-LIST S43-03 data is an array shows the load error with a retry
+ok 79 - T43-STATE-LIST S43-03 data is an array shows the load error with a retry
+  ---
+  duration_ms: 23.716167
+  ...
+# Subtest: T43-STATE-LIST S43-03 data is null shows the load error with a retry
+ok 80 - T43-STATE-LIST S43-03 data is null shows the load error with a retry
+  ---
+  duration_ms: 17.454
+  ...
+# Subtest: T43-STATE-LIST S43-03 malformed shape (invalid-live) is an error, distinct from an empty array
+ok 81 - T43-STATE-LIST S43-03 malformed shape (invalid-live) is an error, distinct from an empty array
+  ---
+  duration_ms: 4.371166
+  ...
+# Subtest: T43-STATE-LIST S43-03 malformed shape (invalid-upcoming) is an error, distinct from an empty array
+ok 82 - T43-STATE-LIST S43-03 malformed shape (invalid-upcoming) is an error, distinct from an empty array
+  ---
+  duration_ms: 3.22825
+  ...
+# Subtest: T43-STATE-LIST S43-03 malformed shape (invalid-past) is an error, distinct from an empty array
+ok 83 - T43-STATE-LIST S43-03 malformed shape (invalid-past) is an error, distinct from an empty array
+  ---
+  duration_ms: 8.220791
+  ...
+# Subtest: T43-STATE-LIST retry: one request at a time, the old error is replaced, focus moves to the heading on success
+ok 84 - T43-STATE-LIST retry: one request at a time, the old error is replaced, focus moves to the heading on success
+  ---
+  duration_ms: 44.550792
+  ...
+# Subtest: T43-STATE-LIST a failing retry puts focus on the new retry button; listeners do not accumulate
+ok 85 - T43-STATE-LIST a failing retry puts focus on the new retry button; listeners do not accumulate
+  ---
+  duration_ms: 12.230625
+  ...
+# Subtest: T43-STATE-LIST pagehide discards a pending response; pageshow from the cache loads again
+ok 86 - T43-STATE-LIST pagehide discards a pending response; pageshow from the cache loads again
+  ---
+  duration_ms: 11.16975
+  ...
+# Subtest: T43-STATE-LIST the footer text comes from the site data
+ok 87 - T43-STATE-LIST the footer text comes from the site data
+  ---
+  duration_ms: 10.993375
+  ...
+# Subtest: T43-DETAIL heading is date then venue then title; DOM order is heading, actions, flyer, information
+ok 88 - T43-DETAIL heading is date then venue then title; DOM order is heading, actions, flyer, information
+  ---
+  duration_ms: 7.757625
+  ...
+# Subtest: T43-DETAIL information rows are exactly the Home formatter lines; the empty title shows no Coming Soon
+ok 89 - T43-DETAIL information rows are exactly the Home formatter lines; the empty title shows no Coming Soon
+  ---
+  duration_ms: 17.592541
+  ...
+# Subtest: T43-DETAIL when the four detail fields are empty the description is shown whole, keeping line breaks and blank lines
+ok 90 - T43-DETAIL when the four detail fields are empty the description is shown whole, keeping line breaks and blank lines
+  ---
+  duration_ms: 16.261458
+  ...
+# Subtest: T43-DETAIL the Instagram button appears only for an Instagram address; other links are not shown
+ok 91 - T43-DETAIL the Instagram button appears only for an Instagram address; other links are not shown
+  ---
+  duration_ms: 13.922084
+  ...
+# Subtest: T43-DETAIL the four reservation outcomes; none of the closed ones offers 予約する or a link
+ok 92 - T43-DETAIL the four reservation outcomes; none of the closed ones offers 予約する or a link
+  ---
+  duration_ms: 128.611167
+  ...
+# Subtest: T43-DETAIL flyer: shown at its original ratio, a missing image shows the date, a broken image swaps to the date face
+ok 93 - T43-DETAIL flyer: shown at its original ratio, a missing image shows the date, a broken image swaps to the date face
+  ---
+  duration_ms: 54.290583
+  ...
+# Subtest: T43-STATE-DETAIL S43-04: no liveId, unknown, duplicate: one notice, no reservation, a way back
+ok 94 - T43-STATE-DETAIL S43-04: no liveId, unknown, duplicate: one notice, no reservation, a way back
+  ---
+  duration_ms: 62.200542
+  ...
+# Subtest: T43-STATE-DETAIL S43-03 and loading: error with retry; skeleton while pending; retry reloads
+ok 95 - T43-STATE-DETAIL S43-03 and loading: error with retry; skeleton while pending; retry reloads
+  ---
+  duration_ms: 39.879333
+  ...
+# Subtest: T43-ARCHIVE ?view=past lists every past Live newest first with the title, linking to details on the same page
+ok 96 - T43-ARCHIVE ?view=past lists every past Live newest first with the title, linking to details on the same page
+  ---
+  duration_ms: 19.94925
+  ...
+# Subtest: T43-ARCHIVE ?liveId wins over ?view=past; an empty ?liveId falls back to the archive; view is case-insensitive
+ok 97 - T43-ARCHIVE ?liveId wins over ?view=past; an empty ?liveId falls back to the archive; view is case-insensitive
+  ---
+  duration_ms: 15.823667
+  ...
+# Subtest: T43-ARCHIVE S43-02: no past Live shows the written empty state; S43-03 shows the error
+ok 98 - T43-ARCHIVE S43-02: no past Live shows the written empty state; S43-03 shows the error
+  ---
+  duration_ms: 7.40425
+  ...
+# Subtest: T43-ARCHIVE the entrances keep working: Home link, the list link and X (live/detail/?liveId=) reach the right view
+ok 99 - T43-ARCHIVE the entrances keep working: Home link, the list link and X (live/detail/?liveId=) reach the right view
+  ---
+  duration_ms: 26.010292
+  ...
+# Subtest: T43-PROD every Live shape renders on all three views without error and without losing text
+ok 100 - T43-PROD every Live shape renders on all three views without error and without losing text
+  ---
+  duration_ms: 177.535916
+  ...
+# Subtest: T43-PROD text is escaped and no truncation class is used in the markup
+ok 101 - T43-PROD text is escaped and no truncation class is used in the markup
+  ---
+  duration_ms: 6.921958
+  ...
+# Subtest: T43-PROD a mixed-date list orders by the real date and keeps unreadable dates last without moving the saved data
+ok 102 - T43-PROD a mixed-date list orders by the real date and keeps unreadable dates last without moving the saved data
+  ---
+  duration_ms: 15.566667
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 103 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 73.745541
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 104 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 9.3495
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 105 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 2.828375
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 106 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 68.5475
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 107 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 188.423667
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 108 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 46.407041
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 109 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 49.637375
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 110 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 6.356958
+  ...
+# Subtest: unaligned legacy dates keep rendering on the Live page and the detail heading
+ok 111 - unaligned legacy dates keep rendering on the Live page and the detail heading
+  ---
+  duration_ms: 49.365375
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 112 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 2.528083
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 113 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 1.029959
+  ...
+1..113
+# tests 113
+# suites 0
+# pass 113
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4030.614292
+exit=0

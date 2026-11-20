@@ -886,7 +886,7 @@
       const label = cta.external ? "予約する（外部サイト）" : "予約する";
       reservation = `<a class="site-button site-button--primary" href="${escapeHtml(cta.url)}"${cta.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${label}</a>`;
     } else {
-      const label = ["reservationClosed", "past"].includes(cta.reason) ? "予約受付終了" : cta.reason === "invalidTicketUrl" ? "予約URLが無効です" : "予約情報を確認できません";
+      const label = ["reservationClosed", "past"].includes(cta.reason) ? "予約受付終了" : cta.reason === "invalidTicketUrl" ? "予約先を確認中" : "予約情報を確認できません";
       reservation = `<span class="home-reservation-status">${label}</span>`;
     }
     container.innerHTML = `<p class="home-live-date">${escapeHtml(formatSharedLiveDate(next.date))}</p><p class="home-live-venue">${escapeHtml(next.venue || "")}</p><p class="home-live-title">${escapeHtml(next.title || "")}</p><p class="home-live-details">${escapeHtml(formatSharedLiveDetails(next)).replace(/\n/g, "<br>")}</p><div class="home-live-actions">${reservation}<a class="site-button site-button--secondary" href="${unique ? `live/detail/?liveId=${encodeURIComponent(id)}` : "live/"}">詳細</a></div><a class="site-text-link" href="live/">all live →</a>`;
@@ -991,7 +991,7 @@
         ["home-top", "home-bands", "home-about"].forEach(id => { document.getElementById(id).hidden = true; });
         const error = document.getElementById("home-load-error");
         error.hidden = false;
-        error.innerHTML = `<p>情報を読み込めませんでした。</p>${homeRetryButton()}<div class="home-links"><a class="site-chip" href="https://1212ki.bandcamp.com/" target="_blank" rel="noopener noreferrer" aria-label="Bandcamp（音源・物販）（外部サイト・別タブ）">Bandcamp（音源・物販）</a><a class="site-chip" href="https://www.youtube.com/@1212____ki" target="_blank" rel="noopener noreferrer" aria-label="YouTube（外部サイト・別タブ）">YouTube</a></div>`;
+        error.innerHTML = `<p>情報を読み込めませんでした。</p>${homeRetryButton()}<div class="home-links"><a class="site-chip" href="${MUSIC_FALLBACK_LINKS.bandcamp}" target="_blank" rel="noopener noreferrer" aria-label="Bandcamp（音源・物販）（外部サイト・別タブ）">Bandcamp（音源・物販）</a><a class="site-chip" href="${MUSIC_FALLBACK_LINKS.youtube}" target="_blank" rel="noopener noreferrer" aria-label="YouTube（外部サイト・別タブ）">YouTube</a></div>`;
       }
     } finally {
       homeRequestPending = false;
@@ -1037,8 +1037,446 @@
     });
   }
 
+  const MUSIC_CHANNELS = ["musicVideos", "liveMovies", "demos"];
+  const MUSIC_FALLBACK_LINKS = { bandcamp: "https://1212ki.bandcamp.com/", youtube: "https://www.youtube.com/@1212____ki" };
+  let musicPlayback = new Map();
+  let musicRequestSerial = 0;
+  let musicRequestPending = false;
+  let musicInterrupted = false;
+  let musicKnownLinks = { ...MUSIC_FALLBACK_LINKS };
+
+  function validMusicData(data) {
+    const object = value => Boolean(value && typeof value === "object" && !Array.isArray(value));
+    if (!object(data)) return false;
+    for (const [collection, keys] of [["discography", ["digital", "demo"]], ["youtube", MUSIC_CHANNELS]]) {
+      if (!(collection in data)) continue;
+      if (!object(data[collection])) return false;
+      for (const key of keys) {
+        if (!(key in data[collection])) continue;
+        const values = data[collection][key];
+        if (!Array.isArray(values) || !values.every(object)) return false;
+      }
+    }
+    return true;
+  }
+
+  function rememberMusicLinks(data) {
+    if (!data || typeof data !== "object" || Array.isArray(data)) return;
+    const links = data.site && data.site.links || {};
+    const channel = data.youtube && data.youtube.channelUrl;
+    musicKnownLinks = {
+      bandcamp: safeHomeUrl(links.bandcamp, false) || MUSIC_FALLBACK_LINKS.bandcamp,
+      youtube: safeHomeUrl(links.youtube, false) || safeHomeUrl(channel, false) || MUSIC_FALLBACK_LINKS.youtube,
+    };
+  }
+
+  function renderMusicFailure(state) {
+    const root = document.getElementById("music-content");
+    musicPlayback = new Map();
+    if (window.MusicPlayer) window.MusicPlayer.close({ restoreFocus: false });
+    root.innerHTML = `<div class="music-heading"><h1 class="site-section-title">music</h1></div><div class="music-error" role="status"><p>音源の情報を読み込めませんでした。</p><button type="button" class="site-button site-button--secondary" data-testid="music-retry" data-music-action="retry">もう一度読み込む</button><div class="music-links">${musicExternal(musicKnownLinks.bandcamp, "Bandcamp", "site-chip")}${musicExternal(musicKnownLinks.youtube, "YouTube", "site-chip")}</div></div>`;
+    root.dataset.state = state;
+  }
+
+  function musicHash() {
+    const root = document.getElementById("music-content");
+    if (root.dataset.state === "loading") return;
+    const hash = String(window.location.hash || "");
+    if (!hash) return;
+    const id = hash.slice(1);
+    const section = ["release", "demo", "video"].includes(id) ? document.getElementById(id) : null;
+    if (section) section.scrollIntoView();
+    else {
+      window.history.replaceState(null, "", window.location.pathname + (window.location.search || ""));
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }
+
+  // PC: the release list is a grid, and the player gets its own full-width row right under the row of the
+  // pressed work (never over another card). The row follows the live column count, so a resize re-places it;
+  // the host is never moved in the DOM because moving an iframe reloads it. Narrow layouts are one column in
+  // flow and the host already follows its own card.
+  function placeMusicPlayer(host) {
+    const list = host && host.parentNode;
+    if (!list || typeof window.getComputedStyle !== "function") return;
+    const style = window.getComputedStyle(list) || {};
+    const columns = style.display === "grid" ? String(style.gridTemplateColumns || "").split(/\s+/).filter(token => /^\d/.test(token)).length : 0;
+    const cards = Array.from(list.children).filter(node => node.classList.contains("music-release-card"));
+    const index = cards.indexOf(document.getElementById(host.dataset.musicHost));
+    host.style.gridRow = columns > 0 && index >= 0 ? String(Math.floor(index / columns) + 2) : "";
+  }
+
+  function musicExternal(url, label, className, workTitle) {
+    const name = `${label}（${workTitle ? `${workTitle}・` : ""}外部サイト・別タブ）`;
+    return `<a class="${className}" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(name)}">${label}</a>`;
+  }
+
+  function musicArtwork(item, version) {
+    const image = safeHomeUrl(item.image, true);
+    const fallback = `<span class="music-artwork-fallback"${image ? " hidden" : ""}>松本一樹</span>`;
+    return `${image ? `<img data-music-image="true" src="${escapeHtml(resolveImageSrc(image, version))}" alt="${escapeHtml(item.title || "")}" width="220" height="220">` : ""}${fallback}`;
+  }
+
+  function renderMusic(data, version) {
+    if (window.MusicPlayer) window.MusicPlayer.close({ restoreFocus: false });
+    const helper = window.MusicData;
+    if (!helper || typeof helper.sortReleasesByDate !== "function") throw new Error("Music helper unavailable");
+    musicPlayback = new Map();
+    const discography = data.discography || {};
+    const youtube = data.youtube || {};
+    const videos = MUSIC_CHANNELS.flatMap(key => youtube[key] || []);
+    const channel = safeHomeUrl(youtube.channelUrl, false);
+    const channelLink = channel ? musicExternal(channel, "YouTubeチャンネル →", "site-text-link") : "";
+    const sections = [];
+    const anchors = [];
+    for (const [category, section] of [["digital", "release"], ["demo", "demo"]]) {
+      const items = discography[category] || [];
+      const sorted = helper.sortReleasesByDate(items);
+      if (!sorted.length) continue;
+      anchors.push(section);
+      const cards = sorted.map(item => {
+        const key = `music-release-${category}-${items.indexOf(item)}`;
+        const hostId = `${key}-player`;
+        const selected = item.playbackVideoId ? videos.find(video => video.id === item.playbackVideoId) : null;
+        const youtubeId = String(selected && selected.youtubeId || "").trim();
+        const playable = /^[A-Za-z0-9_-]{11}$/.test(youtubeId);
+        if (playable) musicPlayback.set(key, { youtubeId, title: item.title || "", mode: "release" });
+        const link = safeHomeUrl(item.link, false);
+        const listen = playable ? `<button type="button" class="site-button site-button--play" data-testid="music-listen" data-music-action="play" data-music-key="${key}" aria-expanded="false" aria-controls="${hostId}">聴く</button>` : "";
+        const external = link ? musicExternal(link, category === "digital" ? "配信先へ" : "購入先へ", category === "digital" ? "site-chip" : "site-button site-button--secondary", String(item.title || "")) : "";
+        const description = String(item.description || "").replace(/<br\s*\/?>/gi, "\n").replace(/\r\n?/g, "\n");
+        const meta = homeReleaseMeta(item);
+        return `<article id="${key}" class="site-release-card music-release-card" data-music-release="${key}"><div class="site-release-image music-release-image">${musicArtwork(item, version)}</div><div class="music-release-text"><h3 class="music-release-title">${escapeHtml(item.title || "")}</h3>${meta ? `<p class="music-release-meta">${escapeHtml(meta)}</p>` : ""}${description ? `<p class="music-release-description">${escapeHtml(description).replace(/\n/g, "<br>")}</p>` : ""}${listen || external ? `<div class="music-actions">${listen}${external}</div>` : ""}</div></article><div id="${hostId}" class="music-player music-release-player" role="group" aria-label="${escapeHtml(item.title || "作品")}の再生" data-music-host="${key}" hidden></div>`;
+      }).join("");
+      sections.push(`<section id="${section}" class="music-section" aria-labelledby="${section}-title"><div class="music-section-heading"><h2 id="${section}-title">${section}</h2>${section === "demo" ? '<p class="music-demo-intro">宅録のデモ。ライブ会場とBandcampで販売しています。</p>' : ""}</div><div class="music-release-list">${cards}</div></section>`);
+    }
+    const groups = MUSIC_CHANNELS.map((category, i) => {
+      const items = youtube[category] || [];
+      if (!items.length) return "";
+      const cards = items.map((item, ordinal) => {
+        const key = `music-video-${category}-${ordinal}`;
+        const hostId = `${key}-player`;
+        const youtubeId = String(item.youtubeId || "").trim();
+        const playable = /^[A-Za-z0-9_-]{11}$/.test(youtubeId);
+        if (playable) musicPlayback.set(key, { youtubeId, title: item.title || "", mode: "video" });
+        const thumbnail = `${playable ? `<img data-music-image="true" src="https://img.youtube.com/vi/${encodeURIComponent(youtubeId)}/hqdefault.jpg" alt="" width="474" height="267">` : ""}<span class="music-video-fallback"${playable ? " hidden" : ""}>video</span>`;
+        const trigger = playable ? `<button type="button" class="music-video-thumbnail" data-testid="music-video-play" data-music-action="play" data-music-key="${key}" aria-label="${escapeHtml(item.title || "映像")}を再生" aria-expanded="false" aria-controls="${hostId}">${thumbnail}</button>` : `<div class="music-video-thumbnail">${thumbnail}</div>`;
+        return `<article id="${key}" class="music-video-card" data-music-video="${key}"><div class="music-video-stage">${trigger}<div id="${hostId}" class="music-player" hidden></div></div><h4 class="music-video-title">${escapeHtml(item.title || "")}</h4>${playable ? `<button type="button" class="site-button site-button--secondary" data-testid="music-close" data-music-action="close" data-music-key="${key}" aria-controls="${hostId}" hidden>閉じる</button>` : ""}</article>`;
+      }).join("");
+      return `<div class="music-video-group"><h3 class="home-caption">${["music video", "live movie", "demo"][i]}</h3><div class="music-video-list">${cards}</div></div>`;
+    }).join("");
+    if (groups) {
+      anchors.push("video");
+      sections.push(`<section id="video" class="music-section" aria-labelledby="video-title"><div class="music-video-heading"><h2 id="video-title">video</h2>${channelLink}</div>${groups}</section>`);
+    }
+    document.getElementById("music-content").innerHTML = `<div class="music-heading"><h1 class="site-section-title">music</h1><nav class="music-jumps" aria-label="ページ内の移動">${anchors.map(id => `<a class="site-chip" href="#${id}">${id}</a>`).join("")}</nav>${!groups ? channelLink : ""}</div>${sections.join("")}`;
+    return sections.length > 0;
+  }
+
+  // After a retry the pressed button is replaced, so focus would fall to body. Put it back on a meaningful
+  // element unless the user has already moved it somewhere else while loading.
+  function settleMusicFocus(root, origin) {
+    const active = document.activeElement;
+    if (active && active !== document.body && active !== origin && !root.contains(active)) return;
+    const target = root.dataset.state === "ready" ? root.querySelector("h1") : root.querySelector('[data-music-action="retry"]');
+    if (!target) return;
+    if (target.tagName === "H1") target.setAttribute("tabindex", "-1");
+    // musicHash() has already put a hash section in view; the heading focus must not scroll it away.
+    if (target.tagName === "H1" && ["release", "demo", "video"].includes(String(window.location.hash || "").slice(1))) target.focus({ preventScroll: true });
+    else target.focus();
+  }
+
+  async function bootMusic(retryButton) {
+    if (musicRequestPending) return;
+    musicRequestPending = true;
+    const serial = ++musicRequestSerial;
+    const root = document.getElementById("music-content");
+    if (window.MusicPlayer) window.MusicPlayer.close({ restoreFocus: false });
+    musicPlayback = new Map();
+    root.dataset.state = "loading";
+    root.setAttribute("aria-busy", "true");
+    root.innerHTML = '<div class="music-heading"><h1 class="site-section-title">music</h1></div><div class="music-loading"><p role="status">読み込み中</p><div class="music-skeleton" aria-hidden="true"></div></div><section class="music-section"><h2>release</h2></section><section class="music-section"><h2>demo</h2></section><section class="music-section"><h2>video</h2></section>';
+    const payload = await fetchSiteData();
+    if (serial !== musicRequestSerial) return;
+    try {
+      rememberMusicLinks(payload && payload.data);
+      if (!payload || !validMusicData(payload.data)) throw new Error("Invalid Music data");
+      const hasContent = renderMusic(payload.data, payload.meta.updatedAt || "");
+      renderSite(payload.data.site || {});
+      if (hasContent) root.dataset.state = "ready";
+      else renderMusicFailure("empty");
+    } catch (_error) {
+      renderMusicFailure("error");
+    } finally {
+      musicRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+      musicHash();
+    }
+    if (retryButton) settleMusicFocus(root, retryButton);
+  }
+
+  function wireMusic() {
+    const root = document.getElementById("music-content");
+    root.addEventListener("click", event => {
+      const button = event.target.closest("[data-music-action]");
+      if (!button || !root.contains(button)) return;
+      if (button.dataset.musicAction === "retry") {
+        if (!musicRequestPending) { button.disabled = true; bootMusic(button); }
+        return;
+      }
+      const player = window.MusicPlayer;
+      if (!player) return;
+      if (button.dataset.musicAction === "close" || button.getAttribute("aria-expanded") === "true") player.close();
+      else if (button.dataset.musicAction === "play") {
+        const key = button.dataset.musicKey;
+        const playback = musicPlayback.get(key);
+        if (!playback) return;
+        const article = document.getElementById(key);
+        if (playback.mode === "release") placeMusicPlayer(document.getElementById(`${key}-player`));
+        player.open({ ...playback, host: document.getElementById(`${key}-player`), trigger: button, closeButton: playback.mode === "release" ? button : article.querySelector('[data-music-action="close"]') });
+      }
+    });
+    root.addEventListener("error", event => {
+      const image = event.target;
+      if (!image || image.getAttribute("data-music-image") !== "true") return;
+      image.hidden = true;
+      if (image.nextElementSibling) image.nextElementSibling.hidden = false;
+    }, true);
+    window.addEventListener("hashchange", musicHash);
+    window.addEventListener("resize", () => {
+      root.querySelectorAll(".music-release-player").forEach(host => { if (!host.hidden) placeMusicPlayer(host); });
+    });
+    window.addEventListener("pagehide", () => {
+      if (musicRequestPending) musicInterrupted = true;
+      ++musicRequestSerial;
+      musicRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+      root.querySelectorAll('[data-music-action="retry"]').forEach(button => { button.disabled = false; });
+      if (window.MusicPlayer) window.MusicPlayer.close({ restoreFocus: false });
+    });
+    window.addEventListener("pageshow", event => {
+      if (!event.persisted || !musicInterrupted) return;
+      musicInterrupted = false;
+      bootMusic();
+    });
+  }
+
+  // Issue #45: Profile.
+  let profileRequestSerial = 0;
+  let profileRequestPending = false;
+  let profileInterrupted = false;
+
+  function isPlainObject(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  }
+
+  // Same alias test as findProfileLink, so the five services are decided exactly as on Home.
+  function isSharedServiceLink(item) {
+    const name = String(item && item.name ? item.name : "").trim().toLowerCase();
+    return SHARED_LINKS.some((entry) => entry.aliases.some((alias) => {
+      const safeAlias = String(alias).trim().toLowerCase();
+      return name === safeAlias || name.includes(safeAlias);
+    }));
+  }
+
+  function profileLinkKey(url) {
+    return new URL(url).href.replace(/\/+$/, "");
+  }
+
+  // The five services come first, exactly as Home builds them; Profile links outside those services follow in
+  // registered order. The same destination appears once and only http(s) links are kept.
+  function buildProfileLinks(siteLinks, profileLinks) {
+    const shared = buildSharedLinks(siteLinks, profileLinks)
+      .filter((entry) => safeHomeUrl(entry.url, false))
+      .map((entry) => ({ label: entry.label, url: entry.url }));
+    const seen = new Set(shared.map((entry) => profileLinkKey(entry.url)));
+    const extra = [];
+    (Array.isArray(profileLinks) ? profileLinks : []).forEach((item) => {
+      if (!isPlainObject(item) || isSharedServiceLink(item)) return;
+      const url = safeHomeUrl(item.url, false);
+      if (!url) return;
+      const key = profileLinkKey(url);
+      if (seen.has(key)) return;
+      seen.add(key);
+      extra.push({ label: String(item.name || "").trim() || new URL(url).host, url });
+    });
+    return shared.concat(extra);
+  }
+
+  function validProfileData(payload) {
+    if (!payload || !isPlainObject(payload.data)) return false;
+    const profile = payload.data.profile;
+    return profile === undefined || profile === null || isPlainObject(profile);
+  }
+
+  function renderProfileContent(data, version) {
+    const profile = isPlainObject(data.profile) ? data.profile : {};
+    const site = isPlainObject(data.site) ? data.site : {};
+    const photo = document.getElementById("profile-photo");
+    const image = document.getElementById("profile-image");
+    const text = document.getElementById("profile-text");
+    const block = document.getElementById("profile-links-block");
+    const list = document.getElementById("profile-link-list");
+
+    const imagePath = safeHomeUrl(profile.image, true);
+    image.removeAttribute("src");
+    photo.hidden = !imagePath;
+    if (imagePath) image.setAttribute("src", resolveImageSrc(imagePath, version));
+
+    const raw = profile.text === undefined || profile.text === null ? "" : String(profile.text);
+    const value = raw.replace(/\r\n?/g, "\n").replace(/<br\s*\/?>/gi, "\n");
+    text.textContent = value.trim() ? value : "";
+    text.hidden = !value.trim();
+
+    const links = buildProfileLinks(site.links, profile.links);
+    list.innerHTML = links
+      .map((link) => `<a href="${escapeHtml(link.url)}" class="site-chip" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(link.label)}（外部サイト・別タブ）">${escapeHtml(link.label)}</a>`)
+      .join("");
+    block.hidden = links.length === 0;
+    renderSite(site, version);
+  }
+
+  function renderProfileFailure() {
+    const root = document.getElementById("profile-content");
+    root.dataset.state = "error";
+    document.getElementById("profile-photo").hidden = true;
+    document.getElementById("profile-image").removeAttribute("src");
+    document.getElementById("profile-text").textContent = "";
+    document.getElementById("profile-text").hidden = true;
+    document.getElementById("profile-link-list").innerHTML = "";
+    document.getElementById("profile-links-block").hidden = true;
+    document.getElementById("profile-state").innerHTML = '<p>プロフィールを読み込めませんでした。</p><button type="button" class="site-button site-button--secondary" data-profile-action="retry">もう一度読み込む</button>';
+  }
+
+  async function bootProfile(retryButton) {
+    if (profileRequestPending) return;
+    profileRequestPending = true;
+    const serial = ++profileRequestSerial;
+    const root = document.getElementById("profile-content");
+    root.dataset.state = "loading";
+    root.setAttribute("aria-busy", "true");
+    const image = document.getElementById("profile-image");
+    image.removeAttribute("src");
+    document.getElementById("profile-photo").hidden = false;
+    document.getElementById("profile-text").hidden = true;
+    document.getElementById("profile-links-block").hidden = true;
+    document.getElementById("profile-state").innerHTML = '<p role="status">読み込み中</p>';
+    const payload = await fetchSiteData();
+    if (serial !== profileRequestSerial) return;
+    try {
+      if (!validProfileData(payload)) throw new Error("Invalid Profile data");
+      renderProfileContent(payload.data, payload.meta && payload.meta.updatedAt ? payload.meta.updatedAt : "");
+      document.getElementById("profile-state").innerHTML = "";
+      root.dataset.state = "ready";
+    } catch (_error) {
+      renderProfileFailure();
+    } finally {
+      profileRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+    }
+    if (!retryButton) return;
+    const target = root.dataset.state === "ready" ? root.querySelector("h1") : root.querySelector('[data-profile-action="retry"]');
+    if (!target) return;
+    if (target.tagName === "H1") target.setAttribute("tabindex", "-1");
+    target.focus();
+  }
+
+  function wireProfile() {
+    const root = document.getElementById("profile-content");
+    root.addEventListener("click", (event) => {
+      const button = event.target && event.target.closest ? event.target.closest('[data-profile-action="retry"]') : null;
+      if (!button || !root.contains(button) || profileRequestPending) return;
+      button.disabled = true;
+      bootProfile(button);
+    });
+    // A photo that cannot be loaded leaves no empty frame behind.
+    document.getElementById("profile-image").addEventListener("error", () => {
+      document.getElementById("profile-photo").hidden = true;
+    });
+    window.addEventListener("pagehide", () => {
+      if (profileRequestPending) profileInterrupted = true;
+      ++profileRequestSerial;
+      profileRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+      root.querySelectorAll('[data-profile-action="retry"]').forEach((button) => { button.disabled = false; });
+    });
+    window.addEventListener("pageshow", (event) => {
+      if (!event.persisted || !profileInterrupted) return;
+      profileInterrupted = false;
+      bootProfile();
+    });
+  }
+
+  // Issue #45: Contact. The embedded intro and endpoint are the fallback; settings only refine them.
+  const CONTACT_SETTINGS_TIMEOUT_MS = 8000;
+
+  async function bootContact() {
+    const root = document.getElementById("contact-content");
+    const intro = document.getElementById("contact-intro");
+    const form = document.getElementById("contact-form");
+    const submit = document.getElementById("contact-submit");
+    const embeddedIntro = intro.textContent;
+    const embeddedIntroHidden = intro.hidden;
+    let timedOut = false;
+    let answered = false;
+
+    // The submit button stays off while settings are loading or a submission is in flight.
+    function syncSubmit() {
+      submit.disabled = root.dataset.settings === "loading" || form.dataset.submitState === "sending";
+    }
+    function settle(mode) {
+      root.dataset.settings = mode;
+      root.setAttribute("aria-busy", "false");
+      syncSubmit();
+    }
+    function showEmbeddedIntro() {
+      intro.textContent = embeddedIntro;
+      intro.hidden = embeddedIntroHidden;
+      delete intro.dataset.state;
+    }
+    function applySettings(contact) {
+      const introText = String(contact.introText || "").trim();
+      const formAction = String(contact.formAction || "").trim();
+      delete intro.dataset.state;
+      intro.textContent = introText;
+      intro.hidden = !introText || form.dataset.submitState === "done";
+      if (formAction) form.setAttribute("action", formAction);
+    }
+
+    root.dataset.settings = "loading";
+    root.setAttribute("aria-busy", "true");
+    intro.textContent = "読み込み中";
+    intro.dataset.state = "loading";
+    intro.hidden = false;
+    syncSubmit();
+    const timer = setTimeout(() => {
+      if (answered) return;
+      timedOut = true;
+      showEmbeddedIntro();
+      settle("fallback");
+    }, CONTACT_SETTINGS_TIMEOUT_MS);
+
+    const payload = await fetchSiteData();
+    answered = true;
+    clearTimeout(timer);
+    const data = payload && payload.data;
+    if (!isPlainObject(data) || !(data.contact === undefined || data.contact === null || isPlainObject(data.contact))) {
+      if (!timedOut) {
+        showEmbeddedIntro();
+        settle("fallback");
+      }
+      return;
+    }
+    applySettings(isPlainObject(data.contact) ? data.contact : {});
+    renderSite(isPlainObject(data.site) ? data.site : {}, payload.meta && payload.meta.updatedAt ? payload.meta.updatedAt : "");
+    settle("ready");
+  }
+
   async function boot() {
     if (document.getElementById("home-content")) { wireHome(); return bootHome(); }
+    if (document.getElementById("music-content")) { wireMusic(); return bootMusic(); }
+    if (document.getElementById("profile-content")) { wireProfile(); return bootProfile(); }
+    if (document.getElementById("contact-content")) return bootContact();
     const payload = await fetchSiteData();
     if (!payload) return;
     const siteData = payload.data || {};

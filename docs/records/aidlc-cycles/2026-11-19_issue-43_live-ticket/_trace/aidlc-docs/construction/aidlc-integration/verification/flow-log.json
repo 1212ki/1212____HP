@@ -1,0 +1,46 @@
+{
+  "ui_route": "ui_route=headless_acceptance:PS-L-01,PS-L-02,PS-L-05,PS-COM-02,AC43-LISTEN,AC43-PROD",
+  "steps": [
+    {
+      "screen": "list",
+      "url": "/live/"
+    },
+    {
+      "screen": "ticket",
+      "url": "/ticket/?liveId=fx-up-far"
+    },
+    {
+      "screen": "complete",
+      "url": "/ticket/complete/?liveId=fx-up-far&rid=fixture-ticket-0001"
+    }
+  ],
+  "screens": [
+    "list",
+    "ticket",
+    "complete"
+  ],
+  "distinct_screens": 3,
+  "selected_live_on_ticket": "fx-up-far",
+  "complete_query_keys": [
+    "liveId",
+    "rid"
+  ],
+  "personal_data_in_url": [],
+  "dialogs": 0,
+  "posts_to_fixture": [
+    {
+      "liveId": "fx-up-far",
+      "name": "架空 太郎",
+      "email": "taro@example.test",
+      "quantity": 2,
+      "message": "取り置き名義は架空の名義です。",
+      "company": ""
+    }
+  ],
+  "blocked_external_requests": [
+    "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+  ],
+  "ok": true
+}

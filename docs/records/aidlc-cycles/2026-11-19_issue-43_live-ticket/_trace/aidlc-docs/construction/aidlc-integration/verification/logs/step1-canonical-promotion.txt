@@ -1,0 +1,22 @@
+# canonical promotion check (2026-11-19T18:32:25+09:00)
+## plan section 3 hashes (proposal / original) vs actual
+--- public-site-ui.md
+proposal : 51d9c23e37525c79b8f87b889f7e4758441cf3d1852600a29b5b617cf2a0691a
+promoted : 51d9c23e37525c79b8f87b889f7e4758441cf3d1852600a29b5b617cf2a0691a
+original : 1aa471ebbb9680f762b4bcd2e97788aedd6f259fe82ad67ebc1f8b9e65e30a56  (git HEAD = base ba12401)
+cmp -s: identical
+--- live-operations-admin-ui.md
+proposal : 80a3363ed23b60bfc42dcd8a03583cbbf89ce27a6ca18b1b6ed26dd63ce4e62f
+promoted : 80a3363ed23b60bfc42dcd8a03583cbbf89ce27a6ca18b1b6ed26dd63ce4e62f
+original : f031cc243749714ecdbead55ed9e79dd6f33e73c9fd851390346fdcc681c4cb1  (git HEAD = base ba12401)
+cmp -s: identical
+--- README.md
+proposal : 3e10bd642a8d8441d35a75ce0417a424a38dd738d841abbb50638f34953aac75
+promoted : 3e10bd642a8d8441d35a75ce0417a424a38dd738d841abbb50638f34953aac75
+original : 8ecd9e3c00ad1025acf8683417780f7071d8d9d8be29e0bd9a98044c890dea0a  (git HEAD = base ba12401)
+cmp -s: identical
+## diff stat (original -> promoted)
+ docs/specs/current/README.md                   |  7 ++-
+ docs/specs/current/live-operations-admin-ui.md | 11 +++--
+ docs/specs/current/public-site-ui.md           | 68 ++++++++++++++++++++++++--
+ 3 files changed, 76 insertions(+), 10 deletions(-)

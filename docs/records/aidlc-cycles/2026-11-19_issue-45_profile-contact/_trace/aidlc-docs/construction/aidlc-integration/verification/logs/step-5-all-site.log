@@ -1,0 +1,3168 @@
+TAP version 13
+# Subtest: default image forms keep the existing path display for non-live images
+ok 1 - default image forms keep the existing path display for non-live images
+  ---
+  duration_ms: 99.877833
+  ...
+# Subtest: default image path display escapes the current image path
+ok 2 - default image path display escapes the current image path
+  ---
+  duration_ms: 3.982958
+  ...
+# Subtest: downloadable live flyer forms hide path text and wrap the preview in a download link
+ok 3 - downloadable live flyer forms hide path text and wrap the preview in a download link
+  ---
+  duration_ms: 5.62575
+  ...
+# Subtest: Live edit workspace uses a downloadable flyer preview without path or URL display
+ok 4 - Live edit workspace uses a downloadable flyer preview without path or URL display
+  ---
+  duration_ms: 10.308375
+  ...
+# Subtest: Live image selection keeps the selected flyer preview inside a download link
+ok 5 - Live image selection keeps the selected flyer preview inside a download link
+  ---
+  duration_ms: 8.69825
+  ...
+# Subtest: Live image clear marks the workspace editor dirty and disables the global save route
+ok 6 - Live image clear marks the workspace editor dirty and disables the global save route
+  ---
+  duration_ms: 12.467667
+  ...
+# Subtest: API fallback disables and runtime-guards Live flyer select and clear mutations
+ok 7 - API fallback disables and runtime-guards Live flyer select and clear mutations
+  ---
+  duration_ms: 12.550375
+  ...
+# Subtest: Live image API upload updates the flyer download link to the uploaded URL
+ok 8 - Live image API upload updates the flyer download link to the uploaded URL
+  ---
+  duration_ms: 10.14625
+  ...
+# Subtest: a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+ok 9 - a Live image upload cannot update a replacement workspace editor that reuses edit-image IDs
+  ---
+  duration_ms: 78.679166
+  ...
+# Subtest: pending Live image upload protects beforeunload and settles into dirty state on success
+ok 10 - pending Live image upload protects beforeunload and settles into dirty state on success
+  ---
+  duration_ms: 7.963333
+  ...
+# Subtest: failed Live image upload restores its original preview and preserves unrelated dirty input
+ok 11 - failed Live image upload restores its original preview and preserves unrelated dirty input
+  ---
+  duration_ms: 9.425125
+  ...
+# Subtest: Live image overlapping same-ID uploads release the superseded request when latest settles
+ok 12 - Live image overlapping same-ID uploads release the superseded request when latest settles
+  ---
+  duration_ms: 12.741
+  ...
+# Subtest: latest overlapping upload failure restores the first confirmed image baseline
+ok 13 - latest overlapping upload failure restores the first confirmed image baseline
+  ---
+  duration_ms: 12.497209
+  ...
+# Subtest: Local Live image read blocks transition until confirmed discard releases its owner
+ok 14 - Local Live image read blocks transition until confirmed discard releases its owner
+  ---
+  duration_ms: 13.307584
+  ...
+# Subtest: Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+ok 15 - Local Live image reads are latest-wins when FileReader callbacks resolve in reverse order
+  ---
+  duration_ms: 7.324
+  ...
+# Subtest: generic modal close and replacement release abandoned image operations
+ok 16 - generic modal close and replacement release abandoned image operations
+  ---
+  duration_ms: 32.152167
+  ...
+# Subtest: clearImage is latest across API and Local Live image operations
+    # Subtest: API
+    ok 1 - API
+      ---
+      duration_ms: 18.517958
+      ...
+    # Subtest: Local
+    ok 2 - Local
+      ---
+      duration_ms: 12.640667
+      ...
+    1..2
+ok 17 - clearImage is latest across API and Local Live image operations
+  ---
+  duration_ms: 34.651459
+  ...
+# Subtest: clearImage is latest for generic page images after API success and Local failure
+ok 18 - clearImage is latest for generic page images after API success and Local failure
+  ---
+  duration_ms: 58.051709
+  ...
+# Subtest: a new image selection does not release a parallel operation for another input
+ok 19 - a new image selection does not release a parallel operation for another input
+  ---
+  duration_ms: 51.634042
+  ...
+# APIデータ読み込みエラー: Error: offline
+#     at Object.loadData (evalmachine.<anonymous>:796:15)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/admin-live-operations.test.mjs:1180:3)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: Live is the initial primary tab and Tickets is not a global tab
+ok 20 - Live is the initial primary tab and Tickets is not a global tab
+  ---
+  duration_ms: 9.934
+  ...
+# Subtest: Live workspace has semantic Liveページ and 予約管理 tabs
+ok 21 - Live workspace has semantic Liveページ and 予約管理 tabs
+  ---
+  duration_ms: 1.995833
+  ...
+# Subtest: Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 22 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+  ---
+  duration_ms: 0.850542
+  ...
+# Subtest: Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 23 - Live workspace separates reservations and Ticket Page共通設定 from Live list details
+  ---
+  duration_ms: 0.631875
+  ...
+# Subtest: Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 24 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+  ---
+  duration_ms: 69.711625
+  ...
+# Subtest: Live workspace initial state is Liveページ and 開催予定
+ok 25 - Live workspace initial state is Liveページ and 開催予定
+  ---
+  duration_ms: 47.3935
+  ...
+# Subtest: Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 26 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+  ---
+  duration_ms: 16.736583
+  ...
+# Subtest: master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 27 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+  ---
+  duration_ms: 0.90125
+  ...
+# Subtest: Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+ok 28 - Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+  ---
+  duration_ms: 157.430584
+  ...
+# Subtest: master-detail marks only the first upcoming card as Next Live
+ok 29 - master-detail marks only the first upcoming card as Next Live
+  ---
+  duration_ms: 6.126166
+  ...
+# Subtest: Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 30 - Live task tabs are semantic, keyboard operable, and preserve mounted input
+  ---
+  duration_ms: 10.765834
+  ...
+# Subtest: new Live prioritizes source intake and gates post-save tasks until first save
+ok 31 - new Live prioritizes source intake and gates post-save tasks until first save
+  ---
+  duration_ms: 20.927667
+  ...
+# Subtest: Live validation blocks missing date and venue before changing data or saving
+ok 32 - Live validation blocks missing date and venue before changing data or saving
+  ---
+  duration_ms: 13.734458
+  ...
+# Subtest: Live category mismatch warns but saves without automatically moving collection
+ok 33 - Live category mismatch warns but saves without automatically moving collection
+  ---
+  duration_ms: 7.25575
+  ...
+# Subtest: Live API save reports saving, saved, and failed states around the existing save route
+ok 34 - Live API save reports saving, saved, and failed states around the existing save route
+  ---
+  duration_ms: 260.947541
+  ...
+# Subtest: Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 35 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+  ---
+  duration_ms: 24.44725
+  ...
+# Subtest: reselecting the active global Live tab is a no-op for a dirty editor
+ok 36 - reselecting the active global Live tab is a no-op for a dirty editor
+  ---
+  duration_ms: 5.220041
+  ...
+# Subtest: reselecting the active global Live tab is also a no-op for a clean editor
+ok 37 - reselecting the active global Live tab is also a no-op for a clean editor
+  ---
+  duration_ms: 22.473916
+  ...
+# Subtest: Live internal task switching preserves dirty input without discard confirmation
+ok 38 - Live internal task switching preserves dirty input without discard confirmation
+  ---
+  duration_ms: 33.464833
+  ...
+# Subtest: API fallback is read-only while keeping Live navigation available
+ok 39 - API fallback is read-only while keeping Live navigation available
+  ---
+  duration_ms: 32.59225
+  ...
+# Subtest: API fallback keeps every admin collection immutable while existing details remain viewable
+ok 40 - API fallback keeps every admin collection immutable while existing details remain viewable
+  ---
+  duration_ms: 43.463792
+  ...
+# Subtest: API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 41 - API fallback blocks direct Live item and API save calls before mutation or PUT
+  ---
+  duration_ms: 9.194125
+  ...
+# Subtest: beforeunload protects global changes and Live dirty or saving states
+ok 42 - beforeunload protects global changes and Live dirty or saving states
+  ---
+  duration_ms: 29.011084
+  ...
+# Subtest: explicit Local Mode labels the header action as JSON export
+ok 43 - explicit Local Mode labels the header action as JSON export
+  ---
+  duration_ms: 25.549459
+  ...
+# Subtest: responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+ok 44 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+  ---
+  duration_ms: 12.800625
+  ...
+# Subtest: sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 45 - sticky Live controls have no scrolling mechanism in the complete ancestor chain
+  ---
+  duration_ms: 7.694125
+  ...
+# Subtest: sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 46 - sticky Live task tabs offset below the fixed global header and navigation chrome
+  ---
+  duration_ms: 0.860084
+  ...
+# Subtest: essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 47 - essential mobile Live workspace list utility and back controls guarantee 44px targets
+  ---
+  duration_ms: 0.35325
+  ...
+# Subtest: saved header action maintains white text contrast through hover and focus
+ok 48 - saved header action maintains white text contrast through hover and focus
+  ---
+  duration_ms: 0.849042
+  ...
+# Subtest: sticky Live task tabs and footer have no clipping workspace ancestor
+ok 49 - sticky Live task tabs and footer have no clipping workspace ancestor
+  ---
+  duration_ms: 0.563083
+  ...
+# Subtest: production Live lock gives every workspace button a disabled affordance
+ok 50 - production Live lock gives every workspace button a disabled affordance
+  ---
+  duration_ms: 0.535625
+  ...
+# Subtest: admin build marker and operator docs match the merged Live UI assets
+ok 51 - admin build marker and operator docs match the merged Live UI assets
+  ---
+  duration_ms: 1.14325
+  ...
+# Subtest: Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 52 - Live edit workspace saves a category move in place and routes Local Mode to JSON export
+  ---
+  duration_ms: 12.977291
+  ...
+# Subtest: Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 53 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+  ---
+  duration_ms: 161.074083
+  ...
+# Subtest: Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 54 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+  ---
+  duration_ms: 11.603375
+  ...
+# Subtest: Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 55 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+  ---
+  duration_ms: 32.162792
+  ...
+# Subtest: Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 56 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+  ---
+  duration_ms: 12.153667
+  ...
+# Subtest: Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 57 - Live API publish blocks global tab navigation and marks every global tab disabled while pending
+  ---
+  duration_ms: 9.432084
+  ...
+# Subtest: global tabs re-enable and navigate normally after Live API publish succeeds
+ok 58 - global tabs re-enable and navigate normally after Live API publish succeeds
+  ---
+  duration_ms: 26.05825
+  ...
+# Subtest: global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 59 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+  ---
+  duration_ms: 9.93375
+  ...
+# Subtest: shared LiveOperations script is loaded before the admin application
+ok 60 - shared LiveOperations script is loaded before the admin application
+  ---
+  duration_ms: 0.488917
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 61 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+  ---
+  duration_ms: 13.573833
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 62 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+  ---
+  duration_ms: 48.858708
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 63 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+  ---
+  duration_ms: 26.245792
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 64 - AIで整理 source intake discards a stale response when source text changes while pending / legacy
+  ---
+  duration_ms: 9.383416
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 65 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+  ---
+  duration_ms: 25.2495
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 66 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+  ---
+  duration_ms: 21.603917
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 15.016084
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 8.313875
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 7.61075
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 10.32025
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 10.388375
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 154.958917
+      ...
+    1..6
+ok 67 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+  ---
+  duration_ms: 254.486542
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 3.978541
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 4.935334
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 6.967583
+      ...
+    1..3
+ok 68 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+  ---
+  duration_ms: 16.529375
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 69 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+  ---
+  duration_ms: 5.546291
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 70 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+  ---
+  duration_ms: 6.536833
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 71 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+  ---
+  duration_ms: 4.043083
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 72 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+  ---
+  duration_ms: 9.756667
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 73 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+  ---
+  duration_ms: 6.842208
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 74 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+  ---
+  duration_ms: 19.708875
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 75 - AIで整理 source intake discards a stale response when source text changes while pending / openai
+  ---
+  duration_ms: 7.173458
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 76 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+  ---
+  duration_ms: 5.542875
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 77 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+  ---
+  duration_ms: 11.438542
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 5.796
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 11.967417
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 3.754375
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 3.815458
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 22.892125
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 5.560833
+      ...
+    1..6
+ok 78 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+  ---
+  duration_ms: 54.985
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / openai
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 12.401583
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 10.718167
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 6.30375
+      ...
+    1..3
+ok 79 - AIで整理 source intake never falls back from a custom API base to canonical production / openai
+  ---
+  duration_ms: 30.730125
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 80 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+  ---
+  duration_ms: 44.738375
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 81 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+  ---
+  duration_ms: 3.205334
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 82 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+  ---
+  duration_ms: 2.940792
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 83 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+  ---
+  duration_ms: 5.873709
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 84 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+  ---
+  duration_ms: 5.221958
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 85 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+  ---
+  duration_ms: 117.451375
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 86 - AIで整理 source intake discards a stale response when source text changes while pending / claude
+  ---
+  duration_ms: 14.806292
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 87 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+  ---
+  duration_ms: 28.716958
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 88 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+  ---
+  duration_ms: 13.299291
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 6.904291
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 4.053375
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 13.770542
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 6.778459
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 6.644083
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 8.200584
+      ...
+    1..6
+ok 89 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+  ---
+  duration_ms: 48.014041
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / claude
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 4.150292
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 6.053
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 5.216166
+      ...
+    1..3
+ok 90 - AIで整理 source intake never falls back from a custom API base to canonical production / claude
+  ---
+  duration_ms: 16.070208
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 91 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+  ---
+  duration_ms: 3.10025
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 92 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+  ---
+  duration_ms: 5.803667
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 93 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+  ---
+  duration_ms: 6.745541
+  ...
+# Subtest: AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+    # Subtest: invalid payload 0
+    ok 1 - invalid payload 0
+      ---
+      duration_ms: 3.351583
+      ...
+    # Subtest: invalid payload 1
+    ok 2 - invalid payload 1
+      ---
+      duration_ms: 19.904583
+      ...
+    # Subtest: invalid payload 2
+    ok 3 - invalid payload 2
+      ---
+      duration_ms: 3.324042
+      ...
+    # Subtest: invalid payload 3
+    ok 4 - invalid payload 3
+      ---
+      duration_ms: 3.43125
+      ...
+    # Subtest: invalid payload 4
+    ok 5 - invalid payload 4
+      ---
+      duration_ms: 4.321208
+      ...
+    # Subtest: invalid payload 5
+    ok 6 - invalid payload 5
+      ---
+      duration_ms: 6.655042
+      ...
+    # Subtest: invalid payload 6
+    ok 7 - invalid payload 6
+      ---
+      duration_ms: 3.151625
+      ...
+    # Subtest: invalid payload 7
+    ok 8 - invalid payload 7
+      ---
+      duration_ms: 3.649042
+      ...
+    # Subtest: invalid payload 8
+    ok 9 - invalid payload 8
+      ---
+      duration_ms: 18.158125
+      ...
+    # Subtest: invalid payload 9
+    ok 10 - invalid payload 9
+      ---
+      duration_ms: 4.597875
+      ...
+    # Subtest: invalid payload 10
+    ok 11 - invalid payload 10
+      ---
+      duration_ms: 23.1485
+      ...
+    # Subtest: invalid payload 11
+    ok 12 - invalid payload 11
+      ---
+      duration_ms: 11.93875
+      ...
+    # Subtest: invalid payload 12
+    ok 13 - invalid payload 12
+      ---
+      duration_ms: 11.941209
+      ...
+    # Subtest: invalid payload 13
+    ok 14 - invalid payload 13
+      ---
+      duration_ms: 43.13925
+      ...
+    # Subtest: invalid payload 14
+    ok 15 - invalid payload 14
+      ---
+      duration_ms: 12.255375
+      ...
+    1..15
+ok 94 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+  ---
+  duration_ms: 176.454041
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 95 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+  ---
+  duration_ms: 24.45075
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 96 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+  ---
+  duration_ms: 8.800625
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 97 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+  ---
+  duration_ms: 10.617625
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 98 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+  ---
+  duration_ms: 17.2745
+  ...
+# Subtest: AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 99 - AIで整理 source intake uses the existing small status markup for desktop and mobile
+  ---
+  duration_ms: 0.62625
+  ...
+# Subtest: Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 100 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+  ---
+  duration_ms: 164.60575
+  ...
+# Subtest: structured Live editor normalizes legacy date and saves independent detail fields
+ok 101 - structured Live editor normalizes legacy date and saves independent detail fields
+  ---
+  duration_ms: 10.492
+  ...
+# Subtest: unparsed legacy Live date is preserved until a valid replacement is entered
+ok 102 - unparsed legacy Live date is preserved until a valid replacement is entered
+  ---
+  duration_ms: 6.948125
+  ...
+# Subtest: saving a Live merges new fields into the original object without dropping unknown properties
+ok 103 - saving a Live merges new fields into the original object without dropping unknown properties
+  ---
+  duration_ms: 6.613583
+  ...
+# Subtest: unified X announcement preview drives Intent and copy without save
+ok 104 - unified X announcement preview drives Intent and copy without save
+  ---
+  duration_ms: 18.269584
+  ...
+# Subtest: Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 105 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+  ---
+  duration_ms: 5.298542
+  ...
+# Subtest: Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 106 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+  ---
+  duration_ms: 6.420541
+  ...
+# Subtest: Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 107 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+  ---
+  duration_ms: 6.824167
+  ...
+# Subtest: Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 108 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+  ---
+  duration_ms: 8.443
+  ...
+# Subtest: Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 109 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+  ---
+  duration_ms: 0.965166
+  ...
+# Subtest: new Live requires an explicit save before X Intent or reservation operations
+ok 110 - new Live requires an explicit save before X Intent or reservation operations
+  ---
+  duration_ms: 7.492625
+  ...
+# Subtest: saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 111 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+  ---
+  duration_ms: 9.46675
+  ...
+# Subtest: manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 112 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+  ---
+  duration_ms: 146.738792
+  ...
+# Subtest: active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 113 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+  ---
+  duration_ms: 10.878583
+  ...
+# Subtest: CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 114 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+  ---
+  duration_ms: 3.337167
+  ...
+# Subtest: CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 115 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+  ---
+  duration_ms: 5.145166
+  ...
+# Subtest: reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 116 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+  ---
+  duration_ms: 213.857333
+  ...
+# Subtest: reservation loading for a non-current Live cannot mutate the current modal
+ok 117 - reservation loading for a non-current Live cannot mutate the current modal
+  ---
+  duration_ms: 9.650292
+  ...
+# Subtest: cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 118 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+  ---
+  duration_ms: 5.237709
+  ...
+# Subtest: cross-Live ledger response cannot mutate a disconnected replacement target
+ok 119 - cross-Live ledger response cannot mutate a disconnected replacement target
+  ---
+  duration_ms: 45.973833
+  ...
+# Subtest: cross-Live ledger response requires both current filters to match its snapshot
+ok 120 - cross-Live ledger response requires both current filters to match its snapshot
+  ---
+  duration_ms: 28.436167
+  ...
+# Subtest: cross-Live filters refresh without reloading when the effective selection remains valid
+ok 121 - cross-Live filters refresh without reloading when the effective selection remains valid
+  ---
+  duration_ms: 12.744
+  ...
+# Subtest: deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 122 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+  ---
+  duration_ms: 103.601958
+  ...
+# Subtest: reservation status actions use escaped data attributes and delegated event handling
+ok 123 - reservation status actions use escaped data attributes and delegated event handling
+  ---
+  duration_ms: 122.627625
+  ...
+# Subtest: generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 124 - generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+  ---
+  duration_ms: 13.185834
+  ...
+# Subtest: saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 125 - saving a rendered Live keeps its editor and selected replacement trigger after a category move
+  ---
+  duration_ms: 41.9245
+  ...
+# Subtest: saving a new past Live activates its visible destination category
+ok 126 - saving a new past Live activates its visible destination category
+  ---
+  duration_ms: 3.584875
+  ...
+# Subtest: admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+    # Subtest: cross-collection / API
+    ok 1 - cross-collection / API
+      ---
+      duration_ms: 2.055625
+      ...
+    # Subtest: cross-collection / Local
+    ok 2 - cross-collection / Local
+      ---
+      duration_ms: 1.750625
+      ...
+    # Subtest: same-collection / API
+    ok 3 - same-collection / API
+      ---
+      duration_ms: 4.008875
+      ...
+    # Subtest: same-collection / Local
+    ok 4 - same-collection / Local
+      ---
+      duration_ms: 2.320834
+      ...
+    1..4
+ok 127 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+  ---
+  duration_ms: 11.061333
+  ...
+# Subtest: Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 128 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+  ---
+  duration_ms: 9.807
+  ...
+# Subtest: music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+ok 129 - music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+  ---
+  duration_ms: 15.052792
+  ...
+# Subtest: music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+ok 130 - music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+  ---
+  duration_ms: 11.615917
+  ...
+# Subtest: music data fields API failure keeps editor and baseline, structured errors bind only matching release
+ok 131 - music data fields API failure keeps editor and baseline, structured errors bind only matching release
+  ---
+  duration_ms: 12.718959
+  ...
+# Subtest: music data fields legacy date 2025.5.5 stays on unrelated save and move
+ok 132 - music data fields legacy date 2025.5.5 stays on unrelated save and move
+  ---
+  duration_ms: 13.528875
+  ...
+# Subtest: music data fields legacy date 2025/05/05 stays on unrelated save and move
+ok 133 - music data fields legacy date 2025/05/05 stays on unrelated save and move
+  ---
+  duration_ms: 14.564958
+  ...
+# Subtest: music data fields legacy date 2025.05 stays on unrelated save and move
+ok 134 - music data fields legacy date 2025.05 stays on unrelated save and move
+  ---
+  duration_ms: 56.225292
+  ...
+# Subtest: music data fields legacy date  stays on unrelated save and move
+ok 135 - music data fields legacy date  stays on unrelated save and move
+  ---
+  duration_ms: 5.879625
+  ...
+# Subtest: music data fields legacy date undefined stays on unrelated save and move
+ok 136 - music data fields legacy date undefined stays on unrelated save and move
+  ---
+  duration_ms: 5.200875
+  ...
+# Subtest: music data fields legacy date 42 stays on unrelated save and move
+ok 137 - music data fields legacy date 42 stays on unrelated save and move
+  ---
+  duration_ms: 6.280292
+  ...
+# Subtest: music data fields legacy date null stays on unrelated save and move
+ok 138 - music data fields legacy date null stays on unrelated save and move
+  ---
+  duration_ms: 5.423875
+  ...
+# Subtest: music data fields new release empty or shaped date, header validation and baseline only after success
+ok 139 - music data fields new release empty or shaped date, header validation and baseline only after success
+  ---
+  duration_ms: 5.556708
+  ...
+# Subtest: music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+ok 140 - music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+  ---
+  duration_ms: 17.708166
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through Local JSON
+ok 141 - music data fields deletion clears featured and shared video references through Local JSON
+  ---
+  duration_ms: 5.837209
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through API
+ok 142 - music data fields deletion clears featured and shared video references through API
+  ---
+  duration_ms: 4.832125
+  ...
+# Subtest: music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+ok 143 - music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+  ---
+  duration_ms: 3.969084
+  ...
+# Subtest: music data fields release and video category moves preserve IDs and all selections
+ok 144 - music data fields release and video category moves preserve IDs and all selections
+  ---
+  duration_ms: 9.896666
+  ...
+# Subtest: music data fields successful saves advance date baseline and failures retain the old baseline
+ok 145 - music data fields successful saves advance date baseline and failures retain the old baseline
+  ---
+  duration_ms: 132.498292
+  ...
+# Subtest: music data fields image upload blocks release mutation and JSON failure retains baseline
+ok 146 - music data fields image upload blocks release mutation and JSON failure retains baseline
+  ---
+  duration_ms: 8.51
+  ...
+# Subtest: music data fields structured API error for another release never marks the active release
+ok 147 - music data fields structured API error for another release never marks the active release
+  ---
+  duration_ms: 29.362459
+  ...
+# Subtest: music data fields RV41-01 failed move retry with same category saves one release
+ok 148 - music data fields RV41-01 failed move retry with same category saves one release
+  ---
+  duration_ms: 20.098459
+  ...
+# Subtest: music data fields RV41-01 failed move retry with original category saves one release
+ok 149 - music data fields RV41-01 failed move retry with original category saves one release
+  ---
+  duration_ms: 4.035625
+  ...
+# Subtest: music data fields RV41-01 failed move retry with other field saves one release
+ok 150 - music data fields RV41-01 failed move retry with other field saves one release
+  ---
+  duration_ms: 8.776083
+  ...
+# Subtest: music data fields RV41-01 failed move then delete removes the moved release and featured reference
+ok 151 - music data fields RV41-01 failed move then delete removes the moved release and featured reference
+  ---
+  duration_ms: 65.331125
+  ...
+# Subtest: music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases
+ok 152 - music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases
+  ---
+  duration_ms: 40.253708
+  ...
+# Subtest: music data fields RV41-01 release deletion survives header failure and retry
+ok 153 - music data fields RV41-01 release deletion survives header failure and retry
+  ---
+  duration_ms: 4.496666
+  ...
+# Subtest: music data fields RV41-01 shared video deletion survives header failure and retry
+ok 154 - music data fields RV41-01 shared video deletion survives header failure and retry
+  ---
+  duration_ms: 16.553333
+  ...
+# Subtest: music data fields RV41-01 new release retry keeps its generated ID after category change
+ok 155 - music data fields RV41-01 new release retry keeps its generated ID after category change
+  ---
+  duration_ms: 4.576709
+  ...
+# Subtest: T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+ok 156 - T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+  ---
+  duration_ms: 17.268375
+  ...
+# Subtest: T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+ok 157 - T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+  ---
+  duration_ms: 87.929666
+  ...
+# Subtest: T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+ok 158 - T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+  ---
+  duration_ms: 39.171958
+  ...
+# Subtest: T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+ok 159 - T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+  ---
+  duration_ms: 57.734583
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+ok 160 - T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 11.759417
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+ok 161 - T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 100.95725
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+ok 162 - T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 11.53575
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+ok 163 - T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 21.698833
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+ok 164 - T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 42.217917
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+ok 165 - T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 39.568875
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+ok 166 - T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 28.41925
+  ...
+# Subtest: T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+ok 167 - T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+  ---
+  duration_ms: 28.517959
+  ...
+# Subtest: T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+ok 168 - T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+  ---
+  duration_ms: 24.527833
+  ...
+# Subtest: T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+ok 169 - T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+  ---
+  duration_ms: 11.870917
+  ...
+# Subtest: T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+ok 170 - T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+  ---
+  duration_ms: 22.02175
+  ...
+# Subtest: T45-CON-VALID empty, whitespace-only and malformed values: no request, in-page sentence per field, aria wiring, first field focused, values kept
+ok 171 - T45-CON-VALID empty, whitespace-only and malformed values: no request, in-page sentence per field, aria wiring, first field focused, values kept
+  ---
+  duration_ms: 120.833875
+  ...
+# Subtest: T45-CON-VALID typing clears only that field error; fixing everything sends; the browser typeMismatch standard decides the format
+ok 172 - T45-CON-VALID typing clears only that field error; fixing everything sends; the browser typeMismatch standard decides the format
+  ---
+  duration_ms: 9.407083
+  ...
+# Subtest: T45-CON-FAIL network exception: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 173 - T45-CON-FAIL network exception: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 176.834417
+  ...
+# Subtest: T45-CON-FAIL HTTP 400: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 174 - T45-CON-FAIL HTTP 400: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 72.654042
+  ...
+# Subtest: T45-CON-FAIL HTTP 500: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 175 - T45-CON-FAIL HTTP 500: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 15.2665
+  ...
+# Subtest: T45-CON-FAIL empty action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 176 - T45-CON-FAIL empty action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 17.58975
+  ...
+# Subtest: T45-CON-FAIL whitespace action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 177 - T45-CON-FAIL whitespace action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 18.858583
+  ...
+# Subtest: T45-CON-FAIL a new attempt hides the previous notice while sending
+ok 178 - T45-CON-FAIL a new attempt hides the previous notice while sending
+  ---
+  duration_ms: 17.4555
+  ...
+# Subtest: T45-CON-DONE ok shows the sent content as text, keeps the heading, moves focus, ignores later edits
+ok 179 - T45-CON-DONE ok shows the sent content as text, keeps the heading, moves focus, ignores later edits
+  ---
+  duration_ms: 19.012833
+  ...
+# Subtest: T45-CON-DOUBLE sending: one request, disabled button 送信しています…, read-only fields keep values, status announced, state restored afterwards
+ok 180 - T45-CON-DOUBLE sending: one request, disabled button 送信しています…, read-only fields keep values, status announced, state restored afterwards
+  ---
+  duration_ms: 9.615958
+  ...
+# Subtest: T45-CON-DOUBLE late settings never re-enable the button during sending nor reopen the intro after completion
+ok 181 - T45-CON-DOUBLE late settings never re-enable the button during sending nor reopen the intro after completion
+  ---
+  duration_ms: 11.987709
+  ...
+# Subtest: T42-PLAY click inserts exactly one unmuted iframe synchronously
+ok 182 - T42-PLAY click inserts exactly one unmuted iframe synchronously
+  ---
+  duration_ms: 6.963958
+  ...
+# Subtest: T42-PLAY close blanks then removes iframe, restores action and focus
+ok 183 - T42-PLAY close blanks then removes iframe, restores action and focus
+  ---
+  duration_ms: 3.781792
+  ...
+# Subtest: T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+ok 184 - T42-PLAY re-open replaces previous iframe and pagehide stops without focus
+  ---
+  duration_ms: 1.413375
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id 
+ok 185 - T42-PLAY refuses invalid youtube id 
+  ---
+  duration_ms: 1.5965
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id short
+ok 186 - T42-PLAY refuses invalid youtube id short
+  ---
+  duration_ms: 1.493959
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghij!
+ok 187 - T42-PLAY refuses invalid youtube id abcdefghij!
+  ---
+  duration_ms: 1.746625
+  ...
+# Subtest: T42-PLAY refuses invalid youtube id abcdefghijk/evil
+ok 188 - T42-PLAY refuses invalid youtube id abcdefghijk/evil
+  ---
+  duration_ms: 8.845583
+  ...
+# Subtest: RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+ok 189 - RV42-02 player sits after metadata before horizontal actions and close restores DOM classes focus
+  ---
+  duration_ms: 4.02475
+  ...
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 190 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 4.324458
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 191 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 153.712708
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 192 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 8.096833
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 193 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 5.615375
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 194 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 7.197334
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 195 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 6.801208
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 196 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 7.746792
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 197 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 39.529041
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 198 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 3.447458
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 199 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 4.076125
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 200 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 8.115833
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 201 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 2.201208
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 202 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 2.944583
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 203 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 12.251458
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 204 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 7.740667
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 205 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 3.398
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 206 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 4.382875
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 207 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 107.577
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 208 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 8.912041
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 209 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 7.667
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 210 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 4.684416
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 211 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 4.43125
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 212 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 3.957375
+  ...
+# Subtest: T42-LIVE booking internal
+ok 213 - T42-LIVE booking internal
+  ---
+  duration_ms: 6.111667
+  ...
+# Subtest: T42-LIVE booking external
+ok 214 - T42-LIVE booking external
+  ---
+  duration_ms: 4.433625
+  ...
+# Subtest: T42-LIVE booking closed
+ok 215 - T42-LIVE booking closed
+  ---
+  duration_ms: 5.97975
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 216 - T42-LIVE booking invalid
+  ---
+  duration_ms: 17.269792
+  ...
+# Subtest: T42-LIVE booking past
+ok 217 - T42-LIVE booking past
+  ---
+  duration_ms: 3.337542
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 218 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 9.637125
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 219 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 7.639041
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 220 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 5.189917
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 221 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 11.727084
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 222 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 3.94725
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 223 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 9.862042
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 224 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 6.79
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 225 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 2.893917
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 226 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 6.854167
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 227 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 3.203667
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 228 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 6.935458
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 229 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 10.331125
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 230 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 6.818542
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 231 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 11.647208
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 232 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 3.054584
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 233 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 8.286
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 234 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 15.68475
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 235 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 3.086166
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 236 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 11.643458
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 237 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 9.00125
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 238 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 2.3205
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 239 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 6.833042
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 240 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 4.974708
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 241 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 6.210792
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 242 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 9.827084
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 243 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 3.444458
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 244 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 4.676166
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 245 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 21.158625
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 246 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 5.50975
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 247 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 10.085625
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 248 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 4.076541
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 249 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 30.166709
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 250 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 4.6975
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 251 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 9.504583
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 252 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 14.67075
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 253 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 114.388083
+  ...
+# Subtest: browser Live formatters satisfy the shared fixture matrix
+ok 254 - browser Live formatters satisfy the shared fixture matrix
+  ---
+  duration_ms: 11.212375
+  ...
+# Subtest: formatLiveDate normalizes legacy separators and recomputes the weekday
+ok 255 - formatLiveDate normalizes legacy separators and recomputes the weekday
+  ---
+  duration_ms: 1.0495
+  ...
+# Subtest: formatLiveDetails uses canonical order, labels, and normalization
+ok 256 - formatLiveDetails uses canonical order, labels, and normalization
+  ---
+  duration_ms: 1.590292
+  ...
+# Subtest: parseLiveSourceText preserves source text and extracts a conservative draft
+ok 257 - parseLiveSourceText preserves source text and extracts a conservative draft
+  ---
+  duration_ms: 7.238083
+  ...
+# Subtest: empty source text returns an empty draft and a warning
+ok 258 - empty source text returns an empty draft and a warning
+  ---
+  duration_ms: 0.995125
+  ...
+# Subtest: multiple common date styles normalize to the existing YYYY.MM.DD format
+ok 259 - multiple common date styles normalize to the existing YYYY.MM.DD format
+  ---
+  duration_ms: 1.88575
+  ...
+# Subtest: open/start and lineup markers remain structured detail instead of becoming the title
+ok 260 - open/start and lineup markers remain structured detail instead of becoming the title
+  ---
+  duration_ms: 1.832042
+  ...
+# Subtest: ticket URL extraction cleans surrounding and trailing punctuation
+ok 261 - ticket URL extraction cleans surrounding and trailing punctuation
+  ---
+  duration_ms: 3.54625
+  ...
+# Subtest: malformed percent-encoding is rejected by the parser without throwing
+ok 262 - malformed percent-encoding is rejected by the parser without throwing
+  ---
+  duration_ms: 0.630833
+  ...
+# Subtest: one-line booking text extracts fields without splitting date and URL slashes
+ok 263 - one-line booking text extracts fields without splitting date and URL slashes
+  ---
+  duration_ms: 0.5975
+  ...
+# Subtest: detail cleanup removes only the selected ticket URL and preserves other HTTPS text
+ok 264 - detail cleanup removes only the selected ticket URL and preserves other HTTPS text
+  ---
+  duration_ms: 0.480375
+  ...
+# Subtest: declared weekday mismatch produces a warning while a matching weekday does not
+ok 265 - declared weekday mismatch produces a warning while a matching weekday does not
+  ---
+  duration_ms: 0.497042
+  ...
+# Subtest: parsing does not mutate input or add save and publish state
+ok 266 - parsing does not mutate input or add save and publish state
+  ---
+  duration_ms: 0.38475
+  ...
+# Subtest: an own ticketUrl property is authoritative, including an explicit empty value
+ok 267 - an own ticketUrl property is authoritative, including an explicit empty value
+  ---
+  duration_ms: 0.52525
+  ...
+# Subtest: legacy link inference accepts known ticket providers and explicit booking paths
+ok 268 - legacy link inference accepts known ticket providers and explicit booking paths
+  ---
+  duration_ms: 0.48625
+  ...
+# Subtest: legacy form-mailer inference accepts only the existing fms booking pattern
+ok 269 - legacy form-mailer inference accepts only the existing fms booking pattern
+  ---
+  duration_ms: 1.302292
+  ...
+# Subtest: malformed percent-encoding is rejected by legacy inference without throwing
+ok 270 - malformed percent-encoding is rejected by legacy inference without throwing
+  ---
+  duration_ms: 0.49575
+  ...
+# Subtest: legacy link inference rejects social, profile, detail, and arbitrary URLs
+ok 271 - legacy link inference rejects social, profile, detail, and arbitrary URLs
+  ---
+  duration_ms: 0.923834
+  ...
+# Subtest: known ticket providers still reject profile and Live detail URLs
+ok 272 - known ticket providers still reject profile and Live detail URLs
+  ---
+  duration_ms: 0.724917
+  ...
+# Subtest: getTicketCta routes external and explicit-empty tickets deterministically
+ok 273 - getTicketCta routes external and explicit-empty tickets deterministically
+  ---
+  duration_ms: 0.854709
+  ...
+# Subtest: invalid authoritative ticketUrl values stay authoritative but produce an inactive CTA
+ok 274 - invalid authoritative ticketUrl values stay authoritative but produce an inactive CTA
+  ---
+  duration_ms: 0.239917
+  ...
+# Subtest: getTicketCta is inactive for past and reservation-closed Lives
+ok 275 - getTicketCta is inactive for past and reservation-closed Lives
+  ---
+  duration_ms: 0.1695
+  ...
+# Subtest: getTicketCta changes business date exactly at Asia/Tokyo midnight on a UTC-like host
+ok 276 - getTicketCta changes business date exactly at Asia/Tokyo midnight on a UTC-like host
+  ---
+  duration_ms: 0.321667
+  ...
+# Subtest: resolveLiveById returns one canonical record/category and fails closed for duplicate IDs
+ok 277 - resolveLiveById returns one canonical record/category and fails closed for duplicate IDs
+  ---
+  duration_ms: 0.551334
+  ...
+# Subtest: buildXParentText contains only owner framing, hashtag, and canonical Live URL
+ok 278 - buildXParentText contains only owner framing, hashtag, and canonical Live URL
+  ---
+  duration_ms: 0.969042
+  ...
+# Subtest: buildXReplyText contains structured Live details
+ok 279 - buildXReplyText contains structured Live details
+  ---
+  duration_ms: 0.665084
+  ...
+# Subtest: X announcement emits the unified Live post in canonical order
+ok 280 - X announcement emits the unified Live post in canonical order
+  ---
+  duration_ms: 0.71725
+  ...
+# Subtest: X announcement recomputes Japanese weekday and omits empty blocks
+ok 281 - X announcement recomputes Japanese weekday and omits empty blocks
+  ---
+  duration_ms: 0.27325
+  ...
+# Subtest: the dependency-free module exposes the same API to a browser global
+ok 282 - the dependency-free module exposes the same API to a browser global
+  ---
+  duration_ms: 4.910375
+  ...
+# Subtest: requiring the CommonJS module does not publish a Node global
+ok 283 - requiring the CommonJS module does not publish a Node global
+  ---
+  duration_ms: 0.203834
+  ...
+# Subtest: music date format uses exactly ten ASCII characters without calendar restrictions
+ok 284 - music date format uses exactly ten ASCII characters without calendar restrictions
+  ---
+  duration_ms: 5.940291
+  ...
+# Subtest: music stable sorting, automatic and explicit selection do not mutate inputs
+ok 285 - music stable sorting, automatic and explicit selection do not mutate inputs
+  ---
+  duration_ms: 2.574833
+  ...
+# Subtest: music references clear after deletion, retain category moves and normalize only new keys
+ok 286 - music references clear after deletion, retain category moves and normalize only new keys
+  ---
+  duration_ms: 3.338667
+  ...
+# Subtest: T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+ok 287 - T44-PLAY Music adapter exists and makes one unmuted iframe synchronously
+  ---
+  duration_ms: 23.407459
+  ...
+# Subtest: T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+ok 288 - T44-PLAY release close restores focus/label/classes/aria and blanks before removal
+  ---
+  duration_ms: 5.336833
+  ...
+# Subtest: T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+ok 289 - T44-PLAY video swaps thumbnail for player; visible close restores thumbnail focus
+  ---
+  duration_ms: 3.026166
+  ...
+# Subtest: T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+ok 290 - T44-PLAY replacing release → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 1.578375
+  ...
+# Subtest: T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+ok 291 - T44-PLAY replacing release → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 0.898208
+  ...
+# Subtest: T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+ok 292 - T44-PLAY replacing video → release including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 2.627541
+  ...
+# Subtest: T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+ok 293 - T44-PLAY replacing video → video including same youtubeId restarts exactly one session
+  ---
+  duration_ms: 8.913
+  ...
+# Subtest: T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+ok 294 - T44-PLAY Home ↔ Music adapters share a single session and Home restores original DOM
+  ---
+  duration_ms: 1.848542
+  ...
+# Subtest: T44-PLAY refuses invalid id 
+ok 295 - T44-PLAY refuses invalid id 
+  ---
+  duration_ms: 2.265208
+  ...
+# Subtest: T44-PLAY refuses invalid id bad
+ok 296 - T44-PLAY refuses invalid id bad
+  ---
+  duration_ms: 10.651875
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghij!
+ok 297 - T44-PLAY refuses invalid id abcdefghij!
+  ---
+  duration_ms: 1.86425
+  ...
+# Subtest: T44-PLAY refuses invalid id abcdefghijk/evil
+ok 298 - T44-PLAY refuses invalid id abcdefghijk/evil
+  ---
+  duration_ms: 7.693375
+  ...
+# Subtest: T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+ok 299 - T44-PLAY invalid mode, missing host/trigger/closeButton never opens
+  ---
+  duration_ms: 4.37
+  ...
+# Subtest: T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+ok 300 - T44-LEGACY discography real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 3.073917
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/
+ok 301 - T44-LEGACY replace fixed destination discography/
+  ---
+  duration_ms: 8.200041
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#old
+ok 302 - T44-LEGACY replace fixed destination discography/\#old
+  ---
+  duration_ms: 2.174083
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/\#video
+ok 303 - T44-LEGACY replace fixed destination discography/\#video
+  ---
+  duration_ms: 2.990291
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+ok 304 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic
+  ---
+  duration_ms: 1.559
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+ok 305 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#old
+  ---
+  duration_ms: 0.961791
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+ok 306 - T44-LEGACY replace fixed destination discography/?utm_source=synthetic\#video
+  ---
+  duration_ms: 1.031792
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+ok 307 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 1.275375
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+ok 308 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 2.306917
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+ok 309 - T44-LEGACY replace fixed destination discography/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 2.642
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html
+ok 310 - T44-LEGACY replace fixed destination discography/index.html
+  ---
+  duration_ms: 3.934041
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#old
+ok 311 - T44-LEGACY replace fixed destination discography/index.html\#old
+  ---
+  duration_ms: 1.233542
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html\#video
+ok 312 - T44-LEGACY replace fixed destination discography/index.html\#video
+  ---
+  duration_ms: 2.051416
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+ok 313 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic
+  ---
+  duration_ms: 5.373917
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+ok 314 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 2.688709
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+ok 315 - T44-LEGACY replace fixed destination discography/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 2.014208
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+ok 316 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 5.01025
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+ok 317 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 13.003541
+  ...
+# Subtest: T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+ok 318 - T44-LEGACY replace fixed destination discography/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 3.158708
+  ...
+# Subtest: T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+ok 319 - T44-LEGACY youtube real HTML is static guidance/canonical/noindex with no API and a visible link
+  ---
+  duration_ms: 1.654292
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/
+ok 320 - T44-LEGACY replace fixed destination youtube/
+  ---
+  duration_ms: 2.000417
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#old
+ok 321 - T44-LEGACY replace fixed destination youtube/\#old
+  ---
+  duration_ms: 1.765459
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/\#video
+ok 322 - T44-LEGACY replace fixed destination youtube/\#video
+  ---
+  duration_ms: 1.768459
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+ok 323 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic
+  ---
+  duration_ms: 1.132417
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+ok 324 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#old
+  ---
+  duration_ms: 2.673125
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+ok 325 - T44-LEGACY replace fixed destination youtube/?utm_source=synthetic\#video
+  ---
+  duration_ms: 1.683083
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+ok 326 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 1.220666
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+ok 327 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 1.462375
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+ok 328 - T44-LEGACY replace fixed destination youtube/?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 1.417334
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html
+ok 329 - T44-LEGACY replace fixed destination youtube/index.html
+  ---
+  duration_ms: 4.559042
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#old
+ok 330 - T44-LEGACY replace fixed destination youtube/index.html\#old
+  ---
+  duration_ms: 2.422625
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html\#video
+ok 331 - T44-LEGACY replace fixed destination youtube/index.html\#video
+  ---
+  duration_ms: 1.301959
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+ok 332 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic
+  ---
+  duration_ms: 1.899375
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+ok 333 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#old
+  ---
+  duration_ms: 4.387
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+ok 334 - T44-LEGACY replace fixed destination youtube/index.html?utm_source=synthetic\#video
+  ---
+  duration_ms: 3.144292
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+ok 335 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored
+  ---
+  duration_ms: 2.784708
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+ok 336 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#old
+  ---
+  duration_ms: 3.527375
+  ...
+# Subtest: T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+ok 337 - T44-LEGACY replace fixed destination youtube/index.html?next=https://evil.test/path\#ignored\#video
+  ---
+  duration_ms: 2.957625
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects 
+ok 338 - T44-LEGACY invalid destination never redirects 
+  ---
+  duration_ms: 4.616333
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects other
+ok 339 - T44-LEGACY invalid destination never redirects other
+  ---
+  duration_ms: 1.317291
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects https://evil.test/
+ok 340 - T44-LEGACY invalid destination never redirects https://evil.test/
+  ---
+  duration_ms: 99.598125
+  ...
+# Subtest: T44-LEGACY invalid destination never redirects ../video
+ok 341 - T44-LEGACY invalid destination never redirects ../video
+  ---
+  duration_ms: 2.376792
+  ...
+# Subtest: T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+ok 342 - T44-LEGACY destination sections exist in actual renderer and no-JS Music keeps two listening links
+  ---
+  duration_ms: 3.938958
+  ...
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 343 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 19.671542
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 344 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 144.711708
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 345 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 21.703375
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 346 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 9.326584
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 347 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 11.155583
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 348 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 11.075458
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 349 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 260.356208
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 350 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 37.218584
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+ok 351 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 27.032125
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+ok 352 - T44-STATE loading leaves one status, skeleton and busy until success
+  ---
+  duration_ms: 179.085
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+ok 353 - T44-STATE partial/empty successful data all-empty
+  ---
+  duration_ms: 16.370084
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+ok 354 - T44-STATE partial/empty successful data missing-collections
+  ---
+  duration_ms: 7.707792
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+ok 355 - T44-STATE partial/empty successful data channel-only
+  ---
+  duration_ms: 9.454292
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 356 - T44-STATE partial/empty successful data only-videos
+  ---
+  duration_ms: 4.974625
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 357 - T44-STATE partial/empty successful data only-releases
+  ---
+  duration_ms: 8.388625
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 358 - T44-STATE partial/empty successful data empty-demo
+  ---
+  duration_ms: 3.81025
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 359 - T44-STATE partial/empty successful data empty-live-movie
+  ---
+  duration_ms: 4.097792
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 360 - T44-STATE partial/empty successful data empty-video
+  ---
+  duration_ms: 3.572458
+  ...
+# Subtest: T44-STATE malformed input is error null
+ok 361 - T44-STATE malformed input is error null
+  ---
+  duration_ms: 2.791375
+  ...
+# Subtest: T44-STATE malformed input is error []
+ok 362 - T44-STATE malformed input is error []
+  ---
+  duration_ms: 3.1465
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+ok 363 - T44-STATE malformed input is error {"discography":[]}
+  ---
+  duration_ms: 4.3455
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+ok 364 - T44-STATE malformed input is error {"discography":null}
+  ---
+  duration_ms: 11.522916
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+ok 365 - T44-STATE malformed input is error {"discography":{"digital":null}}
+  ---
+  duration_ms: 49.28375
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+ok 366 - T44-STATE malformed input is error {"discography":{"digital":{}}}
+  ---
+  duration_ms: 35.07825
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+ok 367 - T44-STATE malformed input is error {"discography":{"digital":[null]}}
+  ---
+  duration_ms: 65.708125
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+ok 368 - T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+  ---
+  duration_ms: 9.000875
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+ok 369 - T44-STATE malformed input is error {"youtube":[]}
+  ---
+  duration_ms: 7.569375
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+ok 370 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+  ---
+  duration_ms: 5.363917
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+ok 371 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+  ---
+  duration_ms: 5.471917
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+ok 372 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+  ---
+  duration_ms: 13.88675
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+ok 373 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+  ---
+  duration_ms: 19.298334
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+ok 374 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+  ---
+  duration_ms: 16.642166
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+ok 375 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+  ---
+  duration_ms: 7.269667
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+ok 376 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+  ---
+  duration_ms: 12.903041
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+ok 377 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+  ---
+  duration_ms: 55.158875
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+ok 378 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+  ---
+  duration_ms: 10.67275
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+ok 379 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+  ---
+  duration_ms: 18.546208
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+ok 380 - T44-STATE pagehide after ready stops player without extra GET on bfcache return
+  ---
+  duration_ms: 14.152834
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+ok 381 - T44-STATE async hash after ready and hashchange \#release
+  ---
+  duration_ms: 32.61875
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+ok 382 - T44-STATE async hash after ready and hashchange \#demo
+  ---
+  duration_ms: 6.11425
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+ok 383 - T44-STATE async hash after ready and hashchange \#video
+  ---
+  duration_ms: 11.59225
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+ok 384 - T44-STATE async hash after ready and hashchange \#unknown
+  ---
+  duration_ms: 6.535458
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+ok 385 - T44-STATE async hash after ready and hashchange \#missing%20stuff
+  ---
+  duration_ms: 7.771292
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+ok 386 - T44-STATE empty section hash is removed by replace without adding history and top remains usable
+  ---
+  duration_ms: 18.644292
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+ok 387 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+  ---
+  duration_ms: 114.920041
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+ok 388 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+  ---
+  duration_ms: 12.156125
+  ...
+# Subtest: T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+ok 389 - T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+  ---
+  duration_ms: 9.301
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+ok 390 - T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 52.622541
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+ok 391 - T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 75.3775
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+ok 392 - T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 5.796041
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+ok 393 - T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 4.686625
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+ok 394 - T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 36.09875
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+ok 395 - T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 13.919625
+  ...
+# Subtest: T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+ok 396 - T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+  ---
+  duration_ms: 10.170833
+  ...
+# Subtest: T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+ok 397 - T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 7.9125
+  ...
+# Subtest: T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+ok 398 - T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+  ---
+  duration_ms: 16.376959
+  ...
+# Subtest: T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+ok 399 - T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+  ---
+  duration_ms: 48.41125
+  ...
+# Subtest: T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+ok 400 - T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+  ---
+  duration_ms: 34.2315
+  ...
+# Subtest: T44-FOCUS retry success with a valid hash keeps the section position: heading focus uses preventScroll
+ok 401 - T44-FOCUS retry success with a valid hash keeps the section position: heading focus uses preventScroll
+  ---
+  duration_ms: 23.189
+  ...
+# Subtest: T44-FOCUS retry that fails again with a hash still moves focus to the retry button
+ok 402 - T44-FOCUS retry that fails again with a hash still moves focus to the retry button
+  ---
+  duration_ms: 11.075958
+  ...
+# Subtest: T44-FOCUS retry that fails again moves focus to the new retry button, not body
+ok 403 - T44-FOCUS retry that fails again moves focus to the new retry button, not body
+  ---
+  duration_ms: 27.869125
+  ...
+# Subtest: T44-FOCUS empty result after retry keeps focus on the retry still shown
+ok 404 - T44-FOCUS empty result after retry keeps focus on the retry still shown
+  ---
+  duration_ms: 6.607416
+  ...
+# Subtest: T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+ok 405 - T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+  ---
+  duration_ms: 62.147416
+  ...
+# Subtest: T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+ok 406 - T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+  ---
+  duration_ms: 39.300625
+  ...
+# Subtest: /Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-contact-dom.mjs
+ok 11 - /Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-contact-dom.mjs
+  ---
+  duration_ms: 1699.440375
+  ...
+# Subtest: T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+ok 408 - T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+  ---
+  duration_ms: 29.869084
+  ...
+# Subtest: T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+ok 409 - T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+  ---
+  duration_ms: 144.352375
+  ...
+# Subtest: T45-PROF-DATA footer text comes from site.footerText
+ok 410 - T45-PROF-DATA footer text comes from site.footerText
+  ---
+  duration_ms: 16.205166
+  ...
+# Subtest: T45-PROF-DATA text normalization: CRLF
+ok 411 - T45-PROF-DATA text normalization: CRLF
+  ---
+  duration_ms: 19.940334
+  ...
+# Subtest: T45-PROF-DATA text normalization: CR
+ok 412 - T45-PROF-DATA text normalization: CR
+  ---
+  duration_ms: 17.066375
+  ...
+# Subtest: T45-PROF-DATA text normalization: literal <br>
+ok 413 - T45-PROF-DATA text normalization: literal <br>
+  ---
+  duration_ms: 23.748
+  ...
+# Subtest: T45-PROF-DATA text normalization: mixed with blank line
+ok 414 - T45-PROF-DATA text normalization: mixed with blank line
+  ---
+  duration_ms: 17.988458
+  ...
+# Subtest: T45-PROF-DATA text normalization: markup stays literal
+ok 415 - T45-PROF-DATA text normalization: markup stays literal
+  ---
+  duration_ms: 54.318209
+  ...
+# Subtest: T45-PROF-DATA text whitespace only keeps the text element hidden
+ok 416 - T45-PROF-DATA text whitespace only keeps the text element hidden
+  ---
+  duration_ms: 43.129542
+  ...
+# Subtest: T45-PROF-DATA text empty keeps the text element hidden
+ok 417 - T45-PROF-DATA text empty keeps the text element hidden
+  ---
+  duration_ms: 14.255416
+  ...
+# Subtest: T45-PROF-DATA text missing keeps the text element hidden
+ok 418 - T45-PROF-DATA text missing keeps the text element hidden
+  ---
+  duration_ms: 6.484375
+  ...
+# Subtest: T45-PROF-DATA text null keeps the text element hidden
+ok 419 - T45-PROF-DATA text null keeps the text element hidden
+  ---
+  duration_ms: 4.390708
+  ...
+# Subtest: T45-PROF-DATA text number zero keeps the text element hidden
+ok 420 - T45-PROF-DATA text number zero keeps the text element hidden
+  ---
+  duration_ms: 4.608625
+  ...
+# Subtest: T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+ok 421 - T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+  ---
+  duration_ms: 83.757708
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+ok 422 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+  ---
+  duration_ms: 242.168583
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+ok 423 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+  ---
+  duration_ms: 259.444708
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+ok 424 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+  ---
+  duration_ms: 194.408208
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+ok 425 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+  ---
+  duration_ms: 194.38025
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+ok 426 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+  ---
+  duration_ms: 184.73225
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+ok 427 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+  ---
+  duration_ms: 175.767625
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+ok 428 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+  ---
+  duration_ms: 181.026458
+  ...
+# Subtest: T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+ok 429 - T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+  ---
+  duration_ms: 18.682958
+  ...
+# Subtest: T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+ok 430 - T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+  ---
+  duration_ms: 18.072833
+  ...
+# Subtest: T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+ok 431 - T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+  ---
+  duration_ms: 10.152667
+  ...
+# Subtest: T45-PROF-LINKS markup in labels and URLs is escaped
+ok 432 - T45-PROF-LINKS markup in labels and URLs is escaped
+  ---
+  duration_ms: 5.862542
+  ...
+# Subtest: T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+ok 433 - T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+  ---
+  duration_ms: 163.688208
+  ...
+# Subtest: T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+ok 434 - T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+  ---
+  duration_ms: 8.155125
+  ...
+# Subtest: T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+ok 435 - T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+  ---
+  duration_ms: 33.354958
+  ...
+# Subtest: T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+ok 436 - T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+  ---
+  duration_ms: 4.798166
+  ...
+# Subtest: T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+ok 437 - T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 5.017709
+  ...
+# Subtest: T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+ok 438 - T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 8.256334
+  ...
+# Subtest: T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+ok 439 - T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+  ---
+  duration_ms: 5.82625
+  ...
+# Subtest: T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+ok 440 - T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 4.509958
+  ...
+# Subtest: T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+ok 441 - T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 4.552416
+  ...
+# Subtest: T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+ok 442 - T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 4.2195
+  ...
+# Subtest: T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+ok 443 - T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 3.216417
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+ok 444 - T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+  ---
+  duration_ms: 12.662375
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+ok 445 - T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+  ---
+  duration_ms: 6.329875
+  ...
+# Subtest: T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+ok 446 - T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+  ---
+  duration_ms: 14.671334
+  ...
+# Subtest: T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+ok 447 - T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+  ---
+  duration_ms: 9.861875
+  ...
+# Subtest: T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+ok 448 - T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+  ---
+  duration_ms: 6.067709
+  ...
+# Subtest: T45-PROF-STATE retry is not repeated while a request is pending
+ok 449 - T45-PROF-STATE retry is not repeated while a request is pending
+  ---
+  duration_ms: 5.946375
+  ...
+# Subtest: T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+ok 450 - T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+  ---
+  duration_ms: 111.46
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 451 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 54.465917
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 452 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 89.461417
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 453 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 12.088542
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 454 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 120.371833
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 455 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 14.227208
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 456 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 15.771125
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 457 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 14.2705
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 458 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 4.289292
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 459 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 1.488125
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 460 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 0.647334
+  ...
+# Subtest: shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+ok 461 - shared helper route matrix keeps explicit-empty authority and conservative legacy inference
+  ---
+  duration_ms: 7.224584
+  ...
+# Subtest: Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+ok 462 - Home renders the shared external CTA as primary and encodes internal IDs without active closed links
+  ---
+  duration_ms: 102.55275
+  ...
+# Subtest: Live list renders shared reservation and detail actions only for active upcoming Lives
+ok 463 - Live list renders shared reservation and detail actions only for active upcoming Lives
+  ---
+  duration_ms: 7.975625
+  ...
+# Subtest: public Live summary, detail, and modal share the structured date and detail format
+ok 464 - public Live summary, detail, and modal share the structured date and detail format
+  ---
+  duration_ms: 51.491958
+  ...
+# Subtest: public Live details preserve legacy description when structured fields are empty
+ok 465 - public Live details preserve legacy description when structured fields are empty
+  ---
+  duration_ms: 6.094166
+  ...
+# Subtest: Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+ok 466 - Live detail replaces stale CTA state and renders external, internal, past, and invalid states safely
+  ---
+  duration_ms: 33.404625
+  ...
+# Subtest: Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+    # Subtest: cross-collection
+    ok 1 - cross-collection
+      ---
+      duration_ms: 14.245292
+      ...
+    # Subtest: same-collection
+    ok 2 - same-collection
+      ---
+      duration_ms: 9.020209
+      ...
+    1..2
+ok 467 - Home, Live list, Live detail, and ticket form all fail closed for duplicate Live IDs
+  ---
+  duration_ms: 24.567417
+  ...
+# Subtest: ticket form lists and falls back only to open internal Lives
+ok 468 - ticket form lists and falls back only to open internal Lives
+  ---
+  duration_ms: 5.16025
+  ...
+# Subtest: ticket options and selected Live preview use the shared structured format
+ok 469 - ticket options and selected Live preview use the shared structured format
+  ---
+  duration_ms: 2.965292
+  ...
+# Subtest: ticket completion formats legacy query dates through LiveOperations
+ok 470 - ticket completion formats legacy query dates through LiveOperations
+  ---
+  duration_ms: 2.071625
+  ...
+# Subtest: ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+ok 471 - ticket form shows the empty state and disables submission when every upcoming Live routes elsewhere
+  ---
+  duration_ms: 2.288708
+  ...
+# Subtest: ticket classifies rejected deep-links when zero internal Lives are eligible
+ok 472 - ticket classifies rejected deep-links when zero internal Lives are eligible
+  ---
+  duration_ms: 13.870417
+  ...
+# Subtest: ticket valid internal query wins over draft while restoring non-routing draft fields
+ok 473 - ticket valid internal query wins over draft while restoring non-routing draft fields
+  ---
+  duration_ms: 3.591375
+  ...
+# Subtest: ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+ok 474 - ticket rejects external, past, closed, invalid, and unknown deep-links without silent fallback
+  ---
+  duration_ms: 11.031167
+  ...
+# Subtest: ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+ok 475 - ticket draft never restores excluded Live and a stale/tampered excluded selection cannot submit
+  ---
+  duration_ms: 2.884708
+  ...
+# Subtest: ticket valid submission preserves the public API endpoint and payload fields
+ok 476 - ticket valid submission preserves the public API endpoint and payload fields
+  ---
+  duration_ms: 7.015
+  ...
+# Subtest: ticket trims public text fields once for matching confirmation, JSON, and saved values
+ok 477 - ticket trims public text fields once for matching confirmation, JSON, and saved values
+  ---
+  duration_ms: 4.958334
+  ...
+# Subtest: ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+ok 478 - ticket submission sends the submit-time guarded Live ID despite a duplicate same-name form control
+  ---
+  duration_ms: 5.881625
+  ...
+# Subtest: ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+    # Subtest: duplicate control before
+    ok 1 - duplicate control before
+      ---
+      duration_ms: 3.85075
+      ...
+    # Subtest: duplicate control after
+    ok 2 - duplicate control after
+      ---
+      duration_ms: 5.665542
+      ...
+    1..2
+ok 479 - ticket confirmation and payload share one immutable Live snapshot across reordered controls and canonical control-read mutation
+  ---
+  duration_ms: 10.898541
+  ...
+# Subtest: ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+    # Subtest: duplicate controls before
+    ok 1 - duplicate controls before
+      ---
+      duration_ms: 3.744375
+      ...
+    # Subtest: duplicate controls after
+    ok 2 - duplicate controls after
+      ---
+      duration_ms: 7.872333
+      ...
+    1..2
+ok 480 - ticket confirmation and JSON use only canonical ID controls despite duplicate reordered public fields
+  ---
+  duration_ms: 12.786916
+  ...
+# Subtest: ticket rejects invalid canonical quantity before opening confirmation or sending
+    # Subtest: <anonymous>
+    ok 1 - <anonymous>
+      ---
+      duration_ms: 11.62325
+      ...
+    # Subtest: 0
+    ok 2 - 0
+      ---
+      duration_ms: 4.123208
+      ...
+    # Subtest: 11
+    ok 3 - 11
+      ---
+      duration_ms: 4.253958
+      ...
+    # Subtest: 1.5
+    ok 4 - 1.5
+      ---
+      duration_ms: 6.118333
+      ...
+    # Subtest: not-a-number
+    ok 5 - not-a-number
+      ---
+      duration_ms: 10.575292
+      ...
+    1..5
+ok 481 - ticket rejects invalid canonical quantity before opening confirmation or sending
+  ---
+  duration_ms: 40.217916
+  ...
+# Subtest: ticket helper failure is clear and fail-safe
+ok 482 - ticket helper failure is clear and fail-safe
+  ---
+  duration_ms: 1.603042
+  ...
+# Subtest: public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+ok 483 - public HTML loads the helper in order, removes only global Ticket nav, and retains the ticket form
+  ---
+  duration_ms: 15.960291
+  ...
+# Subtest: ticket removes both copy elements and ignores legacy payload copy
+ok 484 - ticket removes both copy elements and ignores legacy payload copy
+  ---
+  duration_ms: 4.112792
+  ...
+# Subtest: ticket completion has neutral static default and preserves saved completion and receipt
+ok 485 - ticket completion has neutral static default and preserves saved completion and receipt
+  ---
+  duration_ms: 24.963167
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs index.html
+ok 486 - T44-SHELL ten routes and five shared nav URLs index.html
+  ---
+  duration_ms: 101.948042
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/index.html
+ok 487 - T44-SHELL ten routes and five shared nav URLs live/index.html
+  ---
+  duration_ms: 97.60275
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+ok 488 - T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+  ---
+  duration_ms: 81.014834
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/index.html
+ok 489 - T44-SHELL ten routes and five shared nav URLs ticket/index.html
+  ---
+  duration_ms: 100.450917
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+ok 490 - T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 73.395542
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs discography/index.html
+ok 491 - T44-SHELL ten routes and five shared nav URLs discography/index.html
+  ---
+  duration_ms: 106.03525
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs youtube/index.html
+ok 492 - T44-SHELL ten routes and five shared nav URLs youtube/index.html
+  ---
+  duration_ms: 85.263042
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs profile/index.html
+not ok 493 - T44-SHELL ten routes and five shared nav URLs profile/index.html
+  ---
+  duration_ms: 140.787625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    non-Home main bytes
+    + actual - expected
+    
+    + '<main id="profile-content" class="profile-container">\n' +
+    +   '    <h1 class="site-section-title">profile</h1>\n' +
+    +   '    <div class="profile-intro">\n' +
+    +   '      <div id="profile-photo" class="profile-photo" hidden>\n' +
+    +   '        <img id="profile-image" alt="松本一樹">\n' +
+    +   '      </div>\n' +
+    +   '      <div class="profile-body">\n' +
+    +   '        <div class="profile-name">\n' +
+    +   '          <h2>松本一樹</h2>\n' +
+    +   '          <p>itsuki matsumoto</p>\n' +
+    +   '        </div>\n' +
+    +   '        <div id="profile-state" class="profile-state"></div>\n' +
+    +   '        <p id="profile-text" class="profile-text" hidden></p>\n' +
+    +   '        <div id="profile-links-block" class="profile-links-block" hidden>\n' +
+    +   '          <h2 id="profile-links-title" class="home-caption">links</h2>\n' +
+    +   '          <div id="profile-link-list" class="profile-link-list"></div>\n' +
+    +   '        </div>\n' +
+    +   '        <div class="profile-contact-entry">\n' +
+    +   '          <p class="profile-contact-label">出演のご依頼・お問い合わせ</p>\n' +
+    +   '          <a class="site-button site-button--secondary" href="../contact/">Contactへ</a>\n' +
+    +   '        </div>\n' +
+    +   '      </div>\n' +
+    +   '    </div>\n' +
+    - '<main>\n' +
+    -   '    <section class="profile">\n' +
+    -   '      <div class="container">\n' +
+    -   '        <img id="profile-image" src="" alt="Artist Photo" class="artist-photo" style="display:none">\n' +
+    -   '        <h2 class="section-title">profile</h2>\n' +
+    -   '        <p id="profile-text"></p>\n' +
+    -   '        <div class="profile-links" id="profile-links"></div>\n' +
+    -   '      </div>\n' +
+    -   '    </section>\n' +
+        '  </main>'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    <main>
+        <section class="profile">
+          <div class="container">
+            <img id="profile-image" src="" alt="Artist Photo" class="artist-photo" style="display:none">
+            <h2 class="section-title">profile</h2>
+            <p id="profile-text"></p>
+            <div class="profile-links" id="profile-links"></div>
+          </div>
+        </section>
+      </main>
+  actual: |-
+    <main id="profile-content" class="profile-container">
+        <h1 class="site-section-title">profile</h1>
+        <div class="profile-intro">
+          <div id="profile-photo" class="profile-photo" hidden>
+            <img id="profile-image" alt="松本一樹">
+          </div>
+          <div class="profile-body">
+            <div class="profile-name">
+              <h2>松本一樹</h2>
+              <p>itsuki matsumoto</p>
+            </div>
+            <div id="profile-state" class="profile-state"></div>
+            <p id="profile-text" class="profile-text" hidden></p>
+            <div id="profile-links-block" class="profile-links-block" hidden>
+              <h2 id="profile-links-title" class="home-caption">links</h2>
+              <div id="profile-link-list" class="profile-link-list"></div>
+            </div>
+            <div class="profile-contact-entry">
+              <p class="profile-contact-label">出演のご依頼・お問い合わせ</p>
+              <a class="site-button site-button--secondary" href="../contact/">Contactへ</a>
+            </div>
+          </div>
+        </div>
+      </main>
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/site-shell.test.mjs:25:109)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs contact/index.html
+not ok 494 - T44-SHELL ten routes and five shared nav URLs contact/index.html
+  ---
+  duration_ms: 105.665625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/site-shell.test.mjs:14:25'
+  failureType: 'testCodeFailure'
+  error: |-
+    non-Home main bytes
+    + actual - expected ... Lines skipped
+    
+    + '<main id="contact-content" class="contact-container">\n' +
+    +   '    <h1 class="site-section-title">contact</h1>\n' +
+    +   '    <div id="contact-panel" class="contact-panel">\n' +
+    +   '      <p id="contact-intro" class="contact-intro"><embedded-intro-sentence></p>\n' +
+    +   '      <form id="contact-form" class="contact-form" action="https://formspree.io/f/<embedded-endpoint-id>" method="POST" novalidate>\n' +
+    +   '        <div class="contact-field">\n' +
+    +   '          <label for="name">名前</label>\n' +
+    +   '          <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>\n' +
+    +   '          <p class="contact-error" id="name-error" hidden></p>\n' +
+    +   '        </div>\n' +
+    +   '        <div class="contact-field">\n' +
+    +   '          <label for="email">e-mail</label>\n' +
+    +   '          <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>\n' +
+    +   '          <p class="contact-error" id="email-error" hidden></p>\n' +
+    +   '        </div>\n' +
+    +   '        <div class="contact-field">\n' +
+    +   '          <label for="message">内容</label>\n' +
+    +   '          <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>\n' +
+    +   '          <p class="contact-error" id="message-error" hidden></p>\n' +
+    +   '        </div>\n' +
+    +   '        <div id="contact-failure" class="contact-failure" role="alert" hidden>送信できませんでした。入力内容は残っています。時間をおいて、もう一度お試しください。</div>\n' +
+    +   '        <button id="contact-submit" type="submit" class="site-button site-button--primary">送信する</button>\n' +
+    +   '      </form>\n' +
+    +   '      <div id="contact-done" class="contact-done" tabindex="-1" hidden></div>\n' +
+    +   '    </div>\n' +
+    +   '    <p id="contact-status" class="contact-sr" role="status"></p>\n' +
+    ...
+    - '<main>\n' +
+    -   '    <!-- お問い合わせセクション -->\n' +
+    -   '    <section class="contact">\n' +
+    -   '      <div class="container">\n' +
+    -   '        <h2 class="section-title">contact</h2>\n' +
+    -   '        <p id="contact-intro"><embedded-intro-sentence></p>\n' +
+    -   '         <form id="contact-form" action="https://formspree.io/f/<embedded-endpoint-id>" method="POST">\n' +
+    -   '          <label for="name">名前</label>\n' +
+    -   '          <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>\n' +
+    -   '          \n' +
+    -   '          <label for="email">e-mail</label>\n' +
+    -   '          <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>\n' +
+    -   '          \n' +
+    -   '          <label for="message">内容</label>\n' +
+    -   '          <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>\n' +
+    -   '          \n' +
+    -   '          <button type="submit">送信する</button>\n' +
+    -   '        </form>\n' +
+    -   '      </div>\n' +
+    -   '    </section>\n' +
+    -   '  \n' +
+    -   '    <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>\n' +
+    -   '    <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">\n' +
+    -   '      <div class="ticket-modal-header">\n' +
+    -   '        <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>\n' +
+    -   '        <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>\n' +
+    ...
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    <main>
+        <!-- お問い合わせセクション -->
+        <section class="contact">
+          <div class="container">
+            <h2 class="section-title">contact</h2>
+            <p id="contact-intro"><embedded-intro-sentence></p>
+             <form id="contact-form" action="https://formspree.io/f/<embedded-endpoint-id>" method="POST">
+              <label for="name">名前</label>
+              <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>
+              
+              <label for="email">e-mail</label>
+              <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>
+              
+              <label for="message">内容</label>
+              <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+              
+              <button type="submit">送信する</button>
+            </form>
+          </div>
+        </section>
+      
+        <div class="ticket-modal-overlay" id="contactConfirmOverlay" aria-hidden="true"></div>
+        <div class="ticket-modal" id="contactConfirmModal" role="dialog" aria-modal="true" aria-labelledby="contactConfirmTitle" aria-hidden="true">
+          <div class="ticket-modal-header">
+            <h3 id="contactConfirmTitle" class="ticket-modal-title">送信中...</h3>
+            <button type="button" class="ticket-modal-close" id="contactConfirmCloseBtn" aria-label="Close">×</button>
+          </div>
+          <div class="ticket-modal-body">
+            <p id="contactConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">送信しています。</p>
+            <div class="ticket-confirm-summary" id="contactConfirmSummary"></div>
+            <div id="contactConfirmError" class="ticket-confirm-error" style="display:none;"></div>
+          </div>
+          <div class="ticket-modal-footer">
+            <a class="ticket-modal-btn ghost" id="contactModalBackLink" href="./">もう一度</a>
+            <a class="ticket-modal-btn primary" id="contactModalHomeLink" href="../">home</a>
+          </div>
+        </div>
+      </main>
+  actual: |-
+    <main id="contact-content" class="contact-container">
+        <h1 class="site-section-title">contact</h1>
+        <div id="contact-panel" class="contact-panel">
+          <p id="contact-intro" class="contact-intro"><embedded-intro-sentence></p>
+          <form id="contact-form" class="contact-form" action="https://formspree.io/f/<embedded-endpoint-id>" method="POST" novalidate>
+            <div class="contact-field">
+              <label for="name">名前</label>
+              <input type="text" id="name" name="name" placeholder="例: 松本 一樹" required>
+              <p class="contact-error" id="name-error" hidden></p>
+            </div>
+            <div class="contact-field">
+              <label for="email">e-mail</label>
+              <input type="email" id="email" name="_replyto" placeholder="例: example@mail.com" required>
+              <p class="contact-error" id="email-error" hidden></p>
+            </div>
+            <div class="contact-field">
+              <label for="message">内容</label>
+              <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+              <p class="contact-error" id="message-error" hidden></p>
+            </div>
+            <div id="contact-failure" class="contact-failure" role="alert" hidden>送信できませんでした。入力内容は残っています。時間をおいて、もう一度お試しください。</div>
+            <button id="contact-submit" type="submit" class="site-button site-button--primary">送信する</button>
+          </form>
+          <div id="contact-done" class="contact-done" tabindex="-1" hidden></div>
+        </div>
+        <p id="contact-status" class="contact-sr" role="status"></p>
+      </main>
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/site-shell.test.mjs:25:109)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs music/index.html
+ok 495 - T44-SHELL ten routes and five shared nav URLs music/index.html
+  ---
+  duration_ms: 5.796583
+  ...
+# Subtest: T44-SHELL shared style and script cache version aligned for every consumer
+ok 496 - T44-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 3.650542
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 497 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 78.960959
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 498 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 219.785
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 499 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 9.76375
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 500 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 3.434583
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 501 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 9.744166
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 502 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 3.906709
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 503 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 4.400916
+  ...
+# Subtest: RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+ok 504 - RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+  ---
+  duration_ms: 1.256334
+  ...
+# Subtest: RV42-07 Home caption and news spacing match master without changing shared title gap
+ok 505 - RV42-07 Home caption and news spacing match master without changing shared title gap
+  ---
+  duration_ms: 1.354542
+  ...
+# Subtest: FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+ok 506 - FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+  ---
+  duration_ms: 0.736834
+  ...
+# Subtest: FR-N2 all Home news rows share the longest bounded date column and content start
+ok 507 - FR-N2 all Home news rows share the longest bounded date column and content start
+  ---
+  duration_ms: 0.581209
+  ...
+# Subtest: T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+ok 508 - T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+  ---
+  duration_ms: 731.244083
+  ...
+# Subtest: T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+ok 509 - T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+  ---
+  duration_ms: 60.333667
+  ...
+# Subtest: T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+ok 510 - T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+  ---
+  duration_ms: 84.068916
+  ...
+# Subtest: T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+ok 511 - T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+  ---
+  duration_ms: 57.2495
+  ...
+# Subtest: T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+ok 512 - T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+  ---
+  duration_ms: 814.211625
+  ...
+# Subtest: T44-SHELL current mapping/aria /
+ok 513 - T44-SHELL current mapping/aria /
+  ---
+  duration_ms: 2.744292
+  ...
+# Subtest: T44-SHELL current mapping/aria /index.html
+ok 514 - T44-SHELL current mapping/aria /index.html
+  ---
+  duration_ms: 1.736416
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/
+ok 515 - T44-SHELL current mapping/aria /music/
+  ---
+  duration_ms: 2.369084
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/index.html
+ok 516 - T44-SHELL current mapping/aria /music/index.html
+  ---
+  duration_ms: 2.490583
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/
+ok 517 - T44-SHELL current mapping/aria /ticket/
+  ---
+  duration_ms: 1.769666
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/complete/
+ok 518 - T44-SHELL current mapping/aria /ticket/complete/
+  ---
+  duration_ms: 2.433625
+  ...
+# Subtest: T44-SHELL current mapping/aria /live/detail/
+ok 519 - T44-SHELL current mapping/aria /live/detail/
+  ---
+  duration_ms: 6.667917
+  ...
+# Subtest: T44-SHELL current mapping/aria /discography/index.html
+ok 520 - T44-SHELL current mapping/aria /discography/index.html
+  ---
+  duration_ms: 3.428625
+  ...
+# Subtest: T44-SHELL current mapping/aria /youtube/
+ok 521 - T44-SHELL current mapping/aria /youtube/
+  ---
+  duration_ms: 1.609542
+  ...
+# Subtest: T44-SHELL current mapping/aria /profile/
+ok 522 - T44-SHELL current mapping/aria /profile/
+  ---
+  duration_ms: 3.041292
+  ...
+# Subtest: T44-SHELL current mapping/aria /contact/
+ok 523 - T44-SHELL current mapping/aria /contact/
+  ---
+  duration_ms: 8.951875
+  ...
+# Subtest: T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+ok 524 - T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+  ---
+  duration_ms: 2.596208
+  ...
+1..524
+# tests 583
+# suites 0
+# pass 581
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9123.150375
+exit=1

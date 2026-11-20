@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>松本一樹 -itsuki matsumoto- : live</title>
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
+  <link rel="stylesheet" href="../assets/css/live-ticket.css?v=20261119-43">
 </head>
 
-<body class="live-page">
+<body class="site-live">
   <!-- ヘッダー -->
   <header class="site-header">
     <div class="container header-container">
@@ -28,48 +29,28 @@
       </button>
       <nav id="global-nav">
         <ul>
-          <!-- 1つ上の階層にあるindex.htmlをHomeに -->
           <li><a href="../">Home</a></li>
-          <!-- profileディレクトリへ移動する場合、../profile/ -->
-          <li><a href="../profile/">Profile</a></li>
           <li><a href="../live/">Live</a></li>
-          <li><a href="../youtube/">YouTube</a></li>
-          <li><a href="../discography/">Discography</a></li>
+          <li><a href="../music/">Music</a></li>
+          <li><a href="../profile/">Profile</a></li>
           <li><a href="../contact/">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="live">
-      <div class="container">
-        <h2 class="section-title">live</h2>
-        <div class="live-events" id="live-upcoming-events"></div>
-        <br><br>
-        <h3 id="live-past-heading">↓公演終了</h3>
-        <div class="live-events" id="live-past-events"></div>
-        <div id="live-past-more" style="display:none;">
-          <a class="application-link" href="./detail/?view=past">▷終了公演をもっと見る</a>
-        </div>
-      </div>
+  <main id="live-content" class="live-container" data-site-root="../" data-state="loading" aria-busy="true">
+    <h1 class="site-section-title" tabindex="-1" data-live-focus>live</h1>
+    <div id="live-status"><div class="live-skeleton" role="status">読み込み中</div></div>
+    <section id="live-upcoming" class="live-section" aria-labelledby="live-upcoming-heading" hidden>
+      <h2 id="live-upcoming-heading" class="live-label">開催予定</h2>
+      <div id="live-upcoming-list" class="live-card-list"></div>
     </section>
-
-    <!-- Live detail modal -->
-    <div class="ticket-modal-overlay" id="liveDetailOverlay" aria-hidden="true"></div>
-    <div class="ticket-modal" id="liveDetailModal" role="dialog" aria-modal="true" aria-labelledby="liveDetailTitle" aria-hidden="true">
-      <div class="ticket-modal-header">
-        <h3 id="liveDetailTitle" class="ticket-modal-title">live detail</h3>
-        <button type="button" class="ticket-modal-close" id="liveDetailCloseBtn" aria-label="Close">×</button>
-      </div>
-      <div class="ticket-modal-body">
-        <div id="liveDetailBody"></div>
-      </div>
-      <div class="ticket-modal-footer">
-        <a class="ticket-modal-btn ghost" id="liveDetailCloseLink" href="#">閉じる</a>
-        <a class="ticket-modal-btn primary" id="liveDetailExternalLink" href="#" target="_blank" rel="noopener" style="display:none;">instagram</a>
-      </div>
-    </div>
+    <section id="live-past" class="live-section" aria-labelledby="live-past-heading" hidden>
+      <h2 id="live-past-heading" class="live-label">終了したライブ</h2>
+      <div id="live-past-list" class="live-row-list"></div>
+      <a id="live-past-all" class="site-text-link" href="./detail/?view=past" hidden>終了したライブをすべて見る →</a>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -80,8 +61,10 @@
 
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/live-operations.js?v=20260804-2"></script>
-  <script src="../assets/js/site-content.js?v=20261117-42"></script>
-  <script src="../assets/js/script.js?v=20261117-42"></script>
+  <script src="../assets/js/live-order.js?v=20261119-43"></script>
+  <script src="../assets/js/reservation-cta.js?v=20261119-43"></script>
+  <script src="../assets/js/live-pages.js?v=20261119-43"></script>
+  <script src="../assets/js/script.js?v=20261118-44"></script>
 </body>
 
 </html>

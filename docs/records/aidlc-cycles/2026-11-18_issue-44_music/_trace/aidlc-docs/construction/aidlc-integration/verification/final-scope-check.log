@@ -1,0 +1,132 @@
+plan §3: exactly 25 non-aidlc changed files; no outside paths: PASS
+admin/README.md
+assets/css/style.css
+assets/js/home-player.js
+assets/js/music-redirect.js
+assets/js/script.js
+assets/js/site-content.js
+contact/index.html
+discography/index.html
+docs/specs/current/README.md
+docs/specs/current/live-operations-admin-ui.md
+docs/specs/current/public-site-ui.md
+index.html
+live/detail/index.html
+live/index.html
+music/index.html
+profile/index.html
+test/fixtures/music-states.json
+test/music-player.test.mjs
+test/music-redirect.test.mjs
+test/music-rendering.test.mjs
+test/public-music-data-compatibility.test.mjs
+test/site-shell.test.mjs
+ticket/complete/index.html
+ticket/index.html
+youtube/index.html
+
+git status --short --untracked-files=all:
+ M admin/README.md
+ M aidlc-docs/README.md
+ M assets/css/style.css
+ M assets/js/home-player.js
+ M assets/js/script.js
+ M assets/js/site-content.js
+ M contact/index.html
+ M discography/index.html
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M docs/specs/current/public-site-ui.md
+ M index.html
+ M live/detail/index.html
+ M live/index.html
+ M profile/index.html
+ M test/public-music-data-compatibility.test.mjs
+ M test/site-shell.test.mjs
+ M ticket/complete/index.html
+ M ticket/index.html
+ M youtube/index.html
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/01-requirements-approval.md
+?? aidlc-docs/approvals/02-workflow-plan-approval.md
+?? aidlc-docs/approvals/03-code-generation-plan-approval.md
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/aidlc-integration/canonical-proposals/README.md
+?? aidlc-docs/construction/aidlc-integration/canonical-proposals/live-operations-admin-ui.md
+?? aidlc-docs/construction/aidlc-integration/canonical-proposals/public-site-ui.md
+?? aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md
+?? aidlc-docs/construction/aidlc-integration/figma-fix-requests.md
+?? aidlc-docs/construction/aidlc-integration/link-inventory.md
+?? aidlc-docs/construction/aidlc-integration/verification/approvals.log
+?? aidlc-docs/construction/aidlc-integration/verification/bootstrap-local.log
+?? aidlc-docs/construction/aidlc-integration/verification/capture-contract-check.log
+?? aidlc-docs/construction/aidlc-integration/verification/capture-image-inventory.json
+?? aidlc-docs/construction/aidlc-integration/verification/capture-music.py
+?? aidlc-docs/construction/aidlc-integration/verification/close-preflight.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-all-site.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-all-worker.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-check-home-player.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-check-music-redirect.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-check-script.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-check-site-content.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-focused.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-git-status.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-local.log
+?? aidlc-docs/construction/aidlc-integration/verification/final-status.log
+?? aidlc-docs/construction/aidlc-integration/verification/focused-ledger.json
+?? aidlc-docs/construction/aidlc-integration/verification/input-check.log
+?? aidlc-docs/construction/aidlc-integration/verification/main-compatibility.log
+?? aidlc-docs/construction/aidlc-integration/verification/planning-self-check.md
+?? aidlc-docs/construction/aidlc-integration/verification/promotion.log
+?? aidlc-docs/construction/aidlc-integration/verification/source-and-fixture-check.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-1-characterization.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-2-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-2-red-exit-replay.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-2-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-3-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-3-red-exit-replay.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-3-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-all-site.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-all-worker.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-check-home-player.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-check-script.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-check-site-content.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-diff-check.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-git-status.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-local.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-red-exit-replay.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-4-status.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-5-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-5-red-exit-replay.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-5-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-all-site.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-all-worker.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-attempt-1.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-check-home-player.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-check-music-redirect.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-check-script.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-check-site-content.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-diff-check.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-git-status.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-green.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-local.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-nav-css-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-red-exit-replay.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-red.log
+?? aidlc-docs/construction/aidlc-integration/verification/step-6-status.log
+?? aidlc-docs/construction/aidlc-integration/verification/worker-execution.md
+?? aidlc-docs/construction/build-and-test/build-and-test-summary.md
+?? aidlc-docs/construction/plans/aidlc-integration-code-generation-plan.md
+?? aidlc-docs/cycle-summary.md
+?? aidlc-docs/inception/plans/execution-plan.md
+?? aidlc-docs/inception/requirements/requirements.md
+?? assets/js/music-redirect.js
+?? music/index.html
+?? test/fixtures/music-states.json
+?? test/music-player.test.mjs
+?? test/music-redirect.test.mjs
+?? test/music-rendering.test.mjs
+
+exit_code: 0

@@ -1,0 +1,1192 @@
+TAP version 13
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 1 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 2.521708
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 2 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 45.646125
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 3 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 3.713167
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 4 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 7.739417
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 5 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 13.274959
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 6 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 6.285042
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 7 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 2.508209
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 8 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 27.006583
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 9 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 4.349042
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 10 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 9.4555
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 11 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 7.038166
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 12 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 1.949792
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 13 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 2.092209
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 14 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 7.938583
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 15 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 3.31325
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 16 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 6.7995
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 17 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 6.0015
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 18 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 8.614167
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 19 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 5.766458
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 20 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 11.504709
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 21 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 2.386583
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 22 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 10.338709
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 23 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 10.327
+  ...
+# Subtest: T42-LIVE booking internal
+ok 24 - T42-LIVE booking internal
+  ---
+  duration_ms: 3.45475
+  ...
+# Subtest: T42-LIVE booking external
+ok 25 - T42-LIVE booking external
+  ---
+  duration_ms: 4.944083
+  ...
+# Subtest: T42-LIVE booking closed
+ok 26 - T42-LIVE booking closed
+  ---
+  duration_ms: 20.253708
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 27 - T42-LIVE booking invalid
+  ---
+  duration_ms: 11.844083
+  ...
+# Subtest: T42-LIVE booking past
+ok 28 - T42-LIVE booking past
+  ---
+  duration_ms: 3.357041
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 29 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 2.355333
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 30 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 5.575583
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 31 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 1.961792
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 32 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 2.610791
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 33 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 1.914459
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 34 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 5.83125
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 35 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 24.002708
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 36 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 2.548709
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 37 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 3.544916
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 38 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 11.165625
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 39 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 1.945084
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 40 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 2.982875
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 41 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 16.830084
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 42 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 2.887917
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 43 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 0.995334
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 44 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 1.724333
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 45 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 1.439625
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 46 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 10.974291
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 47 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 17.730625
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 48 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 7.817291
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 49 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 15.0055
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 50 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 2.114583
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 51 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 3.578584
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 52 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 2.032083
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 53 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 2.560167
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 54 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 4.636583
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 55 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 2.498541
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 56 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 13.775792
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 57 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 3.350333
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 58 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 10.165375
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 59 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 12.555375
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 60 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 26.405917
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 61 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 2.000583
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 62 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 1.969167
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 63 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 2.118417
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 64 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 2.073459
+  ...
+# Subtest: T43-LIST real HTML: body class, hooks, script order, no site-content.js, new stylesheet
+not ok 65 - T43-LIST real HTML: body class, hooks, script order, no site-content.js, new stylesheet
+  ---
+  duration_ms: 12.867833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<body class="site-live">/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '  <title>松本一樹 -itsuki matsumoto- : live</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">\n' +
+      '</head>\n' +
+      '\n' +
+      '<body class="live-page">\n' +
+      '  <!-- ヘッダー -->\n' +
+      '  <header class="site-header">\n' +
+      '    <div class="container header-container">\n' +
+      '      <h1 class="logo">\n' +
+      '        松本一樹\n' +
+      '        <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '        <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>\n' +
+      '      </h1>\n' +
+      '      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">\n' +
+      '        <span class="nav-toggle-text">Menu</span>\n' +
+      '        <span class="nav-toggle-icon" aria-hidden="true">\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '          <span></span>\n' +
+      '        </span>\n' +
+      '      </button>\n' +
+      '      <nav id="global-nav">\n' +
+      '        <ul>\n' +
+      '          <li><a href="../">Home</a></li>\n' +
+      '          <li><a href="../live/">Live</a></li>\n' +
+      '          <li><a href="../music/">Music</a></li>\n' +
+      '          <li><a href="../profile/">Profile</a></li>\n' +
+      '          <li><a href="../contact/">Contact</a></li>\n' +
+      '        </ul>\n' +
+      '      </nav>\n' +
+      '    </div>\n' +
+      '  </header>\n' +
+      '\n' +
+      '  <main>\n' +
+      '    <section class="live">\n' +
+      '      <div class="container">\n' +
+      '        <h2 class="section-title">live</h2>\n' +
+      '        <div class="live-events" id="live-upcoming-events"></div>\n' +
+      '        <br><br>\n' +
+      '        <h3 id="live-past-heading">↓公演終了</h3>\n' +
+      '        <div class="live-events" id="live-past-events"></div>\n' +
+      '        <div id="live-past-more" style="display:none;">\n' +
+      '          <a class="application-link" href="./detail/?view=past">▷終了公演をもっと見る</a>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Live detail modal -->\n' +
+      '    <div class="ticket-modal-overlay" id="liveDetailOverlay" aria-hidden="true"></div>\n' +
+      '    <div class="ticket-modal" id="liveDetailModal" role="dialog" aria-modal="true" aria-labelledby="liveDetailTitle" aria-hidden="true">\n' +
+      '      <div class="ticket-modal-header">\n' +
+      '        <h3 id="liveDetailTitle" class="ticket-modal-title">live detail</h3>\n' +
+      '        <button type="button" class="ticket-modal-close" id="liveDetailCloseBtn" aria-label="Close">×</button>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-body">\n' +
+      '        <div id="liveDetailBody"></div>\n' +
+      '      </div>\n' +
+      '      <div class="ticket-modal-footer">\n' +
+      '        <a class="ticket-modal-btn ghost" id="liveDetailCloseLink" href="#">閉じる</a>\n' +
+      '        <a class="ticket-modal-btn primary" id="liveDetailExternalLink" href="#" target="_blank" rel="noopener" style="display:none;">instagram</a>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  </main>\n' +
+      '\n' +
+      '  <footer class="site-footer">\n' +
+      '    <div class="container">\n' +
+      '      <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>\n' +
+      '    </div>\n' +
+      '  </footer>\n' +
+      '\n' +
+      '  <script src="../assets/js/site-config.js"></script>\n' +
+      '  <script src="../assets/js/live-operations.js?v=20260804-2"></script>\n' +
+      '  <script src="../assets/js/site-content.js?v=20261118-44"></script>\n' +
+      '  <script src="../assets/js/script.js?v=20261118-44"></script>\n' +
+      '</body>\n' +
+      '\n' +
+      '</html>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>松本一樹 -itsuki matsumoto- : live</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
+    </head>
+    
+    <body class="live-page">
+      <!-- ヘッダー -->
+      <header class="site-header">
+        <div class="container header-container">
+          <h1 class="logo">
+            松本一樹
+            <span class="pc-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+            <span class="sp-only"> -<span class="accent">i</span>tsuki matsumoto-</span>
+          </h1>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開閉">
+            <span class="nav-toggle-text">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+          <nav id="global-nav">
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="../live/">Live</a></li>
+              <li><a href="../music/">Music</a></li>
+              <li><a href="../profile/">Profile</a></li>
+              <li><a href="../contact/">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    
+      <main>
+        <section class="live">
+          <div class="container">
+            <h2 class="section-title">live</h2>
+            <div class="live-events" id="live-upcoming-events"></div>
+            <br><br>
+            <h3 id="live-past-heading">↓公演終了</h3>
+            <div class="live-events" id="live-past-events"></div>
+            <div id="live-past-more" style="display:none;">
+              <a class="application-link" href="./detail/?view=past">▷終了公演をもっと見る</a>
+            </div>
+          </div>
+        </section>
+    
+        <!-- Live detail modal -->
+        <div class="ticket-modal-overlay" id="liveDetailOverlay" aria-hidden="true"></div>
+        <div class="ticket-modal" id="liveDetailModal" role="dialog" aria-modal="true" aria-labelledby="liveDetailTitle" aria-hidden="true">
+          <div class="ticket-modal-header">
+            <h3 id="liveDetailTitle" class="ticket-modal-title">live detail</h3>
+            <button type="button" class="ticket-modal-close" id="liveDetailCloseBtn" aria-label="Close">×</button>
+          </div>
+          <div class="ticket-modal-body">
+            <div id="liveDetailBody"></div>
+          </div>
+          <div class="ticket-modal-footer">
+            <a class="ticket-modal-btn ghost" id="liveDetailCloseLink" href="#">閉じる</a>
+            <a class="ticket-modal-btn primary" id="liveDetailExternalLink" href="#" target="_blank" rel="noopener" style="display:none;">instagram</a>
+          </div>
+        </div>
+      </main>
+    
+      <footer class="site-footer">
+        <div class="container">
+          <p id="site-footer">&copy; 2025 松本一樹 -itsuki matsumoto-. All rights reserved.</p>
+        </div>
+      </footer>
+    
+      <script src="../assets/js/site-config.js"></script>
+      <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+      <script src="../assets/js/site-content.js?v=20261118-44"></script>
+      <script src="../assets/js/script.js?v=20261118-44"></script>
+    </body>
+    
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:27:12)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T43-LIST upcoming cards are in nearest-first order with flyer, date, venue, title, two detail lines, reserve and 詳細
+not ok 66 - T43-LIST upcoming cards are in nearest-first order with flyer, date, venue, title, two detail lines, reserve and 詳細
+  ---
+  duration_ms: 98.276
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:38:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'fx-up-stale',
+    -   'fx-up-near',
+    -   'fx-up-far',
+    -   'fx-up-ext',
+    -   'fx-up-closed',
+    -   'fx-up-invalid',
+    -   'fx-up-social'
+    - ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'fx-up-stale'
+    1: 'fx-up-near'
+    2: 'fx-up-far'
+    3: 'fx-up-ext'
+    4: 'fx-up-closed'
+    5: 'fx-up-invalid'
+    6: 'fx-up-social'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:41:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LIST reservation kinds in the list: closed, invalid and past-dated upcoming show no 予約する; external opens a new tab
+not ok 67 - T43-LIST reservation kinds in the list: closed, invalid and past-dated upcoming show no 予約する; external opens a new tab
+  ---
+  duration_ms: 29.156792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:63:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:66:34)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LIST past: newest first, only the first three, with date, venue, title and an arrow; whole row is the link
+not ok 68 - T43-LIST past: newest first, only the first three, with date, venue, title and an arrow; whole row is the link
+  ---
+  duration_ms: 9.856917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:86:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:89:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LIST the all-link appears only above three past Lives; three or fewer show every row
+not ok 69 - T43-LIST the all-link appears only above three past Lives; three or fewer show every row
+  ---
+  duration_ms: 14.498792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:104:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:108:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LIST hrefs encode the Live ID once and keep dangerous characters out of markup
+not ok 70 - T43-LIST hrefs encode the Live ID once and keep dangerous characters out of markup
+  ---
+  duration_ms: 10.899
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:116:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:123:55)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LIST duplicate or empty IDs offer neither reservation nor detail; the helper missing offers none either
+not ok 71 - T43-LIST duplicate or empty IDs offer neither reservation nor detail; the helper missing offers none either
+  ---
+  duration_ms: 34.101042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:131:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'querySelector')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:140:46)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LIST images: relative paths resolve from the site root, a missing image shows the date on a pale face, a broken image swaps in the face
+not ok 72 - T43-LIST images: relative paths resolve from the site root, a missing image shows the date on a pale face, a broken image swaps in the face
+  ---
+  duration_ms: 8.993125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:147:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'querySelector')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:151:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-LIST sections and headings: 開催予定 and 終了したライブ are headings; the page keeps one live title with the red rule class
+not ok 73 - T43-LIST sections and headings: 開催予定 and 終了したライブ are headings; the page keeps one live title with the red rule class
+  ---
+  duration_ms: 18.958875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:165:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== '開催予定'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '開催予定'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:167:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST loading first: skeleton with role=status 読み込み中 and aria-busy, not an empty list
+not ok 74 - T43-STATE-LIST loading first: skeleton with role=status 読み込み中 and aria-busy, not an empty list
+  ---
+  duration_ms: 11.099791
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:176:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:181:21)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-01 and S43-02: empty arrays are states, not errors
+not ok 75 - T43-STATE-LIST S43-01 and S43-02: empty arrays are states, not errors
+  ---
+  duration_ms: 15.536834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:194:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - '次のライブは、決まり次第ここでお知らせします。'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '次のライブは、決まり次第ここでお知らせします。'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:196:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 network failure shows the load error with a retry
+not ok 76 - T43-STATE-LIST S43-03 network failure shows the load error with a retry
+  ---
+  duration_ms: 3.630417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:215:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:217:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 HTTP failure shows the load error with a retry
+not ok 77 - T43-STATE-LIST S43-03 HTTP failure shows the load error with a retry
+  ---
+  duration_ms: 4.564959
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:215:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:217:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 invalid JSON shows the load error with a retry
+not ok 78 - T43-STATE-LIST S43-03 invalid JSON shows the load error with a retry
+  ---
+  duration_ms: 8.106
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:215:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:217:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 data is an array shows the load error with a retry
+not ok 79 - T43-STATE-LIST S43-03 data is an array shows the load error with a retry
+  ---
+  duration_ms: 4.453292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:215:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:217:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 data is null shows the load error with a retry
+not ok 80 - T43-STATE-LIST S43-03 data is null shows the load error with a retry
+  ---
+  duration_ms: 6.440708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:215:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:217:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 malformed shape (invalid-live) is an error, distinct from an empty array
+not ok 81 - T43-STATE-LIST S43-03 malformed shape (invalid-live) is an error, distinct from an empty array
+  ---
+  duration_ms: 6.442958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:226:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:228:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 malformed shape (invalid-upcoming) is an error, distinct from an empty array
+not ok 82 - T43-STATE-LIST S43-03 malformed shape (invalid-upcoming) is an error, distinct from an empty array
+  ---
+  duration_ms: 35.982917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:226:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:228:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST S43-03 malformed shape (invalid-past) is an error, distinct from an empty array
+not ok 83 - T43-STATE-LIST S43-03 malformed shape (invalid-past) is an error, distinct from an empty array
+  ---
+  duration_ms: 47.032292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:226:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:228:62)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST retry: one request at a time, the old error is replaced, focus moves to the heading on success
+not ok 84 - T43-STATE-LIST retry: one request at a time, the old error is replaced, focus moves to the heading on success
+  ---
+  duration_ms: 27.633667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:234:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'click')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:240:24)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST a failing retry puts focus on the new retry button; listeners do not accumulate
+not ok 85 - T43-STATE-LIST a failing retry puts focus on the new retry button; listeners do not accumulate
+  ---
+  duration_ms: 19.135666
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:252:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'listenerCount')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:255:23)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST pagehide discards a pending response; pageshow from the cache loads again
+not ok 86 - T43-STATE-LIST pagehide discards a pending response; pageshow from the cache loads again
+  ---
+  duration_ms: 20.156625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:267:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:273:60)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-LIST the footer text comes from the site data
+ok 87 - T43-STATE-LIST the footer text comes from the site data
+  ---
+  duration_ms: 18.893666
+  ...
+# Subtest: T43-DETAIL heading is date then venue then title; DOM order is heading, actions, flyer, information
+not ok 88 - T43-DETAIL heading is date then venue then title; DOM order is heading, actions, flyer, information
+  ---
+  duration_ms: 7.888334
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:295:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - '2026.12.26(Sat)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2026.12.26(Sat)'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:298:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-DETAIL information rows are exactly the Home formatter lines; the empty title shows no Coming Soon
+not ok 89 - T43-DETAIL information rows are exactly the Home formatter lines; the empty title shows no Coming Soon
+  ---
+  duration_ms: 18.43175
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:310:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'Open/Start: 17:30/18:00',
+    -   'ticket: 前売 ¥3,000 (+1D)',
+    -   'w. 架空の出演者A / 架空の出演者B'
+    - ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'Open/Start: 17:30/18:00'
+    1: 'ticket: 前売 ¥3,000 (+1D)'
+    2: 'w. 架空の出演者A / 架空の出演者B'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:315:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-DETAIL when the four detail fields are empty the description is shown whole, keeping line breaks and blank lines
+not ok 90 - T43-DETAIL when the four detail fields are empty the description is shown whole, keeping line breaks and blank lines
+  ---
+  duration_ms: 18.224292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:323:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'textContent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:327:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-DETAIL the Instagram button appears only for an Instagram address; other links are not shown
+not ok 91 - T43-DETAIL the Instagram button appears only for an Instagram address; other links are not shown
+  ---
+  duration_ms: 14.12775
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:337:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:340:23)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-DETAIL the four reservation outcomes; none of the closed ones offers 予約する or a link
+not ok 92 - T43-DETAIL the four reservation outcomes; none of the closed ones offers 予約する or a link
+  ---
+  duration_ms: 10.132833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:351:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:356:26)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-DETAIL flyer: shown at its original ratio, a missing image shows the date, a broken image swaps to the date face
+not ok 93 - T43-DETAIL flyer: shown at its original ratio, a missing image shows the date, a broken image swaps to the date face
+  ---
+  duration_ms: 21.541833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:369:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:372:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-DETAIL S43-04: no liveId, unknown, duplicate: one notice, no reservation, a way back
+not ok 94 - T43-STATE-DETAIL S43-04: no liveId, unknown, duplicate: one notice, no reservation, a way back
+  ---
+  duration_ms: 7.460333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:389:1'
+  failureType: 'testCodeFailure'
+  error: ''
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:393:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-STATE-DETAIL S43-03 and loading: error with retry; skeleton while pending; retry reloads
+not ok 95 - T43-STATE-DETAIL S43-03 and loading: error with retry; skeleton while pending; retry reloads
+  ---
+  duration_ms: 5.037375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:404:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:408:70)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-ARCHIVE ?view=past lists every past Live newest first with the title, linking to details on the same page
+not ok 96 - T43-ARCHIVE ?view=past lists every past Live newest first with the title, linking to details on the same page
+  ---
+  duration_ms: 6.132791
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:425:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'sortPast')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:428:72)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-ARCHIVE ?liveId wins over ?view=past; an empty ?liveId falls back to the archive; view is case-insensitive
+not ok 97 - T43-ARCHIVE ?liveId wins over ?view=past; an empty ?liveId falls back to the archive; view is case-insensitive
+  ---
+  duration_ms: 16.976917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:440:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - '2026.10.31(Sat)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2026.10.31(Sat)'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:443:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-ARCHIVE S43-02: no past Live shows the written empty state; S43-03 shows the error
+not ok 98 - T43-ARCHIVE S43-02: no past Live shows the written empty state; S43-03 shows the error
+  ---
+  duration_ms: 4.630167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:450:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - '終了したライブはまだありません。'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '終了したライブはまだありません。'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:452:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-ARCHIVE the entrances keep working: Home link, the list link and X (live/detail/?liveId=) reach the right view
+not ok 99 - T43-ARCHIVE the entrances keep working: Home link, the list link and X (live/detail/?liveId=) reach the right view
+  ---
+  duration_ms: 23.929833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:460:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 12
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:464:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-PROD every Live shape renders on all three views without error and without losing text
+not ok 100 - T43-PROD every Live shape renders on all three views without error and without losing text
+  ---
+  duration_ms: 8.79
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:475:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'getAttribute')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:479:64)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-PROD text is escaped and no truncation class is used in the markup
+not ok 101 - T43-PROD text is escaped and no truncation class is used in the markup
+  ---
+  duration_ms: 16.718625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:496:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'innerHTML')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:498:54)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T43-PROD a mixed-date list orders by the real date and keeps unreadable dates last without moving the saved data
+not ok 102 - T43-PROD a mixed-date list orders by the real date and keeps unreadable dates last without moving the saved data
+  ---
+  duration_ms: 18.844666
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:509:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'fx-past-01'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'fx-past-01'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-43-live-ticket/test/live-pages.test.mjs:514:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 103 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 23.765083
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 104 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 5.166708
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 105 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 4.167416
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 106 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 5.483042
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 107 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 17.077459
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 108 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 4.243958
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 109 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 6.920666
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 110 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 4.403042
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 111 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 0.810917
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 112 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 0.499541
+  ...
+1..112
+# tests 112
+# suites 0
+# pass 75
+# fail 37
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2453.793375
+exit=1

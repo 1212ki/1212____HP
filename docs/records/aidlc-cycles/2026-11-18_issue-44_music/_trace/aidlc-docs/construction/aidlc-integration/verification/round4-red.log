@@ -1,0 +1,346 @@
+TAP version 13
+# Subtest: T44-DATA Music real HTML hooks, loading status, canonical and script order
+ok 1 - T44-DATA Music real HTML hooks, loading status, canonical and script order
+  ---
+  duration_ms: 8.460625
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel false
+ok 2 - T44-DATA all four releases/five videos, exact title/meta/channel false
+  ---
+  duration_ms: 49.352625
+  ...
+# Subtest: T44-DATA all four releases/five videos, exact title/meta/channel true
+ok 3 - T44-DATA all four releases/five videos, exact title/meta/channel true
+  ---
+  duration_ms: 15.673458
+  ...
+# Subtest: T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+ok 4 - T44-DATA sort uses helper per category; ties and malformed/blank dates stay stable and nonmutating
+  ---
+  duration_ms: 17.101667
+  ...
+# Subtest: T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+ok 5 - T44-DATA metadata missing/empty has no blank row or separator; titles never parsed
+  ---
+  duration_ms: 11.289917
+  ...
+# Subtest: T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+ok 6 - T44-DATA description br/CRLF normalization and escape retains every numbered line in both categories
+  ---
+  duration_ms: 24.421708
+  ...
+# Subtest: T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+ok 7 - T44-DATA safe external operations, relative images and cache query; no id/title injected into hooks
+  ---
+  duration_ms: 79.020625
+  ...
+# Subtest: T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+ok 8 - T44-DATA first matching id by category; invalid selected id has no listen; bad video still has title/placeholder
+  ---
+  duration_ms: 16.788916
+  ...
+# Subtest: T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+ok 9 - T44-PLAY delegated real release/video clicks call adapter synchronously, close and render stop
+  ---
+  duration_ms: 6.695709
+  ...
+# Subtest: T44-STATE loading leaves one status, skeleton and busy until success
+ok 10 - T44-STATE loading leaves one status, skeleton and busy until success
+  ---
+  duration_ms: 16.788792
+  ...
+# Subtest: T44-STATE partial/empty successful data all-empty
+ok 11 - T44-STATE partial/empty successful data all-empty
+  ---
+  duration_ms: 27.484583
+  ...
+# Subtest: T44-STATE partial/empty successful data missing-collections
+ok 12 - T44-STATE partial/empty successful data missing-collections
+  ---
+  duration_ms: 12.776458
+  ...
+# Subtest: T44-STATE partial/empty successful data channel-only
+ok 13 - T44-STATE partial/empty successful data channel-only
+  ---
+  duration_ms: 5.723709
+  ...
+# Subtest: T44-STATE partial/empty successful data only-videos
+ok 14 - T44-STATE partial/empty successful data only-videos
+  ---
+  duration_ms: 17.080375
+  ...
+# Subtest: T44-STATE partial/empty successful data only-releases
+ok 15 - T44-STATE partial/empty successful data only-releases
+  ---
+  duration_ms: 10.35075
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-demo
+ok 16 - T44-STATE partial/empty successful data empty-demo
+  ---
+  duration_ms: 7.582959
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-live-movie
+ok 17 - T44-STATE partial/empty successful data empty-live-movie
+  ---
+  duration_ms: 8.506083
+  ...
+# Subtest: T44-STATE partial/empty successful data empty-video
+ok 18 - T44-STATE partial/empty successful data empty-video
+  ---
+  duration_ms: 6.894959
+  ...
+# Subtest: T44-STATE malformed input is error null
+ok 19 - T44-STATE malformed input is error null
+  ---
+  duration_ms: 163.03875
+  ...
+# Subtest: T44-STATE malformed input is error []
+ok 20 - T44-STATE malformed input is error []
+  ---
+  duration_ms: 4.879875
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":[]}
+ok 21 - T44-STATE malformed input is error {"discography":[]}
+  ---
+  duration_ms: 9.288417
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":null}
+ok 22 - T44-STATE malformed input is error {"discography":null}
+  ---
+  duration_ms: 17.021625
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":null}}
+ok 23 - T44-STATE malformed input is error {"discography":{"digital":null}}
+  ---
+  duration_ms: 16.027458
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":{}}}
+ok 24 - T44-STATE malformed input is error {"discography":{"digital":{}}}
+  ---
+  duration_ms: 3.812542
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[null]}}
+ok 25 - T44-STATE malformed input is error {"discography":{"digital":[null]}}
+  ---
+  duration_ms: 8.461208
+  ...
+# Subtest: T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+ok 26 - T44-STATE malformed input is error {"discography":{"digital":[[]]}}
+  ---
+  duration_ms: 10.579833
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":[]}
+ok 27 - T44-STATE malformed input is error {"youtube":[]}
+  ---
+  duration_ms: 4.558667
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+ok 28 - T44-STATE malformed input is error {"youtube":{"demos":"wrong"}}
+  ---
+  duration_ms: 5.84575
+  ...
+# Subtest: T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+ok 29 - T44-STATE malformed input is error {"youtube":{"musicVideos":[7]}}
+  ---
+  duration_ms: 3.637875
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+ok 30 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks http
+  ---
+  duration_ms: 6.550125
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+ok 31 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks network
+  ---
+  duration_ms: 4.51125
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+ok 32 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks json
+  ---
+  duration_ms: 48.878042
+  ...
+# Subtest: T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+ok 33 - T44-STATE failure retains heading/footer, one retry and two safe fallbacks render
+  ---
+  duration_ms: 3.782
+  ...
+# Subtest: T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+ok 34 - T44-STATE safe fetched Site and channel fallback URLs take priority for empty and render failure
+  ---
+  duration_ms: 39.744625
+  ...
+# Subtest: T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+ok 35 - T44-STATE broken/unsafe images show only artist or video placeholder without losing title/actions
+  ---
+  duration_ms: 20.63475
+  ...
+# Subtest: T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+ok 36 - T44-STATE retry suppresses double GET, disables button, closes player and reuses listeners
+  ---
+  duration_ms: 14.0335
+  ...
+# Subtest: T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+ok 37 - T44-STATE pagehide invalidates late response; bfcache retries interrupted request once
+  ---
+  duration_ms: 14.090792
+  ...
+# Subtest: T44-STATE pagehide after ready stops player without extra GET on bfcache return
+ok 38 - T44-STATE pagehide after ready stops player without extra GET on bfcache return
+  ---
+  duration_ms: 33.684125
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#release
+ok 39 - T44-STATE async hash after ready and hashchange \#release
+  ---
+  duration_ms: 32.643125
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#demo
+ok 40 - T44-STATE async hash after ready and hashchange \#demo
+  ---
+  duration_ms: 27.587209
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#video
+ok 41 - T44-STATE async hash after ready and hashchange \#video
+  ---
+  duration_ms: 5.65575
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#unknown
+ok 42 - T44-STATE async hash after ready and hashchange \#unknown
+  ---
+  duration_ms: 13.507625
+  ...
+# Subtest: T44-STATE async hash after ready and hashchange \#missing%20stuff
+ok 43 - T44-STATE async hash after ready and hashchange \#missing%20stuff
+  ---
+  duration_ms: 9.089209
+  ...
+# Subtest: T44-STATE empty section hash is removed by replace without adding history and top remains usable
+ok 44 - T44-STATE empty section hash is removed by replace without adding history and top remains usable
+  ---
+  duration_ms: 8.824291
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+ok 45 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded false
+  ---
+  duration_ms: 22.488833
+  ...
+# Subtest: T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+ok 46 - T44-STATE real script.js leaves Music anchors native before/after DOMContentLoaded true
+  ---
+  duration_ms: 97.642792
+  ...
+# Subtest: T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+ok 47 - T44-LAYOUT release player host is a list sibling right after its card and is named for the work
+  ---
+  duration_ms: 5.543917
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+ok 48 - T44-LAYOUT PC grid with 4 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 18.728375
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+ok 49 - T44-LAYOUT PC grid with 4 columns: work 3 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 4.733083
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+ok 50 - T44-LAYOUT PC grid with 4 columns: work 4 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 7.127416
+  ...
+# Subtest: T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+ok 51 - T44-LAYOUT PC grid with 4 columns: work 5 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 14.294458
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+ok 52 - T44-LAYOUT PC grid with 3 columns: work 2 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 16.213125
+  ...
+# Subtest: T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+ok 53 - T44-LAYOUT PC grid with 3 columns: work 3 opens its player in grid row 3, below the pressed row
+  ---
+  duration_ms: 5.899875
+  ...
+# Subtest: T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+ok 54 - T44-LAYOUT PC grid with 2 columns: work 5 opens its player in grid row 4, below the pressed row
+  ---
+  duration_ms: 5.746625
+  ...
+# Subtest: T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+ok 55 - T44-LAYOUT PC grid with 1 columns: work 0 opens its player in grid row 2, below the pressed row
+  ---
+  duration_ms: 7.969584
+  ...
+# Subtest: T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+ok 56 - T44-LAYOUT narrow (one-column flex) layout leaves the player in flow under its own card, and resize re-places an open player
+  ---
+  duration_ms: 9.417625
+  ...
+# Subtest: T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+ok 57 - T44-LAYOUT press while the grid is not measurable (no computed style) never throws and sets no row
+  ---
+  duration_ms: 7.032167
+  ...
+# Subtest: T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+ok 58 - T44-FOCUS retry success moves focus to the music heading; the heading is focusable only by script
+  ---
+  duration_ms: 14.433292
+  ...
+# Subtest: T44-FOCUS retry success with a valid hash keeps the section position: heading focus uses preventScroll
+not ok 59 - T44-FOCUS retry success with a valid hash keeps the section position: heading focus uses preventScroll
+  ---
+  duration_ms: 11.530625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:234:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - true
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-44-music/test/music-rendering.test.mjs:239:101)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T44-FOCUS retry that fails again with a hash still moves focus to the retry button
+ok 60 - T44-FOCUS retry that fails again with a hash still moves focus to the retry button
+  ---
+  duration_ms: 18.421709
+  ...
+# Subtest: T44-FOCUS retry that fails again moves focus to the new retry button, not body
+ok 61 - T44-FOCUS retry that fails again moves focus to the new retry button, not body
+  ---
+  duration_ms: 14.385958
+  ...
+# Subtest: T44-FOCUS empty result after retry keeps focus on the retry still shown
+ok 62 - T44-FOCUS empty result after retry keeps focus on the retry still shown
+  ---
+  duration_ms: 5.585833
+  ...
+# Subtest: T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+ok 63 - T44-FOCUS focus is not stolen when the user moved it elsewhere while loading, nor on first load or a stale response
+  ---
+  duration_ms: 56.563084
+  ...
+# Subtest: T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+ok 64 - T44-A11Y release links keep the visible label and add the work name to the accessible name; channel and failure links are unchanged
+  ---
+  duration_ms: 36.826542
+  ...
+1..64
+# tests 64
+# suites 0
+# pass 63
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1705.5815

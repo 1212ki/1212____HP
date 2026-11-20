@@ -1,0 +1,591 @@
+TAP version 13
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 1 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 17.323083
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 2 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 124.797667
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 3 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 42.592292
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 4 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 15.352333
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 5 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 4.27425
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 6 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 9.123
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 7 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 4.777042
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 8 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 13.269333
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 9 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 4.51625
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 10 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 3.58325
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 11 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 76.203375
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 12 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 19.346584
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 13 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 3.181
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 14 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 4.173958
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 15 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 6.998792
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 16 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 2.824875
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 17 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 2.848
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 18 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 3.04925
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 19 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 4.915166
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 20 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 23.393542
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 21 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 15.772917
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 22 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 11.549833
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 23 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 6.62225
+  ...
+# Subtest: T42-LIVE booking internal
+ok 24 - T42-LIVE booking internal
+  ---
+  duration_ms: 7.393292
+  ...
+# Subtest: T42-LIVE booking external
+ok 25 - T42-LIVE booking external
+  ---
+  duration_ms: 2.89225
+  ...
+# Subtest: T42-LIVE booking closed
+ok 26 - T42-LIVE booking closed
+  ---
+  duration_ms: 2.534416
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 27 - T42-LIVE booking invalid
+  ---
+  duration_ms: 2.333292
+  ...
+# Subtest: T42-LIVE booking past
+ok 28 - T42-LIVE booking past
+  ---
+  duration_ms: 3.713958
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 29 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 2.4425
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 30 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 2.76275
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 31 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 3.725416
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 32 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 126.569875
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 33 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 3.475666
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 34 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 2.532084
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 35 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 4.336833
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 36 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 7.013542
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 37 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 70.193625
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 38 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 5.431083
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 39 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 3.301958
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 40 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 5.068709
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 41 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 4.959875
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 42 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 4.931666
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 43 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 1.767416
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 44 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 2.395917
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 45 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 2.133916
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 46 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 2.042
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 47 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 1.811625
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 48 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 1.688917
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 49 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 1.838708
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 50 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 2.647792
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 51 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 2.562834
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 52 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 2.461958
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 53 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 2.145333
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 54 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 6.359583
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 55 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 3.085167
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 56 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 3.44125
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 57 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 2.094458
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 58 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 5.266208
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 59 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 2.236333
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 60 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 127.765041
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 61 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 3.545
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 62 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 9.649208
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 63 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 3.289708
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 64 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 3.269584
+  ...
+# Subtest: T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+ok 65 - T45-PROF-DATA real HTML: ids, structure, fixed name and contact entry, no initial state attributes
+  ---
+  duration_ms: 111.656667
+  ...
+# Subtest: T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+ok 66 - T45-PROF-DATA success renders photo src (../ prefix, version, upper-case extension), text via textContent, one GET
+  ---
+  duration_ms: 30.0715
+  ...
+# Subtest: T45-PROF-DATA footer text comes from site.footerText
+ok 67 - T45-PROF-DATA footer text comes from site.footerText
+  ---
+  duration_ms: 6.583125
+  ...
+# Subtest: T45-PROF-DATA text normalization: CRLF
+ok 68 - T45-PROF-DATA text normalization: CRLF
+  ---
+  duration_ms: 5.704167
+  ...
+# Subtest: T45-PROF-DATA text normalization: CR
+ok 69 - T45-PROF-DATA text normalization: CR
+  ---
+  duration_ms: 6.001209
+  ...
+# Subtest: T45-PROF-DATA text normalization: literal <br>
+ok 70 - T45-PROF-DATA text normalization: literal <br>
+  ---
+  duration_ms: 3.971875
+  ...
+# Subtest: T45-PROF-DATA text normalization: mixed with blank line
+ok 71 - T45-PROF-DATA text normalization: mixed with blank line
+  ---
+  duration_ms: 6.777458
+  ...
+# Subtest: T45-PROF-DATA text normalization: markup stays literal
+ok 72 - T45-PROF-DATA text normalization: markup stays literal
+  ---
+  duration_ms: 84.053792
+  ...
+# Subtest: T45-PROF-DATA text whitespace only keeps the text element hidden
+ok 73 - T45-PROF-DATA text whitespace only keeps the text element hidden
+  ---
+  duration_ms: 54.610208
+  ...
+# Subtest: T45-PROF-DATA text empty keeps the text element hidden
+ok 74 - T45-PROF-DATA text empty keeps the text element hidden
+  ---
+  duration_ms: 21.826625
+  ...
+# Subtest: T45-PROF-DATA text missing keeps the text element hidden
+ok 75 - T45-PROF-DATA text missing keeps the text element hidden
+  ---
+  duration_ms: 14.417541
+  ...
+# Subtest: T45-PROF-DATA text null keeps the text element hidden
+ok 76 - T45-PROF-DATA text null keeps the text element hidden
+  ---
+  duration_ms: 4.697583
+  ...
+# Subtest: T45-PROF-DATA text number zero keeps the text element hidden
+ok 77 - T45-PROF-DATA text number zero keeps the text element hidden
+  ---
+  duration_ms: 5.7415
+  ...
+# Subtest: T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+ok 78 - T45-PROF-LINKS production shape (Site 5, Profile 4 all among the five services) stays five, Home order, label Bandcamp
+  ---
+  duration_ms: 7.294375
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+ok 79 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: both Site and Profile (production shape)
+  ---
+  duration_ms: 194.769667
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+ok 80 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Site only
+  ---
+  duration_ms: 134.570958
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+ok 81 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile only
+  ---
+  duration_ms: 260.855958
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+ok 82 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: neither
+  ---
+  duration_ms: 242.464458
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+ok 83 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: extra links beyond the five services
+  ---
+  duration_ms: 564.04475
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+ok 84 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile with extras only and no Site links
+  ---
+  duration_ms: 219.651583
+  ...
+# Subtest: T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+ok 85 - T45-PROF-LINKS no link of the current Profile disappears, same order at the head: Profile links not an array
+  ---
+  duration_ms: 149.994292
+  ...
+# Subtest: T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+ok 86 - T45-PROF-LINKS extras: registered order after the five services, one per destination, unsafe URL dropped, empty name shows host
+  ---
+  duration_ms: 6.767458
+  ...
+# Subtest: T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+ok 87 - T45-PROF-LINKS a Site service wins over the same service on Profile; the same destination appears once
+  ---
+  duration_ms: 18.905042
+  ...
+# Subtest: T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+ok 88 - T45-PROF-LINKS without Site links Profile services are completed like Home, unsafe Site links are not rendered
+  ---
+  duration_ms: 9.618084
+  ...
+# Subtest: T45-PROF-LINKS markup in labels and URLs is escaped
+not ok 89 - T45-PROF-LINKS markup in labels and URLs is escaped
+  ---
+  duration_ms: 12.917125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:165:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'X'
+    - '<img src=x onerror=1>'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '<img src=x onerror=1>'
+  actual: 'X'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:170:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+not ok 90 - T45-PROF-LINKS Home links output is unchanged by the Issue \#45 block
+  ---
+  duration_ms: 50.360041
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'error'
+    - 'ready'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ready'
+  actual: 'error'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:183:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+ok 91 - T45-PROF-STATE S45-L loading: busy, photo frame and status shown, no text or links, fixed entry present
+  ---
+  duration_ms: 9.807625
+  ...
+# Subtest: T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+ok 92 - T45-PROF-STATE S45-01 no photo: frame hidden, text kept, still ready; invalid image values count as unregistered
+  ---
+  duration_ms: 24.548292
+  ...
+# Subtest: T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+ok 93 - T45-PROF-STATE S45-X1 photo load error hides the frame while text and links stay
+  ---
+  duration_ms: 8.698084
+  ...
+# Subtest: T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+ok 94 - T45-PROF-STATE S45-02 HTTP failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 7.693792
+  ...
+# Subtest: T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+ok 95 - T45-PROF-STATE S45-02 network failure gives error, never ready, one notice with retry
+  ---
+  duration_ms: 11.199958
+  ...
+# Subtest: T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+ok 96 - T45-PROF-STATE S45-02 invalid JSON gives error, never ready, one notice with retry
+  ---
+  duration_ms: 16.325875
+  ...
+# Subtest: T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+ok 97 - T45-PROF-STATE S45-02 null root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 137.241959
+  ...
+# Subtest: T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+ok 98 - T45-PROF-STATE S45-02 array root gives error, never ready, one notice with retry
+  ---
+  duration_ms: 8.960958
+  ...
+# Subtest: T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+ok 99 - T45-PROF-STATE S45-02 array data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 8.383708
+  ...
+# Subtest: T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+ok 100 - T45-PROF-STATE S45-02 string data gives error, never ready, one notice with retry
+  ---
+  duration_ms: 6.346917
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+ok 101 - T45-PROF-STATE S45-02 profile is an array gives error, never ready, one notice with retry
+  ---
+  duration_ms: 6.788584
+  ...
+# Subtest: T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+ok 102 - T45-PROF-STATE S45-02 profile is a string gives error, never ready, one notice with retry
+  ---
+  duration_ms: 8.380458
+  ...
+# Subtest: T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+ok 103 - T45-PROF-STATE profile missing, null or empty object is ready with name and entry only
+  ---
+  duration_ms: 23.359709
+  ...
+# Subtest: T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+ok 104 - T45-PROF-STATE retry: one request, success moves focus to the heading, failure keeps focus on the new button
+  ---
+  duration_ms: 11.93675
+  ...
+# Subtest: T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+ok 105 - T45-PROF-STATE stale responses never overwrite the current state (pagehide then pageshow)
+  ---
+  duration_ms: 11.707417
+  ...
+# Subtest: T45-PROF-STATE retry is not repeated while a request is pending
+ok 106 - T45-PROF-STATE retry is not repeated while a request is pending
+  ---
+  duration_ms: 7.791792
+  ...
+# Subtest: T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+not ok 107 - T45-PROF-STATE Home profile column is untouched: first paragraph only, same as before
+  ---
+  duration_ms: 5.886708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:322:1'
+  failureType: 'testCodeFailure'
+  error: `Expected "actual" to be strictly unequal to: ''`
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: ''
+  operator: 'notStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/profile-rendering.test.mjs:329:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..107
+# tests 107
+# suites 0
+# pass 104
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3453.619833

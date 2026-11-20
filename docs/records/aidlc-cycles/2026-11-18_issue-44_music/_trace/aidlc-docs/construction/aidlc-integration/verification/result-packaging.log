@@ -1,0 +1,3 @@
+Final worker.result: required keys, referenced artifact SHA-256 values, exact git status, final close preflight digests, diff check: PASS
+Packaging exception: initial large stdin Python source was rejected with Non-UTF-8 SyntaxError before execution; result was then written with apply_patch and checked. No artifact/input bytes were changed by the rejected source.
+Owner touch/ambiguous: none in this worker conversation. Independent review/Owner gates/Front completion remain pending.

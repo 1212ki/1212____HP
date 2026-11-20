@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>松本一樹 -itsuki matsumoto- : ticket</title>
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20261117-42">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
+  <link rel="stylesheet" href="../assets/css/live-ticket.css?v=20261119-43">
 </head>
-<body>
+<body class="site-ticket">
   <header class="site-header">
     <div class="container header-container">
       <h1 class="logo">
@@ -26,76 +27,57 @@
       <nav id="global-nav">
         <ul>
           <li><a href="../">Home</a></li>
-          <li><a href="../profile/">Profile</a></li>
           <li><a href="../live/">Live</a></li>
-          <li><a href="../youtube/">YouTube</a></li>
-          <li><a href="../discography/">Discography</a></li>
+          <li><a href="../music/">Music</a></li>
+          <li><a href="../profile/">Profile</a></li>
           <li><a href="../contact/">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="contact">
-      <div class="container">
-        <h2 class="section-title">ticket</h2>
-
-        <p id="ticket-route-message" class="ticket-route-message" role="status" aria-live="polite" hidden></p>
-
-        <div id="ticket-live-preview" style="margin-top: 18px;"></div>
-
-        <form id="ticket-form">
-          <div id="ticket-field-live">
-            <label id="ticket-label-live" for="liveId">ライブ</label>
-            <select id="liveId" name="liveId" required></select>
-          </div>
-
-          <div id="ticket-field-name">
+  <main id="ticket-content" class="live-container ticket-container" data-site-root="../" data-state="loading" aria-busy="true">
+    <a id="ticket-back" class="live-back" href="../live/">← live</a>
+    <h1 class="site-section-title" tabindex="-1" data-live-focus>ticket</h1>
+    <div id="ticket-loading"><div class="live-skeleton" role="status">読み込み中</div></div>
+    <div id="ticket-notice" class="live-notice" role="status" aria-live="polite" hidden></div>
+    <div id="ticket-layout" class="ticket-layout" hidden>
+      <form id="ticket-form" class="ticket-form" novalidate>
+        <div id="ticket-field-live" class="ticket-field">
+          <label id="ticket-label-live" for="liveId">ライブ</label>
+          <select id="liveId" name="liveId" required></select>
+        </div>
+        <div id="ticket-fields" class="ticket-fields">
+          <div id="ticket-field-name" class="ticket-field">
             <label id="ticket-label-name" for="name">名前</label>
             <input id="name" name="name" type="text" autocomplete="name" required>
+            <p id="ticket-error-name" class="ticket-error" role="alert" hidden></p>
           </div>
-
-          <div id="ticket-field-email">
+          <div id="ticket-field-email" class="ticket-field">
             <label id="ticket-label-email" for="email">e-mail</label>
             <input id="email" name="email" type="email" autocomplete="email" required>
+            <p id="ticket-error-email" class="ticket-error" role="alert" hidden></p>
           </div>
-
-          <div id="ticket-field-quantity">
+          <div id="ticket-field-quantity" class="ticket-field ticket-field--quantity">
             <label id="ticket-label-quantity" for="quantity">枚数</label>
             <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
+            <p id="ticket-error-quantity" class="ticket-error" role="alert" hidden></p>
           </div>
-
-          <div id="ticket-field-message">
+          <div id="ticket-field-message" class="ticket-field">
             <label id="ticket-label-message" for="message">備考</label>
             <textarea id="message" name="message" rows="4" placeholder="例: 取り置き名義が別の場合など"></textarea>
           </div>
-
-          <!-- Honeypot -->
-          <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;">
-
-          <button type="submit" id="submitBtn">予約する</button>
-        </form>
-
-        <div id="ticket-result" style="margin-top: 18px;"></div>
-      </div>
-    </section>
-
-    <div class="ticket-modal-overlay" id="ticketConfirmOverlay" aria-hidden="true"></div>
-    <div class="ticket-modal" id="ticketConfirmModal" role="dialog" aria-modal="true" aria-labelledby="ticketConfirmTitle" aria-hidden="true">
-      <div class="ticket-modal-header">
-        <h3 id="ticketConfirmTitle" class="ticket-modal-title">送信中...</h3>
-        <button type="button" class="ticket-modal-close" id="ticketConfirmCloseBtn" aria-label="Close">×</button>
-      </div>
-      <div class="ticket-modal-body">
-        <p id="ticketConfirmLead" style="color: var(--ink-muted); margin-bottom: 12px;">予約を送信しています。</p>
-        <div class="ticket-confirm-summary" id="ticketConfirmSummary"></div>
-        <div id="ticketConfirmError" class="ticket-confirm-error" style="display:none;"></div>
-      </div>
-      <div class="ticket-modal-footer">
-        <a class="ticket-modal-btn ghost" id="ticketModalBackLink" href="./">もう一度</a>
-        <a class="ticket-modal-btn primary" id="ticketModalHomeLink" href="../">home</a>
-      </div>
+          <input type="text" name="company" id="company" class="ticket-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="ticket-actions">
+            <button type="submit" id="submitBtn" class="site-button site-button--primary">予約する</button>
+          </div>
+        </div>
+        <p id="ticket-status" class="ticket-status" role="status" aria-live="polite"></p>
+      </form>
+      <aside id="ticket-live-preview" class="ticket-summary" aria-labelledby="ticket-summary-label" hidden>
+        <p id="ticket-summary-label" class="ticket-summary-label">予約するライブ</p>
+        <div id="ticket-summary-body"></div>
+      </aside>
     </div>
   </main>
 
@@ -107,7 +89,10 @@
 
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/live-operations.js?v=20260804-2"></script>
-  <script src="../assets/js/ticket.js?v=20260804-2"></script>
-  <script src="../assets/js/script.js?v=20261117-42"></script>
+  <script src="../assets/js/live-order.js?v=20261119-43"></script>
+  <script src="../assets/js/reservation-cta.js?v=20261119-43"></script>
+  <script src="../assets/js/ticket-receipt.js?v=20261119-43"></script>
+  <script src="../assets/js/ticket.js?v=20261119-43"></script>
+  <script src="../assets/js/script.js?v=20261118-44"></script>
 </body>
 </html>

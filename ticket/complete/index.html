@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>松本一樹 -itsuki matsumoto- : ticket</title>
   <link rel="stylesheet" href="../../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="../../assets/css/style.css?v=20261117-42">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20261118-44">
+  <link rel="stylesheet" href="../../assets/css/live-ticket.css?v=20261119-43">
 </head>
-<body>
+<body class="site-ticket">
   <header class="site-header">
     <div class="container header-container">
       <h1 class="logo">
@@ -26,41 +27,37 @@
       <nav id="global-nav">
         <ul>
           <li><a href="../../">Home</a></li>
-          <li><a href="../../profile/">Profile</a></li>
           <li><a href="../../live/">Live</a></li>
-          <li><a href="../../youtube/">YouTube</a></li>
-          <li><a href="../../discography/">Discography</a></li>
+          <li><a href="../../music/">Music</a></li>
+          <li><a href="../../profile/">Profile</a></li>
           <li><a href="../../contact/">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="contact">
-      <div class="container">
-        <h2 class="section-title">ticket</h2>
-        <p id="ticket-complete-message" style="margin-top: 12px; color: var(--ink-muted);">
-          予約しました。
-        </p>
-
-        <div id="ticket-complete-card" style="margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">
-          <div style="display:flex; flex-direction:column; gap: 8px;">
-            <div style="display:flex; gap: 10px; align-items: baseline; flex-wrap: wrap;">
-              <span style="font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);">Receipt ID</span>
-              <code id="ticket-receipt-id" style="font-size: 0.95rem;">-</code>
-            </div>
-            <div id="ticket-receipt-live" style="color: var(--ink);"></div>
-          </div>
-        </div>
-
-        <div style="margin-top: 18px; display:flex; gap: 10px; flex-wrap: wrap;">
-          <a class="application-link" href="../">▷Back</a>
-          <a class="application-link" href="../../live/">▷Live</a>
-          <a class="application-link" href="../../">▷Home</a>
-        </div>
+  <main id="ticket-complete-content" class="live-container ticket-container" data-site-root="../../" data-state="missing">
+    <h1 class="site-section-title" tabindex="-1" data-live-focus>ticket</h1>
+    <div id="ticket-complete-missing" class="live-notice" data-testid="ticket-complete-missing">
+      <p>予約の受付内容を表示できませんでした。</p>
+      <a class="site-text-link" href="../../live/">ライブの一覧へ →</a>
+    </div>
+    <div id="ticket-complete-ready" class="ticket-complete-ready" hidden>
+      <p id="ticket-complete-message" class="ticket-complete-message">予約しました。</p>
+      <div id="ticket-complete-card" class="ticket-complete-card"></div>
+      <div class="ticket-next" role="group" aria-label="次に行く先">
+        <a id="ticket-next-detail" class="site-text-link" href="../../live/">ライブの詳細 →</a>
+        <a class="site-text-link" href="../../live/">ほかのライブ →</a>
+        <a class="site-text-link" href="../../">Home →</a>
       </div>
-    </section>
+      <section id="ticket-listen" class="ticket-listen" aria-labelledby="ticket-listen-label" hidden>
+        <p id="ticket-listen-label" class="home-caption">当日までに聴く</p>
+        <div id="ticket-listen-item" class="ticket-listen-item">
+          <div id="ticket-player" class="home-player" hidden></div>
+        </div>
+        <a class="site-text-link" href="../../music/">music →</a>
+      </section>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -71,7 +68,10 @@
 
   <script src="../../assets/js/site-config.js"></script>
   <script src="../../assets/js/live-operations.js?v=20260804-2"></script>
-  <script src="../../assets/js/ticket-complete.js?v=20260804-2"></script>
-  <script src="../../assets/js/script.js?v=20261117-42"></script>
+  <script src="../../assets/js/music-data.js"></script>
+  <script src="../../assets/js/home-player.js?v=20261118-44"></script>
+  <script src="../../assets/js/ticket-receipt.js?v=20261119-43"></script>
+  <script src="../../assets/js/ticket-complete.js?v=20261119-43"></script>
+  <script src="../../assets/js/script.js?v=20261118-44"></script>
 </body>
 </html>
