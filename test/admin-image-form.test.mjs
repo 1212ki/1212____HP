@@ -191,6 +191,11 @@ function loadAdminApp(options = {}) {
   addStatic('live-editor-back', 'button');
   const liveEditorBody = addStatic('live-editor-body');
   installOwnedHtmlBehavior(liveEditorBody, new Set(), []);
+  // Issue #46: the confirmation surface that replaced window.confirm for unsaved Live changes.
+  const liveDialogOverlay = addStatic('live-dialog-overlay');
+  const liveDialogRoot = addStatic('live-dialog');
+  liveDialogRoot.parentElement = liveDialogOverlay;
+  installOwnedHtmlBehavior(liveDialogRoot, new Set(), []);
 
   const context = {
     Blob,
@@ -250,6 +255,8 @@ globalThis.__adminTest = {
   setSiteData(value) { siteData = value; },
   setUploadImageToApi(fn) { uploadImageToApi = fn; },
   setSaveFunction(fn) { saveData = fn; },
+  // Issue #46: a Live save is a scoped PUT (saveScoped -> saveToApi), no longer saveData.
+  setSaveToApi(fn) { saveToApi = fn; },
   ensureNoActiveImageUploads,
   getLiveEditorState() { return { dirty: Boolean(liveEditorDirty) }; },
   getGlobalState() { return { hasChanges: Boolean(hasChanges) }; },
@@ -312,6 +319,12 @@ function deferred() {
 
 async function flushAsync() {
   await new Promise((resolve) => setImmediate(resolve));
+}
+
+// Issue #46: unsaved Live changes are confirmed on a surface (not window.confirm); answer it with a named button.
+async function answerLiveDialog(app, actionId) {
+  await flushAsync();
+  await app.elements.get(`live-dialog-action-${actionId}`).dispatch('click');
 }
 
 test('default image forms keep the existing path display for non-live images', () => {
@@ -479,19 +492,18 @@ test('a Live image upload cannot update a replacement workspace editor that reus
   app.editLive('live-a', 'upcoming');
   const oldInput = app.elements.get('edit-image');
   app.handleImageSelect({ files: [{ name: 'a-new.png' }] }, 'edit-image');
-  let confirmCalls = 0;
-  app.setConfirm(() => {
-    confirmCalls += 1;
-    return false;
-  });
-  assert.equal(app.editLive('live-b', 'upcoming'), false);
-  assert.equal(confirmCalls, 1);
+  const stayed = app.editLive('live-b', 'upcoming');
+  await flushAsync();
+  assert.ok(app.elements.get('live-dialog-action-stay'), 'the confirmation surface is shown once');
+  await answerLiveDialog(app, 'stay');
+  assert.equal(await stayed, false);
   assert.equal(app.getModalState().currentEditId, 'live-a');
   assert.equal(app.elements.get('edit-image'), oldInput);
   assert.equal(app.ensureNoActiveImageUploads(), false);
 
-  app.setConfirm(() => true);
-  assert.equal(app.editLive('live-b', 'upcoming'), true);
+  const discarded = app.editLive('live-b', 'upcoming');
+  await answerLiveDialog(app, 'discard');
+  assert.equal(await discarded, true);
   const replacementInput = app.elements.get('edit-image');
   const replacementPreview = app.elements.get('edit-image-preview-container');
   assert.notEqual(oldInput, replacementInput);
@@ -500,7 +512,7 @@ test('a Live image upload cannot update a replacement workspace editor that reus
   await app.dispatchWindow('beforeunload', cleanEvent);
   assert.equal(cleanEvent.prevented, 0);
 
-  app.setSaveFunction(async () => true);
+  app.setSaveToApi(async () => {});
   assert.equal(await app.saveLiveWorkspace(), true);
 
   upload.resolve({ url: 'https://cdn.example.com/live/a-final.png' });
@@ -580,7 +592,7 @@ test('Live image overlapping same-ID uploads release the superseded request when
   await flushAsync();
   assert.equal(app.elements.get('edit-image').value, 'https://cdn.example.com/live/second.png');
   assert.equal(app.ensureNoActiveImageUploads(), true);
-  app.setSaveFunction(async () => true);
+  app.setSaveToApi(async () => {});
   assert.equal(await app.saveLiveWorkspace(), true);
   const savedInput = app.elements.get('edit-image');
   const savedPreview = app.elements.get('edit-image-preview-container');
@@ -640,13 +652,15 @@ test('Local Live image read blocks transition until confirmed discard releases i
   app.editLive('local-a', 'upcoming');
   app.handleImageSelect({ files: [{ name: 'local-a-new.png' }] }, 'edit-image');
 
-  app.setConfirm(() => false);
-  assert.equal(app.editLive('local-b', 'upcoming'), false);
+  const stayed = app.editLive('local-b', 'upcoming');
+  await answerLiveDialog(app, 'stay');
+  assert.equal(await stayed, false);
   assert.equal(app.getModalState().currentEditId, 'local-a');
   assert.equal(app.ensureNoActiveImageUploads(), false);
 
-  app.setConfirm(() => true);
-  assert.equal(app.editLive('local-b', 'upcoming'), true);
+  const discarded = app.editLive('local-b', 'upcoming');
+  await answerLiveDialog(app, 'discard');
+  assert.equal(await discarded, true);
   const replacementInput = app.elements.get('edit-image');
   const replacementPreview = app.elements.get('edit-image-preview-container');
   assert.equal(app.ensureNoActiveImageUploads(), true);
@@ -732,7 +746,7 @@ test('clearImage is latest across API and Local Live image operations', async (t
       assert.match(app.elements.get('edit-image-preview-container').innerHTML, /image-placeholder/);
       assert.equal(app.getLiveEditorState().dirty, true);
       assert.equal(app.ensureNoActiveImageUploads(), true);
-      app.setSaveFunction(async () => true);
+      app.setSaveToApi(async () => {});
       assert.equal(await app.saveLiveWorkspace(), true);
       const savedInput = app.elements.get('edit-image');
       const savedPreview = app.elements.get('edit-image-preview-container');

@@ -1,0 +1,4781 @@
+TAP version 13
+# Subtest: T46-STYLE every group of style.css except the Live group has the bytes of the base commit
+not ok 1 - T46-STYLE every group of style.css except the Live group has the bytes of the base commit
+  ---
+  duration_ms: 10.80625
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:79:1'
+  failureType: 'testCodeFailure'
+  error: 'the work of #46 is in the Live group'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    
+    .live-workspace {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: visible;
+    }
+    
+    .live-workspace-tabs,
+    .live-list-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .live-workspace-tabs {
+      padding: 8px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .live-workspace-tab,
+    .live-list-tab,
+    .live-workspace-utility {
+      border: 0;
+      background: transparent;
+      color: var(--gray-700);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+    
+    .live-workspace-tab {
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+    }
+    
+    .live-workspace-tab.is-active {
+      background: var(--gray-900);
+      color: var(--white);
+    }
+    
+    .live-workspace-panel {
+      padding: 20px;
+    }
+    
+    .live-page-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .live-list-tabs {
+      padding: 3px;
+      background: var(--gray-100);
+      border-radius: var(--radius-sm);
+    }
+    
+    .live-list-tab {
+      padding: 7px 12px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: var(--gray-500);
+      font-size: 0.88em;
+    }
+    
+    .live-list-tab.is-active {
+      background: var(--white);
+      border-color: var(--gray-200);
+      color: var(--gray-900);
+    }
+    
+    .live-workspace-utility {
+      padding: 8px 4px;
+      color: var(--gray-500);
+      font-size: 0.82em;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    
+    .live-workspace-tab:focus-visible,
+    .live-list-tab:focus-visible,
+    .live-workspace-utility:focus-visible,
+    .live-editor-task-tab:focus-visible,
+    .live-editor-back:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    
+    .live-ticket-settings-panel,
+    .live-reservations-panel {
+      padding: 20px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+    }
+    
+    .live-workspace-eyebrow {
+      margin-bottom: 4px;
+      color: var(--gray-500);
+      font-size: 0.72em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    
+    .live-workspace [hidden] {
+      display: none;
+    }
+    
+    .live-master-detail {
+      min-width: 0;
+    }
+    
+    .live-master-pane,
+    .live-editor-pane {
+      min-width: 0;
+    }
+    
+    .live-editor-pane {
+      display: none;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      overflow: clip;
+    }
+    
+    .live-master-detail.has-live-selection .live-master-pane {
+      display: none;
+    }
+    
+    .live-master-detail.has-live-selection .live-editor-pane {
+      display: block;
+    }
+    
+    .live-editor-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .live-editor-title-group {
+      min-width: 0;
+      flex: 1;
+    }
+    
+    .live-editor-title-group h3 {
+      overflow: hidden;
+      color: var(--gray-900);
+      font-size: 1.05em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .live-editor-back {
+      border: 0;
+      background: transparent;
+      color: var(--gray-700);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+    
+    .live-editor-save-status {
+      flex: 0 0 auto;
+      color: var(--gray-500);
+      font-size: 0.78em;
+      font-weight: 700;
+    }
+    
+    .live-editor-body {
+      padding: 20px;
+      overflow-wrap: anywhere;
+    }
+    
+    .live-editor-task-tabs {
+      position: sticky;
+      z-index: 2;
+      top: var(--admin-global-chrome-sticky-offset);
+      display: flex;
+      gap: 4px;
+      margin: -20px -20px 20px;
+      padding: 8px 20px;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+    
+    .live-editor-task-tab {
+      min-height: 44px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--gray-500);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.88em;
+      font-weight: 700;
+    }
+    
+    .live-editor-task-tab.is-active {
+      border-bottom-color: var(--primary);
+      color: var(--gray-900);
+    }
+    
+    .live-editor-task-tab:disabled {
+      cursor: not-allowed;
+      opacity: 0.42;
+    }
+    
+    .live-editor-task-panel,
+    #live-public-fields {
+      min-width: 0;
+    }
+    
+    .live-source-intake,
+    .live-editor-details {
+      margin-bottom: 24px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      background: var(--gray-100);
+    }
+    
+    .live-source-intake > summary,
+    .live-editor-details > summary {
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    
+    .live-source-intake-body,
+    .live-editor-details-body {
+      padding: 0 16px 16px;
+    }
+    
+    .live-source-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .live-category-field {
+      margin-top: 20px;
+    }
+    
+    .live-editor-footer {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      gap: 10px;
+      margin: 24px -20px -20px;
+      padding: 16px 20px;
+      border-top: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+    
+    .live-edit-trigger.is-selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+    
+    .next-live-badge {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      border: 1px solid var(--primary);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: var(--primary);
+      font-size: 0.68em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    
+    @media (max-width: 899px) {
+      .live-workspace-tab,
+      .live-list-tab,
+      .live-workspace-utility,
+      .live-editor-back {
+        min-height: 44px;
+      }
+    }
+    
+    @media (min-width: 900px) {
+      .live-master-detail {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 20px;
+        align-items: start;
+      }
+    
+      .live-master-detail .live-master-pane,
+      .live-master-detail.has-live-selection .live-master-pane,
+      .live-master-detail .live-editor-pane {
+        display: block;
+      }
+    
+      .live-editor-back {
+        display: none;
+      }
+    }
+    
+    .section-header.compact {
+      margin-bottom: 16px;
+    }
+    
+    .section-header.compact h3 {
+      font-size: 1.05em;
+    }
+    
+    .live-editor-section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .live-editor-section:first-child {
+      padding-top: 0;
+    }
+    
+    .live-editor-section:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .operation-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .operation-heading h3 {
+      color: var(--gray-900);
+      font-size: 1.05em;
+      letter-spacing: 0.04em;
+    }
+    
+    .operation-step {
+      color: var(--primary);
+      font-size: 0.75em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+    
+    .source-intake {
+      background: var(--gray-100);
+      margin: -20px -20px 0;
+      padding: 24px 20px;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .parse-warnings {
+      margin-top: 12px;
+      padding-left: 12px;
+      border-left: 3px solid var(--primary);
+      color: var(--gray-700);
+      font-size: 0.85em;
+    }
+    
+    .parse-warnings:empty {
+      display: none;
+    }
+    
+    .parse-warnings ul {
+      margin: 4px 0 0 18px;
+    }
+    
+    .parse-ok {
+      color: var(--gray-500);
+    }
+    
+    .preview-text {
+      background: var(--gray-100);
+      border-style: dashed;
+    }
+    
+    .operation-gate {
+      border-left: 3px solid var(--primary);
+      background: var(--primary-soft);
+      padding: 12px 16px;
+      color: var(--gray-700);
+      font-size: 0.85em;
+      text-align: left;
+      margin: 12px 0;
+    }
+    
+    .manual-reservation-form {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--gray-300);
+    }
+    
+    .manual-reservation-form h4 {
+      margin-bottom: 16px;
+      font-size: 0.95em;
+    }
+    
+    .manual-fields {
+      align-items: flex-start;
+    }
+    
+    .manual-fields .form-group {
+      flex: 1;
+    }
+    
+    .manual-fields .quantity-field {
+      flex: 0 0 96px;
+    }
+    
+    .form-error {
+      min-height: 1.6em;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-size: 0.85em;
+    }
+    
+    .reservation-totals {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .reservation-totals span {
+      padding: 12px;
+      border: 1px solid var(--gray-200);
+      background: var(--gray-100);
+      color: var(--gray-700);
+      font-size: 0.8em;
+      text-align: center;
+    }
+    
+    .reservation-totals strong {
+      display: block;
+      color: var(--gray-900);
+      font-size: 1.45em;
+      line-height: 1.2;
+    }
+    
+    .source-badge {
+      display: inline-flex;
+      flex: 0 0 auto;
+      padding: 3px 8px;
+      border: 1px solid var(--gray-300);
+      color: var(--gray-700);
+      font-size: 0.7em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    
+    .source-badge.is-manual {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .ticket-note {
+      white-space: pre-wrap;
+    }
+    
+    .meta-label {
+      font-weight: 700;
+      color: var(--gray-700);
+    }
+    
+    
+  actual: |-
+    
+    .live-workspace {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: visible;
+    }
+    
+    .live-workspace-tabs,
+    .live-list-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .live-workspace-tabs {
+      padding: 8px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .live-workspace-tab,
+    .live-list-tab,
+    .live-workspace-utility {
+      border: 0;
+      background: transparent;
+      color: var(--gray-700);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+    
+    .live-workspace-tab {
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+    }
+    
+    .live-workspace-tab.is-active {
+      background: var(--gray-900);
+      color: var(--white);
+    }
+    
+    .live-workspace-panel {
+      padding: 20px;
+    }
+    
+    .live-page-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .live-list-tabs {
+      padding: 3px;
+      background: var(--gray-100);
+      border-radius: var(--radius-sm);
+    }
+    
+    .live-list-tab {
+      padding: 7px 12px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: var(--gray-500);
+      font-size: 0.88em;
+    }
+    
+    .live-list-tab.is-active {
+      background: var(--white);
+      border-color: var(--gray-200);
+      color: var(--gray-900);
+    }
+    
+    .live-workspace-utility {
+      padding: 8px 4px;
+      color: var(--gray-500);
+      font-size: 0.82em;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    
+    .live-workspace-tab:focus-visible,
+    .live-list-tab:focus-visible,
+    .live-workspace-utility:focus-visible,
+    .live-editor-task-tab:focus-visible,
+    .live-editor-back:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    
+    .live-ticket-settings-panel,
+    .live-reservations-panel {
+      padding: 20px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+    }
+    
+    .live-workspace-eyebrow {
+      margin-bottom: 4px;
+      color: var(--gray-500);
+      font-size: 0.72em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    
+    .live-workspace [hidden] {
+      display: none;
+    }
+    
+    .live-master-detail {
+      min-width: 0;
+    }
+    
+    .live-master-pane,
+    .live-editor-pane {
+      min-width: 0;
+    }
+    
+    .live-editor-pane {
+      display: none;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      overflow: clip;
+    }
+    
+    .live-master-detail.has-live-selection .live-master-pane {
+      display: none;
+    }
+    
+    .live-master-detail.has-live-selection .live-editor-pane {
+      display: block;
+    }
+    
+    .live-editor-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .live-editor-title-group {
+      min-width: 0;
+      flex: 1;
+    }
+    
+    .live-editor-title-group h3 {
+      overflow: hidden;
+      color: var(--gray-900);
+      font-size: 1.05em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .live-editor-back {
+      border: 0;
+      background: transparent;
+      color: var(--gray-700);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+    
+    .live-editor-save-status {
+      flex: 0 0 auto;
+      color: var(--gray-500);
+      font-size: 0.78em;
+      font-weight: 700;
+    }
+    
+    .live-editor-body {
+      padding: 20px;
+      overflow-wrap: anywhere;
+    }
+    
+    .live-editor-task-tabs {
+      position: sticky;
+      z-index: 2;
+      top: var(--admin-global-chrome-sticky-offset);
+      display: flex;
+      gap: 4px;
+      margin: -20px -20px 20px;
+      padding: 8px 20px;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+    
+    .live-editor-task-tab {
+      min-height: 44px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--gray-500);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.88em;
+      font-weight: 700;
+    }
+    
+    .live-editor-task-tab.is-active {
+      border-bottom-color: var(--primary);
+      color: var(--gray-900);
+    }
+    
+    .live-editor-task-tab:disabled {
+      cursor: not-allowed;
+      opacity: 0.42;
+    }
+    
+    .live-editor-task-panel,
+    #live-public-fields {
+      min-width: 0;
+    }
+    
+    .live-source-intake,
+    .live-editor-details {
+      margin-bottom: 24px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      background: var(--gray-100);
+    }
+    
+    .live-source-intake > summary,
+    .live-editor-details > summary {
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    
+    .live-source-intake-body,
+    .live-editor-details-body {
+      padding: 0 16px 16px;
+    }
+    
+    .live-source-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .live-category-field {
+      margin-top: 20px;
+    }
+    
+    .live-editor-footer {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      gap: 10px;
+      margin: 24px -20px -20px;
+      padding: 16px 20px;
+      border-top: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+    
+    .live-edit-trigger.is-selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+    
+    .next-live-badge {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      border: 1px solid var(--primary);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: var(--primary);
+      font-size: 0.68em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    
+    @media (max-width: 899px) {
+      .live-workspace-tab,
+      .live-list-tab,
+      .live-workspace-utility,
+      .live-editor-back {
+        min-height: 44px;
+      }
+    }
+    
+    @media (min-width: 900px) {
+      .live-master-detail {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 20px;
+        align-items: start;
+      }
+    
+      .live-master-detail .live-master-pane,
+      .live-master-detail.has-live-selection .live-master-pane,
+      .live-master-detail .live-editor-pane {
+        display: block;
+      }
+    
+      .live-editor-back {
+        display: none;
+      }
+    }
+    
+    .section-header.compact {
+      margin-bottom: 16px;
+    }
+    
+    .section-header.compact h3 {
+      font-size: 1.05em;
+    }
+    
+    .live-editor-section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .live-editor-section:first-child {
+      padding-top: 0;
+    }
+    
+    .live-editor-section:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .operation-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .operation-heading h3 {
+      color: var(--gray-900);
+      font-size: 1.05em;
+      letter-spacing: 0.04em;
+    }
+    
+    .operation-step {
+      color: var(--primary);
+      font-size: 0.75em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+    
+    .source-intake {
+      background: var(--gray-100);
+      margin: -20px -20px 0;
+      padding: 24px 20px;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .parse-warnings {
+      margin-top: 12px;
+      padding-left: 12px;
+      border-left: 3px solid var(--primary);
+      color: var(--gray-700);
+      font-size: 0.85em;
+    }
+    
+    .parse-warnings:empty {
+      display: none;
+    }
+    
+    .parse-warnings ul {
+      margin: 4px 0 0 18px;
+    }
+    
+    .parse-ok {
+      color: var(--gray-500);
+    }
+    
+    .preview-text {
+      background: var(--gray-100);
+      border-style: dashed;
+    }
+    
+    .operation-gate {
+      border-left: 3px solid var(--primary);
+      background: var(--primary-soft);
+      padding: 12px 16px;
+      color: var(--gray-700);
+      font-size: 0.85em;
+      text-align: left;
+      margin: 12px 0;
+    }
+    
+    .manual-reservation-form {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--gray-300);
+    }
+    
+    .manual-reservation-form h4 {
+      margin-bottom: 16px;
+      font-size: 0.95em;
+    }
+    
+    .manual-fields {
+      align-items: flex-start;
+    }
+    
+    .manual-fields .form-group {
+      flex: 1;
+    }
+    
+    .manual-fields .quantity-field {
+      flex: 0 0 96px;
+    }
+    
+    .form-error {
+      min-height: 1.6em;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-size: 0.85em;
+    }
+    
+    .reservation-totals {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .reservation-totals span {
+      padding: 12px;
+      border: 1px solid var(--gray-200);
+      background: var(--gray-100);
+      color: var(--gray-700);
+      font-size: 0.8em;
+      text-align: center;
+    }
+    
+    .reservation-totals strong {
+      display: block;
+      color: var(--gray-900);
+      font-size: 1.45em;
+      line-height: 1.2;
+    }
+    
+    .source-badge {
+      display: inline-flex;
+      flex: 0 0 auto;
+      padding: 3px 8px;
+      border: 1px solid var(--gray-300);
+      color: var(--gray-700);
+      font-size: 0.7em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    
+    .source-badge.is-manual {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .ticket-note {
+      white-space: pre-wrap;
+    }
+    
+    .meta-label {
+      font-weight: 700;
+      color: var(--gray-700);
+    }
+    
+    
+  operator: 'notStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:88:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T46-STYLE every rule \#46 added is scoped to Live, reservation or settings classes, never to a shared class alone
+not ok 2 - T46-STYLE every rule \#46 added is scoped to Live, reservation or settings classes, never to a shared class alone
+  ---
+  duration_ms: 10.505
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:91:1'
+  failureType: 'testCodeFailure'
+  error: 'the stage 4-7 rules were added'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:96:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the lines \#46 added use token variables only: no hex, rgb or hsl colors
+not ok 3 - T46-STYLE the lines \#46 added use token variables only: no hex, rgb or hsl colors
+  ---
+  duration_ms: 11.954334
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:103:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(added.length > 400)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:106:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the main controls are at least 44px to tap, at every width
+not ok 4 - T46-STYLE the main controls are at least 44px to tap, at every width
+  ---
+  duration_ms: 0.1415
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:111:1'
+  failureType: 'testCodeFailure'
+  error: '.live-row has min-height of 44px or more'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:118:12)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the arrangement switches at 899px and 900px, and the page chrome steps aside only below 900px
+not ok 5 - T46-STYLE the arrangement switches at 899px and 900px, and the page chrome steps aside only below 900px
+  ---
+  duration_ms: 0.507
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:129:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(media.includes('@media (min-width: 900px) and (max-width: 1179px)'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:134:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE at 900px and above the fields are 2 and 3 columns, one column less between 900px and 1179px
+not ok 6 - T46-STYLE at 900px and above the fields are 2 and 3 columns, one column less between 900px and 1179px
+  ---
+  duration_ms: 0.385125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:145:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'repeat(2, minmax(0, 1fr))'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'repeat(2, minmax(0, 1fr))'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:152:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE wide: 保存して公開 sits at the right of the heading, dimmed while it cannot be pressed; the Live tab is not capped at 980px
+not ok 7 - T46-STYLE wide: 保存して公開 sits at the right of the heading, dimmed while it cannot be pressed; the Live tab is not capped at 980px
+  ---
+  duration_ms: 1.279291
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:169:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(footer.some((rule) => /position:\s*absolute/.test(rule.body) && /top:\s*18px/.test(rule.body) && /right:\s*24px/.test(rule.body)))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:173:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the sticky bottom bars (an open Live, the settings screen) have no scrolling mechanism in their ancestors
+not ok 8 - T46-STYLE the sticky bottom bars (an open Live, the settings screen) have no scrolling mechanism in their ancestors
+  ---
+  duration_ms: 0.994125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:182:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(rulesFor('.ticket-settings-actions', rules).some((rule) => inContext(rule, 'max-width: 899px') && /position:\s*sticky/.test(rule.body) && /bottom:\s*0/.test(rule.body)))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:192:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the reservation table: six columns on a wide screen and a pane of 320px on its right
+not ok 9 - T46-STYLE the reservation table: six columns on a wide screen and a pane of 320px on its right
+  ---
+  duration_ms: 0.449208
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:197:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(detail && /grid-template-columns:\s*minmax\(0, 1fr\) 320px/.test(detail.body))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:201:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE wide: 保存して公開 is in the heading for every task, dimmed until something is unsaved, and a narrow screen keeps the bar hidden
+not ok 10 - T46-STYLE wide: 保存して公開 is in the heading for every task, dimmed until something is unsaved, and a narrow screen keeps the bar hidden
+  ---
+  duration_ms: 16.165875
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:253:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:262:26)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE wide: saving keeps the heading button dimmed while it runs and after it is saved; a failure makes it pressable again
+not ok 11 - T46-STYLE wide: saving keeps the heading button dimmed while it runs and after it is saved; a failure makes it pressable again
+  ---
+  duration_ms: 3.187
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:283:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    saved: nothing unsaved, dimmed
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:296:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE wide: one reservation opens beside the list and the Header stays on the Live; narrow replaces the list and shows the reservation in the Header
+not ok 12 - T46-STYLE wide: one reservation opens beside the list and the Header stays on the Live; narrow replaces the list and shows the reservation in the Header
+  ---
+  duration_ms: 1.944625
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:308:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:245:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:317:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE wide: the 取り置き form opens on the right of the list; crossing 900px re-applies the arrangement without losing what is open
+not ok 13 - T46-STYLE wide: the 取り置き form opens on the right of the list; crossing 900px re-applies the arrangement without losing what is open
+  ---
+  duration_ms: 1.384667
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:341:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'dispatch')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:347:47)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the reservation rows carry the table cells, a pending row can be marked 対応済み in the row, and the status route is unchanged
+not ok 14 - T46-STYLE the reservation rows carry the table cells, a pending row can be marked 対応済み in the row, and the status route is unchanged
+  ---
+  duration_ms: 2.945041
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:363:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /class="reservation-table-head" aria-hidden="true"/. Input:
+    
+    '\n' +
+      '    <div class="reservation-totals" aria-label="有効予約集計">\n' +
+      '      <span><strong>2</strong> 有効予約件数</span>\n' +
+      '      <span><strong>5</strong> 予約枚数</span>\n' +
+      '    </div>\n' +
+      '    <div class="items-list live-ledger-list">\n' +
+      '      \n' +
+      '    <div class="item-card ticket-row is-compact">\n' +
+      '      <div class="info">\n' +
+      '        <div class="ticket-top">\n' +
+      '          <div class="title">架空 太郎</div>\n' +
+      '          <span class="source-badge is-web">Web</span>\n' +
+      '          <span class="status-badge is-pending">未対応</span>\n' +
+      '        </div>\n' +
+      '        <div class="meta">架空 太郎 / 2枚 / taro@example.test</div>\n' +
+      '        <div class="meta ticket-message">架空の備考</div>\n' +
+      '        \n' +
+      '        <div class="meta mt-2">2026-11-18T10:00:00.000Z</div>\n' +
+      '        <div class="ticket-actions">\n' +
+      '          <button type="button" class="x-test-btn" data-reservation-id="fx-res-1" data-reservation-status="handled">対応済み</button>\n' +
+      '       <button type="button" class="x-post-btn" data-reservation-id="fx-res-1" data-reservation-status="cancelled">キャンセル</button>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '    <div class="item-card ticket-row is-compact">\n' +
+      '      <div class="info">\n' +
+      '        <div class="ticket-top">\n' +
+      '          <div class="title">架空 花子</div>\n' +
+      '          <span class="source-badge is-manual">手動</span>\n' +
+      '          <span class="status-badge is-handled">対応済み</span>\n' +
+      '        </div>\n' +
+      '        <div class="meta">架空 花子 / 3枚 / 090-0000-0000</div>\n' +
+      '        \n' +
+      '        <div class="meta ticket-note"><span class="meta-label">内部メモ</span> 架空の内部メモ</div>\n' +
+      '        <div class="meta mt-2">2026-11-18T11:00:00.000Z</div>\n' +
+      '        <div class="ticket-actions">\n' +
+      '          <button type="button" class="x-test-btn" data-reservation-id="fx-res-2" data-reservation-status="pending">未対応に戻す</button>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '    <div class="item-card ticket-row is-compact">\n' +
+      '      <div class="info">\n' +
+      '        <div class="ticket-top">\n' +
+      '          <div class="title">架空 次郎</div>\n' +
+      '          <span class="source-badge is-web">Web</span>\n' +
+      '          <span class="status-badge is-cancelled">キャンセル</span>\n' +
+      '        </div>\n' +
+      '        <div class="meta">架空 次郎 / 4枚 / jiro@example.test</div>\n' +
+      '        \n' +
+      '        \n' +
+      '        <div class="meta mt-2">2026-11-18T12:00:00.000Z</div>\n' +
+      '        <div class="ticket-actions">\n' +
+      '          <button type="button" class="x-test-btn" data-reservation-id="fx-res-3" data-reservation-status="pending">未対応に戻す</button>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '    </div>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="reservation-totals" aria-label="有効予約集計">
+          <span><strong>2</strong> 有効予約件数</span>
+          <span><strong>5</strong> 予約枚数</span>
+        </div>
+        <div class="items-list live-ledger-list">
+          
+        <div class="item-card ticket-row is-compact">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">架空 太郎</div>
+              <span class="source-badge is-web">Web</span>
+              <span class="status-badge is-pending">未対応</span>
+            </div>
+            <div class="meta">架空 太郎 / 2枚 / taro@example.test</div>
+            <div class="meta ticket-message">架空の備考</div>
+            
+            <div class="meta mt-2">2026-11-18T10:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-1" data-reservation-status="handled">対応済み</button>
+           <button type="button" class="x-post-btn" data-reservation-id="fx-res-1" data-reservation-status="cancelled">キャンセル</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="item-card ticket-row is-compact">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">架空 花子</div>
+              <span class="source-badge is-manual">手動</span>
+              <span class="status-badge is-handled">対応済み</span>
+            </div>
+            <div class="meta">架空 花子 / 3枚 / 090-0000-0000</div>
+            
+            <div class="meta ticket-note"><span class="meta-label">内部メモ</span> 架空の内部メモ</div>
+            <div class="meta mt-2">2026-11-18T11:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-2" data-reservation-status="pending">未対応に戻す</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="item-card ticket-row is-compact">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">架空 次郎</div>
+              <span class="source-badge is-web">Web</span>
+              <span class="status-badge is-cancelled">キャンセル</span>
+            </div>
+            <div class="meta">架空 次郎 / 4枚 / jiro@example.test</div>
+            
+            
+            <div class="meta mt-2">2026-11-18T12:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-3" data-reservation-status="pending">未対応に戻す</button>
+            </div>
+          </div>
+        </div>
+      
+        </div>
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:370:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the 予約管理 table opens one reservation on its right on a wide screen, and replaces the list on a narrow one
+not ok 15 - T46-STYLE the 予約管理 table opens one reservation on its right on a wide screen, and replaces the list on a narrow one
+  ---
+  duration_ms: 1.237042
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:383:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /reservation-table-head/. Input:
+    
+    '\n' +
+      '    <div class="item-card ticket-row ">\n' +
+      '      <div class="info">\n' +
+      '        <div class="ticket-top">\n' +
+      '          <div class="title">2099.12.12 テスト会場B</div>\n' +
+      '          <span class="source-badge is-web">Web</span>\n' +
+      '          <span class="status-badge is-pending">未対応</span>\n' +
+      '        </div>\n' +
+      '        <div class="meta">架空 太郎 / 2枚 / taro@example.test</div>\n' +
+      '        <div class="meta ticket-message">架空の備考</div>\n' +
+      '        \n' +
+      '        <div class="meta mt-2">2026-11-18T10:00:00.000Z</div>\n' +
+      '        <div class="ticket-actions">\n' +
+      '          <button type="button" class="x-test-btn" data-reservation-id="fx-res-1" data-reservation-status="handled">対応済み</button>\n' +
+      '       <button type="button" class="x-post-btn" data-reservation-id="fx-res-1" data-reservation-status="cancelled">キャンセル</button>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '    <div class="item-card ticket-row ">\n' +
+      '      <div class="info">\n' +
+      '        <div class="ticket-top">\n' +
+      '          <div class="title">2099.12.12 テスト会場B</div>\n' +
+      '          <span class="source-badge is-manual">手動</span>\n' +
+      '          <span class="status-badge is-handled">対応済み</span>\n' +
+      '        </div>\n' +
+      '        <div class="meta">架空 花子 / 3枚 / 090-0000-0000</div>\n' +
+      '        \n' +
+      '        <div class="meta ticket-note"><span class="meta-label">内部メモ</span> 架空の内部メモ</div>\n' +
+      '        <div class="meta mt-2">2026-11-18T11:00:00.000Z</div>\n' +
+      '        <div class="ticket-actions">\n' +
+      '          <button type="button" class="x-test-btn" data-reservation-id="fx-res-2" data-reservation-status="pending">未対応に戻す</button>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '    <div class="item-card ticket-row ">\n' +
+      '      <div class="info">\n' +
+      '        <div class="ticket-top">\n' +
+      '          <div class="title">2099.12.12 テスト会場B</div>\n' +
+      '          <span class="source-badge is-web">Web</span>\n' +
+      '          <span class="status-badge is-cancelled">キャンセル</span>\n' +
+      '        </div>\n' +
+      '        <div class="meta">架空 次郎 / 4枚 / jiro@example.test</div>\n' +
+      '        \n' +
+      '        \n' +
+      '        <div class="meta mt-2">2026-11-18T12:00:00.000Z</div>\n' +
+      '        <div class="ticket-actions">\n' +
+      '          <button type="button" class="x-test-btn" data-reservation-id="fx-res-3" data-reservation-status="pending">未対応に戻す</button>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="item-card ticket-row ">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">2099.12.12 テスト会場B</div>
+              <span class="source-badge is-web">Web</span>
+              <span class="status-badge is-pending">未対応</span>
+            </div>
+            <div class="meta">架空 太郎 / 2枚 / taro@example.test</div>
+            <div class="meta ticket-message">架空の備考</div>
+            
+            <div class="meta mt-2">2026-11-18T10:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-1" data-reservation-status="handled">対応済み</button>
+           <button type="button" class="x-post-btn" data-reservation-id="fx-res-1" data-reservation-status="cancelled">キャンセル</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="item-card ticket-row ">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">2099.12.12 テスト会場B</div>
+              <span class="source-badge is-manual">手動</span>
+              <span class="status-badge is-handled">対応済み</span>
+            </div>
+            <div class="meta">架空 花子 / 3枚 / 090-0000-0000</div>
+            
+            <div class="meta ticket-note"><span class="meta-label">内部メモ</span> 架空の内部メモ</div>
+            <div class="meta mt-2">2026-11-18T11:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-2" data-reservation-status="pending">未対応に戻す</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="item-card ticket-row ">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">2099.12.12 テスト会場B</div>
+              <span class="source-badge is-web">Web</span>
+              <span class="status-badge is-cancelled">キャンセル</span>
+            </div>
+            <div class="meta">架空 次郎 / 4枚 / jiro@example.test</div>
+            
+            
+            <div class="meta mt-2">2026-11-18T12:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-3" data-reservation-status="pending">未対応に戻す</button>
+            </div>
+          </div>
+        </div>
+      
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:389:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the Ticket Page共通設定 screen: back, title and state in the Header, the seven inputs, and 保存して公開 only while unsaved (always, dimmed, when wide)
+not ok 16 - T46-STYLE the Ticket Page共通設定 screen: back, title and state in the Header, the seven inputs, and 保存して公開 only while unsaved (always, dimmed, when wide)
+  ---
+  duration_ms: 0.473708
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:402:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<header class="live-editor-header live-ticket-settings-header">\s*<button type="button" id="live-ticket-settings-close" class="live-editor-back">‹ 一覧<\/button>\s*<div class="live-editor-title-group">\s*<h3 id="live-ticket-settings-title">Ticket Page共通設定<\/h3>\s*<\/div>\s*<span id="ticket-settings-status"/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+      '  <title>1212 HP Admin</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="style.css?v=20260816-22">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <div id="app">\n' +
+      '    <!-- ヘッダー -->\n' +
+      '    <header class="header">\n' +
+      '      <div>\n' +
+      '        <h1 class="logo">1212 <span class="accent">Admin</span></h1>\n' +
+      '        <p class="header-meta" id="modeBadge">Local Mode</p>\n' +
+      '      </div>\n' +
+      '      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>\n' +
+      '    </header>\n' +
+      '    <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>\n' +
+      '\n' +
+      '    <!-- タブナビ -->\n' +
+      '    <nav class="tab-nav">\n' +
+      '      <button class="tab-btn" data-tab="site">Site</button>\n' +
+      '      <button class="tab-btn" data-tab="news">News</button>\n' +
+      '      <button class="tab-btn active" data-tab="live">Live</button>\n' +
+      '      <button class="tab-btn" data-tab="youtube">YouTube</button>\n' +
+      '      <button class="tab-btn" data-tab="discography">Disco</button>\n' +
+      '      <button class="tab-btn" data-tab="profile">Profile</button>\n' +
+      '    </nav>\n' +
+      '\n' +
+      '    <!-- Siteタブ -->\n' +
+      '    <section class="tab-content" id="site-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Site</h2>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="site-featured-release-id">顔にする作品</label>\n' +
+      '          <select id="site-featured-release-id" class="select" data-admin-mutation>\n' +
+      '            <option value="">自動（最新のリリース）</option>\n' +
+      '          </select>\n' +
+      '        </div>\n' +
+      '        <label>共有時の画像</label>\n' +
+      '        <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>\n' +
+      '        <div id="site-hero-image-form"></div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home Links</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Bandcamp</label>\n' +
+      '          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>YouTube</label>\n' +
+      '          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>X</label>\n' +
+      '          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Instagram</label>\n' +
+      '          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>note</label>\n' +
+      '          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Footer</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>フッター文言（空なら既定のまま）</label>\n' +
+      '          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Contact</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>導入文</label>\n' +
+      '          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Form Action（Formspree URL）</label>\n' +
+      '          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Newsタブ -->\n' +
+      '    <section class="tab-content" id="news-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>News</h2>\n' +
+      '        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>\n' +
+      '      </div>\n' +
+      '      <div class="items-list" id="news-list"></div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Liveタブ -->\n' +
+      '    <section class="tab-content active" id="live-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Live</h2>\n' +
+      '        <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>\n' +
+      '      </div>\n' +
+      '      <div class="live-workspace" id="live-workspace">\n' +
+      '        <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">\n' +
+      '          <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>\n' +
+      '          <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">\n' +
+      '          <div id="live-page-primary">\n' +
+      '            <div class="live-page-toolbar">\n' +
+      '              <div class="live-list-tabs" role="tablist" aria-label="公演一覧">\n' +
+      '                <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>\n' +
+      '                <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>\n' +
+      '            </div>\n' +
+      '\n' +
+      '            <div class="live-master-detail" id="live-master-detail">\n' +
+      '              <div class="live-master-pane" id="live-master-pane">\n' +
+      '                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">\n' +
+      '                  <div class="items-list" id="live-upcoming-list"></div>\n' +
+      '                </section>\n' +
+      '                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>\n' +
+      '                  <div class="items-list" id="live-past-list"></div>\n' +
+      '                </section>\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">\n' +
+      '                <header class="live-editor-header">\n' +
+      '                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>\n' +
+      '                  <div class="live-editor-title-group">\n' +
+      '                    <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>\n' +
+      '                    <h3 id="live-editor-heading">Liveを選択</h3>\n' +
+      '                  </div>\n' +
+      '                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>\n' +
+      '                </header>\n' +
+      '                <div class="live-editor-body" id="live-editor-body">\n' +
+      '                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>\n' +
+      '                </div>\n' +
+      '              </section>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>\n' +
+      '            <div class="section-header compact">\n' +
+      '              <div>\n' +
+      '                <p class="live-workspace-eyebrow">Liveページ共通</p>\n' +
+      '                <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示文言）</h3>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>完了文（空なら既定のまま）</label>\n' +
+      '                <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示項目）</h3>\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>\n' +
+      '                <label for="ticket-field-quantity">Quantity（枚数）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>枚数 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-message" data-admin-mutation>\n' +
+      '                <label for="ticket-field-message">備考（任意）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 プレースホルダ（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="form-group">\n' +
+      '                <label>送信ボタン文言（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '          </section>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-li'... 5521 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>1212 HP Admin</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="style.css?v=20260816-22">
+    </head>
+    <body>
+      <div id="app">
+        <!-- ヘッダー -->
+        <header class="header">
+          <div>
+            <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+            <p class="header-meta" id="modeBadge">Local Mode</p>
+          </div>
+          <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
+        </header>
+        <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+    
+        <!-- タブナビ -->
+        <nav class="tab-nav">
+          <button class="tab-btn" data-tab="site">Site</button>
+          <button class="tab-btn" data-tab="news">News</button>
+          <button class="tab-btn active" data-tab="live">Live</button>
+          <button class="tab-btn" data-tab="youtube">YouTube</button>
+          <button class="tab-btn" data-tab="discography">Disco</button>
+          <button class="tab-btn" data-tab="profile">Profile</button>
+        </nav>
+    
+        <!-- Siteタブ -->
+        <section class="tab-content" id="site-tab">
+          <div class="section-header">
+            <h2>Site</h2>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home</h3>
+            <div class="form-group">
+              <label for="site-featured-release-id">顔にする作品</label>
+              <select id="site-featured-release-id" class="select" data-admin-mutation>
+                <option value="">自動（最新のリリース）</option>
+              </select>
+            </div>
+            <label>共有時の画像</label>
+            <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>
+            <div id="site-hero-image-form"></div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Links</h3>
+            <div class="form-group">
+              <label>Bandcamp</label>
+              <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>YouTube</label>
+              <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>X</label>
+              <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>note</label>
+              <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Footer</h3>
+            <div class="form-group">
+              <label>フッター文言（空なら既定のまま）</label>
+              <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Contact</h3>
+            <div class="form-group">
+              <label>導入文</label>
+              <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Form Action（Formspree URL）</label>
+              <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+            </div>
+          </div>
+        </section>
+    
+        <!-- Newsタブ -->
+        <section class="tab-content" id="news-tab">
+          <div class="section-header">
+            <h2>News</h2>
+            <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="items-list" id="news-list"></div>
+        </section>
+    
+        <!-- Liveタブ -->
+        <section class="tab-content active" id="live-tab">
+          <div class="section-header">
+            <h2>Live</h2>
+            <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>
+          </div>
+          <div class="live-workspace" id="live-workspace">
+            <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+              <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+              <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
+            </div>
+    
+            <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+              <div id="live-page-primary">
+                <div class="live-page-toolbar">
+                  <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                    <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                    <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+                  </div>
+                  <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+                </div>
+    
+                <div class="live-master-detail" id="live-master-detail">
+                  <div class="live-master-pane" id="live-master-pane">
+                    <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                      <div class="items-list" id="live-upcoming-list"></div>
+                    </section>
+                    <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                      <div class="items-list" id="live-past-list"></div>
+                    </section>
+                  </div>
+    
+                  <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                    <header class="live-editor-header">
+                      <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                      <div class="live-editor-title-group">
+                        <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
+                        <h3 id="live-editor-heading">Liveを選択</h3>
+                      </div>
+                      <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                    </header>
+                    <div class="live-editor-body" id="live-editor-body">
+                      <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+    
+              <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+                <div class="section-header compact">
+                  <div>
+                    <p class="live-workspace-eyebrow">Liveページ共通</p>
+                    <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+                  </div>
+                  <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示文言）</h3>
+                  <div class="form-group">
+                    <label>完了文（空なら既定のまま）</label>
+                    <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
+                  </div>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示項目）</h3>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
+                    <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>枚数 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
+                  </div>
+    
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-message" data-admin-mutation>
+                    <label for="ticket-field-message">備考（任意）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>備考 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
+                  </div>
+                  <div class="form-group">
+                    <label>備考 プレースホルダ（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
+                  </div>
+    
+                  <div class="form-group">
+                    <label>送信ボタン文言（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
+                  </div>
+                </div>
+              </section>
+            </section>
+    
+            <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+              <div class="live-reservations-panel">
+              <div class="section-header compact">
+                <h3>横断予約台帳</h3>
+                <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+              </div>
+              <div class="form-group">
+                <label for="tickets-live-filter">フィルタ</label>
+                <div class="filters">
+                  <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+                  <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                    <option value="">全ステータス</option>
+                    <option value="pending" selected>未対応</option>
+                    <option value="handled">対応済み</option>
+                    <option value="cancelled">キャンセル</option>
+                  </select>
+                </div>
+              </div>
+              <div class="items-list" id="tickets-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+    
+        <!-- YouTubeタブ -->
+        <section class="tab-content" id="youtube-tab">
+          <div class="section-header">
+            <h2>YouTube</h2>
+            <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Channel URL</h3>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+    
+          <div class="subsection">
+            <h3>Music Video</h3>
+            <div class="items-list" id="youtube-musicVideos-list"></div>
+            <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Live Movie</h3>
+            <div class="items-list" id="youtube-liveMovies-list"></div>
+            <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Demo</h3>
+            <div class="items-list" id="youtube-demos-list"></div>
+            <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+          </div>
+        </section>
+    
+        <!-- Discographyタブ -->
+        <section class="tab-content" id="discography-tab">
+          <div class="section-header">
+            <h2>Discography</h2>
+            <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
+          </div>
+          <div class="subsection">
+            <h3>Digital Release</h3>
+            <div class="items-list" id="disc-digital-list"></div>
+          </div>
+          <div class="subsection">
+            <h3>宅録Demo</h3>
+            <div class="items-list" id="disc-demo-list"></div>
+          </div>
+        </section>
+    
+        <!-- Profileタブ -->
+        <section class="tab-content" id="profile-tab">
+          <div class="section-header">
+            <h2>Profile</h2>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group">
+            <label>プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+          <div class="subsection">
+            <h3>SNSリンク</h3>
+            <div class="items-list" id="profile-links-list"></div>
+            <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+        </section>
+    
+        <!-- モーダル -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+          <div class="modal-header">
+            <h3 id="modal-title">編集</h3>
+            <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+            <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
+          </div>
+        </div>
+    
+        <!-- トースト -->
+        <div class="toast" id="toast"></div>
+      </div>
+      <script>
+      // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+      window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
+      try {
+        var badge = document.getElementById('modeBadge');
+        if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+        var banner0 = document.getElementById('connectionBanner');
+        if (banner0) banner0.textContent = '読み込み中...';
+      } catch (e) {}
+      window.addEventListener('error', function (ev) {
+        try {
+          var banner = document.getElementById('connectionBanner');
+          if (banner) {
+            banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+            banner.classList.add('is-error');
+          }
+        } catch (e) {}
+      });
+    </script>
+    <script src="config.js?v=20260216-2001"></script>
+    <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+    <script src="../assets/js/music-data.js?v=20261117-41"></script>
+    <script src="app.js?v=20261117-41"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:403:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the settings screen takes the place of the editor and marks the page, and a Live opened from the list closes it
+not ok 17 - T46-STYLE the settings screen takes the place of the editor and marks the page, and a Live opened from the list closes it
+  ---
+  duration_ms: 0.858167
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:435:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:440:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE the confirmation surface is a fixed layer over the page, 360px at most, with its two buttons side by side
+not ok 18 - T46-STYLE the confirmation surface is a fixed layer over the page, 360px at most, with its two buttons side by side
+  ---
+  duration_ms: 0.124125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:453:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'body')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:456:24)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-STYLE while the confirmation surface is open the page behind is inert, and it is restored when the surface closes
+not ok 19 - T46-STYLE while the confirmation surface is open the page behind is inert, and it is restored when the surface closes
+  ---
+  duration_ms: 3.067583
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:467:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    live-tab cannot be reached while the surface is open
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:475:76)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-MODE the header 保存 is hidden on the Live tab only while the API is connected and nothing else is unsaved
+not ok 20 - T46-MODE the header 保存 is hidden on the Live tab only while the API is connected and nothing else is unsaved
+  ---
+  duration_ms: 1.6425
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:500:1'
+  failureType: 'testCodeFailure'
+  error: 'app.syncGlobalSaveButton is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:503:7)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-MODE Local Mode and read-only keep the header button on the Live tab
+ok 21 - T46-MODE Local Mode and read-only keep the header button on the Live tab
+  ---
+  duration_ms: 2.331
+  ...
+# Subtest: T46-MODE API connection failure is read-only: every new operation is off, nothing is sent, the list can still be read
+not ok 22 - T46-MODE API connection failure is read-only: every new operation is off, nothing is sent, the list can still be read
+  ---
+  duration_ms: 1.208916
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:538:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:542:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-MODE read-only: the reservation operations (row actions, status buttons, the form) cannot change anything
+not ok 23 - T46-MODE read-only: the reservation operations (row actions, status buttons, the form) cannot change anything
+  ---
+  duration_ms: 4.50125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:564:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'disabled')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:574:60)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-MODE Local Mode: save is 反映 to memory and 書き出し待ち, settings save is the same, and the API-only parts stay off
+not ok 24 - T46-MODE Local Mode: save is 反映 to memory and 書き出し待ち, settings save is the same, and the API-only parts stay off
+  ---
+  duration_ms: 0.9475
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:578:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:581:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-MODE leaving an unsaved Live through the global tab still asks first (the header button being hidden changes nothing)
+not ok 25 - T46-MODE leaving an unsaved Live through the global tab still asks first (the header button being hidden changes nothing)
+  ---
+  duration_ms: 0.836541
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:600:1'
+  failureType: 'testCodeFailure'
+  error: 'app.syncGlobalSaveButton is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:602:7)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-COMPAT the public Live script has the bytes of the base commit
+ok 26 - T46-COMPAT the public Live script has the bytes of the base commit
+  ---
+  duration_ms: 9.886542
+  ...
+# Subtest: T46-COMPAT the functions \#46 promised not to touch have the bodies they had at the base commit
+ok 27 - T46-COMPAT the functions \#46 promised not to touch have the bodies they had at the base commit
+  ---
+  duration_ms: 10.149833
+  ...
+# Subtest: T46-COMPAT News, YouTube, Disco, Profile and Site print the same markup and form values as at the base commit
+ok 28 - T46-COMPAT News, YouTube, Disco, Profile and Site print the same markup and form values as at the base commit
+  ---
+  duration_ms: 2.348834
+  ...
+# Subtest: T46-COMPAT the generic modals open with the same fields, and the picture wording of the other tabs is the base wording
+ok 29 - T46-COMPAT the generic modals open with the same fields, and the picture wording of the other tabs is the base wording
+  ---
+  duration_ms: 2.259083
+  ...
+# Subtest: T46-COMPAT the header 保存 (saveData) sends the whole data, including a change made in another tab, exactly as at the base commit
+ok 30 - T46-COMPAT the header 保存 (saveData) sends the whole data, including a change made in another tab, exactly as at the base commit
+  ---
+  duration_ms: 1.639917
+  ...
+# Subtest: T46-COMPAT the shared picture form keeps the other tabs wording; only the Live flyer has the new wording
+ok 31 - T46-COMPAT the shared picture form keeps the other tabs wording; only the Live flyer has the new wording
+  ---
+  duration_ms: 2.572708
+  ...
+# Subtest: T46-VERSION ADMIN_BUILD_ID and the ?v= of style.css, app.js and music-data.js are the build of this Issue and agree with each other and the README
+not ok 32 - T46-VERSION ADMIN_BUILD_ID and the ?v= of style.css, app.js and music-data.js are the build of this Issue and agree with each other and the README
+  ---
+  duration_ms: 0.353792
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:734:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   app: '20261117-41',
+    +   music: '20261117-41',
+    +   style: '20260816-22'
+    -   app: '20261120-46',
+    -   music: '20261120-46',
+    -   style: '20261120-46'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    style: '20261120-46'
+    app: '20261120-46'
+    music: '20261120-46'
+  actual:
+    style: '20260816-22'
+    app: '20261117-41'
+    music: '20261117-41'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:742:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-VERSION the operator docs describe the new flow, the commands that exist, and the order: Worker first, then merge
+not ok 33 - T46-VERSION the operator docs describe the new flow, the commands that exist, and the order: Worker first, then merge
+  ---
+  duration_ms: 0.160583
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:752:1'
+  failureType: 'testCodeFailure'
+  error: 'admin/README.md says: 予約 N枚'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:754:12)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-VERSION the Worker has the summary route and exports its rule (that the diff is additions only is checked at deploy time: git diff against the base)
+not ok 34 - T46-VERSION the Worker has the summary route and exports its rule (that the diff is additions only is checked at deploy time: git diff against the base)
+  ---
+  duration_ms: 1.386459
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:767:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /\/api\/admin\/ticket-reservation-summary/. Input:
+    
+    'const DEFAULT_SITE_DATA = {\n' +
+      '  news: [],\n' +
+      '  live: { ticketLink: "", upcoming: [], past: [] },\n' +
+      '  discography: { digital: [], demo: [] },\n' +
+      '  profile: { image: "", text: "", links: [] },\n' +
+      '  youtube: { channelUrl: "https://www.youtube.com/@1212____ki", musicVideos: [], liveMovies: [], demos: [] },\n' +
+      '  site: {\n' +
+      '    heroImage: "assets/images/hero.jpg",\n' +
+      '    featuredReleaseId: "",\n' +
+      '    links: {\n' +
+      '      bandcamp: "https://1212ki.bandcamp.com/",\n' +
+      '      youtube: "https://www.youtube.com/@1212____ki",\n' +
+      '      x: "https://www.x.com/1212____ki",\n' +
+      '      instagram: "https://www.instagram.com/1212____ki",\n' +
+      '      note: "https://note.com/1212_4939/m/m466c3962969c",\n' +
+      '    },\n' +
+      '    footerText: "© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.",\n' +
+      '  },\n' +
+      '  ticket: {\n' +
+      '    completeText: "予約しました。",\n' +
+      '    fields: {\n' +
+      '      showQuantity: true,\n' +
+      '      showMessage: true,\n' +
+      '      labelQuantity: "枚数",\n' +
+      '      labelMessage: "備考",\n' +
+      '      placeholderMessage: "例: 取り置き名義が別の場合など",\n' +
+      '      submitLabel: "予約する",\n' +
+      '    },\n' +
+      '  },\n' +
+      '  contact: {\n' +
+      '    introText: "お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。",\n' +
+      '    formAction: "https://formspree.io/f/xqaeddgj",\n' +
+      '  },\n' +
+      '};\n' +
+      'const TOKYO_UTC_OFFSET_MS = 9 * 60 * 60 * 1000;\n' +
+      'const LIVE_AI_SOURCE_MAX_LENGTH = 12_000;\n' +
+      'const LIVE_AI_TIMEOUT_MS = 15_000;\n' +
+      'const LIVE_AI_TOTAL_TIMEOUT_MS = 30_000;\n' +
+      'const LIVE_AI_DRAFT_KEYS = [\n' +
+      '  "date",\n' +
+      '  "title",\n' +
+      '  "venue",\n' +
+      '  "openTime",\n' +
+      '  "startTime",\n' +
+      '  "ticket",\n' +
+      '  "notes",\n' +
+      '  "performers",\n' +
+      '  "ticketUrl",\n' +
+      '  "link",\n' +
+      '];\n' +
+      'const LIVE_AI_DRAFT_LIMITS = {\n' +
+      '  date: 10,\n' +
+      '  title: 300,\n' +
+      '  venue: 300,\n' +
+      '  openTime: 5,\n' +
+      '  startTime: 5,\n' +
+      '  ticket: 2_000,\n' +
+      '  notes: 10_000,\n' +
+      '  performers: 10_000,\n' +
+      '  ticketUrl: 2_048,\n' +
+      '  link: 2_048,\n' +
+      '};\n' +
+      'const LIVE_AI_OUTPUT_SCHEMA = {\n' +
+      '  type: "object",\n' +
+      '  additionalProperties: false,\n' +
+      '  properties: Object.fromEntries(LIVE_AI_DRAFT_KEYS.map((key) => [key, { type: "string" }])),\n' +
+      '  required: LIVE_AI_DRAFT_KEYS,\n' +
+      '};\n' +
+      'const LIVE_AI_INSTRUCTIONS = [\n' +
+      '  "ライブ／公演の元情報を、指定された10項目へ整理してください。",\n' +
+      '  "原文にない情報は補わず、判断できない項目は空文字にしてください。",\n' +
+      '  "原文の「公演名」のような引用符付き公演名は、引用符を除いた本文をtitleに入れてください。",\n' +
+      '  "日付と会場が同じ行にある場合は、日付をdate、会場名をvenueに分けてください。",\n' +
+      '  "OPENに続く時刻をopenTime、STARTに続く時刻をstartTimeに入れてください。",\n' +
+      '  "ADVとDOORを含む料金・券種の表記は、両方をticketに入れてください。",\n' +
+      '  "-act-の下に並ぶ出演者はperformersとして扱ってください。",\n' +
+      '  "dateは判断できる場合だけYYYY-MM-DD形式にしてください。",\n' +
+      '  "openTimeとstartTimeはそれぞれ24時間表記のHH:mm形式にし、ラベルは含めないでください。",\n' +
+      '  "ticketには料金や券種の本文だけを入れ、ticket:などのラベルは含めないでください。",\n' +
+      '  "notesは補足を1項目1行にし、行頭の※は含めないでください。",\n' +
+      '  "performersは松本一樹または1212本人を除外し、共演者だけを / 区切りにしてください。共演者がいなければ空文字にし、w.などのラベルは含めないでください。",\n' +
+      '  "ticketUrlにはチケットの予約または購入先URLだけを入れてください。",\n' +
+      '  "linkには公演詳細やSNSなど、予約・購入先ではない関連URLを入れてください。",\n' +
+      '].join("\\n");\n' +
+      '\n' +
+      'class SiteDataValidationError extends Error {\n' +
+      '  constructor(message, fields) {\n' +
+      '    super(message);\n' +
+      '    this.name = "SiteDataValidationError";\n' +
+      '    if (fields) this.fields = fields;\n' +
+      '  }\n' +
+      '}\n' +
+      '\n' +
+      'class PublicReservationError extends Error {\n' +
+      '  constructor(message) {\n' +
+      '    super(message);\n' +
+      '    this.name = "PublicReservationError";\n' +
+      '  }\n' +
+      '}\n' +
+      '\n' +
+      'class KnownClientError extends Error {\n' +
+      '  constructor(message) {\n' +
+      '    super(message);\n' +
+      '    this.name = "KnownClientError";\n' +
+      '  }\n' +
+      '}\n' +
+      '\n' +
+      'class LiveAiProviderError extends Error {\n' +
+      '  constructor() {\n' +
+      '    super("AI source intake failed");\n' +
+      '    this.name = "LiveAiProviderError";\n' +
+      '  }\n' +
+      '}\n' +
+      '\n' +
+      'class LiveAiTimeoutError extends Error {\n' +
+      '  constructor() {\n' +
+      '    super("AI source intake timed out");\n' +
+      '    this.name = "LiveAiTimeoutError";\n' +
+      '  }\n' +
+      '}\n' +
+      '\n' +
+      'function nowIso() {\n' +
+      '  return new Date().toISOString();\n' +
+      '}\n' +
+      '\n' +
+      'function generateId(prefix = "id") {\n' +
+      '  return `${prefix}_${nowIso().replace(/[-:.TZ]/g, "")}_${makeNonce(10)}`;\n' +
+      '}\n' +
+      '\n' +
+      'function percentEncode(value) {\n' +
+      '  return encodeURIComponent(value)\n' +
+      `    .replace(/[!'()*]/g, (ch) => "%" + ch.charCodeAt(0).toString(16).toUpperCase());\n` +
+      '}\n' +
+      '\n' +
+      'function normalizeSiteData(input) {\n' +
+      '  const base = structuredClone(DEFAULT_SITE_DATA);\n' +
+      '  if (!input || typeof input !== "object") return base;\n' +
+      '  const data = { ...base, ...structuredClone(input) };\n' +
+      '  data.news = Array.isArray(data.news) ? data.news : [];\n' +
+      '  data.live = data.live && typeof data.live === "object" ? data.live : base.live;\n' +
+      '  data.live.ticketLink = data.live.ticketLink || "";\n' +
+      '  data.live.upcoming = Array.isArray(data.live.upcoming) ? data.live.upcoming : [];\n' +
+      '  data.live.past = Array.isArray(data.live.past) ? data.live.past : [];\n' +
+      '  data.discography = data.discography && typeof data.discography === "object" ? data.discography : base.discography;\n' +
+      '  data.discography.digital = Array.isArray(data.discography.digital) ? data.discography.digital : [];\n' +
+      '  data.discography.demo = Array.isArray(data.discography.demo) ? data.discography.demo : [];\n' +
+      '  data.profile = data.profile && typeof data.profile === "object" ? data.profile : base.profile;\n' +
+      '  data.profile.image = data.profile.image || "";\n' +
+      '  data.profile.text = data.profile.text || "";\n' +
+      '  data.profile.links = Array.isArray(data.profile.links) ? data.profile.links : [];\n' +
+      '\n' +
+      '  data.youtube = data.youtube && typeof data.youtube === "object" ? data.youtube : base.youtube;\n' +
+      '  data.youtube.channelUrl = data.youtube.channelUrl || base.youtube.channelUrl;\n' +
+      '  data.youtube.musicVideos = Array.isArray(data.youtube.musicVideos) ? data.youtube.musicVideos : [];\n' +
+      '  data.youtube.liveMovies = Array.isArray(data.youtube.liveMovies) ? data.youtube.liveMovies : [];\n' +
+      '  data.youtube.demos = Array.isArray(data.youtube.demos) ? data.youtube.demos : [];\n' +
+      '\n' +
+      '  data.site = data.site && typeof data.site === "object" ? data.site : base.site;\n' +
+      '  data.site.heroImage = data.site.heroImage || base.site.heroImage;\n' +
+      '  data.site.links = data.site.links && typeof data.site.links === "object" ? data.site.links : base.site.links;\n' +
+      '  data.site.links.bandcamp = data.site.links.bandcamp || base.site.links.bandcamp;\n' +
+      '  data.site.links.youtube = data.site.links.youtube || base.site.links.youtube;\n' +
+      '  data.site.links.x = data.site.links.x || base.site.links.x;\n' +
+      '  data.site.links.instagram = data.site.links.instagram || base.site.links.instagram;\n' +
+      '  data.site.links.note = data.site.links.note || base.site.links.note;\n' +
+      '  data.site.footerText = data.site.footerText || base.site.footerText;\n' +
+      '\n' +
+      '  data.ticket = data.ticket && typeof data.ticket === "object" ? data.ticket : base.ticket;\n' +
+      '  delete data.ticket.introText;\n' +
+      '  delete data.ticket.noticeText;\n' +
+      '  data.ticket.completeText = data.ticket.completeText || base.ticket.completeText;\n' +
+      '  data.ticket.fields = data.ticket.fields && typeof data.ticket.fields === "object" ? data.ticket.fields : base.ticket.fields;\n' +
+      '  data.ticket.fields.showQuantity = data.ticket.fields.showQuantity !== false;\n' +
+      '  data.ticket.fields.showMessage = data.ticket.fields.showMessage !== false;\n' +
+      '  data.ticket.fields.labelQuantity = data.ticket.fields.labelQuantity || base.ticket.fields.labelQuantity;\n' +
+      '  data.ticket.fields.labelMessage = data.ticket.fields.labelMessage || base.ticket.fields.labelMessage;\n' +
+      '  data.ticket.fields.placeholderMessage = data.ticket.fields.placeholderMessage || base.ticket.fields.placeholderMessage;\n' +
+      '  data.ticket.fields.submitLabel = data.ticket.fields.submitLabel || base.ticket.fields.submitLabel;\n' +
+      '\n' +
+      '  data.contact = data.contact && typeof data.contact === "object" ? data.contact : base.contact;\n' +
+      '  data.contact.introText = data.contact.introText || base.contact.introText;\n' +
+      '  data.contact.formAction = data.contact.formAction || base.contact.formAction;\n' +
+      '  return clearDanglingMusicReferences(data);\n' +
+      '}\n' +
+      '\n' +
+      'function musicReleases(data) {\n' +
+      '  return ["digital", "demo"].flatMap(key => Array.isArray(data?.discography?.[key]) ? data.discography[key] : []);\n' +
+      '}\n' +
+      '\n' +
+      'function clearDanglingMusicReferences(input) {\n' +
+      '  const data = structuredClone(input);\n' +
+      '  const releases = musicReleases(data);\n' +
+      '  const releaseIds = new Set(releases.map(item => item.id));\n' +
+      '  const videoIds = new Set(["musicVideos", "liveMovies", "demos"].flatMap(key => data.youtube[key].map(item => item.id)));\n' +
+      '  if (typeof data.site.featuredReleaseId !== "string" || !releaseIds.has(data.site.featuredReleaseId)) data.site.featuredReleaseId = "";\n' +
+      '  for (const item of releases) {\n' +
+      '    if (typeof item.releaseType !== "string") item.releaseType = "";\n' +
+      '    if (typeof item.playbackVideoId !== "string" || !videoIds.has(item.playbackVideoId)) item.playbackVideoId = "";\n' +
+      '  }\n' +
+      '  return data;\n' +
+      '}\n' +
+      '\n' +
+      'function preserveOmittedMusicFields(input, previous) {\n' +
+      '  const data = structuredClone(input);\n' +
+      '  const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);\n' +
+      '  if (!data.site || typeof data.site !== "object") data.site = {};\n' +
+      '  if (!has(data.site, "featuredReleaseId")) data.site.featuredReleaseId = previous?.site?.featuredReleaseId;\n' +
+      '  const old = new Map(musicReleases(previous).map(item => [item.id, item]));\n' +
+      '  for (const item of musicReleases(data)) {\n' +
+      '    for (const key of ["releaseType", "playbackVideoId"]) {\n' +
+      '      if (!has(item, key)) item[key] = old.get(item.id)?.[key];\n' +
+      '    }\n' +
+      '  }\n' +
+      '  return data;\n' +
+      '}\n' +
+      '\n' +
+      'function validateReleaseDates(data, previous) {\n' +
+      '  const old = new Map(musicReleases(previous).map(item => [item.id, item]));\n' +
+      '  const fields = [];\n' +
+      '  for (const item of musicReleases(data)) {\n' +
+      '    const value = item.releaseDate === undefined ? "" : item.releaseDate;\n' +
+      '    const before = old.get(item.id);\n' +
+      '    const oldValue = before?.releaseDate === undefined ? "" : before.releaseDate;\n' +
+      '    if (before && JSON.stringify(value) === JSON.stringify(oldValue)) continue;\n' +
+      '    if (value === "" || (typeof value === "string" && value.length === 10 && /^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}$/.test(value))) continue;\n' +
+      '    fields.push({ id: item.id, field: "releaseDate", message: "「2025.05.05」の形で入力してください。" });\n' +
+      '  }\n' +
+      '  if (fields.length) throw new SiteDataValidationError("invalid releaseDate", fields);\n' +
+      '}\n' +
+      '\n' +
+      'function projectPublicSiteData(data) {\n' +
+      '  const projected = structuredClone(data);\n' +
+      '  for (const collection of ["upcoming", "past"]) {\n' +
+      '    const lives = projected?.live?.[collection];\n' +
+      '    if (!Array.isArray(lives)) continue;\n' +
+      '    for (const live of lives) {\n' +
+      '      if (!live || typeof live !== "object") continue;\n' +
+      '      delete live.sourceText;\n' +
+      '      delete live.xComment;\n' +
+      '    }\n' +
+      '  }\n' +
+      '  return projected;\n' +
+      '}\n' +
+      '\n' +
+      'function getAllowedOrigins(env) {\n' +
+      '  const raw = env.ALLOWED_ORIGINS || "";\n' +
+      '  return raw\n' +
+      '    .split(",")\n' +
+      '    .map((s) => s.trim())\n' +
+      '    .filter(Boolean);\n' +
+      '}\n' +
+      '\n'... 67124 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    const DEFAULT_SITE_DATA = {
+      news: [],
+      live: { ticketLink: "", upcoming: [], past: [] },
+      discography: { digital: [], demo: [] },
+      profile: { image: "", text: "", links: [] },
+      youtube: { channelUrl: "https://www.youtube.com/@1212____ki", musicVideos: [], liveMovies: [], demos: [] },
+      site: {
+        heroImage: "assets/images/hero.jpg",
+        featuredReleaseId: "",
+        links: {
+          bandcamp: "https://1212ki.bandcamp.com/",
+          youtube: "https://www.youtube.com/@1212____ki",
+          x: "https://www.x.com/1212____ki",
+          instagram: "https://www.instagram.com/1212____ki",
+          note: "https://note.com/1212_4939/m/m466c3962969c",
+        },
+        footerText: "© 2025 松本一樹 -itsuki matsumoto-. All rights reserved.",
+      },
+      ticket: {
+        completeText: "予約しました。",
+        fields: {
+          showQuantity: true,
+          showMessage: true,
+          labelQuantity: "枚数",
+          labelMessage: "備考",
+          placeholderMessage: "例: 取り置き名義が別の場合など",
+          submitLabel: "予約する",
+        },
+      },
+      contact: {
+        introText: "お問い合わせは以下のフォームに必要事項をご入力の上、送信してください。",
+        formAction: "https://formspree.io/f/xqaeddgj",
+      },
+    };
+    const TOKYO_UTC_OFFSET_MS = 9 * 60 * 60 * 1000;
+    const LIVE_AI_SOURCE_MAX_LENGTH = 12_000;
+    const LIVE_AI_TIMEOUT_MS = 15_000;
+    const LIVE_AI_TOTAL_TIMEOUT_MS = 30_000;
+    const LIVE_AI_DRAFT_KEYS = [
+      "date",
+      "title",
+      "venue",
+      "openTime",
+      "startTime",
+      "ticket",
+      "notes",
+      "performers",
+      "ticketUrl",
+      "link",
+    ];
+    const LIVE_AI_DRAFT_LIMITS = {
+      date: 10,
+      title: 300,
+      venue: 300,
+      openTime: 5,
+      startTime: 5,
+      ticket: 2_000,
+      notes: 10_000,
+      performers: 10_000,
+      ticketUrl: 2_048,
+      link: 2_048,
+    };
+    const LIVE_AI_OUTPUT_SCHEMA = {
+      type: "object",
+      additionalProperties: false,
+      properties: Object.fromEntries(LIVE_AI_DRAFT_KEYS.map((key) => [key, { type: "string" }])),
+      required: LIVE_AI_DRAFT_KEYS,
+    };
+    const LIVE_AI_INSTRUCTIONS = [
+      "ライブ／公演の元情報を、指定された10項目へ整理してください。",
+      "原文にない情報は補わず、判断できない項目は空文字にしてください。",
+      "原文の「公演名」のような引用符付き公演名は、引用符を除いた本文をtitleに入れてください。",
+      "日付と会場が同じ行にある場合は、日付をdate、会場名をvenueに分けてください。",
+      "OPENに続く時刻をopenTime、STARTに続く時刻をstartTimeに入れてください。",
+      "ADVとDOORを含む料金・券種の表記は、両方をticketに入れてください。",
+      "-act-の下に並ぶ出演者はperformersとして扱ってください。",
+      "dateは判断できる場合だけYYYY-MM-DD形式にしてください。",
+      "openTimeとstartTimeはそれぞれ24時間表記のHH:mm形式にし、ラベルは含めないでください。",
+      "ticketには料金や券種の本文だけを入れ、ticket:などのラベルは含めないでください。",
+      "notesは補足を1項目1行にし、行頭の※は含めないでください。",
+      "performersは松本一樹または1212本人を除外し、共演者だけを / 区切りにしてください。共演者がいなければ空文字にし、w.などのラベルは含めないでください。",
+      "ticketUrlにはチケットの予約または購入先URLだけを入れてください。",
+      "linkには公演詳細やSNSなど、予約・購入先ではない関連URLを入れてください。",
+    ].join("\n");
+    
+    class SiteDataValidationError extends Error {
+      constructor(message, fields) {
+        super(message);
+        this.name = "SiteDataValidationError";
+        if (fields) this.fields = fields;
+      }
+    }
+    
+    class PublicReservationError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "PublicReservationError";
+      }
+    }
+    
+    class KnownClientError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "KnownClientError";
+      }
+    }
+    
+    class LiveAiProviderError extends Error {
+      constructor() {
+        super("AI source intake failed");
+        this.name = "LiveAiProviderError";
+      }
+    }
+    
+    class LiveAiTimeoutError extends Error {
+      constructor() {
+        super("AI source intake timed out");
+        this.name = "LiveAiTimeoutError";
+      }
+    }
+    
+    function nowIso() {
+      return new Date().toISOString();
+    }
+    
+    function generateId(prefix = "id") {
+      return `${prefix}_${nowIso().replace(/[-:.TZ]/g, "")}_${makeNonce(10)}`;
+    }
+    
+    function percentEncode(value) {
+      return encodeURIComponent(value)
+        .replace(/[!'()*]/g, (ch) => "%" + ch.charCodeAt(0).toString(16).toUpperCase());
+    }
+    
+    function normalizeSiteData(input) {
+      const base = structuredClone(DEFAULT_SITE_DATA);
+      if (!input || typeof input !== "object") return base;
+      const data = { ...base, ...structuredClone(input) };
+      data.news = Array.isArray(data.news) ? data.news : [];
+      data.live = data.live && typeof data.live === "object" ? data.live : base.live;
+      data.live.ticketLink = data.live.ticketLink || "";
+      data.live.upcoming = Array.isArray(data.live.upcoming) ? data.live.upcoming : [];
+      data.live.past = Array.isArray(data.live.past) ? data.live.past : [];
+      data.discography = data.discography && typeof data.discography === "object" ? data.discography : base.discography;
+      data.discography.digital = Array.isArray(data.discography.digital) ? data.discography.digital : [];
+      data.discography.demo = Array.isArray(data.discography.demo) ? data.discography.demo : [];
+      data.profile = data.profile && typeof data.profile === "object" ? data.profile : base.profile;
+      data.profile.image = data.profile.image || "";
+      data.profile.text = data.profile.text || "";
+      data.profile.links = Array.isArray(data.profile.links) ? data.profile.links : [];
+    
+      data.youtube = data.youtube && typeof data.youtube === "object" ? data.youtube : base.youtube;
+      data.youtube.channelUrl = data.youtube.channelUrl || base.youtube.channelUrl;
+      data.youtube.musicVideos = Array.isArray(data.youtube.musicVideos) ? data.youtube.musicVideos : [];
+      data.youtube.liveMovies = Array.isArray(data.youtube.liveMovies) ? data.youtube.liveMovies : [];
+      data.youtube.demos = Array.isArray(data.youtube.demos) ? data.youtube.demos : [];
+    
+      data.site = data.site && typeof data.site === "object" ? data.site : base.site;
+      data.site.heroImage = data.site.heroImage || base.site.heroImage;
+      data.site.links = data.site.links && typeof data.site.links === "object" ? data.site.links : base.site.links;
+      data.site.links.bandcamp = data.site.links.bandcamp || base.site.links.bandcamp;
+      data.site.links.youtube = data.site.links.youtube || base.site.links.youtube;
+      data.site.links.x = data.site.links.x || base.site.links.x;
+      data.site.links.instagram = data.site.links.instagram || base.site.links.instagram;
+      data.site.links.note = data.site.links.note || base.site.links.note;
+      data.site.footerText = data.site.footerText || base.site.footerText;
+    
+      data.ticket = data.ticket && typeof data.ticket === "object" ? data.ticket : base.ticket;
+      delete data.ticket.introText;
+      delete data.ticket.noticeText;
+      data.ticket.completeText = data.ticket.completeText || base.ticket.completeText;
+      data.ticket.fields = data.ticket.fields && typeof data.ticket.fields === "object" ? data.ticket.fields : base.ticket.fields;
+      data.ticket.fields.showQuantity = data.ticket.fields.showQuantity !== false;
+      data.ticket.fields.showMessage = data.ticket.fields.showMessage !== false;
+      data.ticket.fields.labelQuantity = data.ticket.fields.labelQuantity || base.ticket.fields.labelQuantity;
+      data.ticket.fields.labelMessage = data.ticket.fields.labelMessage || base.ticket.fields.labelMessage;
+      data.ticket.fields.placeholderMessage = data.ticket.fields.placeholderMessage || base.ticket.fields.placeholderMessage;
+      data.ticket.fields.submitLabel = data.ticket.fields.submitLabel || base.ticket.fields.submitLabel;
+    
+      data.contact = data.contact && typeof data.contact === "object" ? data.contact : base.contact;
+      data.contact.introText = data.contact.introText || base.contact.introText;
+      data.contact.formAction = data.contact.formAction || base.contact.formAction;
+      return clearDanglingMusicReferences(data);
+    }
+    
+    function musicReleases(data) {
+      return ["digital", "demo"].flatMap(key => Array.isArray(data?.discography?.[key]) ? data.discography[key] : []);
+    }
+    
+    function clearDanglingMusicReferences(input) {
+      const data = structuredClone(input);
+      const releases = musicReleases(data);
+      const releaseIds = new Set(releases.map(item => item.id));
+      const videoIds = new Set(["musicVideos", "liveMovies", "demos"].flatMap(key => data.youtube[key].map(item => item.id)));
+      if (typeof data.site.featuredReleaseId !== "string" || !releaseIds.has(data.site.featuredReleaseId)) data.site.featuredReleaseId = "";
+      for (const item of releases) {
+        if (typeof item.releaseType !== "string") item.releaseType = "";
+        if (typeof item.playbackVideoId !== "string" || !videoIds.has(item.playbackVideoId)) item.playbackVideoId = "";
+      }
+      return data;
+    }
+    
+    function preserveOmittedMusicFields(input, previous) {
+      const data = structuredClone(input);
+      const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj || {}, key);
+      if (!data.site || typeof data.site !== "object") data.site = {};
+      if (!has(data.site, "featuredReleaseId")) data.site.featuredReleaseId = previous?.site?.featuredReleaseId;
+      const old = new Map(musicReleases(previous).map(item => [item.id, item]));
+      for (const item of musicReleases(data)) {
+        for (const key of ["releaseType", "playbackVideoId"]) {
+          if (!has(item, key)) item[key] = old.get(item.id)?.[key];
+        }
+      }
+      return data;
+    }
+    
+    function validateReleaseDates(data, previous) {
+      const old = new Map(musicReleases(previous).map(item => [item.id, item]));
+      const fields = [];
+      for (const item of musicReleases(data)) {
+        const value = item.releaseDate === undefined ? "" : item.releaseDate;
+        const before = old.get(item.id);
+        const oldValue = before?.releaseDate === undefined ? "" : before.releaseDate;
+        if (before && JSON.stringify(value) === JSON.stringify(oldValue)) continue;
+        if (value === "" || (typeof value === "string" && value.length === 10 && /^[0-9]{4}\.[0-9]{2}\.[0-9]{2}$/.test(value))) continue;
+        fields.push({ id: item.id, field: "releaseDate", message: "「2025.05.05」の形で入力してください。" });
+      }
+      if (fields.length) throw new SiteDataValidationError("invalid releaseDate", fields);
+    }
+    
+    function projectPublicSiteData(data) {
+      const projected = structuredClone(data);
+      for (const collection of ["upcoming", "past"]) {
+        const lives = projected?.live?.[collection];
+        if (!Array.isArray(lives)) continue;
+        for (const live of lives) {
+          if (!live || typeof live !== "object") continue;
+          delete live.sourceText;
+          delete live.xComment;
+        }
+      }
+      return projected;
+    }
+    
+    function getAllowedOrigins(env) {
+      const raw = env.ALLOWED_ORIGINS || "";
+      return raw
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
+    
+    function createCorsHeaders(request, env) {
+      const origin = request.headers.get("Origin") || "";
+      const allowedOrigins = getAllowedOrigins(env);
+      const allowOrigin = allowedOrigins.length === 0
+        ? "*"
+        : allowedOrigins.includes(origin)
+          ? origin
+          : allowedOrigins[0];
+    
+      return {
+        "Access-Control-Allow-Origin": allowOrigin,
+        "Access-Control-Allow-Headers": "Authorization, Content-Type, X-Admin-Token",
+        "Access-Control-Allow-Methods": "GET, PUT, POST, OPTIONS",
+        "Access-Control-Max-Age": "86400",
+        "Vary": "Origin",
+      };
+    }
+    
+    function jsonResponse(body, request, env, status = 200) {
+      return new Response(JSON.stringify(body), {
+        status,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Cache-Control": "no-store, max-age=0",
+          "CDN-Cache-Control": "no-store",
+          "Pragma": "no-cache",
+          ...createCorsHeaders(request, env),
+        },
+      });
+    }
+    
+    function textResponse(body, request, env, status = 200, headers = {}) {
+      return new Response(body, {
+        status,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          ...headers,
+          ...createCorsHeaders(request, env),
+        },
+      });
+    }
+    
+    function htmlResponse(body, status = 200, headers = {}) {
+      return new Response(body, {
+        status,
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          ...headers,
+        },
+      });
+    }
+    
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+    
+    function truncate(str, maxLen) {
+      const s = String(str || "");
+      if (s.length <= maxLen) return s;
+      return s.slice(0, Math.max(0, maxLen - 1)) + "…";
+    }
+    
+    function isOgCrawler(userAgent) {
+      const ua = String(userAgent || "").toLowerCase();
+      if (!ua) return false;
+      return (
+        ua.includes("twitterbot") ||
+        ua.includes("facebookexternalhit") ||
+        ua.includes("slackbot") ||
+        ua.includes("discordbot") ||
+        ua.includes("linkedinbot") ||
+        ua.includes("whatsapp") ||
+        ua.includes("telegrambot")
+      );
+    }
+    
+    function buildCompactDescription(raw) {
+      const txt = String(raw || "")
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/\r\n/g, "\n");
+      const parts = txt
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+      return parts.join(" / ");
+    }
+    
+    function formatLiveDateForDisplay(value) {
+      const original = String(value == null ? "" : value).trim();
+      if (!original) return "";
+      const parsed = parsePublicReservationLiveDate(original);
+      if (!parsed) return original;
+      const date = new Date(Date.UTC(parsed.year, parsed.month - 1, parsed.day));
+      const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      return `${String(parsed.year).padStart(4, "0")}.${String(parsed.month).padStart(2, "0")}.${String(parsed.day).padStart(2, "0")}(${weekdays[date.getUTCDay()]})`;
+    }
+    
+    function normalizeLivePerformersForDisplay(value) {
+      return String(value == null ? "" : value)
+        .replace(/\r\n?/g, "\n")
+        .replace(/(^|[\n/])\s*(?:(?:w\s*[./])\s*)+/giu, "$1")
+        .split(/\n|\s*\/\s*/u)
+        .map((performer) => performer.trim())
+        .filter(Boolean)
+        .join(" / ");
+    }
+    
+    function formatLiveDetailsForDisplay(liveInput) {
+      const live = liveInput && typeof liveInput === "object" ? liveInput : {};
+      const openTime = String(live.openTime || "").trim();
+      const startTime = String(live.startTime || "").trim();
+      const ticket = String(live.ticket || "").trim();
+      const notes = String(live.notes || "")
+        .replace(/\r\n?/g, "\n")
+        .split("\n")
+        .map((note) => note.trim().replace(/^※+\s*/u, ""))
+        .filter(Boolean);
+      const performers = normalizeLivePerformersForDisplay(live.performers);
+      const lines = [];
+    
+      if (openTime && startTime) lines.push(`Open/Start: ${openTime}/${startTime}`);
+      else if (startTime) lines.push(`Start: ${startTime}`);
+      else if (openTime) lines.push(`Open: ${openTime}`);
+      if (ticket) lines.push(`ticket: ${ticket}`);
+      lines.push(...notes.map((note) => `※${note}`));
+      if (performers) lines.push(`w. ${performers}`);
+    
+      return lines.length > 0
+        ? lines.join("\n")
+        : String(live.description || "").replace(/<br\s*\/?>/gi, "\n").trim();
+    }
+    
+    function resolveOgImageUrl(raw, ogOrigin, publicOrigin, env) {
+      const v = String(raw || "").trim();
+      if (!v) return "";
+      if (/^https?:\/\//i.test(v)) return v;
+    
+      const looksStatic = v.startsWith("assets/") || v.startsWith("/assets/");
+      if (looksStatic) {
+        return resolvePublicImageUrl(v, publicOrigin, env);
+      }
+    
+      return resolvePublicImageUrl(v, ogOrigin, env);
+    }
+    
+    function buildOgLiveHtml({ pageUrl, canonicalUrl, title, description, imageUrl }) {
+      const safeTitle = escapeHtml(title || "");
+      const safeDesc = escapeHtml(description || "");
+      const safePageUrl = escapeHtml(pageUrl || "");
+      const safeCanonical = escapeHtml(canonicalUrl || "");
+      const safeImg = escapeHtml(imageUrl || "");
+      const safeCanonicalJs = JSON.stringify(String(canonicalUrl || ""));
+    
+      return `<!doctype html>
+    <html lang="ja">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>${safeTitle}</title>
+      ${canonicalUrl ? `<link rel="canonical" href="${safeCanonical}" />` : ""}
+    
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="松本一樹" />
+      <meta property="og:url" content="${safePageUrl}" />
+      <meta property="og:title" content="${safeTitle}" />
+      <meta property="og:description" content="${safeDesc}" />
+      ${imageUrl ? `<meta property="og:image" content="${safeImg}" />` : ""}
+    
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="${safeTitle}" />
+      <meta name="twitter:description" content="${safeDesc}" />
+      ${imageUrl ? `<meta name="twitter:image" content="${safeImg}" />` : ""}
+    
+      <style>
+        :root { color-scheme: light; }
+        body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; padding: 24px; background: #fff; color: #111; }
+        .card { max-width: 720px; margin: 0 auto; border: 1px solid rgba(0,0,0,0.12); border-radius: 16px; padding: 18px; }
+        h1 { font-size: 18px; margin: 0 0 10px; }
+        p { margin: 0 0 14px; color: #444; line-height: 1.6; white-space: pre-wrap; }
+        a { color: #111; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.12); text-decoration: none; }
+      </style>
+    </head>
+    <body>
+      <main class="card">
+        <h1>${safeTitle}</h1>
+        <p>${safeDesc}</p>
+        ${canonicalUrl ? `<a class="btn" href="${safeCanonical}" rel="noopener">詳細を見る</a>` : ""}
+      </main>
+      ${canonicalUrl ? `
+      <script>
+        // X/Twitter card bots do not execute JS. For humans, redirect quickly to the canonical HP URL.
+        try { setTimeout(function () { location.replace(${safeCanonicalJs}); }, 30); } catch (e) {}
+      </script>` : ""}
+    </body>
+    </html>`;
+    }
+    
+    function sanitizeFilename(name) {
+      const base = String(name || "image")
+        .trim()
+        .replace(/[/\\\\?%*:|"<>]/g, "_")
+        .replace(/\s+/g, "_")
+        .slice(0, 80);
+      return base || "image";
+    }
+    
+    function guessExtFromContentType(contentType) {
+      const ct = String(contentType || "").toLowerCase();
+      if (ct.includes("image/jpeg")) return "jpg";
+      if (ct.includes("image/png")) return "png";
+      if (ct.includes("image/webp")) return "webp";
+      if (ct.includes("image/gif")) return "gif";
+      return "bin";
+    }
+    
+    function isAdminAuthorized(request, env) {
+      const bypass = String(env.BYPASS_ADMIN_TOKEN || "false").toLowerCase() === "true";
+      if (bypass) return true;
+      // Prefer secret binding to avoid committing tokens to git; keep ADMIN_TOKEN for backward compatibility.
+      const expected = env.ADMIN_SHARED_TOKEN || env.ADMIN_TOKEN || "";
+      if (!expected) return false;
+      const auth = request.headers.get("Authorization") || "";
+      const bearer = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+      const token = bearer || request.headers.get("X-Admin-Token") || "";
+      return token === expected;
+    }
+    
+    function isValidLiveAiDate(value) {
+      const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+      if (!match) return false;
+      const year = Number(match[1]);
+      const month = Number(match[2]);
+      const day = Number(match[3]);
+      if (month < 1 || month > 12) return false;
+      const leapYear = year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+      const daysInMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      return day >= 1 && day <= daysInMonth[month - 1];
+    }
+    
+    function isValidLiveAiTime(value) {
+      if (!value) return true;
+      const match = /^(\d{2}):(\d{2})$/.exec(value);
+      if (!match) return false;
+      return Number(match[1]) <= 23 && Number(match[2]) <= 59;
+    }
+    
+    function isValidLiveAiUrl(value) {
+      if (!value) return true;
+      try {
+        const url = new URL(value);
+        return (
+          (url.protocol === "http:" || url.protocol === "https:") &&
+          Boolean(url.hostname) &&
+          !url.username &&
+          !url.password
+        );
+      } catch (_error) {
+        return false;
+      }
+    }
+    
+    function validateLiveAiDraft(input) {
+      if (!input || typeof input !== "object" || Array.isArray(input)) {
+        throw new LiveAiProviderError();
+      }
+    
+      const keys = Object.keys(input);
+      if (
+        keys.length !== LIVE_AI_DRAFT_KEYS.length ||
+        !LIVE_AI_DRAFT_KEYS.every((key) => Object.prototype.hasOwnProperty.call(input, key))
+      ) {
+        throw new LiveAiProviderError();
+      }
+    
+      const draft = {};
+      for (const key of LIVE_AI_DRAFT_KEYS) {
+        if (typeof input[key] !== "string") throw new LiveAiProviderError();
+        const value = input[key].trim();
+        if (value.length > LIVE_AI_DRAFT_LIMITS[key]) throw new LiveAiProviderError();
+        draft[key] = value;
+      }
+    
+      if (draft.date && !isValidLiveAiDate(draft.date)) throw new LiveAiProviderError();
+      if (!isValidLiveAiTime(draft.openTime) || !isValidLiveAiTime(draft.startTime)) {
+        throw new LiveAiProviderError();
+      }
+      if (!isValidLiveAiUrl(draft.ticketUrl) || !isValidLiveAiUrl(draft.link)) {
+        throw new LiveAiProviderError();
+      }
+      return draft;
+    }
+    
+    function hasLiveAiRefusal(payload) {
+      if (typeof payload?.refusal === "string" && payload.refusal.trim()) return true;
+      if (!Array.isArray(payload?.output)) return false;
+      return payload.output.some((item) => (
+        Array.isArray(item?.content) && item.content.some((content) => (
+          content?.type === "refusal" ||
+          (typeof content?.refusal === "string" && content.refusal.trim())
+        ))
+      ));
+    }
+    
+    function extractLiveAiOutputText(payload) {
+      if (typeof payload?.output_text === "string" && payload.output_text.trim()) {
+        return payload.output_text;
+      }
+      if (!Array.isArray(payload?.output)) return "";
+      for (const item of payload.output) {
+        if (!Array.isArray(item?.content)) continue;
+        for (const content of item.content) {
+          if (content?.type === "output_text" && typeof content.text === "string" && content.text.trim()) {
+            return content.text;
+          }
+        }
+      }
+      return "";
+    }
+    
+    async function requestOpenAiLiveDraft(env, sourceText, signal) {
+      const response = await fetch("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: String(env.LIVE_AI_MODEL || "").trim() || "gpt-5-mini",
+          reasoning: { effort: "minimal" },
+          instructions: LIVE_AI_INSTRUCTIONS,
+          input: sourceText,
+          text: {
+            format: {
+              type: "json_schema",
+              name: "live_source_intake",
+              strict: true,
+              schema: LIVE_AI_OUTPUT_SCHEMA,
+            },
+          },
+        }),
+        signal,
+      });
+      if (!response.ok) throw new LiveAiProviderError();
+      const payload = await response.json();
+    
+      if (
+        !payload ||
+        typeof payload !== "object" ||
+        payload.error ||
+        (payload.status && payload.status !== "completed") ||
+        hasLiveAiRefusal(payload)
+      ) {
+        throw new LiveAiProviderError();
+      }
+    
+      const outputText = extractLiveAiOutputText(payload);
+      if (!outputText) throw new LiveAiProviderError();
+    
+      let parsed;
+      try {
+        parsed = JSON.parse(outputText);
+      } catch (_error) {
+        throw new LiveAiProviderError();
+      }
+      return validateLiveAiDraft(parsed);
+    }
+    
+    async function requestClaudeLiveDraft(env, sourceText, signal) {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "x-api-key": env.ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          model: String(env.LIVE_AI_CLAUDE_MODEL || "").trim() || "claude-haiku-5-5",
+          max_tokens: 16_384,
+          system: LIVE_AI_INSTRUCTIONS,
+          messages: [{ role: "user", content: sourceText }],
+          output_config: {
+            effort: "low",
+            format: { type: "json_schema", schema: LIVE_AI_OUTPUT_SCHEMA },
+          },
+        }),
+        signal,
+      });
+      if (!response.ok) throw new LiveAiProviderError();
+      const payload = await response.json();
+      if (
+        !payload || typeof payload !== "object" || Array.isArray(payload) || payload.error ||
+        payload.stop_reason !== "end_turn" || !Array.isArray(payload.content)
+      ) {
+        throw new LiveAiProviderError();
+      }
+      const outputText = payload.content
+        .filter((block) => block?.type === "text" && typeof block.text === "string")
+        .map((block) => block.text).join("");
+      if (!outputText.trim()) throw new LiveAiProviderError();
+      return validateLiveAiDraft(JSON.parse(outputText));
+    }
+    
+    function ensureLiveAiDeadline(deadline, controller) {
+      if (controller.signal.aborted || performance.now() >= deadline) {
+        controller.abort();
+        throw new LiveAiTimeoutError();
+      }
+    }
+    
+    async function requestLiveAiAttempt(adapter, env, sourceText, controller, deadline) {
+      let timer;
+      let rejectOnAbort;
+      try {
+        ensureLiveAiDeadline(deadline, controller);
+        const timeout = new Promise((_resolve, reject) => {
+          rejectOnAbort = () => reject(new LiveAiTimeoutError());
+          controller.signal.addEventListener("abort", rejectOnAbort, { once: true });
+          timer = setTimeout(() => controller.abort(), deadline - performance.now());
+        });
+        // The adapter includes body reading, extraction and validation inside this race.
+        const draft = await Promise.race([adapter(env, sourceText, controller.signal), timeout]);
+        ensureLiveAiDeadline(deadline, controller);
+        return draft;
+      } catch (_error) {
+        ensureLiveAiDeadline(deadline, controller);
+        throw new LiveAiProviderError();
+      } finally {
+        clearTimeout(timer);
+        if (rejectOnAbort) controller.signal.removeEventListener("abort", rejectOnAbort);
+      }
+    }
+    
+    async function requestLiveAiDraft(env, sourceText) {
+      const deadline = performance.now() + LIVE_AI_TOTAL_TIMEOUT_MS;
+      const providers = [
+        ["openai", env.OPENAI_API_KEY, requestOpenAiLiveDraft],
+        ["claude", env.ANTHROPIC_API_KEY, requestClaudeLiveDraft],
+      ].filter(([, key]) => String(key || "").trim());
+      let activeController = null;
+      let globalTimer;
+      const timeout = new Promise((_resolve, reject) => {
+        globalTimer = setTimeout(() => {
+          activeController?.abort();
+          reject(new LiveAiTimeoutError());
+        }, deadline - performance.now());
+      });
+      const runProviders = async () => {
+        let lastError = new LiveAiProviderError();
+        for (const [provider, _key, adapter] of providers) {
+          const attemptStart = performance.now();
+          if (attemptStart >= deadline) throw new LiveAiTimeoutError();
+          const controller = new AbortController();
+          const attemptDeadline = Math.min(attemptStart + LIVE_AI_TIMEOUT_MS, deadline);
+          activeController = controller;
+          try {
+            const draft = await requestLiveAiAttempt(
+              adapter, env, sourceText, controller, attemptDeadline,
+            );
+            ensureLiveAiDeadline(attemptDeadline, controller);
+            return { draft, provider };
+          } catch (error) {
+            if (performance.now() >= deadline) {
+              controller.abort();
+              throw new LiveAiTimeoutError();
+            }
+            lastError = error;
+          } finally {
+            activeController = null;
+          }
+        }
+        throw lastError;
+      };
+      try {
+        return await Promise.race([runProviders(), timeout]);
+      } finally {
+        clearTimeout(globalTimer);
+        activeController = null;
+      }
+    }
+    
+    async function serveImage(request, env, key) {
+      if (!env.IMAGES) {
+        return new Response("image storage not configured", { status: 500 });
+      }
+      const safeKey = String(key || "").replace(/^\/+/, "");
+      if (!safeKey || safeKey.includes("..")) {
+        return new Response("bad key", { status: 400 });
+      }
+      const method = String(request.method || "GET").toUpperCase();
+      const obj = method === "HEAD" ? await env.IMAGES.head(safeKey) : await env.IMAGES.get(safeKey);
+      if (!obj) return new Response("not found", { status: 404 });
+    
+      const headers = new Headers();
+      const contentType = obj.httpMetadata?.contentType || "application/octet-stream";
+      headers.set("Content-Type", contentType);
+      headers.set("Cache-Control", "public, max-age=31536000, immutable");
+      headers.set("ETag", obj.etag);
+      // Allow images to be embedded anywhere.
+      headers.set("Access-Control-Allow-Origin", "*");
+    
+      return new Response(method === "HEAD" ? null : obj.body, { status: 200, headers });
+    }
+    
+    async function getSiteDataRow(env) {
+      const row = await env.DB.prepare("SELECT data, updated_at FROM site_data WHERE id = 1").first();
+      if (!row || !row.data) {
+        const fallback = normalizeSiteData(DEFAULT_SITE_DATA);
+        const updatedAt = nowIso();
+        await env.DB.prepare(
+          "INSERT OR REPLACE INTO site_data (id, data, updated_at) VALUES (1, ?, ?)"
+        ).bind(JSON.stringify(fallback), updatedAt).run();
+        return { data: fallback, updatedAt };
+      }
+      try {
+        return { data: normalizeSiteData(JSON.parse(row.data)), updatedAt: row.updated_at || "" };
+      } catch (_error) {
+        return { data: normalizeSiteData(DEFAULT_SITE_DATA), updatedAt: row.updated_at || "" };
+      }
+    }
+    
+    async function getSiteData(env) {
+      const { data } = await getSiteDataRow(env);
+      return data;
+    }
+    
+    async function saveSiteData(env, data) {
+      const duplicateLiveIds = findDuplicateLiveIds(data);
+      if (duplicateLiveIds.length > 0) {
+        throw new SiteDataValidationError(`duplicate Live ID: ${duplicateLiveIds.join(", ")}`);
+      }
+      const row = await env.DB.prepare("SELECT data, updated_at FROM site_data WHERE id = 1").first();
+      let previous = {};
+      if (row) {
+        try { previous = JSON.parse(row.data); }
+        catch (_error) { throw new SiteDataValidationError("invalid stored site data"); }
+      }
+      validateReleaseDates(data, previous);
+      const normalized = normalizeSiteData(preserveOmittedMusicFields(data, previous));
+      await env.DB.prepare(
+        "INSERT OR REPLACE INTO site_data (id, data, updated_at) VALUES (1, ?, ?)"
+      ).bind(JSON.stringify(normalized), nowIso()).run();
+      return normalized;
+    }
+    
+    function isValidEmail(email) {
+      const value = String(email || "").trim();
+      if (value.length < 5 || value.length > 254) return false;
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+    
+    function clampInt(value, min, max) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return min;
+      return Math.max(min, Math.min(max, Math.floor(n)));
+    }
+    
+    async function createTicketReservation(env, input) {
+      const liveId = String(input.liveId || "").trim();
+      const name = String(input.name || "").trim();
+      const email = String(input.email || "").trim();
+      const message = String(input.message || "").trim();
+      const quantity = input.quantity;
+    
+      if (!liveId) throw new PublicReservationError("liveId is required");
+      if (!name) throw new PublicReservationError("name is required");
+      if (!isValidEmail(email)) throw new PublicReservationError("email is invalid");
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+        throw new PublicReservationError("quantity is invalid");
+      }
+    
+      const siteData = await getSiteData(env);
+      const resolvedLive = resolveLiveById(siteData, liveId);
+      if (resolvedLive.status === "ambiguous") throw new PublicReservationError("live ID is ambiguous");
+      if (resolvedLive.status !== "unique") throw new PublicReservationError("live not found");
+      const live = resolvedLive.live;
+      if (!isPublicTicketReservationEligible(siteData, liveId)) {
+        throw new PublicReservationError("live is not available for public reservation");
+      }
+    
+      const id = generateId("ticket");
+      const createdAt = nowIso();
+      const duplicateThreshold = new Date(Date.parse(createdAt) - 5 * 60 * 1000).toISOString();
+      const status = "pending";
+    
+      const insertResult = await env.DB.prepare(
+        `INSERT INTO ticket_reservations
+          (id, live_id, live_date, live_venue, name, email, quantity, message, status, created_at, updated_at, source)
+         SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+         WHERE NOT EXISTS (
+           SELECT 1 FROM ticket_reservations
+           WHERE live_id = ? AND email = ? AND created_at >= ?
+         )`
+      ).bind(
+        id,
+        liveId,
+        String(live.date || ""),
+        String(live.venue || ""),
+        name,
+        email,
+        quantity,
+        message,
+        status,
+        createdAt,
+        createdAt,
+        "web",
+        liveId,
+        email,
+        duplicateThreshold
+      ).run();
+      if (Number(insertResult?.meta?.changes) === 0) {
+        throw new PublicReservationError("reservation already submitted recently");
+      }
+    
+      return {
+        id,
+        liveId,
+        liveDate: String(live.date || ""),
+        liveVenue: String(live.venue || ""),
+        name,
+        email,
+        quantity,
+        message,
+        status,
+        source: "web",
+        createdAt,
+      };
+    }
+    
+    async function createManualTicketReservation(env, input) {
+      const liveId = typeof input.liveId === "string" ? input.liveId.trim() : "";
+      const name = typeof input.name === "string" ? input.name.trim() : "";
+      const quantity = input.quantity;
+    
+      if (!liveId) throw new KnownClientError("liveId is required");
+      if (!name) throw new KnownClientError("name is required");
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+        throw new KnownClientError("quantity is invalid");
+      }
+      if (input.contact != null && typeof input.contact !== "string") {
+        throw new KnownClientError("contact is invalid");
+      }
+      if (input.internalNote != null && typeof input.internalNote !== "string") {
+        throw new KnownClientError("internalNote is invalid");
+      }
+    
+      const contact = String(input.contact || "").trim();
+      const internalNote = String(input.internalNote || "").trim();
+      if (contact.length > 200) throw new KnownClientError("contact is too long");
+      if (internalNote.length > 2000) throw new KnownClientError("internalNote is too long");
+    
+      const siteData = await getSiteData(env);
+      const resolvedLive = resolveLiveById(siteData, liveId);
+      if (resolvedLive.status === "ambiguous") throw new KnownClientError("live ID is ambiguous");
+      if (resolvedLive.status !== "unique") throw new KnownClientError("live not found");
+      const live = resolvedLive.live;
+    
+      const id = generateId("ticket");
+      const createdAt = nowIso();
+      const status = "handled";
+      const source = "manual";
+    
+      await env.DB.prepare(
+        `INSERT INTO ticket_reservations
+          (id, live_id, live_date, live_venue, name, email, quantity, message, status, created_at, updated_at, source, contact, internal_note)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ).bind(
+        id,
+        liveId,
+        String(live.date || ""),
+        String(live.venue || ""),
+        name,
+        "",
+        quantity,
+        "",
+        status,
+        createdAt,
+        createdAt,
+        source,
+        contact,
+        internalNote
+      ).run();
+    
+      return {
+        id,
+        liveId,
+        liveDate: String(live.date || ""),
+        liveVenue: String(live.venue || ""),
+        name,
+        email: "",
+        quantity,
+        message: "",
+        status,
+        source,
+        contact,
+        internalNote,
+        createdAt,
+      };
+    }
+    
+    async function listTicketReservations(env, options = {}) {
+      const liveId = String(options.liveId || "").trim();
+      const status = String(options.status || "").trim();
+      const limit = clampInt(options.limit, 1, 200);
+    
+      let stmt;
+      if (liveId && status) {
+        stmt = env.DB.prepare(
+          `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+                  name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+                  COALESCE(source, 'web') as source, contact, internal_note as internalNote
+           FROM ticket_reservations
+           WHERE live_id = ? AND status = ?
+           ORDER BY created_at DESC
+           LIMIT ?`
+        ).bind(liveId, status, limit);
+      } else if (liveId) {
+        stmt = env.DB.prepare(
+          `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+                  name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+                  COALESCE(source, 'web') as source, contact, internal_note as internalNote
+           FROM ticket_reservations
+           WHERE live_id = ?
+           ORDER BY created_at DESC
+           LIMIT ?`
+        ).bind(liveId, limit);
+      } else if (status) {
+        stmt = env.DB.prepare(
+          `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+                  name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+                  COALESCE(source, 'web') as source, contact, internal_note as internalNote
+           FROM ticket_reservations
+           WHERE status = ?
+           ORDER BY created_at DESC
+           LIMIT ?`
+        ).bind(status, limit);
+      } else {
+        stmt = env.DB.prepare(
+          `SELECT id, live_id as liveId, live_date as liveDate, live_venue as liveVenue,
+                  name, email, quantity, message, status, created_at as createdAt, updated_at as updatedAt,
+                  COALESCE(source, 'web') as source, contact, internal_note as internalNote
+           FROM ticket_reservations
+           ORDER BY created_at DESC
+           LIMIT ?`
+        ).bind(limit);
+      }
+    
+      const result = await stmt.all();
+      return result.results || [];
+    }
+    
+    async function updateTicketReservationStatus(env, id, status) {
+      const allowed = new Set(["pending", "handled", "cancelled"]);
+      const next = String(status || "").trim();
+      if (!allowed.has(next)) throw new KnownClientError("invalid status");
+    
+      const updatedAt = nowIso();
+      const res = await env.DB.prepare(
+        `UPDATE ticket_reservations SET status = ?, updated_at = ? WHERE id = ?`
+      ).bind(next, updatedAt, id).run();
+    
+      if (!res.success) throw new Error("update failed");
+      return { id, status: next, updatedAt };
+    }
+    
+    function toCsv(rows) {
+      const header = [
+        "id",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "liveId",
+        "liveDate",
+        "liveVenue",
+        "name",
+        "email",
+        "quantity",
+        "message",
+        "source",
+        "contact",
+        "internalNote",
+      ];
+      const escape = (v) => {
+        const raw = String(v ?? "");
+        const s = typeof v === "string" && /^[\s\x00-\x1f\x7f-\x9f]*[=+\-@]/.test(v)
+          ? `'${raw}`
+          : raw;
+        if (/[\",\n\r]/.test(s)) return `"${s.replace(/\"/g, "\"\"")}"`;
+        return s;
+      };
+      const lines = [header.join(",")];
+      for (const r of rows) {
+        lines.push(
+          [
+            r.id,
+            r.status,
+            r.createdAt,
+            r.updatedAt,
+            r.liveId,
+            r.liveDate,
+            r.liveVenue,
+            r.name,
+            r.email,
+            r.quantity,
+            r.message,
+            r.source || "web",
+            r.contact,
+            r.internalNote,
+          ].map(escape).join(",")
+        );
+      }
+      return lines.join("\n") + "\n";
+    }
+    
+    function getLiveEntries(siteData) {
+      const live = siteData && siteData.live && typeof siteData.live === "object" ? siteData.live : {};
+      const upcoming = Array.isArray(live.upcoming) ? live.upcoming : [];
+      const past = Array.isArray(live.past) ? live.past : [];
+      return [
+        ...upcoming.map((item) => ({ live: item, category: "upcoming" })),
+        ...past.map((item) => ({ live: item, category: "past" })),
+      ];
+    }
+    
+    function normalizeLiveId(value) {
+      return String(value == null ? "" : value).trim();
+    }
+    
+    function resolveLiveById(siteData, liveId) {
+      const id = normalizeLiveId(liveId);
+      const matches = id
+        ? getLiveEntries(siteData).filter((entry) => normalizeLiveId(entry.live && entry.live.id) === id)
+        : [];
+      if (matches.length === 0) return { status: "missing", live: null, category: null };
+      if (matches.length !== 1) return { status: "ambiguous", live: null, category: null };
+      return { status: "unique", live: matches[0].live, category: matches[0].category };
+    }
+    
+    function findDuplicateLiveIds(siteData) {
+      const counts = new Map();
+      for (const entry of getLiveEntries(siteData)) {
+        const id = normalizeLiveId(entry.live && entry.live.id);
+        if (!id) continue;
+        counts.set(id, (counts.get(id) || 0) + 1);
+      }
+      return [...counts.entries()]
+        .filter(([, count]) => count > 1)
+        .map(([id]) => id)
+        .sort();
+    }
+    
+    function findLiveById(siteData, liveId) {
+      const resolved = resolveLiveById(siteData, liveId);
+      return resolved.status === "unique" ? resolved.live : null;
+    }
+    
+    const PUBLIC_RESERVATION_SOCIAL_HOSTS = [
+      "instagram.com",
+      "x.com",
+      "twitter.com",
+      "youtube.com",
+      "youtu.be",
+      "facebook.com",
+      "fb.com",
+      "tiktok.com",
+      "threads.net",
+      "bandcamp.com",
+      "soundcloud.com",
+      "spotify.com",
+    ];
+    
+    const PUBLIC_RESERVATION_TICKET_HOSTS = [
+      "tiget.net",
+      "eplus.jp",
+      "pia.jp",
+      "l-tike.com",
+      "livepocket.jp",
+      "zaiko.io",
+      "peatix.com",
+      "teket.jp",
+      "ticketpay.jp",
+      "confetti-web.com",
+      "rakuten-ticket.com",
+      "ticketbook.jp",
+      "eventregist.com",
+    ];
+    
+    function hasOwn(object, property) {
+      return object != null && Object.prototype.hasOwnProperty.call(object, property);
+    }
+    
+    function cleanPublicReservationUrl(value) {
+      return String(value == null ? "" : value).trim()
+        .replace(/^[\s\u300c\u300e\u3010(<\[]+/u, "")
+        .replace(/[\s\u300d\u300f\u3011。、，．!！?？;；:：)>\]}]+$/u, "");
+    }
+    
+    function parseSafePublicReservationUrl(value) {
+      let parsed;
+      try {
+        parsed = new URL(String(value == null ? "" : value).trim());
+        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+        decodeURIComponent(parsed.pathname);
+        decodeURIComponent(parsed.search);
+        decodeURIComponent(parsed.hash);
+      } catch (_error) {
+        return null;
+      }
+      return parsed;
+    }
+    
+    function publicReservationHostMatches(hostname, candidate) {
+      return hostname === candidate || hostname.endsWith(`.${candidate}`);
+    }
+    
+    function isRecognizablePublicBookingUrl(value) {
+      const cleaned = cleanPublicReservationUrl(value);
+      const parsed = parseSafePublicReservationUrl(cleaned);
+      if (!parsed) return false;
+    
+      const hostname = parsed.hostname.toLowerCase().replace(/^www\./, "");
+      if (PUBLIC_RESERVATION_SOCIAL_HOSTS.some((candidate) => publicReservationHostMatches(hostname, candidate))) {
+        return false;
+      }
+      const path = decodeURIComponent(parsed.pathname).toLowerCase();
+      if (/(?:^|\/)profile(?:\/|$)/.test(path)) return false;
+      if (/(?:^|\/)live\/detail(?:\/|$)/.test(path)) return false;
+      if (hostname === "ssl.form-mailer.jp" && /^\/fms\/[a-z0-9_-]+\/?$/i.test(path)) return true;
+      if (PUBLIC_RESERVATION_TICKET_HOSTS.some((candidate) => publicReservationHostMatches(hostname, candidate))) {
+        return true;
+      }
+      if (/(?:^|[\/_.-])(?:tickets?|reserve|reservation|reservations|booking)(?:$|[\/_.-])/.test(path)) {
+        return true;
+      }
+      for (const key of parsed.searchParams.keys()) {
+        if (/^(?:ticket|tickets|reserve|reservation|booking)$/i.test(key)) return true;
+      }
+      return false;
+    }
+    
+    function parsePublicReservationLiveDate(value) {
+      const text = String(value == null ? "" : value);
+      const match = text.match(/(20\d{2})\s*(?:[.\/-]|年)\s*(\d{1,2})\s*(?:[.\/-]|月)\s*(\d{1,2})\s*日?/u);
+      if (!match) return null;
+    
+      const year = Number(match[1]);
+      const month = Number(match[2]);
+      const day = Number(match[3]);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      if (
+        date.getUTCFullYear() !== year
+        || date.getUTCMonth() !== month - 1
+        || date.getUTCDate() !== day
+      ) {
+        return null;
+      }
+      return { year, month, day };
+    }
+    
+    function isPublicReservationPastLive(live) {
+      if (live.isPast === true || live.past === true) return true;
+      const parsed = parsePublicReservationLiveDate(live.date);
+      if (!parsed) return false;
+    
+      const now = new Date();
+      const tokyoNow = new Date(now.getTime() + TOKYO_UTC_OFFSET_MS);
+      const today = Date.UTC(tokyoNow.getUTCFullYear(), tokyoNow.getUTCMonth(), tokyoNow.getUTCDate());
+      const liveDate = Date.UTC(parsed.year, parsed.month - 1, parsed.day);
+      return liveDate < today;
+    }
+    
+    function isPublicTicketReservationEligible(siteData, liveId) {
+      const resolved = resolveLiveById(siteData, liveId);
+      if (resolved.status !== "unique" || resolved.category !== "upcoming") return false;
+      const live = resolved.live;
+      if (live.reservationClosed === true || isPublicReservationPastLive(live)) return false;
+    
+      if (hasOwn(live, "ticketUrl")) {
+        return String(live.ticketUrl == null ? "" : live.ticketUrl).trim() === "";
+      }
+      return !isRecognizablePublicBookingUrl(live.link);
+    }
+    
+    function buildTweetText(live, _env) {
+      const formattedDetails = formatLiveDetailsForDisplay(live);
+      const descLines = formattedDetails
+        .replace(/\r\n/g, "\n")
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+    
+      const header = "【LIVE】";
+      const eventTitle = String(live?.title || "").trim();
+      const date = formatLiveDateForDisplay(live?.date) || "日付未設定";
+      const heading = `${date} ${String(live?.venue || "").trim()}`.trim();
+    
+      const blocks = [header];
+      if (eventTitle) blocks.push(eventTitle);
+      if (heading) blocks.push(heading);
+      if (descLines.length > 0) {
+        blocks.push("");
+        blocks.push(...descLines);
+      }
+    
+      let text = blocks.join("\n").trim();
+      if (text.length <= 280) return text;
+    
+      text = [header, eventTitle, heading, ...descLines].filter(Boolean).join("\n").trim();
+      if (text.length <= 280) return text;
+    
+      const compact = descLines.join(" / ");
+      const shortened = compact ? compact.slice(0, 120) + "…" : "";
+      text = [header, eventTitle, heading, shortened].filter(Boolean).join("\n").trim();
+      if (text.length <= 280) return text;
+    
+      text = [header, eventTitle, heading].filter(Boolean).join("\n").trim();
+      return text.slice(0, 280);
+    }
+    
+    function makeNonce(length = 16) {
+      const bytes = new Uint8Array(length);
+      crypto.getRandomValues(bytes);
+      return Array.from(bytes, (b) => (b % 36).toString(36)).join("");
+    }
+    
+    function bytesToBase64(bytes) {
+      let binary = "";
+      const view = new Uint8Array(bytes);
+      for (let i = 0; i < view.byteLength; i += 1) {
+        binary += String.fromCharCode(view[i]);
+      }
+      return btoa(binary);
+    }
+    
+    async function hmacSha1Base64(key, message) {
+      const keyBytes = new TextEncoder().encode(key);
+      const msgBytes = new TextEncoder().encode(message);
+      const cryptoKey = await crypto.subtle.importKey(
+        "raw",
+        keyBytes,
+        { name: "HMAC", hash: "SHA-1" },
+        false,
+        ["sign"]
+      );
+      const signature = await crypto.subtle.sign("HMAC", cryptoKey, msgBytes);
+      return bytesToBase64(signature);
+    }
+    
+    function buildOAuthHeader(params) {
+      const ordered = Object.keys(params).sort();
+      const parts = ordered.map((key) => `${percentEncode(key)}="${percentEncode(params[key])}"`);
+      return `OAuth ${parts.join(", ")}`;
+    }
+    
+    async function buildOAuthHeaderForX({
+      method,
+      url,
+      consumerKey,
+      consumerSecret,
+      accessToken,
+      accessTokenSecret,
+      extraParams = {},
+    }) {
+      const oauthParams = {
+        oauth_consumer_key: consumerKey,
+        oauth_nonce: makeNonce(),
+        oauth_signature_method: "HMAC-SHA1",
+        oauth_timestamp: Math.floor(Date.now() / 1000).toString(),
+        oauth_token: accessToken,
+        oauth_version: "1.0",
+      };
+    
+      const signatureParams = { ...oauthParams, ...extraParams };
+      const parameterString = Object.keys(signatureParams)
+        .sort()
+        .map((key) => `${percentEncode(key)}=${percentEncode(signatureParams[key])}`)
+        .join("&");
+      const signatureBase = `${method}&${percentEncode(url)}&${percentEncode(parameterString)}`;
+      const signingKey = `${percentEncode(consumerSecret)}&${percentEncode(accessTokenSecret)}`;
+      const oauthSignature = await hmacSha1Base64(signingKey, signatureBase);
+    
+      return buildOAuthHeader({
+        ...oauthParams,
+        oauth_signature: oauthSignature,
+      });
+    }
+    
+    function getXCredentials(env) {
+      const consumerKey = env.X_CONSUMER_KEY || "";
+      const consumerSecret = env.X_CONSUMER_SECRET || "";
+      const accessToken = env.X_ACCESS_TOKEN || "";
+      const accessTokenSecret = env.X_ACCESS_TOKEN_SECRET || "";
+      return { consumerKey, consumerSecret, accessToken, accessTokenSecret };
+    }
+    
+    function resolvePublicImageUrl(raw, fallbackOrigin, env) {
+      const value = String(raw || "").trim();
+      if (!value) return "";
+      if (/^https?:\/\//i.test(value)) return value;
+    
+      const envOrigin = String(env?.PUBLIC_ORIGIN || env?.SITE_ORIGIN || "")
+        .trim()
+        .replace(/\/+$/, "");
+      const origin = String(fallbackOrigin || envOrigin || "").trim().replace(/\/+$/, "");
+      if (!origin) return "";
+    
+      if (value.startsWith("/")) return origin + value;
+    
+      const normalized = value.replace(/^\.\//, "").replace(/^\.\.\//, "");
+      return `${origin}/${normalized}`;
+    }
+    
+    function guessPublicOrigin(env) {
+      const direct = String(env?.PUBLIC_ORIGIN || env?.SITE_ORIGIN || "")
+        .trim()
+        .replace(/\/+$/, "");
+      if (direct) return direct;
+    
+      const allowed = String(env?.ALLOWED_ORIGINS || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .map((s) => s.replace(/\/+$/, ""));
+    
+      // Prefer public site over admin origin if present.
+      const preferred = allowed.find((s) => !/\/\/admin\./i.test(s)) || allowed[0] || "";
+      return String(preferred || "").trim().replace(/\/+$/, "");
+    }
+    
+    async function fetchImageBytes(imageUrl) {
+      const url = String(imageUrl || "").trim();
+      if (!url) throw new Error("image url is empty");
+    
+      const res = await fetch(url, { cf: { cacheTtl: 0, cacheEverything: false } });
+      if (!res.ok) throw new Error(`image fetch failed: ${res.status}`);
+    
+      const contentType = String(res.headers.get("Content-Type") || "").toLowerCase();
+      if (!contentType.startsWith("image/")) throw new Error("image is not image/*");
+    
+      const bytes = await res.arrayBuffer();
+      const size = Number(bytes.byteLength || 0);
+      const maxBytes = 5 * 1024 * 1024;
+      if (size <= 0) throw new Error("image is empty");
+      if (size > maxBytes) throw new Error("image too large (max 5MB)");
+    
+      return { bytes, contentType };
+    }
+    
+    async function uploadMediaToX(env, bytes, contentType) {
+      const { consumerKey, consumerSecret, accessToken, accessTokenSecret } = getXCredentials(env);
+      if (!consumerKey || !consumerSecret || !accessToken || !accessTokenSecret) {
+        throw new Error("X API認証情報が不足しています");
+      }
+    
+      const method = "POST";
+      const url = "https://upload.twitter.com/1.1/media/upload.json";
+      const authHeader = await buildOAuthHeaderForX({
+        method,
+        url,
+        consumerKey,
+        consumerSecret,
+        accessToken,
+        accessTokenSecret,
+      });
+    
+      const form = new FormData();
+      form.append(
+        "media",
+        new Blob([bytes], { type: contentType || "application/octet-stream" }),
+        "flyer"
+      );
+    
+      const response = await fetch(url, {
+        method,
+        headers: { Authorization: authHeader },
+        body: form,
+      });
+    
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const details =
+          payload?.errors?.[0]?.message || payload?.error || payload?.detail || payload?.title || "unknown";
+        throw new Error(`media upload failed: ${details}`);
+      }
+    
+      const mediaId = payload?.media_id_string || (payload?.media_id ? String(payload.media_id) : "");
+      if (!mediaId) throw new Error("media upload failed: no media id");
+      return mediaId;
+    }
+    
+    async function getFlyerMediaIds(env, live, fallbackOrigin) {
+      if (!live) throw new Error("live not found");
+      const raw = String(live.image || "").trim();
+      if (!raw) return [];
+    
+      const imageUrl = resolvePublicImageUrl(raw, fallbackOrigin, env);
+      if (!imageUrl) throw new Error("flyer url cannot be resolved (set PUBLIC_ORIGIN/SITE_ORIGIN/ALLOWED_ORIGINS)");
+    
+      const { bytes, contentType } = await fetchImageBytes(imageUrl);
+      const mediaId = await uploadMediaToX(env, bytes, contentType);
+      return mediaId ? [mediaId] : [];
+    }
+    
+    async function postTweetToX(env, text, options = {}) {
+      const { consumerKey, consumerSecret, accessToken, accessTokenSecret } = getXCredentials(env);
+    
+      if (!consumerKey || !consumerSecret || !accessToken || !accessTokenSecret) {
+        throw new Error("X API認証情報が不足しています");
+      }
+    
+      const method = "POST";
+      const url = "https://api.x.com/2/tweets";
+      const authHeader = await buildOAuthHeaderForX({
+        method,
+        url,
+        consumerKey,
+        consumerSecret,
+        accessToken,
+        accessTokenSecret,
+      });
+    
+      const body = { text: String(text || "") };
+      const mediaIds = Array.isArray(options.mediaIds) ? options.mediaIds.filter(Boolean) : [];
+      if (mediaIds.length > 0) {
+        body.media = { media_ids: mediaIds };
+      }
+    
+      const response = await fetch(url, {
+        method,
+        headers: {
+          Authorization: authHeader,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+    
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const details = payload?.detail || payload?.title || payload?.error || "unknown";
+        throw new Error(`X投稿失敗: ${details}`);
+      }
+    
+      const tweetId = payload?.data?.id;
+      return {
+        tweetId,
+        url: tweetId ? `https://x.com/i/web/status/${tweetId}` : "",
+        raw: payload,
+      };
+    }
+    
+    async function verifyXCredentials(env) {
+      const { consumerKey, consumerSecret, accessToken, accessTokenSecret } = getXCredentials(env);
+      if (!consumerKey || !consumerSecret || !accessToken || !accessTokenSecret) {
+        throw new Error("X API認証情報が不足しています");
+      }
+    
+      const method = "GET";
+      const url = "https://api.x.com/1.1/account/verify_credentials.json";
+      const extraParams = { include_entities: "false", skip_status: "true" };
+      const authHeader = await buildOAuthHeaderForX({
+        method,
+        url,
+        consumerKey,
+        consumerSecret,
+        accessToken,
+        accessTokenSecret,
+        extraParams,
+      });
+    
+      const query = new URLSearchParams(extraParams);
+      const response = await fetch(`${url}?${query.toString()}`, {
+        method,
+        headers: { Authorization: authHeader },
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const details =
+          payload?.errors?.[0]?.message || payload?.detail || payload?.title || payload?.error || "unknown";
+        throw new Error(`X連携確認失敗: ${details}`);
+      }
+    
+      return {
+        id: payload?.id_str || String(payload?.id || ""),
+        screenName: payload?.screen_name || "",
+        name: payload?.name || "",
+      };
+    }
+    
+    async function recordPostLog(env, log) {
+      await env.DB.prepare(
+        `INSERT INTO x_posts (live_id, status, tweet_id, tweet_url, tweet_text, error_message, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`
+      ).bind(
+        log.liveId || "",
+        log.status || "unknown",
+        log.tweetId || "",
+        log.tweetUrl || "",
+        log.tweetText || "",
+        log.errorMessage || "",
+        nowIso()
+      ).run();
+    }
+    
+    function isValidIsoDate(value) {
+      const v = String(value || "").trim();
+      if (!v) return false;
+      const d = new Date(v);
+      return Number.isFinite(d.getTime());
+    }
+    
+    function toIso(value) {
+      const d = value instanceof Date ? value : new Date(value);
+      return new Date(d.getTime()).toISOString();
+    }
+    
+    async function listXPosts(env, options = {}) {
+      const liveId = String(options.liveId || "").trim();
+      const limit = clampInt(options.limit, 1, 200);
+      const stmt = liveId
+        ? env.DB.prepare(
+            `SELECT id, live_id as liveId, status, tweet_id as tweetId, tweet_url as tweetUrl, tweet_text as tweetText,
+                    error_message as errorMessage, created_at as createdAt
+             FROM x_posts WHERE live_id = ? ORDER BY created_at DESC LIMIT ?`
+          ).bind(liveId, limit)
+        : env.DB.prepare(
+            `SELECT id, live_id as liveId, status, tweet_id as tweetId, tweet_url as tweetUrl, tweet_text as tweetText,
+                    error_message as errorMessage, created_at as createdAt
+             FROM x_posts ORDER BY created_at DESC LIMIT ?`
+          ).bind(limit);
+      const result = await stmt.all();
+      return result.results || [];
+    }
+    
+    async function createXPostSchedule(env, liveId, scheduledAtIso, tweetText) {
+      const res = await env.DB.prepare(
+        `INSERT INTO x_posts (live_id, status, tweet_id, tweet_url, tweet_text, error_message, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`
+      ).bind(liveId, "scheduled", "", "", tweetText || "", "", scheduledAtIso).run();
+    
+      const id = res?.meta?.last_row_id || null;
+      return { id, liveId, status: "scheduled", tweetText, createdAt: scheduledAtIso };
+    }
+    
+    async function cancelScheduledXPost(env, id) {
+      const row = await env.DB.prepare(
+        `SELECT id, status FROM x_posts WHERE id = ? LIMIT 1`
+      ).bind(id).first();
+      if (!row) throw new KnownClientError("not found");
+      if (String(row.status) !== "scheduled") throw new KnownClientError("not scheduled");
+      await env.DB.prepare(
+        `UPDATE x_posts SET status = ?, error_message = ? WHERE id = ?`
+      ).bind("cancelled", "cancelled", id).run();
+      return { id, status: "cancelled" };
+    }
+    
+    async function executeDueXPostSchedules(env) {
+      const now = nowIso();
+      const result = await env.DB.prepare(
+        `SELECT id, live_id as liveId, tweet_text as tweetText, created_at as createdAt
+         FROM x_posts
+         WHERE status = 'scheduled' AND created_at <= ?
+         ORDER BY created_at ASC
+         LIMIT 10`
+      ).bind(now).all();
+      const jobs = result.results || [];
+      const fallbackOrigin = guessPublicOrigin(env);
+      const siteData = await getSiteData(env);
+      for (const job of jobs) {
+        const text = String(job.tweetText || "").trim();
+        if (!text) {
+          await env.DB.prepare(
+            `UPDATE x_posts SET status = ?, error_message = ? WHERE id = ?`
+          ).bind("failed", "tweet text is empty", job.id).run();
+          continue;
+        }
+        try {
+          const live = findLiveById(siteData, job.liveId);
+          let mediaIds = [];
+          try {
+            mediaIds = await getFlyerMediaIds(env, live, fallbackOrigin);
+          } catch (e) {
+            console.warn("flyer media skipped:", e);
+            mediaIds = [];
+          }
+          const tweet = await postTweetToX(env, text, { mediaIds });
+          await env.DB.prepare(
+            `UPDATE x_posts
+             SET status = ?, tweet_id = ?, tweet_url = ?, error_message = ?
+             WHERE id = ?`
+          ).bind("success", tweet.tweetId || "", tweet.url || "", "", job.id).run();
+        } catch (error) {
+          await env.DB.prepare(
+            `UPDATE x_posts
+             SET status = ?, error_message = ?
+             WHERE id = ?`
+          ).bind("failed", error.message || "failed", job.id).run();
+        }
+      }
+      return { ok: true, processed: jobs.length, now };
+    }
+    
+    function buildTicketLineMessage(reservation) {
+      const r = reservation && typeof reservation === "object" ? reservation : {};
+      const live = `${String(r.liveDate || "").trim()} ${String(r.liveVenue || "").trim()}`.trim();
+      const lines = ["[ticket] 予約が届きました"];
+      if (live) lines.push(live);
+      if (r.name) lines.push(`名前: ${String(r.name).trim()}`);
+      if (r.quantity) lines.push(`枚数: ${String(r.quantity).trim()}`);
+      const msg = String(r.message || "").trim();
+      if (msg) lines.push(`備考: ${msg.slice(0, 140)}`);
+      if (r.id) lines.push(`id: ${String(r.id).trim()}`);
+      return lines.join("\n");
+    }
+    
+    async function sendLinePush(env, text) {
+      const token = String(env.LINE_CHANNEL_ACCESS_TOKEN || "").trim();
+      const to = String(env.LINE_TO || "").trim();
+      if (!token || !to) return { skipped: true, reason: "not configured" };
+    
+      const res = await fetch("https://api.line.me/v2/bot/message/push", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          to,
+          messages: [{ type: "text", text }],
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        throw new Error(`LINE push failed: ${res.status} ${body}`.trim());
+      }
+      return { ok: true };
+    }
+    
+    async function sendLineWebhook(env, payload) {
+      const url = String(env.LINE_WEBHOOK_URL || "").trim();
+      if (!url) return { skipped: true, reason: "not configured" };
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload || {}),
+      });
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        throw new Error(`LINE webhook failed: ${res.status} ${body}`.trim());
+      }
+      return { ok: true };
+    }
+    
+    async function notifyTicketReservation(env, reservation) {
+      const text = buildTicketLineMessage(reservation);
+      const results = [];
+      try {
+        results.push(await sendLinePush(env, text));
+      } catch (e) {
+        console.error("LINE push error:", e);
+      }
+      try {
+        results.push(await sendLineWebhook(env, { text, reservation }));
+      } catch (e) {
+        console.error("LINE webhook error:", e);
+      }
+      return results;
+    }
+    
+    function buildTicketAutoReplyPayload(reservation, token) {
+      const r = reservation && typeof reservation === "object" ? reservation : {};
+      return new URLSearchParams({
+        token,
+        receipt_id: String(r.id || "").trim(),
+        live: `${String(r.liveDate || "").trim()} ${String(r.liveVenue || "").trim()}`.trim(),
+        name: String(r.name || "").trim(),
+        email: String(r.email || "").trim(),
+        quantity: String(r.quantity || ""),
+        message: String(r.message || "").trim(),
+      });
+    }
+    
+    async function sendTicketAutoReply(env, reservation) {
+      if (reservation?.source === "manual") return { skipped: true, reason: "manual" };
+      const url = String(env.TICKET_AUTOREPLY_FORM_URL || "").trim();
+      const token = String(env.TICKET_AUTOREPLY_TOKEN || "");
+      if (!url || !token.trim()) return { skipped: true, reason: "not configured" };
+    
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          body: buildTicketAutoReplyPayload(reservation, token),
+        });
+        if (!res.ok) throw new Error("ticket auto-reply failed");
+        const result = await res.json();
+        if (result?.ok !== true) throw new Error("ticket auto-reply failed");
+        return { ok: true };
+      } catch (_error) {
+        throw new Error("ticket auto-reply failed");
+      }
+    }
+    
+    async function notifyTicketAutoReply(env, reservation) {
+      try {
+        return await sendTicketAutoReply(env, reservation);
+      } catch (_error) {
+        return { ok: false, error: "ticket auto-reply failed" };
+      }
+    }
+    
+    async function handleRequest(request, env, ctx) {
+      if (request.method === "OPTIONS") {
+        return new Response(null, {
+          status: 204,
+          headers: createCorsHeaders(request, env),
+        });
+      }
+    
+      const url = new URL(request.url);
+      const path = url.pathname;
+    
+      const imageMatch = path.match(/^\/images\/(.+)$/);
+      if (imageMatch && (request.method === "GET" || request.method === "HEAD")) {
+        return serveImage(request, env, decodeURIComponent(imageMatch[1]));
+      }
+    
+      const ogLiveMatch = path.match(/^\/og\/live\/([^/]+)$/);
+      if (ogLiveMatch && (request.method === "GET" || request.method === "HEAD")) {
+        const liveId = decodeURIComponent(ogLiveMatch[1]);
+        const siteData = await getSiteData(env);
+        const live = findLiveById(siteData, liveId);
+        if (!live) {
+          return htmlResponse("not found", 404, { "Cache-Control": "no-store" });
+        }
+    
+        const publicOrigin = guessPublicOrigin(env) || "https://1212hp.com";
+        const canonicalUrl = `${String(publicOrigin).replace(/\/+$/, "")}/live/detail/?liveId=${encodeURIComponent(liveId)}`;
+        const liveTitle = String(live?.title || "").trim();
+        const heading = `${formatLiveDateForDisplay(live?.date)} ${String(live?.venue || "").trim()}`.trim();
+        const title = liveTitle
+          ? `${liveTitle} | ${heading || "Live"} | 松本一樹`
+          : (heading ? `${heading} | 松本一樹` : "松本一樹 | Live");
+    
+        const compact = buildCompactDescription(formatLiveDetailsForDisplay(live));
+        const description = truncate(compact || heading || "Live info", 180);
+    
+        const imageUrl =
+          resolveOgImageUrl(live?.image || "", url.origin, publicOrigin, env) ||
+          resolveOgImageUrl(siteData?.site?.heroImage || "", url.origin, publicOrigin, env);
+    
+        const headers = {
+          "Cache-Control": "public, max-age=300",
+        };
+    
+        if (request.method === "HEAD") {
+          return htmlResponse("", 200, headers);
+        }
+    
+        const html = buildOgLiveHtml({
+          pageUrl: canonicalUrl,
+          canonicalUrl,
+          title,
+          description,
+          imageUrl,
+        });
+    
+        return htmlResponse(html, 200, headers);
+      }
+    
+      if (path === "/api/public/site-data" && request.method === "GET") {
+        const row = await getSiteDataRow(env);
+        return jsonResponse(
+          { data: projectPublicSiteData(row.data), meta: { updatedAt: row.updatedAt } },
+          request,
+          env,
+        );
+      }
+    
+      if (path === "/api/public/ticket-reservations" && request.method === "POST") {
+        const payload = await request.json().catch(() => null);
+        if (!payload || typeof payload !== "object") {
+          return jsonResponse({ error: "invalid payload" }, request, env, 400);
+        }
+        // Honeypot
+        if (payload.company) {
+          return jsonResponse({ ok: true }, request, env);
+        }
+        try {
+          const reservation = await createTicketReservation(env, payload);
+          let notifications = null;
+          try {
+            notifications = Promise.all([
+              notifyTicketReservation(env, reservation),
+              notifyTicketAutoReply(env, reservation),
+            ]);
+            if (ctx && typeof ctx.waitUntil === "function") {
+              ctx.waitUntil(notifications);
+            } else {
+              notifications.catch(() => {});
+            }
+          } catch (notificationError) {
+            console.error("ticket reservation notification scheduling error:", notificationError);
+            if (notifications) notifications.catch(() => {});
+          }
+          return jsonResponse({ ok: true, reservation }, request, env, 201);
+        } catch (error) {
+          if (error instanceof PublicReservationError) {
+            return jsonResponse({ error: error.message }, request, env, 400);
+          }
+          console.error("public ticket reservation error:", error);
+          return jsonResponse({ error: "internal server error" }, request, env, 500);
+        }
+      }
+    
+      if (path === "/api/admin/live-source-intake" && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const payload = await request.json().catch(() => null);
+        const sourceText = typeof payload?.sourceText === "string" ? payload.sourceText.trim() : "";
+        if (!sourceText || sourceText.length > LIVE_AI_SOURCE_MAX_LENGTH) {
+          return jsonResponse({ error: "invalid sourceText" }, request, env, 400);
+        }
+        if (!String(env.OPENAI_API_KEY || "").trim() && !String(env.ANTHROPIC_API_KEY || "").trim()) {
+          return jsonResponse({ error: "AI source intake is not configured" }, request, env, 503);
+        }
+    
+        try {
+          const result = await requestLiveAiDraft(env, sourceText);
+          return jsonResponse(result, request, env);
+        } catch (error) {
+          if (error instanceof LiveAiTimeoutError) {
+            return jsonResponse({ error: "AI source intake timed out" }, request, env, 504);
+          }
+          return jsonResponse({ error: "AI source intake failed" }, request, env, 502);
+        }
+      }
+    
+      if (path === "/api/admin/site-data" && request.method === "GET") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const row = await getSiteDataRow(env);
+        return jsonResponse({ data: row.data, meta: { updatedAt: row.updatedAt } }, request, env);
+      }
+    
+      if (path === "/api/admin/site-data" && request.method === "PUT") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const payload = await request.json().catch(() => null);
+        if (!payload || typeof payload !== "object") {
+          return jsonResponse({ error: "invalid payload" }, request, env, 400);
+        }
+        try {
+          const saved = await saveSiteData(env, payload.data ?? payload);
+          return jsonResponse({ ok: true, data: saved }, request, env);
+        } catch (error) {
+          if (error instanceof SiteDataValidationError) {
+            return jsonResponse({ error: error.message, ...(error.fields ? { fields: error.fields } : {}) }, request, env, 400);
+          }
+          throw error;
+        }
+      }
+    
+      if (path === "/api/admin/x-posts" && request.method === "GET") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const liveId = url.searchParams.get("liveId") || "";
+        const limit = url.searchParams.get("limit") || "100";
+        const posts = await listXPosts(env, { liveId, limit });
+        return jsonResponse({ posts }, request, env);
+      }
+    
+      const previewMatch = path.match(/^\/api\/admin\/live\/([^/]+)\/preview-x$/);
+      if (previewMatch && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const liveId = decodeURIComponent(previewMatch[1]);
+        const siteData = await getSiteData(env);
+        const live = findLiveById(siteData, liveId);
+        if (!live) return jsonResponse({ error: "live not found" }, request, env, 404);
+        const tweetText = buildTweetText(live, env);
+        return jsonResponse({ ok: true, liveId, tweetText }, request, env);
+      }
+    
+      const scheduleMatch = path.match(/^\/api\/admin\/live\/([^/]+)\/schedule-x$/);
+      if (scheduleMatch && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const liveId = decodeURIComponent(scheduleMatch[1]);
+        const payload = await request.json().catch(() => null);
+        if (!payload || typeof payload !== "object") {
+          return jsonResponse({ error: "invalid payload" }, request, env, 400);
+        }
+        const scheduledAt = payload.scheduledAt || payload.scheduled_at || "";
+        if (!isValidIsoDate(scheduledAt)) {
+          return jsonResponse({ error: "scheduledAt is invalid" }, request, env, 400);
+        }
+        const scheduledAtIso = toIso(scheduledAt);
+        const now = Date.now();
+        if (new Date(scheduledAtIso).getTime() < now + 30 * 1000) {
+          return jsonResponse({ error: "scheduledAt must be in the future" }, request, env, 400);
+        }
+    
+        const siteData = await getSiteData(env);
+        const live = findLiveById(siteData, liveId);
+        if (!live) return jsonResponse({ error: "live not found" }, request, env, 404);
+    
+        const tweetTextInput = typeof payload.tweetText === "string" ? payload.tweetText.trim() : "";
+        const tweetText = tweetTextInput || buildTweetText(live, env);
+        if (!tweetText) return jsonResponse({ error: "tweetText is empty" }, request, env, 400);
+        if (tweetText.length > 280) return jsonResponse({ error: "tweetText is too long" }, request, env, 400);
+    
+        const job = await createXPostSchedule(env, liveId, scheduledAtIso, tweetText);
+        return jsonResponse({ ok: true, job }, request, env, 201);
+      }
+    
+      const cancelMatch = path.match(/^\/api\/admin\/x-posts\/(\d+)\/cancel$/);
+      if (cancelMatch && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const id = Number(cancelMatch[1]);
+        if (!Number.isFinite(id) || id <= 0) {
+          return jsonResponse({ error: "invalid id" }, request, env, 400);
+        }
+        try {
+          const updated = await cancelScheduledXPost(env, id);
+          return jsonResponse({ ok: true, updated }, request, env);
+        } catch (error) {
+          if (error instanceof KnownClientError) {
+            return jsonResponse({ error: error.message }, request, env, 400);
+          }
+          throw error;
+        }
+      }
+    
+      if (path === "/api/admin/ticket-reservations" && request.method === "GET") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const liveId = url.searchParams.get("liveId") || "";
+        const status = url.searchParams.get("status") || "";
+        const limit = url.searchParams.get("limit") || "100";
+        const reservations = await listTicketReservations(env, { liveId, status, limit });
+        return jsonResponse({ reservations }, request, env);
+      }
+    
+      if (path === "/api/admin/ticket-reservations" && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const payload = await request.json().catch(() => null);
+        if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+          return jsonResponse({ error: "invalid payload" }, request, env, 400);
+        }
+        try {
+          const reservation = await createManualTicketReservation(env, payload);
+          return jsonResponse({ ok: true, reservation }, request, env, 201);
+        } catch (error) {
+          if (error instanceof KnownClientError) {
+            return jsonResponse({ error: error.message }, request, env, 400);
+          }
+          throw error;
+        }
+      }
+    
+      if (path === "/api/admin/ticket-reservations.csv" && request.method === "GET") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const liveId = url.searchParams.get("liveId") || "";
+        const status = url.searchParams.get("status") || "";
+        const limit = url.searchParams.get("limit") || "200";
+        const rows = await listTicketReservations(env, { liveId, status, limit });
+        const csv = toCsv(rows);
+        return textResponse(csv, request, env, 200, {
+          "Content-Type": "text/csv; charset=utf-8",
+          "Content-Disposition": "attachment; filename=\"ticket_reservations.csv\"",
+        });
+      }
+    
+      const ticketStatusMatch = path.match(/^\/api\/admin\/ticket-reservations\/([^/]+)\/status$/);
+      if (ticketStatusMatch && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const id = decodeURIComponent(ticketStatusMatch[1]);
+        const payload = await request.json().catch(() => null);
+        if (!payload || typeof payload !== "object") {
+          return jsonResponse({ error: "invalid payload" }, request, env, 400);
+        }
+        try {
+          const updated = await updateTicketReservationStatus(env, id, payload.status);
+          return jsonResponse({ ok: true, updated }, request, env);
+        } catch (error) {
+          if (error instanceof KnownClientError) {
+            return jsonResponse({ error: error.message }, request, env, 400);
+          }
+          throw error;
+        }
+      }
+    
+      if (path === "/api/admin/upload-image" && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        if (!env.IMAGES) {
+          return jsonResponse({ error: "image storage not configured" }, request, env, 500);
+        }
+    
+        const form = await request.formData().catch(() => null);
+        if (!form) return jsonResponse({ error: "invalid form" }, request, env, 400);
+    
+        const file = form.get("file");
+        if (!file || typeof file !== "object" || typeof file.arrayBuffer !== "function") {
+          return jsonResponse({ error: "file is required" }, request, env, 400);
+        }
+    
+        const contentType = file.type || "application/octet-stream";
+        if (!String(contentType).toLowerCase().startsWith("image/")) {
+          return jsonResponse({ error: "only image/* is allowed" }, request, env, 400);
+        }
+    
+        const size = Number(file.size || 0);
+        const maxBytes = 5 * 1024 * 1024;
+        if (size <= 0 || size > maxBytes) {
+          return jsonResponse({ error: "file too large (max 5MB)" }, request, env, 400);
+        }
+    
+        const original = sanitizeFilename(file.name || "");
+        const ext = guessExtFromContentType(contentType);
+        const nonce = makeNonce(12);
+        const yyyyMmDd = nowIso().slice(0, 10).replace(/-/g, "");
+        const key = `uploads/${yyyyMmDd}/${nonce}_${original}.${ext}`;
+    
+        const bytes = await file.arrayBuffer();
+        await env.IMAGES.put(key, bytes, {
+          httpMetadata: { contentType },
+        });
+    
+        const publicUrl = `${url.origin}/images/${encodeURIComponent(key)}`;
+        return jsonResponse({ ok: true, key, url: publicUrl }, request, env);
+      }
+    
+      const livePostMatch = path.match(/^\/api\/admin\/live\/([^/]+)\/post-x$/);
+      if (livePostMatch && request.method === "POST") {
+        if (!isAdminAuthorized(request, env)) {
+          return jsonResponse({ error: "unauthorized" }, request, env, 401);
+        }
+        const payload = await request.json().catch(() => null);
+        const dryRunParam = (url.searchParams.get("dryRun") || "").toLowerCase();
+        const dryRun = dryRunParam === "1" || dryRunParam === "true" || dryRunParam === "yes";
+        const liveId = decodeURIComponent(livePostMatch[1]);
+        const siteData = await getSiteData(env);
+        const live = findLiveById(siteData, liveId);
+        if (!live) {
+          return jsonResponse({ error: "live not found" }, request, env, 404);
+        }
+    
+        const tweetTextInput = payload && typeof payload === "object" && typeof payload.tweetText === "string" ? payload.tweetText.trim() : "";
+        const tweetText = tweetTextInput || buildTweetText(live, env);
+        if (!tweetText) {
+          return jsonResponse({ error: "tweetText is empty" }, request, env, 400);
+        }
+        if (tweetText.length > 280) {
+          return jsonResponse({ error: "tweetText is too long" }, request, env, 400);
+        }
+    
+        if (dryRun) {
+          const account = await verifyXCredentials(env);
+          return jsonResponse(
+            {
+              ok: true,
+              dryRun: true,
+              liveId,
+              tweetText,
+              account,
+              createdAt: nowIso(),
+            },
+            request,
+            env
+          );
+        }
+    
+        try {
+          let mediaIds = [];
+          try {
+            mediaIds = await getFlyerMediaIds(env, live, url.origin);
+          } catch (e) {
+            console.warn("flyer media skipped:", e);
+            mediaIds = [];
+          }
+          const tweet = await postTweetToX(env, tweetText, { mediaIds });
+          await recordPostLog(env, {
+            liveId,
+            status: "success",
+            tweetId: tweet.tweetId,
+            tweetUrl: tweet.url,
+            tweetText,
+          });
+          return jsonResponse(
+            {
+              ok: true,
+              liveId,
+              tweet,
+              createdAt: nowIso(),
+            },
+            request,
+            env
+          );
+        } catch (error) {
+          try {
+            await recordPostLog(env, {
+              liveId,
+              status: "failed",
+              tweetText,
+              errorMessage: error.message,
+            });
+          } catch (logError) {
+            console.error("x post failure log error:", logError);
+          }
+          throw error;
+        }
+      }
+    
+      return jsonResponse({ error: "not found" }, request, env, 404);
+    }
+    
+    export default {
+      async fetch(request, env, ctx) {
+        try {
+          return await handleRequest(request, env, ctx);
+        } catch (error) {
+          console.error("worker request error:", error);
+          return jsonResponse(
+            { error: "internal server error" },
+            request,
+            env,
+            500
+          );
+        }
+      },
+      async scheduled(_event, env, ctx) {
+        ctx.waitUntil(executeDueXPostSchedules(env));
+      },
+    };
+    
+    export {
+      buildTicketAutoReplyPayload,
+      formatLiveDateForDisplay,
+      formatLiveDetailsForDisplay,
+      notifyTicketAutoReply,
+      sendTicketAutoReply,
+    };
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02c-tmp/red-root7/test/admin-live-style.test.mjs:769:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 7
+# fail 27
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3236.75275

@@ -1,0 +1,960 @@
+# RED: T46-SAVE/GUARD/DELETE/SCOPE/TICKET (admin-live-save) against the pre-#46 admin/app.js, admin/index.html (git show e191e53), cwd=temp copy
+TAP version 13
+# Subtest: T46-SAVE the editor is unsaved only while its values differ from the values it was opened with
+not ok 1 - T46-SAVE the editor is unsaved only while its values differ from the values it was opened with
+  ---
+  duration_ms: 17.611833
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:71:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    typing the original value back is no change
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:85:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SAVE every field that is part of the editor counts: source text, flyer, checkboxes, the announcement comment
+not ok 2 - T46-SAVE every field that is part of the editor counts: source text, flyer, checkboxes, the announcement comment
+  ---
+  duration_ms: 3.022791
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:90:1'
+  failureType: 'testCodeFailure'
+  error: 'app.snapshotLiveEditor is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:94:24)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SAVE a new Live is not unsaved until something is typed, and typing it away again makes it not unsaved
+not ok 3 - T46-SAVE a new Live is not unsaved until something is typed, and typing it away again makes it not unsaved
+  ---
+  duration_ms: 1.794042
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:123:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:126:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SAVE while saving, the status says so and inputs, moves, delete and reservations are locked; a second click sends one PUT
+not ok 4 - T46-SAVE while saving, the status says so and inputs, moves, delete and reservations are locked; a second click sends one PUT
+  ---
+  duration_ms: 3.806333
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:138:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '保存中'
+    - '保存しています…'
+         ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '保存しています…'
+  actual: '保存中'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:149:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SAVE a failed save puts the data back, keeps the input and the editor, and shows the reason above the actions
+not ok 5 - T46-SAVE a failed save puts the data back, keeps the input and the editor, and shows the reason above the actions
+  ---
+  duration_ms: 1.269334
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:162:1'
+  failureType: 'testCodeFailure'
+  error: 'app.getSavedBaseline is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:165:36)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SAVE a rejected password (401 / 403) is reported as 認証できませんでした。
+not ok 6 - T46-SAVE a rejected password (401 / 403) is reported as 認証できませんでした。
+  ---
+  duration_ms: 3.542417
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:189:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'textContent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:196:60)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SAVE a missing date or venue stops the save and a date that disagrees with the category only warns
+ok 7 - T46-SAVE a missing date or venue stops the save and a date that disagrees with the category only warns
+  ---
+  duration_ms: 2.614125
+  ...
+# Subtest: T46-SAVE after a save the editor stays on the same Live and keeps the task that was open
+not ok 8 - T46-SAVE after a save the editor stays on the same Live and keeps the task that was open
+  ---
+  duration_ms: 4.057292
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:218:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'false'
+    - 'true'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'true'
+  actual: 'false'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:226:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SAVE in Local Mode a save reflects into memory, marks the data changed and never calls the API
+ok 9 - T46-SAVE in Local Mode a save reflects into memory, marks the data changed and never calls the API
+  ---
+  duration_ms: 4.619666
+  ...
+# Subtest: T46-GUARD the confirmation says 保存していない変更があります。 with 破棄して移動 and 編集を続ける, and focus starts on 編集を続ける
+not ok 10 - T46-GUARD the confirmation says 保存していない変更があります。 with 破棄して移動 and 編集を続ける, and focus starts on 編集を続ける
+  ---
+  duration_ms: 1.603916
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:255:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:259:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-GUARD 編集を続ける, Escape and the backdrop change nothing; 破棄して移動 moves
+not ok 11 - T46-GUARD 編集を続ける, Escape and the backdrop change nothing; 破棄して移動 moves
+  ---
+  duration_ms: 1.70425
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:271:1'
+  failureType: 'testCodeFailure'
+  error: 'the confirmation surface has a "stay" button'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    answerLiveDialog (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/support/admin-app-harness.mjs:765:10)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:280:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-GUARD every way out of an unsaved Live asks first, and 破棄して移動 then goes
+not ok 12 - T46-GUARD every way out of an unsaved Live asks first, and 破棄して移動 then goes
+  ---
+  duration_ms: 1.683
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:307:1'
+  failureType: 'testCodeFailure'
+  error: 'another Live asks'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:321:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-GUARD with nothing unsaved the move is immediate and synchronous, and the Live task tabs never ask
+ok 13 - T46-GUARD with nothing unsaved the move is immediate and synchronous, and the Live task tabs never ask
+  ---
+  duration_ms: 2.283875
+  ...
+# Subtest: T46-GUARD asking again while the surface is open does not stack a second one
+not ok 14 - T46-GUARD asking again while the surface is open does not stack a second one
+  ---
+  duration_ms: 2.294292
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:352:1'
+  failureType: 'testCodeFailure'
+  error: 'the confirmation surface has a "discard" button'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    answerLiveDialog (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/support/admin-app-harness.mjs:765:10)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:357:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-GUARD unsaved Ticket Page settings ask the same way, and a discard puts the saved values back
+not ok 15 - T46-GUARD unsaved Ticket Page settings ask the same way, and a discard puts the saved values back
+  ---
+  duration_ms: 1.059375
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:362:1'
+  failureType: 'testCodeFailure'
+  error: 'app.elements.get(...).oninput is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:366:50)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-GUARD beforeunload stops a reload while a Live or the settings are unsaved or saving, and not otherwise
+not ok 16 - T46-GUARD beforeunload stops a reload while a Live or the settings are unsaved or saving, and not otherwise
+  ---
+  duration_ms: 4.659
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:383:1'
+  failureType: 'testCodeFailure'
+  error: 'the confirmation surface has a "discard" button'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    answerLiveDialog (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/support/admin-app-harness.mjs:765:10)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:395:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE the confirmation text depends on the reservations: none, N, or not known
+not ok 17 - T46-DELETE the confirmation text depends on the reservations: none, N, or not known
+  ---
+  duration_ms: 2.394042
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:430:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /このライブを削除しますか。/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:435:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE when the ledger is not loaded, the count is read once for this Live
+not ok 18 - T46-DELETE when the ledger is not loaded, the count is read once for this Live
+  ---
+  duration_ms: 1.580083
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:466:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /予約が2件あります/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:478:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE やめる and Escape change nothing and send nothing
+not ok 19 - T46-DELETE やめる and Escape change nothing and send nothing
+  ---
+  duration_ms: 1.566791
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:483:1'
+  failureType: 'testCodeFailure'
+  error: 'the confirmation surface has a "cancel" button'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    answerLiveDialog (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/support/admin-app-harness.mjs:765:10)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:488:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE 削除する PUTs the saved content minus that Live only, then returns to the list
+not ok 20 - T46-DELETE 削除する PUTs the saved content minus that Live only, then returns to the list
+  ---
+  duration_ms: 1.061125
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:498:1'
+  failureType: 'testCodeFailure'
+  error: 'app.getSavedBaseline is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:501:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE a failed delete puts the Live back, keeps the editor and the input, and shows the reason
+not ok 21 - T46-DELETE a failed delete puts the Live back, keeps the editor and the input, and shows the reason
+  ---
+  duration_ms: 1.625417
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:524:1'
+  failureType: 'testCodeFailure'
+  error: 'the confirmation surface has a "delete" button'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    answerLiveDialog (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/support/admin-app-harness.mjs:765:10)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:531:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE a failed delete does not make a clean editor unsaved
+not ok 22 - T46-DELETE a failed delete does not make a clean editor unsaved
+  ---
+  duration_ms: 1.398625
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:545:1'
+  failureType: 'testCodeFailure'
+  error: 'the confirmation surface has a "delete" button'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    answerLiveDialog (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/support/admin-app-harness.mjs:765:10)
+    async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:549:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE a new Live has nothing to delete
+ok 23 - T46-DELETE a new Live has nothing to delete
+  ---
+  duration_ms: 1.177875
+  ...
+# Subtest: T46-DELETE in Local Mode it asks, removes the Live in memory and waits for the JSON export
+not ok 24 - T46-DELETE in Local Mode it asks, removes the Live in memory and waits for the JSON export
+  ---
+  duration_ms: 1.4205
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:564:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /削除すると公開画面からも消えます。/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:567:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DELETE is refused while a save is in flight and in the read-only fallback
+ok 25 - T46-DELETE is refused while a save is in flight and in the read-only fallback
+  ---
+  duration_ms: 3.842125
+  ...
+# Subtest: T46-SCOPE a Live save does not send unsaved changes of other tabs and leaves the header save waiting for them
+not ok 26 - T46-SCOPE a Live save does not send unsaved changes of other tabs and leaves the header save waiting for them
+  ---
+  duration_ms: 0.996625
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:605:1'
+  failureType: 'testCodeFailure'
+  error: 'app.getSavedBaseline is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:608:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SCOPE Live, delete and Ticket settings do not carry each other, and an unsaved Live input never reaches a settings save
+not ok 27 - T46-SCOPE Live, delete and Ticket settings do not carry each other, and an unsaved Live input never reaches a settings save
+  ---
+  duration_ms: 0.810208
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:631:1'
+  failureType: 'testCodeFailure'
+  error: 'app.getSavedBaseline is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:634:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SCOPE live.ticketLink, the \#41 site and release items, the other Lives and the works all travel unchanged
+not ok 28 - T46-SCOPE live.ticketLink, the \#41 site and release items, the other Lives and the works all travel unchanged
+  ---
+  duration_ms: 0.784042
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:666:1'
+  failureType: 'testCodeFailure'
+  error: 'app.getSavedBaseline is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:669:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SCOPE a success moves the baseline, so the next save carries the last one; a failure leaves it alone
+not ok 29 - T46-SCOPE a success moves the baseline, so the next save carries the last one; a failure leaves it alone
+  ---
+  duration_ms: 4.918166
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:683:1'
+  failureType: 'testCodeFailure'
+  error: 'app.getSavedBaseline is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:690:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SCOPE a duplicate Live id is refused with no PUT, in Live saves and in deletes
+not ok 30 - T46-SCOPE a duplicate Live id is refused with no PUT, in Live saves and in deletes
+  ---
+  duration_ms: 1.991042
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:706:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'textContent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:715:58)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-SCOPE the layering functions: a Live goes to the head of its category, a delete removes both, settings replace ticket
+not ok 31 - T46-SCOPE the layering functions: a Live goes to the head of its category, a delete removes both, settings replace ticket
+  ---
+  duration_ms: 0.834
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:719:1'
+  failureType: 'testCodeFailure'
+  error: 'app.applyLiveSlice is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:723:7)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-TICKET the settings screen has the seven inputs, a status, a reason line and a 保存して公開 button, and no old copy fields
+not ok 32 - T46-TICKET the settings screen has the seven inputs, a status, a reason line and a 保存して公開 button, and no old copy fields
+  ---
+  duration_ms: 0.213
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:746:1'
+  failureType: 'testCodeFailure'
+  error: 'ticket-settings-status'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>1212 HP Admin</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="style.css?v=20260816-22">
+    </head>
+    <body>
+      <div id="app">
+        <!-- ヘッダー -->
+        <header class="header">
+          <div>
+            <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+            <p class="header-meta" id="modeBadge">Local Mode</p>
+          </div>
+          <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
+        </header>
+        <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+    
+        <!-- タブナビ -->
+        <nav class="tab-nav">
+          <button class="tab-btn" data-tab="site">Site</button>
+          <button class="tab-btn" data-tab="news">News</button>
+          <button class="tab-btn active" data-tab="live">Live</button>
+          <button class="tab-btn" data-tab="youtube">YouTube</button>
+          <button class="tab-btn" data-tab="discography">Disco</button>
+          <button class="tab-btn" data-tab="profile">Profile</button>
+        </nav>
+    
+        <!-- Siteタブ -->
+        <section class="tab-content" id="site-tab">
+          <div class="section-header">
+            <h2>Site</h2>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home</h3>
+            <div class="form-group">
+              <label for="site-featured-release-id">顔にする作品</label>
+              <select id="site-featured-release-id" class="select" data-admin-mutation>
+                <option value="">自動（最新のリリース）</option>
+              </select>
+            </div>
+            <label>共有時の画像</label>
+            <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>
+            <div id="site-hero-image-form"></div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Links</h3>
+            <div class="form-group">
+              <label>Bandcamp</label>
+              <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>YouTube</label>
+              <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>X</label>
+              <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>note</label>
+              <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Footer</h3>
+            <div class="form-group">
+              <label>フッター文言（空なら既定のまま）</label>
+              <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Contact</h3>
+            <div class="form-group">
+              <label>導入文</label>
+              <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Form Action（Formspree URL）</label>
+              <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+            </div>
+          </div>
+        </section>
+    
+        <!-- Newsタブ -->
+        <section class="tab-content" id="news-tab">
+          <div class="section-header">
+            <h2>News</h2>
+            <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="items-list" id="news-list"></div>
+        </section>
+    
+        <!-- Liveタブ -->
+        <section class="tab-content active" id="live-tab">
+          <div class="section-header">
+            <h2>Live</h2>
+            <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新規Live</button>
+          </div>
+          <div class="live-workspace" id="live-workspace">
+            <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+              <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+              <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
+            </div>
+    
+            <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+              <div id="live-page-primary">
+                <div class="live-page-toolbar">
+                  <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                    <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                    <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+                  </div>
+                  <button type="button" id="live-ticket-settings-open" class="live-workspace-utility" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+                </div>
+    
+                <div class="live-master-detail" id="live-master-detail">
+                  <div class="live-master-pane" id="live-master-pane">
+                    <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                      <div class="items-list" id="live-upcoming-list"></div>
+                    </section>
+                    <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                      <div class="items-list" id="live-past-list"></div>
+                    </section>
+                  </div>
+    
+                  <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                    <header class="live-editor-header">
+                      <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                      <div class="live-editor-title-group">
+                        <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
+                        <h3 id="live-editor-heading">Liveを選択</h3>
+                      </div>
+                      <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                    </header>
+                    <div class="live-editor-body" id="live-editor-body">
+                      <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+    
+              <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+                <div class="section-header compact">
+                  <div>
+                    <p class="live-workspace-eyebrow">Liveページ共通</p>
+                    <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+                  </div>
+                  <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示文言）</h3>
+                  <div class="form-group">
+                    <label>完了文（空なら既定のまま）</label>
+                    <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
+                  </div>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示項目）</h3>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
+                    <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>枚数 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
+                  </div>
+    
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-message" data-admin-mutation>
+                    <label for="ticket-field-message">備考（任意）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>備考 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
+                  </div>
+                  <div class="form-group">
+                    <label>備考 プレースホルダ（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
+                  </div>
+    
+                  <div class="form-group">
+                    <label>送信ボタン文言（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
+                  </div>
+                </div>
+              </section>
+            </section>
+    
+            <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+              <div class="live-reservations-panel">
+              <div class="section-header compact">
+                <h3>横断予約台帳</h3>
+                <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+              </div>
+              <div class="form-group">
+                <label for="tickets-live-filter">フィルタ</label>
+                <div class="filters">
+                  <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+                  <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                    <option value="">全ステータス</option>
+                    <option value="pending" selected>未対応</option>
+                    <option value="handled">対応済み</option>
+                    <option value="cancelled">キャンセル</option>
+                  </select>
+                </div>
+              </div>
+              <div class="items-list" id="tickets-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+    
+        <!-- YouTubeタブ -->
+        <section class="tab-content" id="youtube-tab">
+          <div class="section-header">
+            <h2>YouTube</h2>
+            <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Channel URL</h3>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+    
+          <div class="subsection">
+            <h3>Music Video</h3>
+            <div class="items-list" id="youtube-musicVideos-list"></div>
+            <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Live Movie</h3>
+            <div class="items-list" id="youtube-liveMovies-list"></div>
+            <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Demo</h3>
+            <div class="items-list" id="youtube-demos-list"></div>
+            <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+          </div>
+        </section>
+    
+        <!-- Discographyタブ -->
+        <section class="tab-content" id="discography-tab">
+          <div class="section-header">
+            <h2>Discography</h2>
+            <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
+          </div>
+          <div class="subsection">
+            <h3>Digital Release</h3>
+            <div class="items-list" id="disc-digital-list"></div>
+          </div>
+          <div class="subsection">
+            <h3>宅録Demo</h3>
+            <div class="items-list" id="disc-demo-list"></div>
+          </div>
+        </section>
+    
+        <!-- Profileタブ -->
+        <section class="tab-content" id="profile-tab">
+          <div class="section-header">
+            <h2>Profile</h2>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group">
+            <label>プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+          <div class="subsection">
+            <h3>SNSリンク</h3>
+            <div class="items-list" id="profile-links-list"></div>
+            <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+        </section>
+    
+        <!-- モーダル -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+          <div class="modal-header">
+            <h3 id="modal-title">編集</h3>
+            <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+            <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
+          </div>
+        </div>
+    
+        <!-- トースト -->
+        <div class="toast" id="toast"></div>
+      </div>
+      <script>
+      // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+      window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
+      try {
+        var badge = document.getElementById('modeBadge');
+        if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+        var banner0 = document.getElementById('connectionBanner');
+        if (banner0) banner0.textContent = '読み込み中...';
+      } catch (e) {}
+      window.addEventListener('error', function (ev) {
+        try {
+          var banner = document.getElementById('connectionBanner');
+          if (banner) {
+            banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+            banner.classList.add('is-error');
+          }
+        } catch (e) {}
+      });
+    </script>
+    <script src="config.js?v=20260216-2001"></script>
+    <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+    <script src="../assets/js/music-data.js?v=20261117-41"></script>
+    <script src="app.js?v=20261117-41"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:748:12)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-TICKET typing edits a draft, not the data; the actions show only while the inputs differ from what is saved
+not ok 33 - T46-TICKET typing edits a draft, not the data; the actions show only while the inputs differ from what is saved
+  ---
+  duration_ms: 0.901
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:756:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    '' !== '保存済み'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '保存済み'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:760:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-TICKET saving PUTs the saved content with only ticket replaced, then the draft is the saved value
+not ok 34 - T46-TICKET saving PUTs the saved content with only ticket replaced, then the draft is the saved value
+  ---
+  duration_ms: 0.795042
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:782:1'
+  failureType: 'testCodeFailure'
+  error: 'app.getSavedBaseline is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:785:30)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-TICKET while saving the status says so and the inputs are locked; a failure keeps the input and says why
+not ok 35 - T46-TICKET while saving the status says so and the inputs are locked; a failure keeps the input and says why
+  ---
+  duration_ms: 0.811458
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:815:1'
+  failureType: 'testCodeFailure'
+  error: 'app.elements.get(...).oninput is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:821:50)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-TICKET in Local Mode the settings reflect into memory and wait for the JSON export; the read-only fallback ignores edits
+not ok 36 - T46-TICKET in Local Mode the settings reflect into memory and wait for the JSON export; the read-only fallback ignores edits
+  ---
+  duration_ms: 0.806333
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:844:1'
+  failureType: 'testCodeFailure'
+  error: 'local.elements.get(...).oninput is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:848:52)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-TICKET opening the settings again starts from what is saved, never from an abandoned draft
+not ok 37 - T46-TICKET opening the settings again starts from what is saved, never from an abandoned draft
+  ---
+  duration_ms: 0.749458
+  location: '/Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:865:1'
+  failureType: 'testCodeFailure'
+  error: 'app.elements.get(...).oninput is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_scratch/codex-work/20261120-145511_1212hp-46-admin-live-ops/worker-02a2-tmp/red-root/test/admin-live-save.test.mjs:869:50)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 5
+# fail 32
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3219.373

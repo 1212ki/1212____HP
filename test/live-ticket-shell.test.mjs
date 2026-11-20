@@ -92,8 +92,13 @@ test('T43-COMPAT shared code, tokens, design rules, admin and the Worker are unt
   const addedCss = nowCss.slice(baseCss.length);
   assert.ok(addedCss === '' || addedCss.trimStart().startsWith('/* Issue #45'), 'anything added to style.css is the Issue #45 block');
   assert.doesNotMatch(nowCss, /live-ticket|\.live-ticket-/, 'no #43 selector in style.css');
-  const unchanged = execFileSync('git', ['diff', '--name-only', BASE, '--', 'admin', 'cloudflare', 'data', 'scripts'], { encoding: 'utf8' }).trim();
-  assert.equal(unchanged, '', 'admin/, cloudflare/, data/ and scripts/ have no change');
+  // Issue #46 changes admin/ and the Worker after #43. What #43 must hold is that they did not change between its base
+  // and #46's base commit (commit vs commit); data/ and scripts/ are still compared with the working tree.
+  const BASE46 = 'e191e53ada480014e03ad2fa23835f6178ce371a';
+  const changedByIssue43 = execFileSync('git', ['diff', '--name-only', BASE, BASE46, '--', 'admin', 'cloudflare'], { encoding: 'utf8' }).trim();
+  assert.equal(changedByIssue43, '', 'admin/ and cloudflare/ have no change between the #43 base and the #46 base');
+  const unchanged = execFileSync('git', ['diff', '--name-only', BASE, '--', 'data', 'scripts'], { encoding: 'utf8' }).trim();
+  assert.equal(unchanged, '', 'data/ and scripts/ have no change');
 });
 
 test('T43-COMPAT the Worker still answers a repeat send with the exact text the Ticket page checks', () => {
@@ -150,6 +155,16 @@ test('T43-COMPAT the only files changed by #43 are the planned ones (no stray pa
     /^aidlc-docs\//,
     /^docs\/records\/aidlc-cycles\/2026-11-19_issue-43_live-ticket\//,
     /^docs\/records\/aidlc-cycles\/2026-11-19_issue-45_profile-contact\//,
+    // Issue #46 (admin live operations): the planned files only.
+    /^admin\/(index\.html|app\.js|style\.css|README\.md)$/,
+    /^cloudflare\/worker\/(src\/worker\.js|README\.md|test\/ticket-reservation-summary\.test\.js)$/,
+    /^test\/support\/admin-app-harness\.mjs$/,
+    /^test\/support\/admin-preview\/(capture-admin-live|fake_admin_api|fake_admin_server)\.py$/,
+    /^test\/admin-live-[\w-]+\.test\.mjs$/,
+    /^test\/(admin-live-operations|admin-image-form)\.test\.mjs$/,
+    /^test\/fixtures\/admin-live-states\.json$/,
+    /^test\/(live-ticket-shell|profile-contact-shell|site-shell)\.test\.mjs$/,
+    /^docs\/records\/aidlc-cycles\/2026-11-20_issue-46_admin-live-ops\//,
   ];
   for (const path of [...changed, ...untracked]) assert.ok(allowed.some((pattern) => pattern.test(path)), `unexpected change: ${path}`);
 });

@@ -225,10 +225,27 @@ body {
 
 /* ----- Live Operations Hub ----- */
 .live-workspace {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   overflow: visible;
+}
+
+/* Visually hidden "Live" heading: the page keeps its heading for assistive technology, the Figma master draws none. */
+#live-tab > .live-section-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: clip;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.live-workspace-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .live-workspace-tabs,
@@ -239,8 +256,12 @@ body {
 }
 
 .live-workspace-tabs {
-  padding: 8px;
-  border-bottom: 1px solid var(--gray-200);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
 }
 
 .live-workspace-tab,
@@ -255,8 +276,14 @@ body {
 }
 
 .live-workspace-tab {
-  padding: 10px 16px;
-  border-radius: var(--radius-sm);
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .live-workspace-tab.is-active {
@@ -265,7 +292,7 @@ body {
 }
 
 .live-workspace-panel {
-  padding: 20px;
+  padding: 0;
 }
 
 .live-page-toolbar {
@@ -273,35 +300,42 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 20px;
 }
 
+/* The 開催予定／公演終了 switch is a text row (Figma 44:492), not a filled control. */
 .live-list-tabs {
-  padding: 3px;
-  background: var(--gray-100);
-  border-radius: var(--radius-sm);
+  gap: 16px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 .live-list-tab {
-  padding: 7px 12px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  color: var(--gray-500);
-  font-size: 0.88em;
+  min-height: 44px;
+  white-space: nowrap;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
 }
 
 .live-list-tab.is-active {
-  background: var(--white);
-  border-color: var(--gray-200);
-  color: var(--gray-900);
+  background: transparent;
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .live-workspace-utility {
-  padding: 8px 4px;
-  color: var(--gray-500);
-  font-size: 0.82em;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  min-height: 44px;
+  padding: 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: left;
 }
 
 .live-workspace-tab:focus-visible,
@@ -315,9 +349,9 @@ body {
 
 .live-ticket-settings-panel,
 .live-reservations-panel {
-  padding: 20px;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-sm);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
 }
 
 .live-workspace-eyebrow {
@@ -340,6 +374,12 @@ body {
 .live-master-pane,
 .live-editor-pane {
   min-width: 0;
+}
+
+.live-master-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .live-editor-pane {
@@ -385,14 +425,18 @@ body {
   color: var(--gray-700);
   cursor: pointer;
   font: inherit;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
 }
 
 .live-editor-save-status {
   flex: 0 0 auto;
-  color: var(--gray-500);
-  font-size: 0.78em;
-  font-weight: 700;
+  white-space: nowrap;
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
 }
 
 .live-editor-body {
@@ -404,29 +448,35 @@ body {
   position: sticky;
   z-index: 2;
   top: var(--admin-global-chrome-sticky-offset);
-  display: flex;
-  gap: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
   margin: -20px -20px 20px;
-  padding: 8px 20px;
+  padding: 0;
   border-bottom: 1px solid var(--gray-200);
   background: var(--white);
 }
 
 .live-editor-task-tab {
   min-height: 44px;
+  padding: 14px 0;
+  text-align: center;
+  white-space: nowrap;
   border: 0;
   border-bottom: 2px solid transparent;
   background: transparent;
   color: var(--gray-500);
   cursor: pointer;
   font: inherit;
-  font-size: 0.88em;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
 }
 
 .live-editor-task-tab.is-active {
-  border-bottom-color: var(--primary);
-  color: var(--gray-900);
+  border-bottom-color: var(--ink);
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .live-editor-task-tab:disabled {
@@ -475,7 +525,7 @@ body {
   display: flex;
   gap: 10px;
   margin: 24px -20px -20px;
-  padding: 16px 20px;
+  padding: 12px 16px;
   border-top: 1px solid var(--gray-200);
   background: var(--white);
 }
@@ -498,12 +548,697 @@ body {
   white-space: nowrap;
 }
 
+/* Issue #46: list rows, the one-line Header, the fields, the announcement and the save bar */
+.live-summary-note {
+  margin: 0 0 12px;
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+
+.live-summary-note:empty {
+  display: none;
+}
+
+.live-list-panel .items-list {
+  gap: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.live-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 14px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.live-row:last-child {
+  border-bottom: 0;
+}
+
+.live-row:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.live-row-thumb {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 62px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--gray-100);
+}
+
+.live-row-info {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.live-row-date {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.live-row-venue {
+  color: var(--ink);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.live-row-reservation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.live-row-seats,
+.live-row-pending {
+  white-space: nowrap;
+}
+
+.live-row .arrow {
+  flex: 0 0 auto;
+  color: var(--ink-muted);
+}
+
+.live-ticket-settings-entry {
+  display: block;
+  margin-top: 0;
+}
+
+.live-editor-header {
+  min-height: 48px;
+  padding: 12px 16px;
+}
+
+.live-editor-back {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--ink-muted);
+}
+
+.live-editor-title-group h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.live-editor-body .text-input,
+.live-editor-body .select {
+  min-height: 52px;
+  border-radius: var(--radius-sm);
+}
+
+.live-editor-body .form-group {
+  margin-bottom: 0;
+}
+
+.live-public-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-field-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.live-field-grid-times {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.live-field-grid-times .live-field-fee {
+  grid-column: 1 / -1;
+}
+
+.live-field-label {
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.live-flyer-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.live-flyer-preview {
+  width: 96px;
+  min-height: 136px;
+  margin-bottom: 0;
+  flex: 0 0 auto;
+}
+
+.live-flyer-preview .image-preview-large {
+  width: 96px;
+  height: 136px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.live-flyer-preview .image-placeholder {
+  display: flex;
+  width: 96px;
+  height: 136px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px dashed var(--gray-300);
+  border-radius: 8px;
+  background: var(--white);
+  font-size: 12px;
+}
+
+.live-flyer-actions {
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.live-flyer-actions .btn {
+  white-space: nowrap;
+}
+
+.live-flyer-clear {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.live-flyer-status {
+  margin-top: 8px;
+  color: var(--ink-muted);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.live-flyer-status:empty {
+  display: none;
+}
+
+.live-collapse {
+  margin-bottom: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+}
+
+.live-collapse-summary {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  color: var(--ink);
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+}
+
+.live-collapse-summary::-webkit-details-marker {
+  display: none;
+}
+
+.live-collapse-chevron {
+  color: var(--ink-muted);
+}
+
+.live-collapse-chevron::after {
+  content: "›";
+}
+
+.live-collapse[open] > .live-collapse-summary .live-collapse-chevron::after {
+  content: "閉じる";
+}
+
+.live-collapse-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px 16px;
+}
+
+.live-switch-row {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.live-switch {
+  position: relative;
+  width: 44px;
+  height: 26px;
+  flex: 0 0 auto;
+  appearance: none;
+  border-radius: 999px;
+  background: var(--gray-300);
+  cursor: pointer;
+}
+
+.live-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--white);
+  transition: transform 0.15s ease;
+}
+
+.live-switch:checked {
+  background: var(--ink);
+}
+
+.live-switch:checked::after {
+  transform: translateX(18px);
+}
+
+.live-switch:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.live-segment {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+}
+
+.live-segment-option {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.live-segment-option.is-selected {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.live-segment-option:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.live-category-field {
+  margin-top: 0;
+}
+
+.live-text-button {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.live-text-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.live-source-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-source-textarea {
+  min-height: 204px;
+}
+
+.live-source-actions {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.live-source-actions .btn {
+  white-space: nowrap;
+}
+
+.live-copy-status {
+  margin-top: 8px;
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+
+.live-copy-status:empty {
+  display: none;
+}
+
+.live-postsave {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-postsave-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.live-postsave-preview {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.live-editor-footer .btn {
+  width: 100%;
+  white-space: nowrap;
+}
+
+#live-editor-panel-announcement [class~="live-announcement-actions"] {
+  gap: 12px;
+}
+
+#live-editor-panel-announcement [class~="live-announcement-actions"] .btn {
+  min-height: 46px;
+  white-space: nowrap;
+}
+
+#x-intent-btn {
+  flex: 1 1 100%;
+}
+
+#x-post-copy-btn,
+#x-link-copy-btn {
+  flex: 1 1 calc(50% - 6px);
+}
+
+/* Reservations: the list of one Live and of every Live, one reservation, the 取り置き form */
+.reservation-panel .reservation-totals {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.reservation-panel .reservation-totals span {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 14px;
+  text-align: left;
+}
+
+.reservation-panel .reservation-totals strong {
+  display: inline;
+  color: var(--ink);
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.reservation-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.reservation-chip {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--gray-100);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.reservation-chip.is-selected {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.reservation-chip:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.reservation-list,
+.tickets-list {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.reservation-row {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.reservation-row:last-child {
+  border-bottom: 0;
+}
+
+.reservation-row:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.reservation-row-main {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reservation-row-name {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+}
+
+.reservation-row-meta {
+  color: var(--ink-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  overflow-wrap: anywhere;
+}
+
+.live-reservation-add {
+  width: 100%;
+  margin-top: 16px;
+  white-space: nowrap;
+}
+
+.reservation-detail-list {
+  margin: 0 0 16px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.reservation-detail-row {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.reservation-detail-row dt {
+  flex: 0 0 64px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.reservation-detail-row dd {
+  min-width: 0;
+  margin: 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.reservation-detail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reservation-detail-actions .btn {
+  width: 100%;
+  min-height: 46px;
+  white-space: nowrap;
+}
+
+.reservation-panel .manual-reservation-form {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.reservation-panel .manual-reservation-form .btn {
+  width: 100%;
+}
+
+.reservation-panel .quantity-field {
+  max-width: 120px;
+}
+
+.live-reservations-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tickets-detail-back {
+  margin-bottom: 12px;
+}
+
+#tickets-csv-btn {
+  display: block;
+  margin: 16px auto 0;
+}
+
+.live-delete-link {
+  align-self: center;
+}
+
+.live-workspace {
+  --live-editor-header-height: 48px;
+}
+
 @media (max-width: 899px) {
   .live-workspace-tab,
   .live-list-tab,
   .live-workspace-utility,
   .live-editor-back {
     min-height: 44px;
+  }
+
+  .live-editor-task-tab {
+    min-height: 44px;
+  }
+
+  /* While a Live is open the page chrome steps aside: one Header row and the switch are all that stays above the fields. */
+  body.is-live-editing .header,
+  body.is-live-editing .connection-banner,
+  body.is-live-editing .tab-nav,
+  body.is-live-editing #live-tab > .section-header,
+  body.is-live-editing .live-workspace-tabs,
+  body.is-live-editing .live-page-toolbar,
+  body.is-live-editing .live-summary-note,
+  body.is-live-ticket-settings .header,
+  body.is-live-ticket-settings .connection-banner,
+  body.is-live-ticket-settings .tab-nav,
+  body.is-live-ticket-settings #live-tab > .section-header,
+  body.is-live-ticket-settings .live-workspace-tabs {
+    display: none;
+  }
+
+  body.is-live-editing .live-workspace,
+  body.is-live-ticket-settings .live-workspace {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  body.is-live-editing .live-workspace-panel,
+  body.is-live-ticket-settings .live-workspace-panel {
+    padding: 0;
+  }
+
+  body.is-live-editing .live-editor-pane {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  body.is-live-editing .live-editor-header {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    background: var(--white);
+  }
+
+  body.is-live-editing .live-editor-task-tabs {
+    top: var(--live-editor-header-height);
+  }
+
+  body.is-live-editing .live-editor-body {
+    padding: 16px;
+  }
+
+  body.is-live-editing .live-editor-task-tabs {
+    margin: -16px -16px 16px;
+  }
+
+  body.is-live-editing .live-editor-footer {
+    margin: 16px -16px -16px;
   }
 }
 
@@ -516,7 +1251,10 @@ body {
   }
 
   .live-master-detail .live-master-pane,
-  .live-master-detail.has-live-selection .live-master-pane,
+  .live-master-detail.has-live-selection .live-master-pane {
+    display: flex;
+  }
+
   .live-master-detail .live-editor-pane {
     display: block;
   }
@@ -686,6 +1424,1057 @@ body {
 .meta-label {
   font-weight: 700;
   color: var(--gray-700);
+}
+
+/* Issue #46: confirmation surface (role="alertdialog") and Ticket Page settings actions */
+.live-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.live-dialog-overlay[hidden] {
+  display: none;
+}
+
+.live-dialog-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0.5;
+}
+
+.live-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  padding: 20px 16px 16px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+.live-dialog-title {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.live-dialog-body {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.live-dialog-actions {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.live-dialog-actions .btn {
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.ticket-settings-status {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.ticket-settings-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.ticket-settings-actions[hidden] {
+  display: none;
+}
+
+/* Issue #46 stage 7: Ticket Page共通設定 is a screen of its own (header: ‹ 一覧 | title | state; fields; 保存して公開) */
+.live-ticket-settings-panel {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--white);
+}
+
+.live-master-detail > .live-ticket-settings-panel {
+  min-width: 0;
+}
+
+.live-ticket-settings-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 16px;
+}
+
+.live-settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-settings-heading {
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.live-ticket-settings-body .text-input,
+.live-ticket-settings-body .textarea {
+  min-height: 52px;
+  border-radius: var(--radius-sm);
+}
+
+.live-ticket-settings-body .form-group {
+  margin-bottom: 0;
+}
+
+.live-ticket-settings-body .form-error {
+  min-height: 0;
+  margin: 0;
+}
+
+.live-ticket-settings-body .form-error:empty {
+  display: none;
+}
+
+.ticket-settings-status {
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+#live-page-primary.is-ticket-settings .live-editor-pane {
+  display: none;
+}
+
+/* The reservation rows: two lines on a narrow screen; the table cells and the row action are for width 900px and above */
+.reservation-row-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.reservation-row-item:last-child {
+  border-bottom: 0;
+}
+
+.reservation-row-item .reservation-row {
+  border-bottom: 0;
+}
+
+.reservation-cell,
+.reservation-row-action,
+.reservation-table-head,
+.reservation-pane-close {
+  display: none;
+}
+
+.live-reservation-detail:focus,
+.tickets-detail-view:focus {
+  outline: none;
+}
+
+@media (max-width: 899px) {
+  #live-page-primary.is-ticket-settings .live-page-toolbar,
+  #live-page-primary.is-ticket-settings .live-summary-note,
+  #live-page-primary.is-ticket-settings .live-master-pane {
+    display: none;
+  }
+
+  body.is-live-ticket-settings .live-ticket-settings-header {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    background: var(--white);
+  }
+
+  .ticket-settings-actions {
+    position: sticky;
+    bottom: 0;
+    margin: 0 -16px -20px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--gray-200);
+    background: var(--white);
+  }
+
+  .ticket-settings-actions .btn {
+    width: 100%;
+    min-height: 46px;
+    white-space: nowrap;
+  }
+
+  .live-switch-row {
+    min-height: 44px;
+  }
+}
+
+/* Width 900px and above: the list on the left (320px), the editor on the right, 保存して公開 in the editor's heading */
+@media (min-width: 900px) {
+  #live-tab {
+    max-width: none;
+    padding: 24px 32px;
+  }
+
+  .live-master-detail {
+    gap: 24px;
+  }
+
+  .live-master-detail > .live-editor-pane,
+  .live-master-detail > .live-ticket-settings-panel {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .live-editor-pane,
+  .live-ticket-settings-panel {
+    position: relative;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+  }
+
+  .live-editor-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2px;
+    align-content: center;
+    min-height: 82px;
+    padding: 18px 208px 18px 24px;
+  }
+
+  .live-editor-title-group h3 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .live-editor-save-status {
+    font-size: 12px;
+  }
+
+  .live-editor-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  /* 16px of air under the line plus the 24px the task tabs below are pulled up by, so the tabs never cover the reason */
+  #live-editor-save-error {
+    order: -1;
+    margin-bottom: 40px;
+  }
+
+  #live-editor-save-error:empty {
+    display: none;
+  }
+
+  .live-editor-task-tabs {
+    margin: -24px -24px 24px;
+  }
+
+  .live-editor-footer,
+  .ticket-settings-actions {
+    position: absolute;
+    z-index: 4;
+    top: 18px;
+    right: 24px;
+    bottom: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  /* The base rule's `bottom: 0` (sticky bar) and the safe-area padding further down must not stretch this box over the editor. */
+  .live-workspace .live-editor-footer,
+  .live-workspace .ticket-settings-actions {
+    bottom: auto;
+    padding: 0;
+  }
+
+  .live-editor-footer[hidden],
+  .ticket-settings-actions[hidden] {
+    display: none;
+  }
+
+  .live-editor-footer .btn,
+  .ticket-settings-actions .btn {
+    width: auto;
+    min-width: 135px;
+    min-height: 46px;
+    white-space: nowrap;
+  }
+
+  .live-editor-footer .btn:disabled,
+  .ticket-settings-actions .btn:disabled {
+    opacity: 0.4;
+  }
+
+  .live-field-grid-venue,
+  .live-field-grid-notes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .live-field-grid-times {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .live-field-grid-times .live-field-fee {
+    grid-column: auto;
+  }
+
+  .announcement-panel:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 420px;
+    column-gap: 24px;
+    row-gap: 16px;
+    align-items: start;
+  }
+
+  .announcement-panel .live-announce-comment,
+  .announcement-panel .operation-gate,
+  .announcement-panel .live-announcement-actions,
+  .announcement-panel .live-copy-status {
+    grid-column: 1;
+  }
+
+  .announcement-panel .live-announce-preview {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+  }
+
+  .live-ticket-settings-body {
+    max-width: 640px;
+    padding: 24px;
+  }
+
+  .ticket-settings-actions[hidden] {
+    display: none;
+  }
+
+  /* Reservations: a table; one reservation (or the 取り置き form) opens on the right (320px) */
+  #live-editor-panel-reservation[data-reservation-view="detail"]:not([hidden]),
+  #live-editor-panel-reservation[data-reservation-view="add"]:not([hidden]),
+  .live-reservations-panel[data-tickets-view="detail"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  .live-workspace #live-reservation-list-view[hidden],
+  .live-workspace #tickets-list-view[hidden] {
+    display: block;
+  }
+
+  .live-reservation-detail,
+  .manual-reservation-form,
+  .tickets-detail-view {
+    padding: 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+  }
+
+  .reservation-table-head,
+  .reservation-row-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 148px;
+    align-items: center;
+    column-gap: 12px;
+  }
+
+  .reservation-table-head {
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .reservation-table-cols,
+  .reservation-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) 56px minmax(0, 1.4fr) 96px 88px;
+    align-items: center;
+    column-gap: 12px;
+  }
+
+  .reservation-row-main {
+    display: none;
+  }
+
+  .reservation-cell {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .reservation-row-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin-right: 16px;
+    white-space: nowrap;
+  }
+
+  /* 予約管理: the pane is one box; the reservation inside it must not draw a second frame */
+  .tickets-detail-view .live-reservation-detail {
+    padding: 0;
+    border: 0;
+  }
+
+  /* The 取り置き form in the 320px pane: the narrow-screen rule above removed its top padding, so the first label sat on the card's edge */
+  .reservation-panel .manual-reservation-form {
+    padding-top: 16px;
+  }
+
+  /* Figma 47:757 / 195:761: the filter chips that are not chosen are gray-100 pills on the wide screen (plain text on 390, Figma 44:704) */
+  .live-workspace .reservation-chip:not(.is-selected) {
+    background: var(--gray-100);
+  }
+
+  .reservation-pane-close {
+    display: block;
+    margin: 12px auto 0;
+  }
+
+  .tickets-detail-back {
+    display: none;
+  }
+
+  .reservation-panel .quantity-field {
+    max-width: none;
+  }
+}
+
+/* Width 900px to 1179px: one column less (3 → 2, 2 → 1), the announcement stacks, the reservation table keeps its columns */
+@media (min-width: 900px) and (max-width: 1179px) {
+  .live-field-grid-times {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .live-field-grid-times .live-field-fee {
+    grid-column: 1 / -1;
+  }
+
+  .live-field-grid-venue,
+  .live-field-grid-notes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .announcement-panel:not([hidden]) {
+    display: block;
+  }
+
+  /* The editor is 440-600px wide here, too narrow for six columns (at 900px the names and contacts collapsed to nothing): the rows keep the
+     two-line form of the narrow screen (name and seats, received, status) with the in-row action on the right. The table starts at 1180px.
+     (The 予約管理 table has the whole width and keeps its columns.) */
+  #live-editor-panel-reservation .reservation-table-head,
+  #live-editor-panel-reservation .reservation-cell {
+    display: none;
+  }
+
+  #live-editor-panel-reservation .reservation-row-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  #live-editor-panel-reservation .reservation-row {
+    display: flex;
+  }
+
+  #live-editor-panel-reservation .reservation-row-main {
+    display: flex;
+  }
+}
+
+/* Issue #46 visual repair (Front capture 1). The shared groups below this one come later in the file, so a rule that has to beat a
+   shared class (.image-upload-area, .image-actions, .form-group label, .text-input, .btn, .form-error) is scoped by .live-workspace. */
+@media (max-width: 899px) {
+  /* the body of a Figma screen: padding 20 / 16 (a content width of 358 at 390) */
+  #live-tab {
+    padding: 20px 16px;
+  }
+
+  body.is-live-editing,
+  body.is-live-ticket-settings {
+    background: var(--gray-100);
+  }
+
+  body.is-live-editing #live-tab,
+  body.is-live-ticket-settings #live-tab {
+    padding: 0;
+  }
+
+  body.is-live-editing .live-workspace-bar,
+  body.is-live-ticket-settings .live-workspace-bar {
+    display: none;
+  }
+
+  /* The reason a save or a delete failed stays in view: just above the bar of 保存して公開 (Figma 195:749), or at the bottom edge when the bar is not shown */
+  body.is-live-editing #live-editor-save-error:not(:empty) {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin: 0 -16px;
+    padding: 8px 16px;
+    background: var(--gray-100);
+  }
+
+  body.is-live-editing .live-editor-body:has(.live-editor-footer:not([hidden])) #live-editor-save-error:not(:empty) {
+    bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.live-workspace .live-add-button {
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.live-workspace .btn {
+  flex: 0 0 auto;
+  min-height: 46px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.live-workspace .btn-secondary {
+  min-height: 48px;
+  border: 1px solid var(--ink);
+  background: var(--white);
+  color: var(--ink);
+}
+
+/* Fields: Label 14 / Body 16, 1px line, radius 12, no space kept for an empty message */
+.live-workspace .form-group label {
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 22px;
+}
+
+.live-workspace .text-input,
+.live-workspace .textarea,
+.live-workspace .select {
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  font: inherit;
+}
+
+.live-workspace .textarea {
+  min-height: 64px;
+  max-height: 240px;
+  field-sizing: content;
+}
+
+.live-workspace .form-error {
+  min-height: 0;
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.live-workspace .form-error:empty,
+.live-workspace .form-warning:empty,
+.live-workspace .field-hint:empty,
+.live-workspace .live-draft-notice:empty {
+  display: none;
+}
+
+.live-workspace .form-warning {
+  margin: 0;
+  color: var(--primary);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.live-workspace .live-draft-notice {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.live-editor-task-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-workspace .operation-gate {
+  margin: 0;
+}
+
+/* Flyer: a 96 x 136 picture, the change button and 画像を外す in one row (Figma 49:638) */
+.live-workspace .live-flyer-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.live-workspace .live-flyer-preview {
+  width: 96px;
+  min-height: 136px;
+  margin-bottom: 0;
+  flex: 0 0 auto;
+}
+
+.live-workspace .live-flyer-actions {
+  min-width: 0;
+  flex: 1 1 0;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0 16px;
+}
+
+.live-workspace .live-flyer-actions .btn-image-select {
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.live-workspace .live-flyer-clear {
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* New Live, step 1: the source is a field on the page, not a gray card */
+.live-workspace .live-source-screen {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.live-workspace .live-source-textarea {
+  min-height: 204px;
+  max-height: none;
+  field-sizing: fixed;
+}
+
+.live-workspace .live-collapse-summary {
+  min-height: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.live-workspace .live-collapse-chevron {
+  font-size: 14px;
+}
+
+.live-workspace .live-switch-label {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.live-workspace .live-segment-option {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.live-workspace .live-text-button {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+/* Announcement: the post is a white card with no label of its own (Figma 44:676) */
+.live-workspace .live-announce-preview label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: clip;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.live-workspace .live-announce-preview .textarea {
+  min-height: 120px;
+  max-height: none;
+  padding: 16px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-size: 14px;
+  line-height: 22px;
+  resize: none;
+}
+
+/* Reservations */
+.live-workspace .reservation-chip {
+  padding: 0 12px;
+  background: transparent;
+}
+
+.live-workspace .reservation-chip.is-selected {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.reservation-panel .reservation-totals .reservation-total-seats {
+  color: var(--ink);
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.live-workspace .reservation-row-action {
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: right;
+}
+
+.live-workspace .manual-reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-workspace .manual-reservation-form[hidden] {
+  display: none;
+}
+
+.live-workspace .reservation-detail-list {
+  margin-bottom: 0;
+}
+
+.live-workspace .reservation-detail-row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.live-workspace .live-reservations-filters {
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.live-workspace .live-reservations-filters .form-group {
+  margin-bottom: 0;
+}
+
+.live-workspace .live-reservation-detail,
+.live-workspace .tickets-detail-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-workspace .live-reservation-detail[hidden],
+.live-workspace .tickets-detail-view[hidden] {
+  display: none;
+}
+
+.live-workspace .tickets-list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.live-workspace .tickets-list-view[hidden] {
+  display: none;
+}
+
+.live-workspace #tickets-csv-btn {
+  margin: 0;
+  text-align: left;
+}
+
+/* Selected row of the list: the accent-soft fill, no ring (Figma 47:607) */
+.live-row.live-edit-trigger.is-selected {
+  border-color: var(--line);
+  background: var(--accent-soft);
+  box-shadow: none;
+}
+
+@media (min-width: 900px) {
+  .live-workspace {
+    gap: 20px;
+  }
+
+  .live-workspace-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .live-workspace-tabs {
+    display: inline-grid;
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .live-workspace-tab {
+    padding: 8px 16px;
+  }
+
+  .live-workspace .live-add-button {
+    width: auto;
+    min-width: 153px;
+  }
+
+  /* the list on the left is one white card: the switch row, the rows, the settings entry (Figma 47:607) */
+  .live-master-pane {
+    gap: 0;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    background: var(--white);
+    overflow: clip;
+  }
+
+  .live-page-toolbar {
+    padding: 0 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .live-summary-note {
+    margin: 0;
+    padding: 8px 16px 0;
+  }
+
+  .live-list-panel .items-list {
+    border-radius: 0;
+  }
+
+  .live-workspace-utility {
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .live-row.is-selected .arrow {
+    display: none;
+  }
+
+  /* editor tabs fit their text, left aligned (Figma 47:630) */
+  .live-editor-task-tabs {
+    display: flex;
+    justify-content: flex-start;
+    gap: 32px;
+    padding: 0 24px;
+  }
+
+  .live-editor-task-tab {
+    flex: 0 0 auto;
+    padding: 12px 0;
+  }
+
+  .live-workspace .live-collapse {
+    background: var(--gray-100);
+  }
+
+  /* 区分 on the left and 「このライブを削除」 at the right end of one row */
+  .live-public-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    row-gap: 16px;
+    align-items: center;
+  }
+
+  .live-public-fields > * {
+    grid-column: 1 / -1;
+  }
+
+  .live-public-fields > .live-category-field {
+    grid-column: 1;
+  }
+
+  .live-public-fields > .live-delete-link {
+    grid-column: 2;
+  }
+
+  .live-category-field {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .live-category-field .live-field-label {
+    margin-bottom: 0;
+  }
+
+  .live-category-field .live-segment {
+    display: inline-grid;
+    grid-template-columns: repeat(2, auto);
+    width: max-content;
+    background: var(--gray-100);
+  }
+
+  .live-category-field .live-segment-option {
+    padding: 10px 12px;
+  }
+
+  .live-workspace .live-announce-preview .textarea {
+    background: var(--gray-100);
+  }
+
+  /* The white notice and the saved post card sit on a white editor here: a gray-100 fill keeps them visibly boxed; the buttons fit their text like the announcement ones */
+  .live-workspace .live-draft-notice,
+  .live-workspace .live-postsave-preview {
+    background: var(--gray-100);
+  }
+
+  .live-workspace .live-postsave {
+    align-items: flex-start;
+  }
+
+  .live-workspace .live-postsave-preview {
+    align-self: stretch;
+  }
+
+  /* new Live, step 1: 下書きを作る fits its text and 手入力で作る sits beside it (Figma 47:873) */
+  .live-source-actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  #x-intent-btn,
+  #x-post-copy-btn,
+  #x-link-copy-btn {
+    flex: 0 0 auto;
+  }
+
+  .live-workspace .live-reservations-filters {
+    display: flex;
+  }
+
+  /* 予約管理 (Figma 47:926): 「CSVで書き出す」 is an outlined button at the right of the filters, level with the selects */
+  .live-workspace .tickets-list-view {
+    position: relative;
+  }
+
+  .live-workspace #tickets-csv-btn {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    min-height: 46px;
+    padding: 0 24px;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    color: var(--ink);
+    text-align: center;
+  }
+
+  /* While one reservation is open on the right the list column is only as wide as the two filters: the button goes below the table */
+  .live-workspace .live-reservations-panel[data-tickets-view="detail"] #tickets-csv-btn {
+    position: static;
+    align-self: flex-start;
+  }
+
+  .live-workspace .live-reservations-filters .form-group:first-child {
+    width: 280px;
+  }
+
+  .live-workspace .live-reservations-filters .form-group:last-child {
+    width: 200px;
+  }
+
+  .live-workspace .reservation-list,
+  .live-workspace .tickets-list {
+    border-radius: var(--radius);
+  }
+}
+
+/* Width 1180px and above, list only (no reservation or 取り置き form open beside it): the totals on the left, the filter chips and
+   「+ 取り置きを追加」 at the right of one row (Figma 47:810) */
+@media (min-width: 1180px) {
+  #live-editor-panel-reservation:not([data-reservation-view="detail"]):not([data-reservation-view="add"]) #live-reservation-list-view {
+    position: relative;
+  }
+
+  #live-editor-panel-reservation:not([data-reservation-view="detail"]):not([data-reservation-view="add"]) #live-reservation-ledger {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    align-items: center;
+  }
+
+  #live-editor-panel-reservation:not([data-reservation-view="detail"]):not([data-reservation-view="add"]) #live-reservation-ledger > .reservation-totals {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #live-editor-panel-reservation:not([data-reservation-view="detail"]):not([data-reservation-view="add"]) #live-reservation-ledger > .reservation-filters {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+    margin-right: 176px;
+  }
+
+  #live-editor-panel-reservation:not([data-reservation-view="detail"]):not([data-reservation-view="add"]) #live-reservation-ledger > .reservation-list,
+  #live-editor-panel-reservation:not([data-reservation-view="detail"]):not([data-reservation-view="add"]) #live-reservation-ledger > .empty-state {
+    grid-column: 1 / -1;
+  }
+
+  #live-editor-panel-reservation:not([data-reservation-view="detail"]):not([data-reservation-view="add"]) .live-reservation-add {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    margin: 0;
+  }
+}
+
+.save-btn.is-live-concealed {
+  display: none;
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .ticket-settings-actions {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
 }
 
 /* ----- Add Button ----- */

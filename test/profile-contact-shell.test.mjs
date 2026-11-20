@@ -48,11 +48,16 @@ test('T45-COMPAT every page keeps the shared cache query; only contact.js gets t
   assert.match(read('contact/index.html'), /contact\.js\?v=20261119-45/);
 });
 test('T45-COMPAT untouched files keep the base bytes (shared scripts, tokens, rules, admin, data, Worker)', () => {
-  for (const path of ['assets/js/live-operations.js', 'assets/js/music-data.js', 'assets/js/home-player.js', 'assets/js/script.js', 'assets/js/site-config.js', 'assets/css/1212-music.tokens.css', 'DESIGN_RULES.md', 'admin/index.html', 'admin/app.js', 'admin/style.css']) {
+  for (const path of ['assets/js/live-operations.js', 'assets/js/music-data.js', 'assets/js/home-player.js', 'assets/js/script.js', 'assets/js/site-config.js', 'assets/css/1212-music.tokens.css', 'DESIGN_RULES.md']) {
     assert.equal(read(path), atBase(path), path);
   }
-  const changed = execFileSync('git', ['diff', '--name-only', BASE, '--', 'admin', 'cloudflare', 'data'], {encoding: 'utf8'}).trim();
-  assert.equal(changed, '', 'admin/, cloudflare/ and data/ are untouched');
+  // Issue #46 changes admin/ and the Worker after #45. What #45 must hold is that they did not change between its base
+  // and #46's base commit (commit vs commit); data/ is still compared with the working tree.
+  const BASE46 = 'e191e53ada480014e03ad2fa23835f6178ce371a';
+  const changedByIssue45 = execFileSync('git', ['diff', '--name-only', BASE, BASE46, '--', 'admin', 'cloudflare'], {encoding: 'utf8'}).trim();
+  assert.equal(changedByIssue45, '', 'admin/ and cloudflare/ are untouched between the #45 base and the #46 base');
+  const changed = execFileSync('git', ['diff', '--name-only', BASE, '--', 'data'], {encoding: 'utf8'}).trim();
+  assert.equal(changed, '', 'data/ is untouched');
 });
 test('T45-COMPAT site-content.js differs from the #43 parent only by the Issue #45 block and two dispatch lines', () => {
   const now = read('assets/js/site-content.js'), old = atParent('assets/js/site-content.js');

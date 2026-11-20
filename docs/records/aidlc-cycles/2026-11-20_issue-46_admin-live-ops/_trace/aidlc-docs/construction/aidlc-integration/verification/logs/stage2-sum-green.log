@@ -1,0 +1,524 @@
+TAP version 13
+# Subtest: manual ticket reservations
+    # Subtest: manual POST rejects unauthenticated requests before touching D1
+    ok 1 - manual POST rejects unauthenticated requests before touching D1
+      ---
+      duration_ms: 29.456542
+      ...
+    # Subtest: manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+    ok 2 - manual POST creates a handled hold for an external-ticket Live with exact insert semantics
+      ---
+      duration_ms: 6.208584
+      ...
+    # Subtest: manual POST accepts omitted contact and note and accepts a past Live
+    ok 3 - manual POST accepts omitted contact and note and accepts a past Live
+      ---
+      duration_ms: 1.337542
+      ...
+    # Subtest: manual POST rejects invalid Live, name, quantity, contact, and internal note
+        # Subtest: missing Live
+        ok 1 - missing Live
+          ---
+          duration_ms: 1.246875
+          ...
+        # Subtest: blank name
+        ok 2 - blank name
+          ---
+          duration_ms: 1.398584
+          ...
+        # Subtest: non-string name
+        ok 3 - non-string name
+          ---
+          duration_ms: 0.614125
+          ...
+        # Subtest: zero quantity
+        ok 4 - zero quantity
+          ---
+          duration_ms: 0.327917
+          ...
+        # Subtest: too many
+        ok 5 - too many
+          ---
+          duration_ms: 2.934208
+          ...
+        # Subtest: fractional
+        ok 6 - fractional
+          ---
+          duration_ms: 1.186125
+          ...
+        # Subtest: string quantity
+        ok 7 - string quantity
+          ---
+          duration_ms: 0.511292
+          ...
+        # Subtest: contact too long
+        ok 8 - contact too long
+          ---
+          duration_ms: 0.305042
+          ...
+        # Subtest: non-string contact
+        ok 9 - non-string contact
+          ---
+          duration_ms: 0.3515
+          ...
+        # Subtest: note too long
+        ok 10 - note too long
+          ---
+          duration_ms: 0.302834
+          ...
+        # Subtest: non-string note
+        ok 11 - non-string note
+          ---
+          duration_ms: 1.120084
+          ...
+        1..11
+    ok 4 - manual POST rejects invalid Live, name, quantity, contact, and internal note
+      ---
+      duration_ms: 11.587708
+      ...
+    # Subtest: manual admin list defaults legacy source to web and returns admin-only fields
+    ok 5 - manual admin list defaults legacy source to web and returns admin-only fields
+      ---
+      duration_ms: 0.81475
+      ...
+    # Subtest: manual CSV appends source, contact, internalNote after the existing eleven columns
+    ok 6 - manual CSV appends source, contact, internalNote after the existing eleven columns
+      ---
+      duration_ms: 1.097041
+      ...
+    # Subtest: authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+    ok 7 - authenticated CSV neutralizes formula prefixes without changing stored public or manual values
+      ---
+      duration_ms: 3.16425
+      ...
+    # Subtest: manual changes preserve the existing authenticated status endpoint
+    ok 8 - manual changes preserve the existing authenticated status endpoint
+      ---
+      duration_ms: 0.668167
+      ...
+    # Subtest: manual changes preserve invalid status rejection without issuing an UPDATE
+    ok 9 - manual changes preserve invalid status rejection without issuing an UPDATE
+      ---
+      duration_ms: 1.027042
+      ...
+    # Subtest: explicit-empty internal reservation remains web and public notifications still run
+    ok 10 - explicit-empty internal reservation remains web and public notifications still run
+      ---
+      duration_ms: 1.292416
+      ...
+    # Subtest: public POST rejects tampered ineligible Live IDs before D1 write and notifications
+        # Subtest: authoritative external ticketUrl
+        ok 1 - authoritative external ticketUrl
+          ---
+          duration_ms: 0.410584
+          ...
+        # Subtest: invalid authoritative ticketUrl
+        ok 2 - invalid authoritative ticketUrl
+          ---
+          duration_ms: 0.382916
+          ...
+        # Subtest: reservation closed
+        ok 3 - reservation closed
+          ---
+          duration_ms: 0.228542
+          ...
+        # Subtest: upcoming collection item dated before today
+        ok 4 - upcoming collection item dated before today
+          ---
+          duration_ms: 0.203625
+          ...
+        # Subtest: past collection item even with a future date
+        ok 5 - past collection item even with a future date
+          ---
+          duration_ms: 0.372959
+          ...
+        # Subtest: legacy recognizable booking link
+        ok 6 - legacy recognizable booking link
+          ---
+          duration_ms: 0.932084
+          ...
+        1..6
+    ok 11 - public POST rejects tampered ineligible Live IDs before D1 write and notifications
+      ---
+      duration_ms: 3.107042
+      ...
+    # Subtest: public POST accepts explicit-empty and missing-property non-booking internal routes
+        # Subtest: explicit-empty ticketUrl overrides recognizable booking link
+        ok 1 - explicit-empty ticketUrl overrides recognizable booking link
+          ---
+          duration_ms: 1.380208
+          ...
+        # Subtest: missing ticketUrl with social link
+        ok 2 - missing ticketUrl with social link
+          ---
+          duration_ms: 0.539875
+          ...
+        # Subtest: missing ticketUrl with profile link
+        ok 3 - missing ticketUrl with profile link
+          ---
+          duration_ms: 1.3225
+          ...
+        # Subtest: missing ticketUrl with Live detail link
+        ok 4 - missing ticketUrl with Live detail link
+          ---
+          duration_ms: 3.197209
+          ...
+        # Subtest: missing ticketUrl with ordinary link
+        ok 5 - missing ticketUrl with ordinary link
+          ---
+          duration_ms: 1.367834
+          ...
+        1..5
+    ok 12 - public POST accepts explicit-empty and missing-property non-booking internal routes
+      ---
+      duration_ms: 9.185625
+      ...
+    # Subtest: reservation source changes do not weaken public email validation
+    ok 13 - reservation source changes do not weaken public email validation
+      ---
+      duration_ms: 0.561708
+      ...
+    # Subtest: manual reservation schema and one-time migration are additive and documented
+    ok 14 - manual reservation schema and one-time migration are additive and documented
+      ---
+      duration_ms: 25.988542
+      ...
+    1..14
+ok 1 - manual ticket reservations
+  ---
+  duration_ms: 96.853625
+  type: 'suite'
+  ...
+# Subtest: public ticket boundary hardening
+    # Subtest: public site-data omits Live management fields while admin retains stored values
+    ok 1 - public site-data omits Live management fields while admin retains stored values
+      ---
+      duration_ms: 22.309125
+      ...
+    # Subtest: public reservation rejects non-integer raw quantities before insert and notification scheduling
+        # Subtest: missing
+        ok 1 - missing
+          ---
+          duration_ms: 2.143125
+          ...
+        # Subtest: blank
+        ok 2 - blank
+          ---
+          duration_ms: 1.201083
+          ...
+        # Subtest: numeric string
+        ok 3 - numeric string
+          ---
+          duration_ms: 1.844208
+          ...
+        # Subtest: fractional
+        ok 4 - fractional
+          ---
+          duration_ms: 0.840333
+          ...
+        # Subtest: NaN-like
+        ok 5 - NaN-like
+          ---
+          duration_ms: 0.986292
+          ...
+        # Subtest: null
+        ok 6 - null
+          ---
+          duration_ms: 1.055
+          ...
+        # Subtest: zero
+        ok 7 - zero
+          ---
+          duration_ms: 3.029041
+          ...
+        # Subtest: above range
+        ok 8 - above range
+          ---
+          duration_ms: 5.911375
+          ...
+        1..8
+    ok 2 - public reservation rejects non-integer raw quantities before insert and notification scheduling
+      ---
+      duration_ms: 18.381708
+      ...
+    # Subtest: public reservation accepts an integer quantity and inserts and schedules once
+    ok 3 - public reservation accepts an integer quantity and inserts and schedules once
+      ---
+      duration_ms: 5.182584
+      ...
+    # Subtest: public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+        # Subtest: immediately before midnight
+        ok 1 - immediately before midnight
+          ---
+          duration_ms: 1.776375
+          ...
+        # Subtest: at midnight
+        ok 2 - at midnight
+          ---
+          duration_ms: 0.432125
+          ...
+        1..2
+    ok 4 - public reservation changes business date exactly at Asia/Tokyo midnight on a UTC-like Worker host
+      ---
+      duration_ms: 2.592916
+      ...
+    # Subtest: duplicate Live IDs fail closed for public and manual reservation routes
+        # Subtest: cross-collection public
+        ok 1 - cross-collection public
+          ---
+          duration_ms: 0.395916
+          ...
+        # Subtest: cross-collection manual
+        ok 2 - cross-collection manual
+          ---
+          duration_ms: 1.199625
+          ...
+        # Subtest: same-collection public
+        ok 3 - same-collection public
+          ---
+          duration_ms: 1.100833
+          ...
+        # Subtest: same-collection manual
+        ok 4 - same-collection manual
+          ---
+          duration_ms: 1.766125
+          ...
+        1..4
+    ok 5 - duplicate Live IDs fail closed for public and manual reservation routes
+      ---
+      duration_ms: 5.569292
+      ...
+    # Subtest: legacy ambiguous site data remains readable and is never rewritten by public reads
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 1.134
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.313041
+          ...
+        1..2
+    ok 6 - legacy ambiguous site data remains readable and is never rewritten by public reads
+      ---
+      duration_ms: 1.861167
+      ...
+    # Subtest: admin site-data PUT rejects duplicate Live IDs before writing D1
+        # Subtest: cross-collection
+        ok 1 - cross-collection
+          ---
+          duration_ms: 1.897334
+          ...
+        # Subtest: same-collection
+        ok 2 - same-collection
+          ---
+          duration_ms: 0.723458
+          ...
+        1..2
+    ok 7 - admin site-data PUT rejects duplicate Live IDs before writing D1
+      ---
+      duration_ms: 2.874625
+      ...
+    # Subtest: known recent-duplicate error remains a specific safe 400
+    ok 8 - known recent-duplicate error remains a specific safe 400
+      ---
+      duration_ms: 1.467583
+      ...
+    # Subtest: five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+    ok 9 - five-minute duplicate guard uses one UTC format with real SQLite conditional-insert semantics
+      ---
+      duration_ms: 36.6615
+      ...
+    # Subtest: concurrent duplicate requests atomically produce one insert and one known 400
+    ok 10 - concurrent duplicate requests atomically produce one insert and one known 400
+      ---
+      duration_ms: 1.930084
+      ...
+    # Subtest: top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+        # Subtest: /api/public/site-data
+        ok 1 - /api/public/site-data
+          ---
+          duration_ms: 0.307166
+          ...
+        # Subtest: /og/live/live_internal
+        ok 2 - /og/live/live_internal
+          ---
+          duration_ms: 0.296917
+          ...
+        1..2
+    ok 11 - top-level catch logs and redacts unexpected errors on public site-data and OG GET routes
+      ---
+      duration_ms: 0.833417
+      ...
+    # Subtest: known admin and ticket route errors remain specific and safe
+    ok 12 - known admin and ticket route errors remain specific and safe
+      ---
+      duration_ms: 0.482917
+      ...
+    # Subtest: unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+        # Subtest: manual reservation insert
+        ok 1 - manual reservation insert
+          ---
+          duration_ms: 0.291667
+          ...
+        # Subtest: ticket status update
+        ok 2 - ticket status update
+          ---
+          duration_ms: 0.211125
+          ...
+        1..2
+    ok 13 - unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+      ---
+      duration_ms: 0.812167
+      ...
+    # Subtest: unexpected X route errors reach the logged generic top-level 500
+        # Subtest: /api/admin/live/live_internal/post-x?dryRun=1
+        ok 1 - /api/admin/live/live_internal/post-x?dryRun=1
+          ---
+          duration_ms: 15.358042
+          ...
+        # Subtest: /api/admin/live/live_internal/post-x
+        ok 2 - /api/admin/live/live_internal/post-x
+          ---
+          duration_ms: 2.970583
+          ...
+        1..2
+    ok 14 - unexpected X route errors reach the logged generic top-level 500
+      ---
+      duration_ms: 18.864791
+      ...
+    # Subtest: unexpected D1 errors are logged and returned as a generic 500 without leakage
+    ok 15 - unexpected D1 errors are logged and returned as a generic 500 without leakage
+      ---
+      duration_ms: 0.720375
+      ...
+    # Subtest: post-insert notification and waitUntil scheduling failures still return 201 with one insert
+    ok 16 - post-insert notification and waitUntil scheduling failures still return 201 with one insert
+      ---
+      duration_ms: 2.002375
+      ...
+    1..16
+ok 2 - public ticket boundary hardening
+  ---
+  duration_ms: 123.660833
+  type: 'suite'
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=false retains 201
+ok 3 - public save sends one receipt after insert; notification failure=false retains 201
+  ---
+  duration_ms: 2.862667
+  ...
+# Subtest: public save sends one receipt after insert; notification failure=true retains 201
+ok 4 - public save sends one receipt after insert; notification failure=true retains 201
+  ---
+  duration_ms: 0.910417
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+ok 5 - legacy ticket copy is removed on public/admin reads and saves; complete=undefined
+  ---
+  duration_ms: 1.652917
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=
+ok 6 - legacy ticket copy is removed on public/admin reads and saves; complete=
+  ---
+  duration_ms: 1.869833
+  ...
+# Subtest: legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+ok 7 - legacy ticket copy is removed on public/admin reads and saves; complete=保存済みの完了文
+  ---
+  duration_ms: 1.62925
+  ...
+# Subtest: ticket reservation summary route
+    # Subtest: a missing or wrong token is 401 and the DB is never prepared
+    ok 1 - a missing or wrong token is 401 and the DB is never prepared
+      ---
+      duration_ms: 28.552583
+      ...
+    # Subtest: no admin token configured also stays 401 without reading the DB
+    ok 2 - no admin token configured also stays 401 without reading the DB
+      ---
+      duration_ms: 0.563917
+      ...
+    # Subtest: an authorized read runs one aggregate query and answers the summaries for the synthetic rows
+    ok 3 - an authorized read runs one aggregate query and answers the summaries for the synthetic rows
+      ---
+      duration_ms: 0.903167
+      ...
+    # Subtest: the query groups by live and status and reads no personal column
+    ok 4 - the query groups by live and status and reads no personal column
+      ---
+      duration_ms: 1.168542
+      ...
+    # Subtest: the response has only liveId, seats, records and pending, and none of the personal values of the rows
+    ok 5 - the response has only liveId, seats, records and pending, and none of the personal values of the rows
+      ---
+      duration_ms: 0.544541
+      ...
+    # Subtest: the response is not cached and carries the same CORS headers as the other admin routes
+    ok 6 - the response is not cached and carries the same CORS headers as the other admin routes
+      ---
+      duration_ms: 0.291167
+      ...
+    # Subtest: OPTIONS answers 204 with GET allowed, and a POST to the route is not a route
+    ok 7 - OPTIONS answers 204 with GET allowed, and a POST to the route is not a route
+      ---
+      duration_ms: 0.498667
+      ...
+    1..7
+ok 8 - ticket reservation summary route
+  ---
+  duration_ms: 33.896667
+  type: 'suite'
+  ...
+# Subtest: summarizeTicketReservationRows
+    # Subtest: pending only, handled only, and mixed rows
+    ok 1 - pending only, handled only, and mixed rows
+      ---
+      duration_ms: 0.39975
+      ...
+    # Subtest: cancelled rows count nowhere, and a live with only cancelled rows is left out
+    ok 2 - cancelled rows count nowhere, and a live with only cancelled rows is left out
+      ---
+      duration_ms: 0.31125
+      ...
+    # Subtest: manual and web rows are counted the same (source is not part of the rule)
+    ok 3 - manual and web rows are counted the same (source is not part of the rule)
+      ---
+      duration_ms: 0.634542
+      ...
+    # Subtest: a seats value that is not a number counts as 0 while the records are still counted
+    ok 4 - a seats value that is not a number counts as 0 while the records are still counted
+      ---
+      duration_ms: 0.6755
+      ...
+    # Subtest: rows come out ordered by liveId, and an empty or non-array input is an empty list
+    ok 5 - rows come out ordered by liveId, and an empty or non-array input is an empty list
+      ---
+      duration_ms: 0.174167
+      ...
+    # Subtest: rows without a live id are ignored, and the input is not modified
+    ok 6 - rows without a live id are ignored, and the input is not modified
+      ---
+      duration_ms: 0.09225
+      ...
+    # Subtest: a status that is not cancelled counts like the ledger does (only cancelled is excluded)
+    ok 7 - a status that is not cancelled counts like the ledger does (only cancelled is excluded)
+      ---
+      duration_ms: 0.122333
+      ...
+    1..7
+ok 9 - summarizeTicketReservationRows
+  ---
+  duration_ms: 2.911875
+  type: 'suite'
+  ...
+1..9
+# tests 95
+# suites 4
+# pass 95
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 533.419667

@@ -2,11 +2,12 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-11-19
+- Last updated: 2026-11-20
 - Related issues: #39, #40, #37, #35, #33, #29
 - Related implementation issues: #41, #46, #47（公開側の対応: #42, #43, #44, #45）、既存契約: #19, #20, #21, #22, #33, #35, #37
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #46のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-20_issue-46_admin-live-ops/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #43）: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #44）: Issue #44のgate 3（第2版の再承認）における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
@@ -18,6 +19,7 @@
 - Prior design review（Issue #33）: APPROVED（review-04、Issue #33の更新内容。blocking findingなし）
 - Prior design review: APPROVED（Issue #22 AC0〜AC9、Issue #29 owner-approved design）
 - Implementation gate: 本設計は実装の入力であり、Approvedはマスタの実装完了を意味しない。#40のgate 3承認後に同一bytesで昇格する。#41・#46・#47はそれぞれのformal cycleで実装を計画・承認する。確認1前の内容reviewと昇格後のbytes・記録reviewはFrontが手配する
+- Implementation gate（Issue #46）: Issue #46はgate 1〜3の承認と、承認済みCode Generation Planどおりの本ファイルの昇格（同じbytes）を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・Worker deploy・PRは別のOwner承認。本ファイルの§4.6（#46の保存契約）・§5.4・§10.2・§12.4・§13.4は実装の入力で、`00cdea5`の事実列と§15の実装状況は比較時点の記録として保持する。#46の実装・試験・独立reviewの成否は、active時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-20_issue-46_admin-live-ops/_trace/aidlc-docs/`内の同pathを参照する。本設計のApprovedだけで実装済みとはしない
 - Prior implementation gate（Issue #37）: Issue #37はgate 1〜3の承認と、承認済みCode Generation PlanどおりのDraft→Approved反映を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・production deployは別のOwner承認。Apps Script作成・公開とsecret登録はOwnerが行い、本番のメール到達はdeploy後にOwnerが確認する
 - Prior implementation gate（Issue #35）: Issue #35のgate 1〜5、実装・検証・独立reviewの記録は`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/`を参照する。本番の速度確認はdeploy後のOwner確認とする
 - Prior implementation gate（Issue #33）: Issue #33の本版確認済み。実装・全回帰・独立review-07を完了し、Code Generation Resultは本人回答`A`で承認済み（2026-11-16T14:29:00+09:00）。Build/Test Resultは書式修正後の新digestに対する本人回答`A`で再承認済み（2026-11-16T14:52:21+09:00）。cycle完了記録は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`。canonical確認原典: context rootの`_scratch/codex-work/20261116-114342_1212hp-ai-provider-fallback/canonical-owner-confirmation.md`（prompt: 2026-11-16T13:33:01+09:00）。本文中の実装未着手という時点記述は確認時点の記録として保持する。本番反映は別のOwner操作
@@ -151,7 +153,7 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 実装: #46（Live）、#47（News・作品・映像等）。`00cdea5`: Liveだけに幅900pxを境にした一覧＋編集／一覧→編集が実装済み。News・作品・映像はmodalのまま。
 
 - 390pxを先に設計し、1440pxは同じ内容を広げる。幅900px以上は左に一覧、右に編集面を置き、幅900px未満は一覧→編集に切り替える。
-- Liveを開いたスマホの上の帯は「戻る・日付と会場・区分と保存状態」の1行と、公開内容／告知／予約の切り替えに絞る。入力欄を囲む枠は1重、切り替えは3等分にする。
+- Liveを開いたスマホの上の帯は「戻る・日付と会場・保存の状態」の1行と、公開内容／告知／予約の切り替えに絞る。右は保存の状態だけを出し（区分は一覧の見出しと公開内容の「区分」の切り替えで示す）、日付と会場は1行に収め、収まらない時は末尾を「…」で省く（#46のFigma整合案F46-01）。入力欄を囲む枠は1重、切り替えは3等分にする。
 - LiveだけでなくNews・作品・映像も汎用bottom-sheet modalをやめ、同じ一覧と編集の型に揃える。SiteとProfileも同じ見た目・保存状態にする。
 - `予約管理`は全Liveのfilterと一覧。1440pxでは予約の行を押すと右に1件の備考・内部メモ・状態操作を開く。未対応の行には`対応済みにする`を置き、1件を開かずに状態を変えられる。390pxでは一覧から予約1件へ進む。取り置き追加は別の画面で行う。
 
@@ -170,6 +172,18 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 - Ticket Page共通設定は、その画面の`保存して公開`で保存する。Liveの保存に混ぜず、上部の別保存操作を待たせない。
 - 予約追加・予約status変更はLive内容とは別の即時操作とし、`保存して公開`の対象に含めない。
 - Local ModeではLive編集の反映後、header actionを`JSONを書き出す`と表示し、API保存と区別する。
+
+#### Issue #46の保存契約
+
+実装: #46。本節はgate 3承認後の実装入力で、`00cdea5`の事実列は比較時点の記録として保持する。
+
+- 未保存の判定: Live編集面の入力（元情報・公開内容・告知のひとことを含む）を、開いた時の値と比べ、違う間だけ未保存とする。入力して元の値へ戻せば変更なしに戻る。新しいライブは、何も入力していない間は未保存としない。Ticket Page共通設定も、その画面の入力を開いた時の値と比べる。
+- 保存の状態: 「保存済み」「未保存」「保存しています…」「保存できませんでした」（§10.2）。幅390はHeaderの右、幅1440pxは編集の見出しに出す。保存中は入力・移動・削除・予約の操作を押せなくし、失敗したら入力と編集面をそのまま残し、理由を下の操作の上（幅1440pxは見出しの下）に1行出す。
+- 保存の対象の分離: Live・削除・Ticket Page共通設定の保存は、公開データ全体を送る既存の保存（`PUT /api/admin/site-data`。経路・形・認証は変えない）のまま、送る内容を「最後に読み込めた、または保存できた内容に、その操作の対象だけを重ねたもの」にする。Live・削除・Ticket共通設定は互いの未保存の入力を送らず、Site・News・YouTube・Disco・Profileの未保存の変更（headerの「保存」の待ち）も送らない。Site・News・YouTube・Disco・Profileの保存（headerの「保存」と各modalの更新）の動きは変えない。別の端末で行った保存を取り込む仕組みは持たない（今と同じく、最後に保存した側の内容になる。#47で保存全体を見直す時に扱う）。
+- Local Mode: Live・削除・Ticket共通設定の保存はメモリ上の内容へ反映し、headerの「JSONを書き出す」で確定する（今のまま）。
+- 削除: 確認（§10.2）のあと、その場で上の保存を行う。成功したら一覧へ戻り（幅900px以上は編集面を空にし）、一覧・予約管理の絞り込み・集計を更新する。失敗したらライブを一覧に戻し、編集面と入力を残して失敗を示す。
+- 新規ライブの保存の直後は、告知の内容と「Xで告知する」「あとで」を出す。既存ライブの保存の直後は、公開内容のまま状態が「保存済み」になる。
+- 未保存のまま別のライブ・一覧・グローバルタブ・開催予定／公演終了・予約管理・Ticket Page共通設定へ移る時は、画面の中の確認（§10.2）を出す。ブラウザの再読込・戻る・タブを閉じる操作は、ブラウザ標準の確認（`beforeunload`）で止める。文言はブラウザ標準で、標準の確認を出さない環境（iOSのSafariなど）では止められない既知の制限とする。公開内容／告知／予約の内部の切り替えでは確認を出さず入力を保つ。
 
 ### 4.7 必須項目と開催状態
 
@@ -283,13 +297,31 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 
 #43の公開側はTicket Page共通設定の項目（`completeText`、`fields.showQuantity`・`showMessage`・`labelQuantity`・`labelMessage`・`placeholderMessage`・`submitLabel`）をそのまま使い、保存先・名前・既定値・Workerを変えない。Ticket完了は送信時点の完了文・ラベル・表示設定を使い、受付内容は同じタブのsessionStorageにだけ置く（公開設計§5）。Ticket完了の「当日までに聴く」はHomeと同じく`site.featuredReleaseId`（空なら最新の作品）と作品の`playbackVideoId`を使う。管理画面の機能・タブ・保存は#43で変更しない。#43のmergeでは本番も管理のタブも変わらず、Worker deployは不要。復旧は#43の公開差分を同じ単位で戻し、保存済みデータと予約を保持する。
 
+### 5.4 一覧の予約の集計（Issue #46）
+
+実装: #46（Cloudflare Workerに集計を返す処理を新設）。`00cdea5`: 未実装。
+
+開催予定の一覧の各ライブに、予約の枚数と未対応の件数を出す。件数だけを返す管理用の読み取りの処理をWorkerへ足す。
+
+| 項目 | 決め |
+|---|---|
+| 経路 | `GET /api/admin/ticket-reservation-summary`。認証は既存の予約の管理APIと同じ（`isAdminAuthorized`。通らなければ401 `{"error":"unauthorized"}`、DBは読まない）。CORSの許可元・メソッド・ヘッダーは変えない。 |
+| 応答 | `{"summaries":[{"liveId":"…","seats":数,"records":数,"pending":数}]}`。件数だけで、予約者の氏名・e-mail・連絡先・備考・内部メモ・受付の日時・予約のidを含めない。`liveId`の昇順。対象は、キャンセル以外の予約が1件以上あるライブだけ。含まれないライブは0として扱う。 |
+| 数え方 | 今の予約台帳の合計と同じ。`status`が`cancelled`の予約は、枚数にも件数にも未対応にも含めない。`records`はキャンセル以外の件数、`seats`は同じ予約の`quantity`の合計（数でない値は0）、`pending`は`status`が`pending`の件数。Workerの1つの関数が持ち、管理画面の予約台帳の合計（`calculateActiveReservationTotals`）と同じ入力で同じ値になることを試験で確かめる。 |
+| 既存への影響 | 既存のAPIの経路・応答・保存の形・認証を変えない。DBのschema・migrationは足さない。 |
+| 新しい管理画面と古いWorker | 古いWorkerは経路がなく404。集計を出さずに一覧を出し、一覧の上に「予約の数を読み込めませんでした。」を1行出す。保存・予約の操作は妨げない。 |
+| 古い管理画面と新しいWorker | 古い管理画面はこの経路を呼ばない。今のまま動く。 |
+| 認証が通らない時 | 入力の窓で合言葉を聞き（既存の動き）、入力しない・違う時は、一覧の上に「認証できませんでした。」を1行出す。集計は出さない。 |
+| API接続失敗・Local Mode | 集計を呼ばず、案内の行も出さない（§10）。 |
+| 開催予定だけ | 公演終了の一覧には出さない。 |
+
 ## 6. 情報の優先順位
 
 実装: #46（Live）、#47（たまにする更新）。`00cdea5`: 上部の複数の帯、折りたたみ内の画像、常時表示の保存・削除、集計なしの一覧がある。以下のマスタ配置は未実装。
 
 ### Liveを開いた時に見せるもの
 
-- スマホの上は「戻る・日付と会場・区分と保存状態」の1行と、公開内容／告知／予約の切り替え。予約の切り替えには枚数を出す。
+- スマホの上は「戻る・日付と会場・保存の状態」の1行と、公開内容／告知／予約の切り替え。予約の切り替えには枚数を出す。
 - 公開内容はフライヤーをいちばん上に置き、選ぶ・変える・外す操作を置く。続けて日付、会場、ライブ名、OPEN/START、料金、補足、共演者を見せる。必須は日付と会場だけ。
 - `予約先・リンクなど`（予約URL・受付終了・リンク・説明）と`元情報から作り直す`は折りたたむ。区分と削除は下へ置く。
 - スマホの`保存して公開`は未保存の変更がある時だけ下へ出す。告知の「ひとこと」の変更も含み、変更がない時は出さない。幅1440pxでは見出しの右に置き、変更がない時は薄くして押せないようにする。削除は固定せず公開内容の末尾の文字にし、告知と予約の画面に出さない。
@@ -300,7 +332,7 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 - 告知はひとこと、既存規則による投稿preview、`Xで告知する`、投稿文・リンクのコピーを見せる。§7のprovider表示と§8の生成・共有URL契約は保持する。
 - §8の`Xを開く / 詳細をコピー`は、マスタの`Xで告知する / 投稿文をコピー`と同じ操作を指す。表示名を揃え、投稿内容・共有URL・保存を起こさない性質は保つ。
 - 予約は枚数・件数・未対応等の状態、一覧、予約1件、取り置き追加を分ける。スマホは1件を開いて状態を変える。幅1440pxでは行を押すと右に1件の備考・内部メモ・状態操作を開き、未対応の行の`対応済みにする`では開かずに状態を変えられる。枚数と件数にキャンセルを含めない。内部メモは追加時に入力し、その後は表示のみ。状態変更は即時反映し、`未対応に戻す`も残す。
-- 一覧の予約枚数と未対応件数は**入れる。外せる**。開催予定だけに表示し、API接続失敗・Local Modeでは出さない。今は一覧で数を取る仕組みがなく、新しくLiveごとの集計を返す処理が必要。**#46着手時にItsukiへ入れるかを確かめる**。この確認を#40で済ませた扱いにしない。
+- 一覧の予約枚数と未対応件数は**入れる**（#46のgate 3でItsukiが確定した）。開催予定だけに表示し、API接続失敗・Local Modeでは出さない。Liveごとの集計は、Workerに新しく追加する処理（§5.4）が返す。
 
 ### たまにする更新
 
@@ -469,6 +501,8 @@ Live
 
 - 主要actionは到達しやすくするが、補助actionまで全幅・大型にしない。
 - 長いフォームを一度に見せず、現在のタスクを明確にする。
+- Liveを開いた時は、グローバルのHeader・タブ・一覧の切り替えを隠し、「‹ 一覧｜日付と会場｜保存の状態」の1行と公開内容／告知／予約の切り替えだけを上に置く（§4.5）。`保存して公開`は画面の下に固定し、未保存の変更がある時だけ出す。
+- 一覧の行は、日付・会場に続けて開催予定だけ「予約 N枚」と、未対応があれば札「未対応 N」を出す（§5.4）。
 
 ## 10. 状態・失敗時の原則
 
@@ -496,6 +530,28 @@ Live
 OpenAI timeout→Claude成功は`200`、OpenAI timeout→Claude HTTPエラーなどの失敗は`502`、Claudeもtimeoutなら`504`とする。単一providerでも同じ分類を使う。APIキー、providerのエラー本文、request ID、抽出プロンプトをクライアントへ返さず、新たなrawログへ出力しない。
 
 失敗時は10項目・告知preview・元情報をそのまま保持し、反映途中の例外にもrollbackする。待機中に元情報または対象入力が変わった場合や別Liveへ移った場合は、古い応答を反映せず現在の編集を保つ。逆順応答、重複click、保存中の排他は既存のrequest snapshotとeditor ownershipで扱い、provider成功を誤表示しない。
+
+### 10.2 Issue #46の状態と文言
+
+実装: #46。画面に出す文言はこの表だけ（説明の文は足さない）。マスタの状態`39:741`と、描かれていない状態の採用値（#46のFigma整合案F46-12〜17）に基づく。
+
+| 状態 | 出す条件 | 文言・動き |
+|---|---|---|
+| 保存の状態 | 開いたライブ・Ticket Page共通設定の入力の状態 | 「保存済み」（変更なし）、「未保存」（変更あり）、「保存しています…」（保存中。ボタンは押せない）、「保存できませんでした」（失敗。入力は残し、理由を1行添える） |
+| 未保存のまま移る | 未保存で、別のライブ・一覧・タブ・区分・予約管理・共通設定へ移ろうとした時 | 「保存していない変更があります。」ボタン「破棄して移動」「編集を続ける」（初期のフォーカスは「編集を続ける」） |
+| 必須が空 | 保存で日付または会場が空 | 保存せず、空の項目のすぐ下に「日付を入力してください。」「会場を入力してください。」 |
+| 画像（フライヤー） | 画像を選んだ後 | 「アップロードしています…」。失敗は「画像をアップロードできませんでした」と理由を出し、今の画像は残す |
+| 下書き | 「下書きを作る」の実行中・失敗 | 「下書きを作っています…」。失敗は「下書きを作れませんでした。」「入力した元情報と、今の入力内容は残っています。」 |
+| 保存前の告知・予約 | 新しいライブを保存する前 | 「保存すると使えます。」 |
+| コピー | 「投稿文をコピー」「リンクをコピー」 | 「コピーしました。」。失敗は「コピーできませんでした」 |
+| 予約がまだない | 対象のライブの予約が0件 | 「まだ予約はありません。」 |
+| 削除の確認 | 「このライブを削除」を押した時 | 見出し「このライブを削除しますか。」。説明は予約がなければ「削除すると公開画面からも消えます。」、予約があれば「予約が{N}件あります。削除すると公開画面からも消えます。」（Nは有効な予約の件数）。件数を確かめられない時は「予約の件数を確認できませんでした。削除すると公開画面からも消えます。」。ボタン「やめる」「削除する」 |
+| 対応済み・キャンセルの予約 | その予約1件を開いた時 | 操作は「未対応に戻す」だけ |
+| 予約の操作の失敗 | 状態の変更・取り置きの追加の失敗 | 今のまま（状態は「更新失敗: {理由}」、取り置きは入力欄の下に理由） |
+| 管理用の合言葉 | 未入力・違う時 | 入力の窓で聞く（今のまま）。一覧の集計・保存・予約の操作の近くに「認証できませんでした。」 |
+| 一覧の予約の数 | 開催予定の一覧（API接続中） | 読み込み中は行を出さない。成功は「予約 N枚」と、未対応があれば「未対応 N」。取得失敗は一覧の上に「予約の数を読み込めませんでした。」 |
+| API接続失敗 | 読み込み失敗（今のまま） | 「API接続失敗（ローカルJSONを読み取り専用で表示）」。編集・保存・下書き・予約の操作・CSVは使えず、一覧の予約の数は出さない |
+| Local Mode | 明示的なLocal Mode（今のまま） | 「ローカルJSONモード（従来運用）」。保存のボタンは「JSONを書き出す」。下書き・予約・CSVは使えず、一覧の予約の数は出さない |
 
 ## 11. Issue境界
 
@@ -531,7 +587,7 @@ OpenAI timeout→Claude成功は`200`、OpenAI timeout→Claude HTTPエラーな
 |---|---|---|
 | #41 | 3項目、日付の形、削除した参照を空に戻す処理、共有時の画像の表示名。既存編集面へ足す。 | 未実装。§5.3。key名・保存形式は同IssueのCode Generation Plan。 |
 | #42〜#45 | Home・共通、Live・Ticket、Music・5項目ナビ、Profile・Contact。 | 既存公開ページはある。マスタの追加・変更は未実装。`public-site-ui.md`。 |
-| #46 | Liveのスマホの帯・フライヤー・保存と削除・保存直後・一覧集計・予約1件と取り置き・共通設定の保存。 | Liveの型と受付機能は一部実装。マスタの変更分と一覧集計は未実装。外枠の6→5タブはここでは変えない。 |
+| #46 | Liveのスマホの帯・フライヤー・保存と削除・保存直後・一覧集計（Workerに集計を返す処理を新設。§5.4）・予約1件と取り置き・共通設定の保存。 | Liveの型と受付機能は一部実装。マスタの変更分と一覧集計は未実装。外枠の6→5タブはここでは変えない。 |
 | #47 | 5タブ、News・作品・映像の一覧と編集、保存とguard、Site・Profileの見た目。 | 未実装。#41の項目、#44の公開Music、#46のLiveの型のあとに揃える。 |
 
 ## 12. Acceptance Criteria
@@ -584,7 +640,7 @@ AC-35-04はdeploy後のOwner確認として残す。mock testやcycle closeで�
 |---|---|---|
 | ADM-40-01 | 幅390pxでライブを開いた時、最初の画面に入力欄が3つ以上見えている。 | #46 |
 | ADM-40-02 | 新しいライブの登録は、元情報を貼ってから告知まで、押すボタンは3つ（下書きを作る → 保存して公開 → Xで告知する）。 | #46 |
-| ADM-40-03 | 未対応の予約があるかどうかが、一覧を開いただけで分かる。 | #46（入れる。外せる。着手時にItsuki確認） |
+| ADM-40-03 | 未対応の予約があるかどうかが、一覧を開いただけで分かる。 | #46（入れる。#46のgate 3でItsukiが確定） |
 | ADM-40-04 | 「保存して公開」「開催予定」「公演終了」が、幅390pxで1行に収まる。 | #46 |
 | ADM-40-05 | 今の管理画面で編集できる項目が、すべて残っている（Home Heroは「共有時の画像」として残る）。 | #41, #46, #47 |
 | ADM-40-06 | 新しい3項目を空のままにしても、公開画面が今と同じ情報を出せる。 | #41、公開#42〜#45 |
@@ -593,6 +649,22 @@ AC-35-04はdeploy後のOwner確認として残す。mock testやcycle closeで�
 ADM-40-05の#41分は既存入力の保持と共有画像の表示名、ADM-40-06の#41分は3項目が空／登録ありでも既存公開表示が変わらないこととする。#46・#47の画面受入や未保存guardの完了は含めない。#41の実装状態は§5.3末尾の結果参照で確認する。
 
 既存§12・§12.1・§12.2の受入条件は維持する。#37のTicketとメールは§5.2、共有URLは§8・§10、AI整理は§7・§10.1に従う。#40の文書確認は本番の成功や画面条件の合格を意味しない。
+
+### 12.4 Issue #46の受入条件（ADM-46系）
+
+実装: #46。ADM-40-01〜05・07の#46分を、測り方まで固定する。#46のRequirements・Code Generation Planが同じIDを使う。
+
+| ID | 対応 | 合格にする観測 |
+|---|---|---|
+| ADM-46-01 | ADM-40-01 | 幅390px×高さ844pxと390px×667pxで既存のライブを開いた直後（公開内容の上端）、全体が画面に入る入力欄（`input`・`textarea`・`select`。非表示とファイル入力を除く）が3つ以上 |
+| ADM-46-02 | ADM-40-02 | 元情報の画面から告知まで、押すボタンが「下書きを作る」「保存して公開」「Xで告知する」の3つだけ（間に確認の面を挟まない）。一覧からは「+ 新しいライブ」を含めて、公開まで3回 |
+| ADM-46-03 | ADM-40-03 | API接続中の開催予定の一覧に、ライブごとの予約の枚数と、未対応があれば件数が出る。集計が出せない・接続失敗・Local Modeでは、一覧と保存・予約の操作が壊れない |
+| ADM-46-04 | ADM-40-04 | 幅390pxと360pxで「保存して公開」「開催予定」「公演終了」が文字の行で1行。ライブを開いた上の帯も1行 |
+| ADM-46-05 | ADM-40-05 | 今の管理画面で編集できる項目・見られる情報が、対応表のとおりすべて残り、保存の形が今と同じ |
+| ADM-46-07 | ADM-40-07 | 未保存の変更が、別のライブ・一覧・タブ・区分・予約管理・共通設定への移動、再読込・戻る・閉じる、削除・保存の失敗のいずれでも、確認なしに消えない |
+| ADM-46-08 | #46の保護 | 保存・削除・予約の状態変更・取り置き・共通設定の保存が今と同じ形で動き、#41の3項目と他のタブのデータを落とさない |
+| ADM-46-09 | #46の保護 | 新しい管理画面と古いWorker、古い管理画面と新しいWorkerのどちらでも、保存・予約の操作が壊れない |
+| ADM-46-10 | #46の保護 | 公開側のページ・#47のタブ（Site・News・YouTube・Disco・Profile）の表示と保存の動きが変わらない |
 
 ## 13. 検証方法
 
@@ -643,6 +715,15 @@ gate 1〜3承認後、Code Generation Planに固定した差分を本設計・�
 
 Gap: 幅1440pxで予約の1件を右に開いた状態の専用frameは未作成。ほかの未描画frameと本番未確認の範囲は§15.1に残す。文章要件の反映を、描画や実操作の検証済みとは扱わない。
 
+### 13.4 Issue #46の検証・出し方・rollback
+
+実装・検証: #46。`00cdea5`: 未実施。
+
+- 振る舞いはNodeの決定論的な試験（APIは差し替え、networkへ出ない）で確かめる。実装の前に、保存・旧形式のライブ・削除・予約の状態変更と合計・取り置き・告知文と共有用のアドレス・Ticket共通設定の保存の「今の動き」を固定する試験を置き、その試験を通したまま画面を変える。集計はWorkerの試験で確かめる。
+- 見た目（幅390・360・1440と、中間の幅821・900・1011）とADM-46-01・04の実測は、架空のAPIだけを使う撮影で確かめる。
+- 出し方は、GitHub Pagesがmainから配信するため、merge前にPR最終版のtested revisionからWorkerをdeployし、本番の古い管理画面が今のまま動くことを確かめてからmergeする（新しい管理画面と古いWorkerの組み合わせを作らない）。mergeが管理画面の入れ替わりで、別の静的な反映の操作はない。merge・deploy・PRの承認はItsuki。
+- rollbackは、merge前はWorkerを直前のversionへ戻す。merge後は管理画面の差分を戻すrevertを先に行い、旧管理画面の配信を確かめる。集計の経路は追加だけなので、Workerは通常そのまま残してよい（Worker自体に不具合がある時だけ戻す）。D1・データ・予約は戻さない。詳細は#46のCode Generation Planの出し方の節に従う。
+
 ## 14. Canonical file map
 
 今回の対応づけは#40、実装は#41・#46・#47（公開側#42〜#45）。`00cdea5`では公開UI設計と本版のマスタ対応は未登録で、以下の#40参照を追加する。既存契約の参照先は保持する。
@@ -666,6 +747,9 @@ Gap: 幅1440pxで予約の1件を右に開いた状態の専用frameは未作成
 - Issue #37 予約控えの実装計画と証拠: active時は`aidlc-docs/`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-37_ticket-autoreply-gmail/`
 - Issue #37 Gmail送信: `cloudflare/worker/apps-script/ticket-autoreply.gs`
 - Issue #37 Owner設定・確認・停止手順: `cloudflare/worker/apps-script/README.md`
+- Issue #46 計画・承認・証拠: active時は`aidlc-docs/`、close後は`docs/records/aidlc-cycles/2026-11-20_issue-46_admin-live-ops/`（Requirements・Workflow Plan・Code Generation Plan・Figma整合案`figma-fix-requests.md`）
+- Issue #46 集計API: `cloudflare/worker/src/worker.js`の`GET /api/admin/ticket-reservation-summary`（§5.4）、`cloudflare/worker/README.md`
+- Issue #46 管理画面: `admin/index.html`・`admin/app.js`・`admin/style.css`・`admin/README.md`
 - 旧来の要件・仕様・ユースケース: `documents/`
 
 ## 15. 画面・Figmaマスタ・要件・実装の対応
@@ -701,3 +785,6 @@ Gap: 幅1440pxで予約の1件を右に開いた状態の専用frameは未作成
 - 管理の状態frameは19状態。保存、未保存移動、必須不足、削除、画像、空一覧、選択作品削除、選択映像削除、API接続失敗、Local Mode、日付の形、下書き作成中、下書き失敗、未保存Live、コピー、予約0、予約ありLive削除、未対応に戻す、認証失敗を含む。AIの失敗・期限・stale応答と共有URLは§10を保持する。
 - 1440pxの下書き確認・保存直後・予約先/リンク・Ticket共通設定は要件メモが390pxのみと明記する。1440pxの予約詳細・取り置き追加、390pxのMusic映像一覧と作品・映像編集も専用frameはない。メモの挙動と既存frameを参照し、描かれていない表示の検証済みを主張しない。
 - 本番の古いLive、リリース日の形、予約件数、実速度は未調査。snapshotはnode・文言・寸法の証拠であり、初期表示の入力欄数・1行表示・操作回数・本番動作の証明ではない。
+- #46の行（Live一覧〜Ticket Page共通設定）の実装状況は、#46のCode Generation Plan承認後の実装入力で、上の表の`00cdea5`の事実列は比較時点の記録として保持する。#46で足す一覧の集計は§5.4、保存の対象の分離は§4.6、状態と文言は§10.2、受入条件は§12.4に示す。実装・試験・独立reviewの結果は#46のcycle記録を参照する。
+- #46時点の本番の公開データの形（件数と形だけ。ライブ21件のうち時間・料金・予約のキーを持たない旧形式が10件超、タイトルが空のライブ、日付の書き方の混在など）は、#46のRequirementsに記録した。予約の件数の分布は未調査（予約は個人情報で取得しない）。
+- 幅1440pxの下書き確認・保存のあと・予約先リンク・Ticket Page共通設定・予約1件を右に開いた状態・取り置き追加は、専用frameがない。#46は「同じ中身を広げた形」を採用値とし、撮影で目視する（#46のFigma整合案F46-12）。

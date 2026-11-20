@@ -1007,6 +1007,37 @@ async function listTicketReservations(env, options = {}) {
   return result.results || [];
 }
 
+// Issue #46: per-live counts for the admin Live list. The query reads no personal column.
+const TICKET_RESERVATION_SUMMARY_SQL = `SELECT live_id AS liveId, status, COUNT(*) AS records, COALESCE(SUM(quantity), 0) AS seats
+       FROM ticket_reservations
+       GROUP BY live_id, status`;
+
+function summarizeTicketReservationRows(rows) {
+  const finiteOrZero = (value) => {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : 0;
+  };
+  const byLive = new Map();
+  for (const row of Array.isArray(rows) ? rows : []) {
+    const liveId = row && typeof row.liveId === "string" ? row.liveId : "";
+    if (!liveId || row.status === "cancelled") continue;
+    const records = finiteOrZero(row.records);
+    const entry = byLive.get(liveId) || { liveId, seats: 0, records: 0, pending: 0 };
+    entry.records += records;
+    entry.seats += finiteOrZero(row.seats);
+    if (row.status === "pending") entry.pending += records;
+    byLive.set(liveId, entry);
+  }
+  return [...byLive.values()]
+    .filter((entry) => entry.records > 0)
+    .sort((a, b) => (a.liveId < b.liveId ? -1 : a.liveId > b.liveId ? 1 : 0));
+}
+
+async function listTicketReservationSummary(env) {
+  const result = await env.DB.prepare(TICKET_RESERVATION_SUMMARY_SQL).all();
+  return summarizeTicketReservationRows(result.results || []);
+}
+
 async function updateTicketReservationStatus(env, id, status) {
   const allowed = new Set(["pending", "handled", "cancelled"]);
   const next = String(status || "").trim();
@@ -2045,6 +2076,14 @@ async function handleRequest(request, env, ctx) {
     });
   }
 
+  if (path === "/api/admin/ticket-reservation-summary" && request.method === "GET") {
+    if (!isAdminAuthorized(request, env)) {
+      return jsonResponse({ error: "unauthorized" }, request, env, 401);
+    }
+    const summaries = await listTicketReservationSummary(env);
+    return jsonResponse({ summaries }, request, env);
+  }
+
   const ticketStatusMatch = path.match(/^\/api\/admin\/ticket-reservations\/([^/]+)\/status$/);
   if (ticketStatusMatch && request.method === "POST") {
     if (!isAdminAuthorized(request, env)) {
@@ -2217,4 +2256,5 @@ export {
   formatLiveDetailsForDisplay,
   notifyTicketAutoReply,
   sendTicketAutoReply,
+  summarizeTicketReservationRows,
 };

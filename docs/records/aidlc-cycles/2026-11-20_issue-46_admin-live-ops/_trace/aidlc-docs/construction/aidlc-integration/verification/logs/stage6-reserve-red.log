@@ -1,0 +1,1250 @@
+TAP version 13
+# Subtest: T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+ok 1 - T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+  ---
+  duration_ms: 12.643
+  ...
+# Subtest: T46-LIST a live without a flyer or a title still has a row with its date and venue
+ok 2 - T46-LIST a live without a flyer or a title still has a row with its date and venue
+  ---
+  duration_ms: 1.231709
+  ...
+# Subtest: T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+ok 3 - T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+  ---
+  duration_ms: 1.177292
+  ...
+# Subtest: T46-LIST while the summary loads no reservation line is shown and no note is shown
+ok 4 - T46-LIST while the summary loads no reservation line is shown and no note is shown
+  ---
+  duration_ms: 0.957708
+  ...
+# Subtest: T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 5 - T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.041541
+  ...
+# Subtest: T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 6 - T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 0.98775
+  ...
+# Subtest: T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 7 - T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.525125
+  ...
+# Subtest: T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 8 - T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.021541
+  ...
+# Subtest: T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 9 - T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.71425
+  ...
+# Subtest: T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+ok 10 - T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.054125
+  ...
+# Subtest: T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+ok 11 - T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 0.906167
+  ...
+# Subtest: T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+ok 12 - T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 2.063959
+  ...
+# Subtest: T46-LIST the API connection failure and Local Mode never call the summary and show no note
+ok 13 - T46-LIST the API connection failure and Local Mode never call the summary and show no note
+  ---
+  duration_ms: 1.799584
+  ...
+# Subtest: T46-LIST an empty list says there is nothing, as it did before
+ok 14 - T46-LIST an empty list says there is nothing, as it did before
+  ---
+  duration_ms: 0.816125
+  ...
+# Subtest: T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+ok 15 - T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+  ---
+  duration_ms: 13.049334
+  ...
+# Subtest: T46-LIST only the latest of overlapping summary requests is applied
+ok 16 - T46-LIST only the latest of overlapping summary requests is applied
+  ---
+  duration_ms: 1.583917
+  ...
+# Subtest: T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+ok 17 - T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+  ---
+  duration_ms: 7.191375
+  ...
+# Subtest: T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+ok 18 - T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+  ---
+  duration_ms: 0.19725
+  ...
+# Subtest: T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+ok 19 - T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+  ---
+  duration_ms: 0.9865
+  ...
+# Subtest: T46-OPEN the Header is one row: back, date and venue, and only the save state on the right
+ok 20 - T46-OPEN the Header is one row: back, date and venue, and only the save state on the right
+  ---
+  duration_ms: 1.5485
+  ...
+# Subtest: T46-OPEN while a Live is open the body carries is-live-editing, and it is removed when the Live closes
+ok 21 - T46-OPEN while a Live is open the body carries is-live-editing, and it is removed when the Live closes
+  ---
+  duration_ms: 2.103375
+  ...
+# Subtest: T46-OPEN the switch has three entries 公開内容 / 告知 / 予約 and the reservation entry carries the seat count
+ok 22 - T46-OPEN the switch has three entries 公開内容 / 告知 / 予約 and the reservation entry carries the seat count
+  ---
+  duration_ms: 1.600417
+  ...
+# Subtest: T46-OPEN the reservation count is blank for a past live or a failed summary until the ledger is read
+ok 23 - T46-OPEN the reservation count is blank for a past live or a failed summary until the ledger is read
+  ---
+  duration_ms: 2.801875
+  ...
+# Subtest: T46-OPEN the public fields run flyer → date → venue → name → OPEN/START → fee → note → performers → 予約先・リンクなど → category → delete
+ok 24 - T46-OPEN the public fields run flyer → date → venue → name → OPEN/START → fee → note → performers → 予約先・リンクなど → category → delete
+  ---
+  duration_ms: 1.771417
+  ...
+# Subtest: T46-OPEN 保存して公開 is shown only while the Live is unsaved, and only for as long as it differs from the opened values
+ok 25 - T46-OPEN 保存して公開 is shown only while the Live is unsaved, and only for as long as it differs from the opened values
+  ---
+  duration_ms: 1.496333
+  ...
+# Subtest: T46-OPEN the footer shows the failure reason above 保存して公開 and the Header says 保存できませんでした
+ok 26 - T46-OPEN the footer shows the failure reason above 保存して公開 and the Header says 保存できませんでした
+  ---
+  duration_ms: 1.882
+  ...
+# Subtest: T46-OPEN the structure under 900px: the global chrome is hidden, taps are 44px, one-line labels do not wrap, the save bar is fixed to the bottom
+ok 27 - T46-OPEN the structure under 900px: the global chrome is hidden, taps are 44px, one-line labels do not wrap, the save bar is fixed to the bottom
+  ---
+  duration_ms: 0.419
+  ...
+# Subtest: T46-FIELDS every editable item of today is still in the editor, with the same id
+ok 28 - T46-FIELDS every editable item of today is still in the editor, with the same id
+  ---
+  duration_ms: 1.4315
+  ...
+# Subtest: T46-FIELDS a legacy 7-key live opens with empty fields and saves the same 17-key shape as before
+ok 29 - T46-FIELDS a legacy 7-key live opens with empty fields and saves the same 17-key shape as before
+  ---
+  duration_ms: 2.487333
+  ...
+# Subtest: T46-FIELDS values inside the folded 予約先・リンクなど are saved even though it was never opened
+ok 30 - T46-FIELDS values inside the folded 予約先・リンクなど are saved even though it was never opened
+  ---
+  duration_ms: 4.305417
+  ...
+# Subtest: T46-FIELDS the category is a two-way choice backed by edit-isPast: choosing 公演終了 saves into the past list
+ok 31 - T46-FIELDS the category is a two-way choice backed by edit-isPast: choosing 公演終了 saves into the past list
+  ---
+  duration_ms: 2.793292
+  ...
+# Subtest: T46-NEW the first screen has only the source, 下書きを作る and 手入力で作る; the fields wait behind it
+ok 32 - T46-NEW the first screen has only the source, 下書きを作る and 手入力で作る; the fields wait behind it
+  ---
+  duration_ms: 1.301541
+  ...
+# Subtest: T46-NEW from the source to the announcement takes exactly three presses and never opens a confirmation surface
+ok 33 - T46-NEW from the source to the announcement takes exactly three presses and never opens a confirmation surface
+  ---
+  duration_ms: 2.838459
+  ...
+# Subtest: T46-NEW the announcement after saving shows the post text and あとで returns to the list
+ok 34 - T46-NEW the announcement after saving shows the post text and あとで returns to the list
+  ---
+  duration_ms: 4.085375
+  ...
+# Subtest: T46-NEW saving an existing Live stays on its public content and shows 保存済み, never the announcement
+ok 35 - T46-NEW saving an existing Live stays on its public content and shows 保存済み, never the announcement
+  ---
+  duration_ms: 2.390875
+  ...
+# Subtest: T46-NEW 手入力で作る opens the fields without calling the draft route; announcement and reservation say 保存すると使えます。
+ok 36 - T46-NEW 手入力で作る opens the fields without calling the draft route; announcement and reservation say 保存すると使えます。
+  ---
+  duration_ms: 1.368375
+  ...
+# Subtest: T46-NEW saving without a date or venue stays on the draft and says what is missing under the field
+ok 37 - T46-NEW saving without a date or venue stays on the draft and says what is missing under the field
+  ---
+  duration_ms: 1.230667
+  ...
+# Subtest: T46-DRAFT while the draft is made the button says 下書きを作っています… and cannot be pressed; it returns to 下書きを作る
+ok 38 - T46-DRAFT while the draft is made the button says 下書きを作っています… and cannot be pressed; it returns to 下書きを作る
+  ---
+  duration_ms: 1.259459
+  ...
+# Subtest: T46-DRAFT the provider notice after a draft is the fixed sentence of design §7.4, and a legacy response keeps the old one
+ok 39 - T46-DRAFT the provider notice after a draft is the fixed sentence of design §7.4, and a legacy response keeps the old one
+  ---
+  duration_ms: 3.734208
+  ...
+# Subtest: T46-DRAFT when the draft fails the source and every field stay and two lines say so
+ok 40 - T46-DRAFT when the draft fails the source and every field stay and two lines say so
+  ---
+  duration_ms: 1.592792
+  ...
+# Subtest: T46-DRAFT a response that arrives after the source changed or the Live changed is not applied
+ok 41 - T46-DRAFT a response that arrives after the source changed or the Live changed is not applied
+  ---
+  duration_ms: 1.270834
+  ...
+# Subtest: T46-DRAFT Local Mode does not call the draft route
+ok 42 - T46-DRAFT Local Mode does not call the draft route
+  ---
+  duration_ms: 3.189458
+  ...
+# Subtest: T46-ANNOUNCE the announcement has the comment, the post text, Xで告知する and two copy buttons
+ok 43 - T46-ANNOUNCE the announcement has the comment, the post text, Xで告知する and two copy buttons
+  ---
+  duration_ms: 2.068791
+  ...
+# Subtest: T46-ANNOUNCE changing the comment makes the Live unsaved and updates the post; the share URL is unchanged
+ok 44 - T46-ANNOUNCE changing the comment makes the Live unsaved and updates the post; the share URL is unchanged
+  ---
+  duration_ms: 1.479292
+  ...
+# Subtest: T46-ANNOUNCE the copy result is told next to the buttons: コピーしました。 / コピーできませんでした
+ok 45 - T46-ANNOUNCE the copy result is told next to the buttons: コピーしました。 / コピーできませんでした
+  ---
+  duration_ms: 5.744542
+  ...
+# Subtest: T46-ANNOUNCE before saving Xで告知する and リンクをコピー do nothing (no clipboard, no window)
+ok 46 - T46-ANNOUNCE before saving Xで告知する and リンクをコピー do nothing (no clipboard, no window)
+  ---
+  duration_ms: 1.161542
+  ...
+# Subtest: T46-IMAGE the flyer is the first block of the public content: unselected shows a dashed frame and 画像を選ぶ
+ok 47 - T46-IMAGE the flyer is the first block of the public content: unselected shows a dashed frame and 画像を選ぶ
+  ---
+  duration_ms: 1.31375
+  ...
+# Subtest: T46-IMAGE a registered flyer shows the picture (pressing it saves it), 画像を変える and 画像を外す
+ok 48 - T46-IMAGE a registered flyer shows the picture (pressing it saves it), 画像を変える and 画像を外す
+  ---
+  duration_ms: 1.38
+  ...
+# Subtest: T46-IMAGE while the flyer uploads the status says アップロードしています…; a failure says 画像をアップロードできませんでした with the reason and keeps the old flyer
+ok 49 - T46-IMAGE while the flyer uploads the status says アップロードしています…; a failure says 画像をアップロードできませんでした with the reason and keeps the old flyer
+  ---
+  duration_ms: 1.823041
+  ...
+# Subtest: T46-IMAGE the other tabs keep their picture wording
+ok 50 - T46-IMAGE the other tabs keep their picture wording
+  ---
+  duration_ms: 0.923209
+  ...
+# Subtest: T46-RESERVE the list shows the total without the cancelled one, the three filters with their counts, and a row per reservation
+not ok 51 - T46-RESERVE the list shows the total without the cancelled one, the three filters with their counts, and a row per reservation
+  ---
+  duration_ms: 2.041625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:837:1'
+  failureType: 'testCodeFailure'
+  error: '2 + 3 seats; the cancelled 4 are left out'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="reservation-totals" aria-label="有効予約集計">
+          <span><strong>2</strong> 有効予約件数</span>
+          <span><strong>5</strong> 予約枚数</span>
+        </div>
+        <div class="items-list live-ledger-list">
+          
+        <div class="item-card ticket-row is-compact">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">架空 太郎</div>
+              <span class="source-badge is-web">Web</span>
+              <span class="status-badge is-pending">未対応</span>
+            </div>
+            <div class="meta">架空 太郎 / 2枚 / taro@example.test</div>
+            <div class="meta ticket-message">架空の備考</div>
+            
+            <div class="meta mt-2">2026-11-18T10:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-1" data-reservation-status="handled">対応済み</button>
+           <button type="button" class="x-post-btn" data-reservation-id="fx-res-1" data-reservation-status="cancelled">キャンセル</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="item-card ticket-row is-compact">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">架空 花子</div>
+              <span class="source-badge is-manual">手動</span>
+              <span class="status-badge is-handled">対応済み</span>
+            </div>
+            <div class="meta">架空 花子 / 3枚 / 090-0000-0000</div>
+            
+            <div class="meta ticket-note"><span class="meta-label">内部メモ</span> 架空の内部メモ</div>
+            <div class="meta mt-2">2026-11-18T11:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-2" data-reservation-status="pending">未対応に戻す</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="item-card ticket-row is-compact">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">架空 次郎</div>
+              <span class="source-badge is-web">Web</span>
+              <span class="status-badge is-cancelled">キャンセル</span>
+            </div>
+            <div class="meta">架空 次郎 / 4枚 / jiro@example.test</div>
+            
+            
+            <div class="meta mt-2">2026-11-18T12:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-3" data-reservation-status="pending">未対応に戻す</button>
+            </div>
+          </div>
+        </div>
+      
+        </div>
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:841:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE a Live with no reservations says まだ予約はありません。
+not ok 52 - T46-RESERVE a Live with no reservations says まだ予約はありません。
+  ---
+  duration_ms: 2.186166
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:854:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /まだ予約はありません。/. Input:
+    
+    '\n' +
+      '    <div class="reservation-totals" aria-label="有効予約集計">\n' +
+      '      <span><strong>0</strong> 有効予約件数</span>\n' +
+      '      <span><strong>0</strong> 予約枚数</span>\n' +
+      '    </div>\n' +
+      '    <div class="items-list live-ledger-list">\n' +
+      '      <div class="empty-state"><p>予約がありません</p></div>\n' +
+      '    </div>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="reservation-totals" aria-label="有効予約集計">
+          <span><strong>0</strong> 有効予約件数</span>
+          <span><strong>0</strong> 予約枚数</span>
+        </div>
+        <div class="items-list live-ledger-list">
+          <div class="empty-state"><p>予約がありません</p></div>
+        </div>
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:857:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE pressing a filter selects it, pressing it again shows every reservation
+not ok 53 - T46-RESERVE pressing a filter selects it, pressing it again shows every reservation
+  ---
+  duration_ms: 1.775125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:861:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:864:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE opening a row shows the reservation: Header ‹ 予約, name and seats, the seven lines, and the switch is hidden
+not ok 54 - T46-RESERVE opening a row shows the reservation: Header ‹ 予約, name and seats, the seven lines, and the switch is hidden
+  ---
+  duration_ms: 3.51125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:875:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:878:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE a web reservation shows its e-mail as the contact, its note, and no 内部メモ line when there is none
+not ok 55 - T46-RESERVE a web reservation shows its e-mail as the contact, its note, and no 内部メモ line when there is none
+  ---
+  duration_ms: 1.463541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:895:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:898:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE a pending reservation offers 対応済みにする and キャンセルにする; handled and cancelled ones offer only 未対応に戻す
+not ok 56 - T46-RESERVE a pending reservation offers 対応済みにする and キャンセルにする; handled and cancelled ones offer only 未対応に戻す
+  ---
+  duration_ms: 1.423666
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:907:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:910:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE a status change posts as before, returns to the list, and refreshes the list, the summary and the count
+not ok 57 - T46-RESERVE a status change posts as before, returns to the list, and refreshes the list, the summary and the count
+  ---
+  duration_ms: 1.338083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:923:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:927:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE a failed status change keeps the reservation open and says 更新失敗: with the reason
+not ok 58 - T46-RESERVE a failed status change keeps the reservation open and says 更新失敗: with the reason
+  ---
+  duration_ms: 1.32075
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:941:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:944:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE the back button goes from one reservation to the list, and from the list out of the Live
+not ok 59 - T46-RESERVE the back button goes from one reservation to the list, and from the list out of the Live
+  ---
+  duration_ms: 1.518
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:953:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:956:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE 取り置きを追加 opens its own screen; a wrong name or seat count is refused under the fields
+not ok 60 - T46-RESERVE 取り置きを追加 opens its own screen; a wrong name or seat count is refused under the fields
+  ---
+  duration_ms: 4.080459
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:964:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'dispatch')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:967:53)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE a 取り置き sends the same body as before, returns to the list, and refreshes the ledgers and the summary
+not ok 61 - T46-RESERVE a 取り置き sends the same body as before, returns to the list, and refreshes the ledgers and the summary
+  ---
+  duration_ms: 1.929125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:982:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'dispatch')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:992:53)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE a failed 取り置き stays on its screen, keeps the inputs and says why under them
+not ok 62 - T46-RESERVE a failed 取り置き stays on its screen, keeps the inputs and says why under them
+  ---
+  duration_ms: 1.586083
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1005:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'dispatch')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1013:53)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE the 予約管理 list starts on 未対応, shows name, seats, the Live and the received time, and a row opens one reservation
+not ok 63 - T46-RESERVE the 予約管理 list starts on 未対応, shows name, seats, the Live and the received time, and a row opens one reservation
+  ---
+  duration_ms: 1.03675
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1022:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /架空 太郎　2枚/. Input:
+    
+    '\n' +
+      '    <div class="item-card ticket-row ">\n' +
+      '      <div class="info">\n' +
+      '        <div class="ticket-top">\n' +
+      '          <div class="title">2099.12.12 テスト会場B</div>\n' +
+      '          <span class="source-badge is-web">Web</span>\n' +
+      '          <span class="status-badge is-pending">未対応</span>\n' +
+      '        </div>\n' +
+      '        <div class="meta">架空 太郎 / 2枚 / taro@example.test</div>\n' +
+      '        <div class="meta ticket-message">架空の備考</div>\n' +
+      '        \n' +
+      '        <div class="meta mt-2">2026-11-18T10:00:00.000Z</div>\n' +
+      '        <div class="ticket-actions">\n' +
+      '          <button type="button" class="x-test-btn" data-reservation-id="fx-res-1" data-reservation-status="handled">対応済み</button>\n' +
+      '       <button type="button" class="x-post-btn" data-reservation-id="fx-res-1" data-reservation-status="cancelled">キャンセル</button>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="item-card ticket-row ">
+          <div class="info">
+            <div class="ticket-top">
+              <div class="title">2099.12.12 テスト会場B</div>
+              <span class="source-badge is-web">Web</span>
+              <span class="status-badge is-pending">未対応</span>
+            </div>
+            <div class="meta">架空 太郎 / 2枚 / taro@example.test</div>
+            <div class="meta ticket-message">架空の備考</div>
+            
+            <div class="meta mt-2">2026-11-18T10:00:00.000Z</div>
+            <div class="ticket-actions">
+              <button type="button" class="x-test-btn" data-reservation-id="fx-res-1" data-reservation-status="handled">対応済み</button>
+           <button type="button" class="x-post-btn" data-reservation-id="fx-res-1" data-reservation-status="cancelled">キャンセル</button>
+            </div>
+          </div>
+        </div>
+      
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1030:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE changing a status from 予約管理 returns to its list; an empty list says まだ予約はありません。
+not ok 64 - T46-RESERVE changing a status from 予約管理 returns to its list; an empty list says まだ予約はありません。
+  ---
+  duration_ms: 0.83575
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1042:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1047:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE 予約管理 has CSVで書き出す, and the CSV route and its file name are unchanged
+not ok 65 - T46-RESERVE 予約管理 has CSVで書き出す, and the CSV route and its file name are unchanged
+  ---
+  duration_ms: 0.340625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1057:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /id="tickets-csv-btn"[^>]*onclick="downloadTicketsCsv\(\)"[^>]*>CSVで書き出す<\/button>/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+      '  <title>1212 HP Admin</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="style.css?v=20260816-22">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <div id="app">\n' +
+      '    <!-- ヘッダー -->\n' +
+      '    <header class="header">\n' +
+      '      <div>\n' +
+      '        <h1 class="logo">1212 <span class="accent">Admin</span></h1>\n' +
+      '        <p class="header-meta" id="modeBadge">Local Mode</p>\n' +
+      '      </div>\n' +
+      '      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>\n' +
+      '    </header>\n' +
+      '    <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>\n' +
+      '\n' +
+      '    <!-- タブナビ -->\n' +
+      '    <nav class="tab-nav">\n' +
+      '      <button class="tab-btn" data-tab="site">Site</button>\n' +
+      '      <button class="tab-btn" data-tab="news">News</button>\n' +
+      '      <button class="tab-btn active" data-tab="live">Live</button>\n' +
+      '      <button class="tab-btn" data-tab="youtube">YouTube</button>\n' +
+      '      <button class="tab-btn" data-tab="discography">Disco</button>\n' +
+      '      <button class="tab-btn" data-tab="profile">Profile</button>\n' +
+      '    </nav>\n' +
+      '\n' +
+      '    <!-- Siteタブ -->\n' +
+      '    <section class="tab-content" id="site-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Site</h2>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="site-featured-release-id">顔にする作品</label>\n' +
+      '          <select id="site-featured-release-id" class="select" data-admin-mutation>\n' +
+      '            <option value="">自動（最新のリリース）</option>\n' +
+      '          </select>\n' +
+      '        </div>\n' +
+      '        <label>共有時の画像</label>\n' +
+      '        <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>\n' +
+      '        <div id="site-hero-image-form"></div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home Links</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Bandcamp</label>\n' +
+      '          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>YouTube</label>\n' +
+      '          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>X</label>\n' +
+      '          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Instagram</label>\n' +
+      '          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>note</label>\n' +
+      '          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Footer</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>フッター文言（空なら既定のまま）</label>\n' +
+      '          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Contact</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>導入文</label>\n' +
+      '          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Form Action（Formspree URL）</label>\n' +
+      '          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Newsタブ -->\n' +
+      '    <section class="tab-content" id="news-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>News</h2>\n' +
+      '        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>\n' +
+      '      </div>\n' +
+      '      <div class="items-list" id="news-list"></div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Liveタブ -->\n' +
+      '    <section class="tab-content active" id="live-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Live</h2>\n' +
+      '        <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新しいライブ</button>\n' +
+      '      </div>\n' +
+      '      <div class="live-workspace" id="live-workspace">\n' +
+      '        <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">\n' +
+      '          <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>\n' +
+      '          <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">\n' +
+      '          <div id="live-page-primary">\n' +
+      '            <div class="live-page-toolbar">\n' +
+      '              <div class="live-list-tabs" role="tablist" aria-label="公演一覧">\n' +
+      '                <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>\n' +
+      '                <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <p id="live-summary-note" class="live-summary-note" role="status" aria-live="polite"></p>\n' +
+      '\n' +
+      '            <div class="live-master-detail" id="live-master-detail">\n' +
+      '              <div class="live-master-pane" id="live-master-pane">\n' +
+      '                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">\n' +
+      '                  <div class="items-list" id="live-upcoming-list"></div>\n' +
+      '                </section>\n' +
+      '                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>\n' +
+      '                  <div class="items-list" id="live-past-list"></div>\n' +
+      '                </section>\n' +
+      '                <button type="button" id="live-ticket-settings-open" class="live-workspace-utility live-ticket-settings-entry" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">\n' +
+      '                <header class="live-editor-header">\n' +
+      '                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ 一覧</button>\n' +
+      '                  <div class="live-editor-title-group">\n' +
+      '                    <h3 id="live-editor-heading">Liveを選択</h3>\n' +
+      '                  </div>\n' +
+      '                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>\n' +
+      '                </header>\n' +
+      '                <div class="live-editor-body" id="live-editor-body">\n' +
+      '                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>\n' +
+      '                </div>\n' +
+      '              </section>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>\n' +
+      '            <div class="section-header compact">\n' +
+      '              <div>\n' +
+      '                <p class="live-workspace-eyebrow">Liveページ共通</p>\n' +
+      '                <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示文言）</h3>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>完了文（空なら既定のまま）</label>\n' +
+      '                <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示項目）</h3>\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>\n' +
+      '                <label for="ticket-field-quantity">Quantity（枚数）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>枚数 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-message" data-admin-mutation>\n' +
+      '                <label for="ticket-field-message">備考（任意）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 プレースホルダ（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="form-group">\n' +
+      '                <label>送信ボタン文言（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <p id="ticket-settings-status" class="ticket-settings-status" aria-live="polite"></p>\n' +
+      '            <p '... 6248 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>1212 HP Admin</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="style.css?v=20260816-22">
+    </head>
+    <body>
+      <div id="app">
+        <!-- ヘッダー -->
+        <header class="header">
+          <div>
+            <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+            <p class="header-meta" id="modeBadge">Local Mode</p>
+          </div>
+          <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
+        </header>
+        <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+    
+        <!-- タブナビ -->
+        <nav class="tab-nav">
+          <button class="tab-btn" data-tab="site">Site</button>
+          <button class="tab-btn" data-tab="news">News</button>
+          <button class="tab-btn active" data-tab="live">Live</button>
+          <button class="tab-btn" data-tab="youtube">YouTube</button>
+          <button class="tab-btn" data-tab="discography">Disco</button>
+          <button class="tab-btn" data-tab="profile">Profile</button>
+        </nav>
+    
+        <!-- Siteタブ -->
+        <section class="tab-content" id="site-tab">
+          <div class="section-header">
+            <h2>Site</h2>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home</h3>
+            <div class="form-group">
+              <label for="site-featured-release-id">顔にする作品</label>
+              <select id="site-featured-release-id" class="select" data-admin-mutation>
+                <option value="">自動（最新のリリース）</option>
+              </select>
+            </div>
+            <label>共有時の画像</label>
+            <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>
+            <div id="site-hero-image-form"></div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Links</h3>
+            <div class="form-group">
+              <label>Bandcamp</label>
+              <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>YouTube</label>
+              <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>X</label>
+              <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>note</label>
+              <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Footer</h3>
+            <div class="form-group">
+              <label>フッター文言（空なら既定のまま）</label>
+              <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Contact</h3>
+            <div class="form-group">
+              <label>導入文</label>
+              <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Form Action（Formspree URL）</label>
+              <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+            </div>
+          </div>
+        </section>
+    
+        <!-- Newsタブ -->
+        <section class="tab-content" id="news-tab">
+          <div class="section-header">
+            <h2>News</h2>
+            <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="items-list" id="news-list"></div>
+        </section>
+    
+        <!-- Liveタブ -->
+        <section class="tab-content active" id="live-tab">
+          <div class="section-header">
+            <h2>Live</h2>
+            <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新しいライブ</button>
+          </div>
+          <div class="live-workspace" id="live-workspace">
+            <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+              <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+              <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
+            </div>
+    
+            <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+              <div id="live-page-primary">
+                <div class="live-page-toolbar">
+                  <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                    <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                    <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+                  </div>
+                </div>
+                <p id="live-summary-note" class="live-summary-note" role="status" aria-live="polite"></p>
+    
+                <div class="live-master-detail" id="live-master-detail">
+                  <div class="live-master-pane" id="live-master-pane">
+                    <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                      <div class="items-list" id="live-upcoming-list"></div>
+                    </section>
+                    <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                      <div class="items-list" id="live-past-list"></div>
+                    </section>
+                    <button type="button" id="live-ticket-settings-open" class="live-workspace-utility live-ticket-settings-entry" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+                  </div>
+    
+                  <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                    <header class="live-editor-header">
+                      <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ 一覧</button>
+                      <div class="live-editor-title-group">
+                        <h3 id="live-editor-heading">Liveを選択</h3>
+                      </div>
+                      <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                    </header>
+                    <div class="live-editor-body" id="live-editor-body">
+                      <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+    
+              <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+                <div class="section-header compact">
+                  <div>
+                    <p class="live-workspace-eyebrow">Liveページ共通</p>
+                    <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+                  </div>
+                  <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示文言）</h3>
+                  <div class="form-group">
+                    <label>完了文（空なら既定のまま）</label>
+                    <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
+                  </div>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示項目）</h3>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
+                    <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>枚数 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
+                  </div>
+    
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-message" data-admin-mutation>
+                    <label for="ticket-field-message">備考（任意）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>備考 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
+                  </div>
+                  <div class="form-group">
+                    <label>備考 プレースホルダ（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
+                  </div>
+    
+                  <div class="form-group">
+                    <label>送信ボタン文言（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
+                  </div>
+                </div>
+                <p id="ticket-settings-status" class="ticket-settings-status" aria-live="polite"></p>
+                <p id="ticket-settings-error" class="form-error" role="alert"></p>
+                <div id="ticket-settings-actions" class="ticket-settings-actions" hidden>
+                  <button type="button" id="ticket-settings-save-btn" class="btn btn-primary" data-admin-mutation>保存して公開</button>
+                </div>
+              </section>
+            </section>
+    
+            <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+              <div class="live-reservations-panel">
+              <div class="section-header compact">
+                <h3>横断予約台帳</h3>
+                <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+              </div>
+              <div class="form-group">
+                <label for="tickets-live-filter">フィルタ</label>
+                <div class="filters">
+                  <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+                  <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                    <option value="">全ステータス</option>
+                    <option value="pending" selected>未対応</option>
+                    <option value="handled">対応済み</option>
+                    <option value="cancelled">キャンセル</option>
+                  </select>
+                </div>
+              </div>
+              <div class="items-list" id="tickets-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+    
+        <!-- YouTubeタブ -->
+        <section class="tab-content" id="youtube-tab">
+          <div class="section-header">
+            <h2>YouTube</h2>
+            <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Channel URL</h3>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+    
+          <div class="subsection">
+            <h3>Music Video</h3>
+            <div class="items-list" id="youtube-musicVideos-list"></div>
+            <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Live Movie</h3>
+            <div class="items-list" id="youtube-liveMovies-list"></div>
+            <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Demo</h3>
+            <div class="items-list" id="youtube-demos-list"></div>
+            <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+          </div>
+        </section>
+    
+        <!-- Discographyタブ -->
+        <section class="tab-content" id="discography-tab">
+          <div class="section-header">
+            <h2>Discography</h2>
+            <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
+          </div>
+          <div class="subsection">
+            <h3>Digital Release</h3>
+            <div class="items-list" id="disc-digital-list"></div>
+          </div>
+          <div class="subsection">
+            <h3>宅録Demo</h3>
+            <div class="items-list" id="disc-demo-list"></div>
+          </div>
+        </section>
+    
+        <!-- Profileタブ -->
+        <section class="tab-content" id="profile-tab">
+          <div class="section-header">
+            <h2>Profile</h2>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group">
+            <label>プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+          <div class="subsection">
+            <h3>SNSリンク</h3>
+            <div class="items-list" id="profile-links-list"></div>
+            <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+        </section>
+    
+        <!-- モーダル -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+          <div class="modal-header">
+            <h3 id="modal-title">編集</h3>
+            <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+            <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
+          </div>
+        </div>
+    
+        <!-- Liveの確認の面（未保存の確認・削除の確認） -->
+        <div class="live-dialog-overlay" id="live-dialog-overlay" hidden>
+          <div class="live-dialog" id="live-dialog" role="alertdialog" aria-modal="true" aria-labelledby="live-dialog-title" aria-describedby="live-dialog-body"></div>
+        </div>
+    
+        <!-- トースト -->
+        <div class="toast" id="toast"></div>
+      </div>
+      <script>
+      // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+      window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
+      try {
+        var badge = document.getElementById('modeBadge');
+        if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+        var banner0 = document.getElementById('connectionBanner');
+        if (banner0) banner0.textContent = '読み込み中...';
+      } catch (e) {}
+      window.addEventListener('error', function (ev) {
+        try {
+          var banner = document.getElementById('connectionBanner');
+          if (banner) {
+            banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+            banner.classList.add('is-error');
+          }
+        } catch (e) {}
+      });
+    </script>
+    <script src="config.js?v=20260216-2001"></script>
+    <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+    <script src="../assets/js/music-data.js?v=20261117-41"></script>
+    <script src="app.js?v=20261117-41"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1058:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-RESERVE the reservation rows and the detail escape what they print and keep the status buttons delegated
+not ok 66 - T46-RESERVE the reservation rows and the detail escape what they print and keep the status buttons delegated
+  ---
+  duration_ms: 0.761292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1067:1'
+  failureType: 'testCodeFailure'
+  error: 'app.renderReservationRow is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1070:19)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-AUTH the 予約管理 list says 認証できませんでした。 when the passphrase is missing or refused, and a retry after typing it works
+not ok 67 - T46-AUTH the 予約管理 list says 認証できませんでした。 when the passphrase is missing or refused, and a retry after typing it works
+  ---
+  duration_ms: 0.854542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1083:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /認証できませんでした。/. Input:
+    
+    '<div class="empty-state"><p>取得失敗: 管理トークン未設定</p></div>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '<div class="empty-state"><p>取得失敗: 管理トークン未設定</p></div>'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1089:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-AUTH the reservations of a Live say 認証できませんでした。 inside the list
+not ok 68 - T46-AUTH the reservations of a Live say 認証できませんでした。 inside the list
+  ---
+  duration_ms: 1.830333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1096:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /認証できませんでした。/. Input:
+    
+    '<div class="empty-state operation-error"><p>取得失敗: 管理トークン未設定</p></div>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '<div class="empty-state operation-error"><p>取得失敗: 管理トークン未設定</p></div>'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1102:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-AUTH a status change refused for the passphrase says so next to the buttons and leaves the reservation as it was
+not ok 69 - T46-AUTH a status change refused for the passphrase says so next to the buttons and leaves the reservation as it was
+  ---
+  duration_ms: 1.289291
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1106:1'
+  failureType: 'testCodeFailure'
+  error: 'app.handleReservationViewAction is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    click (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:820:35)
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1109:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-AUTH a 取り置き refused for the passphrase says so under the fields and keeps what was typed
+not ok 70 - T46-AUTH a 取り置き refused for the passphrase says so under the fields and keeps what was typed
+  ---
+  duration_ms: 3.481
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1116:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'dispatch')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:1119:53)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-AUTH a save refused for the passphrase says 認証できませんでした。 above 保存して公開 and the changes stay
+ok 71 - T46-AUTH a save refused for the passphrase says 認証できませんでした。 above 保存して公開 and the changes stay
+  ---
+  duration_ms: 2.416625
+  ...
+1..71
+# tests 71
+# suites 0
+# pass 51
+# fail 20
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3301.386917

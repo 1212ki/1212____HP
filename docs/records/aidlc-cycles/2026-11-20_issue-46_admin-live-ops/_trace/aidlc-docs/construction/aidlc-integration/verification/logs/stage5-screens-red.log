@@ -1,0 +1,2876 @@
+TAP version 13
+# Subtest: T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+ok 1 - T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+  ---
+  duration_ms: 14.32525
+  ...
+# Subtest: T46-LIST a live without a flyer or a title still has a row with its date and venue
+ok 2 - T46-LIST a live without a flyer or a title still has a row with its date and venue
+  ---
+  duration_ms: 1.34075
+  ...
+# Subtest: T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+ok 3 - T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+  ---
+  duration_ms: 1.773916
+  ...
+# Subtest: T46-LIST while the summary loads no reservation line is shown and no note is shown
+ok 4 - T46-LIST while the summary loads no reservation line is shown and no note is shown
+  ---
+  duration_ms: 1.076
+  ...
+# Subtest: T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 5 - T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.090084
+  ...
+# Subtest: T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 6 - T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.250542
+  ...
+# Subtest: T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 7 - T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.575708
+  ...
+# Subtest: T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 8 - T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.070458
+  ...
+# Subtest: T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 9 - T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.211875
+  ...
+# Subtest: T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+ok 10 - T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.63825
+  ...
+# Subtest: T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+ok 11 - T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 0.900125
+  ...
+# Subtest: T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+ok 12 - T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 0.806666
+  ...
+# Subtest: T46-LIST the API connection failure and Local Mode never call the summary and show no note
+ok 13 - T46-LIST the API connection failure and Local Mode never call the summary and show no note
+  ---
+  duration_ms: 1.687333
+  ...
+# Subtest: T46-LIST an empty list says there is nothing, as it did before
+ok 14 - T46-LIST an empty list says there is nothing, as it did before
+  ---
+  duration_ms: 0.800167
+  ...
+# Subtest: T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+ok 15 - T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+  ---
+  duration_ms: 10.958375
+  ...
+# Subtest: T46-LIST only the latest of overlapping summary requests is applied
+ok 16 - T46-LIST only the latest of overlapping summary requests is applied
+  ---
+  duration_ms: 1.094083
+  ...
+# Subtest: T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+ok 17 - T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+  ---
+  duration_ms: 7.947333
+  ...
+# Subtest: T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+ok 18 - T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+  ---
+  duration_ms: 0.200125
+  ...
+# Subtest: T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+ok 19 - T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+  ---
+  duration_ms: 0.997833
+  ...
+# Subtest: T46-OPEN the Header is one row: back, date and venue, and only the save state on the right
+not ok 20 - T46-OPEN the Header is one row: back, date and venue, and only the save state on the right
+  ---
+  duration_ms: 2.300875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:283:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /id="live-editor-back"[^>]*>‹ 一覧<\/button>/. Input:
+    
+    '<!DOCTYPE html>\n' +
+      '<html lang="ja">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+      '  <title>1212 HP Admin</title>\n' +
+      '  <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">\n' +
+      '  <link rel="stylesheet" href="style.css?v=20260816-22">\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <div id="app">\n' +
+      '    <!-- ヘッダー -->\n' +
+      '    <header class="header">\n' +
+      '      <div>\n' +
+      '        <h1 class="logo">1212 <span class="accent">Admin</span></h1>\n' +
+      '        <p class="header-meta" id="modeBadge">Local Mode</p>\n' +
+      '      </div>\n' +
+      '      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>\n' +
+      '    </header>\n' +
+      '    <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>\n' +
+      '\n' +
+      '    <!-- タブナビ -->\n' +
+      '    <nav class="tab-nav">\n' +
+      '      <button class="tab-btn" data-tab="site">Site</button>\n' +
+      '      <button class="tab-btn" data-tab="news">News</button>\n' +
+      '      <button class="tab-btn active" data-tab="live">Live</button>\n' +
+      '      <button class="tab-btn" data-tab="youtube">YouTube</button>\n' +
+      '      <button class="tab-btn" data-tab="discography">Disco</button>\n' +
+      '      <button class="tab-btn" data-tab="profile">Profile</button>\n' +
+      '    </nav>\n' +
+      '\n' +
+      '    <!-- Siteタブ -->\n' +
+      '    <section class="tab-content" id="site-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Site</h2>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="site-featured-release-id">顔にする作品</label>\n' +
+      '          <select id="site-featured-release-id" class="select" data-admin-mutation>\n' +
+      '            <option value="">自動（最新のリリース）</option>\n' +
+      '          </select>\n' +
+      '        </div>\n' +
+      '        <label>共有時の画像</label>\n' +
+      '        <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>\n' +
+      '        <div id="site-hero-image-form"></div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Home Links</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Bandcamp</label>\n' +
+      '          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>YouTube</label>\n' +
+      '          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>X</label>\n' +
+      '          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Instagram</label>\n' +
+      '          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>note</label>\n' +
+      '          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Footer</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>フッター文言（空なら既定のまま）</label>\n' +
+      '          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '\n' +
+      '      <div class="subsection">\n' +
+      '        <h3>Contact</h3>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>導入文</label>\n' +
+      '          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label>Form Action（Formspree URL）</label>\n' +
+      '          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Newsタブ -->\n' +
+      '    <section class="tab-content" id="news-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>News</h2>\n' +
+      '        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>\n' +
+      '      </div>\n' +
+      '      <div class="items-list" id="news-list"></div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <!-- Liveタブ -->\n' +
+      '    <section class="tab-content active" id="live-tab">\n' +
+      '      <div class="section-header">\n' +
+      '        <h2>Live</h2>\n' +
+      '        <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新しいライブ</button>\n' +
+      '      </div>\n' +
+      '      <div class="live-workspace" id="live-workspace">\n' +
+      '        <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">\n' +
+      '          <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>\n' +
+      '          <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>\n' +
+      '        </div>\n' +
+      '\n' +
+      '        <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">\n' +
+      '          <div id="live-page-primary">\n' +
+      '            <div class="live-page-toolbar">\n' +
+      '              <div class="live-list-tabs" role="tablist" aria-label="公演一覧">\n' +
+      '                <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>\n' +
+      '                <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <p id="live-summary-note" class="live-summary-note" role="status" aria-live="polite"></p>\n' +
+      '\n' +
+      '            <div class="live-master-detail" id="live-master-detail">\n' +
+      '              <div class="live-master-pane" id="live-master-pane">\n' +
+      '                <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">\n' +
+      '                  <div class="items-list" id="live-upcoming-list"></div>\n' +
+      '                </section>\n' +
+      '                <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>\n' +
+      '                  <div class="items-list" id="live-past-list"></div>\n' +
+      '                </section>\n' +
+      '                <button type="button" id="live-ticket-settings-open" class="live-workspace-utility live-ticket-settings-entry" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">\n' +
+      '                <header class="live-editor-header">\n' +
+      '                  <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>\n' +
+      '                  <div class="live-editor-title-group">\n' +
+      '                    <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>\n' +
+      '                    <h3 id="live-editor-heading">Liveを選択</h3>\n' +
+      '                  </div>\n' +
+      '                  <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>\n' +
+      '                </header>\n' +
+      '                <div class="live-editor-body" id="live-editor-body">\n' +
+      '                  <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>\n' +
+      '                </div>\n' +
+      '              </section>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '\n' +
+      '          <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>\n' +
+      '            <div class="section-header compact">\n' +
+      '              <div>\n' +
+      '                <p class="live-workspace-eyebrow">Liveページ共通</p>\n' +
+      '                <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>\n' +
+      '              </div>\n' +
+      '              <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示文言）</h3>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>完了文（空なら既定のまま）</label>\n' +
+      '                <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <div class="subsection">\n' +
+      '              <h3>Ticket Page（表示項目）</h3>\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>\n' +
+      '                <label for="ticket-field-quantity">Quantity（枚数）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>枚数 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="checkbox-group">\n' +
+      '                <input type="checkbox" id="ticket-field-message" data-admin-mutation>\n' +
+      '                <label for="ticket-field-message">備考（任意）を表示</label>\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 ラベル（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">\n' +
+      '              </div>\n' +
+      '              <div class="form-group">\n' +
+      '                <label>備考 プレースホルダ（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">\n' +
+      '              </div>\n' +
+      '\n' +
+      '              <div class="form-group">\n' +
+      '                <label>送信ボタン文言（空なら既定のまま）</label>\n' +
+      '                <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">\n' +
+      '              </div>\n' +
+      '            </div>\n' +
+      '            <p id='... 6343 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>1212 HP Admin</title>
+      <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
+      <link rel="stylesheet" href="style.css?v=20260816-22">
+    </head>
+    <body>
+      <div id="app">
+        <!-- ヘッダー -->
+        <header class="header">
+          <div>
+            <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+            <p class="header-meta" id="modeBadge">Local Mode</p>
+          </div>
+          <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
+        </header>
+        <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
+    
+        <!-- タブナビ -->
+        <nav class="tab-nav">
+          <button class="tab-btn" data-tab="site">Site</button>
+          <button class="tab-btn" data-tab="news">News</button>
+          <button class="tab-btn active" data-tab="live">Live</button>
+          <button class="tab-btn" data-tab="youtube">YouTube</button>
+          <button class="tab-btn" data-tab="discography">Disco</button>
+          <button class="tab-btn" data-tab="profile">Profile</button>
+        </nav>
+    
+        <!-- Siteタブ -->
+        <section class="tab-content" id="site-tab">
+          <div class="section-header">
+            <h2>Site</h2>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home</h3>
+            <div class="form-group">
+              <label for="site-featured-release-id">顔にする作品</label>
+              <select id="site-featured-release-id" class="select" data-admin-mutation>
+                <option value="">自動（最新のリリース）</option>
+              </select>
+            </div>
+            <label>共有時の画像</label>
+            <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>
+            <div id="site-hero-image-form"></div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Home Links</h3>
+            <div class="form-group">
+              <label>Bandcamp</label>
+              <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>YouTube</label>
+              <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>X</label>
+              <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label>note</label>
+              <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Footer</h3>
+            <div class="form-group">
+              <label>フッター文言（空なら既定のまま）</label>
+              <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+            </div>
+          </div>
+    
+          <div class="subsection">
+            <h3>Contact</h3>
+            <div class="form-group">
+              <label>導入文</label>
+              <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Form Action（Formspree URL）</label>
+              <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+            </div>
+          </div>
+        </section>
+    
+        <!-- Newsタブ -->
+        <section class="tab-content" id="news-tab">
+          <div class="section-header">
+            <h2>News</h2>
+            <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="items-list" id="news-list"></div>
+        </section>
+    
+        <!-- Liveタブ -->
+        <section class="tab-content active" id="live-tab">
+          <div class="section-header">
+            <h2>Live</h2>
+            <button class="add-btn live-primary-action" id="live-add-btn" data-admin-mutation onclick="addLive()">+ 新しいライブ</button>
+          </div>
+          <div class="live-workspace" id="live-workspace">
+            <div class="live-workspace-tabs" role="tablist" aria-label="Live管理">
+              <button type="button" id="live-workspace-page-tab" class="live-workspace-tab is-active" role="tab" data-live-workspace-view="page" aria-controls="live-workspace-page-panel" aria-selected="true" tabindex="0">Liveページ</button>
+              <button type="button" id="live-workspace-reservations-tab" class="live-workspace-tab" role="tab" data-live-workspace-view="reservations" aria-controls="live-workspace-reservations-panel" aria-selected="false" tabindex="-1">予約管理</button>
+            </div>
+    
+            <section id="live-workspace-page-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="page" aria-labelledby="live-workspace-page-tab">
+              <div id="live-page-primary">
+                <div class="live-page-toolbar">
+                  <div class="live-list-tabs" role="tablist" aria-label="公演一覧">
+                    <button type="button" id="live-list-upcoming-tab" class="live-list-tab is-active" role="tab" data-live-list-view="upcoming" aria-controls="live-list-upcoming-panel" aria-selected="true" tabindex="0">開催予定</button>
+                    <button type="button" id="live-list-past-tab" class="live-list-tab" role="tab" data-live-list-view="past" aria-controls="live-list-past-panel" aria-selected="false" tabindex="-1">公演終了</button>
+                  </div>
+                </div>
+                <p id="live-summary-note" class="live-summary-note" role="status" aria-live="polite"></p>
+    
+                <div class="live-master-detail" id="live-master-detail">
+                  <div class="live-master-pane" id="live-master-pane">
+                    <section id="live-list-upcoming-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="upcoming" aria-labelledby="live-list-upcoming-tab">
+                      <div class="items-list" id="live-upcoming-list"></div>
+                    </section>
+                    <section id="live-list-past-panel" class="live-list-panel" role="tabpanel" data-live-list-panel="past" aria-labelledby="live-list-past-tab" hidden>
+                      <div class="items-list" id="live-past-list"></div>
+                    </section>
+                    <button type="button" id="live-ticket-settings-open" class="live-workspace-utility live-ticket-settings-entry" aria-controls="live-ticket-settings-panel" aria-expanded="false">Ticket Page共通設定</button>
+                  </div>
+    
+                  <section class="live-editor-pane" id="live-editor-pane" aria-labelledby="live-editor-heading">
+                    <header class="live-editor-header">
+                      <button type="button" class="live-editor-back" id="live-editor-back" onclick="closeLiveEditor()" hidden>‹ Live一覧</button>
+                      <div class="live-editor-title-group">
+                        <p class="live-workspace-eyebrow" id="live-editor-context">選択中Live</p>
+                        <h3 id="live-editor-heading">Liveを選択</h3>
+                      </div>
+                      <span class="live-editor-save-status" id="live-editor-save-status" aria-live="polite"></span>
+                    </header>
+                    <div class="live-editor-body" id="live-editor-body">
+                      <div class="empty-state live-editor-empty"><p>一覧からLiveを選択するか、新規Liveを追加してください。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+    
+              <section id="live-ticket-settings-panel" class="live-ticket-settings-panel" role="region" aria-labelledby="live-ticket-settings-title" hidden>
+                <div class="section-header compact">
+                  <div>
+                    <p class="live-workspace-eyebrow">Liveページ共通</p>
+                    <h3 id="live-ticket-settings-title">Ticket Page共通設定</h3>
+                  </div>
+                  <button type="button" id="live-ticket-settings-close" class="live-workspace-utility">Liveページへ戻る</button>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示文言）</h3>
+                  <div class="form-group">
+                    <label>完了文（空なら既定のまま）</label>
+                    <textarea id="ticket-complete-text" class="textarea" data-admin-mutation rows="2" placeholder="予約しました..."></textarea>
+                  </div>
+                </div>
+                <div class="subsection">
+                  <h3>Ticket Page（表示項目）</h3>
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-quantity" data-admin-mutation>
+                    <label for="ticket-field-quantity">Quantity（枚数）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>枚数 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-quantity" class="text-input" data-admin-mutation placeholder="枚数">
+                  </div>
+    
+                  <div class="checkbox-group">
+                    <input type="checkbox" id="ticket-field-message" data-admin-mutation>
+                    <label for="ticket-field-message">備考（任意）を表示</label>
+                  </div>
+                  <div class="form-group">
+                    <label>備考 ラベル（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-label-message" class="text-input" data-admin-mutation placeholder="備考">
+                  </div>
+                  <div class="form-group">
+                    <label>備考 プレースホルダ（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-placeholder-message" class="text-input" data-admin-mutation placeholder="例: 取り置き名義が別の場合など">
+                  </div>
+    
+                  <div class="form-group">
+                    <label>送信ボタン文言（空なら既定のまま）</label>
+                    <input type="text" id="ticket-field-submit-label" class="text-input" data-admin-mutation placeholder="予約する">
+                  </div>
+                </div>
+                <p id="ticket-settings-status" class="ticket-settings-status" aria-live="polite"></p>
+                <p id="ticket-settings-error" class="form-error" role="alert"></p>
+                <div id="ticket-settings-actions" class="ticket-settings-actions" hidden>
+                  <button type="button" id="ticket-settings-save-btn" class="btn btn-primary" data-admin-mutation>保存して公開</button>
+                </div>
+              </section>
+            </section>
+    
+            <section id="live-workspace-reservations-panel" class="live-workspace-panel" role="tabpanel" data-live-workspace-panel="reservations" aria-labelledby="live-workspace-reservations-tab" hidden>
+              <div class="live-reservations-panel">
+              <div class="section-header compact">
+                <h3>横断予約台帳</h3>
+                <button type="button" class="add-btn" onclick="downloadTicketsCsv()">CSV</button>
+              </div>
+              <div class="form-group">
+                <label for="tickets-live-filter">フィルタ</label>
+                <div class="filters">
+                  <select id="tickets-live-filter" class="select" onchange="loadTickets()"></select>
+                  <select id="tickets-status-filter" class="select" onchange="loadTickets()">
+                    <option value="">全ステータス</option>
+                    <option value="pending" selected>未対応</option>
+                    <option value="handled">対応済み</option>
+                    <option value="cancelled">キャンセル</option>
+                  </select>
+                </div>
+              </div>
+              <div class="items-list" id="tickets-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+    
+        <!-- YouTubeタブ -->
+        <section class="tab-content" id="youtube-tab">
+          <div class="section-header">
+            <h2>YouTube</h2>
+            <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Channel URL</h3>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+    
+          <div class="subsection">
+            <h3>Music Video</h3>
+            <div class="items-list" id="youtube-musicVideos-list"></div>
+            <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Live Movie</h3>
+            <div class="items-list" id="youtube-liveMovies-list"></div>
+            <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
+          </div>
+    
+          <div class="subsection">
+            <h3>Demo</h3>
+            <div class="items-list" id="youtube-demos-list"></div>
+            <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+          </div>
+        </section>
+    
+        <!-- Discographyタブ -->
+        <section class="tab-content" id="discography-tab">
+          <div class="section-header">
+            <h2>Discography</h2>
+            <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
+          </div>
+          <div class="subsection">
+            <h3>Digital Release</h3>
+            <div class="items-list" id="disc-digital-list"></div>
+          </div>
+          <div class="subsection">
+            <h3>宅録Demo</h3>
+            <div class="items-list" id="disc-demo-list"></div>
+          </div>
+        </section>
+    
+        <!-- Profileタブ -->
+        <section class="tab-content" id="profile-tab">
+          <div class="section-header">
+            <h2>Profile</h2>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group">
+            <label>プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+          <div class="subsection">
+            <h3>SNSリンク</h3>
+            <div class="items-list" id="profile-links-list"></div>
+            <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+        </section>
+    
+        <!-- モーダル -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+          <div class="modal-header">
+            <h3 id="modal-title">編集</h3>
+            <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
+            <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
+          </div>
+        </div>
+    
+        <!-- Liveの確認の面（未保存の確認・削除の確認） -->
+        <div class="live-dialog-overlay" id="live-dialog-overlay" hidden>
+          <div class="live-dialog" id="live-dialog" role="alertdialog" aria-modal="true" aria-labelledby="live-dialog-title" aria-describedby="live-dialog-body"></div>
+        </div>
+    
+        <!-- トースト -->
+        <div class="toast" id="toast"></div>
+      </div>
+      <script>
+      // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
+      window.ADMIN_BUILD_ID = '2026-08-16T0529Z';
+      try {
+        var badge = document.getElementById('modeBadge');
+        if (badge) badge.textContent = 'Loading (' + window.ADMIN_BUILD_ID + ')';
+        var banner0 = document.getElementById('connectionBanner');
+        if (banner0) banner0.textContent = '読み込み中...';
+      } catch (e) {}
+      window.addEventListener('error', function (ev) {
+        try {
+          var banner = document.getElementById('connectionBanner');
+          if (banner) {
+            banner.textContent = '読み込み失敗: ' + (ev && ev.message ? ev.message : '不明なエラー') + '（再読み込みしてください）';
+            banner.classList.add('is-error');
+          }
+        } catch (e) {}
+      });
+    </script>
+    <script src="config.js?v=20260216-2001"></script>
+    <script src="../assets/js/live-operations.js?v=20260804-2"></script>
+    <script src="../assets/js/music-data.js?v=20261117-41"></script>
+    <script src="app.js?v=20261117-41"></script>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:288:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-OPEN while a Live is open the body carries is-live-editing, and it is removed when the Live closes
+not ok 21 - T46-OPEN while a Live is open the body carries is-live-editing, and it is removed when the Live closes
+  ---
+  duration_ms: 1.762375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:297:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:302:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-OPEN the switch has three entries 公開内容 / 告知 / 予約 and the reservation entry carries the seat count
+not ok 22 - T46-OPEN the switch has three entries 公開内容 / 告知 / 予約 and the reservation entry carries the seat count
+  ---
+  duration_ms: 1.805958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:309:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /id="live-editor-task-reservation"[^>]*>予約<span[^>]*id="live-editor-reservation-count"/. Input:
+    
+    '\n' +
+      '    <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">\n' +
+      '      <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>\n' +
+      '      <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>\n' +
+      '      <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>\n' +
+      '    </div>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">\n' +
+      '      <details class="live-source-intake">\n' +
+      '        <summary>元情報から作成</summary>\n' +
+      '        <div class="live-source-intake-body">\n' +
+      '          <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-sourceText">受け取った公演情報</label>\n' +
+      '            <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>\n' +
+      '            <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>\n' +
+      '          </div>\n' +
+      '          <div class="live-source-actions">\n' +
+      '            <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>\n' +
+      '            \n' +
+      '          </div>\n' +
+      '          <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>\n' +
+      '        </div>\n' +
+      '      </details>\n' +
+      '\n' +
+      '      <div id="live-public-fields">\n' +
+      '        <p class="live-workspace-eyebrow">公開画面に表示</p>\n' +
+      '        <section class="live-editor-section live-basic-fields">\n' +
+      '          <div class="operation-heading"><h3>基本情報</h3></div>\n' +
+      '          <div class="field-row">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-date">日付</label>\n' +
+      '              <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">\n' +
+      '              <p id="edit-date-error" class="form-error" role="alert"></p>\n' +
+      '              \n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-venue">会場</label>\n' +
+      '              <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">\n' +
+      '              <p id="edit-venue-error" class="form-error" role="alert"></p>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-title">ライブ名（任意）</label>\n' +
+      '            <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section class="live-editor-section">\n' +
+      '          <div class="operation-heading"><h3>公演情報</h3></div>\n' +
+      '          <div class="field-row live-time-fields">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-openTime">Open</label>\n' +
+      '              <input type="time" id="edit-openTime" class="text-input" value="17:30">\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-startTime">Start</label>\n' +
+      '              <input type="time" id="edit-startTime" class="text-input" value="18:00">\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-ticket">ticket</label>\n' +
+      '            <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-notes">補足</label>\n' +
+      '            <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です\n' +
+      '※ 未就学児の入場はできません</textarea>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-performers">共演者</label>\n' +
+      '            <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <details class="live-editor-details">\n' +
+      '          <summary>画像・リンクなど</summary>\n' +
+      '          <div class="live-editor-details-body">\n' +
+      '            \n' +
+      '            <details class="legacy-live-details">\n' +
+      '              <summary>旧詳細（未構造化）</summary>\n' +
+      '              <div class="form-group">\n' +
+      '                <label for="edit-description">過去データ互換</label>\n' +
+      '                <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。\n' +
+      '\n' +
+      '二つ目の段落です。</textarea>\n' +
+      '                <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>\n' +
+      '              </div>\n' +
+      '            </details>\n' +
+      '            \n' +
+      '    <div class="form-group">\n' +
+      '      <label>画像</label>\n' +
+      '      <div class="image-upload-area" id="image-upload-area">\n' +
+      `        <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">\n` +
+      '        <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">\n' +
+      '        <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">\n' +
+      '          <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>\n' +
+      '        </div>\n' +
+      '        <div class="image-actions">\n' +
+      `          <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>\n` +
+      `          <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>\n` +
+      '        </div>\n' +
+      '        \n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-ticketUrl">予約先</label>\n' +
+      '              <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">\n' +
+      '              <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>\n' +
+      '              <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">\n' +
+      '            </div>\n' +
+      '            <div class="checkbox-group">\n' +
+      '              <input type="checkbox" id="edit-reservationClosed" >\n' +
+      '              <label for="edit-reservationClosed">予約受付を終了</label>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '        </details>\n' +
+      '        <div class="checkbox-group live-category-field">\n' +
+      '          <input type="checkbox" id="edit-isPast" >\n' +
+      '          <label for="edit-isPast">公演終了</label>\n' +
+      '        </div>\n' +
+      '        <p id="live-category-warning" class="form-warning" role="status"></p>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>\n' +
+      '      <div class="operation-heading"><h3>X告知を準備</h3></div>\n' +
+      '      <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="edit-xComment">オーナーコメント</label>\n' +
+      '        <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>\n' +
+      '      </div>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="x-post-preview">X投稿プレビュー</label>\n' +
+      '        <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>\n' +
+      '      </div>\n' +
+      '      \n' +
+      '      <div class="live-announcement-actions">\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>\n' +
+      '      <div class="operation-heading"><h3>予約台帳</h3></div>\n' +
+      '      <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>\n' +
+      '      <form id="manual-reservation-form" class="manual-reservation-form">\n' +
+      '        <h4>手動取り置きを追加</h4>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-name">お名前</label>\n' +
+      '          <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">\n' +
+      '        </div>\n' +
+      '        <div class="field-row manual-fields">\n' +
+      '          <div class="form-group quantity-field">\n' +
+      '            <label for="manual-reservation-quantity">枚数</label>\n' +
+      '            <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="manual-reservation-contact">連絡先（任意）</label>\n' +
+      '            <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-note">内部メモ（任意）</label>\n' +
+      '          <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>\n' +
+      '        </div>\n' +
+      '        <div id="manual-reservation-error" class="form-error" role="alert"></div>\n' +
+      '        <button type="submit" cl'... 515 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">
+          <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>
+          <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>
+          <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>
+        </div>
+    
+        <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">
+          <details class="live-source-intake">
+            <summary>元情報から作成</summary>
+            <div class="live-source-intake-body">
+              <p class="live-workspace-eyebrow">管理専用</p>
+              <div class="form-group">
+                <label for="edit-sourceText">受け取った公演情報</label>
+                <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>
+                <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+              </div>
+              <div class="live-source-actions">
+                <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>
+                
+              </div>
+              <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
+            </div>
+          </details>
+    
+          <div id="live-public-fields">
+            <p class="live-workspace-eyebrow">公開画面に表示</p>
+            <section class="live-editor-section live-basic-fields">
+              <div class="operation-heading"><h3>基本情報</h3></div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label for="edit-date">日付</label>
+                  <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">
+                  <p id="edit-date-error" class="form-error" role="alert"></p>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="edit-venue">会場</label>
+                  <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">
+                  <p id="edit-venue-error" class="form-error" role="alert"></p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-title">ライブ名（任意）</label>
+                <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">
+              </div>
+            </section>
+    
+            <section class="live-editor-section">
+              <div class="operation-heading"><h3>公演情報</h3></div>
+              <div class="field-row live-time-fields">
+                <div class="form-group">
+                  <label for="edit-openTime">Open</label>
+                  <input type="time" id="edit-openTime" class="text-input" value="17:30">
+                </div>
+                <div class="form-group">
+                  <label for="edit-startTime">Start</label>
+                  <input type="time" id="edit-startTime" class="text-input" value="18:00">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-ticket">ticket</label>
+                <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">
+              </div>
+              <div class="form-group">
+                <label for="edit-notes">補足</label>
+                <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です
+    ※ 未就学児の入場はできません</textarea>
+              </div>
+              <div class="form-group">
+                <label for="edit-performers">共演者</label>
+                <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>
+              </div>
+            </section>
+    
+            <details class="live-editor-details">
+              <summary>画像・リンクなど</summary>
+              <div class="live-editor-details-body">
+                
+                <details class="legacy-live-details">
+                  <summary>旧詳細（未構造化）</summary>
+                  <div class="form-group">
+                    <label for="edit-description">過去データ互換</label>
+                    <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。
+    
+    二つ目の段落です。</textarea>
+                    <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>
+                  </div>
+                </details>
+                
+        <div class="form-group">
+          <label>画像</label>
+          <div class="image-upload-area" id="image-upload-area">
+            <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">
+            <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">
+            <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">
+              <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>
+            </div>
+            <div class="image-actions">
+              <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>
+              <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>
+            </div>
+            
+          </div>
+        </div>
+      
+                <div class="form-group">
+                  <label for="edit-ticketUrl">予約先</label>
+                  <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">
+                  <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
+                </div>
+                <div class="form-group">
+                  <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
+                  <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">
+                </div>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="edit-reservationClosed" >
+                  <label for="edit-reservationClosed">予約受付を終了</label>
+                </div>
+              </div>
+            </details>
+            <div class="checkbox-group live-category-field">
+              <input type="checkbox" id="edit-isPast" >
+              <label for="edit-isPast">公演終了</label>
+            </div>
+            <p id="live-category-warning" class="form-warning" role="status"></p>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>
+          <div class="operation-heading"><h3>X告知を準備</h3></div>
+          <p class="live-workspace-eyebrow">管理専用</p>
+          <div class="form-group">
+            <label for="edit-xComment">オーナーコメント</label>
+            <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="x-post-preview">X投稿プレビュー</label>
+            <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>
+          </div>
+          
+          <div class="live-announcement-actions">
+            <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>
+          <div class="operation-heading"><h3>予約台帳</h3></div>
+          <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>
+          <form id="manual-reservation-form" class="manual-reservation-form">
+            <h4>手動取り置きを追加</h4>
+            <div class="form-group">
+              <label for="manual-reservation-name">お名前</label>
+              <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">
+            </div>
+            <div class="field-row manual-fields">
+              <div class="form-group quantity-field">
+                <label for="manual-reservation-quantity">枚数</label>
+                <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="manual-reservation-contact">連絡先（任意）</label>
+                <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="manual-reservation-note">内部メモ（任意）</label>
+              <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div id="manual-reservation-error" class="form-error" role="alert"></div>
+            <button type="submit" class="btn btn-secondary btn-compact" id="manual-reservation-submit">手動取り置きを追加</button>
+          </form>
+        </section>
+    
+        <p id="live-editor-save-error" class="form-error" role="alert"></p>
+        <footer class="live-editor-footer">
+          <button type="button" class="btn btn-danger" id="live-editor-delete-btn" onclick="deleteLiveFromWorkspace()">削除</button>
+          <button type="button" class="btn btn-primary live-primary-action" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>
+        </footer>
+      
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:321:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-OPEN the reservation count is blank for a past live or a failed summary until the ledger is read
+not ok 23 - T46-OPEN the reservation count is blank for a past live or a failed summary until the ledger is read
+  ---
+  duration_ms: 1.31525
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:327:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'textContent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:334:65)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-OPEN the public fields run flyer → date → venue → name → OPEN/START → fee → note → performers → 予約先・リンクなど → category → delete
+not ok 24 - T46-OPEN the public fields run flyer → date → venue → name → OPEN/START → fee → note → performers → 予約先・リンクなど → category → delete
+  ---
+  duration_ms: 2.750875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:340:1'
+  failureType: 'testCodeFailure'
+  error: 'all present: 21,8,10,12,13,14,15,16,17,26,28,27,18,-1,29,47'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:347:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-OPEN 保存して公開 is shown only while the Live is unsaved, and only for as long as it differs from the opened values
+not ok 25 - T46-OPEN 保存して公開 is shown only while the Live is unsaved, and only for as long as it differs from the opened values
+  ---
+  duration_ms: 1.167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:360:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:365:24)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-OPEN the footer shows the failure reason above 保存して公開 and the Header says 保存できませんでした
+not ok 26 - T46-OPEN the footer shows the failure reason above 保存して公開 and the Header says 保存できませんでした
+  ---
+  duration_ms: 1.736833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:374:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:382:54)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-OPEN the structure under 900px: the global chrome is hidden, taps are 44px, one-line labels do not wrap, the save bar is fixed to the bottom
+not ok 27 - T46-OPEN the structure under 900px: the global chrome is hidden, taps are 44px, one-line labels do not wrap, the save bar is fixed to the bottom
+  ---
+  duration_ms: 0.165417
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:387:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /body\.is-live-editing\s+\.header[\s\S]*display:\s*none/. Input:
+    
+    '@media (max-width: 899px) {\n' +
+      '  .live-workspace-tab,\n' +
+      '  .live-list-tab,\n' +
+      '  .live-workspace-utility,\n' +
+      '  .live-editor-back {\n' +
+      '    min-height: 44px;\n' +
+      '  }\n' +
+      '}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    @media (max-width: 899px) {
+      .live-workspace-tab,
+      .live-list-tab,
+      .live-workspace-utility,
+      .live-editor-back {
+        min-height: 44px;
+      }
+    }
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:389:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-FIELDS every editable item of today is still in the editor, with the same id
+ok 28 - T46-FIELDS every editable item of today is still in the editor, with the same id
+  ---
+  duration_ms: 1.120375
+  ...
+# Subtest: T46-FIELDS a legacy 7-key live opens with empty fields and saves the same 17-key shape as before
+ok 29 - T46-FIELDS a legacy 7-key live opens with empty fields and saves the same 17-key shape as before
+  ---
+  duration_ms: 2.112334
+  ...
+# Subtest: T46-FIELDS values inside the folded 予約先・リンクなど are saved even though it was never opened
+ok 30 - T46-FIELDS values inside the folded 予約先・リンクなど are saved even though it was never opened
+  ---
+  duration_ms: 2.021125
+  ...
+# Subtest: T46-FIELDS the category is a two-way choice backed by edit-isPast: choosing 公演終了 saves into the past list
+not ok 31 - T46-FIELDS the category is a two-way choice backed by edit-isPast: choosing 公演終了 saves into the past list
+  ---
+  duration_ms: 3.042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:458:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /id="live-category-upcoming"[^>]*>開催予定<\/button>/. Input:
+    
+    '\n' +
+      '    <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">\n' +
+      '      <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>\n' +
+      '      <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>\n' +
+      '      <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>\n' +
+      '    </div>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">\n' +
+      '      <details class="live-source-intake">\n' +
+      '        <summary>元情報から作成</summary>\n' +
+      '        <div class="live-source-intake-body">\n' +
+      '          <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-sourceText">受け取った公演情報</label>\n' +
+      '            <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>\n' +
+      '            <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>\n' +
+      '          </div>\n' +
+      '          <div class="live-source-actions">\n' +
+      '            <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>\n' +
+      '            \n' +
+      '          </div>\n' +
+      '          <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>\n' +
+      '        </div>\n' +
+      '      </details>\n' +
+      '\n' +
+      '      <div id="live-public-fields">\n' +
+      '        <p class="live-workspace-eyebrow">公開画面に表示</p>\n' +
+      '        <section class="live-editor-section live-basic-fields">\n' +
+      '          <div class="operation-heading"><h3>基本情報</h3></div>\n' +
+      '          <div class="field-row">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-date">日付</label>\n' +
+      '              <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">\n' +
+      '              <p id="edit-date-error" class="form-error" role="alert"></p>\n' +
+      '              \n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-venue">会場</label>\n' +
+      '              <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">\n' +
+      '              <p id="edit-venue-error" class="form-error" role="alert"></p>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-title">ライブ名（任意）</label>\n' +
+      '            <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section class="live-editor-section">\n' +
+      '          <div class="operation-heading"><h3>公演情報</h3></div>\n' +
+      '          <div class="field-row live-time-fields">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-openTime">Open</label>\n' +
+      '              <input type="time" id="edit-openTime" class="text-input" value="17:30">\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-startTime">Start</label>\n' +
+      '              <input type="time" id="edit-startTime" class="text-input" value="18:00">\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-ticket">ticket</label>\n' +
+      '            <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-notes">補足</label>\n' +
+      '            <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です\n' +
+      '※ 未就学児の入場はできません</textarea>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-performers">共演者</label>\n' +
+      '            <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <details class="live-editor-details">\n' +
+      '          <summary>画像・リンクなど</summary>\n' +
+      '          <div class="live-editor-details-body">\n' +
+      '            \n' +
+      '            <details class="legacy-live-details">\n' +
+      '              <summary>旧詳細（未構造化）</summary>\n' +
+      '              <div class="form-group">\n' +
+      '                <label for="edit-description">過去データ互換</label>\n' +
+      '                <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。\n' +
+      '\n' +
+      '二つ目の段落です。</textarea>\n' +
+      '                <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>\n' +
+      '              </div>\n' +
+      '            </details>\n' +
+      '            \n' +
+      '    <div class="form-group">\n' +
+      '      <label>画像</label>\n' +
+      '      <div class="image-upload-area" id="image-upload-area">\n' +
+      `        <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">\n` +
+      '        <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">\n' +
+      '        <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">\n' +
+      '          <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>\n' +
+      '        </div>\n' +
+      '        <div class="image-actions">\n' +
+      `          <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>\n` +
+      `          <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>\n` +
+      '        </div>\n' +
+      '        \n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-ticketUrl">予約先</label>\n' +
+      '              <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">\n' +
+      '              <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>\n' +
+      '              <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">\n' +
+      '            </div>\n' +
+      '            <div class="checkbox-group">\n' +
+      '              <input type="checkbox" id="edit-reservationClosed" >\n' +
+      '              <label for="edit-reservationClosed">予約受付を終了</label>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '        </details>\n' +
+      '        <div class="checkbox-group live-category-field">\n' +
+      '          <input type="checkbox" id="edit-isPast" >\n' +
+      '          <label for="edit-isPast">公演終了</label>\n' +
+      '        </div>\n' +
+      '        <p id="live-category-warning" class="form-warning" role="status"></p>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>\n' +
+      '      <div class="operation-heading"><h3>X告知を準備</h3></div>\n' +
+      '      <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="edit-xComment">オーナーコメント</label>\n' +
+      '        <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>\n' +
+      '      </div>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="x-post-preview">X投稿プレビュー</label>\n' +
+      '        <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>\n' +
+      '      </div>\n' +
+      '      \n' +
+      '      <div class="live-announcement-actions">\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>\n' +
+      '      <div class="operation-heading"><h3>予約台帳</h3></div>\n' +
+      '      <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>\n' +
+      '      <form id="manual-reservation-form" class="manual-reservation-form">\n' +
+      '        <h4>手動取り置きを追加</h4>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-name">お名前</label>\n' +
+      '          <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">\n' +
+      '        </div>\n' +
+      '        <div class="field-row manual-fields">\n' +
+      '          <div class="form-group quantity-field">\n' +
+      '            <label for="manual-reservation-quantity">枚数</label>\n' +
+      '            <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="manual-reservation-contact">連絡先（任意）</label>\n' +
+      '            <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-note">内部メモ（任意）</label>\n' +
+      '          <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>\n' +
+      '        </div>\n' +
+      '        <div id="manual-reservation-error" class="form-error" role="alert"></div>\n' +
+      '        <button type="submit" cl'... 515 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">
+          <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>
+          <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>
+          <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>
+        </div>
+    
+        <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">
+          <details class="live-source-intake">
+            <summary>元情報から作成</summary>
+            <div class="live-source-intake-body">
+              <p class="live-workspace-eyebrow">管理専用</p>
+              <div class="form-group">
+                <label for="edit-sourceText">受け取った公演情報</label>
+                <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>
+                <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+              </div>
+              <div class="live-source-actions">
+                <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>
+                
+              </div>
+              <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
+            </div>
+          </details>
+    
+          <div id="live-public-fields">
+            <p class="live-workspace-eyebrow">公開画面に表示</p>
+            <section class="live-editor-section live-basic-fields">
+              <div class="operation-heading"><h3>基本情報</h3></div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label for="edit-date">日付</label>
+                  <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">
+                  <p id="edit-date-error" class="form-error" role="alert"></p>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="edit-venue">会場</label>
+                  <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">
+                  <p id="edit-venue-error" class="form-error" role="alert"></p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-title">ライブ名（任意）</label>
+                <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">
+              </div>
+            </section>
+    
+            <section class="live-editor-section">
+              <div class="operation-heading"><h3>公演情報</h3></div>
+              <div class="field-row live-time-fields">
+                <div class="form-group">
+                  <label for="edit-openTime">Open</label>
+                  <input type="time" id="edit-openTime" class="text-input" value="17:30">
+                </div>
+                <div class="form-group">
+                  <label for="edit-startTime">Start</label>
+                  <input type="time" id="edit-startTime" class="text-input" value="18:00">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-ticket">ticket</label>
+                <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">
+              </div>
+              <div class="form-group">
+                <label for="edit-notes">補足</label>
+                <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です
+    ※ 未就学児の入場はできません</textarea>
+              </div>
+              <div class="form-group">
+                <label for="edit-performers">共演者</label>
+                <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>
+              </div>
+            </section>
+    
+            <details class="live-editor-details">
+              <summary>画像・リンクなど</summary>
+              <div class="live-editor-details-body">
+                
+                <details class="legacy-live-details">
+                  <summary>旧詳細（未構造化）</summary>
+                  <div class="form-group">
+                    <label for="edit-description">過去データ互換</label>
+                    <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。
+    
+    二つ目の段落です。</textarea>
+                    <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>
+                  </div>
+                </details>
+                
+        <div class="form-group">
+          <label>画像</label>
+          <div class="image-upload-area" id="image-upload-area">
+            <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">
+            <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">
+            <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">
+              <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>
+            </div>
+            <div class="image-actions">
+              <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>
+              <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>
+            </div>
+            
+          </div>
+        </div>
+      
+                <div class="form-group">
+                  <label for="edit-ticketUrl">予約先</label>
+                  <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">
+                  <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
+                </div>
+                <div class="form-group">
+                  <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
+                  <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">
+                </div>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="edit-reservationClosed" >
+                  <label for="edit-reservationClosed">予約受付を終了</label>
+                </div>
+              </div>
+            </details>
+            <div class="checkbox-group live-category-field">
+              <input type="checkbox" id="edit-isPast" >
+              <label for="edit-isPast">公演終了</label>
+            </div>
+            <p id="live-category-warning" class="form-warning" role="status"></p>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>
+          <div class="operation-heading"><h3>X告知を準備</h3></div>
+          <p class="live-workspace-eyebrow">管理専用</p>
+          <div class="form-group">
+            <label for="edit-xComment">オーナーコメント</label>
+            <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="x-post-preview">X投稿プレビュー</label>
+            <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>
+          </div>
+          
+          <div class="live-announcement-actions">
+            <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>
+          <div class="operation-heading"><h3>予約台帳</h3></div>
+          <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>
+          <form id="manual-reservation-form" class="manual-reservation-form">
+            <h4>手動取り置きを追加</h4>
+            <div class="form-group">
+              <label for="manual-reservation-name">お名前</label>
+              <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">
+            </div>
+            <div class="field-row manual-fields">
+              <div class="form-group quantity-field">
+                <label for="manual-reservation-quantity">枚数</label>
+                <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="manual-reservation-contact">連絡先（任意）</label>
+                <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="manual-reservation-note">内部メモ（任意）</label>
+              <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div id="manual-reservation-error" class="form-error" role="alert"></div>
+            <button type="submit" class="btn btn-secondary btn-compact" id="manual-reservation-submit">手動取り置きを追加</button>
+          </form>
+        </section>
+    
+        <p id="live-editor-save-error" class="form-error" role="alert"></p>
+        <footer class="live-editor-footer">
+          <button type="button" class="btn btn-danger" id="live-editor-delete-btn" onclick="deleteLiveFromWorkspace()">削除</button>
+          <button type="button" class="btn btn-primary live-primary-action" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>
+        </footer>
+      
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:463:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-NEW the first screen has only the source, 下書きを作る and 手入力で作る; the fields wait behind it
+not ok 32 - T46-NEW the first screen has only the source, 下書きを作る and 手入力で作る; the fields wait behind it
+  ---
+  duration_ms: 1.419167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:498:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '新規Live'
+    - '新しいライブ'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '新しいライブ'
+  actual: '新規Live'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:503:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-NEW from the source to the announcement takes exactly three presses and never opens a confirmation surface
+not ok 33 - T46-NEW from the source to the announcement takes exactly three presses and never opens a confirmation surface
+  ---
+  duration_ms: 1.530583
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:513:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:526:57)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-NEW the announcement after saving shows the post text and あとで returns to the list
+not ok 34 - T46-NEW the announcement after saving shows the post text and あとで returns to the list
+  ---
+  duration_ms: 3.814333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:546:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'textContent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:555:60)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-NEW saving an existing Live stays on its public content and shows 保存済み, never the announcement
+ok 35 - T46-NEW saving an existing Live stays on its public content and shows 保存済み, never the announcement
+  ---
+  duration_ms: 1.82525
+  ...
+# Subtest: T46-NEW 手入力で作る opens the fields without calling the draft route; announcement and reservation say 保存すると使えます。
+not ok 36 - T46-NEW 手入力で作る opens the fields without calling the draft route; announcement and reservation say 保存すると使えます。
+  ---
+  duration_ms: 1.069167
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:578:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    announcement and reservation both say it
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:587:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-NEW saving without a date or venue stays on the draft and says what is missing under the field
+ok 37 - T46-NEW saving without a date or venue stays on the draft and says what is missing under the field
+  ---
+  duration_ms: 1.026833
+  ...
+# Subtest: T46-DRAFT while the draft is made the button says 下書きを作っています… and cannot be pressed; it returns to 下書きを作る
+not ok 38 - T46-DRAFT while the draft is made the button says 下書きを作っています… and cannot be pressed; it returns to 下書きを作る
+  ---
+  duration_ms: 1.024125
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:610:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'AIで整理中...'
+    - '下書きを作っています…'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '下書きを作っています…'
+  actual: 'AIで整理中...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:619:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DRAFT the provider notice after a draft is the fixed sentence of design §7.4, and a legacy response keeps the old one
+ok 39 - T46-DRAFT the provider notice after a draft is the fixed sentence of design §7.4, and a legacy response keeps the old one
+  ---
+  duration_ms: 3.140916
+  ...
+# Subtest: T46-DRAFT when the draft fails the source and every field stay and two lines say so
+not ok 40 - T46-DRAFT when the draft fails the source and every field stay and two lines say so
+  ---
+  duration_ms: 1.064375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:642:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'AIで整理できませんでした。元情報は変更されていません。'
+    - '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。'
+  actual: 'AIで整理できませんでした。元情報は変更されていません。'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:651:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DRAFT a response that arrives after the source changed or the Live changed is not applied
+not ok 41 - T46-DRAFT a response that arrives after the source changed or the Live changed is not applied
+  ---
+  duration_ms: 1.056917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:655:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '入力が変更されたため反映しませんでした。もう一度AIで整理してください。'
+    - '入力が変更されたため反映しませんでした。もう一度下書きを作ってください。'
+                               ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '入力が変更されたため反映しませんでした。もう一度下書きを作ってください。'
+  actual: '入力が変更されたため反映しませんでした。もう一度AIで整理してください。'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:666:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-DRAFT Local Mode does not call the draft route
+ok 42 - T46-DRAFT Local Mode does not call the draft route
+  ---
+  duration_ms: 0.928875
+  ...
+# Subtest: T46-ANNOUNCE the announcement has the comment, the post text, Xで告知する and two copy buttons
+not ok 43 - T46-ANNOUNCE the announcement has the comment, the post text, Xで告知する and two copy buttons
+  ---
+  duration_ms: 2.557834
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:680:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<label[^>]*for="edit-xComment"[^>]*>ひとこと<\/label>/. Input:
+    
+    '\n' +
+      '    <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">\n' +
+      '      <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>\n' +
+      '      <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>\n' +
+      '      <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>\n' +
+      '    </div>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">\n' +
+      '      <details class="live-source-intake">\n' +
+      '        <summary>元情報から作成</summary>\n' +
+      '        <div class="live-source-intake-body">\n' +
+      '          <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-sourceText">受け取った公演情報</label>\n' +
+      '            <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>\n' +
+      '            <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>\n' +
+      '          </div>\n' +
+      '          <div class="live-source-actions">\n' +
+      '            <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>\n' +
+      '            \n' +
+      '          </div>\n' +
+      '          <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>\n' +
+      '        </div>\n' +
+      '      </details>\n' +
+      '\n' +
+      '      <div id="live-public-fields">\n' +
+      '        <p class="live-workspace-eyebrow">公開画面に表示</p>\n' +
+      '        <section class="live-editor-section live-basic-fields">\n' +
+      '          <div class="operation-heading"><h3>基本情報</h3></div>\n' +
+      '          <div class="field-row">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-date">日付</label>\n' +
+      '              <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">\n' +
+      '              <p id="edit-date-error" class="form-error" role="alert"></p>\n' +
+      '              \n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-venue">会場</label>\n' +
+      '              <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">\n' +
+      '              <p id="edit-venue-error" class="form-error" role="alert"></p>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-title">ライブ名（任意）</label>\n' +
+      '            <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section class="live-editor-section">\n' +
+      '          <div class="operation-heading"><h3>公演情報</h3></div>\n' +
+      '          <div class="field-row live-time-fields">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-openTime">Open</label>\n' +
+      '              <input type="time" id="edit-openTime" class="text-input" value="17:30">\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-startTime">Start</label>\n' +
+      '              <input type="time" id="edit-startTime" class="text-input" value="18:00">\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-ticket">ticket</label>\n' +
+      '            <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-notes">補足</label>\n' +
+      '            <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です\n' +
+      '※ 未就学児の入場はできません</textarea>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-performers">共演者</label>\n' +
+      '            <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <details class="live-editor-details">\n' +
+      '          <summary>画像・リンクなど</summary>\n' +
+      '          <div class="live-editor-details-body">\n' +
+      '            \n' +
+      '            <details class="legacy-live-details">\n' +
+      '              <summary>旧詳細（未構造化）</summary>\n' +
+      '              <div class="form-group">\n' +
+      '                <label for="edit-description">過去データ互換</label>\n' +
+      '                <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。\n' +
+      '\n' +
+      '二つ目の段落です。</textarea>\n' +
+      '                <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>\n' +
+      '              </div>\n' +
+      '            </details>\n' +
+      '            \n' +
+      '    <div class="form-group">\n' +
+      '      <label>画像</label>\n' +
+      '      <div class="image-upload-area" id="image-upload-area">\n' +
+      `        <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">\n` +
+      '        <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">\n' +
+      '        <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">\n' +
+      '          <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>\n' +
+      '        </div>\n' +
+      '        <div class="image-actions">\n' +
+      `          <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>\n` +
+      `          <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>\n` +
+      '        </div>\n' +
+      '        \n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-ticketUrl">予約先</label>\n' +
+      '              <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">\n' +
+      '              <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>\n' +
+      '              <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">\n' +
+      '            </div>\n' +
+      '            <div class="checkbox-group">\n' +
+      '              <input type="checkbox" id="edit-reservationClosed" >\n' +
+      '              <label for="edit-reservationClosed">予約受付を終了</label>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '        </details>\n' +
+      '        <div class="checkbox-group live-category-field">\n' +
+      '          <input type="checkbox" id="edit-isPast" >\n' +
+      '          <label for="edit-isPast">公演終了</label>\n' +
+      '        </div>\n' +
+      '        <p id="live-category-warning" class="form-warning" role="status"></p>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>\n' +
+      '      <div class="operation-heading"><h3>X告知を準備</h3></div>\n' +
+      '      <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="edit-xComment">オーナーコメント</label>\n' +
+      '        <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>\n' +
+      '      </div>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="x-post-preview">X投稿プレビュー</label>\n' +
+      '        <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>\n' +
+      '      </div>\n' +
+      '      \n' +
+      '      <div class="live-announcement-actions">\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>\n' +
+      '      <div class="operation-heading"><h3>予約台帳</h3></div>\n' +
+      '      <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>\n' +
+      '      <form id="manual-reservation-form" class="manual-reservation-form">\n' +
+      '        <h4>手動取り置きを追加</h4>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-name">お名前</label>\n' +
+      '          <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">\n' +
+      '        </div>\n' +
+      '        <div class="field-row manual-fields">\n' +
+      '          <div class="form-group quantity-field">\n' +
+      '            <label for="manual-reservation-quantity">枚数</label>\n' +
+      '            <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="manual-reservation-contact">連絡先（任意）</label>\n' +
+      '            <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-note">内部メモ（任意）</label>\n' +
+      '          <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>\n' +
+      '        </div>\n' +
+      '        <div id="manual-reservation-error" class="form-error" role="alert"></div>\n' +
+      '        <button type="submit" cl'... 515 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">
+          <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>
+          <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>
+          <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>
+        </div>
+    
+        <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">
+          <details class="live-source-intake">
+            <summary>元情報から作成</summary>
+            <div class="live-source-intake-body">
+              <p class="live-workspace-eyebrow">管理専用</p>
+              <div class="form-group">
+                <label for="edit-sourceText">受け取った公演情報</label>
+                <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>
+                <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+              </div>
+              <div class="live-source-actions">
+                <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>
+                
+              </div>
+              <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
+            </div>
+          </details>
+    
+          <div id="live-public-fields">
+            <p class="live-workspace-eyebrow">公開画面に表示</p>
+            <section class="live-editor-section live-basic-fields">
+              <div class="operation-heading"><h3>基本情報</h3></div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label for="edit-date">日付</label>
+                  <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">
+                  <p id="edit-date-error" class="form-error" role="alert"></p>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="edit-venue">会場</label>
+                  <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">
+                  <p id="edit-venue-error" class="form-error" role="alert"></p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-title">ライブ名（任意）</label>
+                <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">
+              </div>
+            </section>
+    
+            <section class="live-editor-section">
+              <div class="operation-heading"><h3>公演情報</h3></div>
+              <div class="field-row live-time-fields">
+                <div class="form-group">
+                  <label for="edit-openTime">Open</label>
+                  <input type="time" id="edit-openTime" class="text-input" value="17:30">
+                </div>
+                <div class="form-group">
+                  <label for="edit-startTime">Start</label>
+                  <input type="time" id="edit-startTime" class="text-input" value="18:00">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-ticket">ticket</label>
+                <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">
+              </div>
+              <div class="form-group">
+                <label for="edit-notes">補足</label>
+                <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です
+    ※ 未就学児の入場はできません</textarea>
+              </div>
+              <div class="form-group">
+                <label for="edit-performers">共演者</label>
+                <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>
+              </div>
+            </section>
+    
+            <details class="live-editor-details">
+              <summary>画像・リンクなど</summary>
+              <div class="live-editor-details-body">
+                
+                <details class="legacy-live-details">
+                  <summary>旧詳細（未構造化）</summary>
+                  <div class="form-group">
+                    <label for="edit-description">過去データ互換</label>
+                    <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。
+    
+    二つ目の段落です。</textarea>
+                    <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>
+                  </div>
+                </details>
+                
+        <div class="form-group">
+          <label>画像</label>
+          <div class="image-upload-area" id="image-upload-area">
+            <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">
+            <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">
+            <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">
+              <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>
+            </div>
+            <div class="image-actions">
+              <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>
+              <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>
+            </div>
+            
+          </div>
+        </div>
+      
+                <div class="form-group">
+                  <label for="edit-ticketUrl">予約先</label>
+                  <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">
+                  <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
+                </div>
+                <div class="form-group">
+                  <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
+                  <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">
+                </div>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="edit-reservationClosed" >
+                  <label for="edit-reservationClosed">予約受付を終了</label>
+                </div>
+              </div>
+            </details>
+            <div class="checkbox-group live-category-field">
+              <input type="checkbox" id="edit-isPast" >
+              <label for="edit-isPast">公演終了</label>
+            </div>
+            <p id="live-category-warning" class="form-warning" role="status"></p>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>
+          <div class="operation-heading"><h3>X告知を準備</h3></div>
+          <p class="live-workspace-eyebrow">管理専用</p>
+          <div class="form-group">
+            <label for="edit-xComment">オーナーコメント</label>
+            <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="x-post-preview">X投稿プレビュー</label>
+            <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>
+          </div>
+          
+          <div class="live-announcement-actions">
+            <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>
+          <div class="operation-heading"><h3>予約台帳</h3></div>
+          <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>
+          <form id="manual-reservation-form" class="manual-reservation-form">
+            <h4>手動取り置きを追加</h4>
+            <div class="form-group">
+              <label for="manual-reservation-name">お名前</label>
+              <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">
+            </div>
+            <div class="field-row manual-fields">
+              <div class="form-group quantity-field">
+                <label for="manual-reservation-quantity">枚数</label>
+                <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="manual-reservation-contact">連絡先（任意）</label>
+                <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="manual-reservation-note">内部メモ（任意）</label>
+              <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div id="manual-reservation-error" class="form-error" role="alert"></div>
+            <button type="submit" class="btn btn-secondary btn-compact" id="manual-reservation-submit">手動取り置きを追加</button>
+          </form>
+        </section>
+    
+        <p id="live-editor-save-error" class="form-error" role="alert"></p>
+        <footer class="live-editor-footer">
+          <button type="button" class="btn btn-danger" id="live-editor-delete-btn" onclick="deleteLiveFromWorkspace()">削除</button>
+          <button type="button" class="btn btn-primary live-primary-action" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>
+        </footer>
+      
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:685:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-ANNOUNCE changing the comment makes the Live unsaved and updates the post; the share URL is unchanged
+not ok 44 - T46-ANNOUNCE changing the comment makes the Live unsaved and updates the post; the share URL is unchanged
+  ---
+  duration_ms: 1.404667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:694:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'hidden')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:701:54)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-ANNOUNCE the copy result is told next to the buttons: コピーしました。 / コピーできませんでした
+not ok 45 - T46-ANNOUNCE the copy result is told next to the buttons: コピーしました。 / コピーできませんでした
+  ---
+  duration_ms: 1.066
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:705:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'textContent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:710:52)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-ANNOUNCE before saving Xで告知する and リンクをコピー do nothing (no clipboard, no window)
+ok 46 - T46-ANNOUNCE before saving Xで告知する and リンクをコピー do nothing (no clipboard, no window)
+  ---
+  duration_ms: 0.934417
+  ...
+# Subtest: T46-IMAGE the flyer is the first block of the public content: unselected shows a dashed frame and 画像を選ぶ
+not ok 47 - T46-IMAGE the flyer is the first block of the public content: unselected shows a dashed frame and 画像を選ぶ
+  ---
+  duration_ms: 1.114541
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:738:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /id="edit-image-placeholder"[^>]*>未選択<\//. Input:
+    
+    '\n' +
+      '    <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">\n' +
+      '      <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>\n' +
+      '      <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>\n' +
+      '      <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>\n' +
+      '    </div>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">\n' +
+      '      <details class="live-source-intake">\n' +
+      '        <summary>元情報から作成</summary>\n' +
+      '        <div class="live-source-intake-body">\n' +
+      '          <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-sourceText">受け取った公演情報</label>\n' +
+      '            <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>\n' +
+      '            <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>\n' +
+      '          </div>\n' +
+      '          <div class="live-source-actions">\n' +
+      '            <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>\n' +
+      '            \n' +
+      '          </div>\n' +
+      '          <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>\n' +
+      '        </div>\n' +
+      '      </details>\n' +
+      '\n' +
+      '      <div id="live-public-fields">\n' +
+      '        <p class="live-workspace-eyebrow">公開画面に表示</p>\n' +
+      '        <section class="live-editor-section live-basic-fields">\n' +
+      '          <div class="operation-heading"><h3>基本情報</h3></div>\n' +
+      '          <div class="field-row">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-date">日付</label>\n' +
+      '              <input type="date" id="edit-date" class="text-input" value="2026-06-01" data-original-unparsed-date="" aria-describedby="edit-date-error">\n' +
+      '              <p id="edit-date-error" class="form-error" role="alert"></p>\n' +
+      '              \n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-venue">会場</label>\n' +
+      '              <input type="text" id="edit-venue" class="text-input" value="テスト会場E" placeholder="下北沢XXX" aria-describedby="edit-venue-error">\n' +
+      '              <p id="edit-venue-error" class="form-error" role="alert"></p>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-title">ライブ名（任意）</label>\n' +
+      '            <input type="text" id="edit-title" class="text-input" value="架空の公演 フライヤーなし" placeholder="例: 〇〇企画 / 〇〇 presents...">\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section class="live-editor-section">\n' +
+      '          <div class="operation-heading"><h3>公演情報</h3></div>\n' +
+      '          <div class="field-row live-time-fields">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-openTime">Open</label>\n' +
+      '              <input type="time" id="edit-openTime" class="text-input" value="19:00">\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-startTime">Start</label>\n' +
+      '              <input type="time" id="edit-startTime" class="text-input" value="19:30">\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-ticket">ticket</label>\n' +
+      '            <input type="text" id="edit-ticket" class="text-input" value="free" placeholder="例: ¥2,500 + 1D">\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-notes">補足</label>\n' +
+      '            <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）"></textarea>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-performers">共演者</label>\n' +
+      '            <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">架空の出演者B</textarea>\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <details class="live-editor-details">\n' +
+      '          <summary>画像・リンクなど</summary>\n' +
+      '          <div class="live-editor-details-body">\n' +
+      '            \n' +
+      '            \n' +
+      '    <div class="form-group">\n' +
+      '      <label>画像</label>\n' +
+      '      <div class="image-upload-area" id="image-upload-area">\n' +
+      `        <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">\n` +
+      '        <input type="hidden" id="edit-image" data-admin-mutation="" value="">\n' +
+      '        <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">\n' +
+      '          <div class="image-placeholder" id="edit-image-placeholder">タップして画像を選択</div>\n' +
+      '        </div>\n' +
+      '        <div class="image-actions">\n' +
+      `          <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>\n` +
+      '          \n' +
+      '        </div>\n' +
+      '        \n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-ticketUrl">予約先</label>\n' +
+      '              <input type="url" id="edit-ticketUrl" class="text-input" value="" placeholder="https://...">\n' +
+      '              <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>\n' +
+      '              <input type="url" id="edit-link" class="text-input" value="" placeholder="Instagramや公演詳細など">\n' +
+      '            </div>\n' +
+      '            <div class="checkbox-group">\n' +
+      '              <input type="checkbox" id="edit-reservationClosed" >\n' +
+      '              <label for="edit-reservationClosed">予約受付を終了</label>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '        </details>\n' +
+      '        <div class="checkbox-group live-category-field">\n' +
+      '          <input type="checkbox" id="edit-isPast" checked>\n' +
+      '          <label for="edit-isPast">公演終了</label>\n' +
+      '        </div>\n' +
+      '        <p id="live-category-warning" class="form-warning" role="status"></p>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>\n' +
+      '      <div class="operation-heading"><h3>X告知を準備</h3></div>\n' +
+      '      <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="edit-xComment">オーナーコメント</label>\n' +
+      '        <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>\n' +
+      '      </div>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="x-post-preview">X投稿プレビュー</label>\n' +
+      '        <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>\n' +
+      '      </div>\n' +
+      '      \n' +
+      '      <div class="live-announcement-actions">\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>\n' +
+      '      <div class="operation-heading"><h3>予約台帳</h3></div>\n' +
+      '      <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>\n' +
+      '      <form id="manual-reservation-form" class="manual-reservation-form">\n' +
+      '        <h4>手動取り置きを追加</h4>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-name">お名前</label>\n' +
+      '          <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">\n' +
+      '        </div>\n' +
+      '        <div class="field-row manual-fields">\n' +
+      '          <div class="form-group quantity-field">\n' +
+      '            <label for="manual-reservation-quantity">枚数</label>\n' +
+      '            <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="manual-reservation-contact">連絡先（任意）</label>\n' +
+      '            <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-note">内部メモ（任意）</label>\n' +
+      '          <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>\n' +
+      '        </div>\n' +
+      '        <div id="manual-reservation-error" class="form-error" role="alert"></div>\n' +
+      '        <button type="submit" class="btn btn-secondary btn-compact" id="manual-reservation-submit">手動取り置きを追加</button>\n' +
+      '      </form>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <p id="live-editor-save-error" class="form-error" role="alert"></p>\n' +
+      '    <footer class="live-editor-footer">\n' +
+      '      <button type="button" class="btn btn-danger" id="live-editor-delete-btn" onclick="deleteLiveFromWorkspace()">削除</button>\n' +
+      '      <button type="button" class="btn btn-primary live-primary-action" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>\n' +
+      '    </footer>\n' +
+      '  '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">
+          <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>
+          <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>
+          <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>
+        </div>
+    
+        <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">
+          <details class="live-source-intake">
+            <summary>元情報から作成</summary>
+            <div class="live-source-intake-body">
+              <p class="live-workspace-eyebrow">管理専用</p>
+              <div class="form-group">
+                <label for="edit-sourceText">受け取った公演情報</label>
+                <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>
+                <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+              </div>
+              <div class="live-source-actions">
+                <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>
+                
+              </div>
+              <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
+            </div>
+          </details>
+    
+          <div id="live-public-fields">
+            <p class="live-workspace-eyebrow">公開画面に表示</p>
+            <section class="live-editor-section live-basic-fields">
+              <div class="operation-heading"><h3>基本情報</h3></div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label for="edit-date">日付</label>
+                  <input type="date" id="edit-date" class="text-input" value="2026-06-01" data-original-unparsed-date="" aria-describedby="edit-date-error">
+                  <p id="edit-date-error" class="form-error" role="alert"></p>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="edit-venue">会場</label>
+                  <input type="text" id="edit-venue" class="text-input" value="テスト会場E" placeholder="下北沢XXX" aria-describedby="edit-venue-error">
+                  <p id="edit-venue-error" class="form-error" role="alert"></p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-title">ライブ名（任意）</label>
+                <input type="text" id="edit-title" class="text-input" value="架空の公演 フライヤーなし" placeholder="例: 〇〇企画 / 〇〇 presents...">
+              </div>
+            </section>
+    
+            <section class="live-editor-section">
+              <div class="operation-heading"><h3>公演情報</h3></div>
+              <div class="field-row live-time-fields">
+                <div class="form-group">
+                  <label for="edit-openTime">Open</label>
+                  <input type="time" id="edit-openTime" class="text-input" value="19:00">
+                </div>
+                <div class="form-group">
+                  <label for="edit-startTime">Start</label>
+                  <input type="time" id="edit-startTime" class="text-input" value="19:30">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-ticket">ticket</label>
+                <input type="text" id="edit-ticket" class="text-input" value="free" placeholder="例: ¥2,500 + 1D">
+              </div>
+              <div class="form-group">
+                <label for="edit-notes">補足</label>
+                <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="edit-performers">共演者</label>
+                <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">架空の出演者B</textarea>
+              </div>
+            </section>
+    
+            <details class="live-editor-details">
+              <summary>画像・リンクなど</summary>
+              <div class="live-editor-details-body">
+                
+                
+        <div class="form-group">
+          <label>画像</label>
+          <div class="image-upload-area" id="image-upload-area">
+            <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">
+            <input type="hidden" id="edit-image" data-admin-mutation="" value="">
+            <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">
+              <div class="image-placeholder" id="edit-image-placeholder">タップして画像を選択</div>
+            </div>
+            <div class="image-actions">
+              <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>
+              
+            </div>
+            
+          </div>
+        </div>
+      
+                <div class="form-group">
+                  <label for="edit-ticketUrl">予約先</label>
+                  <input type="url" id="edit-ticketUrl" class="text-input" value="" placeholder="https://...">
+                  <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
+                </div>
+                <div class="form-group">
+                  <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
+                  <input type="url" id="edit-link" class="text-input" value="" placeholder="Instagramや公演詳細など">
+                </div>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="edit-reservationClosed" >
+                  <label for="edit-reservationClosed">予約受付を終了</label>
+                </div>
+              </div>
+            </details>
+            <div class="checkbox-group live-category-field">
+              <input type="checkbox" id="edit-isPast" checked>
+              <label for="edit-isPast">公演終了</label>
+            </div>
+            <p id="live-category-warning" class="form-warning" role="status"></p>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>
+          <div class="operation-heading"><h3>X告知を準備</h3></div>
+          <p class="live-workspace-eyebrow">管理専用</p>
+          <div class="form-group">
+            <label for="edit-xComment">オーナーコメント</label>
+            <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="x-post-preview">X投稿プレビュー</label>
+            <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>
+          </div>
+          
+          <div class="live-announcement-actions">
+            <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>
+          <div class="operation-heading"><h3>予約台帳</h3></div>
+          <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>
+          <form id="manual-reservation-form" class="manual-reservation-form">
+            <h4>手動取り置きを追加</h4>
+            <div class="form-group">
+              <label for="manual-reservation-name">お名前</label>
+              <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">
+            </div>
+            <div class="field-row manual-fields">
+              <div class="form-group quantity-field">
+                <label for="manual-reservation-quantity">枚数</label>
+                <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="manual-reservation-contact">連絡先（任意）</label>
+                <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="manual-reservation-note">内部メモ（任意）</label>
+              <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div id="manual-reservation-error" class="form-error" role="alert"></div>
+            <button type="submit" class="btn btn-secondary btn-compact" id="manual-reservation-submit">手動取り置きを追加</button>
+          </form>
+        </section>
+    
+        <p id="live-editor-save-error" class="form-error" role="alert"></p>
+        <footer class="live-editor-footer">
+          <button type="button" class="btn btn-danger" id="live-editor-delete-btn" onclick="deleteLiveFromWorkspace()">削除</button>
+          <button type="button" class="btn btn-primary live-primary-action" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>
+        </footer>
+      
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:743:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-IMAGE a registered flyer shows the picture (pressing it saves it), 画像を変える and 画像を外す
+not ok 48 - T46-IMAGE a registered flyer shows the picture (pressing it saves it), 画像を変える and 画像を外す
+  ---
+  duration_ms: 3.135375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:749:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /id="edit-image-select-btn"[^>]*>画像を変える<\/button>/. Input:
+    
+    '\n' +
+      '    <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">\n' +
+      '      <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>\n' +
+      '      <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>\n' +
+      '      <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>\n' +
+      '    </div>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">\n' +
+      '      <details class="live-source-intake">\n' +
+      '        <summary>元情報から作成</summary>\n' +
+      '        <div class="live-source-intake-body">\n' +
+      '          <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-sourceText">受け取った公演情報</label>\n' +
+      '            <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>\n' +
+      '            <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>\n' +
+      '          </div>\n' +
+      '          <div class="live-source-actions">\n' +
+      '            <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>\n' +
+      '            \n' +
+      '          </div>\n' +
+      '          <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>\n' +
+      '        </div>\n' +
+      '      </details>\n' +
+      '\n' +
+      '      <div id="live-public-fields">\n' +
+      '        <p class="live-workspace-eyebrow">公開画面に表示</p>\n' +
+      '        <section class="live-editor-section live-basic-fields">\n' +
+      '          <div class="operation-heading"><h3>基本情報</h3></div>\n' +
+      '          <div class="field-row">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-date">日付</label>\n' +
+      '              <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">\n' +
+      '              <p id="edit-date-error" class="form-error" role="alert"></p>\n' +
+      '              \n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-venue">会場</label>\n' +
+      '              <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">\n' +
+      '              <p id="edit-venue-error" class="form-error" role="alert"></p>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-title">ライブ名（任意）</label>\n' +
+      '            <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <section class="live-editor-section">\n' +
+      '          <div class="operation-heading"><h3>公演情報</h3></div>\n' +
+      '          <div class="field-row live-time-fields">\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-openTime">Open</label>\n' +
+      '              <input type="time" id="edit-openTime" class="text-input" value="17:30">\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-startTime">Start</label>\n' +
+      '              <input type="time" id="edit-startTime" class="text-input" value="18:00">\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-ticket">ticket</label>\n' +
+      '            <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-notes">補足</label>\n' +
+      '            <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です\n' +
+      '※ 未就学児の入場はできません</textarea>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="edit-performers">共演者</label>\n' +
+      '            <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>\n' +
+      '          </div>\n' +
+      '        </section>\n' +
+      '\n' +
+      '        <details class="live-editor-details">\n' +
+      '          <summary>画像・リンクなど</summary>\n' +
+      '          <div class="live-editor-details-body">\n' +
+      '            \n' +
+      '            <details class="legacy-live-details">\n' +
+      '              <summary>旧詳細（未構造化）</summary>\n' +
+      '              <div class="form-group">\n' +
+      '                <label for="edit-description">過去データ互換</label>\n' +
+      '                <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。\n' +
+      '\n' +
+      '二つ目の段落です。</textarea>\n' +
+      '                <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>\n' +
+      '              </div>\n' +
+      '            </details>\n' +
+      '            \n' +
+      '    <div class="form-group">\n' +
+      '      <label>画像</label>\n' +
+      '      <div class="image-upload-area" id="image-upload-area">\n' +
+      `        <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">\n` +
+      '        <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">\n' +
+      '        <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">\n' +
+      '          <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>\n' +
+      '        </div>\n' +
+      '        <div class="image-actions">\n' +
+      `          <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>\n` +
+      `          <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>\n` +
+      '        </div>\n' +
+      '        \n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  \n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-ticketUrl">予約先</label>\n' +
+      '              <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">\n' +
+      '              <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>\n' +
+      '            </div>\n' +
+      '            <div class="form-group">\n' +
+      '              <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>\n' +
+      '              <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">\n' +
+      '            </div>\n' +
+      '            <div class="checkbox-group">\n' +
+      '              <input type="checkbox" id="edit-reservationClosed" >\n' +
+      '              <label for="edit-reservationClosed">予約受付を終了</label>\n' +
+      '            </div>\n' +
+      '          </div>\n' +
+      '        </details>\n' +
+      '        <div class="checkbox-group live-category-field">\n' +
+      '          <input type="checkbox" id="edit-isPast" >\n' +
+      '          <label for="edit-isPast">公演終了</label>\n' +
+      '        </div>\n' +
+      '        <p id="live-category-warning" class="form-warning" role="status"></p>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>\n' +
+      '      <div class="operation-heading"><h3>X告知を準備</h3></div>\n' +
+      '      <p class="live-workspace-eyebrow">管理専用</p>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="edit-xComment">オーナーコメント</label>\n' +
+      '        <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>\n' +
+      '      </div>\n' +
+      '      <div class="form-group">\n' +
+      '        <label for="x-post-preview">X投稿プレビュー</label>\n' +
+      '        <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>\n' +
+      '      </div>\n' +
+      '      \n' +
+      '      <div class="live-announcement-actions">\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>\n' +
+      '        <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>\n' +
+      '      </div>\n' +
+      '    </section>\n' +
+      '\n' +
+      '    <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>\n' +
+      '      <div class="operation-heading"><h3>予約台帳</h3></div>\n' +
+      '      <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>\n' +
+      '      <form id="manual-reservation-form" class="manual-reservation-form">\n' +
+      '        <h4>手動取り置きを追加</h4>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-name">お名前</label>\n' +
+      '          <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">\n' +
+      '        </div>\n' +
+      '        <div class="field-row manual-fields">\n' +
+      '          <div class="form-group quantity-field">\n' +
+      '            <label for="manual-reservation-quantity">枚数</label>\n' +
+      '            <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>\n' +
+      '          </div>\n' +
+      '          <div class="form-group">\n' +
+      '            <label for="manual-reservation-contact">連絡先（任意）</label>\n' +
+      '            <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">\n' +
+      '          </div>\n' +
+      '        </div>\n' +
+      '        <div class="form-group">\n' +
+      '          <label for="manual-reservation-note">内部メモ（任意）</label>\n' +
+      '          <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>\n' +
+      '        </div>\n' +
+      '        <div id="manual-reservation-error" class="form-error" role="alert"></div>\n' +
+      '        <button type="submit" cl'... 515 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <div class="live-editor-task-tabs" role="tablist" aria-label="選択中Liveの操作">
+          <button type="button" id="live-editor-task-public" class="live-editor-task-tab is-active" role="tab" data-live-editor-task="public" aria-controls="live-editor-panel-public" aria-selected="true" tabindex="0">公開内容</button>
+          <button type="button" id="live-editor-task-announcement" class="live-editor-task-tab" role="tab" data-live-editor-task="announcement" aria-controls="live-editor-panel-announcement" aria-selected="false" tabindex="-1">告知</button>
+          <button type="button" id="live-editor-task-reservation" class="live-editor-task-tab" role="tab" data-live-editor-task="reservation" aria-controls="live-editor-panel-reservation" aria-selected="false" tabindex="-1">予約</button>
+        </div>
+    
+        <section id="live-editor-panel-public" class="live-editor-task-panel" role="tabpanel" data-live-editor-task-panel="public" aria-labelledby="live-editor-task-public">
+          <details class="live-source-intake">
+            <summary>元情報から作成</summary>
+            <div class="live-source-intake-body">
+              <p class="live-workspace-eyebrow">管理専用</p>
+              <div class="form-group">
+                <label for="edit-sourceText">受け取った公演情報</label>
+                <textarea id="edit-sourceText" class="textarea" rows="7" placeholder="主催者から届いたテキストをそのまま貼り付け"></textarea>
+                <p class="field-hint">AIは下書き欄を埋めるだけです。保存や公開は行いません。</p>
+              </div>
+              <div class="live-source-actions">
+                <button type="button" class="btn btn-secondary btn-compact" id="live-source-parse-btn">AIで下書きを作る</button>
+                
+              </div>
+              <div id="live-source-warnings" class="parse-warnings" aria-live="polite"></div>
+            </div>
+          </details>
+    
+          <div id="live-public-fields">
+            <p class="live-workspace-eyebrow">公開画面に表示</p>
+            <section class="live-editor-section live-basic-fields">
+              <div class="operation-heading"><h3>基本情報</h3></div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label for="edit-date">日付</label>
+                  <input type="date" id="edit-date" class="text-input" value="2099-12-12" data-original-unparsed-date="" aria-describedby="edit-date-error">
+                  <p id="edit-date-error" class="form-error" role="alert"></p>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="edit-venue">会場</label>
+                  <input type="text" id="edit-venue" class="text-input" value="テスト会場B" placeholder="下北沢XXX" aria-describedby="edit-venue-error">
+                  <p id="edit-venue-error" class="form-error" role="alert"></p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-title">ライブ名（任意）</label>
+                <input type="text" id="edit-title" class="text-input" value="架空の公演 長い文" placeholder="例: 〇〇企画 / 〇〇 presents...">
+              </div>
+            </section>
+    
+            <section class="live-editor-section">
+              <div class="operation-heading"><h3>公演情報</h3></div>
+              <div class="field-row live-time-fields">
+                <div class="form-group">
+                  <label for="edit-openTime">Open</label>
+                  <input type="time" id="edit-openTime" class="text-input" value="17:30">
+                </div>
+                <div class="form-group">
+                  <label for="edit-startTime">Start</label>
+                  <input type="time" id="edit-startTime" class="text-input" value="18:00">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit-ticket">ticket</label>
+                <input type="text" id="edit-ticket" class="text-input" value="¥3,000 + 1D" placeholder="例: ¥2,500 + 1D">
+              </div>
+              <div class="form-group">
+                <label for="edit-notes">補足</label>
+                <textarea id="edit-notes" class="textarea" rows="3" placeholder="1補足1行（※は表示時に付きます）">※ 入場時にドリンク代が必要です
+    ※ 未就学児の入場はできません</textarea>
+              </div>
+              <div class="form-group">
+                <label for="edit-performers">共演者</label>
+                <textarea id="edit-performers" class="textarea" rows="3" placeholder="1組1行、または / 区切り">テスト出演者アテスト出演者イテスト出演者ウテスト出演者エテスト出演者オテスト出演者カテスト出演者キテスト出演者クテスト出演者ケテスト出演者コテスト出演者サテスト出演者シテスト出演者ステスト出演者セテスト出演者ソ</textarea>
+              </div>
+            </section>
+    
+            <details class="live-editor-details">
+              <summary>画像・リンクなど</summary>
+              <div class="live-editor-details-body">
+                
+                <details class="legacy-live-details">
+                  <summary>旧詳細（未構造化）</summary>
+                  <div class="form-group">
+                    <label for="edit-description">過去データ互換</label>
+                    <textarea id="edit-description" class="textarea" rows="4">架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。架空の説明文です。
+    
+    二つ目の段落です。</textarea>
+                    <p class="field-hint">構造化項目が空のときだけ公開表示に使われます。</p>
+                  </div>
+                </details>
+                
+        <div class="form-group">
+          <label>画像</label>
+          <div class="image-upload-area" id="image-upload-area">
+            <input type="file" id="edit-image-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, 'edit-image')" style="display:none">
+            <input type="hidden" id="edit-image" data-admin-mutation="" value="assets/images/fixture-long.jpg">
+            <div class="image-preview-container" id="edit-image-preview-container" data-downloadable-preview="true">
+              <a class="image-download-link" href="../assets/images/fixture-long.jpg" download="fixture-long.jpg" aria-label="画像を保存"><img class="image-preview-large" id="edit-image-preview" src="../assets/images/fixture-long.jpg" alt=""></a>
+            </div>
+            <div class="image-actions">
+              <button type="button" class="btn-image-select" id="edit-image-select-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="document.getElementById('edit-image-file').click()">画像を選択</button>
+              <button type="button" class="btn-image-clear" id="edit-image-clear-btn" data-admin-mutation="" data-live-editor-mutation="true" onclick="clearImage('edit-image')">削除</button>
+            </div>
+            
+          </div>
+        </div>
+      
+                <div class="form-group">
+                  <label for="edit-ticketUrl">予約先</label>
+                  <input type="url" id="edit-ticketUrl" class="text-input" value="https://tickets.example.test/long" placeholder="https://...">
+                  <p class="field-hint">入力あり＝外部予約先、空欄なら1212HP内で予約します。</p>
+                </div>
+                <div class="form-group">
+                  <label for="edit-link">詳細・SNSリンク（予約先とは別）</label>
+                  <input type="url" id="edit-link" class="text-input" value="https://example.test/live/long" placeholder="Instagramや公演詳細など">
+                </div>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="edit-reservationClosed" >
+                  <label for="edit-reservationClosed">予約受付を終了</label>
+                </div>
+              </div>
+            </details>
+            <div class="checkbox-group live-category-field">
+              <input type="checkbox" id="edit-isPast" >
+              <label for="edit-isPast">公演終了</label>
+            </div>
+            <p id="live-category-warning" class="form-warning" role="status"></p>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-announcement" class="live-editor-task-panel announcement-panel" role="tabpanel" data-live-editor-task-panel="announcement" aria-labelledby="live-editor-task-announcement" hidden>
+          <div class="operation-heading"><h3>X告知を準備</h3></div>
+          <p class="live-workspace-eyebrow">管理専用</p>
+          <div class="form-group">
+            <label for="edit-xComment">オーナーコメント</label>
+            <textarea id="edit-xComment" class="textarea" rows="3" placeholder="このLiveへのひとこと"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="x-post-preview">X投稿プレビュー</label>
+            <textarea id="x-post-preview" class="textarea preview-text" rows="12" readonly></textarea>
+          </div>
+          
+          <div class="live-announcement-actions">
+            <button type="button" class="btn btn-secondary btn-compact" id="x-intent-btn">X Web Intentを開く</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-post-copy-btn">投稿文をコピー</button>
+            <button type="button" class="btn btn-secondary btn-compact" id="x-link-copy-btn">リンクをコピー</button>
+          </div>
+        </section>
+    
+        <section id="live-editor-panel-reservation" class="live-editor-task-panel reservation-panel" role="tabpanel" data-live-editor-task-panel="reservation" aria-labelledby="live-editor-task-reservation" hidden>
+          <div class="operation-heading"><h3>予約台帳</h3></div>
+          <div id="live-reservation-ledger" aria-live="polite"><div class="empty-state"><p>予約台帳を読み込みます...</p></div></div>
+          <form id="manual-reservation-form" class="manual-reservation-form">
+            <h4>手動取り置きを追加</h4>
+            <div class="form-group">
+              <label for="manual-reservation-name">お名前</label>
+              <input type="text" id="manual-reservation-name" class="text-input" required maxlength="200">
+            </div>
+            <div class="field-row manual-fields">
+              <div class="form-group quantity-field">
+                <label for="manual-reservation-quantity">枚数</label>
+                <input type="number" id="manual-reservation-quantity" class="text-input" value="1" min="1" max="10" step="1" required>
+              </div>
+              <div class="form-group">
+                <label for="manual-reservation-contact">連絡先（任意）</label>
+                <input type="text" id="manual-reservation-contact" class="text-input" maxlength="200">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="manual-reservation-note">内部メモ（任意）</label>
+              <textarea id="manual-reservation-note" class="textarea" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div id="manual-reservation-error" class="form-error" role="alert"></div>
+            <button type="submit" class="btn btn-secondary btn-compact" id="manual-reservation-submit">手動取り置きを追加</button>
+          </form>
+        </section>
+    
+        <p id="live-editor-save-error" class="form-error" role="alert"></p>
+        <footer class="live-editor-footer">
+          <button type="button" class="btn btn-danger" id="live-editor-delete-btn" onclick="deleteLiveFromWorkspace()">削除</button>
+          <button type="button" class="btn btn-primary live-primary-action" id="live-editor-save-btn" onclick="saveLiveWorkspace()">保存して公開</button>
+        </footer>
+      
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:755:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-IMAGE while the flyer uploads the status says アップロードしています…; a failure says 画像をアップロードできませんでした with the reason and keeps the old flyer
+not ok 49 - T46-IMAGE while the flyer uploads the status says アップロードしています…; a failure says 画像をアップロードできませんでした with the reason and keeps the old flyer
+  ---
+  duration_ms: 1.777333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:771:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'textContent')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:784:51)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-IMAGE the other tabs keep their picture wording
+ok 50 - T46-IMAGE the other tabs keep their picture wording
+  ---
+  duration_ms: 1.131416
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 28
+# fail 22
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3231.138792

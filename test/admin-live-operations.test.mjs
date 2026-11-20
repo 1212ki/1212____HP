@@ -14,737 +14,22 @@ const require = createRequire(import.meta.url);
 const LiveOperations = require(join(repoRoot, 'assets/js/live-operations.js'));
 const musicSource = readFileSync(join(repoRoot, 'assets/js/music-data.js'), 'utf8');
 
-function decodeHtml(value) {
-  return String(value || '')
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'")
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&');
-}
+import {
+  answerLiveDialog,
+  decodeHtml,
+  createElement,
+  createDomHarness,
+  loadAdminApp,
+  setLiveForm,
+  LIVE_SOURCE_INTAKE_FIELD_IDS,
+  snapshotLiveSourceIntake,
+  assertLiveSourceIntakeUnchanged,
+  validLiveSourceIntakeDraft,
+  deferred,
+  jsonResponse,
+  flushAsync,
+} from './support/admin-app-harness.mjs';
 
-function createElement(id, ownerDocument = null, tagName = 'div') {
-  const listeners = new Map();
-  const classes = new Set();
-  const attributes = new Map();
-  let html = '';
-  let isHidden = false;
-  const element = {
-    id,
-    tagName: tagName.toUpperCase(),
-    children: [],
-    dataset: {},
-    value: '',
-    checked: false,
-    disabled: false,
-    tabIndex: 0,
-    textContent: '',
-    parentElement: null,
-    style: {},
-    isConnected: true,
-    focusCount: 0,
-    focusAttemptCount: 0,
-    classList: {
-      add(...names) { names.forEach((name) => classes.add(name)); },
-      remove(...names) { names.forEach((name) => classes.delete(name)); },
-      contains(name) { return classes.has(name); },
-    },
-    addEventListener(type, listener) {
-      const group = listeners.get(type) || [];
-      group.push(listener);
-      listeners.set(type, group);
-    },
-    getAttribute(name) {
-      return attributes.get(name) ?? null;
-    },
-    setAttribute(name, value) {
-      const normalized = String(value);
-      attributes.set(name, normalized);
-      if (name === 'tabindex') this.tabIndex = Number(normalized);
-      if (name.startsWith('data-')) {
-        const dataKey = name.slice(5).replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
-        this.dataset[dataKey] = normalized;
-      }
-    },
-    appendChild(child) {
-      child.parentElement = this;
-      child.isConnected = true;
-      this.children.push(child);
-    },
-    removeChild(child) {
-      this.children = this.children.filter((candidate) => candidate !== child);
-      child.parentElement = null;
-      child.isConnected = false;
-    },
-    remove() {
-      this.parentElement?.removeChild?.(this);
-    },
-    click() {},
-    focus() {
-      this.focusAttemptCount += 1;
-      let focusTarget = this;
-      while (focusTarget) {
-        if (!focusTarget.isConnected || focusTarget.hidden) return;
-        focusTarget = focusTarget.parentElement;
-      }
-      this.focusCount += 1;
-      if (ownerDocument) ownerDocument.activeElement = this;
-    },
-    select() {},
-    querySelector() { return null; },
-    closest() { return null; },
-    async dispatch(type, event = {}) {
-      let result;
-      for (const listener of listeners.get(type) || []) {
-        result = await listener({ preventDefault() {}, target: this, ...event });
-      }
-      return result;
-    },
-  };
-  Object.defineProperty(element, 'innerHTML', {
-    configurable: true,
-    get() { return html; },
-    set(value) { html = String(value); },
-  });
-  Object.defineProperty(element, 'hidden', {
-    configurable: true,
-    get() { return isHidden; },
-    set(value) {
-      isHidden = Boolean(value);
-      if (isHidden && ownerDocument?.activeElement) {
-        let focusTarget = ownerDocument.activeElement;
-        while (focusTarget) {
-          if (focusTarget === element) {
-            ownerDocument.activeElement = ownerDocument.body;
-            break;
-          }
-          focusTarget = focusTarget.parentElement;
-        }
-      }
-    },
-  });
-  return element;
-}
-
-function createDomHarness(options = {}) {
-  const elements = new Map();
-  const documentListeners = new Map();
-  const modalOwnedIds = new Set();
-  const modalOrder = [];
-  const modalOwnedElements = new Map();
-  const liveEditorOwnedElements = new Map();
-  const createdAnchors = [];
-  const createdTextareas = [];
-  const execCommandCalls = [];
-  const objectUrls = [];
-  const revokedObjectUrls = [];
-  let objectUrlSequence = 0;
-  let anchorClickError = null;
-
-  const document = {
-    activeElement: null,
-    body: null,
-    addEventListener(type, listener) {
-      const group = documentListeners.get(type) || [];
-      group.push(listener);
-      documentListeners.set(type, group);
-    },
-    createElement(tag) {
-      const element = createElement('', document, tag);
-      if (tag.toLowerCase() === 'a') {
-        element.click = () => {
-          if (anchorClickError) throw anchorClickError;
-          element.clicked = true;
-        };
-        createdAnchors.push(element);
-      }
-      if (tag.toLowerCase() === 'textarea') createdTextareas.push(element);
-      return element;
-    },
-    execCommand(command) {
-      execCommandCalls.push(command);
-      return options.execCommandResult ?? true;
-    },
-    getElementById(id) {
-      // The Live editor precedes the generic modal in the real document. Keep
-      // that lookup order when duplicate edit-* IDs expose an ownership bug.
-      if (liveEditorOwnedElements.has(id) && modalOwnedElements.has(id)) {
-        return liveEditorOwnedElements.get(id);
-      }
-      return elements.get(id) || null;
-    },
-    querySelectorAll(selector) {
-      if (selector === '[data-live-edit]') {
-        return ['live-upcoming-list', 'live-past-list']
-          .flatMap((id) => elements.get(id)?.children || [])
-          .filter((element) => element.dataset?.liveEdit !== undefined);
-      }
-      const classSelector = selector.match(/^\.([\w-]+)$/);
-      if (classSelector) {
-        return [...elements.values()].filter((element) => element.classList.contains(classSelector[1]));
-      }
-      const dataSelector = selector.match(/^\[data-([\w-]+)\]$/);
-      if (!dataSelector) return [];
-      const dataKey = dataSelector[1].replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
-      return [...elements.values()].filter((element) => element.dataset?.[dataKey] !== undefined);
-    },
-    contains(element) { return Boolean(element?.isConnected); },
-  };
-  document.body = createElement('body', document, 'body');
-
-  function addStatic(id, tagName = 'div') {
-    const element = createElement(id, document, tagName);
-    elements.set(id, element);
-    return element;
-  }
-
-  function installSelectHtmlBehavior(select) {
-    let html = '';
-    Object.defineProperty(select, 'innerHTML', {
-      configurable: true,
-      get() { return html; },
-      set(value) {
-        html = String(value);
-        select.optionValues = [...html.matchAll(/<option\b[^>]*value="([^"]*)"[^>]*>/gi)]
-          .map((match) => decodeHtml(match[1]));
-        const selected = html.match(/<option\b[^>]*value="([^"]*)"[^>]*selected[^>]*>/i)?.[1];
-        select.value = selected === undefined ? (select.optionValues[0] || '') : decodeHtml(selected);
-      },
-    });
-  }
-
-  function installLiveListHtmlBehavior(list) {
-    let html = '';
-    Object.defineProperty(list, 'innerHTML', {
-      configurable: true,
-      get() { return html; },
-      set(value) {
-        for (const child of list.children) child.isConnected = false;
-        list.children = [];
-        html = String(value);
-        for (const match of html.matchAll(/<button\b([^>]*)>/gi)) {
-          const attrs = match[1];
-          const liveId = attrs.match(/\bdata-live-id="([^"]*)"/i)?.[1];
-          const category = attrs.match(/\bdata-live-category="([^"]*)"/i)?.[1];
-          if (liveId === undefined || category === undefined) continue;
-          const trigger = createElement(`live-edit-${decodeHtml(liveId)}`, document, 'button');
-          trigger.dataset.liveEdit = '';
-          trigger.dataset.liveId = decodeHtml(liveId);
-          trigger.dataset.liveCategory = decodeHtml(category);
-          const classAttr = attrs.match(/\bclass="([^"]*)"/i)?.[1] || '';
-          trigger.classList.add(...classAttr.split(/\s+/).filter(Boolean));
-          const ariaCurrent = attrs.match(/\baria-current="([^"]*)"/i)?.[1];
-          if (ariaCurrent !== undefined) trigger.setAttribute('aria-current', ariaCurrent);
-          trigger.closest = (selector) => selector === '[data-live-edit]' ? trigger : null;
-          list.appendChild(trigger);
-        }
-      },
-    });
-  }
-
-  function installOwnedHtmlBehavior(root, ownedIds, order, ownedElements = new Map()) {
-    Object.defineProperty(root, 'innerHTML', {
-      configurable: true,
-      get() { return root._html || ''; },
-      set(value) {
-        for (const id of ownedIds) {
-          const prior = ownedElements.get(id);
-          if (prior) prior.isConnected = false;
-          if (elements.get(id) === prior) elements.delete(id);
-          ownedElements.delete(id);
-        }
-        ownedIds.clear();
-        order.length = 0;
-        root._html = String(value);
-
-        const openingTag = /<([a-z][\w-]*)\b([^>]*\bid="([^"]+)"[^>]*)>/gi;
-        for (const match of root._html.matchAll(openingTag)) {
-          const [, tagName, attrs, id] = match;
-          const element = createElement(id, document, tagName);
-          element.parentElement = root;
-          element.disabled = /\bdisabled(?:\s|>|$)/i.test(attrs);
-          element.checked = /\bchecked(?:\s|>|$)/i.test(attrs);
-          element.hidden = /\bhidden(?:\s|>|$)/i.test(attrs);
-          const classAttr = attrs.match(/\bclass="([^"]*)"/i)?.[1] || '';
-          element.classList.add(...classAttr.split(/\s+/).filter(Boolean));
-          const valueAttr = attrs.match(/\bvalue="([^"]*)"/i);
-          if (valueAttr) element.value = decodeHtml(valueAttr[1]);
-          for (const dataAttr of attrs.matchAll(/\bdata-([\w-]+)="([^"]*)"/gi)) {
-            const key = dataAttr[1].replace(/-([a-z])/g, (_whole, letter) => letter.toUpperCase());
-            element.dataset[key] = decodeHtml(dataAttr[2]);
-          }
-          for (const ariaAttr of attrs.matchAll(/\b(aria-[\w-]+)="([^"]*)"/gi)) {
-            element.setAttribute(ariaAttr[1], decodeHtml(ariaAttr[2]));
-          }
-          const tabindexAttr = attrs.match(/\btabindex="(-?\d+)"/i)?.[1];
-          if (tabindexAttr !== undefined) element.setAttribute('tabindex', tabindexAttr);
-          if (tagName.toLowerCase() === 'textarea') {
-            const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const body = root._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
-            element.value = decodeHtml(body || '');
-          }
-          if (tagName.toLowerCase() === 'select') {
-            installSelectHtmlBehavior(element);
-            const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            element.innerHTML = root._html.match(new RegExp(`<select\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/select>`, 'i'))?.[1] || '';
-          }
-          elements.set(id, element);
-          ownedElements.set(id, element);
-          ownedIds.add(id);
-          order.push(element);
-        }
-      },
-    });
-    root.querySelector = () => order.find((element) => {
-      if (element.disabled) return false;
-      if (element.tagName === 'INPUT' && element.type === 'hidden') return false;
-      return ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName);
-    }) || null;
-    root.querySelectorAll = (selector) => {
-      if (
-        selector === 'input, textarea, select, button'
-        || selector === 'button, input, textarea, select'
-      ) {
-        return order.filter((element) => ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(element.tagName));
-      }
-      if (selector === 'input:not([readonly]), textarea:not([readonly]), select, .btn-image-select, .btn-image-clear') {
-        return order.filter((element) => (
-          ['INPUT', 'TEXTAREA', 'SELECT'].includes(element.tagName)
-          || element.classList.contains('btn-image-select')
-          || element.classList.contains('btn-image-clear')
-        ));
-      }
-      return [];
-    };
-  }
-
-  const modalBody = addStatic('modal-body');
-  installOwnedHtmlBehavior(modalBody, modalOwnedIds, modalOrder, modalOwnedElements);
-
-  addStatic('modal-title');
-  addStatic('modal-overlay');
-  addStatic('modal');
-  const deleteButton = addStatic('delete-btn', 'button');
-  deleteButton.dataset.adminMutation = '';
-  addStatic('toast');
-  const globalSaveButton = addStatic('saveBtn', 'button');
-  globalSaveButton.dataset.adminMutation = '';
-  addStatic('modeBadge');
-  addStatic('connectionBanner');
-  addStatic('news-list');
-  const newsAddButton = addStatic('news-add-btn', 'button');
-  newsAddButton.dataset.adminMutation = '';
-  const siteGlobalTab = addStatic('global-tab-site', 'button');
-  siteGlobalTab.dataset.tab = 'site';
-  siteGlobalTab.classList.add('tab-btn');
-  const liveGlobalTab = addStatic('global-tab-live', 'button');
-  liveGlobalTab.dataset.tab = 'live';
-  liveGlobalTab.classList.add('tab-btn', 'active');
-  const newsGlobalTab = addStatic('global-tab-news', 'button');
-  newsGlobalTab.dataset.tab = 'news';
-  newsGlobalTab.classList.add('tab-btn');
-  const liveGlobalPanel = addStatic('live-tab', 'section');
-  liveGlobalPanel.classList.add('tab-content', 'active');
-  const newsGlobalPanel = addStatic('news-tab', 'section');
-  newsGlobalPanel.classList.add('tab-content');
-  const siteGlobalPanel = addStatic('site-tab', 'section');
-  siteGlobalPanel.classList.add('tab-content');
-  addStatic('tickets-list');
-  const liveFilter = addStatic('tickets-live-filter', 'select');
-  installSelectHtmlBehavior(liveFilter);
-  const statusFilter = addStatic('tickets-status-filter', 'select');
-  statusFilter.value = 'pending';
-  const liveWorkspace = addStatic('live-workspace');
-  liveWorkspace.parentElement = liveGlobalPanel;
-  const liveAddButton = addStatic('live-add-btn', 'button');
-  liveAddButton.dataset.adminMutation = '';
-  const livePageTab = addStatic('live-workspace-page-tab', 'button');
-  livePageTab.dataset.liveWorkspaceView = 'page';
-  const liveReservationsTab = addStatic('live-workspace-reservations-tab', 'button');
-  liveReservationsTab.dataset.liveWorkspaceView = 'reservations';
-  const livePagePanel = addStatic('live-workspace-page-panel', 'section');
-  livePagePanel.dataset.liveWorkspacePanel = 'page';
-  livePagePanel.parentElement = liveWorkspace;
-  const liveReservationsPanel = addStatic('live-workspace-reservations-panel', 'section');
-  liveReservationsPanel.dataset.liveWorkspacePanel = 'reservations';
-  liveReservationsPanel.parentElement = liveWorkspace;
-  const upcomingTab = addStatic('live-list-upcoming-tab', 'button');
-  upcomingTab.dataset.liveListView = 'upcoming';
-  const pastTab = addStatic('live-list-past-tab', 'button');
-  pastTab.dataset.liveListView = 'past';
-  const upcomingPanel = addStatic('live-list-upcoming-panel', 'section');
-  upcomingPanel.dataset.liveListPanel = 'upcoming';
-  const pastPanel = addStatic('live-list-past-panel', 'section');
-  pastPanel.dataset.liveListPanel = 'past';
-  const livePagePrimary = addStatic('live-page-primary');
-  livePagePrimary.parentElement = livePagePanel;
-  const liveMasterDetail = addStatic('live-master-detail');
-  liveMasterDetail.parentElement = livePagePrimary;
-  const liveMasterPane = addStatic('live-master-pane');
-  liveMasterPane.parentElement = liveMasterDetail;
-  const liveEditorPane = addStatic('live-editor-pane', 'section');
-  liveEditorPane.parentElement = liveMasterDetail;
-  const liveEditorBack = addStatic('live-editor-back', 'button');
-  liveEditorBack.parentElement = liveEditorPane;
-  const liveEditorContext = addStatic('live-editor-context', 'p');
-  liveEditorContext.parentElement = liveEditorPane;
-  const liveEditorHeading = addStatic('live-editor-heading', 'h3');
-  liveEditorHeading.parentElement = liveEditorPane;
-  const liveEditorSaveStatus = addStatic('live-editor-save-status', 'span');
-  liveEditorSaveStatus.parentElement = liveEditorPane;
-  const liveEditorBody = addStatic('live-editor-body');
-  liveEditorBody.parentElement = liveEditorPane;
-  const liveEditorOwnedIds = new Set();
-  const liveEditorOrder = [];
-  installOwnedHtmlBehavior(liveEditorBody, liveEditorOwnedIds, liveEditorOrder, liveEditorOwnedElements);
-  upcomingPanel.parentElement = livePagePrimary;
-  pastPanel.parentElement = livePagePrimary;
-  const liveTicketSettingsOpen = addStatic('live-ticket-settings-open', 'button');
-  liveTicketSettingsOpen.parentElement = livePagePrimary;
-  const liveTicketSettingsPanel = addStatic('live-ticket-settings-panel', 'section');
-  liveTicketSettingsPanel.parentElement = livePagePanel;
-  const liveTicketSettingsClose = addStatic('live-ticket-settings-close', 'button');
-  liveTicketSettingsClose.parentElement = liveTicketSettingsPanel;
-  [
-    ['ticket-complete-text', 'textarea'],
-    ['ticket-field-quantity', 'input'],
-    ['ticket-field-message', 'input'],
-    ['ticket-field-label-quantity', 'input'],
-    ['ticket-field-label-message', 'input'],
-    ['ticket-field-placeholder-message', 'input'],
-    ['ticket-field-submit-label', 'input'],
-  ].forEach(([id, tagName]) => {
-    const field = addStatic(id, tagName);
-    field.parentElement = liveTicketSettingsPanel;
-    field.dataset.adminMutation = '';
-  });
-  const upcomingList = addStatic('live-upcoming-list');
-  upcomingList.parentElement = upcomingPanel;
-  installLiveListHtmlBehavior(upcomingList);
-  const pastList = addStatic('live-past-list');
-  pastList.parentElement = pastPanel;
-  installLiveListHtmlBehavior(pastList);
-
-  const siteHeroForm = addStatic('site-hero-image-form');
-  installOwnedHtmlBehavior(siteHeroForm, new Set(), [], new Map());
-  [
-    ['site-featured-release-id', 'select'],
-    ['site-link-bandcamp', 'input'],
-    ['site-link-youtube', 'input'],
-    ['site-link-x', 'input'],
-    ['site-link-instagram', 'input'],
-    ['site-link-note', 'input'],
-    ['site-footer-text', 'input'],
-    ['contact-intro-text', 'textarea'],
-    ['contact-form-action', 'input'],
-    ['youtube-channel-url', 'input'],
-    ['profile-text', 'textarea'],
-  ].forEach(([id, tagName]) => {
-    const control = addStatic(id, tagName);
-    control.dataset.adminMutation = '';
-    if (tagName === 'select') installSelectHtmlBehavior(control);
-  });
-  [
-    'youtube-add-musicVideos-btn',
-    'youtube-add-musicVideos-secondary-btn',
-    'youtube-add-liveMovies-btn',
-    'youtube-add-demos-btn',
-    'discography-add-btn',
-    'profile-link-add-btn',
-    'modal-save-btn',
-  ].forEach((id) => {
-    const control = addStatic(id, 'button');
-    control.dataset.adminMutation = '';
-  });
-  ['youtube-musicVideos-list', 'youtube-liveMovies-list', 'youtube-demos-list', 'disc-digital-list', 'disc-demo-list']
-    .forEach((id) => addStatic(id));
-  const profileImageForm = addStatic('profile-image-form');
-  installOwnedHtmlBehavior(profileImageForm, new Set(), [], new Map());
-  const profileLinksList = addStatic('profile-links-list');
-  installOwnedHtmlBehavior(profileLinksList, new Set(), [], new Map());
-
-  class TestURL extends URL {}
-  TestURL.createObjectURL = (blob) => {
-    const url = `blob:admin-test-${++objectUrlSequence}`;
-    objectUrls.push({ blob, url });
-    return url;
-  };
-  TestURL.revokeObjectURL = (url) => revokedObjectUrls.push(url);
-
-  return {
-    TestURL,
-    createdAnchors,
-    createdTextareas,
-    document,
-    elements,
-    execCommandCalls,
-    objectUrls,
-    revokedObjectUrls,
-    async dispatchDocument(type, event = {}) {
-      for (const listener of documentListeners.get(type) || []) {
-        await listener(event);
-      }
-    },
-    setAnchorClickError(error) { anchorClickError = error; },
-  };
-}
-
-function loadAdminApp(options = {}) {
-  const dom = createDomHarness(options);
-  const { document, elements } = dom;
-  const fetchCalls = [];
-  const networkFetchCalls = [];
-  const clipboardWrites = [];
-  const openedUrls = [];
-  const windowListeners = new Map();
-
-  const context = {
-    Blob,
-    FormData,
-    Headers,
-    URL: dom.TestURL,
-    URLSearchParams,
-    clearTimeout,
-    confirm: () => false,
-    console: options.console || console,
-    document,
-    fetch: async (url, fetchOptions = {}) => {
-      networkFetchCalls.push({ url, options: fetchOptions });
-      return options.networkFetch
-        ? options.networkFetch(url, fetchOptions)
-        : { ok: true, status: 200, json: async () => ({}) };
-    },
-    FileReader: class {},
-    location: { hostname: 'localhost' },
-    localStorage: { getItem: () => '', removeItem() {}, setItem() {} },
-    navigator: {
-      clipboard: {
-        async writeText(value) {
-          clipboardWrites.push(value);
-          if (options.clipboardWrite) await options.clipboardWrite(value);
-        },
-      },
-    },
-    prompt: () => '',
-    setTimeout,
-    structuredClone,
-    window: {
-      ADMIN_CONFIG: options.adminConfig || {},
-      ADMIN_BUILD_ID: '',
-      LiveOperations: options.liveOperations || LiveOperations,
-      addEventListener(type, listener) {
-        const group = windowListeners.get(type) || [];
-        group.push(listener);
-        windowListeners.set(type, group);
-      },
-      location: { href: 'https://1212hp.com/admin/', origin: 'https://1212hp.com' },
-      open(url) { openedUrls.push(url); return null; },
-      prompt: () => '',
-    },
-  };
-  context.__adminSaveCalls = 0;
-  context.globalThis = context;
-
-  vm.runInNewContext(musicSource, context);
-  context.window.MusicData = context.MusicData || context.window.MusicData;
-  vm.runInNewContext(`${adminJs}
-	globalThis.__adminLiveTest = {
-	  applyApiFallbackReadOnlyState,
-	  renderAll,
-	  renderSiteSettings,
-	  renderYouTube,
-	  renderDiscography,
-	  renderProfile,
-	  addNews,
-	  editNews,
-	  addYouTubeVideo,
-	  editYouTubeVideo,
-	  addDiscography,
-	  editDiscography,
-	  addProfileLink,
-	  updateProfileLink,
-	  deleteProfileLink,
-	  handleImageSelect,
-	  clearImage,
-	  addLive,
-	  editLive,
-	  closeLiveEditor: typeof closeLiveEditor === 'function' ? closeLiveEditor : null,
-	  saveLiveWorkspace: typeof saveLiveWorkspace === 'function' ? saveLiveWorkspace : null,
-	  deleteLiveFromWorkspace: typeof deleteLiveFromWorkspace === 'function' ? deleteLiveFromWorkspace : null,
-	  requestLiveEditorTransition: typeof requestLiveEditorTransition === 'function' ? requestLiveEditorTransition : null,
-  handleLiveSourceParse,
-  saveLiveItem,
-  saveToApi,
-  updateXPreviewInModal: typeof updateXPreviewInModal === 'function' ? updateXPreviewInModal : null,
-  buildXIntentUrlFromModal,
-  copyXAnnouncementFromModal: typeof copyXAnnouncementFromModal === 'function' ? copyXAnnouncementFromModal : null,
-  copyLiveLinkFromModal: typeof copyLiveLinkFromModal === 'function' ? copyLiveLinkFromModal : null,
-  loadLiveReservations,
-  submitManualReservation,
-  calculateActiveReservationTotals,
-  renderTicketRow,
-  markTicketStatus,
-  downloadTicketsCsv,
-  renderLiveReservationLedger,
-  loadTickets,
-  renderTicketsUi,
-  renderLive,
-  saveData,
-  saveModal,
-  saveDiscographyItem,
-  getHasChanges() { return hasChanges; },
-  setSaving(value) { isSaving = value; },
-  setSyntheticImageUpload(value) { if (value) activeImageUploads.add("synthetic-upload"); else activeImageUploads.clear(); },
-  deleteItem,
-  closeModal,
-	  setupLiveWorkspace: typeof setupLiveWorkspace === 'function' ? setupLiveWorkspace : null,
-	  setupTabs: typeof setupTabs === 'function' ? setupTabs : null,
-	  loadData: typeof loadData === 'function' ? loadData : null,
-	  renderModeBadge: typeof renderModeBadge === 'function' ? renderModeBadge : null,
-  setLiveWorkspaceView: typeof setLiveWorkspaceView === 'function' ? setLiveWorkspaceView : null,
-  setLiveListView: typeof setLiveListView === 'function' ? setLiveListView : null,
-	  setTicketSettingsOpen: typeof setTicketSettingsOpen === 'function' ? setTicketSettingsOpen : null,
-	  setLiveEditorTask: typeof setLiveEditorTask === 'function' ? setLiveEditorTask : null,
-	  ensureNoActiveImageUploads,
-  handleTicketStatusAction: typeof handleTicketStatusAction === 'function' ? handleTicketStatusAction : null,
-  setApiMode(value) { IS_API_MODE = value; },
-  normalizeSiteData,
-  renderTicketSettings,
-  setSiteData(value) { siteData = value; },
-  getSiteData() { return siteData; },
-	  getModalState() { return { currentEditId, currentEditType, isNewItem }; },
-	  getLiveEditorState() {
-	    return typeof liveEditorGeneration === 'number'
-	      ? {
-	          generation: liveEditorGeneration,
-	          dirty: Boolean(liveEditorDirty),
-	          readOnly: typeof isApiFallbackReadOnly === 'boolean' ? isApiFallbackReadOnly : false,
-	        }
-	      : null;
-	  },
-  setAdminFetch(fn) { adminFetch = async (...args) => { const result = await fn(...args); return result; }; },
-	  setSaveSpy() { saveData = async () => { globalThis.__adminSaveCalls += 1; return true; }; },
-  setSaveFunction(fn) { saveData = fn; },
-	  invokeSaveData(options) { return saveData(options); },
-	  setApiFallbackReadOnly(value) {
-	    isApiFallbackReadOnly = Boolean(value);
-	    if (isApiFallbackReadOnly) applyApiFallbackReadOnlyState();
-	  },
-  setConfirm(fn) { confirm = fn; },
-};`, context);
-
-  return {
-    ...context.__adminLiveTest,
-    ...dom,
-    clipboardWrites,
-    fetchCalls,
-    networkFetchCalls,
-    openedUrls,
-    async dispatchWindow(type, event = {}) {
-      for (const listener of windowListeners.get(type) || []) {
-        await listener(event);
-      }
-      return event;
-    },
-    getSaveCalls: () => context.__adminSaveCalls,
-    useAdminFetch(fn) {
-      context.__adminLiveTest.setAdminFetch(async (path, options = {}, policy = {}) => {
-        fetchCalls.push({ path, options, policy });
-        return fn(path, options, policy);
-      });
-    },
-  };
-}
-
-function setLiveForm(elements, values = {}) {
-  const defaults = {
-    'edit-date': '2026-08-10',
-    'edit-title': 'Night Shift',
-    'edit-venue': '柴崎mod',
-    'edit-openTime': '18:30',
-    'edit-startTime': '19:00',
-    'edit-ticket': '¥2,500 + 1D',
-    'edit-notes': '再入場不可',
-    'edit-performers': '松本一樹 / another band',
-    'edit-image': 'assets/images/live.jpg',
-    'edit-link': 'https://instagram.com/night-shift',
-    'edit-sourceText': 'raw booking copy',
-    'edit-ticketUrl': '',
-    'edit-xComment': 'ぜひ来てください',
-  };
-  Object.entries({ ...defaults, ...values }).forEach(([id, value]) => {
-    const element = elements.get(id) || createElement(id);
-    element.value = value;
-    elements.set(id, element);
-  });
-  const past = elements.get('edit-isPast') || createElement('edit-isPast');
-  past.checked = Boolean(values.isPast);
-  elements.set('edit-isPast', past);
-  const closed = elements.get('edit-reservationClosed') || createElement('edit-reservationClosed');
-  closed.checked = Boolean(values.reservationClosed);
-  elements.set('edit-reservationClosed', closed);
-}
-
-const LIVE_SOURCE_INTAKE_FIELD_IDS = [
-  'edit-date',
-  'edit-title',
-  'edit-venue',
-  'edit-openTime',
-  'edit-startTime',
-  'edit-ticket',
-  'edit-notes',
-  'edit-performers',
-  'edit-ticketUrl',
-  'edit-link',
-  'edit-sourceText',
-];
-
-function snapshotLiveSourceIntake(elements) {
-  return Object.fromEntries(LIVE_SOURCE_INTAKE_FIELD_IDS.map((id) => [id, elements.get(id)?.value]));
-}
-
-function assertLiveSourceIntakeUnchanged(elements, snapshot) {
-  assert.deepEqual(snapshotLiveSourceIntake(elements), snapshot);
-}
-
-function validLiveSourceIntakeDraft(overrides = {}) {
-  return {
-    date: '2026-08-20',
-    title: 'AI title',
-    venue: 'AI venue',
-    openTime: '18:30',
-    startTime: '19:00',
-    ticket: '¥2,500 + 1D',
-    notes: '再入場不可',
-    performers: '松本一樹 / another band',
-    ticketUrl: 'https://tickets.example/live/1',
-    link: 'https://example.com/live/1',
-    ...overrides,
-  };
-}
-
-function deferred() {
-  let resolve;
-  let reject;
-  const promise = new Promise((resolvePromise, rejectPromise) => {
-    resolve = resolvePromise;
-    reject = rejectPromise;
-  });
-  return { promise, reject, resolve };
-}
-
-function jsonResponse(payload, options = {}) {
-  const { ok = true, status = ok ? 200 : 400 } = options;
-  return {
-    ok,
-    status,
-    async json() { return payload; },
-  };
-}
-
-async function flushAsync() {
-  await new Promise((resolve) => setImmediate(resolve));
-}
 
 test('Live is the initial primary tab and Tickets is not a global tab', () => {
   const primaryNav = adminHtml.match(/<nav class="tab-nav">([\s\S]*?)<\/nav>/)?.[1] || '';
@@ -772,7 +57,7 @@ test('Live workspace separates reservations and Ticket Page共通設定 from Liv
   assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*aria-controls="live-ticket-settings-panel"/);
   assert.match(adminHtml, /id="live-ticket-settings-open"[^>]*aria-expanded="false"/);
   assert.match(adminHtml, /id="live-ticket-settings-panel"[^>]*role="region"/);
-  assert.match(adminHtml, /id="live-ticket-settings-close"[^>]*>Liveページへ戻る<\/button>/);
+  assert.match(adminHtml, /id="live-ticket-settings-close"[^>]*>‹ 一覧<\/button>/);
   assert.doesNotMatch(adminHtml, /<details[^>]*[\s\S]*?(?:Ticket Page|予約一覧（全Live）)[\s\S]*?<\/details>/);
 });
 
@@ -787,13 +72,13 @@ test('Live workspace Ticket Page settings moves focus and synchronizes disclosur
   openButton.focus();
   await openButton.dispatch('click');
   assert.equal(openButton.getAttribute('aria-expanded'), 'true');
-  assert.equal(primaryPanel.hidden, true);
+  assert.equal(primaryPanel.classList.contains('is-ticket-settings'), true);
   assert.equal(settingsPanel.hidden, false);
   assert.equal(app.document.activeElement, closeButton);
 
   await closeButton.dispatch('click');
   assert.equal(openButton.getAttribute('aria-expanded'), 'false');
-  assert.equal(primaryPanel.hidden, false);
+  assert.equal(primaryPanel.classList.contains('is-ticket-settings'), false);
   assert.equal(settingsPanel.hidden, true);
   assert.equal(app.document.activeElement, openButton);
 });
@@ -856,26 +141,25 @@ test('Live edit workspace renders add and edit in the detail pane while News kee
 
   app.editLive('detail-live', 'upcoming');
 
-  assert.match(adminHtml, /id="live-editor-context"/);
+  assert.doesNotMatch(adminHtml, /id="live-editor-context"/, 'the eyebrow row is gone from the one-line Header (R46-01)');
   assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-sourceText"/);
   assert.equal(app.elements.get('modal-body').innerHTML, '');
   assert.equal(app.elements.get('modal').classList.contains('active'), false);
-  assert.equal(app.elements.get('live-editor-context').textContent, '選択中Live・開催予定');
-  assert.equal(app.elements.get('live-editor-heading').textContent, '2026.08.10(Mon) 下北沢おてまえ — 山頂');
+  assert.equal(app.elements.get('live-editor-heading').textContent, '2026.08.10(Mon) 下北沢おてまえ');
   assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
   assert.equal(app.elements.get('live-editor-back').hidden, false);
   assert.equal(trigger.getAttribute('aria-current'), 'true');
   assert.equal(trigger.classList.contains('is-selected'), true);
   assert.match(app.elements.get('live-editor-body').innerHTML, />保存して公開<\/button>/);
-  assert.match(app.elements.get('live-editor-body').innerHTML, />削除<\/button>/);
+  assert.match(app.elements.get('live-editor-body').innerHTML, />このライブを削除<\/button>/);
 
   app.closeLiveEditor();
   assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
   assert.equal(app.getModalState().currentEditId, null);
 
   app.addLive();
-  assert.equal(app.elements.get('live-editor-heading').textContent, '新規Live');
-  assert.match(app.elements.get('live-editor-body').innerHTML, /id="live-editor-delete-btn"[^>]*hidden/);
+  assert.equal(app.elements.get('live-editor-heading').textContent, '新しいライブ');
+  assert.doesNotMatch(app.elements.get('live-editor-body').innerHTML, /id="live-editor-delete-btn"/, 'a new Live has no delete');
   assert.equal(app.elements.get('modal').classList.contains('active'), false);
 
   app.setConfirm(() => true);
@@ -919,7 +203,7 @@ test('Live task tabs are semantic, keyboard operable, and preserve mounted input
   assert.match(editorHtml, /class="live-editor-task-tabs"[^>]*role="tablist"/);
   assert.match(editorHtml, /role="tab"[^>]*data-live-editor-task="public"[^>]*aria-selected="true"/);
   assert.match(editorHtml, /role="tab"[^>]*data-live-editor-task="announcement"[^>]*>告知<\/button>/);
-  assert.match(editorHtml, /role="tab"[^>]*data-live-editor-task="reservation"[^>]*>予約<\/button>/);
+  assert.match(editorHtml, /role="tab"[^>]*data-live-editor-task="reservation"[^>]*>予約(<span[^>]*><\/span>)?<\/button>/);
   assert.match(editorHtml, /role="tabpanel"[^>]*data-live-editor-task-panel="public"/);
   assert.equal(typeof app.setLiveEditorTask, 'function');
 
@@ -945,9 +229,9 @@ test('new Live prioritizes source intake and gates post-save tasks until first s
   app.addLive();
 
   const newHtml = app.elements.get('live-editor-body').innerHTML;
-  assert.match(newHtml, /<details[^>]*class="live-source-intake"[^>]*open/);
-  assert.match(newHtml, /id="live-source-parse-btn"[^>]*>AIで下書きを作る<\/button>/);
-  assert.match(newHtml, /id="live-manual-entry-btn"[^>]*>手入力で作成<\/button>/);
+  assert.match(newHtml, /<section[^>]*id="live-source-intake"[^>]*class="live-source-intake live-source-screen"/, 'a new Live starts on the source screen, not a folded block');
+  assert.match(newHtml, /id="live-source-parse-btn"[^>]*>下書きを作る<\/button>/);
+  assert.match(newHtml, /id="live-manual-entry-btn"[^>]*>手入力で作る<\/button>/);
   assert.match(newHtml, /id="live-public-fields"[^>]*hidden/);
   assert.equal(app.elements.get('live-editor-task-announcement').disabled, true);
   assert.equal(app.elements.get('live-editor-task-reservation').disabled, true);
@@ -964,8 +248,8 @@ test('new Live prioritizes source intake and gates post-save tasks until first s
 
   app.editLive(app.getSiteData().live.upcoming[0].id, 'upcoming');
   const existingHtml = app.elements.get('live-editor-body').innerHTML;
-  assert.match(existingHtml, /<details[^>]*class="live-source-intake"/);
-  assert.doesNotMatch(existingHtml, /<details[^>]*class="live-source-intake"[^>]*open/);
+  assert.match(existingHtml, /<details[^>]*id="live-source-intake"[^>]*class="live-source-intake live-collapse"/);
+  assert.doesNotMatch(existingHtml, /<details[^>]*id="live-source-intake"[^>]*open/);
   assert.doesNotMatch(existingHtml, /id="live-public-fields"[^>]*hidden/);
 });
 
@@ -1026,7 +310,7 @@ test('Live API save reports saving, saved, and failed states around the existing
 
   const pendingSave = app.saveLiveWorkspace();
   await flushAsync();
-  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存中');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存しています…');
   response.resolve(jsonResponse({ data: app.getSiteData() }));
   assert.equal(await pendingSave, true);
   assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
@@ -1034,7 +318,7 @@ test('Live API save reports saving, saved, and failed states around the existing
   app.elements.get('edit-title').value = 'Retry';
   app.useAdminFetch(async () => jsonResponse({ error: 'failed' }, { ok: false, status: 500 }));
   assert.equal(await app.saveLiveWorkspace(), false);
-  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存できませんでした');
 });
 
 test('Live dirty guard blocks and then discards navigation to another Live, list, and global tab', async () => {
@@ -1054,27 +338,35 @@ test('Live dirty guard blocks and then discards navigation to another Live, list
   app.editLive('dirty-a', 'upcoming');
   app.elements.get('edit-title').value = 'Unsaved A';
   await app.elements.get('edit-title').dispatch('input');
-  let confirmations = 0;
-  app.setConfirm(() => { confirmations += 1; return false; });
+  let dialogs = 0;
+  const stay = async (action) => {
+    const pending = action();
+    dialogs += 1;
+    await answerLiveDialog(app, 'stay');
+    return pending;
+  };
 
-  assert.equal(app.editLive('dirty-b', 'upcoming'), false);
+  assert.equal(await stay(() => app.editLive('dirty-b', 'upcoming')), false);
   assert.equal(app.getModalState().currentEditId, 'dirty-a');
   assert.equal(app.elements.get('edit-title').value, 'Unsaved A');
-  assert.equal(app.closeLiveEditor(), false);
+  assert.equal(await stay(() => app.closeLiveEditor()), false);
   assert.equal(app.getModalState().currentEditId, 'dirty-a');
-  assert.equal(app.setLiveWorkspaceView('reservations'), false);
+  assert.equal(await stay(() => app.setLiveWorkspaceView('reservations')), false);
   assert.equal(app.elements.get('live-workspace-page-panel').hidden, false);
-  await app.elements.get('global-tab-news').dispatch('click');
+  await stay(() => app.elements.get('global-tab-news').dispatch('click'));
   assert.equal(app.elements.get('global-tab-live').classList.contains('active'), true);
   assert.equal(app.elements.get('global-tab-news').classList.contains('active'), false);
-  assert.equal(confirmations, 4);
+  assert.equal(dialogs, 4);
 
-  app.setConfirm(() => true);
-  assert.equal(app.editLive('dirty-b', 'upcoming'), true);
+  const discarded = app.editLive('dirty-b', 'upcoming');
+  await answerLiveDialog(app, 'discard');
+  assert.equal(await discarded, true);
   assert.equal(app.getModalState().currentEditId, 'dirty-b');
   app.elements.get('edit-title').value = 'Unsaved B';
   await app.elements.get('edit-title').dispatch('input');
-  await app.elements.get('global-tab-news').dispatch('click');
+  const leaving = app.elements.get('global-tab-news').dispatch('click');
+  await answerLiveDialog(app, 'discard');
+  await leaving;
   assert.equal(app.elements.get('global-tab-news').classList.contains('active'), true);
   assert.equal(app.getModalState().currentEditId, null);
 });
@@ -1377,15 +669,16 @@ test('beforeunload protects global changes and Live dirty or saving states', asy
   await live.dispatchWindow('beforeunload', dirtyEvent);
   assert.equal(dirtyEvent.prevented, 1);
 
-  live.setConfirm(() => true);
-  assert.equal(live.closeLiveEditor(), true);
+  const closing = live.closeLiveEditor();
+  await answerLiveDialog(live, 'discard');
+  assert.equal(await closing, true);
   const discardedEvent = { prevented: 0, returnValue: undefined, preventDefault() { this.prevented += 1; } };
   await live.dispatchWindow('beforeunload', discardedEvent);
   assert.equal(discardedEvent.prevented, 0);
 
   live.editLive('beforeunload-live', 'upcoming');
   const pendingSave = deferred();
-  live.setSaveFunction(() => pendingSave.promise);
+  live.setSaveToApi(() => pendingSave.promise);
   const saving = live.saveLiveWorkspace();
   await flushAsync();
   const savingEvent = { prevented: 0, returnValue: undefined, preventDefault() { this.prevented += 1; } };
@@ -1417,16 +710,18 @@ test('responsive Live workspace fixes overflow, focus, sticky actions, and actio
   assert.match(adminCss, /@supports\s*\(padding-bottom:\s*env\(safe-area-inset-bottom\)\)[\s\S]*\.live-editor-footer/);
   assert.match(adminCss, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
 
-  assert.match(adminHtml, /class="add-btn live-primary-action"[^>]*onclick="addLive\(\)"/);
-  assert.match(adminHtml, /href="style\.css\?v=20260816-22"/);
-  assert.match(adminHtml, /src="app\.js\?v=20261117-41"/);
+  assert.match(adminHtml, /class="btn btn-primary live-primary-action live-add-button"[^>]*onclick="addLive\(\)"/);
+  assert.match(adminHtml, /href="style\.css\?v=20261120-46"/);
+  assert.match(adminHtml, /src="app\.js\?v=20261120-46"/);
 
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [{ id: 'hierarchy', date: '2026-08-20', venue: 'Venue', image: '' }], past: [] } });
   app.editLive('hierarchy', 'upcoming');
   const editorHtml = app.elements.get('live-editor-body').innerHTML;
   assert.match(editorHtml, /id="live-editor-save-btn"[^>]*class="[^"]*btn-primary[^"]*live-primary-action|class="[^"]*btn-primary[^"]*live-primary-action[^>]*id="live-editor-save-btn"/);
-  assert.doesNotMatch(editorHtml, /class="[^"]*btn-primary[^"]*"[^>]*id="x-intent-btn"/);
+  // Issue #46: Xで告知する is the Primary action of the announcement (one Primary per area; the copy buttons are Secondary).
+  assert.match(editorHtml, /id="x-intent-btn"/);
+  assert.doesNotMatch(editorHtml, /class="[^"]*btn-primary[^"]*"[^>]*id="x-post-copy-btn"/);
 });
 
 test('sticky Live controls have no scrolling mechanism in the complete ancestor chain', () => {
@@ -1520,14 +815,14 @@ test('production Live lock gives every workspace button a disabled affordance', 
 });
 
 test('admin build marker and operator docs match the merged Live UI assets', () => {
-  assert.match(adminHtml, /window\.ADMIN_BUILD_ID\s*=\s*'2026-08-16T\d{4}Z';/);
+  assert.match(adminHtml, /window\.ADMIN_BUILD_ID\s*=\s*'2026-11-20T\d{4}Z';/);
   const styleVersion = adminHtml.match(/style\.css\?v=([\w-]+)/)?.[1];
   const scriptVersion = adminHtml.match(/app\.js\?v=([\w-]+)/)?.[1];
   assert.ok(styleVersion);
-  assert.equal(styleVersion, '20260816-22');
-  assert.equal(scriptVersion, '20261117-41');
+  assert.equal(styleVersion, '20261120-46');
+  assert.equal(scriptVersion, '20261120-46');
   assert.equal(adminHtml.match(/music-data\.js\?v=([\w-]+)/)?.[1], scriptVersion);
-  assert.match(adminReadme, /Live編集の`AIで下書きを作る`/);
+  assert.match(adminReadme, /Live編集の`下書きを作る`/);
   assert.match(adminReadme, /10項目を一括置換/);
 });
 
@@ -1574,19 +869,22 @@ test('Live edit workspace API save uses the existing save route and deletion kee
       past: [],
     },
   });
-  app.setSaveSpy();
+  let scopedSaves = 0;
+  app.setSaveToApi(async () => { scopedSaves += 1; });
   app.editLive('save-live', 'upcoming');
   setLiveForm(app.elements);
   assert.equal(await app.saveLiveWorkspace(), true);
-  assert.equal(app.getSaveCalls(), 1);
+  assert.equal(scopedSaves, 1);
   assert.equal(app.elements.get('live-editor-save-status').textContent, '保存済み');
 
   app.editLive('delete-live', 'upcoming');
-  app.setConfirm(() => true);
-  assert.equal(await app.deleteLiveFromWorkspace(), true);
+  const deleting = app.deleteLiveFromWorkspace();
+  await answerLiveDialog(app, 'delete');
+  assert.equal(await deleting, true);
   assert.equal(app.getSiteData().live.upcoming.some((live) => live.id === 'delete-live'), false);
   assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
-  assert.equal(app.getSaveCalls(), 1, 'deletion keeps the existing header-save contract');
+  assert.equal(scopedSaves, 2, 'a delete is saved on the spot (R46-06), not left for the header 保存');
+  assert.equal(app.getSaveCalls(), 0, 'the header save (saveData) is not used');
 });
 
 test('Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save', async () => {
@@ -1602,14 +900,16 @@ test('Live editor isolation guards dirty transition and prevents duplicate edit 
   app.elements.get('edit-title').value = 'LIVE UNSAVED';
   await app.elements.get('edit-title').dispatch('input');
 
-  app.setConfirm(() => false);
   assert.equal(app.addNews(), false);
+  await answerLiveDialog(app, 'stay');
+  await flushAsync();
   assert.equal(app.elements.get('modal').classList.contains('active'), false);
   assert.equal(app.getModalState().currentEditId, 'live-owner');
   assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-title"/);
 
-  app.setConfirm(() => true);
-  assert.equal(app.addNews(), true);
+  assert.equal(app.addNews(), false, 'the modal opens after the discard is confirmed, not at once');
+  await answerLiveDialog(app, 'discard');
+  await flushAsync();
   assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
   assert.equal(app.elements.get('modal').classList.contains('active'), true);
   assert.doesNotMatch(app.elements.get('modal-body').innerHTML, /LIVE UNSAVED/);
@@ -1651,7 +951,7 @@ test('Live API save transaction deduplicates clicks and locks mutations, navigat
   await flushAsync();
   const pendingSave = deferred();
   let saveCalls = 0;
-  app.setSaveFunction(() => {
+  app.setSaveToApi(() => {
     saveCalls += 1;
     return pendingSave.promise;
   });
@@ -1720,12 +1020,12 @@ test('Live API save transaction rolls back failure, preserves form values, and c
   app.editLive('rollback-live', 'upcoming');
   setLiveForm(app.elements, { 'edit-title': 'FAILED TITLE', 'edit-venue': 'FAILED VENUE', isPast: true });
   const failedSave = deferred();
-  app.setSaveFunction(() => failedSave.promise);
+  app.setSaveToApi(() => failedSave.promise);
 
   const save = app.saveLiveWorkspace();
   await flushAsync();
   assert.equal(app.getSiteData().live.upcoming.length, 0, 'candidate mutation stays isolated to the pending transaction');
-  failedSave.resolve(false);
+  failedSave.reject(new Error('API保存に失敗しました'));
   assert.equal(await save, false);
 
   assert.equal(app.getSiteData().live.upcoming[0].title, 'Stored title');
@@ -1734,11 +1034,14 @@ test('Live API save transaction rolls back failure, preserves form values, and c
   assert.equal(app.elements.get('edit-title').value, 'FAILED TITLE');
   assert.equal(app.elements.get('edit-venue').value, 'FAILED VENUE');
   assert.equal(app.elements.get('edit-isPast').checked, true);
-  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存できませんでした');
+  assert.equal(app.elements.get('live-editor-save-error').textContent, 'API保存に失敗しました', 'the reason is shown');
   assert.equal(app.elements.get('saveBtn').disabled, true);
 
-  app.setConfirm(() => true);
-  assert.equal(app.addNews(), true);
+  assert.equal(app.addNews(), false, 'the failed Live is still unsaved, so the discard is asked first');
+  await answerLiveDialog(app, 'discard');
+  await flushAsync();
+  assert.equal(app.elements.get('modal').classList.contains('active'), true);
   let persistedData = null;
   app.setSaveFunction(async () => {
     persistedData = structuredClone(app.getSiteData());
@@ -1758,7 +1061,7 @@ test('Live API publish blocks global tab navigation and marks every global tab d
   app.editLive('nav-pending', 'upcoming');
   setLiveForm(app.elements, { 'edit-title': 'Publishing' });
   const pending = deferred();
-  app.setSaveFunction(() => pending.promise);
+  app.setSaveToApi(() => pending.promise);
 
   const save = app.saveLiveWorkspace();
   await flushAsync();
@@ -1784,7 +1087,7 @@ test('global tabs re-enable and navigate normally after Live API publish succeed
   app.editLive('nav-success', 'upcoming');
   setLiveForm(app.elements, { 'edit-title': 'Published' });
   const pending = deferred();
-  app.setSaveFunction(() => pending.promise);
+  app.setSaveToApi(() => pending.promise);
 
   const save = app.saveLiveWorkspace();
   await flushAsync();
@@ -1808,21 +1111,22 @@ test('global tabs re-enable after Live API publish rollback while the failed Liv
   app.editLive('nav-failure', 'upcoming');
   setLiveForm(app.elements, { 'edit-title': 'FAILED VALUE' });
   const pending = deferred();
-  app.setSaveFunction(() => pending.promise);
+  app.setSaveToApi(() => pending.promise);
 
   const save = app.saveLiveWorkspace();
   await flushAsync();
-  pending.resolve(false);
+  pending.reject(new Error('API保存に失敗しました'));
   assert.equal(await save, false);
 
   const tabs = ['site', 'news', 'live'].map((name) => app.elements.get(`global-tab-${name}`));
   assert.equal(tabs.every((tab) => !tab.disabled), true);
   assert.equal(tabs.every((tab) => tab.getAttribute('aria-disabled') === 'false'), true);
   assert.equal(app.elements.get('edit-title').value, 'FAILED VALUE');
-  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存失敗');
+  assert.equal(app.elements.get('live-editor-save-status').textContent, '保存できませんでした');
   assert.equal(app.elements.get('saveBtn').disabled, true);
-  app.setConfirm(() => true);
-  await app.elements.get('global-tab-news').dispatch('click');
+  const leaving = app.elements.get('global-tab-news').dispatch('click');
+  await answerLiveDialog(app, 'discard');
+  await leaving;
   assert.equal(app.elements.get('global-tab-news').classList.contains('active'), true);
   assert.equal(app.elements.get('news-tab').classList.contains('active'), true);
 });
@@ -1832,7 +1136,7 @@ test('shared LiveOperations script is loaded before the admin application', () =
   const appIndex = adminHtml.indexOf('app.js');
   assert.ok(sharedIndex >= 0);
   assert.ok(sharedIndex < appIndex);
-  assert.match(adminHtml, /href="style\.css\?v=20260816-22"/);
+  assert.match(adminHtml, /href="style\.css\?v=20261120-46"/);
 });
 
 for (const provider of [undefined, 'openai', 'claude']) {
@@ -1901,7 +1205,7 @@ test(`AIで整理 source intake posts the exact source once, replaces all ten fi
   }));
 
   const editorHtml = app.elements.get('live-editor-body').innerHTML;
-  assert.match(editorHtml, /id="live-source-parse-btn"[^>]*>AIで下書きを作る<\/button>/);
+  assert.match(editorHtml, /id="live-source-parse-btn"[^>]*>下書きを作る<\/button>/);
   await app.elements.get('live-source-parse-btn').dispatch('click');
 
   assert.equal(app.fetchCalls.length, 1);
@@ -1957,7 +1261,7 @@ test(`AIで整理 source intake disables while pending, blocks duplicate submiss
   const first = button.dispatch('click');
   await flushAsync();
   assert.equal(button.disabled, true);
-  assert.equal(button.textContent, 'AIで整理中...');
+  assert.equal(button.textContent, '下書きを作っています…');
 
   const second = button.dispatch('click');
   await flushAsync();
@@ -1966,7 +1270,7 @@ test(`AIで整理 source intake disables while pending, blocks duplicate submiss
   response.resolve(sourceResponse({ draft: validLiveSourceIntakeDraft() }));
   await Promise.all([first, second]);
   assert.equal(button.disabled, false);
-  assert.equal(button.textContent, 'AIで下書きを作る');
+  assert.equal(button.textContent, '下書きを作る');
 });
 
 test(`AIで整理 source intake discards a stale response when source text changes while pending / ${provider ?? 'legacy'}`, async () => {
@@ -2067,13 +1371,13 @@ test(`AIで整理 source intake lets a replacement modal run while the stale req
   assert.equal(buttonB.disabled, false);
   const pendingB = buttonB.dispatch('click');
   await flushAsync();
-  const bBusyBeforeAResolved = buttonB.disabled && buttonB.textContent === 'AIで整理中...';
+  const bBusyBeforeAResolved = buttonB.disabled && buttonB.textContent === '下書きを作っています…';
 
   responseB.resolve({ ok: true, status: 200, json: () => payloadB.promise });
   await flushAsync();
   responseA.resolve(sourceResponse({ draft: validLiveSourceIntakeDraft({ title: 'STALE A' }) }));
   const resultA = await pendingA;
-  const bBusyAfterAResolved = buttonB.disabled && buttonB.textContent === 'AIで整理中...';
+  const bBusyAfterAResolved = buttonB.disabled && buttonB.textContent === '下書きを作っています…';
   const duplicateB = buttonB.dispatch('click');
   await flushAsync();
   const requestCountWhileBBusy = app.fetchCalls.length;
@@ -2104,7 +1408,7 @@ test(`AIで整理 source intake lets a replacement modal run while the stale req
   assert.equal(app.fetchCalls.length, 2);
   assert.deepEqual(app.fetchCalls.map((call) => JSON.parse(call.options.body).sourceText), ['source A', 'source B']);
   assert.equal(buttonB.disabled, false);
-  assert.equal(buttonB.textContent, 'AIで下書きを作る');
+  assert.equal(buttonB.textContent, '下書きを作る');
   assert.equal(app.elements.get('edit-sourceText').value, 'source B');
   assert.equal(app.elements.get('edit-date').value, '2026-09-09');
   assert.equal(app.elements.get('edit-title').value, 'CURRENT B');
@@ -2169,8 +1473,8 @@ test(`AIで整理 source intake keeps every field and preview unchanged for HTTP
       assertLiveSourceIntakeUnchanged(app.elements, snapshot);
       assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
       assert.equal(app.elements.get('live-source-parse-btn').disabled, false);
-      assert.equal(app.elements.get('live-source-parse-btn').textContent, 'AIで下書きを作る');
-      assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+      assert.equal(app.elements.get('live-source-parse-btn').textContent, '下書きを作る');
+      assert.equal(app.elements.get('live-source-warnings').textContent, '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。');
       assert.doesNotMatch(app.elements.get('live-source-warnings').textContent, /provider-secret|<img/);
       assert.equal(app.getSaveCalls(), 0);
     });
@@ -2206,7 +1510,7 @@ test(`AIで整理 source intake never falls back from a custom API base to canon
       assert.equal(app.networkFetchCalls.some((call) => call.url.startsWith('https://1212hp.itsukimatsumoto.workers.dev')), false);
       assertLiveSourceIntakeUnchanged(app.elements, snapshot);
       assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
-      assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+      assert.equal(app.elements.get('live-source-warnings').textContent, '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。');
       assert.equal(app.getSaveCalls(), 0);
     });
   }
@@ -2229,7 +1533,7 @@ test(`AIで整理 source intake fails atomically when one of the ten destination
   assert.equal(result, false);
   assertLiveSourceIntakeUnchanged(app.elements, snapshot);
   assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
-  assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+  assert.equal(app.elements.get('live-source-warnings').textContent, '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。');
   assert.equal(app.getSaveCalls(), 0);
 });
 
@@ -2259,7 +1563,7 @@ test(`AIで整理 source intake rolls back all fields and the unified preview wh
   assert.equal(result, false);
   assertLiveSourceIntakeUnchanged(app.elements, snapshot);
   assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
-  assert.equal(app.elements.get('live-source-warnings').textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+  assert.equal(app.elements.get('live-source-warnings').textContent, '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。');
   assert.equal(app.getSaveCalls(), 0);
 });
 
@@ -2285,7 +1589,7 @@ test(`AIで整理 source intake stays local-only in Local Mode without calling A
   assert.equal(parserCalls, 0);
   assertLiveSourceIntakeUnchanged(app.elements, snapshot);
   assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
-  assert.match(app.elements.get('live-source-warnings').textContent, /API Modeで利用可能/);
+  assert.match(app.elements.get('live-source-warnings').textContent, /API Modeで利用できます/);
   assert.equal(app.getSaveCalls(), 0);
 });
 }
@@ -2314,7 +1618,7 @@ test('AIで整理 source intake rejects unknown provider values and extra top-le
     assert.equal(await app.handleLiveSourceParse(), false);
     assertLiveSourceIntakeUnchanged(app.elements, before);
     assert.equal(app.elements.get('x-post-preview').value, 'POST BEFORE');
-    assert.equal(status.textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+    assert.equal(status.textContent, '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。');
     assert.equal(app.getSaveCalls(), 0);
     assert.deepEqual(app.openedUrls, []);
   });
@@ -2366,12 +1670,12 @@ for (const provider of ['openai', 'claude']) {
     app.useAdminFetch(() => response.promise);
     const pending = app.handleLiveSourceParse();
     await flushAsync();
-    assert.equal(status.textContent, 'AIで整理しています...');
+    assert.equal(status.textContent, '下書きを作っています…');
     response.resolve(jsonResponse({ error: 'private provider detail request_id prompt' }, { ok: false, status: 504 }));
     assert.equal(await pending, false);
     assertLiveSourceIntakeUnchanged(app.elements, before);
     assert.equal(app.elements.get('x-post-preview').value, preview);
-    assert.equal(status.textContent, 'AIで整理できませんでした。元情報は変更されていません。');
+    assert.equal(status.textContent, '下書きを作れませんでした。入力した元情報と、今の入力内容は残っています。');
     app.setConfirm(() => true);
     app.closeLiveEditor();
     app.addLive();
@@ -2401,10 +1705,9 @@ test('Live editor exposes new fields and conservatively infers only a missing le
   assert.match(legacyHtml, /id="edit-sourceText"/);
   assert.match(legacyHtml, /id="live-source-parse-btn"/);
   assert.match(legacyHtml, /id="edit-ticketUrl"[^>]*value="https:\/\/tiget\.net\/events\/legacy"/);
-  assert.match(legacyHtml, /空欄なら1212HP内で予約/);
   assert.match(legacyHtml, /id="edit-reservationClosed"/);
   assert.match(legacyHtml, /id="edit-xComment"/);
-  assert.match(legacyHtml, /詳細・SNSリンク/);
+  assert.match(legacyHtml, /<label for="edit-link">リンク<\/label>/);
 
   app.editLive('explicit-empty', 'upcoming');
   assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-ticketUrl"[^>]*value=""/);
@@ -2439,7 +1742,7 @@ test('structured Live editor normalizes legacy date and saves independent detail
   assert.match(html, /id="edit-ticket"/);
   assert.match(html, /id="edit-notes"/);
   assert.match(html, /id="edit-performers"/);
-  assert.match(html, /旧詳細（未構造化）/);
+  assert.match(html, /<label for="edit-description">説明<\/label>/, 'the description is always shown inside 予約先・リンクなど (F46-21)');
   assert.match(html, /旧詳細を保持する/);
 
   app.elements.get('edit-date').value = '2026-09-28';
@@ -2538,7 +1841,7 @@ test('unified X announcement preview drives Intent and copy without save', async
   app.editLive('live-x', 'upcoming');
   const editorHtml = app.elements.get('live-editor-body').innerHTML;
   assert.equal((editorHtml.match(/id="x-post-preview"/g) || []).length, 1);
-  assert.match(editorHtml, /<label for="x-post-preview">X投稿プレビュー<\/label>/);
+  assert.match(editorHtml, /<label[^>]*for="x-post-preview"[^>]*>投稿の内容<\/label>/);
   assert.doesNotMatch(editorHtml, /x-parent-preview|x-reply-preview|親投稿プレビュー|返信用 詳細プレビュー/);
   assert.equal(typeof app.updateXPreviewInModal, 'function');
   assert.equal(typeof app.copyXAnnouncementFromModal, 'function');
@@ -2624,7 +1927,7 @@ test('Issue #20 live link actions copy only the saved stable share URL and keep 
   app.setSaveSpy();
   assert.equal(await app.elements.get('x-link-copy-btn').dispatch('click'), true);
   assert.deepEqual(app.clipboardWrites, [shareUrl]);
-  assert.equal(app.elements.get('toast').textContent, 'リンクをコピーしました');
+  assert.equal(app.elements.get('live-copy-status').textContent, 'コピーしました。', 'the result is told next to the buttons (§10.2)');
 
   await app.elements.get('x-intent-btn').dispatch('click');
   const intent = new URL(app.openedUrls[0]);
@@ -2664,7 +1967,7 @@ test('Issue #20 live link actions use the existing clipboard fallback and report
   assert.deepEqual(fallbackSuccess.clipboardWrites, [shareUrl]);
   assert.deepEqual(fallbackSuccess.execCommandCalls, ['copy']);
   assert.equal(fallbackSuccess.createdTextareas[0]?.value, shareUrl);
-  assert.equal(fallbackSuccess.elements.get('toast').textContent, 'リンクをコピーしました');
+  assert.equal(fallbackSuccess.elements.get('live-copy-status').textContent, 'コピーしました。');
   assert.equal(fallbackSuccess.getSaveCalls(), 0);
 
   const fallbackFailure = loadAdminApp({
@@ -2678,7 +1981,7 @@ test('Issue #20 live link actions use the existing clipboard fallback and report
   assert.equal(await fallbackFailure.copyLiveLinkFromModal(), false);
   assert.deepEqual(fallbackFailure.clipboardWrites, [shareUrl]);
   assert.deepEqual(fallbackFailure.execCommandCalls, ['copy']);
-  assert.equal(fallbackFailure.elements.get('toast').textContent, 'コピーできませんでした');
+  assert.equal(fallbackFailure.elements.get('live-copy-status').textContent, 'コピーできませんでした');
   assert.equal(fallbackFailure.getSaveCalls(), 0);
 });
 
@@ -2699,9 +2002,8 @@ test('new Live requires an explicit save before X Intent or reservation operatio
   app.setSiteData({ live: { upcoming: [], past: [] } });
   app.addLive();
   const html = app.elements.get('live-editor-body').innerHTML;
-  assert.match(html, /保存後にWeb Intentを利用できます/);
+  assert.match(html, /保存すると使えます。/);
   assert.match(html, /id="x-intent-btn"[^>]*disabled/);
-  assert.match(html, /予約台帳はLiveを保存すると利用できます/);
   assert.match(html, /id="manual-reservation-submit"[^>]*disabled/);
   assert.equal(app.buildXIntentUrlFromModal(), '');
 });
@@ -2728,13 +2030,18 @@ test('saved Live ledger shows Local Mode gate and API mode fetches one Live with
 
   assert.match(app.fetchCalls.at(-1).path, /^\/api\/admin\/ticket-reservations\?liveId=ledger-live/);
   const html = app.elements.get('live-reservation-ledger').innerHTML;
-  assert.match(html, /<strong>2<\/strong>\s*有効予約件数/);
-  assert.match(html, /<strong>5<\/strong>\s*予約枚数/);
+  assert.match(html, /<strong>5<\/strong>枚/);
+  assert.match(html, />2件</);
   assert.doesNotMatch(html, /2[^<]*2件|5[^<]*5枚/);
-  assert.match(html, /Web/);
-  assert.match(html, /手動/);
-  assert.match(html, /@b/);
-  assert.match(html, /door/);
+  // Issue #46: the contact, the internal note and the source are on the one-reservation screen, not in the list row.
+  assert.match(html, /status-badge is-pending/);
+  app.handleReservationViewAction({ target: { dataset: { reservationOpen: 'manual-1', reservationScope: 'live' }, closest() { return this; } }, preventDefault() {} });
+  const detail = app.elements.get('live-reservation-detail').innerHTML;
+  assert.match(detail, /手動/);
+  assert.match(detail, /@b/);
+  assert.match(detail, /door/);
+  app.handleReservationViewAction({ target: { dataset: { reservationOpen: 'web-1', reservationScope: 'live' }, closest() { return this; } }, preventDefault() {} });
+  assert.match(app.elements.get('live-reservation-detail').innerHTML, /Web/);
 });
 
 test('manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers', async () => {
@@ -2783,7 +2090,7 @@ test('active totals exclude cancelled reservations and cross-Live rows expose so
   ]);
   assert.deepEqual({ records: totals.records, seats: totals.seats }, { records: 2, seats: 5 });
 
-  const manual = app.renderTicketRow({
+  const manual = app.renderReservationDetail({
     id: 'manual', liveId: 'live', name: '<Guest>', quantity: 2, status: 'handled',
     source: 'manual', contact: '<contact>', internalNote: '<note>',
   });
@@ -3086,22 +2393,24 @@ test('deleting the selected Live falls back to all Lives and reloads the guarded
   filter.value = 'delete-me';
 
   app.editLive('delete-me', 'upcoming');
+  await flushAsync();
   app.fetchCalls.length = 0;
-  app.setConfirm(() => true);
-  app.deleteItem();
+  const deleting = app.deleteItem();
+  await answerLiveDialog(app, 'delete');
+  await deleting;
   await flushAsync();
 
   assert.doesNotMatch(filter.innerHTML, /DELETE Delete venue/);
   assert.equal(filter.value, '');
-  assert.equal(app.fetchCalls.length, 1);
-  assert.doesNotMatch(app.fetchCalls[0].path, /liveId=/);
+  const allLivesReads = app.fetchCalls.filter((call) => call.path.startsWith('/api/admin/ticket-reservations?') && !call.path.includes('liveId='));
+  assert.equal(allLivesReads.length, 1, 'the all-Lives ledger is reloaded once');
   assert.match(app.elements.get('tickets-list').innerHTML, /ALL LIVE RESULT/);
 });
 
 test('reservation status actions use escaped data attributes and delegated event handling', async () => {
   const app = loadAdminApp();
   const dangerousId = `quote"');alert(1);//`;
-  const row = app.renderTicketRow({ id: dangerousId, name: 'Guest', status: 'pending', quantity: 1 });
+  const row = app.renderReservationDetail({ id: dangerousId, name: 'Guest', status: 'pending', quantity: 1 });
   assert.doesNotMatch(row, /onclick=/);
   assert.match(row, /data-reservation-id="quote&quot;&#039;\);alert\(1\);\/\/"/);
   assert.match(row, /data-reservation-status="handled"/);
@@ -3249,10 +2558,12 @@ test('Ticket settings remove legacy copy and keep completion, field editing and 
   const message = app.elements.get('ticket-field-label-message');
   message.value = '備考編集';
   message.onchange();
+  assert.equal(app.getSiteData().ticket.completeText, '保存済みの完了文', 'edits stay in a draft until the settings are saved (R46-15)');
+  assert.equal(app.getSiteData().ticket.fields.showQuantity, true);
   let saved;
   app.setApiMode(true);
   app.setAdminFetch(async (_path, options) => { saved = JSON.parse(options.body); return jsonResponse({ ok: true }); });
-  await app.saveToApi();
+  assert.equal(await app.saveTicketSettings(), true);
   assert.ok(saved);
   assert.equal('introText' in saved.ticket, false);
   assert.equal('noticeText' in saved.ticket, false);
@@ -3286,7 +2597,7 @@ function musicEdit(app,id='r',category='digital',values={}) {
 test('music data fields Site and modal labels, choices, escaping and Local JSON roundtrip',async()=>{
   const app=await musicApp();
   assert.match(adminHtml,/<h3>Home<\/h3>/);assert.match(adminHtml,/顔にする作品/);assert.match(adminHtml,/共有時の画像/);
-  assert.ok(adminHtml.indexOf('music-data.js?v=20261117-41')<adminHtml.indexOf('app.js?v=20261117-41'));
+  assert.ok(adminHtml.indexOf('music-data.js?v=20261120-46')<adminHtml.indexOf('app.js?v=20261120-46'));
   const select=app.elements.get('site-featured-release-id');assert.match(select.innerHTML,/自動（最新のリリース）/);assert.match(select.innerHTML,/Digital Release/);assert.match(select.innerHTML,/宅録Demo/);assert.match(select.innerHTML,/&quot;&lt;&amp;/);
   select.value='s';select.onchange(); assert.equal(app.getSiteData().site.featuredReleaseId,'s');
   musicEdit(app,'r','digital',{releaseType:'2nd Single',playbackVideoId:'w'});

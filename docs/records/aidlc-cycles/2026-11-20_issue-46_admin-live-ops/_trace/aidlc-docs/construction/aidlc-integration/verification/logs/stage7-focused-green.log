@@ -1,0 +1,1463 @@
+TAP version 13
+# Subtest: Live is the initial primary tab and Tickets is not a global tab
+ok 1 - Live is the initial primary tab and Tickets is not a global tab
+  ---
+  duration_ms: 0.494458
+  ...
+# Subtest: Live workspace has semantic Liveページ and 予約管理 tabs
+ok 2 - Live workspace has semantic Liveページ and 予約管理 tabs
+  ---
+  duration_ms: 0.096166
+  ...
+# Subtest: Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 3 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+  ---
+  duration_ms: 0.079083
+  ...
+# Subtest: Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 4 - Live workspace separates reservations and Ticket Page共通設定 from Live list details
+  ---
+  duration_ms: 0.1685
+  ...
+# Subtest: Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 5 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+  ---
+  duration_ms: 11.138708
+  ...
+# Subtest: Live workspace initial state is Liveページ and 開催予定
+ok 6 - Live workspace initial state is Liveページ and 開催予定
+  ---
+  duration_ms: 0.199083
+  ...
+# Subtest: Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 7 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+  ---
+  duration_ms: 1.101708
+  ...
+# Subtest: master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 8 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+  ---
+  duration_ms: 0.127459
+  ...
+# Subtest: Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+ok 9 - Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+  ---
+  duration_ms: 4.258667
+  ...
+# Subtest: master-detail marks only the first upcoming card as Next Live
+ok 10 - master-detail marks only the first upcoming card as Next Live
+  ---
+  duration_ms: 0.815333
+  ...
+# Subtest: Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 11 - Live task tabs are semantic, keyboard operable, and preserve mounted input
+  ---
+  duration_ms: 1.850083
+  ...
+# Subtest: new Live prioritizes source intake and gates post-save tasks until first save
+ok 12 - new Live prioritizes source intake and gates post-save tasks until first save
+  ---
+  duration_ms: 3.196291
+  ...
+# Subtest: Live validation blocks missing date and venue before changing data or saving
+ok 13 - Live validation blocks missing date and venue before changing data or saving
+  ---
+  duration_ms: 1.0395
+  ...
+# Subtest: Live category mismatch warns but saves without automatically moving collection
+ok 14 - Live category mismatch warns but saves without automatically moving collection
+  ---
+  duration_ms: 1.761208
+  ...
+# Subtest: Live API save reports saving, saved, and failed states around the existing save route
+ok 15 - Live API save reports saving, saved, and failed states around the existing save route
+  ---
+  duration_ms: 11.453208
+  ...
+# APIデータ読み込みエラー: Error: offline
+#     at Object.loadData (evalmachine.<anonymous>:1027:15)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-operations.test.mjs:472:3)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 16 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+  ---
+  duration_ms: 2.848458
+  ...
+# Subtest: reselecting the active global Live tab is a no-op for a dirty editor
+ok 17 - reselecting the active global Live tab is a no-op for a dirty editor
+  ---
+  duration_ms: 1.228417
+  ...
+# Subtest: reselecting the active global Live tab is also a no-op for a clean editor
+ok 18 - reselecting the active global Live tab is also a no-op for a clean editor
+  ---
+  duration_ms: 1.950959
+  ...
+# Subtest: Live internal task switching preserves dirty input without discard confirmation
+ok 19 - Live internal task switching preserves dirty input without discard confirmation
+  ---
+  duration_ms: 0.928167
+  ...
+# Subtest: API fallback is read-only while keeping Live navigation available
+ok 20 - API fallback is read-only while keeping Live navigation available
+  ---
+  duration_ms: 3.069958
+  ...
+# Subtest: API fallback keeps every admin collection immutable while existing details remain viewable
+ok 21 - API fallback keeps every admin collection immutable while existing details remain viewable
+  ---
+  duration_ms: 6.23075
+  ...
+# Subtest: API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 22 - API fallback blocks direct Live item and API save calls before mutation or PUT
+  ---
+  duration_ms: 1.302042
+  ...
+# Subtest: beforeunload protects global changes and Live dirty or saving states
+ok 23 - beforeunload protects global changes and Live dirty or saving states
+  ---
+  duration_ms: 8.432083
+  ...
+# Subtest: explicit Local Mode labels the header action as JSON export
+ok 24 - explicit Local Mode labels the header action as JSON export
+  ---
+  duration_ms: 2.272667
+  ...
+# Subtest: responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+ok 25 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+  ---
+  duration_ms: 2.072792
+  ...
+# Subtest: sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 26 - sticky Live controls have no scrolling mechanism in the complete ancestor chain
+  ---
+  duration_ms: 1.167792
+  ...
+# Subtest: sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 27 - sticky Live task tabs offset below the fixed global header and navigation chrome
+  ---
+  duration_ms: 0.217792
+  ...
+# Subtest: essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 28 - essential mobile Live workspace list utility and back controls guarantee 44px targets
+  ---
+  duration_ms: 0.092333
+  ...
+# Subtest: saved header action maintains white text contrast through hover and focus
+ok 29 - saved header action maintains white text contrast through hover and focus
+  ---
+  duration_ms: 0.067083
+  ...
+# Subtest: sticky Live task tabs and footer have no clipping workspace ancestor
+ok 30 - sticky Live task tabs and footer have no clipping workspace ancestor
+  ---
+  duration_ms: 0.115792
+  ...
+# Subtest: production Live lock gives every workspace button a disabled affordance
+ok 31 - production Live lock gives every workspace button a disabled affordance
+  ---
+  duration_ms: 0.148166
+  ...
+# Subtest: admin build marker and operator docs match the merged Live UI assets
+ok 32 - admin build marker and operator docs match the merged Live UI assets
+  ---
+  duration_ms: 0.167209
+  ...
+# Subtest: Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 33 - Live edit workspace saves a category move in place and routes Local Mode to JSON export
+  ---
+  duration_ms: 2.769
+  ...
+# Subtest: Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 34 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+  ---
+  duration_ms: 10.866875
+  ...
+# Subtest: Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 35 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+  ---
+  duration_ms: 2.000083
+  ...
+# Subtest: Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 36 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+  ---
+  duration_ms: 3.144792
+  ...
+# Subtest: Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 37 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+  ---
+  duration_ms: 3.1435
+  ...
+# Subtest: Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 38 - Live API publish blocks global tab navigation and marks every global tab disabled while pending
+  ---
+  duration_ms: 2.514708
+  ...
+# Subtest: global tabs re-enable and navigate normally after Live API publish succeeds
+ok 39 - global tabs re-enable and navigate normally after Live API publish succeeds
+  ---
+  duration_ms: 2.932625
+  ...
+# Subtest: global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 40 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+  ---
+  duration_ms: 3.438917
+  ...
+# Subtest: shared LiveOperations script is loaded before the admin application
+ok 41 - shared LiveOperations script is loaded before the admin application
+  ---
+  duration_ms: 0.155542
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 42 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+  ---
+  duration_ms: 2.628291
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 43 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+  ---
+  duration_ms: 2.774917
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 44 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+  ---
+  duration_ms: 2.193792
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 45 - AIで整理 source intake discards a stale response when source text changes while pending / legacy
+  ---
+  duration_ms: 4.138084
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 46 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+  ---
+  duration_ms: 2.220125
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 47 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+  ---
+  duration_ms: 3.166041
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 1.315083
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 1.187625
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.00675
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 1.025666
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 4.508083
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 2.362125
+      ...
+    1..6
+ok 48 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+  ---
+  duration_ms: 11.93875
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 2.353
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 2.334042
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 2.551208
+      ...
+    1..3
+ok 49 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+  ---
+  duration_ms: 7.556958
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 50 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+  ---
+  duration_ms: 2.485542
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 51 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+  ---
+  duration_ms: 1.289375
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 52 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+  ---
+  duration_ms: 1.006416
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 53 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+  ---
+  duration_ms: 1.0945
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 54 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+  ---
+  duration_ms: 1.0705
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 55 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+  ---
+  duration_ms: 8.364542
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 56 - AIで整理 source intake discards a stale response when source text changes while pending / openai
+  ---
+  duration_ms: 1.512916
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 57 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+  ---
+  duration_ms: 3.127334
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 58 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+  ---
+  duration_ms: 2.790125
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 1.079542
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 0.963084
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.03425
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 0.936666
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 3.735125
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 0.99575
+      ...
+    1..6
+ok 59 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+  ---
+  duration_ms: 8.997875
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / openai
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 1.027459
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 0.967375
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 0.948
+      ...
+    1..3
+ok 60 - AIで整理 source intake never falls back from a custom API base to canonical production / openai
+  ---
+  duration_ms: 3.032834
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 61 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+  ---
+  duration_ms: 0.972792
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 62 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+  ---
+  duration_ms: 0.890917
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 63 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+  ---
+  duration_ms: 0.81625
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 64 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+  ---
+  duration_ms: 0.9695
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 65 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+  ---
+  duration_ms: 1.060417
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 66 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+  ---
+  duration_ms: 4.484958
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 67 - AIで整理 source intake discards a stale response when source text changes while pending / claude
+  ---
+  duration_ms: 2.99425
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 68 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+  ---
+  duration_ms: 2.819958
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 69 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+  ---
+  duration_ms: 3.931542
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 2.6535
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 1.237666
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.04625
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 3.47975
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 1.105375
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 1.122375
+      ...
+    1..6
+ok 70 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+  ---
+  duration_ms: 10.990833
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / claude
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 1.265667
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 1.047333
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 1.10725
+      ...
+    1..3
+ok 71 - AIで整理 source intake never falls back from a custom API base to canonical production / claude
+  ---
+  duration_ms: 3.537292
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 72 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+  ---
+  duration_ms: 0.848666
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 73 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+  ---
+  duration_ms: 0.917666
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 74 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+  ---
+  duration_ms: 0.888541
+  ...
+# Subtest: AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+    # Subtest: invalid payload 0
+    ok 1 - invalid payload 0
+      ---
+      duration_ms: 0.969708
+      ...
+    # Subtest: invalid payload 1
+    ok 2 - invalid payload 1
+      ---
+      duration_ms: 3.473875
+      ...
+    # Subtest: invalid payload 2
+    ok 3 - invalid payload 2
+      ---
+      duration_ms: 1.129709
+      ...
+    # Subtest: invalid payload 3
+    ok 4 - invalid payload 3
+      ---
+      duration_ms: 0.974209
+      ...
+    # Subtest: invalid payload 4
+    ok 5 - invalid payload 4
+      ---
+      duration_ms: 0.956916
+      ...
+    # Subtest: invalid payload 5
+    ok 6 - invalid payload 5
+      ---
+      duration_ms: 0.913542
+      ...
+    # Subtest: invalid payload 6
+    ok 7 - invalid payload 6
+      ---
+      duration_ms: 1.126958
+      ...
+    # Subtest: invalid payload 7
+    ok 8 - invalid payload 7
+      ---
+      duration_ms: 0.990833
+      ...
+    # Subtest: invalid payload 8
+    ok 9 - invalid payload 8
+      ---
+      duration_ms: 0.906708
+      ...
+    # Subtest: invalid payload 9
+    ok 10 - invalid payload 9
+      ---
+      duration_ms: 3.164291
+      ...
+    # Subtest: invalid payload 10
+    ok 11 - invalid payload 10
+      ---
+      duration_ms: 1.101875
+      ...
+    # Subtest: invalid payload 11
+    ok 12 - invalid payload 11
+      ---
+      duration_ms: 0.991834
+      ...
+    # Subtest: invalid payload 12
+    ok 13 - invalid payload 12
+      ---
+      duration_ms: 0.985208
+      ...
+    # Subtest: invalid payload 13
+    ok 14 - invalid payload 13
+      ---
+      duration_ms: 0.928042
+      ...
+    # Subtest: invalid payload 14
+    ok 15 - invalid payload 14
+      ---
+      duration_ms: 0.878625
+      ...
+    1..15
+ok 75 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+  ---
+  duration_ms: 20.026125
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 76 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+  ---
+  duration_ms: 7.58975
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 77 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+  ---
+  duration_ms: 1.598125
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 78 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+  ---
+  duration_ms: 2.118542
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 79 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+  ---
+  duration_ms: 1.690833
+  ...
+# Subtest: AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 80 - AIで整理 source intake uses the existing small status markup for desktop and mobile
+  ---
+  duration_ms: 0.142292
+  ...
+# Subtest: Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 81 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+  ---
+  duration_ms: 1.796334
+  ...
+# Subtest: structured Live editor normalizes legacy date and saves independent detail fields
+ok 82 - structured Live editor normalizes legacy date and saves independent detail fields
+  ---
+  duration_ms: 1.271125
+  ...
+# Subtest: unparsed legacy Live date is preserved until a valid replacement is entered
+ok 83 - unparsed legacy Live date is preserved until a valid replacement is entered
+  ---
+  duration_ms: 1.098125
+  ...
+# Subtest: saving a Live merges new fields into the original object without dropping unknown properties
+ok 84 - saving a Live merges new fields into the original object without dropping unknown properties
+  ---
+  duration_ms: 1.148542
+  ...
+# Subtest: unified X announcement preview drives Intent and copy without save
+ok 85 - unified X announcement preview drives Intent and copy without save
+  ---
+  duration_ms: 1.199458
+  ...
+# Subtest: Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 86 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+  ---
+  duration_ms: 3.148333
+  ...
+# Subtest: Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 87 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+  ---
+  duration_ms: 1.329875
+  ...
+# Subtest: Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 88 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+  ---
+  duration_ms: 1.107166
+  ...
+# Subtest: Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 89 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+  ---
+  duration_ms: 2.027417
+  ...
+# Subtest: Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 90 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+  ---
+  duration_ms: 0.224125
+  ...
+# Subtest: new Live requires an explicit save before X Intent or reservation operations
+ok 91 - new Live requires an explicit save before X Intent or reservation operations
+  ---
+  duration_ms: 1.146625
+  ...
+# Subtest: saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 92 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+  ---
+  duration_ms: 1.734166
+  ...
+# Subtest: manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 93 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+  ---
+  duration_ms: 1.355125
+  ...
+# Subtest: active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 94 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+  ---
+  duration_ms: 3.095375
+  ...
+# Subtest: CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 95 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+  ---
+  duration_ms: 1.067333
+  ...
+# Subtest: CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 96 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+  ---
+  duration_ms: 1.408875
+  ...
+# Subtest: reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 97 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+  ---
+  duration_ms: 8.270958
+  ...
+# Subtest: reservation loading for a non-current Live cannot mutate the current modal
+ok 98 - reservation loading for a non-current Live cannot mutate the current modal
+  ---
+  duration_ms: 1.487708
+  ...
+# Subtest: cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 99 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+  ---
+  duration_ms: 1.6435
+  ...
+# Subtest: cross-Live ledger response cannot mutate a disconnected replacement target
+ok 100 - cross-Live ledger response cannot mutate a disconnected replacement target
+  ---
+  duration_ms: 0.710792
+  ...
+# Subtest: cross-Live ledger response requires both current filters to match its snapshot
+ok 101 - cross-Live ledger response requires both current filters to match its snapshot
+  ---
+  duration_ms: 1.156833
+  ...
+# Subtest: cross-Live filters refresh without reloading when the effective selection remains valid
+ok 102 - cross-Live filters refresh without reloading when the effective selection remains valid
+  ---
+  duration_ms: 3.554917
+  ...
+# Subtest: deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 103 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+  ---
+  duration_ms: 2.239791
+  ...
+# Subtest: reservation status actions use escaped data attributes and delegated event handling
+ok 104 - reservation status actions use escaped data attributes and delegated event handling
+  ---
+  duration_ms: 0.920875
+  ...
+# Subtest: generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 105 - generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+  ---
+  duration_ms: 0.857167
+  ...
+# Subtest: saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 106 - saving a rendered Live keeps its editor and selected replacement trigger after a category move
+  ---
+  duration_ms: 1.931417
+  ...
+# Subtest: saving a new past Live activates its visible destination category
+ok 107 - saving a new past Live activates its visible destination category
+  ---
+  duration_ms: 1.083875
+  ...
+# Subtest: admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+    # Subtest: cross-collection / API
+    ok 1 - cross-collection / API
+      ---
+      duration_ms: 0.728375
+      ...
+    # Subtest: cross-collection / Local
+    ok 2 - cross-collection / Local
+      ---
+      duration_ms: 0.584792
+      ...
+    # Subtest: same-collection / API
+    ok 3 - same-collection / API
+      ---
+      duration_ms: 0.557709
+      ...
+    # Subtest: same-collection / Local
+    ok 4 - same-collection / Local
+      ---
+      duration_ms: 0.590834
+      ...
+    1..4
+ok 108 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+  ---
+  duration_ms: 2.643875
+  ...
+# Subtest: Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 109 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+  ---
+  duration_ms: 3.801417
+  ...
+# Subtest: music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+ok 110 - music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+  ---
+  duration_ms: 2.775125
+  ...
+# Subtest: music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+ok 111 - music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+  ---
+  duration_ms: 1.25025
+  ...
+# Subtest: music data fields API failure keeps editor and baseline, structured errors bind only matching release
+ok 112 - music data fields API failure keeps editor and baseline, structured errors bind only matching release
+  ---
+  duration_ms: 1.217375
+  ...
+# Subtest: music data fields legacy date 2025.5.5 stays on unrelated save and move
+ok 113 - music data fields legacy date 2025.5.5 stays on unrelated save and move
+  ---
+  duration_ms: 1.018
+  ...
+# Subtest: music data fields legacy date 2025/05/05 stays on unrelated save and move
+ok 114 - music data fields legacy date 2025/05/05 stays on unrelated save and move
+  ---
+  duration_ms: 1.044292
+  ...
+# Subtest: music data fields legacy date 2025.05 stays on unrelated save and move
+ok 115 - music data fields legacy date 2025.05 stays on unrelated save and move
+  ---
+  duration_ms: 0.965083
+  ...
+# Subtest: music data fields legacy date  stays on unrelated save and move
+ok 116 - music data fields legacy date  stays on unrelated save and move
+  ---
+  duration_ms: 1.051
+  ...
+# Subtest: music data fields legacy date undefined stays on unrelated save and move
+ok 117 - music data fields legacy date undefined stays on unrelated save and move
+  ---
+  duration_ms: 2.094875
+  ...
+# Subtest: music data fields legacy date 42 stays on unrelated save and move
+ok 118 - music data fields legacy date 42 stays on unrelated save and move
+  ---
+  duration_ms: 1.179
+  ...
+# Subtest: music data fields legacy date null stays on unrelated save and move
+ok 119 - music data fields legacy date null stays on unrelated save and move
+  ---
+  duration_ms: 3.415458
+  ...
+# Subtest: music data fields new release empty or shaped date, header validation and baseline only after success
+ok 120 - music data fields new release empty or shaped date, header validation and baseline only after success
+  ---
+  duration_ms: 1.332208
+  ...
+# Subtest: music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+ok 121 - music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+  ---
+  duration_ms: 1.444375
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through Local JSON
+ok 122 - music data fields deletion clears featured and shared video references through Local JSON
+  ---
+  duration_ms: 1.178959
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through API
+ok 123 - music data fields deletion clears featured and shared video references through API
+  ---
+  duration_ms: 1.134041
+  ...
+# Subtest: music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+ok 124 - music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+  ---
+  duration_ms: 0.992875
+  ...
+# Subtest: music data fields release and video category moves preserve IDs and all selections
+ok 125 - music data fields release and video category moves preserve IDs and all selections
+  ---
+  duration_ms: 1.369459
+  ...
+# Subtest: music data fields successful saves advance date baseline and failures retain the old baseline
+ok 126 - music data fields successful saves advance date baseline and failures retain the old baseline
+  ---
+  duration_ms: 8.2715
+  ...
+# Subtest: music data fields image upload blocks release mutation and JSON failure retains baseline
+ok 127 - music data fields image upload blocks release mutation and JSON failure retains baseline
+  ---
+  duration_ms: 4.602792
+  ...
+# Subtest: music data fields structured API error for another release never marks the active release
+ok 128 - music data fields structured API error for another release never marks the active release
+  ---
+  duration_ms: 2.170334
+  ...
+# Subtest: music data fields RV41-01 failed move retry with same category saves one release
+ok 129 - music data fields RV41-01 failed move retry with same category saves one release
+  ---
+  duration_ms: 2.451084
+  ...
+# Subtest: music data fields RV41-01 failed move retry with original category saves one release
+ok 130 - music data fields RV41-01 failed move retry with original category saves one release
+  ---
+  duration_ms: 6.252125
+  ...
+# Subtest: music data fields RV41-01 failed move retry with other field saves one release
+ok 131 - music data fields RV41-01 failed move retry with other field saves one release
+  ---
+  duration_ms: 5.103166
+  ...
+# Subtest: music data fields RV41-01 failed move then delete removes the moved release and featured reference
+ok 132 - music data fields RV41-01 failed move then delete removes the moved release and featured reference
+  ---
+  duration_ms: 2.992083
+  ...
+# Subtest: music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases
+ok 133 - music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases
+  ---
+  duration_ms: 2.1275
+  ...
+# Subtest: music data fields RV41-01 release deletion survives header failure and retry
+ok 134 - music data fields RV41-01 release deletion survives header failure and retry
+  ---
+  duration_ms: 5.659
+  ...
+# Subtest: music data fields RV41-01 shared video deletion survives header failure and retry
+ok 135 - music data fields RV41-01 shared video deletion survives header failure and retry
+  ---
+  duration_ms: 2.488084
+  ...
+# Subtest: music data fields RV41-01 new release retry keeps its generated ID after category change
+ok 136 - music data fields RV41-01 new release retry keeps its generated ID after category change
+  ---
+  duration_ms: 6.123375
+  ...
+# Subtest: T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+ok 137 - T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+  ---
+  duration_ms: 14.48375
+  ...
+# Subtest: T46-LIST a live without a flyer or a title still has a row with its date and venue
+ok 138 - T46-LIST a live without a flyer or a title still has a row with its date and venue
+  ---
+  duration_ms: 2.345291
+  ...
+# Subtest: T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+ok 139 - T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+  ---
+  duration_ms: 2.968375
+  ...
+# Subtest: T46-LIST while the summary loads no reservation line is shown and no note is shown
+ok 140 - T46-LIST while the summary loads no reservation line is shown and no note is shown
+  ---
+  duration_ms: 2.875458
+  ...
+# Subtest: T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 141 - T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 2.763292
+  ...
+# Subtest: T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 142 - T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 2.817459
+  ...
+# Subtest: T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 143 - T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 2.8405
+  ...
+# Subtest: T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 144 - T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 2.434041
+  ...
+# Subtest: T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+ok 145 - T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.470625
+  ...
+# Subtest: T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+ok 146 - T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.199917
+  ...
+# Subtest: T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+ok 147 - T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.004292
+  ...
+# Subtest: T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+ok 148 - T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.886791
+  ...
+# Subtest: T46-LIST the API connection failure and Local Mode never call the summary and show no note
+ok 149 - T46-LIST the API connection failure and Local Mode never call the summary and show no note
+  ---
+  duration_ms: 2.32
+  ...
+# Subtest: T46-LIST an empty list says there is nothing, as it did before
+ok 150 - T46-LIST an empty list says there is nothing, as it did before
+  ---
+  duration_ms: 1.052833
+  ...
+# Subtest: T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+ok 151 - T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+  ---
+  duration_ms: 20.770042
+  ...
+# Subtest: T46-LIST only the latest of overlapping summary requests is applied
+ok 152 - T46-LIST only the latest of overlapping summary requests is applied
+  ---
+  duration_ms: 1.758833
+  ...
+# Subtest: T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+ok 153 - T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+  ---
+  duration_ms: 10.473541
+  ...
+# Subtest: T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+ok 154 - T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+  ---
+  duration_ms: 0.268958
+  ...
+# Subtest: T46-LIST loading the data reads the reservation list and then the summary once, and shows the counts without a second request
+ok 155 - T46-LIST loading the data reads the reservation list and then the summary once, and shows the counts without a second request
+  ---
+  duration_ms: 1.390208
+  ...
+# Subtest: T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+ok 156 - T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+  ---
+  duration_ms: 1.938708
+  ...
+# Subtest: T46-OPEN the Header is one row: back, date and venue, and only the save state on the right
+ok 157 - T46-OPEN the Header is one row: back, date and venue, and only the save state on the right
+  ---
+  duration_ms: 3.865459
+  ...
+# Subtest: T46-OPEN while a Live is open the body carries is-live-editing, and it is removed when the Live closes
+ok 158 - T46-OPEN while a Live is open the body carries is-live-editing, and it is removed when the Live closes
+  ---
+  duration_ms: 2.429916
+  ...
+# Subtest: T46-OPEN the switch has three entries 公開内容 / 告知 / 予約 and the reservation entry carries the seat count
+ok 159 - T46-OPEN the switch has three entries 公開内容 / 告知 / 予約 and the reservation entry carries the seat count
+  ---
+  duration_ms: 3.883458
+  ...
+# Subtest: T46-OPEN the reservation count is blank for a past live or a failed summary until the ledger is read
+ok 160 - T46-OPEN the reservation count is blank for a past live or a failed summary until the ledger is read
+  ---
+  duration_ms: 2.072417
+  ...
+# Subtest: T46-OPEN the public fields run flyer → date → venue → name → OPEN/START → fee → note → performers → 予約先・リンクなど → category → delete
+ok 161 - T46-OPEN the public fields run flyer → date → venue → name → OPEN/START → fee → note → performers → 予約先・リンクなど → category → delete
+  ---
+  duration_ms: 2.061375
+  ...
+# Subtest: T46-OPEN 保存して公開 is shown only while the Live is unsaved, and only for as long as it differs from the opened values
+ok 162 - T46-OPEN 保存して公開 is shown only while the Live is unsaved, and only for as long as it differs from the opened values
+  ---
+  duration_ms: 4.408834
+  ...
+# Subtest: T46-OPEN the footer shows the failure reason above 保存して公開 and the Header says 保存できませんでした
+ok 163 - T46-OPEN the footer shows the failure reason above 保存して公開 and the Header says 保存できませんでした
+  ---
+  duration_ms: 4.1105
+  ...
+# Subtest: T46-OPEN the structure under 900px: the global chrome is hidden, taps are 44px, one-line labels do not wrap, the save bar is fixed to the bottom
+ok 164 - T46-OPEN the structure under 900px: the global chrome is hidden, taps are 44px, one-line labels do not wrap, the save bar is fixed to the bottom
+  ---
+  duration_ms: 0.563375
+  ...
+# Subtest: T46-FIELDS every editable item of today is still in the editor, with the same id
+ok 165 - T46-FIELDS every editable item of today is still in the editor, with the same id
+  ---
+  duration_ms: 2.197125
+  ...
+# Subtest: T46-FIELDS a legacy 7-key live opens with empty fields and saves the same 17-key shape as before
+ok 166 - T46-FIELDS a legacy 7-key live opens with empty fields and saves the same 17-key shape as before
+  ---
+  duration_ms: 3.641417
+  ...
+# Subtest: T46-FIELDS values inside the folded 予約先・リンクなど are saved even though it was never opened
+ok 167 - T46-FIELDS values inside the folded 予約先・リンクなど are saved even though it was never opened
+  ---
+  duration_ms: 7.080583
+  ...
+# Subtest: T46-FIELDS the category is a two-way choice backed by edit-isPast: choosing 公演終了 saves into the past list
+ok 168 - T46-FIELDS the category is a two-way choice backed by edit-isPast: choosing 公演終了 saves into the past list
+  ---
+  duration_ms: 3.510708
+  ...
+# Subtest: T46-NEW the first screen has only the source, 下書きを作る and 手入力で作る; the fields wait behind it
+ok 169 - T46-NEW the first screen has only the source, 下書きを作る and 手入力で作る; the fields wait behind it
+  ---
+  duration_ms: 1.865209
+  ...
+# Subtest: T46-NEW from the source to the announcement takes exactly three presses and never opens a confirmation surface
+ok 170 - T46-NEW from the source to the announcement takes exactly three presses and never opens a confirmation surface
+  ---
+  duration_ms: 5.993667
+  ...
+# Subtest: T46-NEW the announcement after saving shows the post text and あとで returns to the list
+ok 171 - T46-NEW the announcement after saving shows the post text and あとで returns to the list
+  ---
+  duration_ms: 5.01425
+  ...
+# Subtest: T46-NEW saving an existing Live stays on its public content and shows 保存済み, never the announcement
+ok 172 - T46-NEW saving an existing Live stays on its public content and shows 保存済み, never the announcement
+  ---
+  duration_ms: 2.82825
+  ...
+# Subtest: T46-NEW 手入力で作る opens the fields without calling the draft route; announcement and reservation say 保存すると使えます。
+ok 173 - T46-NEW 手入力で作る opens the fields without calling the draft route; announcement and reservation say 保存すると使えます。
+  ---
+  duration_ms: 1.677667
+  ...
+# Subtest: T46-NEW saving without a date or venue stays on the draft and says what is missing under the field
+ok 174 - T46-NEW saving without a date or venue stays on the draft and says what is missing under the field
+  ---
+  duration_ms: 1.453583
+  ...
+# Subtest: T46-DRAFT while the draft is made the button says 下書きを作っています… and cannot be pressed; it returns to 下書きを作る
+ok 175 - T46-DRAFT while the draft is made the button says 下書きを作っています… and cannot be pressed; it returns to 下書きを作る
+  ---
+  duration_ms: 2.801291
+  ...
+# Subtest: T46-DRAFT the provider notice after a draft is the fixed sentence of design §7.4, and a legacy response keeps the old one
+ok 176 - T46-DRAFT the provider notice after a draft is the fixed sentence of design §7.4, and a legacy response keeps the old one
+  ---
+  duration_ms: 4.449959
+  ...
+# Subtest: T46-DRAFT when the draft fails the source and every field stay and two lines say so
+ok 177 - T46-DRAFT when the draft fails the source and every field stay and two lines say so
+  ---
+  duration_ms: 3.696666
+  ...
+# Subtest: T46-DRAFT a response that arrives after the source changed or the Live changed is not applied
+ok 178 - T46-DRAFT a response that arrives after the source changed or the Live changed is not applied
+  ---
+  duration_ms: 1.455208
+  ...
+# Subtest: T46-DRAFT Local Mode does not call the draft route
+ok 179 - T46-DRAFT Local Mode does not call the draft route
+  ---
+  duration_ms: 1.266584
+  ...
+# Subtest: T46-ANNOUNCE the announcement has the comment, the post text, Xで告知する and two copy buttons
+ok 180 - T46-ANNOUNCE the announcement has the comment, the post text, Xで告知する and two copy buttons
+  ---
+  duration_ms: 2.149792
+  ...
+# Subtest: T46-ANNOUNCE changing the comment makes the Live unsaved and updates the post; the share URL is unchanged
+ok 181 - T46-ANNOUNCE changing the comment makes the Live unsaved and updates the post; the share URL is unchanged
+  ---
+  duration_ms: 3.725
+  ...
+# Subtest: T46-ANNOUNCE the copy result is told next to the buttons: コピーしました。 / コピーできませんでした
+ok 182 - T46-ANNOUNCE the copy result is told next to the buttons: コピーしました。 / コピーできませんでした
+  ---
+  duration_ms: 2.92975
+  ...
+# Subtest: T46-ANNOUNCE before saving Xで告知する and リンクをコピー do nothing (no clipboard, no window)
+ok 183 - T46-ANNOUNCE before saving Xで告知する and リンクをコピー do nothing (no clipboard, no window)
+  ---
+  duration_ms: 1.175083
+  ...
+# Subtest: T46-IMAGE the flyer is the first block of the public content: unselected shows a dashed frame and 画像を選ぶ
+ok 184 - T46-IMAGE the flyer is the first block of the public content: unselected shows a dashed frame and 画像を選ぶ
+  ---
+  duration_ms: 1.48625
+  ...
+# Subtest: T46-IMAGE a registered flyer shows the picture (pressing it saves it), 画像を変える and 画像を外す
+ok 185 - T46-IMAGE a registered flyer shows the picture (pressing it saves it), 画像を変える and 画像を外す
+  ---
+  duration_ms: 1.509125
+  ...
+# Subtest: T46-IMAGE while the flyer uploads the status says アップロードしています…; a failure says 画像をアップロードできませんでした with the reason and keeps the old flyer
+ok 186 - T46-IMAGE while the flyer uploads the status says アップロードしています…; a failure says 画像をアップロードできませんでした with the reason and keeps the old flyer
+  ---
+  duration_ms: 2.421958
+  ...
+# Subtest: T46-IMAGE the other tabs keep their picture wording
+ok 187 - T46-IMAGE the other tabs keep their picture wording
+  ---
+  duration_ms: 1.410584
+  ...
+# Subtest: T46-RESERVE the list shows the total without the cancelled one, the three filters with their counts, and a row per reservation
+ok 188 - T46-RESERVE the list shows the total without the cancelled one, the three filters with their counts, and a row per reservation
+  ---
+  duration_ms: 2.593333
+  ...
+# Subtest: T46-RESERVE a Live with no reservations says まだ予約はありません。
+ok 189 - T46-RESERVE a Live with no reservations says まだ予約はありません。
+  ---
+  duration_ms: 3.808209
+  ...
+# Subtest: T46-RESERVE pressing a filter selects it, pressing it again shows every reservation
+ok 190 - T46-RESERVE pressing a filter selects it, pressing it again shows every reservation
+  ---
+  duration_ms: 2.546583
+  ...
+# Subtest: T46-RESERVE opening a row shows the reservation: Header ‹ 予約, name and seats, the seven lines, and the switch is hidden
+ok 191 - T46-RESERVE opening a row shows the reservation: Header ‹ 予約, name and seats, the seven lines, and the switch is hidden
+  ---
+  duration_ms: 2.55475
+  ...
+# Subtest: T46-RESERVE a web reservation shows its e-mail as the contact, its note, and no 内部メモ line when there is none
+ok 192 - T46-RESERVE a web reservation shows its e-mail as the contact, its note, and no 内部メモ line when there is none
+  ---
+  duration_ms: 1.760417
+  ...
+# Subtest: T46-RESERVE a pending reservation offers 対応済みにする and キャンセルにする; handled and cancelled ones offer only 未対応に戻す
+ok 193 - T46-RESERVE a pending reservation offers 対応済みにする and キャンセルにする; handled and cancelled ones offer only 未対応に戻す
+  ---
+  duration_ms: 2.270959
+  ...
+# Subtest: T46-RESERVE a status change posts as before, returns to the list, and refreshes the list, the summary and the count
+ok 194 - T46-RESERVE a status change posts as before, returns to the list, and refreshes the list, the summary and the count
+  ---
+  duration_ms: 5.25025
+  ...
+# Subtest: T46-RESERVE a failed status change keeps the reservation open and says 更新失敗: with the reason
+ok 195 - T46-RESERVE a failed status change keeps the reservation open and says 更新失敗: with the reason
+  ---
+  duration_ms: 2.396667
+  ...
+# Subtest: T46-RESERVE the back button goes from one reservation to the list, and from the list out of the Live
+ok 196 - T46-RESERVE the back button goes from one reservation to the list, and from the list out of the Live
+  ---
+  duration_ms: 2.366833
+  ...
+# Subtest: T46-RESERVE 取り置きを追加 opens its own screen; a wrong name or seat count is refused under the fields
+ok 197 - T46-RESERVE 取り置きを追加 opens its own screen; a wrong name or seat count is refused under the fields
+  ---
+  duration_ms: 3.710625
+  ...
+# Subtest: T46-RESERVE a 取り置き sends the same body as before, returns to the list, and refreshes the ledgers and the summary
+ok 198 - T46-RESERVE a 取り置き sends the same body as before, returns to the list, and refreshes the ledgers and the summary
+  ---
+  duration_ms: 2.486875
+  ...
+# Subtest: T46-RESERVE a failed 取り置き stays on its screen, keeps the inputs and says why under them
+ok 199 - T46-RESERVE a failed 取り置き stays on its screen, keeps the inputs and says why under them
+  ---
+  duration_ms: 1.701125
+  ...
+# Subtest: T46-RESERVE the 予約管理 list starts on 未対応, shows name, seats, the Live and the received time, and a row opens one reservation
+ok 200 - T46-RESERVE the 予約管理 list starts on 未対応, shows name, seats, the Live and the received time, and a row opens one reservation
+  ---
+  duration_ms: 1.172375
+  ...
+# Subtest: T46-RESERVE changing a status from 予約管理 returns to its list; an empty list says まだ予約はありません。
+ok 201 - T46-RESERVE changing a status from 予約管理 returns to its list; an empty list says まだ予約はありません。
+  ---
+  duration_ms: 1.532334
+  ...
+# Subtest: T46-RESERVE 予約管理 has CSVで書き出す, and the CSV route and its file name are unchanged
+ok 202 - T46-RESERVE 予約管理 has CSVで書き出す, and the CSV route and its file name are unchanged
+  ---
+  duration_ms: 1.237792
+  ...
+# Subtest: T46-RESERVE the reservation rows and the detail escape what they print and keep the status buttons delegated
+ok 203 - T46-RESERVE the reservation rows and the detail escape what they print and keep the status buttons delegated
+  ---
+  duration_ms: 0.975166
+  ...
+# Subtest: T46-AUTH the 予約管理 list says 認証できませんでした。 when the passphrase is missing or refused, and a retry after typing it works
+ok 204 - T46-AUTH the 予約管理 list says 認証できませんでした。 when the passphrase is missing or refused, and a retry after typing it works
+  ---
+  duration_ms: 2.094792
+  ...
+# Subtest: T46-AUTH the reservations of a Live say 認証できませんでした。 inside the list
+ok 205 - T46-AUTH the reservations of a Live say 認証できませんでした。 inside the list
+  ---
+  duration_ms: 6.092625
+  ...
+# Subtest: T46-AUTH a status change refused for the passphrase says so next to the buttons and leaves the reservation as it was
+ok 206 - T46-AUTH a status change refused for the passphrase says so next to the buttons and leaves the reservation as it was
+  ---
+  duration_ms: 1.638125
+  ...
+# Subtest: T46-AUTH a 取り置き refused for the passphrase says so under the fields and keeps what was typed
+ok 207 - T46-AUTH a 取り置き refused for the passphrase says so under the fields and keeps what was typed
+  ---
+  duration_ms: 1.799042
+  ...
+# Subtest: T46-AUTH a save refused for the passphrase says 認証できませんでした。 above 保存して公開 and the changes stay
+ok 208 - T46-AUTH a save refused for the passphrase says 認証できませんでした。 above 保存して公開 and the changes stay
+  ---
+  duration_ms: 4.959792
+  ...
+# Subtest: T46-STYLE every group of style.css except the Live group has the bytes of the base commit
+ok 209 - T46-STYLE every group of style.css except the Live group has the bytes of the base commit
+  ---
+  duration_ms: 16.888792
+  ...
+# Subtest: T46-STYLE every rule \#46 added is scoped to Live, reservation or settings classes, never to a shared class alone
+ok 210 - T46-STYLE every rule \#46 added is scoped to Live, reservation or settings classes, never to a shared class alone
+  ---
+  duration_ms: 16.682667
+  ...
+# Subtest: T46-STYLE the lines \#46 added use token variables only: no hex, rgb or hsl colors
+ok 211 - T46-STYLE the lines \#46 added use token variables only: no hex, rgb or hsl colors
+  ---
+  duration_ms: 15.119
+  ...
+# Subtest: T46-STYLE the main controls are at least 44px to tap, at every width
+ok 212 - T46-STYLE the main controls are at least 44px to tap, at every width
+  ---
+  duration_ms: 1.407084
+  ...
+# Subtest: T46-STYLE the arrangement switches at 899px and 900px, and the page chrome steps aside only below 900px
+ok 213 - T46-STYLE the arrangement switches at 899px and 900px, and the page chrome steps aside only below 900px
+  ---
+  duration_ms: 0.630625
+  ...
+# Subtest: T46-STYLE at 900px and above the fields are 2 and 3 columns, one column less between 900px and 1179px
+ok 214 - T46-STYLE at 900px and above the fields are 2 and 3 columns, one column less between 900px and 1179px
+  ---
+  duration_ms: 0.897125
+  ...
+# Subtest: T46-STYLE wide: 保存して公開 sits at the right of the heading, dimmed while it cannot be pressed; the Live tab is not capped at 980px
+ok 215 - T46-STYLE wide: 保存して公開 sits at the right of the heading, dimmed while it cannot be pressed; the Live tab is not capped at 980px
+  ---
+  duration_ms: 0.677125
+  ...
+# Subtest: T46-STYLE the sticky bottom bars (an open Live, the settings screen) have no scrolling mechanism in their ancestors
+ok 216 - T46-STYLE the sticky bottom bars (an open Live, the settings screen) have no scrolling mechanism in their ancestors
+  ---
+  duration_ms: 1.202208
+  ...
+# Subtest: T46-STYLE the reservation table: six columns on a wide screen and a pane of 320px on its right
+ok 217 - T46-STYLE the reservation table: six columns on a wide screen and a pane of 320px on its right
+  ---
+  duration_ms: 0.53625
+  ...
+# Subtest: T46-STYLE wide: 保存して公開 is in the heading for every task, dimmed until something is unsaved, and a narrow screen keeps the bar hidden
+ok 218 - T46-STYLE wide: 保存して公開 is in the heading for every task, dimmed until something is unsaved, and a narrow screen keeps the bar hidden
+  ---
+  duration_ms: 25.396041
+  ...
+# Subtest: T46-STYLE wide: saving keeps the heading button dimmed while it runs and after it is saved; a failure makes it pressable again
+ok 219 - T46-STYLE wide: saving keeps the heading button dimmed while it runs and after it is saved; a failure makes it pressable again
+  ---
+  duration_ms: 9.636542
+  ...
+# Subtest: T46-STYLE wide: one reservation opens beside the list and the Header stays on the Live; narrow replaces the list and shows the reservation in the Header
+ok 220 - T46-STYLE wide: one reservation opens beside the list and the Header stays on the Live; narrow replaces the list and shows the reservation in the Header
+  ---
+  duration_ms: 7.145708
+  ...
+# Subtest: T46-STYLE wide: the 取り置き form opens on the right of the list; crossing 900px re-applies the arrangement without losing what is open
+ok 221 - T46-STYLE wide: the 取り置き form opens on the right of the list; crossing 900px re-applies the arrangement without losing what is open
+  ---
+  duration_ms: 2.180208
+  ...
+# Subtest: T46-STYLE the reservation rows carry the table cells, a pending row can be marked 対応済み in the row, and the status route is unchanged
+ok 222 - T46-STYLE the reservation rows carry the table cells, a pending row can be marked 対応済み in the row, and the status route is unchanged
+  ---
+  duration_ms: 3.0515
+  ...
+# Subtest: T46-STYLE the 予約管理 table opens one reservation on its right on a wide screen, and replaces the list on a narrow one
+ok 223 - T46-STYLE the 予約管理 table opens one reservation on its right on a wide screen, and replaces the list on a narrow one
+  ---
+  duration_ms: 2.688666
+  ...
+# Subtest: T46-STYLE the Ticket Page共通設定 screen: back, title and state in the Header, the seven inputs, and 保存して公開 only while unsaved (always, dimmed, when wide)
+ok 224 - T46-STYLE the Ticket Page共通設定 screen: back, title and state in the Header, the seven inputs, and 保存して公開 only while unsaved (always, dimmed, when wide)
+  ---
+  duration_ms: 2.544625
+  ...
+# Subtest: T46-STYLE the settings screen takes the place of the editor and marks the page, and a Live opened from the list closes it
+ok 225 - T46-STYLE the settings screen takes the place of the editor and marks the page, and a Live opened from the list closes it
+  ---
+  duration_ms: 3.211333
+  ...
+# Subtest: T46-STYLE the confirmation surface is a fixed layer over the page, 360px at most, with its two buttons side by side
+ok 226 - T46-STYLE the confirmation surface is a fixed layer over the page, 360px at most, with its two buttons side by side
+  ---
+  duration_ms: 0.60275
+  ...
+# Subtest: T46-STYLE while the confirmation surface is open the page behind is inert, and it is restored when the surface closes
+ok 227 - T46-STYLE while the confirmation surface is open the page behind is inert, and it is restored when the surface closes
+  ---
+  duration_ms: 5.293542
+  ...
+# Subtest: T46-MODE the header 保存 is hidden on the Live tab only while the API is connected and nothing else is unsaved
+ok 228 - T46-MODE the header 保存 is hidden on the Live tab only while the API is connected and nothing else is unsaved
+  ---
+  duration_ms: 1.726875
+  ...
+# Subtest: T46-MODE Local Mode and read-only keep the header button on the Live tab
+ok 229 - T46-MODE Local Mode and read-only keep the header button on the Live tab
+  ---
+  duration_ms: 1.99125
+  ...
+# Subtest: T46-MODE API connection failure is read-only: every new operation is off, nothing is sent, the list can still be read
+ok 230 - T46-MODE API connection failure is read-only: every new operation is off, nothing is sent, the list can still be read
+  ---
+  duration_ms: 7.308833
+  ...
+# Subtest: T46-MODE read-only: the reservation operations (row actions, status buttons, the form) cannot change anything
+ok 231 - T46-MODE read-only: the reservation operations (row actions, status buttons, the form) cannot change anything
+  ---
+  duration_ms: 2.192542
+  ...
+# Subtest: T46-MODE Local Mode: save is 反映 to memory and 書き出し待ち, settings save is the same, and the API-only parts stay off
+ok 232 - T46-MODE Local Mode: save is 反映 to memory and 書き出し待ち, settings save is the same, and the API-only parts stay off
+  ---
+  duration_ms: 3.490334
+  ...
+# Subtest: T46-MODE leaving an unsaved Live through the global tab still asks first (the header button being hidden changes nothing)
+ok 233 - T46-MODE leaving an unsaved Live through the global tab still asks first (the header button being hidden changes nothing)
+  ---
+  duration_ms: 1.818417
+  ...
+# Subtest: T46-COMPAT the public Live script has the bytes of the base commit
+ok 234 - T46-COMPAT the public Live script has the bytes of the base commit
+  ---
+  duration_ms: 22.10125
+  ...
+# Subtest: T46-COMPAT the functions \#46 promised not to touch have the bodies they had at the base commit
+ok 235 - T46-COMPAT the functions \#46 promised not to touch have the bodies they had at the base commit
+  ---
+  duration_ms: 23.689625
+  ...
+# Subtest: T46-COMPAT News, YouTube, Disco, Profile and Site print the same markup and form values as at the base commit
+ok 236 - T46-COMPAT News, YouTube, Disco, Profile and Site print the same markup and form values as at the base commit
+  ---
+  duration_ms: 4.747833
+  ...
+# Subtest: T46-COMPAT the generic modals open with the same fields, and the picture wording of the other tabs is the base wording
+ok 237 - T46-COMPAT the generic modals open with the same fields, and the picture wording of the other tabs is the base wording
+  ---
+  duration_ms: 3.428209
+  ...
+# Subtest: T46-COMPAT the header 保存 (saveData) sends the whole data, including a change made in another tab, exactly as at the base commit
+ok 238 - T46-COMPAT the header 保存 (saveData) sends the whole data, including a change made in another tab, exactly as at the base commit
+  ---
+  duration_ms: 3.585
+  ...
+# Subtest: T46-COMPAT the shared picture form keeps the other tabs wording; only the Live flyer has the new wording
+ok 239 - T46-COMPAT the shared picture form keeps the other tabs wording; only the Live flyer has the new wording
+  ---
+  duration_ms: 2.009791
+  ...
+# Subtest: T46-VERSION ADMIN_BUILD_ID and the ?v= of style.css, app.js and music-data.js are the build of this Issue and agree with each other and the README
+ok 240 - T46-VERSION ADMIN_BUILD_ID and the ?v= of style.css, app.js and music-data.js are the build of this Issue and agree with each other and the README
+  ---
+  duration_ms: 0.246458
+  ...
+# Subtest: T46-VERSION the operator docs describe the new flow, the commands that exist, and the order: Worker first, then merge
+ok 241 - T46-VERSION the operator docs describe the new flow, the commands that exist, and the order: Worker first, then merge
+  ---
+  duration_ms: 0.659875
+  ...
+# Subtest: T46-VERSION the Worker has the summary route and exports its rule (that the diff is additions only is checked at deploy time: git diff against the base)
+ok 242 - T46-VERSION the Worker has the summary route and exports its rule (that the diff is additions only is checked at deploy time: git diff against the base)
+  ---
+  duration_ms: 0.89625
+  ...
+1..242
+# tests 288
+# suites 0
+# pass 288
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3488.76425

@@ -1,0 +1,12 @@
+$ node --check admin/app.js
+ok
+$ node --check cloudflare/worker/src/worker.js
+ok
+$ python3 -B -c ast.parse (3 scripts)
+ok
+$ /usr/bin/python3 -B capture-admin-live.py --self-check
+fake_admin_server: OK（bindなし）
+fake_admin_api: OK（14 scenario。bindなし・networkなし）
+契約OK: 150画像 / 16画面 / 14scenario（ブラウザ・bindなし）
+$ git diff --check
+ok

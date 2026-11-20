@@ -1,0 +1,105 @@
+TAP version 13
+# APIデータ読み込みエラー: Error: offline
+#     at Object.loadData (evalmachine.<anonymous>:1058:15)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-review-fixes.test.mjs:71:3)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: T46-HEADER API connected: the Header says only 接続中, the band is not shown, and the build mark is the title, not text
+ok 1 - T46-HEADER API connected: the Header says only 接続中, the band is not shown, and the build mark is the title, not text
+  ---
+  duration_ms: 13.079625
+  ...
+# Subtest: T46-HEADER API connection failed: the band says so, the Header stays 読み取り専用 and the 保存 button is off
+ok 2 - T46-HEADER API connection failed: the band says so, the Header stays 読み取り専用 and the 保存 button is off
+  ---
+  duration_ms: 1.782708
+  ...
+# Subtest: T46-HEADER Local Mode: the band says ローカルJSONモード, the Header says Local Mode, and the button exports JSON
+ok 3 - T46-HEADER Local Mode: the band says ローカルJSONモード, the Header says Local Mode, and the button exports JSON
+  ---
+  duration_ms: 0.64025
+  ...
+# Subtest: T46-HEADER without a build mark there is no title; a connection that comes back after a failure hides the band again
+ok 4 - T46-HEADER without a build mark there is no title; a connection that comes back after a failure hides the band again
+  ---
+  duration_ms: 1.344583
+  ...
+# Subtest: T46-HEADER the other tabs differ from the base commit only in this display: 保存 button, Local Mode and read-only band, six tabs, header markup
+ok 5 - T46-HEADER the other tabs differ from the base commit only in this display: 保存 button, Local Mode and read-only band, six tabs, header markup
+  ---
+  duration_ms: 33.546917
+  ...
+# Subtest: T46-HEADER a load error shows the band again with its message; the boot marker keeps the build out of the visible text
+ok 6 - T46-HEADER a load error shows the band again with its message; the boot marker keeps the build out of the visible text
+  ---
+  duration_ms: 0.276125
+  ...
+# Subtest: T46-SUMMARY-BASE a summary read that fails (401) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 7 - T46-SUMMARY-BASE a summary read that fails (401) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+  ---
+  duration_ms: 2.031125
+  ...
+# Subtest: T46-SUMMARY-BASE a summary read that fails (403) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 8 - T46-SUMMARY-BASE a summary read that fails (403) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+  ---
+  duration_ms: 1.947709
+  ...
+# Subtest: T46-SUMMARY-BASE a summary read that fails (404) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 9 - T46-SUMMARY-BASE a summary read that fails (404) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+  ---
+  duration_ms: 1.258042
+  ...
+# Subtest: T46-SUMMARY-BASE a summary read that fails (500) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 10 - T46-SUMMARY-BASE a summary read that fails (500) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+  ---
+  duration_ms: 1.178375
+  ...
+# Subtest: T46-SUMMARY-BASE a summary read that fails (no connection) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 11 - T46-SUMMARY-BASE a summary read that fails (no connection) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+  ---
+  duration_ms: 1.056292
+  ...
+# Subtest: T46-SUMMARY-BASE the summary read asks adminFetch not to fall back, and the other reads and writes keep the default policy
+ok 12 - T46-SUMMARY-BASE the summary read asks adminFetch not to fall back, and the other reads and writes keep the default policy
+  ---
+  duration_ms: 1.050209
+  ...
+# Subtest: T46-SUMMARY-BASE the other reads still fall back to the canonical base as before (only the summary is exempt)
+ok 13 - T46-SUMMARY-BASE the other reads still fall back to the canonical base as before (only the summary is exempt)
+  ---
+  duration_ms: 0.894708
+  ...
+# Subtest: T46-ERRORLINE (a) after a failed status change, drawing the same reservation again keeps the failure line (width change, ledger read, the view called again)
+ok 14 - T46-ERRORLINE (a) after a failed status change, drawing the same reservation again keeps the failure line (width change, ledger read, the view called again)
+  ---
+  duration_ms: 7.147458
+  ...
+# Subtest: T46-ERRORLINE (a) the same holds for the 予約管理 detail, and an authentication failure line is kept as well
+ok 15 - T46-ERRORLINE (a) the same holds for the 予約管理 detail, and an authentication failure line is kept as well
+  ---
+  duration_ms: 1.129292
+  ...
+# Subtest: T46-ERRORLINE (b) another reservation, the list, and then the same reservation again start without the line
+ok 16 - T46-ERRORLINE (b) another reservation, the list, and then the same reservation again start without the line
+  ---
+  duration_ms: 2.105333
+  ...
+# Subtest: T46-ERRORLINE (b) the 予約管理 detail: closing it and opening it again, or opening another one, starts without the line
+ok 17 - T46-ERRORLINE (b) the 予約管理 detail: closing it and opening it again, or opening another one, starts without the line
+  ---
+  duration_ms: 1.726708
+  ...
+# Subtest: T46-ERRORLINE (c) a status change that succeeds leaves no line: the reservation closes and opens clean
+ok 18 - T46-ERRORLINE (c) a status change that succeeds leaves no line: the reservation closes and opens clean
+  ---
+  duration_ms: 6.585291
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3203.4935

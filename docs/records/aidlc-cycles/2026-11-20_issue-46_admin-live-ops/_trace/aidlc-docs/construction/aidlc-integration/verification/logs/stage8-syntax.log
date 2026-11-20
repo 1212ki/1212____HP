@@ -1,0 +1,8 @@
+node --check admin/app.js OK
+node --check worker.js OK
+python ast.parse 3 scripts OK
+/usr/bin/python3 ast.parse OK
+fake_admin_server: OK（bindなし）
+fake_admin_api: OK（14 scenario。bindなし・networkなし）
+契約OK: 150画像 / 16画面 / 14scenario（ブラウザ・bindなし）
+git diff --check OK

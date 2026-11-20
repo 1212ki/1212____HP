@@ -1,0 +1,354 @@
+TAP version 13
+# Subtest: T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+not ok 1 - T46-LIST a row shows the flyer, the date, the venue and ›, never the live title; only the first upcoming row says Next Live
+  ---
+  duration_ms: 11.634542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:71:1'
+  failureType: 'testCodeFailure'
+  error: 'the live name is not shown in the list'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    
+        <button type="button" class="item-card live-edit-trigger " data-live-edit data-live-id="fx-live-today" data-live-category="upcoming" aria-current="false">
+          <img class="thumbnail" src="https://img.example.test/uploads/fixture-today.jpg" alt="" onerror="this.style.display='none'">
+          <span class="info">
+            <span class="next-live-badge" aria-label="Next Live">Next Live</span>
+            <span class="title">架空の公演 今日</span>
+            <span class="meta">2026.11.20(Fri) テスト会場A</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+      
+        <button type="button" class="item-card live-edit-trigger " data-live-edit data-live-id="fx-live-long" data-live-category="upcoming" aria-current="false">
+          <img class="thumbnail" src="../assets/images/fixture-long.jpg" alt="" onerror="this.style.display='none'">
+          <span class="info">
+            
+            <span class="title">架空の公演 長い文</span>
+            <span class="meta">2099.12.12(Sat) テスト会場B</span>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+      
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:82:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: T46-LIST a live without a flyer or a title still has a row with its date and venue
+ok 2 - T46-LIST a live without a flyer or a title still has a row with its date and venue
+  ---
+  duration_ms: 1.612166
+  ...
+# Subtest: T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+not ok 3 - T46-LIST upcoming rows show 予約 N枚 and a 未対応 N badge only when something is pending; 0 seats says 予約 0枚; past rows show nothing
+  ---
+  duration_ms: 1.012
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:100:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:103:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST while the summary loads no reservation line is shown and no note is shown
+not ok 4 - T46-LIST while the summary loads no reservation line is shown and no note is shown
+  ---
+  duration_ms: 1.253708
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:114:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:118:23)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+not ok 5 - T46-LIST 404 from an old Worker shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 0.873166
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:133:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:136:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+not ok 6 - T46-LIST 500 shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 0.942459
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:133:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:136:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+not ok 7 - T46-LIST a body without summaries shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 0.844958
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:133:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:136:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+not ok 8 - T46-LIST summaries that is not a list shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.25575
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:133:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:136:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+not ok 9 - T46-LIST a network failure shows one line "予約の数を読み込めませんでした。" and no reservation line
+  ---
+  duration_ms: 1.117375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:133:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:136:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+not ok 10 - T46-LIST 401 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 0.935333
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:148:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:151:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+not ok 11 - T46-LIST 403 shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 1.659625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:148:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:151:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+not ok 12 - T46-LIST an empty passphrase (the prompt was closed) shows "認証できませんでした。" instead of the load failure line
+  ---
+  duration_ms: 0.871875
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:148:3'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:151:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST the API connection failure and Local Mode never call the summary and show no note
+not ok 13 - T46-LIST the API connection failure and Local Mode never call the summary and show no note
+  ---
+  duration_ms: 0.855292
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:157:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:161:15)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST an empty list says there is nothing, as it did before
+ok 14 - T46-LIST an empty list says there is nothing, as it did before
+  ---
+  duration_ms: 0.720417
+  ...
+# Subtest: T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+not ok 15 - T46-LIST with an old Worker (summary 404) saving a Live and changing a reservation still work
+  ---
+  duration_ms: 0.894917
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:174:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:177:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST only the latest of overlapping summary requests is applied
+not ok 16 - T46-LIST only the latest of overlapping summary requests is applied
+  ---
+  duration_ms: 0.832666
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:191:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:197:21)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+not ok 17 - T46-LIST the summary is read again after a save, a delete, a status change and a manual reservation
+  ---
+  duration_ms: 0.805542
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:208:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:211:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+not ok 18 - T46-LIST the Ticket Page共通設定 entry sits below the lists; the note line sits above them
+  ---
+  duration_ms: 0.119667
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:238:1'
+  failureType: 'testCodeFailure'
+  error: 'the entry is after both lists'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:240:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+not ok 19 - T46-LIST the loaded summary is requested once after the data load, and the list rows can be opened
+  ---
+  duration_ms: 0.789625
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:247:1'
+  failureType: 'testCodeFailure'
+  error: 'app.loadReservationSummary is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-46-admin-live-ops/test/admin-live-screens.test.mjs:250:13)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 2
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 154.053917
