@@ -3,7 +3,8 @@
 - Status: Approved
 - Owner: Itsuki Matsumoto
 - Last updated: 2026-11-19
-- Owner approval: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #45のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-45_profile-contact/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #43）: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #44）: Issue #44のgate 3（第2版の再承認）における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #41）: Issue #41のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-41_data-fields/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
@@ -32,6 +33,8 @@ Approvedは実装の入力としての承認を示します。各設計書の画
 #44の入力は公開設計§3の#44対応表・§5のMusic表示契約・§6のMusicとHome入口・§7の状態とまとめ出し、および管理設計§5.3の#44対応に示す。`/music/`の全作品・全映像、旧URL誘導、全10公開HTMLの5項目ナビとHome入口を対象にする。公開Musicの作品は管理Disco、映像とChannel URLは管理YouTubeで編集し、タブ統合は#47。#44の設計承認・実装・試験・Frontの画面確認・独立review・公開は別の信号である。
 
 #43の入力は公開設計§3の#43対応表・§5のLive・Ticket表示契約・§6のTicket完了・§7の状態とまとめ出し、および管理設計§5.2・§5.3の#43対応に示す。Live一覧・Live詳細・終了したライブ（全件）・Ticket・Ticket完了の本文を対象にし、送信中・失敗をTicketのページ内、成功をTicket完了のページで示す。予約の受付・自動返信メールの仕組み、データの形・保存、Cloudflare Workerは変えない。#43の設計承認・実装・試験・Frontの画面確認・独立review・公開は別の信号である。
+
+#45の入力は公開設計§3の#45対応表・§5のProfile・Contact表示契約・§6のProfileとContact・§7の状態とまとめ出しに示す。`profile/index.html`と`contact/index.html`の本文、`assets/js/contact.js`の送信状態を対象にする。ヘッダー・ナビ・フッターは#44のまま。Contactの送る先・送る項目・送り方、データの形、管理画面、Cloudflare Workerは変えないため、管理設計は更新しない。#45の設計承認・実装・試験・Frontの画面確認・独立review・公開は別の信号である。
 
 Owner決定（2026-11-18）：#44を先に`feature/39-public-pages`へ統合し、#43・#45も同branchへ集約してmainへ1回で公開する。#44のmergeでは本番配信は変わらず、Worker deployはない。Issue/Projectはまとめ出しまでReview。確認1はgate 1〜3、確認2はgate 4〜5。Frontは確認2前にfixtureとは別に本番公開データの画面を確認し、毎回PC/スマホURLを渡す。確認2のItsukiの閲覧は任意、必須の本人画面確認はまとめ出し前の1回。#42の単独公開時点の記述は履歴として保つ。
 

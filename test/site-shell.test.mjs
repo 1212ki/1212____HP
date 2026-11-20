@@ -14,6 +14,9 @@ const liveTicketScripts={
   'ticket/complete/index.html':['site-config.js','live-operations.js','music-data.js','home-player.js','ticket-receipt.js','ticket-complete.js','script.js'].map(x=>'../../assets/js/'+x),
 };
 const before=p=>execFileSync('git',['show',`${base}:${p}`],{encoding:'utf8'});
+// #45 appends its own block after #44's; the #44 CSS checks look only at what #44 added (base 0803258 .. ba12401).
+const base45='ba124011ce5e0ae56ddb1c6ac47d1783600687b4';
+const added44=css=>css.slice(before('assets/css/style.css').length,execFileSync('git',['show',`${base45}:assets/css/style.css`],{encoding:'utf8'}).length);
 const scripts=html=>[...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m=>m[1].split('?')[0]);
 const normalizedNav=html=>[...html.match(/<nav\b[\s\S]*?<\/nav>/)[0].matchAll(/<a href="([^"]*)"[^>]*>([^<]+)<\/a>/g)];
 
@@ -30,7 +33,7 @@ for(const path of paths)test('T44-SHELL ten routes and five shared nav URLs '+pa
   // Issue #43: the four Live/Ticket pages have their own bodies and scripts (main bytes and header/nav/footer are covered by T43-SHELL).
   if(liveTicketScripts[path])expected=liveTicketScripts[path];
   assert.deepEqual(scripts(html),expected);
-  if(!['index.html','music/index.html','discography/index.html','youtube/index.html',...Object.keys(liveTicketScripts)].includes(path))assert.equal(html.match(/<main\b[\s\S]*?<\/main>/)[0],old.match(/<main\b[\s\S]*?<\/main>/)[0], 'non-Home main bytes');
+  if(!['index.html','music/index.html','discography/index.html','youtube/index.html',...Object.keys(liveTicketScripts),'profile/index.html','contact/index.html'].includes(path))assert.equal(html.match(/<main\b[\s\S]*?<\/main>/)[0],old.match(/<main\b[\s\S]*?<\/main>/)[0], 'non-Home main bytes');
   for(const src of scripts(html))assert.ok(existsSync(new URL(src,'file://'+process.cwd()+'/'+path)),src);
 });
 test('T44-SHELL shared style and script cache version aligned for every consumer',()=>{
@@ -120,7 +123,7 @@ test('FR-N2 all Home news rows share the longest bounded date column and content
 
 test('T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only',()=>{
   const css=read('assets/css/style.css'),old=before('assets/css/style.css');assert.equal(css.slice(0,old.length),old);
-  const added=css.slice(old.length);assert.match(added,/body\.site-music/);assert.match(added,/width: min\(calc\(100% - 32px\), var\(--max-width\)\)/);
+  const added=added44(css);assert.match(added,/body\.site-music/);assert.match(added,/width: min\(calc\(100% - 32px\), var\(--max-width\)\)/);
   assert.match(added,/grid-template-columns: 120px minmax\(0, 1fr\)/);assert.match(added,/width: 220px/);assert.match(added,/aspect-ratio: 16 \/ 9/);assert.doesNotMatch(added,/310px|\b24px\b|height: 174px/);
   assert.match(added,/\.site-music \[hidden\]\s*\{[^}]*display: none !important/);assert.match(added,/scroll-margin-top:/);
   assert.doesNotMatch(added,/var\(--accent|#[0-9a-fA-F]{3,8}\b|line-clamp|text-overflow: ellipsis|height: 160px/);
@@ -134,7 +137,7 @@ test('T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to M
 // Owner decision 2026-11-18 (round 2): YouTube asks embeds to be at least 200px tall and recommends 480x270 for 16:9.
 const rule=(css,selector)=>{const m=css.replace(/\/\*[^]*?\*\//g,'').match(new RegExp('(?:^|\\})\\s*'+selector.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\{([^{}]*)\\}'));return m?m[1]:null;};
 test('T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall',()=>{
-  const css=read('assets/css/style.css'),old=before('assets/css/style.css'),added=css.slice(old.length),desktop=added.slice(0,added.indexOf('@media (max-width: 820px)')),mobile=added.slice(added.indexOf('@media (max-width: 820px)'));
+  const css=read('assets/css/style.css'),old=before('assets/css/style.css'),added=added44(css),desktop=added.slice(0,added.indexOf('@media (max-width: 820px)')),mobile=added.slice(added.indexOf('@media (max-width: 820px)'));
   const list=rule(desktop,'.site-music .music-release-list');assert.match(list,/display: grid/);assert.match(list,/grid-template-columns: repeat\(auto-fill, 220px\)/);assert.match(list,/gap: var\(--space-32\)/);assert.match(list,/justify-content: start/);
   const host=rule(desktop,'.site-music .music-release-player');assert.match(host,/grid-column: 1 \/ -1/);assert.match(host,/width: min\(480px, 100%\)/);
   const player=rule(desktop,'.site-music .music-player');assert.match(player,/aspect-ratio: 16 \/ 9/);assert.match(player,/min-height: 200px/);assert.doesNotMatch(player,/overflow: visible/);
@@ -143,7 +146,7 @@ test('T44-STYLE PC release player: 480 wide, own full-width grid row under the p
   assert.match(rule(mobile,'.site-music .music-release-player'),/width: 100%/);assert.doesNotMatch(mobile,/music-release-card > \.music-player/);
 });
 test('T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost',()=>{
-  const css=read('assets/css/style.css'),old=before('assets/css/style.css'),added=css.slice(old.length),desktop=added.slice(0,added.indexOf('@media (max-width: 820px)')),mobile=added.slice(added.indexOf('@media (max-width: 820px)'));
+  const css=read('assets/css/style.css'),old=before('assets/css/style.css'),added=added44(css),desktop=added.slice(0,added.indexOf('@media (max-width: 820px)')),mobile=added.slice(added.indexOf('@media (max-width: 820px)'));
   const list=rule(desktop,'.site-music .music-video-list');assert.match(list,/display: grid/);assert.match(list,/grid-template-columns: repeat\(2, minmax\(0, 474px\)\)/);assert.match(list,/gap: var\(--space-32\)/);
   const card=rule(desktop,'.site-music .music-video-card');assert.match(card,/width: 100%/);assert.doesNotMatch(card,/310px/);assert.match(rule(desktop,'.site-music .music-video-title'),/width: 100%/);
   const thumbnail=rule(desktop,'.site-music .music-video-thumbnail');assert.match(thumbnail,/width: 100%/);assert.match(thumbnail,/aspect-ratio: 16 \/ 9/);assert.match(thumbnail,/min-height: 200px/);

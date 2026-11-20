@@ -1,0 +1,8 @@
+profile-rendering: # tests 43 # pass 43 # fail 0 
+contact-form: # tests 26 # pass 26 # fail 0 
+profile-contact-shell: # tests 24 # pass 24 # fail 0 
+site-shell: # tests 39 # pass 39 # fail 0 
+home-rendering: # tests 64 # pass 64 # fail 0 
+public-music-data-compatibility: # tests 10 # pass 10 # fail 0 
+music-rendering: # tests 64 # pass 64 # fail 0 
+public-ticket-routing: # tests 36 # pass 36 # fail 0 

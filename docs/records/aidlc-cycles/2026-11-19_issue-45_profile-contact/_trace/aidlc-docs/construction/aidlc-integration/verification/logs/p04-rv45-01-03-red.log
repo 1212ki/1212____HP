@@ -1,0 +1,182 @@
+TAP version 13
+# Subtest: T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+ok 1 - T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+  ---
+  duration_ms: 5.38325
+  ...
+# Subtest: T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+ok 2 - T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+  ---
+  duration_ms: 8.91975
+  ...
+# Subtest: T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+ok 3 - T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+  ---
+  duration_ms: 3.050791
+  ...
+# Subtest: T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+ok 4 - T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+  ---
+  duration_ms: 8.639167
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+ok 5 - T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 2.538541
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+ok 6 - T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 2.7525
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+ok 7 - T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 2.323166
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+ok 8 - T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 2.543709
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+ok 9 - T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 2.059875
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+ok 10 - T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 2.17225
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+ok 11 - T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 2.727417
+  ...
+# Subtest: T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+ok 12 - T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+  ---
+  duration_ms: 2.410958
+  ...
+# Subtest: T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+ok 13 - T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+  ---
+  duration_ms: 4.091792
+  ...
+# Subtest: T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+ok 14 - T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+  ---
+  duration_ms: 3.497
+  ...
+# Subtest: T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+ok 15 - T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+  ---
+  duration_ms: 2.506833
+  ...
+# Subtest: T45-CON-VALID empty, whitespace-only and malformed values: no request, in-page sentence per field, aria wiring, first field focused, values kept
+ok 16 - T45-CON-VALID empty, whitespace-only and malformed values: no request, in-page sentence per field, aria wiring, first field focused, values kept
+  ---
+  duration_ms: 18.324375
+  ...
+# Subtest: T45-CON-VALID typing clears only that field error; fixing everything sends; the browser typeMismatch standard decides the format
+ok 17 - T45-CON-VALID typing clears only that field error; fixing everything sends; the browser typeMismatch standard decides the format
+  ---
+  duration_ms: 4.168916
+  ...
+# Subtest: T45-CON-FAIL network exception: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 18 - T45-CON-FAIL network exception: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 5.025083
+  ...
+# Subtest: T45-CON-FAIL HTTP 400: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 19 - T45-CON-FAIL HTTP 400: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 5.149292
+  ...
+# Subtest: T45-CON-FAIL HTTP 500: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 20 - T45-CON-FAIL HTTP 500: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 4.703166
+  ...
+# Subtest: T45-CON-FAIL empty action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 21 - T45-CON-FAIL empty action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 3.948958
+  ...
+# Subtest: T45-CON-FAIL whitespace action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+ok 22 - T45-CON-FAIL whitespace action: input untouched, fixed notice, retry button, focus on the button; retry can succeed or fail again
+  ---
+  duration_ms: 4.399125
+  ...
+# Subtest: T45-CON-FAIL a new attempt hides the previous notice while sending
+ok 23 - T45-CON-FAIL a new attempt hides the previous notice while sending
+  ---
+  duration_ms: 3.644292
+  ...
+# Subtest: T45-CON-DONE ok shows the sent content as text, keeps the heading, moves focus, ignores later edits
+ok 24 - T45-CON-DONE ok shows the sent content as text, keeps the heading, moves focus, ignores later edits
+  ---
+  duration_ms: 3.11775
+  ...
+# Subtest: T45-CON-DOUBLE sending: one request, disabled button 送信しています…, read-only fields keep values, status announced, state restored afterwards
+ok 25 - T45-CON-DOUBLE sending: one request, disabled button 送信しています…, read-only fields keep values, status announced, state restored afterwards
+  ---
+  duration_ms: 4.405166
+  ...
+# Subtest: T45-CON-DOUBLE late settings never re-enable the button during sending nor reopen the intro after completion
+ok 26 - T45-CON-DOUBLE late settings never re-enable the button during sending nor reopen the intro after completion
+  ---
+  duration_ms: 2.817958
+  ...
+# Subtest: T45-CON-GUARD RV45-01 an HTML without the elements the handler needs gets no handler: submit is not prevented, nothing is requested
+not ok 27 - T45-CON-GUARD RV45-01 an HTML without the elements the handler needs gets no handler: submit is not prevented, nothing is requested
+  ---
+  duration_ms: 3.210666
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:387:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    contact-submit missing: the standard form submission must stay in charge
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:400:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: T45-CON-VALID RV45-03 an input error after a failed send hides the previous failure notice
+not ok 28 - T45-CON-VALID RV45-03 an input error after a failed send hides the previous failure notice
+  ---
+  duration_ms: 3.633833
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:405:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-45-profile-contact/test/contact-form.test.mjs:413:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 26
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 359.29875

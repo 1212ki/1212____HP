@@ -1,0 +1,135 @@
+TAP version 13
+# Subtest: T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+ok 1 - T45-CON-SETTINGS real HTML: three fields, embedded intro and endpoint untouched, in-page validation switch, no overlay
+  ---
+  duration_ms: 11.623416
+  ...
+# Subtest: T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+ok 2 - T45-CON-SETTINGS success applies intro and endpoint, becomes ready, footer from site
+  ---
+  duration_ms: 21.17125
+  ...
+# Subtest: T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+ok 3 - T45-CON-SETTINGS loading: intro place shows 読み込み中, submit disabled and ignored
+  ---
+  duration_ms: 9.370875
+  ...
+# Subtest: T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+ok 4 - T45-CON-SETTINGS empty settings keep the embedded endpoint and show no intro; missing contact behaves the same
+  ---
+  duration_ms: 22.280875
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+ok 5 - T45-CON-SETTINGS S45-X2 HTTP failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 5.356292
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+ok 6 - T45-CON-SETTINGS S45-X2 network failure: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 4.271125
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+ok 7 - T45-CON-SETTINGS S45-X2 invalid JSON: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 6.669625
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+ok 8 - T45-CON-SETTINGS S45-X2 null root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 3.702583
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+ok 9 - T45-CON-SETTINGS S45-X2 array root: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 5.227083
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+ok 10 - T45-CON-SETTINGS S45-X2 contact is an array: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 6.2135
+  ...
+# Subtest: T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+ok 11 - T45-CON-SETTINGS S45-X2 contact is a string: embedded intro and endpoint, sendable, no notice
+  ---
+  duration_ms: 4.001125
+  ...
+# Subtest: T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+ok 12 - T45-CON-SETTINGS 8 seconds: falls back to embedded values, still sendable, a late success is applied without blocking
+  ---
+  duration_ms: 5.238416
+  ...
+# Subtest: T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+ok 13 - T45-CON-SETTINGS a timely response clears the timer; a late failure changes nothing
+  ---
+  duration_ms: 9.913375
+  ...
+# Subtest: T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+ok 14 - T45-CON-SEND posts to the action at submit time with Accept json and a FormData of exactly three keys
+  ---
+  duration_ms: 6.578667
+  ...
+# Subtest: T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+ok 15 - T45-CON-SEND works with the embedded endpoint when settings were unreadable, and success needs only ok
+  ---
+  duration_ms: 7.361375
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 16 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 36.84075
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 17 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 16.157666
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 18 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 9.532584
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 19 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 8.713958
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 20 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 6.950167
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 21 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 6.383792
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 22 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 8.60125
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 23 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 5.218791
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 24 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 1.707125
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 25 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 1.19325
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 749.46975

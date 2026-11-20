@@ -153,7 +153,7 @@ async function render(data,envelope,helper,pathname,detailId) {
   if(detailId)ids.push('live-detail','live-detail-title','live-detail-heading','live-detail-description','live-detail-single','live-detail-notfound');
   const {document,elements}=createDom({ids});
   const window={SITE_API_BASE:'',location:{pathname,search:detailId?'?liveId='+detailId:''},addEventListener(){}};
-  const context={document,window,globalThis:window,console,URL,URLSearchParams,structuredClone,fetch:async()=>response(envelope?{data,meta:{updatedAt:'fixed-version'}}:data)};
+  const context={document,window,globalThis:window,console,URL,URLSearchParams,structuredClone,setTimeout,clearTimeout,fetch:async()=>response(envelope?{data,meta:{updatedAt:'fixed-version'}}:data)};
   vm.runInNewContext(liveHelper,context);
   if(helper)vm.runInNewContext(musicHelper,context);
   vm.runInNewContext(renderer,context);await settle();

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../assets/css/style.css?v=20261118-44">
 </head>
 
-<body>
+<body class="site-profile">
   <!-- ヘッダー -->
   <header class="site-header">
     <div class="container header-container">
@@ -38,15 +38,29 @@
     </div>
   </header>
 
-  <main>
-    <section class="profile">
-      <div class="container">
-        <img id="profile-image" src="" alt="Artist Photo" class="artist-photo" style="display:none">
-        <h2 class="section-title">profile</h2>
-        <p id="profile-text"></p>
-        <div class="profile-links" id="profile-links"></div>
+  <main id="profile-content" class="profile-container">
+    <h1 class="site-section-title">profile</h1>
+    <div class="profile-intro">
+      <div id="profile-photo" class="profile-photo" hidden>
+        <img id="profile-image" alt="松本一樹">
       </div>
-    </section>
+      <div class="profile-body">
+        <div class="profile-name">
+          <h2>松本一樹</h2>
+          <p>itsuki matsumoto</p>
+        </div>
+        <div id="profile-state" class="profile-state"></div>
+        <p id="profile-text" class="profile-text" hidden></p>
+        <div id="profile-links-block" class="profile-links-block" hidden>
+          <h2 id="profile-links-title" class="home-caption">links</h2>
+          <div id="profile-link-list" class="profile-link-list"></div>
+        </div>
+        <div class="profile-contact-entry">
+          <p class="profile-contact-label">出演のご依頼・お問い合わせ</p>
+          <a class="site-button site-button--secondary" href="../contact/">Contactへ</a>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">

@@ -1261,9 +1261,222 @@
     });
   }
 
+  // Issue #45: Profile.
+  let profileRequestSerial = 0;
+  let profileRequestPending = false;
+  let profileInterrupted = false;
+
+  function isPlainObject(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  }
+
+  // Same alias test as findProfileLink, so the five services are decided exactly as on Home.
+  function isSharedServiceLink(item) {
+    const name = String(item && item.name ? item.name : "").trim().toLowerCase();
+    return SHARED_LINKS.some((entry) => entry.aliases.some((alias) => {
+      const safeAlias = String(alias).trim().toLowerCase();
+      return name === safeAlias || name.includes(safeAlias);
+    }));
+  }
+
+  function profileLinkKey(url) {
+    return new URL(url).href.replace(/\/+$/, "");
+  }
+
+  // The five services come first, exactly as Home builds them; Profile links outside those services follow in
+  // registered order. The same destination appears once and only http(s) links are kept.
+  function buildProfileLinks(siteLinks, profileLinks) {
+    const shared = buildSharedLinks(siteLinks, profileLinks)
+      .filter((entry) => safeHomeUrl(entry.url, false))
+      .map((entry) => ({ label: entry.label, url: entry.url }));
+    const seen = new Set(shared.map((entry) => profileLinkKey(entry.url)));
+    const extra = [];
+    (Array.isArray(profileLinks) ? profileLinks : []).forEach((item) => {
+      if (!isPlainObject(item) || isSharedServiceLink(item)) return;
+      const url = safeHomeUrl(item.url, false);
+      if (!url) return;
+      const key = profileLinkKey(url);
+      if (seen.has(key)) return;
+      seen.add(key);
+      extra.push({ label: String(item.name || "").trim() || new URL(url).host, url });
+    });
+    return shared.concat(extra);
+  }
+
+  function validProfileData(payload) {
+    if (!payload || !isPlainObject(payload.data)) return false;
+    const profile = payload.data.profile;
+    return profile === undefined || profile === null || isPlainObject(profile);
+  }
+
+  function renderProfileContent(data, version) {
+    const profile = isPlainObject(data.profile) ? data.profile : {};
+    const site = isPlainObject(data.site) ? data.site : {};
+    const photo = document.getElementById("profile-photo");
+    const image = document.getElementById("profile-image");
+    const text = document.getElementById("profile-text");
+    const block = document.getElementById("profile-links-block");
+    const list = document.getElementById("profile-link-list");
+
+    const imagePath = safeHomeUrl(profile.image, true);
+    image.removeAttribute("src");
+    photo.hidden = !imagePath;
+    if (imagePath) image.setAttribute("src", resolveImageSrc(imagePath, version));
+
+    const raw = profile.text === undefined || profile.text === null ? "" : String(profile.text);
+    const value = raw.replace(/\r\n?/g, "\n").replace(/<br\s*\/?>/gi, "\n");
+    text.textContent = value.trim() ? value : "";
+    text.hidden = !value.trim();
+
+    const links = buildProfileLinks(site.links, profile.links);
+    list.innerHTML = links
+      .map((link) => `<a href="${escapeHtml(link.url)}" class="site-chip" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(link.label)}（外部サイト・別タブ）">${escapeHtml(link.label)}</a>`)
+      .join("");
+    block.hidden = links.length === 0;
+    renderSite(site, version);
+  }
+
+  function renderProfileFailure() {
+    const root = document.getElementById("profile-content");
+    root.dataset.state = "error";
+    document.getElementById("profile-photo").hidden = true;
+    document.getElementById("profile-image").removeAttribute("src");
+    document.getElementById("profile-text").textContent = "";
+    document.getElementById("profile-text").hidden = true;
+    document.getElementById("profile-link-list").innerHTML = "";
+    document.getElementById("profile-links-block").hidden = true;
+    document.getElementById("profile-state").innerHTML = '<p>プロフィールを読み込めませんでした。</p><button type="button" class="site-button site-button--secondary" data-profile-action="retry">もう一度読み込む</button>';
+  }
+
+  async function bootProfile(retryButton) {
+    if (profileRequestPending) return;
+    profileRequestPending = true;
+    const serial = ++profileRequestSerial;
+    const root = document.getElementById("profile-content");
+    root.dataset.state = "loading";
+    root.setAttribute("aria-busy", "true");
+    const image = document.getElementById("profile-image");
+    image.removeAttribute("src");
+    document.getElementById("profile-photo").hidden = false;
+    document.getElementById("profile-text").hidden = true;
+    document.getElementById("profile-links-block").hidden = true;
+    document.getElementById("profile-state").innerHTML = '<p role="status">読み込み中</p>';
+    const payload = await fetchSiteData();
+    if (serial !== profileRequestSerial) return;
+    try {
+      if (!validProfileData(payload)) throw new Error("Invalid Profile data");
+      renderProfileContent(payload.data, payload.meta && payload.meta.updatedAt ? payload.meta.updatedAt : "");
+      document.getElementById("profile-state").innerHTML = "";
+      root.dataset.state = "ready";
+    } catch (_error) {
+      renderProfileFailure();
+    } finally {
+      profileRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+    }
+    if (!retryButton) return;
+    const target = root.dataset.state === "ready" ? root.querySelector("h1") : root.querySelector('[data-profile-action="retry"]');
+    if (!target) return;
+    if (target.tagName === "H1") target.setAttribute("tabindex", "-1");
+    target.focus();
+  }
+
+  function wireProfile() {
+    const root = document.getElementById("profile-content");
+    root.addEventListener("click", (event) => {
+      const button = event.target && event.target.closest ? event.target.closest('[data-profile-action="retry"]') : null;
+      if (!button || !root.contains(button) || profileRequestPending) return;
+      button.disabled = true;
+      bootProfile(button);
+    });
+    // A photo that cannot be loaded leaves no empty frame behind.
+    document.getElementById("profile-image").addEventListener("error", () => {
+      document.getElementById("profile-photo").hidden = true;
+    });
+    window.addEventListener("pagehide", () => {
+      if (profileRequestPending) profileInterrupted = true;
+      ++profileRequestSerial;
+      profileRequestPending = false;
+      root.setAttribute("aria-busy", "false");
+      root.querySelectorAll('[data-profile-action="retry"]').forEach((button) => { button.disabled = false; });
+    });
+    window.addEventListener("pageshow", (event) => {
+      if (!event.persisted || !profileInterrupted) return;
+      profileInterrupted = false;
+      bootProfile();
+    });
+  }
+
+  // Issue #45: Contact. The embedded intro and endpoint are the fallback; settings only refine them.
+  const CONTACT_SETTINGS_TIMEOUT_MS = 8000;
+
+  async function bootContact() {
+    const root = document.getElementById("contact-content");
+    const intro = document.getElementById("contact-intro");
+    const form = document.getElementById("contact-form");
+    const submit = document.getElementById("contact-submit");
+    const embeddedIntro = intro.textContent;
+    const embeddedIntroHidden = intro.hidden;
+    let timedOut = false;
+    let answered = false;
+
+    // The submit button stays off while settings are loading or a submission is in flight.
+    function syncSubmit() {
+      submit.disabled = root.dataset.settings === "loading" || form.dataset.submitState === "sending";
+    }
+    function settle(mode) {
+      root.dataset.settings = mode;
+      root.setAttribute("aria-busy", "false");
+      syncSubmit();
+    }
+    function showEmbeddedIntro() {
+      intro.textContent = embeddedIntro;
+      intro.hidden = embeddedIntroHidden;
+      delete intro.dataset.state;
+    }
+    function applySettings(contact) {
+      const introText = String(contact.introText || "").trim();
+      const formAction = String(contact.formAction || "").trim();
+      delete intro.dataset.state;
+      intro.textContent = introText;
+      intro.hidden = !introText || form.dataset.submitState === "done";
+      if (formAction) form.setAttribute("action", formAction);
+    }
+
+    root.dataset.settings = "loading";
+    root.setAttribute("aria-busy", "true");
+    intro.textContent = "読み込み中";
+    intro.dataset.state = "loading";
+    intro.hidden = false;
+    syncSubmit();
+    const timer = setTimeout(() => {
+      if (answered) return;
+      timedOut = true;
+      showEmbeddedIntro();
+      settle("fallback");
+    }, CONTACT_SETTINGS_TIMEOUT_MS);
+
+    const payload = await fetchSiteData();
+    answered = true;
+    clearTimeout(timer);
+    const data = payload && payload.data;
+    if (!isPlainObject(data) || !(data.contact === undefined || data.contact === null || isPlainObject(data.contact))) {
+      if (!timedOut) {
+        showEmbeddedIntro();
+        settle("fallback");
+      }
+      return;
+    }
+    applySettings(isPlainObject(data.contact) ? data.contact : {});
+    renderSite(isPlainObject(data.site) ? data.site : {}, payload.meta && payload.meta.updatedAt ? payload.meta.updatedAt : "");
+    settle("ready");
+  }
+
   async function boot() {
     if (document.getElementById("home-content")) { wireHome(); return bootHome(); }
     if (document.getElementById("music-content")) { wireMusic(); return bootMusic(); }
+    if (document.getElementById("profile-content")) { wireProfile(); return bootProfile(); }
+    if (document.getElementById("contact-content")) return bootContact();
     const payload = await fetchSiteData();
     if (!payload) return;
     const siteData = payload.data || {};

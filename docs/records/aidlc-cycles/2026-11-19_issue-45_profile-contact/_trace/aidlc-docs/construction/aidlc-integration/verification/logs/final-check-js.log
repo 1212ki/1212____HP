@@ -1,0 +1,3 @@
+node --check assets/js/site-content.js: ok
+node --check assets/js/contact.js: ok
+node --check assets/js/script.js: ok

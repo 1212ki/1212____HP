@@ -1,0 +1,575 @@
+TAP version 13
+# Subtest: T42-DATA Home root, fixed hooks and scripts exist in real HTML
+ok 1 - T42-DATA Home root, fixed hooks and scripts exist in real HTML
+  ---
+  duration_ms: 2.984375
+  ...
+# Subtest: T42-DATA featured and music render from envelope
+ok 2 - T42-DATA featured and music render from envelope
+  ---
+  duration_ms: 112.369917
+  ...
+# Subtest: T42-DATA featured and music render from body
+ok 3 - T42-DATA featured and music render from body
+  ---
+  duration_ms: 3.382917
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference 
+ok 4 - T42-DATA explicit/automatic/broken reference 
+  ---
+  duration_ms: 8.210541
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference missing
+ok 5 - T42-DATA explicit/automatic/broken reference missing
+  ---
+  duration_ms: 19.122417
+  ...
+# Subtest: T42-DATA explicit/automatic/broken reference release-c
+ok 6 - T42-DATA explicit/automatic/broken reference release-c
+  ---
+  duration_ms: 4.412291
+  ...
+# Subtest: T42-DATA ties retain digital then demo source order
+ok 7 - T42-DATA ties retain digital then demo source order
+  ---
+  duration_ms: 4.789708
+  ...
+# Subtest: T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+ok 8 - T42-DATA invalid dates produce no face but keep music; empty and 0/1 music work
+  ---
+  duration_ms: 16.989917
+  ...
+# Subtest: T42-DATA three fields missing and original title
+ok 9 - T42-DATA three fields missing and original title
+  ---
+  duration_ms: 4.332875
+  ...
+# Subtest: T42-DATA three fields empty and original title
+ok 10 - T42-DATA three fields empty and original title
+  ---
+  duration_ms: 5.069334
+  ...
+# Subtest: T42-DATA three fields populated and original title
+ok 11 - T42-DATA three fields populated and original title
+  ---
+  duration_ms: 14.430334
+  ...
+# Subtest: T42-DATA missing music helper fails safely
+ok 12 - T42-DATA missing music helper fails safely
+  ---
+  duration_ms: 4.988875
+  ...
+# Subtest: T42-PLAY video resolves in musicVideos and click calls player synchronously
+ok 13 - T42-PLAY video resolves in musicVideos and click calls player synchronously
+  ---
+  duration_ms: 2.625958
+  ...
+# Subtest: T42-PLAY video resolves in liveMovies and click calls player synchronously
+ok 14 - T42-PLAY video resolves in liveMovies and click calls player synchronously
+  ---
+  duration_ms: 4.35325
+  ...
+# Subtest: T42-PLAY video resolves in demos and click calls player synchronously
+ok 15 - T42-PLAY video resolves in demos and click calls player synchronously
+  ---
+  duration_ms: 2.622917
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference 
+ok 16 - T42-PLAY missing or unsafe playback reference 
+  ---
+  duration_ms: 6.710583
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference missing
+ok 17 - T42-PLAY missing or unsafe playback reference missing
+  ---
+  duration_ms: 4.457084
+  ...
+# Subtest: T42-PLAY missing or unsafe playback reference bad
+ok 18 - T42-PLAY missing or unsafe playback reference bad
+  ---
+  duration_ms: 19.412208
+  ...
+# Subtest: T42-PLAY hides unsafe release URL 
+ok 19 - T42-PLAY hides unsafe release URL 
+  ---
+  duration_ms: 4.8855
+  ...
+# Subtest: T42-PLAY hides unsafe release URL javascript:alert(1)
+ok 20 - T42-PLAY hides unsafe release URL javascript:alert(1)
+  ---
+  duration_ms: 2.83325
+  ...
+# Subtest: T42-PLAY hides unsafe release URL data:text/plain,hi
+ok 21 - T42-PLAY hides unsafe release URL data:text/plain,hi
+  ---
+  duration_ms: 2.658791
+  ...
+# Subtest: T42-PLAY hides unsafe release URL not a url
+ok 22 - T42-PLAY hides unsafe release URL not a url
+  ---
+  duration_ms: 10.1415
+  ...
+# Subtest: T42-PLAY Demo purchase and escaped accessible external label
+ok 23 - T42-PLAY Demo purchase and escaped accessible external label
+  ---
+  duration_ms: 3.330833
+  ...
+# Subtest: T42-LIVE booking internal
+ok 24 - T42-LIVE booking internal
+  ---
+  duration_ms: 5.437292
+  ...
+# Subtest: T42-LIVE booking external
+ok 25 - T42-LIVE booking external
+  ---
+  duration_ms: 3.949583
+  ...
+# Subtest: T42-LIVE booking closed
+ok 26 - T42-LIVE booking closed
+  ---
+  duration_ms: 6.871917
+  ...
+# Subtest: T42-LIVE booking invalid
+ok 27 - T42-LIVE booking invalid
+  ---
+  duration_ms: 2.456
+  ...
+# Subtest: T42-LIVE booking past
+ok 28 - T42-LIVE booking past
+  ---
+  duration_ms: 2.48675
+  ...
+# Subtest: T42-LIVE booking duplicate
+ok 29 - T42-LIVE booking duplicate
+  ---
+  duration_ms: 3.089791
+  ...
+# Subtest: T42-LIVE booking empty-id
+ok 30 - T42-LIVE booking empty-id
+  ---
+  duration_ms: 3.074625
+  ...
+# Subtest: T42-LIVE booking no-helper
+ok 31 - T42-LIVE booking no-helper
+  ---
+  duration_ms: 2.807666
+  ...
+# Subtest: T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+ok 32 - T42-LIVE sort keeps earliest upcoming even past-date and detail-only description survives
+  ---
+  duration_ms: 46.657833
+  ...
+# Subtest: T42-LIVE structured detail formatter output preserved
+ok 33 - T42-LIVE structured detail formatter output preserved
+  ---
+  duration_ms: 25.34725
+  ...
+# Subtest: T42-LIVE successful empty upcoming has archive entry and no reservation
+ok 34 - T42-LIVE successful empty upcoming has archive entry and no reservation
+  ---
+  duration_ms: 7.765625
+  ...
+# Subtest: T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+ok 35 - T42-CONTENT news stable descending 6, full descriptions, one suffix arrow, no images
+  ---
+  duration_ms: 3.775958
+  ...
+# Subtest: T42-CONTENT news invalid/empty dates last, link fallback and no-link
+ok 36 - T42-CONTENT news invalid/empty dates last, link fallback and no-link
+  ---
+  duration_ms: 3.573834
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+ok 37 - T42-CONTENT profile normalizes paragraphs "first\\r\\nline\\r\\n \\t\\r\\nsecond"
+  ---
+  duration_ms: 6.687708
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+ok 38 - T42-CONTENT profile normalizes paragraphs "first<br>line<br><br>second"
+  ---
+  duration_ms: 1.992958
+  ...
+# Subtest: T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+ok 39 - T42-CONTENT profile normalizes paragraphs "first\\rline\\r\\rsecond"
+  ---
+  duration_ms: 1.599958
+  ...
+# Subtest: T42-CONTENT profile escape, empty paragraph and single line
+ok 40 - T42-CONTENT profile escape, empty paragraph and single line
+  ---
+  duration_ms: 3.277375
+  ...
+# Subtest: T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+ok 41 - T42-CONTENT 5 links order, Home label, Site priority, Profile fallback, URL filtering
+  ---
+  duration_ms: 5.37525
+  ...
+# Subtest: T42-CONTENT footer displays complete configured text including narrow screens
+ok 42 - T42-CONTENT footer displays complete configured text including narrow screens
+  ---
+  duration_ms: 30.368167
+  ...
+# Subtest: T42-STATE pending initial fetch is busy and has no fabricated reservation
+ok 43 - T42-STATE pending initial fetch is busy and has no fabricated reservation
+  ---
+  duration_ms: 1.651958
+  ...
+# Subtest: T42-STATE full failure http is one notice, default footer and static links
+ok 44 - T42-STATE full failure http is one notice, default footer and static links
+  ---
+  duration_ms: 2.746834
+  ...
+# Subtest: T42-STATE full failure json is one notice, default footer and static links
+ok 45 - T42-STATE full failure json is one notice, default footer and static links
+  ---
+  duration_ms: 1.845292
+  ...
+# Subtest: T42-STATE full failure network is one notice, default footer and static links
+ok 46 - T42-STATE full failure network is one notice, default footer and static links
+  ---
+  duration_ms: 1.709
+  ...
+# Subtest: T42-STATE full failure null is one notice, default footer and static links
+ok 47 - T42-STATE full failure null is one notice, default footer and static links
+  ---
+  duration_ms: 1.904167
+  ...
+# Subtest: T42-STATE full failure array is one notice, default footer and static links
+ok 48 - T42-STATE full failure array is one notice, default footer and static links
+  ---
+  duration_ms: 1.395666
+  ...
+# Subtest: T42-STATE full failure string is one notice, default footer and static links
+ok 49 - T42-STATE full failure string is one notice, default footer and static links
+  ---
+  duration_ms: 1.249375
+  ...
+# Subtest: T42-STATE local invalid live isolated null
+ok 50 - T42-STATE local invalid live isolated null
+  ---
+  duration_ms: 1.705292
+  ...
+# Subtest: T42-STATE local invalid live isolated {}
+ok 51 - T42-STATE local invalid live isolated {}
+  ---
+  duration_ms: 13.091541
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":null}
+ok 52 - T42-STATE local invalid live isolated {"upcoming":null}
+  ---
+  duration_ms: 14.453542
+  ...
+# Subtest: T42-STATE local invalid live isolated {"upcoming":"invalid"}
+ok 53 - T42-STATE local invalid live isolated {"upcoming":"invalid"}
+  ---
+  duration_ms: 19.29625
+  ...
+# Subtest: T42-STATE local rendering exception preserves other content
+ok 54 - T42-STATE local rendering exception preserves other content
+  ---
+  duration_ms: 6.076042
+  ...
+# Subtest: T42-STATE full retry recovers with one request, one listener and closes player
+ok 55 - T42-STATE full retry recovers with one request, one listener and closes player
+  ---
+  duration_ms: 5.231625
+  ...
+# Subtest: T42-STATE local retry keeps other sections and only Live busy, then recovers
+ok 56 - T42-STATE local retry keeps other sections and only Live busy, then recovers
+  ---
+  duration_ms: 4.924916
+  ...
+# Subtest: T42-STATE pagehide invalidates a late fetch response
+ok 57 - T42-STATE pagehide invalidates a late fetch response
+  ---
+  duration_ms: 3.166584
+  ...
+# Subtest: T42-STATE no image and actual error event expose title/name fallback without retry
+ok 58 - T42-STATE no image and actual error event expose title/name fallback without retry
+  ---
+  duration_ms: 9.065459
+  ...
+# Subtest: T42-STATE news missing or empty hides only news, no releases retains links and Live
+ok 59 - T42-STATE news missing or empty hides only news, no releases retains links and Live
+  ---
+  duration_ms: 2.893083
+  ...
+# Subtest: RV42-01 chips have text-only labels and accessible safe external navigation
+ok 60 - RV42-01 chips have text-only labels and accessible safe external navigation
+  ---
+  duration_ms: 8.111375
+  ...
+# Subtest: RV42-03 no release hides new release caption and restores it on retry
+ok 61 - RV42-03 no release hides new release caption and restores it on retry
+  ---
+  duration_ms: 3.420583
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted initial GET and ignores old response
+ok 62 - RV42-05 bfcache resumes interrupted initial GET and ignores old response
+  ---
+  duration_ms: 3.962833
+  ...
+# Subtest: RV42-05 bfcache resumes interrupted Live retry and ignores old response
+ok 63 - RV42-05 bfcache resumes interrupted Live retry and ignores old response
+  ---
+  duration_ms: 3.011709
+  ...
+# Subtest: FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+ok 64 - FR-N1 freeform news dates preserve raw text and isolate whitespace-delimited words safely
+  ---
+  duration_ms: 3.552375
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ body
+ok 65 - music fields public DOM unchanged for missing, empty and populated fields /live/ body
+  ---
+  duration_ms: 26.65625
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+ok 66 - music fields public DOM unchanged for missing, empty and populated fields /profile/ body
+  ---
+  duration_ms: 32.520125
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+ok 67 - music fields public DOM unchanged for missing, empty and populated fields /contact/ body
+  ---
+  duration_ms: 4.99
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+ok 68 - music fields public DOM unchanged for missing, empty and populated fields /live/ envelope
+  ---
+  duration_ms: 5.8805
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+ok 69 - music fields public DOM unchanged for missing, empty and populated fields /profile/ envelope
+  ---
+  duration_ms: 5.388333
+  ...
+# Subtest: music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+ok 70 - music fields public DOM unchanged for missing, empty and populated fields /contact/ envelope
+  ---
+  duration_ms: 51.798792
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text l
+ok 71 - music fields description-only Live detail keeps legacy text l
+  ---
+  duration_ms: 6.892875
+  ...
+# Subtest: music fields description-only Live detail keeps legacy text p
+ok 72 - music fields description-only Live detail keeps legacy text p
+  ---
+  duration_ms: 6.342958
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer discography
+ok 73 - music compatibility legacy route retains static link and drops old data renderer discography
+  ---
+  duration_ms: 1.219292
+  ...
+# Subtest: music compatibility legacy route retains static link and drops old data renderer youtube
+ok 74 - music compatibility legacy route retains static link and drops old data renderer youtube
+  ---
+  duration_ms: 1.009833
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs index.html
+ok 75 - T44-SHELL ten routes and five shared nav URLs index.html
+  ---
+  duration_ms: 144.845375
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/index.html
+ok 76 - T44-SHELL ten routes and five shared nav URLs live/index.html
+  ---
+  duration_ms: 69.066583
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+ok 77 - T44-SHELL ten routes and five shared nav URLs live/detail/index.html
+  ---
+  duration_ms: 53.618166
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/index.html
+ok 78 - T44-SHELL ten routes and five shared nav URLs ticket/index.html
+  ---
+  duration_ms: 123.204791
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+ok 79 - T44-SHELL ten routes and five shared nav URLs ticket/complete/index.html
+  ---
+  duration_ms: 91.459917
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs discography/index.html
+ok 80 - T44-SHELL ten routes and five shared nav URLs discography/index.html
+  ---
+  duration_ms: 204.408292
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs youtube/index.html
+ok 81 - T44-SHELL ten routes and five shared nav URLs youtube/index.html
+  ---
+  duration_ms: 207.651709
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs profile/index.html
+ok 82 - T44-SHELL ten routes and five shared nav URLs profile/index.html
+  ---
+  duration_ms: 132.093
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs contact/index.html
+ok 83 - T44-SHELL ten routes and five shared nav URLs contact/index.html
+  ---
+  duration_ms: 127.785
+  ...
+# Subtest: T44-SHELL ten routes and five shared nav URLs music/index.html
+ok 84 - T44-SHELL ten routes and five shared nav URLs music/index.html
+  ---
+  duration_ms: 2.096375
+  ...
+# Subtest: T44-SHELL shared style and script cache version aligned for every consumer
+ok 85 - T44-SHELL shared style and script cache version aligned for every consumer
+  ---
+  duration_ms: 42.453042
+  ...
+# Subtest: T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+ok 86 - T42-SHELL new classes and Home scoped color/layout preserve previous CSS bytes
+  ---
+  duration_ms: 241.744584
+  ...
+# Subtest: T42-SHELL logo behavior and animation CSS bytes preserved
+ok 87 - T42-SHELL logo behavior and animation CSS bytes preserved
+  ---
+  duration_ms: 253.358
+  ...
+# Subtest: T42-SHELL admin share explanation and current Home use, no hero consumer
+ok 88 - T42-SHELL admin share explanation and current Home use, no hero consumer
+  ---
+  duration_ms: 3.375584
+  ...
+# Subtest: T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+ok 89 - T42-SHELL mobile Menu label/hidden/aria, Escape and explicit-close focus
+  ---
+  duration_ms: 5.783042
+  ...
+# Subtest: T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+ok 90 - T42-SHELL every nav link closes without focus jump and desktop resize clears hidden
+  ---
+  duration_ms: 31.467459
+  ...
+# Subtest: T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+ok 91 - T42-SHELL logo click keeps ripple, 26 timed particles and reduced-motion opt-out
+  ---
+  duration_ms: 6.023458
+  ...
+# Subtest: T42-SHELL Home initial content is visible and other pages keep fade-in
+ok 92 - T42-SHELL Home initial content is visible and other pages keep fade-in
+  ---
+  duration_ms: 3.037042
+  ...
+# Subtest: RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+ok 93 - RV42-04 narrow Menu preserves active hover row lines and eight pixel list padding
+  ---
+  duration_ms: 4.916542
+  ...
+# Subtest: RV42-07 Home caption and news spacing match master without changing shared title gap
+ok 94 - RV42-07 Home caption and news spacing match master without changing shared title gap
+  ---
+  duration_ms: 10.325917
+  ...
+# Subtest: FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+ok 95 - FR-N1 news date column grows from master 88px within a bounded width and keeps body space
+  ---
+  duration_ms: 0.9205
+  ...
+# Subtest: FR-N2 all Home news rows share the longest bounded date column and content start
+ok 96 - FR-N2 all Home news rows share the longest bounded date column and content start
+  ---
+  duration_ms: 0.831583
+  ...
+# Subtest: T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+ok 97 - T44-STYLE/COMPAT all previous CSS bytes retained and new rules scoped to Music only
+  ---
+  duration_ms: 1290.225125
+  ...
+# Subtest: T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+ok 98 - T44-STYLE PC release player: 480 wide, own full-width grid row under the pressed row, 16:9, never below 200px tall
+  ---
+  duration_ms: 290.343667
+  ...
+# Subtest: T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+ok 99 - T44-STYLE PC video: two columns, gap 32, 474 wide thumbnail and player of equal size, one column before 200px tall is lost
+  ---
+  duration_ms: 83.811667
+  ...
+# Subtest: T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+ok 100 - T44-STYLE Home player CSS is untouched (round 2 changes Music only)
+  ---
+  duration_ms: 138.481833
+  ...
+# Subtest: T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+ok 101 - T44-COMPAT Home main changes only its music arrow href, cards and logo remain
+  ---
+  duration_ms: 1162.298667
+  ...
+# Subtest: T44-SHELL current mapping/aria /
+ok 102 - T44-SHELL current mapping/aria /
+  ---
+  duration_ms: 1.520542
+  ...
+# Subtest: T44-SHELL current mapping/aria /index.html
+ok 103 - T44-SHELL current mapping/aria /index.html
+  ---
+  duration_ms: 1.101042
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/
+ok 104 - T44-SHELL current mapping/aria /music/
+  ---
+  duration_ms: 1.143333
+  ...
+# Subtest: T44-SHELL current mapping/aria /music/index.html
+ok 105 - T44-SHELL current mapping/aria /music/index.html
+  ---
+  duration_ms: 2.449917
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/
+ok 106 - T44-SHELL current mapping/aria /ticket/
+  ---
+  duration_ms: 1.762708
+  ...
+# Subtest: T44-SHELL current mapping/aria /ticket/complete/
+ok 107 - T44-SHELL current mapping/aria /ticket/complete/
+  ---
+  duration_ms: 1.901375
+  ...
+# Subtest: T44-SHELL current mapping/aria /live/detail/
+ok 108 - T44-SHELL current mapping/aria /live/detail/
+  ---
+  duration_ms: 1.624792
+  ...
+# Subtest: T44-SHELL current mapping/aria /discography/index.html
+ok 109 - T44-SHELL current mapping/aria /discography/index.html
+  ---
+  duration_ms: 1.246166
+  ...
+# Subtest: T44-SHELL current mapping/aria /youtube/
+ok 110 - T44-SHELL current mapping/aria /youtube/
+  ---
+  duration_ms: 3.53325
+  ...
+# Subtest: T44-SHELL current mapping/aria /profile/
+ok 111 - T44-SHELL current mapping/aria /profile/
+  ---
+  duration_ms: 0.974459
+  ...
+# Subtest: T44-SHELL current mapping/aria /contact/
+ok 112 - T44-SHELL current mapping/aria /contact/
+  ---
+  duration_ms: 0.838583
+  ...
+# Subtest: T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+ok 113 - T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain
+  ---
+  duration_ms: 0.985584
+  ...
+1..113
+# tests 113
+# suites 0
+# pass 113
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6437.471542
