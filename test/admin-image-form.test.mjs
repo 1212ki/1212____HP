@@ -172,6 +172,36 @@ function loadAdminApp(options = {}) {
   const modalBody = addStatic('modal-body');
   installOwnedHtmlBehavior(modalBody, modalOwnedIds, modalOrder);
 
+  // Issue #47: News is an edit surface (not the generic modal). Its uploads are owned by it the way the modal's were.
+  addStatic('news-list');
+  addStatic('news-master-detail');
+  addStatic('news-editor-pane');
+  addStatic('news-editor-heading');
+  addStatic('news-editor-title');
+  addStatic('news-editor-status');
+  addStatic('news-editor-status-wide');
+  addStatic('news-editor-error');
+  addStatic('news-editor-actions');
+  addStatic('news-save-btn', 'button');
+  addStatic('news-editor-back', 'button');
+  const newsEditorBody = addStatic('news-editor-body');
+  installOwnedHtmlBehavior(newsEditorBody, new Set(), []);
+  // Issue #47 stage 3: a work is an edit surface too (the same shape as News).
+  addStatic('music-works-list');
+  addStatic('music-videos-list');
+  addStatic('music-master-detail');
+  addStatic('music-editor-pane');
+  addStatic('music-editor-heading');
+  addStatic('music-editor-title');
+  addStatic('music-editor-status');
+  addStatic('music-editor-status-wide');
+  addStatic('music-editor-error');
+  addStatic('music-editor-actions');
+  addStatic('music-save-btn', 'button');
+  addStatic('music-editor-back', 'button');
+  const musicEditorBody = addStatic('music-editor-body');
+  installOwnedHtmlBehavior(musicEditorBody, new Set(), []);
+
   addStatic('modal-title');
   addStatic('modal-overlay');
   addStatic('modal');
@@ -239,8 +269,10 @@ globalThis.__adminTest = {
   addLive,
   editLive,
 	  editNews,
+	  closeOccEditor,
 	  editDiscography,
-	  closeModal,
+	  renderProfile,
+	  isOccDirty,
 	  saveLiveWorkspace,
 	  requestLiveEditorTransition,
 	  getImageFormHtml,
@@ -335,6 +367,11 @@ test('default image forms keep the existing path display for non-live images', (
   assert.match(html, /class="image-path-display"/);
   assert.match(html, /パス: assets\/images\/news\.jpg/);
   assert.doesNotMatch(html, /class="image-download-link"/);
+  // Issue #47: every page except the Live flyer says 画像を選ぶ / 画像を変える / 画像を外す (it said 画像を選択 / 削除)
+  assert.match(html, />画像を変える</);
+  assert.match(html, />画像を外す</);
+  assert.doesNotMatch(html, />画像を選択<|>削除</);
+  assert.match(getImageFormHtml(''), />画像を選ぶ</);
 });
 
 test('default image path display escapes the current image path', () => {
@@ -693,7 +730,8 @@ test('Local Live image reads are latest-wins when FileReader callbacks resolve i
   assert.equal(preview.innerHTML, latestPreview);
 });
 
-test('generic modal close and replacement release abandoned image operations', async () => {
+test('closing the News edit surface and opening another edit release abandoned image operations', async () => {
+  // Issue #47: News is an edit surface now (it was the generic modal), and so is a work (stage 3): the other edit is opened on its own surface.
   const app = loadAdminApp();
   app.setSiteData({
     live: { upcoming: [], past: [] },
@@ -709,12 +747,20 @@ test('generic modal close and replacement release abandoned image operations', a
 
   app.editNews('news-image');
   app.handleImageSelect({ files: [{ name: 'news-close.png' }] }, 'edit-image');
-  app.closeModal();
+  // a picture still uploading is unsaved: closing asks first, and 破棄して移動 lets the upload go
+  const closing = app.closeOccEditor();
+  assert.equal(typeof closing.then, 'function');
+  await answerLiveDialog(app, 'discard');
+  assert.equal(await closing, true);
   assert.equal(app.ensureNoActiveImageUploads(), true);
 
   app.editNews('news-image');
   app.handleImageSelect({ files: [{ name: 'news-replace.png' }] }, 'edit-image');
-  app.editDiscography('disco-image', 'digital');
+  const opening = app.editDiscography('disco-image', 'digital');
+  assert.equal(typeof opening.then, 'function', 'the open edit is unsaved, so the other edit waits for the answer');
+  await answerLiveDialog(app, 'discard');
+  assert.equal(await opening, true);
+  await flushAsync();
   assert.equal(app.ensureNoActiveImageUploads(), true);
   const replacementInput = app.elements.get('edit-image');
   const replacementPreview = app.elements.get('edit-image-preview-container');
@@ -769,6 +815,7 @@ test('clearImage is latest for generic page images after API success and Local f
   api.setSiteData({ live: { upcoming: [], past: [] }, profile: { image: 'assets/images/profile.jpg', text: '', links: [] } });
   const apiDom = setupImageSelectionDom(api.elements, 'profile-image');
   api.elements.get('profile-image').value = 'assets/images/profile.jpg';
+  api.renderProfile();
   api.setApiMode(true);
   const pending = deferred();
   api.setUploadImageToApi(() => pending.promise);
@@ -776,7 +823,10 @@ test('clearImage is latest for generic page images after API success and Local f
   api.clearImage('profile-image');
   const apiCleared = { input: api.elements.get('profile-image').value, preview: apiDom.container.innerHTML };
   assert.equal(api.ensureNoActiveImageUploads(), true);
-  assert.equal(api.getGlobalState().hasChanges, true);
+  // since #47 the picture of the Profile screen is held by the screen (unsaved there), not written to siteData
+  assert.equal(api.isOccDirty(), true);
+  assert.equal(api.getSiteData().profile.image, 'assets/images/profile.jpg');
+  assert.equal(api.getGlobalState().hasChanges, false);
   pending.resolve({ url: 'https://cdn.example.com/profile-stale.png' });
   await flushAsync();
   assert.deepEqual({ input: api.elements.get('profile-image').value, preview: apiDom.container.innerHTML }, apiCleared);

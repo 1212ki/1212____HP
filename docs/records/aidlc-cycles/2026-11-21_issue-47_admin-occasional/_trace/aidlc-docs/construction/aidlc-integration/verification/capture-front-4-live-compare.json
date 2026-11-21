@@ -1,0 +1,2224 @@
+{
+  "summary": {
+    "size-differs": 58,
+    "same": 81,
+    "differs": 11
+  },
+  "rows": [
+    {
+      "image": "announce-comment-empty-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        779
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "announce-comment-empty-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        861
+      ],
+      "new_size": [
+        390,
+        861
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "announce-comment-filled-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        911
+      ],
+      "new_size": [
+        1440,
+        911
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "announce-comment-filled-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1015
+      ],
+      "new_size": [
+        390,
+        1015
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "announce-comment-typed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        911
+      ],
+      "new_size": [
+        1440,
+        911
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "announce-comment-typed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1090
+      ],
+      "new_size": [
+        390,
+        1090
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "announce-copied-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        867
+      ],
+      "new_size": [
+        1440,
+        867
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "announce-copied-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1017
+      ],
+      "new_size": [
+        390,
+        1017
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "chrome-six-tabs-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "chrome-six-tabs-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "dialog-delete-none-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        401,
+        224,
+        900,
+        415
+      ]
+    },
+    {
+      "image": "dialog-delete-none-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "dialog-delete-reserved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        401,
+        213,
+        905,
+        426
+      ]
+    },
+    {
+      "image": "dialog-delete-reserved-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "dialog-delete-unknown-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        540,
+        213,
+        900,
+        426
+      ]
+    },
+    {
+      "image": "dialog-delete-unknown-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "dialog-unsaved-move-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        540,
+        243,
+        900,
+        396
+      ]
+    },
+    {
+      "image": "dialog-unsaved-move-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "links-open-unsaved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1703
+      ],
+      "new_size": [
+        1440,
+        1703
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "links-open-unsaved-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        2170
+      ],
+      "new_size": [
+        390,
+        2170
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "list-past-base-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        932
+      ],
+      "new_size": [
+        1440,
+        932
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "list-past-base-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        1011
+      ],
+      "new_size": [
+        390,
+        1011
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "list-past-empty-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-past-empty-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-broken-images-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-broken-images-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-empty-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-empty-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-handled-only-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-handled-only-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-legacy-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-legacy-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-loading-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-loading-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-local-mode-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        0,
+        8,
+        1440,
+        422
+      ]
+    },
+    {
+      "image": "list-upcoming-local-mode-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        0,
+        2,
+        390,
+        499
+      ]
+    },
+    {
+      "image": "list-upcoming-long-venue-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-long-venue-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-read-only-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        32,
+        8,
+        1341,
+        111
+      ]
+    },
+    {
+      "image": "list-upcoming-read-only-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        20,
+        9,
+        378,
+        110
+      ]
+    },
+    {
+      "image": "list-upcoming-reserved-1011.png",
+      "bar_cropped": true,
+      "old_size": [
+        1011,
+        754
+      ],
+      "new_size": [
+        1011,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-reserved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-reserved-360-many.png",
+      "bar_cropped": true,
+      "old_size": [
+        360,
+        698
+      ],
+      "new_size": [
+        360,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-reserved-360.png",
+      "bar_cropped": true,
+      "old_size": [
+        360,
+        698
+      ],
+      "new_size": [
+        360,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-reserved-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-reserved-821.png",
+      "bar_cropped": true,
+      "old_size": [
+        821,
+        754
+      ],
+      "new_size": [
+        821,
+        805
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-reserved-900.png",
+      "bar_cropped": true,
+      "old_size": [
+        900,
+        754
+      ],
+      "new_size": [
+        900,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-summary-500-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-summary-500-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-summary-failed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-summary-failed-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-unauthorized-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "list-upcoming-unauthorized-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "manual-add-failed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        938
+      ],
+      "new_size": [
+        1440,
+        938
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "manual-add-failed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "manual-add-initial-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        892
+      ],
+      "new_size": [
+        1440,
+        892
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "manual-add-initial-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "manual-add-invalid-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        938
+      ],
+      "new_size": [
+        1440,
+        938
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "manual-add-invalid-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-ai-notice-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1073
+      ],
+      "new_size": [
+        1440,
+        1073
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-ai-notice-360.png",
+      "bar_cropped": false,
+      "old_size": [
+        360,
+        1318
+      ],
+      "new_size": [
+        360,
+        1318
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-ai-notice-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1318
+      ],
+      "new_size": [
+        390,
+        1318
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-required-empty-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1028
+      ],
+      "new_size": [
+        1440,
+        1028
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-required-empty-360.png",
+      "bar_cropped": false,
+      "old_size": [
+        360,
+        1281
+      ],
+      "new_size": [
+        360,
+        1281
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-required-empty-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1281
+      ],
+      "new_size": [
+        390,
+        1281
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-unsaved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1073
+      ],
+      "new_size": [
+        1440,
+        1073
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-unsaved-360.png",
+      "bar_cropped": false,
+      "old_size": [
+        360,
+        1318
+      ],
+      "new_size": [
+        360,
+        1318
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-edit-unsaved-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1318
+      ],
+      "new_size": [
+        390,
+        1318
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-source-draft-failed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "new-source-draft-failed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-source-drafting-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "new-source-drafting-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "new-source-initial-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "new-source-initial-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-broken-flyer-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1182
+      ],
+      "new_size": [
+        1440,
+        1182
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-broken-flyer-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1422
+      ],
+      "new_size": [
+        390,
+        1422
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-date-warning-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1280
+      ],
+      "new_size": [
+        1440,
+        1280
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-date-warning-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1557
+      ],
+      "new_size": [
+        390,
+        1557
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-delete-failed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1460
+      ],
+      "new_size": [
+        390,
+        1460
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-legacy-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1182
+      ],
+      "new_size": [
+        1440,
+        1182
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-legacy-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1422
+      ],
+      "new_size": [
+        390,
+        1422
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-long-text-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1246
+      ],
+      "new_size": [
+        1440,
+        1246
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-long-text-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1551
+      ],
+      "new_size": [
+        390,
+        1551
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-no-flyer-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1182
+      ],
+      "new_size": [
+        1440,
+        1182
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-no-flyer-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1422
+      ],
+      "new_size": [
+        390,
+        1422
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-read-only-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1224
+      ],
+      "new_size": [
+        1440,
+        1224
+      ],
+      "result": "differs",
+      "diff_box": [
+        32,
+        8,
+        1341,
+        111
+      ]
+    },
+    {
+      "image": "open-public-read-only-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1422
+      ],
+      "new_size": [
+        390,
+        1422
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-save-failed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1252
+      ],
+      "new_size": [
+        1440,
+        1252
+      ],
+      "result": "differs",
+      "diff_box": [
+        543,
+        672,
+        898,
+        755
+      ]
+    },
+    {
+      "image": "open-public-save-failed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1535
+      ],
+      "new_size": [
+        390,
+        1535
+      ],
+      "result": "differs",
+      "diff_box": [
+        45,
+        762,
+        373,
+        814
+      ]
+    },
+    {
+      "image": "open-public-saved-1011.png",
+      "bar_cropped": true,
+      "old_size": [
+        1011,
+        1489
+      ],
+      "new_size": [
+        1011,
+        1489
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1182
+      ],
+      "new_size": [
+        1440,
+        1182
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saved-360.png",
+      "bar_cropped": false,
+      "old_size": [
+        360,
+        1422
+      ],
+      "new_size": [
+        360,
+        1422
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saved-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1422
+      ],
+      "new_size": [
+        390,
+        1422
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saved-390x667.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        667
+      ],
+      "new_size": [
+        390,
+        667
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saved-390x844.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saved-821.png",
+      "bar_cropped": false,
+      "old_size": [
+        821,
+        1422
+      ],
+      "new_size": [
+        821,
+        1422
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saved-900.png",
+      "bar_cropped": true,
+      "old_size": [
+        900,
+        1489
+      ],
+      "new_size": [
+        900,
+        1489
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saving-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1182
+      ],
+      "new_size": [
+        1440,
+        1182
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-saving-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1497
+      ],
+      "new_size": [
+        390,
+        1497
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-unsaved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1182
+      ],
+      "new_size": [
+        1440,
+        1182
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-unsaved-360.png",
+      "bar_cropped": false,
+      "old_size": [
+        360,
+        1497
+      ],
+      "new_size": [
+        360,
+        1497
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "open-public-unsaved-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1497
+      ],
+      "new_size": [
+        390,
+        1497
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "postsave-announce-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        920
+      ],
+      "new_size": [
+        1440,
+        920
+      ],
+      "result": "differs",
+      "diff_box": [
+        647,
+        616,
+        907,
+        755
+      ]
+    },
+    {
+      "image": "postsave-announce-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "differs",
+      "diff_box": [
+        179,
+        513,
+        197,
+        523
+      ]
+    },
+    {
+      "image": "rebuild-open-existing-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1870
+      ],
+      "new_size": [
+        390,
+        1870
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-detail-cancelled-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        881
+      ],
+      "new_size": [
+        1440,
+        881
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-detail-cancelled-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-detail-handled-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        929
+      ],
+      "new_size": [
+        1440,
+        929
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-detail-handled-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-detail-pending-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        944
+      ],
+      "new_size": [
+        1440,
+        944
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-detail-pending-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-detail-status-failed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        990
+      ],
+      "new_size": [
+        1440,
+        990
+      ],
+      "result": "differs",
+      "diff_box": [
+        581,
+        646,
+        1357,
+        755
+      ]
+    },
+    {
+      "image": "reservation-detail-status-failed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-filter-pending-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "reservation-filter-pending-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-many-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1263
+      ],
+      "new_size": [
+        1440,
+        1263
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-many-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1395
+      ],
+      "new_size": [
+        390,
+        1395
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-normal-1011.png",
+      "bar_cropped": true,
+      "old_size": [
+        1011,
+        796
+      ],
+      "new_size": [
+        1011,
+        796
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-normal-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "reservation-normal-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-normal-821.png",
+      "bar_cropped": false,
+      "old_size": [
+        821,
+        900
+      ],
+      "new_size": [
+        821,
+        900
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-normal-900.png",
+      "bar_cropped": true,
+      "old_size": [
+        900,
+        796
+      ],
+      "new_size": [
+        900,
+        796
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-read-failed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "reservation-read-failed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "reservation-zero-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "reservation-zero-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        844
+      ],
+      "new_size": [
+        390,
+        844
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "ticket-settings-failed-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1118
+      ],
+      "new_size": [
+        1440,
+        1118
+      ],
+      "result": "differs",
+      "diff_box": [
+        543,
+        617,
+        960,
+        755
+      ]
+    },
+    {
+      "image": "ticket-settings-failed-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        1042
+      ],
+      "new_size": [
+        390,
+        1042
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "ticket-settings-saved-1011.png",
+      "bar_cropped": true,
+      "old_size": [
+        1011,
+        1064
+      ],
+      "new_size": [
+        1011,
+        1064
+      ],
+      "result": "differs",
+      "diff_box": [
+        920,
+        617,
+        921,
+        618
+      ]
+    },
+    {
+      "image": "ticket-settings-saved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1064
+      ],
+      "new_size": [
+        1440,
+        1064
+      ],
+      "result": "differs",
+      "diff_box": [
+        959,
+        617,
+        960,
+        618
+      ]
+    },
+    {
+      "image": "ticket-settings-saved-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        913
+      ],
+      "new_size": [
+        390,
+        913
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "ticket-settings-saved-821.png",
+      "bar_cropped": false,
+      "old_size": [
+        821,
+        913
+      ],
+      "new_size": [
+        821,
+        913
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "ticket-settings-saved-900.png",
+      "bar_cropped": true,
+      "old_size": [
+        900,
+        1064
+      ],
+      "new_size": [
+        900,
+        1064
+      ],
+      "result": "differs",
+      "diff_box": [
+        809,
+        617,
+        810,
+        618
+      ]
+    },
+    {
+      "image": "ticket-settings-saving-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1064
+      ],
+      "new_size": [
+        1440,
+        1064
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "ticket-settings-saving-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        988
+      ],
+      "new_size": [
+        390,
+        988
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "ticket-settings-unsaved-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        1064
+      ],
+      "new_size": [
+        1440,
+        1064
+      ],
+      "result": "differs",
+      "diff_box": [
+        959,
+        617,
+        960,
+        618
+      ]
+    },
+    {
+      "image": "ticket-settings-unsaved-390.png",
+      "bar_cropped": false,
+      "old_size": [
+        390,
+        988
+      ],
+      "new_size": [
+        390,
+        988
+      ],
+      "result": "same",
+      "diff_box": null
+    },
+    {
+      "image": "tickets-detail-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        755
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-detail-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-empty-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-empty-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-local-mode-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        0,
+        8,
+        1440,
+        220
+      ]
+    },
+    {
+      "image": "tickets-local-mode-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        0,
+        2,
+        390,
+        280
+      ]
+    },
+    {
+      "image": "tickets-normal-1011.png",
+      "bar_cropped": true,
+      "old_size": [
+        1011,
+        754
+      ],
+      "new_size": [
+        1011,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-normal-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-normal-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-normal-821.png",
+      "bar_cropped": true,
+      "old_size": [
+        821,
+        754
+      ],
+      "new_size": [
+        821,
+        805
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-normal-900.png",
+      "bar_cropped": true,
+      "old_size": [
+        900,
+        754
+      ],
+      "new_size": [
+        900,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": null
+    },
+    {
+      "image": "tickets-read-only-1440.png",
+      "bar_cropped": true,
+      "old_size": [
+        1440,
+        754
+      ],
+      "new_size": [
+        1440,
+        785
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        32,
+        8,
+        1341,
+        111
+      ]
+    },
+    {
+      "image": "tickets-read-only-390.png",
+      "bar_cropped": true,
+      "old_size": [
+        390,
+        698
+      ],
+      "new_size": [
+        390,
+        749
+      ],
+      "result": "size-differs",
+      "diff_box_in_common_area": [
+        20,
+        9,
+        378,
+        110
+      ]
+    }
+  ]
+}

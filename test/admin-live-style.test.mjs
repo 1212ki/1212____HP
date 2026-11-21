@@ -27,10 +27,14 @@ const adminCss = readFileSync(join(repoRoot, 'admin/style.css'), 'utf8');
 const adminJs = readFileSync(join(repoRoot, 'admin/app.js'), 'utf8');
 
 // Groups of admin/style.css (the `/* ----- Name ----- */` comments) that a later Issue is allowed to change. Empty for #46.
+// Issue #47 changes the top band (Reset & Base variables, Header, Tab Navigation) and adds one group of its own.
 const LIVE_GROUP = 'Live Operations Hub';
-const LATER_ISSUE_STYLE_GROUPS = [];
-// Tabs whose rendering a later Issue (#47) is allowed to change; the comparison with the base skips them.
-const LATER_ISSUE_TABS = [];
+const LATER_ISSUE_STYLE_GROUPS = ['Reset & Base', 'Header', 'Tab Navigation'];
+// Groups a later Issue may add (they are not part of the base). T47-STYLE / T47-STYLE-SPEC bind what is inside them.
+const LATER_ISSUE_NEW_GROUPS = ['Occasional Updates'];
+// Tabs whose rendering a later Issue (#47) is allowed to change; the comparison with the base skips them. What those
+// comparisons observed is kept by T47-PIN (test/admin-occasional-pin.test.mjs), which reads the base commit's app.
+const LATER_ISSUE_TABS = ['site', 'news', 'youtube', 'discography', 'profile'];
 
 const gitShow = (path) => execFileSync('git', ['show', `${BASE}:${path}`], { cwd: repoRoot, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
 const plain = (value) => JSON.parse(JSON.stringify(value));
@@ -80,7 +84,7 @@ test('T46-STYLE every group of style.css except the Live group has the bytes of 
   const base = splitGroups(gitShow('admin/style.css'));
   const current = splitGroups(adminCss);
   assert.equal(current.preamble, base.preamble);
-  assert.deepEqual([...current.groups.keys()], [...base.groups.keys()], 'no group was added, removed or reordered');
+  assert.deepEqual([...current.groups.keys()].filter((name) => !LATER_ISSUE_NEW_GROUPS.includes(name)), [...base.groups.keys()], 'no group was added, removed or reordered (except the groups a later Issue names in LATER_ISSUE_NEW_GROUPS)');
   for (const [name, text] of base.groups) {
     if (name === LIVE_GROUP || LATER_ISSUE_STYLE_GROUPS.includes(name)) continue;
     assert.equal(current.groups.get(name), text, `the "${name}" group is unchanged`);
@@ -647,40 +651,45 @@ test('T46-STYLE while the confirmation surface is open the page behind is inert,
 // ---------------------------------------------------------------------------------------------------------
 const GLOBAL_TABS = ['global-tab-site', 'global-tab-news'];
 
-test('T46-MODE the header 保存 is hidden on the Live tab only while the API is connected and nothing else is unsaved', async () => {
+// Issue #47 (D47-08, R47-16): the pages save from their own 保存して公開, so while the API is connected the header 保存 is hidden on every
+// tab. It shows only while a change that nothing but the header 保存 can save is waiting (Music, Site and Profile until they move),
+// and in Local Mode, where it is JSONを書き出す. (Before #47 it was hidden on the Live tab only: the class is-live-concealed.)
+test('T46-MODE (rewritten by #47 stage 5) the header 保存 is hidden on every tab while the API is connected, whatever is waiting, and its handler sends nothing', async () => {
   const app = makeApp({ api: true });
   const save = app.elements.get('saveBtn');
   app.syncGlobalSaveButton();
-  assert.equal(save.classList.contains('is-live-concealed'), true, 'API Mode, Live tab, nothing waiting');
+  assert.equal(save.hidden, true, 'API Mode, Live tab, nothing waiting');
   assert.equal(app.getActiveGlobalTab(), 'live');
 
   await app.elements.get('global-tab-news').dispatch('click');
   assert.equal(app.getActiveGlobalTab(), 'news');
-  assert.equal(save.classList.contains('is-live-concealed'), false, 'other tabs keep it');
+  assert.equal(save.hidden, true, 'the other tabs have their own 保存して公開');
   await app.elements.get('global-tab-live').dispatch('click');
-  assert.equal(save.classList.contains('is-live-concealed'), true);
+  assert.equal(save.hidden, true);
 
+  // #47 stage 5 (D47-08): nothing shows it while the API is connected (stages 2 to 4 showed it for a change the old way of saving was waiting for), and
+  // the handler no longer sends the whole data: it sends nothing and answers false.
   app.markChanged();
-  assert.equal(save.classList.contains('is-live-concealed'), false, 'something unsaved from another tab: shown on the Live tab too');
-  assert.match(save.textContent, /保存 \*/);
+  assert.equal(save.hidden, true, 'a leftover waiting change does not bring it back');
   const calls = useRoutes(app);
-  await app.invokeSaveData();
-  assert.equal(calls.puts.length, 1);
-  assert.equal(save.classList.contains('is-live-concealed'), true, 'saved: hidden again on the Live tab');
+  assert.equal(await app.invokeSaveData(), false);
+  assert.equal(await app.invokeSaveData({ silent: true }), false);
+  assert.equal(calls.puts.length, 0, 'no request: the whole of siteData is not sent from anywhere');
+  assert.equal(save.hidden, true);
 
   for (const id of GLOBAL_TABS) await app.elements.get(id).dispatch('click');
-  assert.equal(save.classList.contains('is-live-concealed'), false);
-  assert.match(adminHtml, /<button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData\(\)">保存<\/button>/, 'the button and its handler are unchanged');
+  assert.equal(save.hidden, true);
+  assert.match(adminHtml, /<button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData\(\)" hidden>保存<\/button>/, 'the button and its handler are kept (Local Mode uses them); it starts hidden');
 });
 
-test('T46-MODE Local Mode and read-only keep the header button on the Live tab', () => {
+test('T46-MODE (rewritten by #47) Local Mode keeps JSONを書き出す in the header; read-only has no header button', () => {
   const local = makeApp({ api: false });
   local.renderModeBadge();
-  assert.equal(local.elements.get('saveBtn').classList.contains('is-live-concealed'), false);
+  assert.equal(local.elements.get('saveBtn').hidden, false);
   assert.equal(local.elements.get('saveBtn').textContent, 'JSONを書き出す');
 
   const readOnly = makeApp({ api: true, readOnly: true });
-  assert.equal(readOnly.elements.get('saveBtn').classList.contains('is-live-concealed'), false);
+  assert.equal(readOnly.elements.get('saveBtn').hidden, true);
   assert.equal(readOnly.elements.get('saveBtn').textContent, '読み取り専用');
   assert.equal(readOnly.elements.get('saveBtn').disabled, true);
 });
@@ -757,7 +766,7 @@ test('T46-MODE leaving an unsaved Live through the global tab still asks first (
   await answerLiveDialog(app, 'stay');
   await clicked;
   assert.equal(app.getActiveGlobalTab(), 'live');
-  assert.equal(app.elements.get('saveBtn').classList.contains('is-live-concealed'), true);
+  assert.equal(app.elements.get('saveBtn').hidden, true);
 });
 
 // ---------------------------------------------------------------------------------------------------------
@@ -864,15 +873,16 @@ test('T46-COMPAT the header 保存 (saveData) sends the whole data, including a 
   assert.equal(bodies[1].news[0].title, '他のタブで直したお知らせ');
 });
 
-test('T46-COMPAT the shared picture form keeps the other tabs wording; only the Live flyer has the new wording', () => {
+test('T46-COMPAT (rewritten by #47) the picture form of every tab says 画像を選ぶ / 画像を変える / 画像を外す, as the Live flyer does; the base said 画像を選択', () => {
   const html = (app) => app.elements.get('profile-image-form').innerHTML;
   const baseApp = loadWith(baseSource);
   const app = loadWith(adminJs);
   baseApp.renderProfile();
   app.renderProfile();
-  assert.equal(html(app), html(baseApp));
-  assert.match(html(app), /画像を選択/);
-  assert.doesNotMatch(html(app), /画像を選ぶ|画像を変える|画像を外す/);
+  assert.match(html(baseApp), /画像を選択/, 'what the base printed');
+  assert.match(html(app), />画像を(選ぶ|変える)</);
+  assert.match(html(app), />画像を外す</);
+  assert.doesNotMatch(html(app), /画像を選択|>削除</);
 });
 
 // ---------------------------------------------------------------------------------------------------------
@@ -889,11 +899,13 @@ test('T46-VERSION ADMIN_BUILD_ID and the ?v= of style.css, app.js and music-data
     app: adminHtml.match(/app\.js\?v=([\w-]+)/)?.[1],
     music: adminHtml.match(/music-data\.js\?v=([\w-]+)/)?.[1],
   };
-  assert.deepEqual(versions, { style: '20261120-46', app: '20261120-46', music: '20261120-46' });
+  // #47 (D47-20): the build of the latest Issue. The README also keeps #46's build in its history section, so it names both.
+  assert.deepEqual(versions, { style: '20261121-47', app: '20261121-47', music: '20261121-47' });
   assert.equal(`${build[1]}${build[2]}${build[3]}`, versions.app.slice(0, 8), 'the build marker is dated the same day as ?v=');
-  assert.ok(adminHtml.indexOf('music-data.js?v=20261120-46') < adminHtml.indexOf('app.js?v=20261120-46'), 'the helper loads before the app');
+  assert.ok(adminHtml.indexOf('music-data.js?v=20261121-47') < adminHtml.indexOf('app.js?v=20261121-47'), 'the helper loads before the app');
   assert.match(adminReadme, new RegExp(build[0].match(/'([^']+)'/)[1]));
-  assert.match(adminReadme, /20261120-46/);
+  assert.match(adminReadme, /20261121-47/);
+  assert.match(adminReadme, /20261120-46/, 'the #46 build stays in the README history');
   // the three files the docs name as unchanged keep their previous versions
   assert.match(adminHtml, /live-operations\.js\?v=20260804-2/);
   assert.match(adminHtml, /config\.js\?v=20260216-2001/);

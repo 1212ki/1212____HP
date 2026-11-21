@@ -165,6 +165,15 @@ test('T43-COMPAT the only files changed by #43 are the planned ones (no stray pa
     /^test\/fixtures\/admin-live-states\.json$/,
     /^test\/(live-ticket-shell|profile-contact-shell|site-shell)\.test\.mjs$/,
     /^docs\/records\/aidlc-cycles\/2026-11-20_issue-46_admin-live-ops\//,
+    // Issue #47 (admin occasional updates): the planned files only. admin/, docs/specs/current/, aidlc-docs/, the harness and
+    // fake_admin_*.py are already allowed above. The cycle record is written when the cycle is closed, through the close
+    // command's temporary paths.
+    /^docs\/records\/aidlc-cycles\/2026-11-21_issue-47_admin-occasional\//,
+    /^docs\/records\/aidlc-cycles\/\.aidlc-(stage|idle|recovery)-[^/]+\//,
+    /^\.aidlc-(idle|recovery)-[^/]+\//,
+    /^test\/admin-occasional-[\w-]+\.test\.mjs$/,
+    /^test\/fixtures\/admin-occasional-states\.json$/,
+    /^test\/support\/admin-preview\/capture-admin-occasional\.py$/,
   ];
   for (const path of [...changed, ...untracked]) assert.ok(allowed.some((pattern) => pattern.test(path)), `unexpected change: ${path}`);
 });

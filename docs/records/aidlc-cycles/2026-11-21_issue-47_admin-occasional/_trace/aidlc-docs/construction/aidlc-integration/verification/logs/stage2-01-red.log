@@ -1,0 +1,74 @@
+# stage2 RED: new T47 tests (save + screens) against admin/ as of base (no #47 change in admin/)
+# command: node --test test/admin-occasional-save.test.mjs test/admin-occasional-screens.test.mjs (Node v20.19.4)
+# exit: 1
+not ok 1 - T47-EQ News: changing every field of one item sends the body the modal 更新 sent (same keys, order, values, position)
+not ok 2 - T47-EQ News: changing one value keeps the other values, including a free-form date, a double quote and full-width characters
+not ok 3 - T47-EQ News: opening an item and saving it without a change sends the same body (a save with nothing to save is forced here)
+not ok 4 - T47-EQ News: a new item goes to the head with the same keys and the default link text
+not ok 5 - T47-EQ News (intended difference): delete — the modal needed two steps (deleteItem, then the header 保存), the edit surface saves in one; the PUT body is the same
+not ok 6 - T47-EQ News: an item of an older shape is rebuilt to the seven keys when one value is changed, and keys the form does not have are dropped
+not ok 7 - T47-EQ News: long values, an empty description and an empty image are kept as they are
+not ok 8 - T47-EQ News: an item whose id looks like a number opens from the list, and its id keeps its type in the body
+not ok 9 - T47-SAVE the four states: 保存済み, 未保存, 保存しています…, 保存できませんでした; typing a value and putting it back is 保存済み again
+not ok 10 - T47-SAVE a new item is 保存済み until something is typed, is not in the list until saved, and becomes the edit of the saved item
+not ok 11 - T47-SAVE saving with nothing to save sends nothing and answers true
+not ok 12 - T47-SAVE while saving, the inputs, the moves, delete and add are locked, and a second click sends one PUT
+not ok 13 - T47-SAVE a failed save keeps the inputs and the surface, says why, leaves siteData and the saved baseline as they were, and the retry sends the same body
+not ok 14 - T47-SAVE after a save, siteData and the baseline hold the saved item and the next save is built on it
+not ok 15 - T47-SAVE in Local Mode a save reflects into memory and waits for the JSON export; no API call
+not ok 16 - T47-SAVE an image that is still uploading is not saved: nothing is sent and the person is told
+not ok 17 - T47-SCOPE a News save does not send another input's unsaved change, keeps everything else (live, ticket, \#41 references, hero image), and leaves that change waiting
+not ok 18 - T47-SCOPE a News delete sends the baseline without that item and nothing of another input's unsaved change
+not ok 19 - T47-SCOPE the header 保存 still sends the whole data: the other change and the saved News item together
+not ok 20 - T47-SCOPE a failed save does not move the saved baseline; a duplicate Live id is not sent
+not ok 21 - T47-SCOPE the slice functions touch only the news list
+not ok 22 - T47-GUARD unsaved + another item: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+not ok 23 - T47-GUARD unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+not ok 24 - T47-GUARD unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+not ok 25 - T47-GUARD unsaved + a global tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+not ok 26 - T47-GUARD after 破棄して移動 the input is back to the saved content (the same item shown again is not the dropped text)
+not ok 27 - T47-GUARD with nothing unsaved no surface opens and the move is made at once (synchronously)
+not ok 28 - T47-GUARD a new item with something typed is unsaved too; typing and putting it back is not
+not ok 29 - T47-GUARD the browser asks before leaving while something is unsaved, saving, or uploading; not otherwise
+not ok 30 - T47-DELETE the confirmation names the item, says it also leaves the public page, and has やめる (focused) and 削除する
+not ok 31 - T47-DELETE 削除する saves once, closes the surface to the list, and the list no longer has the item
+not ok 32 - T47-DELETE a failed delete keeps the item in the list and the surface and the inputs; siteData is as before
+not ok 33 - T47-DELETE in Local Mode the delete is made in memory and waits for the JSON export; a new item has no delete
+not ok 34 - T47-IMAGE choosing a picture is unsaved while it uploads (save cannot be pressed) and after it, while it differs from the saved picture; then it is saved with the URL
+not ok 35 - T47-IMAGE a failed upload says so with the reason, keeps the current picture, and the surface is not unsaved because of it
+not ok 36 - T47-IMAGE 画像を外す empties the picture (unsaved) and the button says 画像を選ぶ; the same surface shown again after 破棄 has the saved picture back
+not ok 37 - T47-IMAGE 破棄して移動 while a picture uploads releases the upload: it does not finish into the next item
+not ok 38 - T47-IMAGE in Local Mode the picture gets a file name from the date and is part of the save; nothing is uploaded
+not ok 39 - T47-HEADER the Header is one row: 1212 Admin on the left, the connection on the right, and no 保存 button by default
+not ok 40 - T47-HEADER the heights are the Live master's: 46px / tabs 49px up to 899px wide, 62px / 53px from 900px
+not ok 41 - T47-HEADER the Live sticky offsets follow the variables (nothing in the Live group has the old 92px / 54px)
+not ok 42 - T47-HEADER the connection label and the band are as before: 接続中 / API Fallback / Local Mode
+not ok 43 - T47-HEADER while the API is connected the header 保存 is hidden; only a change still saved the old way shows it; Local Mode always has JSONを書き出す
+not ok 44 - T47-TABS five tabs: Site, News, Live, Music, Profile — in this order, Live selected, no YouTube and no Disco
+not ok 45 - T47-TABS every tab has its section; \#music-tab holds what the YouTube and Disco tabs held until stage 3 replaces it
+not ok 46 - T47-TABS clicking a tab shows its section and hides the others; the Live editor and the News edit surface close behind it
+not ok 47 - T47-NEWS the list rows are buttons with the date and the title; the first screen is only the list; nothing is selected
+not ok 48 - T47-NEWS a click on a row (the way the browser delivers it) opens that item; the opened row is marked
+not ok 49 - T47-NEWS the edit surface has every field with the same id and the values of the item, in the order Date, Title, Description, Image, Link URL, Link text
+ok 50 - T47-NEWS the fields are written as text: a double quote, a tag and a line break in the saved values arrive unchanged
+not ok 51 - T47-NEWS an item of an older shape opens (the missing values are empty) and an id that looks like a number opens from its row
+not ok 52 - T47-NEWS a new item is an empty edit surface (link text view...), titled 新しいお知らせ, with no delete and 保存済み
+not ok 53 - T47-NEWS a list with no item says so and offers + 追加; the edit surface on a wide screen says what to do
+not ok 54 - T47-NEWS a title that is empty is shown as （題なし） in the row and in the top bar
+not ok 55 - T47-NEWS the 保存して公開 is on screen only while it can be used on a narrow screen, and always (dimmed when idle) on a wide one
+not ok 56 - T47-NEWS leaving the edit surface with ‹ 一覧 (nothing unsaved) goes back to the list and clears the surface
+not ok 57 - T47-NEWS the read-only state (API connection failed) lets the item be read but not changed, added or saved
+not ok 58 - T47-IMAGE the picture form says 画像を選ぶ without a picture, and 画像を変える with 画像を外す with one; the path is shown and escaped
+not ok 59 - T47-IMAGE the select and clear buttons keep the ids and handlers the upload code uses, in the form of every tab
+not ok 60 - T47-STYLE-SPEC every rule of Occasional Updates belongs to an occ- class, and one that restyles a shared class sits under .occ-tab with a specificity of (0,2,0) or more
+not ok 61 - T47-STYLE-SPEC the Occasional Updates group comes after the shared groups it restyles and before Safe Area
+not ok 62 - T47-STYLE the buttons and rows the News surface uses are at least 44px tall
+not ok 63 - T47-STYLE the narrow layout hides the page chrome while an edit is open and fixes 保存して公開 to the bottom; the wide layout puts the two panes side by side
+not ok 64 - T47-STYLE a fixed 保存して公開 has no scrolling ancestor of its own (overflow / transform / filter) in the occ- rules
+# tests 64
+# suites 0
+# pass 1
+# fail 63
+# cancelled 0
+# skipped 0
+# todo 0

@@ -1,0 +1,81 @@
+# 段6 GREEN
+TAP version 13
+# Subtest: T47-STYLE the layout switches at 899px / 900px and nowhere else: every media query of the groups \#47 owns is (max-width: 899px) or (min-width: 900px)
+ok 1 - T47-STYLE the layout switches at 899px / 900px and nowhere else: every media query of the groups \#47 owns is (max-width: 899px) or (min-width: 900px)
+  ---
+  duration_ms: 1.399084
+  ...
+# Subtest: T47-STYLE at 360, 390, 821 and 899px News and Music are one column (the list, then an edit that takes its place); at 900, 1011 and 1440px they are two columns of 320px and the rest
+ok 2 - T47-STYLE at 360, 390, 821 and 899px News and Music are one column (the list, then an edit that takes its place); at 900, 1011 and 1440px they are two columns of 320px and the rest
+  ---
+  duration_ms: 0.718417
+  ...
+# Subtest: T47-STYLE 保存して公開 is a bar fixed to the bottom up to 899px and part of the heading from 900px (a button of 135px or more, dimmed when it cannot be pressed)
+ok 3 - T47-STYLE 保存して公開 is a bar fixed to the bottom up to 899px and part of the heading from 900px (a button of 135px or more, dimmed when it cannot be pressed)
+  ---
+  duration_ms: 0.363333
+  ...
+# Subtest: T47-STYLE the upper band is 46px (Tabs 49px) up to 899px and 62px (Tabs 53px) from 900px, as variables the Header, the Tabs and the Live sticky offsets all read
+ok 4 - T47-STYLE the upper band is 46px (Tabs 49px) up to 899px and 62px (Tabs 53px) from 900px, as variables the Header, the Tabs and the Live sticky offsets all read
+  ---
+  duration_ms: 2.234125
+  ...
+# Subtest: T47-STYLE a fixed 保存して公開 has no ancestor that scrolls or makes a containing block for it (overflow, transform, filter, contain, will-change, perspective, backdrop-filter), at 360 to 899px
+ok 5 - T47-STYLE a fixed 保存して公開 has no ancestor that scrolls or makes a containing block for it (overflow, transform, filter, contain, will-change, perspective, backdrop-filter), at 360 to 899px
+  ---
+  duration_ms: 4.814209
+  ...
+# Subtest: T47-STYLE everything pressable the occasional updates add is 44px or more tall (rows, switch, add, back, delete, link delete, picture buttons, 保存して公開) and the header button keeps a 44px area
+ok 6 - T47-STYLE everything pressable the occasional updates add is 44px or more tall (rows, switch, add, back, delete, link delete, picture buttons, 保存して公開) and the header button keeps a 44px area
+  ---
+  duration_ms: 0.381458
+  ...
+# Subtest: T47-STYLE only four groups differ from the base commit: Reset & Base (the two sticky-height variables), Header, Tab Navigation, and the new Occasional Updates; every other group, Live Operations Hub included, is the same bytes
+ok 7 - T47-STYLE only four groups differ from the base commit: Reset & Base (the two sticky-height variables), Header, Tab Navigation, and the new Occasional Updates; every other group, Live Operations Hub included, is the same bytes
+  ---
+  duration_ms: 0.261417
+  ...
+# Subtest: T47-STYLE the shared classes keep their look: nothing outside Occasional Updates mentions an occ- class, and no rule of the unchanged groups is new
+ok 8 - T47-STYLE the shared classes keep their look: nothing outside Occasional Updates mentions an occ- class, and no rule of the unchanged groups is new
+  ---
+  duration_ms: 1.131958
+  ...
+# Subtest: T47-STYLE the colours of the new rules are token variables only (no hex, rgb or hsl): the whole Occasional Updates group and the lines \#47 added to Reset & Base, Header and Tab Navigation
+ok 9 - T47-STYLE the colours of the new rules are token variables only (no hex, rgb or hsl): the whole Occasional Updates group and the lines \#47 added to Reset & Base, Header and Tab Navigation
+  ---
+  duration_ms: 0.818375
+  ...
+# Subtest: T47-STYLE-SPEC every rule of Occasional Updates has an occ- class (or is a body state of an occ- screen), and the group stands after the shared groups it restyles
+ok 10 - T47-STYLE-SPEC every rule of Occasional Updates has an occ- class (or is a body state of an occ- screen), and the group stands after the shared groups it restyles
+  ---
+  duration_ms: 0.224792
+  ...
+# Subtest: T47-STYLE-SPEC a rule that restyles a shared class is under .occ-tab and out-weighs every shared rule it overlaps with, so no rule depends on being written later
+ok 11 - T47-STYLE-SPEC a rule that restyles a shared class is under .occ-tab and out-weighs every shared rule it overlaps with, so no rule depends on being written later
+  ---
+  duration_ms: 3.19075
+  ...
+# Subtest: T47-LIVE-COMPAT the Live tab draws the same markup as the base commit: the two lists, the editor of every Live (and of a new one), the Ticket Page settings
+ok 12 - T47-LIVE-COMPAT the Live tab draws the same markup as the base commit: the two lists, the editor of every Live (and of a new one), the Ticket Page settings
+  ---
+  duration_ms: 54.209833
+  ...
+# Subtest: T47-LIVE-COMPAT a Live save, a category move, a new Live, a delete and the Ticket Page settings PUT the same bodies (as strings) as the base commit
+ok 13 - T47-LIVE-COMPAT a Live save, a category move, a new Live, a delete and the Ticket Page settings PUT the same bodies (as strings) as the base commit
+  ---
+  duration_ms: 22.41725
+  ...
+# Subtest: T47-LIVE-COMPAT the Live script, the Worker, the public pages, the public scripts and styles, the data and DESIGN_RULES.md are the bytes of the base commit
+ok 14 - T47-LIVE-COMPAT the Live script, the Worker, the public pages, the public scripts and styles, the data and DESIGN_RULES.md are the bytes of the base commit
+  ---
+  duration_ms: 75.528667
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3229.028667

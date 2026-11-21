@@ -1,0 +1,7 @@
+# npm --prefix cloudflare/worker test
+# exit: 0
+    # Subtest: unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+    ok 13 - unexpected admin D1 errors bypass known-client handlers and use the logged generic 500
+# tests 361
+# pass 361
+# fail 0

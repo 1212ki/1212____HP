@@ -855,13 +855,15 @@ test('T46-IMAGE while the flyer uploads the status says アップロードして
   assert.equal(app.elements.get('edit-image').value, before, 'the current flyer stays');
 });
 
-test('T46-IMAGE the other tabs keep their picture wording', () => {
+test('T46-IMAGE the other tabs use the same three words as the Live flyer since #47 (they said 画像を選択 / 削除)', () => {
   const app = makeApp();
   app.addNews();
-  const html = app.elements.get('modal-body').innerHTML;
-  assert.match(html, /画像を選択/);
-  assert.match(html, /タップして画像を選択/);
-  assert.doesNotMatch(html, /画像を選ぶ|画像を変える|未選択/);
+  const html = app.elements.get('news-editor-body').innerHTML;
+  assert.match(html, />画像を選ぶ</);
+  assert.match(html, /未選択/);
+  assert.doesNotMatch(html, /画像を選択|タップして画像を選択|>削除</);
+  assert.doesNotMatch(html, /画像を変える/, 'no picture yet, so not 画像を変える');
+  assert.match(app.getImageFormHtml('assets/images/x.jpg', 'site-hero-image'), />画像を変える<[\s\S]*>画像を外す</);
 });
 
 // ======================================================================================================

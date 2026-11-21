@@ -1,0 +1,34 @@
+ M admin/README.md
+ M admin/app.js
+ M admin/index.html
+ M admin/style.css
+ M aidlc-docs/README.md
+ M docs/specs/current/README.md
+ M docs/specs/current/live-operations-admin-ui.md
+ M test/admin-image-form.test.mjs
+ M test/admin-live-operations.test.mjs
+ M test/admin-live-pin.test.mjs
+ M test/admin-live-review-fixes.test.mjs
+ M test/admin-live-save.test.mjs
+ M test/admin-live-screens.test.mjs
+ M test/admin-live-style.test.mjs
+ M test/live-ticket-shell.test.mjs
+ M test/site-shell.test.mjs
+ M test/support/admin-app-harness.mjs
+ M test/support/admin-preview/capture-admin-live.py
+ M test/support/admin-preview/fake_admin_api.py
+ M test/support/admin-preview/fake_admin_server.py
+?? aidlc-docs/aidlc-state.md
+?? aidlc-docs/approvals/
+?? aidlc-docs/audit.md
+?? aidlc-docs/construction/
+?? aidlc-docs/inception/
+?? test/admin-occasional-guard.test.mjs
+?? test/admin-occasional-pin.test.mjs
+?? test/admin-occasional-save.test.mjs
+?? test/admin-occasional-screens.test.mjs
+?? test/admin-occasional-states.test.mjs
+?? test/admin-occasional-style.test.mjs
+?? test/admin-occasional-version.test.mjs
+?? test/fixtures/admin-occasional-states.json
+?? test/support/admin-preview/capture-admin-occasional.py

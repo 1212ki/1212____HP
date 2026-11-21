@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>1212 HP Admin</title>
   <link rel="stylesheet" href="../assets/css/1212-music.tokens.css">
-  <link rel="stylesheet" href="style.css?v=20261120-46">
+  <link rel="stylesheet" href="style.css?v=20261121-47">
 </head>
 <body>
   <div id="app">
-    <!-- ヘッダー -->
+    <!-- ヘッダー: 左に「1212 Admin」、右に接続の表示（Local Modeだけ「JSONを書き出す」も） -->
     <header class="header">
-      <div>
-        <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+      <h1 class="logo">1212 <span class="accent">Admin</span></h1>
+      <div class="header-right">
         <p class="header-meta" id="modeBadge">Local Mode</p>
+        <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()" hidden>保存</button>
       </div>
-      <button class="save-btn" id="saveBtn" data-admin-mutation onclick="saveData()">保存</button>
     </header>
     <div class="connection-banner" id="connectionBanner">データ接続を初期化中...</div>
 
@@ -24,82 +24,114 @@
       <button class="tab-btn" data-tab="site">Site</button>
       <button class="tab-btn" data-tab="news">News</button>
       <button class="tab-btn active" data-tab="live">Live</button>
-      <button class="tab-btn" data-tab="youtube">YouTube</button>
-      <button class="tab-btn" data-tab="discography">Disco</button>
+      <button class="tab-btn" data-tab="music">Music</button>
       <button class="tab-btn" data-tab="profile">Profile</button>
     </nav>
 
-    <!-- Siteタブ -->
-    <section class="tab-content" id="site-tab">
-      <div class="section-header">
-        <h2>Site</h2>
-      </div>
-
-      <div class="subsection">
-        <h3>Home</h3>
-        <div class="form-group">
-          <label for="site-featured-release-id">顔にする作品</label>
-          <select id="site-featured-release-id" class="select" data-admin-mutation>
-            <option value="">自動（最新のリリース）</option>
-          </select>
-        </div>
-        <label>共有時の画像</label>
-        <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>
-        <div id="site-hero-image-form"></div>
-      </div>
-
-      <div class="subsection">
-        <h3>Home Links</h3>
-        <div class="form-group">
-          <label>Bandcamp</label>
-          <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label>YouTube</label>
-          <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label>X</label>
-          <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label>Instagram</label>
-          <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label>note</label>
-          <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+    <!-- Siteタブ: 一覧のない1画面。入力はこの画面の中だけに持ち、「保存して公開」で公開データへ反映する -->
+    <section class="tab-content occ-tab occ-page" id="site-tab">
+      <div class="occ-page-head">
+        <h2 class="occ-page-title">Site</h2>
+        <span class="occ-status" id="site-editor-status" role="status" aria-live="polite"></span>
+        <div class="occ-save" id="site-editor-actions" hidden>
+          <p class="occ-error" id="site-editor-error" role="alert"></p>
+          <button type="button" class="btn btn-primary occ-save-btn" id="site-save-btn" data-admin-mutation>保存して公開</button>
         </div>
       </div>
 
-      <div class="subsection">
-        <h3>Footer</h3>
-        <div class="form-group">
-          <label>フッター文言（空なら既定のまま）</label>
-          <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
-        </div>
-      </div>
+      <div class="occ-page-body">
+        <section class="occ-panel" aria-labelledby="site-home-heading">
+          <h3 class="occ-panel-heading" id="site-home-heading">Home</h3>
+          <div class="form-group occ-field">
+            <label for="site-featured-release-id">顔にする作品</label>
+            <select id="site-featured-release-id" class="select" data-admin-mutation>
+              <option value="">自動（最新のリリース）</option>
+            </select>
+          </div>
+          <div class="occ-hero-field">
+            <p class="occ-field-label" id="site-hero-image-label">共有時の画像</p>
+            <p class="field-hint">ライブの画像がない時、共有時の画像に使います。Homeには作品のジャケットを表示します。</p>
+            <div id="site-hero-image-form"></div>
+          </div>
+        </section>
 
-      <div class="subsection">
-        <h3>Contact</h3>
-        <div class="form-group">
-          <label>導入文</label>
-          <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>Form Action（Formspree URL）</label>
-          <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
-        </div>
+        <section class="occ-panel" aria-labelledby="site-links-heading">
+          <h3 class="occ-panel-heading" id="site-links-heading">Home Links</h3>
+          <div class="form-group occ-field">
+            <label for="site-link-bandcamp">Bandcamp</label>
+            <input type="url" id="site-link-bandcamp" class="text-input" data-admin-mutation placeholder="https://...">
+          </div>
+          <div class="form-group occ-field">
+            <label for="site-link-youtube">YouTube</label>
+            <input type="url" id="site-link-youtube" class="text-input" data-admin-mutation placeholder="https://...">
+          </div>
+          <div class="form-group occ-field">
+            <label for="site-link-x">X</label>
+            <input type="url" id="site-link-x" class="text-input" data-admin-mutation placeholder="https://...">
+          </div>
+          <div class="form-group occ-field">
+            <label for="site-link-instagram">Instagram</label>
+            <input type="url" id="site-link-instagram" class="text-input" data-admin-mutation placeholder="https://...">
+          </div>
+          <div class="form-group occ-field">
+            <label for="site-link-note">note</label>
+            <input type="url" id="site-link-note" class="text-input" data-admin-mutation placeholder="https://...">
+          </div>
+        </section>
+
+        <section class="occ-panel" aria-labelledby="site-footer-heading">
+          <h3 class="occ-panel-heading" id="site-footer-heading">Footer</h3>
+          <div class="form-group occ-field">
+            <label for="site-footer-text">フッター文言（空なら既定のまま）</label>
+            <input type="text" id="site-footer-text" class="text-input" data-admin-mutation placeholder="&copy; ...">
+          </div>
+        </section>
+
+        <section class="occ-panel" aria-labelledby="site-contact-heading">
+          <h3 class="occ-panel-heading" id="site-contact-heading">Contact</h3>
+          <div class="form-group occ-field">
+            <label for="contact-intro-text">導入文</label>
+            <textarea id="contact-intro-text" class="textarea" data-admin-mutation rows="3" placeholder="お問い合わせは..."></textarea>
+          </div>
+          <div class="form-group occ-field">
+            <label for="contact-form-action">Form Action（Formspree URL）</label>
+            <input type="url" id="contact-form-action" class="text-input" data-admin-mutation placeholder="https://formspree.io/f/...">
+          </div>
+        </section>
       </div>
     </section>
 
-    <!-- Newsタブ -->
-    <section class="tab-content" id="news-tab">
-      <div class="section-header">
-        <h2>News</h2>
-        <button class="add-btn" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+    <!-- Newsタブ: 一覧と編集（幅900px以上は2列、幅899px以下は一覧→編集） -->
+    <section class="tab-content occ-tab occ-tab-split" id="news-tab">
+      <div class="occ-master-detail" id="news-master-detail">
+        <div class="occ-list-pane" id="news-list-pane">
+          <div class="occ-list-head">
+            <h2 class="occ-list-title">News</h2>
+            <button type="button" class="btn btn-secondary occ-add" id="news-add-btn" data-admin-mutation onclick="addNews()">+ 追加</button>
+          </div>
+          <div class="occ-list" id="news-list"></div>
+        </div>
+
+        <section class="occ-editor-pane" id="news-editor-pane" aria-labelledby="news-editor-heading">
+          <header class="occ-editor-bar" id="news-editor-bar">
+            <button type="button" class="occ-back" id="news-editor-back">‹ 一覧</button>
+            <span class="occ-editor-bar-title" id="news-editor-title"></span>
+            <span class="occ-status occ-status-bar" id="news-editor-status" role="status" aria-live="polite"></span>
+          </header>
+          <div class="occ-editor-card" id="news-editor-card">
+            <div class="occ-editor-head">
+              <h3 class="occ-editor-heading" id="news-editor-heading"></h3>
+              <div class="occ-save" id="news-editor-actions" hidden>
+                <span class="occ-status occ-status-wide" id="news-editor-status-wide" role="status" aria-live="polite"></span>
+                <p class="occ-error" id="news-editor-error" role="alert"></p>
+                <button type="button" class="btn btn-primary occ-save-btn" id="news-save-btn" data-admin-mutation>保存して公開</button>
+              </div>
+            </div>
+            <div class="occ-editor-body" id="news-editor-body"></div>
+          </div>
+          <p class="occ-editor-empty" id="news-editor-empty">一覧から選ぶか、「+ 追加」を押してください。</p>
+        </section>
       </div>
-      <div class="items-list" id="news-list"></div>
     </section>
 
     <!-- Liveタブ -->
@@ -231,84 +263,90 @@
       </div>
     </section>
 
-    <!-- YouTubeタブ -->
-    <section class="tab-content" id="youtube-tab">
-      <div class="section-header">
-        <h2>YouTube</h2>
-        <button class="add-btn" id="youtube-add-musicVideos-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
+    <!-- Musicタブ: 作品／映像の切り替えと、一覧と編集（映像の側は上にChannel URLの欄）。幅900px以上は2列、幅899px以下は一覧→編集 -->
+    <section class="tab-content occ-tab occ-tab-split occ-tab-music" id="music-tab">
+      <div class="occ-music-top">
+        <div class="occ-switch" role="tablist" aria-label="Music">
+          <button type="button" class="occ-switch-btn is-active" id="music-switch-works" role="tab" data-music-view="works" aria-selected="true" aria-controls="music-works-list" tabindex="0">作品</button>
+          <button type="button" class="occ-switch-btn" id="music-switch-videos" role="tab" data-music-view="videos" aria-selected="false" aria-controls="music-videos-list" tabindex="-1">映像</button>
+        </div>
+
+        <section class="occ-panel occ-channel" id="music-channel-panel" aria-labelledby="music-channel-heading" hidden>
+          <div class="occ-panel-head">
+            <h3 class="occ-panel-heading" id="music-channel-heading">Channel URL</h3>
+            <span class="occ-status" id="channel-editor-status" role="status" aria-live="polite"></span>
+            <div class="occ-save" id="channel-editor-actions" hidden>
+              <p class="occ-error" id="channel-editor-error" role="alert"></p>
+              <button type="button" class="btn btn-primary occ-save-btn" id="channel-save-btn" data-admin-mutation>保存して公開</button>
+            </div>
+          </div>
+          <div class="form-group occ-field">
+            <label for="youtube-channel-url">Channel URL</label>
+            <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
+          </div>
+        </section>
       </div>
 
-      <div class="subsection">
-        <h3>Channel URL</h3>
-        <input type="url" id="youtube-channel-url" class="text-input" data-admin-mutation placeholder="https://www.youtube.com/@...">
-      </div>
+      <div class="occ-master-detail" id="music-master-detail">
+        <div class="occ-list-pane" id="music-list-pane">
+          <div class="occ-list-head">
+            <h2 class="occ-list-title" id="music-list-title">作品</h2>
+            <button type="button" class="btn btn-secondary occ-add" id="music-add-btn" data-admin-mutation onclick="addMusicItem()">+ 追加</button>
+          </div>
+          <div class="occ-list" id="music-works-list"></div>
+          <div class="occ-list" id="music-videos-list" hidden></div>
+        </div>
 
-      <div class="subsection">
-        <h3>Music Video</h3>
-        <div class="items-list" id="youtube-musicVideos-list"></div>
-        <button class="add-btn small" id="youtube-add-musicVideos-secondary-btn" data-admin-mutation onclick="addYouTubeVideo('musicVideos')">+ 追加</button>
-      </div>
-
-      <div class="subsection">
-        <h3>Live Movie</h3>
-        <div class="items-list" id="youtube-liveMovies-list"></div>
-        <button class="add-btn small" id="youtube-add-liveMovies-btn" data-admin-mutation onclick="addYouTubeVideo('liveMovies')">+ 追加</button>
-      </div>
-
-      <div class="subsection">
-        <h3>Demo</h3>
-        <div class="items-list" id="youtube-demos-list"></div>
-        <button class="add-btn small" id="youtube-add-demos-btn" data-admin-mutation onclick="addYouTubeVideo('demos')">+ 追加</button>
+        <section class="occ-editor-pane" id="music-editor-pane" aria-labelledby="music-editor-heading">
+          <header class="occ-editor-bar" id="music-editor-bar">
+            <button type="button" class="occ-back" id="music-editor-back">‹ 一覧</button>
+            <span class="occ-editor-bar-title" id="music-editor-title"></span>
+            <span class="occ-status occ-status-bar" id="music-editor-status" role="status" aria-live="polite"></span>
+          </header>
+          <div class="occ-editor-card" id="music-editor-card">
+            <div class="occ-editor-head">
+              <h3 class="occ-editor-heading" id="music-editor-heading"></h3>
+              <div class="occ-save" id="music-editor-actions" hidden>
+                <span class="occ-status occ-status-wide" id="music-editor-status-wide" role="status" aria-live="polite"></span>
+                <p class="occ-error" id="music-editor-error" role="alert"></p>
+                <button type="button" class="btn btn-primary occ-save-btn" id="music-save-btn" data-admin-mutation>保存して公開</button>
+              </div>
+            </div>
+            <div class="occ-editor-body" id="music-editor-body"></div>
+          </div>
+          <p class="occ-editor-empty" id="music-editor-empty">一覧から選ぶか、「+ 追加」を押してください。</p>
+        </section>
       </div>
     </section>
 
-    <!-- Discographyタブ -->
-    <section class="tab-content" id="discography-tab">
-      <div class="section-header">
-        <h2>Discography</h2>
-        <button class="add-btn" id="discography-add-btn" data-admin-mutation onclick="addDiscography()">+ 追加</button>
-      </div>
-      <div class="subsection">
-        <h3>Digital Release</h3>
-        <div class="items-list" id="disc-digital-list"></div>
-      </div>
-      <div class="subsection">
-        <h3>宅録Demo</h3>
-        <div class="items-list" id="disc-demo-list"></div>
+    <!-- Profileタブ: 一覧のない1画面。入力はこの画面の中だけに持ち、「保存して公開」で公開データへ反映する -->
+    <section class="tab-content occ-tab occ-page" id="profile-tab">
+      <div class="occ-page-body">
+        <section class="occ-panel" aria-labelledby="profile-heading">
+          <div class="occ-panel-head">
+            <h2 class="occ-panel-heading" id="profile-heading">Profile</h2>
+            <span class="occ-status" id="profile-editor-status" role="status" aria-live="polite"></span>
+            <div class="occ-save" id="profile-editor-actions" hidden>
+              <p class="occ-error" id="profile-editor-error" role="alert"></p>
+              <button type="button" class="btn btn-primary occ-save-btn" id="profile-save-btn" data-admin-mutation>保存して公開</button>
+            </div>
+          </div>
+          <div id="profile-image-form"></div>
+          <div class="form-group occ-field">
+            <label for="profile-text">プロフィールテキスト</label>
+            <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
+          </div>
+        </section>
+
+        <section class="occ-panel" aria-labelledby="profile-links-heading">
+          <div class="occ-panel-head occ-panel-head-plain">
+            <h3 class="occ-panel-heading" id="profile-links-heading">SNSリンク</h3>
+            <button type="button" class="btn btn-secondary occ-add" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
+          </div>
+          <div class="occ-link-list" id="profile-links-list"></div>
+        </section>
       </div>
     </section>
-
-    <!-- Profileタブ -->
-    <section class="tab-content" id="profile-tab">
-      <div class="section-header">
-        <h2>Profile</h2>
-      </div>
-      <div id="profile-image-form"></div>
-      <div class="form-group">
-        <label>プロフィールテキスト</label>
-        <textarea id="profile-text" class="textarea" data-admin-mutation rows="10" placeholder="プロフィール本文"></textarea>
-      </div>
-      <div class="subsection">
-        <h3>SNSリンク</h3>
-        <div class="items-list" id="profile-links-list"></div>
-        <button class="add-btn small" id="profile-link-add-btn" data-admin-mutation onclick="addProfileLink()">+ リンク追加</button>
-      </div>
-    </section>
-
-    <!-- モーダル -->
-    <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
-    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
-      <div class="modal-header">
-        <h3 id="modal-title">編集</h3>
-        <button type="button" class="modal-close" aria-label="閉じる" onclick="closeModal()">&times;</button>
-      </div>
-      <div class="modal-body" id="modal-body"></div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
-        <button class="btn btn-danger" id="delete-btn" data-admin-mutation onclick="deleteItem()">削除</button>
-        <button class="btn btn-primary" id="modal-save-btn" data-admin-mutation onclick="saveModal()">更新</button>
-      </div>
-    </div>
 
     <!-- Liveの確認の面（未保存の確認・削除の確認） -->
     <div class="live-dialog-overlay" id="live-dialog-overlay" hidden>
@@ -320,7 +358,7 @@
   </div>
   <script>
   // Admin boot marker + basic error surface (if JS fails to load, it won't silently look like Local Mode).
-  window.ADMIN_BUILD_ID = '2026-11-20T1600Z';
+  window.ADMIN_BUILD_ID = '2026-11-21T0300Z';
   try {
     var badge = document.getElementById('modeBadge');
     if (badge) {
@@ -343,7 +381,7 @@
 </script>
 <script src="config.js?v=20260216-2001"></script>
 <script src="../assets/js/live-operations.js?v=20260804-2"></script>
-<script src="../assets/js/music-data.js?v=20261120-46"></script>
-<script src="app.js?v=20261120-46"></script>
+<script src="../assets/js/music-data.js?v=20261121-47"></script>
+<script src="app.js?v=20261121-47"></script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+# 段6 RED: 段6の試験（admin-occasional-style.test.mjs）は、段2〜5で作った CSS・実装に対して最初の実行で GREEN だった（段6の CSS は段2〜4で全幅の規則まで書いてあり、段6は縛る試験の追加になる）。
+# 試験が実際に効くことの確認として、次の4つの変更を一時的に加えて実行し、そのたびに元に戻した（repo に残していない）。
+## (1) .occ-editor-card に overflow: hidden を足す（固定の「保存して公開」の祖先）
+not ok 5 - T47-STYLE a fixed 保存して公開 has no ancestor that scrolls or makes a containing block for it (overflow, transform, filter, contain, will-change, perspective, backdrop-filter), at 360 to 899px
+# tests 14
+# pass 13
+# fail 1
+## (2) 2列に切り替わる幅を 900px から 880px に変える
+not ok 1 - T47-STYLE the layout switches at 899px / 900px and nowhere else: every media query of the groups \#47 owns is (max-width: 899px) or (min-width: 900px)
+not ok 2 - T47-STYLE at 360, 390, 821 and 899px News and Music are one column (the list, then an edit that takes its place); at 900, 1011 and 1440px they are two columns of 320px and the rest
+not ok 3 - T47-STYLE 保存して公開 is a bar fixed to the bottom up to 899px and part of the heading from 900px (a button of 135px or more, dimmed when it cannot be pressed)
+# tests 14
+# pass 11
+# fail 3
+## (3) Live の編集面の markup に class を1つ足す
+not ok 12 - T47-LIVE-COMPAT the Live tab draws the same markup as the base commit: the two lists, the editor of every Live (and of a new one), the Ticket Page settings
+# tests 14
+# pass 13
+# fail 1
+## (4) saveScoped の本文に key を1つ足す（Live の保存の本文が変わる）
+not ok 13 - T47-LIVE-COMPAT a Live save, a category move, a new Live, a delete and the Ticket Page settings PUT the same bodies (as strings) as the base commit
+# tests 14
+# pass 13
+# fail 1
+## 元に戻したことの確認
+restored (app.js, style.css)

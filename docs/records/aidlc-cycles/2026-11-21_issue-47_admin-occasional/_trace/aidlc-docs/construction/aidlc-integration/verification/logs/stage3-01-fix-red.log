@@ -1,0 +1,5 @@
+not ok 28 - FIX1 the inputs of an occ- tab take the page font and the ink colour (a textarea is not drawn in the browser's monospace)
+not ok 29 - FIX2 from 900px the tab text is not centred in a 44px minimum width, and the 44px to press is kept by a ::before
+# tests 29
+# pass 27
+# fail 2

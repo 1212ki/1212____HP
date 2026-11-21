@@ -1,0 +1,834 @@
+# FIX4/FIX5 RED: app.js の liveDialogBodyHtml を使わず（配列は空白で結合）、style.css の FIX4 の規則を外した状態
+TAP version 13
+# Subtest: T47-EQ News: changing every field of one item sends the body the modal 更新 sent (same keys, order, values, position)
+ok 1 - T47-EQ News: changing every field of one item sends the body the modal 更新 sent (same keys, order, values, position)
+  ---
+  duration_ms: 30.956917
+  ...
+# Subtest: T47-EQ News: changing one value keeps the other values, including a free-form date, a double quote and full-width characters
+ok 2 - T47-EQ News: changing one value keeps the other values, including a free-form date, a double quote and full-width characters
+  ---
+  duration_ms: 22.260125
+  ...
+# Subtest: T47-EQ News: opening an item and saving it without a change sends the same body (a save with nothing to save is forced here)
+ok 3 - T47-EQ News: opening an item and saving it without a change sends the same body (a save with nothing to save is forced here)
+  ---
+  duration_ms: 4.499125
+  ...
+# Subtest: T47-EQ News: a new item goes to the head with the same keys and the default link text
+ok 4 - T47-EQ News: a new item goes to the head with the same keys and the default link text
+  ---
+  duration_ms: 3.327916
+  ...
+# Subtest: T47-EQ News (intended difference): delete — the modal needed two steps (deleteItem, then the header 保存), the edit surface saves in one; the PUT body is the same
+ok 5 - T47-EQ News (intended difference): delete — the modal needed two steps (deleteItem, then the header 保存), the edit surface saves in one; the PUT body is the same
+  ---
+  duration_ms: 18.160083
+  ...
+# Subtest: T47-EQ News: an item of an older shape is rebuilt to the seven keys when one value is changed, and keys the form does not have are dropped
+ok 6 - T47-EQ News: an item of an older shape is rebuilt to the seven keys when one value is changed, and keys the form does not have are dropped
+  ---
+  duration_ms: 10.085209
+  ...
+# Subtest: T47-EQ News: long values, an empty description and an empty image are kept as they are
+ok 7 - T47-EQ News: long values, an empty description and an empty image are kept as they are
+  ---
+  duration_ms: 7.404792
+  ...
+# Subtest: T47-EQ News: an item whose id looks like a number opens from the list, and its id keeps its type in the body
+ok 8 - T47-EQ News: an item whose id looks like a number opens from the list, and its id keeps its type in the body
+  ---
+  duration_ms: 3.666625
+  ...
+# Subtest: T47-SAVE the four states: 保存済み, 未保存, 保存しています…, 保存できませんでした; typing a value and putting it back is 保存済み again
+ok 9 - T47-SAVE the four states: 保存済み, 未保存, 保存しています…, 保存できませんでした; typing a value and putting it back is 保存済み again
+  ---
+  duration_ms: 2.076042
+  ...
+# Subtest: T47-SAVE a new item is 保存済み until something is typed, is not in the list until saved, and becomes the edit of the saved item
+ok 10 - T47-SAVE a new item is 保存済み until something is typed, is not in the list until saved, and becomes the edit of the saved item
+  ---
+  duration_ms: 4.506083
+  ...
+# Subtest: T47-SAVE saving with nothing to save sends nothing and answers true
+ok 11 - T47-SAVE saving with nothing to save sends nothing and answers true
+  ---
+  duration_ms: 1.596375
+  ...
+# Subtest: T47-SAVE while saving, the inputs, the moves, delete and add are locked, and a second click sends one PUT
+ok 12 - T47-SAVE while saving, the inputs, the moves, delete and add are locked, and a second click sends one PUT
+  ---
+  duration_ms: 1.850875
+  ...
+# Subtest: T47-SAVE a failed save keeps the inputs and the surface, says why, leaves siteData and the saved baseline as they were, and the retry sends the same body
+ok 13 - T47-SAVE a failed save keeps the inputs and the surface, says why, leaves siteData and the saved baseline as they were, and the retry sends the same body
+  ---
+  duration_ms: 2.399833
+  ...
+# Subtest: T47-SAVE after a save, siteData and the baseline hold the saved item and the next save is built on it
+ok 14 - T47-SAVE after a save, siteData and the baseline hold the saved item and the next save is built on it
+  ---
+  duration_ms: 2.190291
+  ...
+# Subtest: T47-SAVE in Local Mode a save reflects into memory and waits for the JSON export; no API call
+ok 15 - T47-SAVE in Local Mode a save reflects into memory and waits for the JSON export; no API call
+  ---
+  duration_ms: 2.048875
+  ...
+# Subtest: T47-SAVE an image that is still uploading is not saved: nothing is sent and the person is told
+ok 16 - T47-SAVE an image that is still uploading is not saved: nothing is sent and the person is told
+  ---
+  duration_ms: 7.701709
+  ...
+# Subtest: T47-SCOPE a News save does not send another input's unsaved change, keeps everything else (live, ticket, \#41 references, hero image), and leaves that change waiting
+ok 17 - T47-SCOPE a News save does not send another input's unsaved change, keeps everything else (live, ticket, \#41 references, hero image), and leaves that change waiting
+  ---
+  duration_ms: 3.336417
+  ...
+# Subtest: T47-SCOPE (intended difference from before \#47) the modal 更新 sent another input's unsaved change along with the News item; the edit surface does not
+ok 18 - T47-SCOPE (intended difference from before \#47) the modal 更新 sent another input's unsaved change along with the News item; the edit surface does not
+  ---
+  duration_ms: 3.313042
+  ...
+# Subtest: T47-SCOPE a News delete sends the baseline without that item and nothing of another input's unsaved change
+ok 19 - T47-SCOPE a News delete sends the baseline without that item and nothing of another input's unsaved change
+  ---
+  duration_ms: 2.238458
+  ...
+# Subtest: T47-SCOPE the header 保存 sends siteData: the saved News item, and (since Site and the Channel URL hold their input only) nothing that is typed and not saved
+ok 20 - T47-SCOPE the header 保存 sends siteData: the saved News item, and (since Site and the Channel URL hold their input only) nothing that is typed and not saved
+  ---
+  duration_ms: 2.091917
+  ...
+# Subtest: T47-SCOPE a failed save does not move the saved baseline; a duplicate Live id is not sent
+ok 21 - T47-SCOPE a failed save does not move the saved baseline; a duplicate Live id is not sent
+  ---
+  duration_ms: 2.750959
+  ...
+# Subtest: T47-SCOPE the slice functions touch only the news list
+ok 22 - T47-SCOPE the slice functions touch only the news list
+  ---
+  duration_ms: 4.472042
+  ...
+# Subtest: T47-GUARD unsaved + another item: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 23 - T47-GUARD unsaved + another item: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+  ---
+  duration_ms: 3.301333
+  ...
+# Subtest: T47-GUARD unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 24 - T47-GUARD unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+  ---
+  duration_ms: 2.791083
+  ...
+# Subtest: T47-GUARD unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 25 - T47-GUARD unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+  ---
+  duration_ms: 2.339292
+  ...
+# Subtest: T47-GUARD unsaved + a global tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 26 - T47-GUARD unsaved + a global tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+  ---
+  duration_ms: 4.736625
+  ...
+# Subtest: T47-GUARD after 破棄して移動 the input is back to the saved content (the same item shown again is not the dropped text)
+ok 27 - T47-GUARD after 破棄して移動 the input is back to the saved content (the same item shown again is not the dropped text)
+  ---
+  duration_ms: 2.244833
+  ...
+# Subtest: T47-GUARD with nothing unsaved no surface opens and the move is made at once (synchronously)
+ok 28 - T47-GUARD with nothing unsaved no surface opens and the move is made at once (synchronously)
+  ---
+  duration_ms: 2.012875
+  ...
+# Subtest: T47-GUARD a new item with something typed is unsaved too; typing and putting it back is not
+ok 29 - T47-GUARD a new item with something typed is unsaved too; typing and putting it back is not
+  ---
+  duration_ms: 1.606917
+  ...
+# Subtest: T47-GUARD the browser asks before leaving while something is unsaved, saving, or uploading; not otherwise
+ok 30 - T47-GUARD the browser asks before leaving while something is unsaved, saving, or uploading; not otherwise
+  ---
+  duration_ms: 4.749292
+  ...
+# Subtest: T47-DELETE the confirmation names the item, says it also leaves the public page, and has やめる (focused) and 削除する
+ok 31 - T47-DELETE the confirmation names the item, says it also leaves the public page, and has やめる (focused) and 削除する
+  ---
+  duration_ms: 5.393875
+  ...
+# Subtest: T47-DELETE 削除する saves once, closes the surface to the list, and the list no longer has the item
+ok 32 - T47-DELETE 削除する saves once, closes the surface to the list, and the list no longer has the item
+  ---
+  duration_ms: 2.010833
+  ...
+# Subtest: T47-DELETE a failed delete keeps the item in the list and the surface and the inputs; siteData is as before
+ok 33 - T47-DELETE a failed delete keeps the item in the list and the surface and the inputs; siteData is as before
+  ---
+  duration_ms: 1.877292
+  ...
+# Subtest: T47-DELETE in Local Mode the delete is made in memory and waits for the JSON export; a new item has no delete
+ok 34 - T47-DELETE in Local Mode the delete is made in memory and waits for the JSON export; a new item has no delete
+  ---
+  duration_ms: 3.555875
+  ...
+# Subtest: T47-IMAGE choosing a picture is unsaved while it uploads (save cannot be pressed) and after it, while it differs from the saved picture; then it is saved with the URL
+ok 35 - T47-IMAGE choosing a picture is unsaved while it uploads (save cannot be pressed) and after it, while it differs from the saved picture; then it is saved with the URL
+  ---
+  duration_ms: 2.145917
+  ...
+# Subtest: T47-IMAGE a failed upload says so with the reason, keeps the current picture, and the surface is not unsaved because of it
+ok 36 - T47-IMAGE a failed upload says so with the reason, keeps the current picture, and the surface is not unsaved because of it
+  ---
+  duration_ms: 1.871208
+  ...
+# Subtest: T47-IMAGE 画像を外す empties the picture (unsaved) and the button says 画像を選ぶ; the same surface shown again after 破棄 has the saved picture back
+ok 37 - T47-IMAGE 画像を外す empties the picture (unsaved) and the button says 画像を選ぶ; the same surface shown again after 破棄 has the saved picture back
+  ---
+  duration_ms: 1.851459
+  ...
+# Subtest: T47-IMAGE 破棄して移動 while a picture uploads releases the upload: it does not finish into the next item
+ok 38 - T47-IMAGE 破棄して移動 while a picture uploads releases the upload: it does not finish into the next item
+  ---
+  duration_ms: 1.89725
+  ...
+# Subtest: T47-IMAGE in Local Mode the picture gets a file name from the date and is part of the save; nothing is uploaded
+ok 39 - T47-IMAGE in Local Mode the picture gets a file name from the date and is part of the save; nothing is uploaded
+  ---
+  duration_ms: 2.356916
+  ...
+# Subtest: T47-EQ work: changing one value of each work sends the body the modal 更新 sent (same keys, order and position: a save moves the work to the head of its category)
+ok 40 - T47-EQ work: changing one value of each work sends the body the modal 更新 sent (same keys, order and position: a save moves the work to the head of its category)
+  ---
+  duration_ms: 17.578208
+  ...
+# Subtest: T47-EQ work: changing every field and moving it to the other category sends the same body, with its id and its references kept
+ok 41 - T47-EQ work: changing every field and moving it to the other category sends the same body, with its id and its references kept
+  ---
+  duration_ms: 3.584042
+  ...
+# Subtest: T47-EQ work: opening a work and saving it without a change sends the same body (forced here: a save with nothing to save sends nothing); a work of an old shape too
+ok 42 - T47-EQ work: opening a work and saving it without a change sends the same body (forced here: a save with nothing to save sends nothing); a work of an old shape too
+  ---
+  duration_ms: 30.318666
+  ...
+# Subtest: T47-EQ work: a date that is not in the YYYY.MM.DD shape is kept as it was when another field changes (and a work without a date stays without the key)
+ok 43 - T47-EQ work: a date that is not in the YYYY.MM.DD shape is kept as it was when another field changes (and a work without a date stays without the key)
+  ---
+  duration_ms: 16.473542
+  ...
+# Subtest: T47-EQ work: a new work goes to the head of Digital Release (or the category chosen) with the same keys
+ok 44 - T47-EQ work: a new work goes to the head of Digital Release (or the category chosen) with the same keys
+  ---
+  duration_ms: 8.86325
+  ...
+# Subtest: T47-EQ work: long values and a work of the long-values data are kept as they are
+ok 45 - T47-EQ work: long values and a work of the long-values data are kept as they are
+  ---
+  duration_ms: 3.058208
+  ...
+# Subtest: T47-EQ video: changing the title of each video sends the body the modal 更新 sent
+ok 46 - T47-EQ video: changing the title of each video sends the body the modal 更新 sent
+  ---
+  duration_ms: 15.465625
+  ...
+# Subtest: T47-EQ video: a category move with a URL typed in place of the id sends the 11 characters of the id, in the other category, with the same id
+ok 47 - T47-EQ video: a category move with a URL typed in place of the id sends the 11 characters of the id, in the other category, with the same id
+  ---
+  duration_ms: 6.882167
+  ...
+# Subtest: T47-EQ video: opening a video and saving it without a change sends the same body; a video of an old shape too (a URL stored as the id becomes the id)
+ok 48 - T47-EQ video: opening a video and saving it without a change sends the same body; a video of an old shape too (a URL stored as the id becomes the id)
+  ---
+  duration_ms: 39.134625
+  ...
+# Subtest: T47-EQ video: a new video goes to the head of the category it is added for, with the same keys
+ok 49 - T47-EQ video: a new video goes to the head of the category it is added for, with the same keys
+  ---
+  duration_ms: 13.872541
+  ...
+# Subtest: T47-EQ Channel URL: the same body as before for a changed URL, an emptied one and an untouched one (forced)
+ok 50 - T47-EQ Channel URL: the same body as before for a changed URL, an emptied one and an untouched one (forced)
+  ---
+  duration_ms: 15.936416
+  ...
+# Subtest: T47-EQ Site: changing each input, all of them, or emptying one sends the body the header 保存 sent after the same change (Site data in the same keys)
+ok 51 - T47-EQ Site: changing each input, all of them, or emptying one sends the body the header 保存 sent after the same change (Site data in the same keys)
+  ---
+  duration_ms: 40.4465
+  ...
+# Subtest: T47-EQ Site: only the keys that were changed are written; the others stay as the data has them (also when the data has a key the screen does not know)
+ok 52 - T47-EQ Site: only the keys that were changed are written; the others stay as the data has them (also when the data has a key the screen does not know)
+  ---
+  duration_ms: 1.536916
+  ...
+# Subtest: T47-EQ Profile: a changed text, a changed link, an added link, a deleted link and several of them together send what the header 保存 sent
+ok 53 - T47-EQ Profile: a changed text, a changed link, an added link, a deleted link and several of them together send what the header 保存 sent
+  ---
+  duration_ms: 21.938542
+  ...
+# Subtest: T47-EQ Profile: a link that has a key besides name and url keeps it when it is edited; a new link is { name, url }
+ok 54 - T47-EQ Profile: a link that has a key besides name and url keeps it when it is edited; a new link is { name, url }
+  ---
+  duration_ms: 3.04075
+  ...
+# Subtest: T47-EQ picture: choosing or removing the picture of Site and of Profile saves the body the header 保存 saved (API)
+ok 55 - T47-EQ picture: choosing or removing the picture of Site and of Profile saves the body the header 保存 saved (API)
+  ---
+  duration_ms: 15.801791
+  ...
+# Subtest: T47-SCOPE the Channel URL save does not carry the open video's typed title; the video save does not carry the Channel URL
+ok 56 - T47-SCOPE the Channel URL save does not carry the open video's typed title; the video save does not carry the Channel URL
+  ---
+  duration_ms: 2.040333
+  ...
+# Subtest: T47-SCOPE a work or a video save does not carry the unsaved Site or Profile inputs; a Site or Profile save does not carry another screen's
+ok 57 - T47-SCOPE a work or a video save does not carry the unsaved Site or Profile inputs; a Site or Profile save does not carry another screen's
+  ---
+  duration_ms: 2.683708
+  ...
+# Subtest: T47-SCOPE every save keeps live, ticket, the \#41 references and the rest; the site / profile / channel saves do not touch the lists
+ok 58 - T47-SCOPE every save keeps live, ticket, the \#41 references and the rest; the site / profile / channel saves do not touch the lists
+  ---
+  duration_ms: 6.367834
+  ...
+# Subtest: T47-SCOPE a failed Site / Channel save keeps siteData and the saved baseline, keeps what was typed, and says why; a duplicate Live id is not sent
+ok 59 - T47-SCOPE a failed Site / Channel save keeps siteData and the saved baseline, keeps what was typed, and says why; a duplicate Live id is not sent
+  ---
+  duration_ms: 2.704875
+  ...
+# Subtest: T47-SCOPE the slice functions touch only their own target
+ok 60 - T47-SCOPE the slice functions touch only their own target
+  ---
+  duration_ms: 1.695666
+  ...
+# Subtest: T47-DELETE the confirmation of a work says its title, that it disappears from the public pages, and (only when it is the face of the site) that the face goes back to 自動
+ok 61 - T47-DELETE the confirmation of a work says its title, that it disappears from the public pages, and (only when it is the face of the site) that the face goes back to 自動
+  ---
+  duration_ms: 7.826666
+  ...
+# Subtest: T47-DELETE the confirmation of a video says how many works play it (and nothing about it when none does)
+ok 62 - T47-DELETE the confirmation of a video says how many works play it (and nothing about it when none does)
+  ---
+  duration_ms: 4.025459
+  ...
+# Subtest: T47-DELETE やめる (and Escape) change nothing: no request, the item and the edit stay
+ok 63 - T47-DELETE やめる (and Escape) change nothing: no request, the item and the edit stay
+  ---
+  duration_ms: 3.187625
+  ...
+# Subtest: T47-DELETE deleting the work that is the face of the site and plays a video: one request, the item removed and the face back to empty, the same body the base sent after two steps
+ok 64 - T47-DELETE deleting the work that is the face of the site and plays a video: one request, the item removed and the face back to empty, the same body the base sent after two steps
+  ---
+  duration_ms: 13.17225
+  ...
+# Subtest: T47-DELETE deleting a video that works play: the works go back to 選ばない in the same request (same body as the base after two steps)
+ok 65 - T47-DELETE deleting a video that works play: the works go back to 選ばない in the same request (same body as the base after two steps)
+  ---
+  duration_ms: 15.749125
+  ...
+# Subtest: T47-DELETE after a delete the list, the options of 顔にする作品 and of その場で再生する映像 no longer have the item, and the edit is closed
+ok 66 - T47-DELETE after a delete the list, the options of 顔にする作品 and of その場で再生する映像 no longer have the item, and the edit is closed
+  ---
+  duration_ms: 2.235416
+  ...
+# Subtest: T47-DELETE a failed delete: the item is still in the list and the data, the edit and what was typed stay, and the reason is shown
+ok 67 - T47-DELETE a failed delete: the item is still in the list and the data, the edit and what was typed stay, and the reason is shown
+  ---
+  duration_ms: 1.606792
+  ...
+# Subtest: T47-DELETE a new work or video has no delete; in Local Mode a delete is made in memory and waits for the JSON export
+ok 68 - T47-DELETE a new work or video has no delete; in Local Mode a delete is made in memory and waits for the JSON export
+  ---
+  duration_ms: 4.24775
+  ...
+# Subtest: T47-DATE a new work or a changed date is checked (YYYY.MM.DD); the reason is right under the date and nothing is sent
+ok 69 - T47-DATE a new work or a changed date is checked (YYYY.MM.DD); the reason is right under the date and nothing is sent
+  ---
+  duration_ms: 3.255583
+  ...
+# Subtest: T47-DATE a date that is not in the shape is kept when the date is not changed (a save, a move to the other category), and the work without a date still saves
+ok 70 - T47-DATE a date that is not in the shape is kept when the date is not changed (a save, a move to the other category), and the work without a date still saves
+  ---
+  duration_ms: 6.708333
+  ...
+# Subtest: T47-DATE the structured 400 of the Worker (fields) is shown under the date of the work it names, and only of that one
+ok 71 - T47-DATE the structured 400 of the Worker (fields) is shown under the date of the work it names, and only of that one
+  ---
+  duration_ms: 4.504417
+  ...
+# Subtest: T47-DATE the id of a video that cannot be read is shown under the field and nothing is sent; a URL or the 11 characters are accepted
+ok 72 - T47-DATE the id of a video that cannot be read is shown under the field and nothing is sent; a URL or the 11 characters are accepted
+  ---
+  duration_ms: 1.596458
+  ...
+# Subtest: T47-DATE nothing is required: a work with no value at all and a video without a title save (only the id of a video is needed)
+ok 73 - T47-DATE nothing is required: a work with no value at all and a video without a title save (only the id of a video is needed)
+  ---
+  duration_ms: 2.132417
+  ...
+# Subtest: T47-SAVE site: saved → unsaved → saving (nothing can be pressed) → saved; typing the saved value back is saved again; a second click sends one request
+ok 74 - T47-SAVE site: saved → unsaved → saving (nothing can be pressed) → saved; typing the saved value back is saved again; a second click sends one request
+  ---
+  duration_ms: 1.514375
+  ...
+# Subtest: T47-SAVE site in Local Mode: no request, siteData takes it, 「JSON書き出し待ち」 until the export
+ok 75 - T47-SAVE site in Local Mode: no request, siteData takes it, 「JSON書き出し待ち」 until the export
+  ---
+  duration_ms: 1.308666
+  ...
+# Subtest: T47-SAVE profile: saved → unsaved → saving (nothing can be pressed) → saved; typing the saved value back is saved again; a second click sends one request
+ok 76 - T47-SAVE profile: saved → unsaved → saving (nothing can be pressed) → saved; typing the saved value back is saved again; a second click sends one request
+  ---
+  duration_ms: 3.235167
+  ...
+# Subtest: T47-SAVE profile in Local Mode: no request, siteData takes it, 「JSON書き出し待ち」 until the export
+ok 77 - T47-SAVE profile in Local Mode: no request, siteData takes it, 「JSON書き出し待ち」 until the export
+  ---
+  duration_ms: 1.312209
+  ...
+# Subtest: T47-SAVE channel: saved → unsaved → saving (nothing can be pressed) → saved; typing the saved value back is saved again; a second click sends one request
+ok 78 - T47-SAVE channel: saved → unsaved → saving (nothing can be pressed) → saved; typing the saved value back is saved again; a second click sends one request
+  ---
+  duration_ms: 1.410584
+  ...
+# Subtest: T47-SAVE channel in Local Mode: no request, siteData takes it, 「JSON書き出し待ち」 until the export
+ok 79 - T47-SAVE channel in Local Mode: no request, siteData takes it, 「JSON書き出し待ち」 until the export
+  ---
+  duration_ms: 1.214625
+  ...
+# Subtest: T47-IMAGE Site and Profile: choosing a picture is unsaved while it uploads and after it; siteData does not take it before the save
+ok 80 - T47-IMAGE Site and Profile: choosing a picture is unsaved while it uploads and after it; siteData does not take it before the save
+  ---
+  duration_ms: 4.237
+  ...
+# Subtest: T47-IMAGE Site and Profile: a failed upload says so with the reason and keeps the picture; 画像を外す empties it (unsaved); 破棄 gives the saved picture back and lets a running upload go
+ok 81 - T47-IMAGE Site and Profile: a failed upload says so with the reason and keeps the picture; 画像を外す empties it (unsaved); 破棄 gives the saved picture back and lets a running upload go
+  ---
+  duration_ms: 6.667333
+  ...
+# Subtest: T47-IMAGE Site and Profile in Local Mode: the picture gets a file name from the date, is unsaved until 保存して公開, and nothing is uploaded
+ok 82 - T47-IMAGE Site and Profile in Local Mode: the picture gets a file name from the date, is unsaved until 保存して公開, and nothing is uploaded
+  ---
+  duration_ms: 1.596208
+  ...
+# Subtest: FIX5 the delete confirmation of a work puts 顔にする作品は… in a paragraph of its own, after 削除すると公開画面からも消えます。
+not ok 83 - FIX5 the delete confirmation of a work puts 顔にする作品は… in a paragraph of its own, after 削除すると公開画面からも消えます。
+  ---
+  duration_ms: 2.364375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-save.test.mjs:1612:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   '削除すると公開画面からも消えます。',
+    -   '顔にする作品は「自動（最新のリリース）」に戻ります。'
+    - ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '削除すると公開画面からも消えます。'
+    1: '顔にする作品は「自動（最新のリリース）」に戻ります。'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-save.test.mjs:1615:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: FIX5 the delete confirmation of a video puts 再生する映像に選んでいる作品が{N}件あります。… in a paragraph of its own
+not ok 84 - FIX5 the delete confirmation of a video puts 再生する映像に選んでいる作品が{N}件あります。… in a paragraph of its own
+  ---
+  duration_ms: 1.56375
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-save.test.mjs:1627:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   '削除すると公開画面からも消えます。',
+    -   '再生する映像に選んでいる作品が2件あります。「選ばない」に戻り、公開画面では「聴く」が出なくなります。'
+    - ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '削除すると公開画面からも消えます。'
+    1: '再生する映像に選んでいる作品が2件あります。「選ばない」に戻り、公開画面では「聴く」が出なくなります。'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-save.test.mjs:1633:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: FIX5 the Live confirmations keep their one-paragraph body (the markup of \#46 is not changed)
+ok 85 - FIX5 the Live confirmations keep their one-paragraph body (the markup of \#46 is not changed)
+  ---
+  duration_ms: 4.248083
+  ...
+# Subtest: T47-HEADER the Header is one row: 1212 Admin on the left, the connection on the right, and no 保存 button by default
+ok 86 - T47-HEADER the Header is one row: 1212 Admin on the left, the connection on the right, and no 保存 button by default
+  ---
+  duration_ms: 0.751625
+  ...
+# Subtest: T47-HEADER the heights are the Live master's: 46px / tabs 49px up to 899px wide, 62px / 53px from 900px
+ok 87 - T47-HEADER the heights are the Live master's: 46px / tabs 49px up to 899px wide, 62px / 53px from 900px
+  ---
+  duration_ms: 0.231959
+  ...
+# Subtest: T47-HEADER while the header button is shown the Header is 56px / 64px tall and the tabs and the Live sticky offsets follow it
+ok 88 - T47-HEADER while the header button is shown the Header is 56px / 64px tall and the tabs and the Live sticky offsets follow it
+  ---
+  duration_ms: 16.326834
+  ...
+# Subtest: T47-HEADER the Live sticky offsets follow the variables (nothing in the Live group has the old 92px / 54px)
+ok 89 - T47-HEADER the Live sticky offsets follow the variables (nothing in the Live group has the old 92px / 54px)
+  ---
+  duration_ms: 0.139792
+  ...
+# Subtest: T47-HEADER the connection label and the band are as before: 接続中 / API Fallback / Local Mode
+ok 90 - T47-HEADER the connection label and the band are as before: 接続中 / API Fallback / Local Mode
+  ---
+  duration_ms: 4.1255
+  ...
+# Subtest: T47-HEADER while the API is connected the header 保存 is hidden; only a change still saved the old way shows it; Local Mode always has JSONを書き出す
+ok 91 - T47-HEADER while the API is connected the header 保存 is hidden; only a change still saved the old way shows it; Local Mode always has JSONを書き出す
+  ---
+  duration_ms: 4.069125
+  ...
+# Subtest: T47-TABS five tabs: Site, News, Live, Music, Profile — in this order, Live selected, no YouTube and no Disco
+ok 92 - T47-TABS five tabs: Site, News, Live, Music, Profile — in this order, Live selected, no YouTube and no Disco
+  ---
+  duration_ms: 0.388833
+  ...
+# Subtest: T47-TABS every tab has its section; \#music-tab holds the switch, the Channel URL, the lists and the edit surface of the works and the videos
+ok 93 - T47-TABS every tab has its section; \#music-tab holds the switch, the Channel URL, the lists and the edit surface of the works and the videos
+  ---
+  duration_ms: 0.319375
+  ...
+# Subtest: T47-TABS clicking a tab shows its section and hides the others; the Live editor and the News edit surface close behind it
+ok 94 - T47-TABS clicking a tab shows its section and hides the others; the Live editor and the News edit surface close behind it
+  ---
+  duration_ms: 3.760459
+  ...
+# Subtest: T47-NEWS the list rows are buttons with the date and the title; the first screen is only the list; nothing is selected
+ok 95 - T47-NEWS the list rows are buttons with the date and the title; the first screen is only the list; nothing is selected
+  ---
+  duration_ms: 2.01225
+  ...
+# Subtest: T47-NEWS a click on a row (the way the browser delivers it) opens that item; the opened row is marked
+ok 96 - T47-NEWS a click on a row (the way the browser delivers it) opens that item; the opened row is marked
+  ---
+  duration_ms: 1.94625
+  ...
+# Subtest: T47-NEWS the edit surface has every field with the same id and the values of the item, in the order Date, Title, Description, Image, Link URL, Link text
+ok 97 - T47-NEWS the edit surface has every field with the same id and the values of the item, in the order Date, Title, Description, Image, Link URL, Link text
+  ---
+  duration_ms: 2.815833
+  ...
+# Subtest: T47-NEWS the fields are written as text: a double quote, a tag and a line break in the saved values arrive unchanged
+ok 98 - T47-NEWS the fields are written as text: a double quote, a tag and a line break in the saved values arrive unchanged
+  ---
+  duration_ms: 1.796625
+  ...
+# Subtest: T47-NEWS an item of an older shape opens (the missing values are empty) and an id that looks like a number opens from its row
+ok 99 - T47-NEWS an item of an older shape opens (the missing values are empty) and an id that looks like a number opens from its row
+  ---
+  duration_ms: 4.966458
+  ...
+# Subtest: T47-NEWS a new item is an empty edit surface (link text view...), titled 新しいお知らせ, with no delete and 保存済み
+ok 100 - T47-NEWS a new item is an empty edit surface (link text view...), titled 新しいお知らせ, with no delete and 保存済み
+  ---
+  duration_ms: 1.80025
+  ...
+# Subtest: T47-NEWS a list with no item says so and offers + 追加; the edit surface on a wide screen says what to do
+ok 101 - T47-NEWS a list with no item says so and offers + 追加; the edit surface on a wide screen says what to do
+  ---
+  duration_ms: 2.223292
+  ...
+# Subtest: T47-NEWS a title that is empty is shown as （題なし） in the row and in the top bar
+ok 102 - T47-NEWS a title that is empty is shown as （題なし） in the row and in the top bar
+  ---
+  duration_ms: 1.83075
+  ...
+# Subtest: T47-NEWS the 保存して公開 is on screen only while it can be used on a narrow screen, and always (dimmed when idle) on a wide one
+ok 103 - T47-NEWS the 保存して公開 is on screen only while it can be used on a narrow screen, and always (dimmed when idle) on a wide one
+  ---
+  duration_ms: 3.467
+  ...
+# Subtest: T47-NEWS leaving the edit surface with ‹ 一覧 (nothing unsaved) goes back to the list and clears the surface
+ok 104 - T47-NEWS leaving the edit surface with ‹ 一覧 (nothing unsaved) goes back to the list and clears the surface
+  ---
+  duration_ms: 1.888
+  ...
+# Subtest: T47-NEWS the read-only state (API connection failed) lets the item be read but not changed, added or saved
+ok 105 - T47-NEWS the read-only state (API connection failed) lets the item be read but not changed, added or saved
+  ---
+  duration_ms: 2.214291
+  ...
+# Subtest: T47-IMAGE the picture form says 画像を選ぶ without a picture, and 画像を変える with 画像を外す with one; the path is shown and escaped
+ok 106 - T47-IMAGE the picture form says 画像を選ぶ without a picture, and 画像を変える with 画像を外す with one; the path is shown and escaped
+  ---
+  duration_ms: 0.900542
+  ...
+# Subtest: T47-IMAGE the select and clear buttons keep the ids and handlers the upload code uses, in the form of every tab
+ok 107 - T47-IMAGE the select and clear buttons keep the ids and handlers the upload code uses, in the form of every tab
+  ---
+  duration_ms: 2.549958
+  ...
+# Subtest: T47-STYLE-SPEC every rule of Occasional Updates belongs to an occ- class, and one that restyles a shared class sits under .occ-tab with a specificity of (0,2,0) or more
+ok 108 - T47-STYLE-SPEC every rule of Occasional Updates belongs to an occ- class, and one that restyles a shared class sits under .occ-tab with a specificity of (0,2,0) or more
+  ---
+  duration_ms: 1.615208
+  ...
+# Subtest: T47-STYLE-SPEC the Occasional Updates group comes after the shared groups it restyles and before Safe Area
+ok 109 - T47-STYLE-SPEC the Occasional Updates group comes after the shared groups it restyles and before Safe Area
+  ---
+  duration_ms: 0.097291
+  ...
+# Subtest: T47-STYLE the buttons and rows the News surface uses are at least 44px tall
+ok 110 - T47-STYLE the buttons and rows the News surface uses are at least 44px tall
+  ---
+  duration_ms: 2.049083
+  ...
+# Subtest: T47-STYLE the narrow layout hides the page chrome while an edit is open and fixes 保存して公開 to the bottom; the wide layout puts the two panes side by side
+ok 111 - T47-STYLE the narrow layout hides the page chrome while an edit is open and fixes 保存して公開 to the bottom; the wide layout puts the two panes side by side
+  ---
+  duration_ms: 1.038208
+  ...
+# Subtest: T47-STYLE a fixed 保存して公開 has no scrolling ancestor of its own (overflow / transform / filter) in the occ- rules
+ok 112 - T47-STYLE a fixed 保存して公開 has no scrolling ancestor of its own (overflow / transform / filter) in the occ- rules
+  ---
+  duration_ms: 0.693
+  ...
+# Subtest: FIX1 the inputs of an occ- tab take the page font and the ink colour (a textarea is not drawn in the browser's monospace)
+ok 113 - FIX1 the inputs of an occ- tab take the page font and the ink colour (a textarea is not drawn in the browser's monospace)
+  ---
+  duration_ms: 0.520167
+  ...
+# Subtest: FIX2 from 900px the tab text is not centred in a 44px minimum width, and the 44px to press is kept by a ::before
+ok 114 - FIX2 from 900px the tab text is not centred in a 44px minimum width, and the 44px to press is kept by a ::before
+  ---
+  duration_ms: 0.223708
+  ...
+# Subtest: T47-MUSIC \#music-tab: the switch (a tablist of 作品 and 映像), the Channel URL panel of the videos, the list and the edit surface; none of the stacked old sections
+ok 115 - T47-MUSIC \#music-tab: the switch (a tablist of 作品 and 映像), the Channel URL panel of the videos, the list and the edit surface; none of the stacked old sections
+  ---
+  duration_ms: 0.291958
+  ...
+# Subtest: T47-MUSIC the list of works: a heading for each category that has works, then one row each (jacket, title, release date); a row is a button that carries what it opens
+ok 116 - T47-MUSIC the list of works: a heading for each category that has works, then one row each (jacket, title, release date); a row is a button that carries what it opens
+  ---
+  duration_ms: 1.808333
+  ...
+# Subtest: T47-MUSIC the list of videos: a heading for each category that has videos, then one row each with the title only
+ok 117 - T47-MUSIC the list of videos: a heading for each category that has videos, then one row each with the title only
+  ---
+  duration_ms: 1.6335
+  ...
+# Subtest: T47-MUSIC empty lists show one line and no category headings (S47-05); a category with nothing in it has no heading
+ok 118 - T47-MUSIC empty lists show one line and no category headings (S47-05); a category with nothing in it has no heading
+  ---
+  duration_ms: 2.695459
+  ...
+# Subtest: T47-MUSIC the switch shows the works or the videos (with the Channel URL panel); the selected tab is the one tab stop; it answers the arrow keys, Home and End
+ok 119 - T47-MUSIC the switch shows the works or the videos (with the Channel URL panel); the selected tab is the one tab stop; it answers the arrow keys, Home and End
+  ---
+  duration_ms: 6.263958
+  ...
+# Subtest: T47-MUSIC the switch asks first when the open work, or the Channel URL, is unsaved: 編集を続ける keeps everything, 破棄して移動 switches and drops the input
+ok 120 - T47-MUSIC the switch asks first when the open work, or the Channel URL, is unsaved: 編集を続ける keeps everything, 破棄して移動 switches and drops the input
+  ---
+  duration_ms: 8.984208
+  ...
+# Subtest: T47-MUSIC the edit of a work has the fields of the old modal in the order of the design, each with its id and its saved value
+ok 121 - T47-MUSIC the edit of a work has the fields of the old modal in the order of the design, each with its id and its saved value
+  ---
+  duration_ms: 1.92925
+  ...
+# Subtest: T47-MUSIC a new work opens empty (Digital Release, no delete, 「新しい作品」), stays out of the list until it is saved, and a save makes it the edit of that work
+ok 122 - T47-MUSIC a new work opens empty (Digital Release, no delete, 「新しい作品」), stays out of the list until it is saved, and a save makes it the edit of that work
+  ---
+  duration_ms: 2.614667
+  ...
+# Subtest: T47-MUSIC the edit of a video has category, title and YouTube URL / ID; a new one starts in the category it was added for
+ok 123 - T47-MUSIC the edit of a video has category, title and YouTube URL / ID; a new one starts in the category it was added for
+  ---
+  duration_ms: 1.68975
+  ...
+# Subtest: T47-MUSIC + 追加 adds to the list that is shown; a row opens its work or video; the same row again changes nothing
+ok 124 - T47-MUSIC + 追加 adds to the list that is shown; a row opens its work or video; the same row again changes nothing
+  ---
+  duration_ms: 2.593833
+  ...
+# Subtest: T47-MUSIC while a work or a video is open the page is in the editing state (body and list pane), and leaving the tab closes it; the News edit surface is not touched by Music
+ok 125 - T47-MUSIC while a work or a video is open the page is in the editing state (body and list pane), and leaving the tab closes it; the News edit surface is not touched by Music
+  ---
+  duration_ms: 2.007125
+  ...
+# Subtest: T47-MUSIC the Channel URL is its own panel: its input holds what is typed (siteData is not written), it has its own state and save, and the video edit does not touch it
+ok 126 - T47-MUSIC the Channel URL is its own panel: its input holds what is typed (siteData is not written), it has its own state and save, and the video edit does not touch it
+  ---
+  duration_ms: 2.205875
+  ...
+# Subtest: T47-SITE \#site-tab: one screen of four white panels (Home, Home Links, Footer, Contact) with the fields of the old tab, a heading row with the state and 保存して公開
+ok 127 - T47-SITE \#site-tab: one screen of four white panels (Home, Home Links, Footer, Contact) with the fields of the old tab, a heading row with the state and 保存して公開
+  ---
+  duration_ms: 0.178625
+  ...
+# Subtest: T47-SITE the screen shows what is saved: the face of the site chosen among the works (grouped, the newest first), the picture, the links, the footer and the contact
+ok 128 - T47-SITE the screen shows what is saved: the face of the site chosen among the works (grouped, the newest first), the picture, the links, the footer and the contact
+  ---
+  duration_ms: 1.506792
+  ...
+# Subtest: T47-SITE typing is unsaved on the screen only: siteData and the header 保存 do not move; typing the saved value back is saved again
+ok 129 - T47-SITE typing is unsaved on the screen only: siteData and the header 保存 do not move; typing the saved value back is saved again
+  ---
+  duration_ms: 3.483708
+  ...
+# Subtest: T47-SITE 保存して公開 is under the screen up to 899px only while something is unsaved, saving or failed; from 900px it is in the heading row, dimmed and not pressable while nothing is unsaved
+ok 130 - T47-SITE 保存して公開 is under the screen up to 899px only while something is unsaved, saving or failed; from 900px it is in the heading row, dimmed and not pressable while nothing is unsaved
+  ---
+  duration_ms: 2.752667
+  ...
+# Subtest: T47-SITE while the connection is lost the screen is read-only: typing goes back to the saved value, nothing can be saved
+ok 131 - T47-SITE while the connection is lost the screen is read-only: typing goes back to the saved value, nothing can be saved
+  ---
+  duration_ms: 1.44975
+  ...
+# Subtest: T47-SITE 顔にする作品: after a work is deleted the options follow, an unsaved choice stays chosen, and only a choice that no longer exists goes back to 自動
+ok 132 - T47-SITE 顔にする作品: after a work is deleted the options follow, an unsaved choice stays chosen, and only a choice that no longer exists goes back to 自動
+  ---
+  duration_ms: 7.7555
+  ...
+# Subtest: T47-SITE leaving the tab with something unsaved asks; 破棄して移動 puts the saved values back
+ok 133 - T47-SITE leaving the tab with something unsaved asks; 破棄して移動 puts the saved values back
+  ---
+  duration_ms: 1.988375
+  ...
+# Subtest: T47-PROFILE \#profile-tab: one screen of two white panels (the picture and the text under the heading with the state and 保存して公開; the SNS links with + リンク追加)
+ok 134 - T47-PROFILE \#profile-tab: one screen of two white panels (the picture and the text under the heading with the state and 保存して公開; the SNS links with + リンク追加)
+  ---
+  duration_ms: 0.17925
+  ...
+# Subtest: T47-PROFILE the screen shows the saved picture, the text (a blank line and a full-width space kept as they are) and one row per link with 名前, URL and 削除
+ok 135 - T47-PROFILE the screen shows the saved picture, the text (a blank line and a full-width space kept as they are) and one row per link with 名前, URL and 削除
+  ---
+  duration_ms: 1.765
+  ...
+# Subtest: T47-PROFILE adding a link adds an empty row and puts the cursor in it; deleting a row renumbers the rest and keeps what was typed; adding then deleting the same row is nothing to save
+ok 136 - T47-PROFILE adding a link adds an empty row and puts the cursor in it; deleting a row renumbers the rest and keeps what was typed; adding then deleting the same row is nothing to save
+  ---
+  duration_ms: 1.653459
+  ...
+# Subtest: T47-PROFILE with no link the panel says so; a save of added links makes them the saved ones, and the rows keep working
+ok 137 - T47-PROFILE with no link the panel says so; a save of added links makes them the saved ones, and the rows keep working
+  ---
+  duration_ms: 1.866459
+  ...
+# Subtest: T47-PROFILE leaving the tab with something unsaved asks; 破棄して移動 puts the saved text and links back
+ok 138 - T47-PROFILE leaving the tab with something unsaved asks; 破棄して移動 puts the saved text and links back
+  ---
+  duration_ms: 3.933917
+  ...
+# Subtest: T47-IMAGE the picture form takes a label and can leave it out; the same three words (画像を選ぶ / 画像を変える / 画像を外す) stand in every tab
+ok 139 - T47-IMAGE the picture form takes a label and can leave it out; the same three words (画像を選ぶ / 画像を変える / 画像を外す) stand in every tab
+  ---
+  duration_ms: 0.834208
+  ...
+# Subtest: T47-STYLE Music: the switch is a white pill with a black selected half; the buttons are at least 44px tall; two halves up to 899px, the width of its text from 900px
+ok 140 - T47-STYLE Music: the switch is a white pill with a black selected half; the buttons are at least 44px tall; two halves up to 899px, the width of its text from 900px
+  ---
+  duration_ms: 2.394208
+  ...
+# Subtest: T47-STYLE Music: a group heading is a gray band with a Caption; a work row is jacket 40x40 (radius 6) + title + date; a hidden list or panel is not drawn
+ok 141 - T47-STYLE Music: a group heading is a gray band with a Caption; a work row is jacket 40x40 (radius 6) + title + date; a hidden list or panel is not drawn
+  ---
+  duration_ms: 0.85575
+  ...
+# Subtest: T47-STYLE Music: while a work or a video is open (up to 899px) the switch and the Channel URL step aside; the Channel URL has no heading there, and its 保存して公開 is under the input, not fixed to the bottom
+ok 142 - T47-STYLE Music: while a work or a video is open (up to 899px) the switch and the Channel URL step aside; the Channel URL has no heading there, and its 保存して公開 is under the input, not fixed to the bottom
+  ---
+  duration_ms: 0.12575
+  ...
+# Subtest: T47-STYLE Site and Profile: white panels (radius 16, padding 24) one under the other with a 24px gap, 880px wide from 900px; the heading row is title | state | 保存して公開 from 900px
+ok 143 - T47-STYLE Site and Profile: white panels (radius 16, padding 24) one under the other with a 24px gap, 880px wide from 900px; the heading row is title | state | 保存して公開 from 900px
+  ---
+  duration_ms: 0.485458
+  ...
+# Subtest: T47-STYLE Site and Profile: up to 899px 保存して公开 is the fixed bar of the other screens, and the end of the screen is not hidden behind it while it shows
+ok 144 - T47-STYLE Site and Profile: up to 899px 保存して公开 is the fixed bar of the other screens, and the end of the screen is not hidden behind it while it shows
+  ---
+  duration_ms: 0.1985
+  ...
+# Subtest: T47-STYLE Profile and pictures: a link row is 名前 (200px) | URL | 削除 from 900px and stacked below; 削除 is 44px tall; a work picture is 72x72, the photo 72x90
+ok 145 - T47-STYLE Profile and pictures: a link row is 名前 (200px) | URL | 削除 from 900px and stacked below; 削除 is 44px tall; a work picture is 72x72, the photo 72x90
+  ---
+  duration_ms: 0.569375
+  ...
+# Subtest: T47-STYLE the pages of Site and Profile are occ-page tabs and share nothing with the stacked old markup (no .subsection / .section-header / .link-item left in them)
+ok 146 - T47-STYLE the pages of Site and Profile are occ-page tabs and share nothing with the stacked old markup (no .subsection / .section-header / .link-item left in them)
+  ---
+  duration_ms: 0.073
+  ...
+# Subtest: T47-STYLE the Music, Site and Profile controls are at least 44px tall (switch, + 追加, 削除 of a link, 保存して公開, 削除 of an item)
+ok 147 - T47-STYLE the Music, Site and Profile controls are at least 44px tall (switch, + 追加, 削除 of a link, 保存して公開, 削除 of an item)
+  ---
+  duration_ms: 0.468625
+  ...
+# Subtest: FIX4 the error line under the date of a work and the id of a video is empty and takes no room until it has something to say
+not ok 148 - FIX4 the error line under the date of a work and the id of a video is empty and takes no room until it has something to say
+  ---
+  duration_ms: 0.448792
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-screens.test.mjs:1105:1'
+  failureType: 'testCodeFailure'
+  error: 'a rule for the error line inside an occ- field exists'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-screens.test.mjs:1107:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: FIX4 the dialog lines of the delete confirmation: the shared .live-dialog-body keeps its 16px, only the lines before the last are 8px apart
+not ok 149 - FIX4 the dialog lines of the delete confirmation: the shared .live-dialog-body keeps its 16px, only the lines before the last are 8px apart
+  ---
+  duration_ms: 3.799042
+  location: '/Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-screens.test.mjs:1119:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(lines && /margin-bottom:\s*8px/.test(lines.body))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-occasional-screens.test.mjs:1121:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..149
+# tests 149
+# suites 0
+# pass 145
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3681.670458

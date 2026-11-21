@@ -617,20 +617,33 @@ test('T46-DELETE is refused while a save is in flight and in the read-only fallb
 });
 
 // ---- T46-SCOPE -----------------------------------------------------------------------------------------
-function addUnsavedElsewhere(app) {
-  const data = app.getSiteData();
-  data.news.push({ id: 'unsaved-news', date: '2026.11.20', title: '未保存のお知らせ', body: '', link: '' });
-  data.site.footerText = '未保存のフッター';
-  data.profile.text = '未保存のプロフィール';
-  app.markChanged();
+// Issue #47 (D47-05): the other tabs hold what is typed in their own inputs and not in siteData, so "unsaved elsewhere" is typed text.
+async function addUnsavedElsewhere(app) {
+  app.renderSiteSettings();
+  app.renderProfile();
+  for (const [id, value] of [['site-footer-text', '未保存のフッター'], ['profile-text', '未保存のプロフィール']]) {
+    app.elements.get(id).value = value;
+    await app.elements.get(id).dispatch('input');
+  }
 }
 
-test('T46-SCOPE a Live save does not send unsaved changes of other tabs and leaves the header save waiting for them', async () => {
+function assertUnsavedElsewhereIsKept(app) {
+  assert.equal(app.getOccState().panels.site.dirty, true, 'Site is still unsaved');
+  assert.equal(app.getOccState().panels.profile.dirty, true, 'Profile is still unsaved');
+  assert.equal(app.elements.get('site-footer-text').value, '未保存のフッター');
+  assert.equal(app.elements.get('profile-text').value, '未保存のプロフィール');
+  assert.notEqual(app.getSiteData().site.footerText, '未保存のフッター', 'siteData never takes what is typed and not saved');
+  app.renderModeBadge();
+  assert.equal(app.elements.get('saveBtn').hidden, true, 'no header save while the API is connected');
+}
+
+test('T46-SCOPE a Live save does not send unsaved changes of other tabs and leaves them where they were typed (#47: there is no header save to wait for them)', async () => {
   const app = makeApp({ api: true });
   const puts = useRecordingFetch(app);
   const baseline = plain(app.getSavedBaseline());
-  addUnsavedElsewhere(app);
   await openForEdit(app, 'fx-live-long', 'upcoming');
+  // typed after the Live is open: with Site / Profile unsaved, opening a Live would first ask (T47-GUARD)
+  await addUnsavedElsewhere(app);
   await typeInto(app, 'edit-title', 'スコープの確認');
 
   assert.equal(await app.saveLiveWorkspace(), true);
@@ -639,15 +652,18 @@ test('T46-SCOPE a Live save does not send unsaved changes of other tabs and leav
   for (const key of ['site', 'discography', 'youtube', 'profile', 'ticket', 'contact', 'news']) assert.deepEqual(puts[0][key], baseline[key], key);
   assert.equal(JSON.stringify(puts[0]).includes('未保存'), false);
   assert.equal(puts[0].live.upcoming[0].title, 'スコープの確認');
-  assert.equal(app.getHasChanges(), true, 'the header save is still waiting (the value from before the Live save)');
-  assert.equal(app.elements.get('saveBtn').textContent, '保存 *');
-  assert.equal(app.getSiteData().news.some((item) => item.id === 'unsaved-news'), true, 'the unsaved change is still in memory');
+  assertUnsavedElsewhereIsKept(app);
 
-  // The header save still sends everything, the Live that was just saved included.
-  await app.invokeSaveData({ silent: true });
+  // #47 (D47-08): the header save is gone while the API is connected; it sends nothing. The next page that saves is built on what was saved
+  // (the Live that was just saved is in it), and it carries only its own typed text.
+  assert.equal(await app.invokeSaveData({ silent: true }), false);
+  assert.equal(puts.length, 1, 'the header save sent nothing');
+  assert.equal(await app.saveOccPanel('site'), true);
   const last = puts[puts.length - 1];
-  assert.equal(last.news.some((item) => item.id === 'unsaved-news'), true);
+  assert.equal(puts.length, 2);
+  assert.equal(last.news.some((item) => item.id === 'unsaved-news'), false);
   assert.equal(last.site.footerText, '未保存のフッター');
+  assert.equal(last.profile.text, baseline.profile.text, 'Site does not carry the Profile text');
   assert.equal(last.live.upcoming[0].title, 'スコープの確認');
 });
 
@@ -806,8 +822,8 @@ test('T46-TICKET saving PUTs the saved content with only ticket replaced, then t
   const app = makeApp({ api: true });
   const puts = useRecordingFetch(app);
   const baseline = plain(app.getSavedBaseline());
-  addUnsavedElsewhere(app);
   app.setTicketSettingsOpen(true);
+  await addUnsavedElsewhere(app);
   app.elements.get('ticket-complete-text').value = '新しい完了文';
   await app.elements.get('ticket-complete-text').oninput();
   app.elements.get('ticket-field-submit-label').value = '送る';
@@ -827,7 +843,7 @@ test('T46-TICKET saving PUTs the saved content with only ticket replaced, then t
   assert.equal('introText' in puts[0].ticket, false);
   assert.equal('noticeText' in puts[0].ticket, false);
   assert.equal(JSON.stringify(puts[0]).includes('未保存'), false);
-  assert.equal(app.getHasChanges(), true, 'the header save still waits for the other tab');
+  assertUnsavedElsewhereIsKept(app);
   assert.equal(app.elements.get('ticket-settings-status').textContent, '保存済み');
   assert.equal(app.elements.get('ticket-settings-actions').hidden, true);
   assert.equal(app.isTicketSettingsDirty(), false);

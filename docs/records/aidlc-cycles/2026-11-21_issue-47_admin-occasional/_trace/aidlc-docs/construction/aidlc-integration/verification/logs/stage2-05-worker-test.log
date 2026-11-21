@@ -1,0 +1,8 @@
+# npm --prefix cloudflare/worker test. exit: 0
+# tests 361
+# suites 7
+# pass 361
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0

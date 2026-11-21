@@ -2,6 +2,7 @@
 
 execution target（worktreeのroot）で実行:
   /usr/bin/python3 test/support/admin-preview/fake_admin_server.py --port 8080
+  /usr/bin/python3 test/support/admin-preview/fake_admin_server.py --port 8080 --fixture test/fixtures/admin-occasional-states.json   （#47: たまにする更新）
 PCのブラウザで http://127.0.0.1:8080/admin/ を開く（開発者ツールの画面幅を390にするとスマホの形）。
 スマホで触るなら、起動したまま別のterminalで tunnel（例: cloudflared tunnel --url http://127.0.0.1:8080）の公開URLをスマホで開く。
 URLを知る人は架空のデータだけを見られる。個人情報も本番の値もない。
@@ -10,7 +11,7 @@ URLを知る人は架空のデータだけを見られる。個人情報も本�
 - 標準ライブラリだけ。127.0.0.1だけにbindする。
 - 管理画面に必要なファイル（admin/index.html・app.js・style.css、assets/css・assets/js）だけを配る。`.git`・admin/data・設定値・他のdirectoryは配らない。
 - /admin/config.js は実ファイルを読まず、同じ配信元をAPIとする架空の設定と架空の合言葉で応える。入力の窓は出ない。**本物の合言葉を入力しない。**
-- /api/admin/* は fake_admin_api.py が、メモリ上の架空のデータ（test/fixtures/admin-live-states.json）で応える。保存・削除・予約の状態の変更・取り置きはメモリに書くだけ。
+- /api/admin/* は fake_admin_api.py が、メモリ上の架空のデータ（既定は test/fixtures/admin-live-states.json。--fixture で #47 の test/fixtures/admin-occasional-states.json）で応える。保存・削除・予約の状態の変更・取り置きはメモリに書くだけ。
   サーバーを止めると元に戻る。本番のD1・予約・公開データには何も書かない。
 - 管理画面の adminFetch は 401・403・404・5xx を受けると本番のAPIへ切り替えて再送する作りなので、このserverは管理画面が呼ぶ経路にそれらを返さない
   （未対応の経路は400）。合言葉の入力・未入力・違う時、古いWorker（集計が404）、通信の失敗の表示は、撮影（capture-admin-live.py。本番へのrequestを遮断する）で確かめる。
@@ -124,11 +125,22 @@ def build_handler(api, origin):
     return Handler
 
 
-def build_server(host='127.0.0.1', port=8080, scenario='base'):
+def resolve_fixture(fixture_path=None):
+    """--fixture は repo の中の fixture だけ（任意の path を読まない）。"""
+    if not fixture_path:
+        return api_module.load_fixture()
+    target = (Path(fixture_path) if Path(fixture_path).is_absolute() else ROOT / fixture_path).resolve()
+    allowed = {api_module.FIXTURE_PATH.resolve(), api_module.OCCASIONAL_FIXTURE_PATH.resolve()}
+    if target not in allowed:
+        raise ValueError(f'--fixture は {sorted(str(path.relative_to(ROOT)) for path in allowed)} のどちらか')
+    return api_module.load_fixture(target)
+
+
+def build_server(host='127.0.0.1', port=8080, scenario='base', fixture_path=None):
     if host not in LOOPBACK:
         raise ValueError('bindは127.0.0.1だけ（tunnelは同じmachineの127.0.0.1へつなぐ）')
     origin = f'http://127.0.0.1:{port}'
-    api = api_module.FakeAdminApi(api_module.load_fixture(), scenario, strict=True, image_origin=origin)
+    api = api_module.FakeAdminApi(resolve_fixture(fixture_path), scenario, strict=True, image_origin=origin)
     return ThreadingHTTPServer((host, port), build_handler(api, origin)), api
 
 
@@ -142,8 +154,10 @@ def self_check():
         assert resolve_static(denied) is None, denied
     config = fake_config_js('http://127.0.0.1:8080').decode('utf-8')
     assert api_module.FAKE_TOKEN in config and 'workers.dev' not in config and '1212hp' not in config
+    live_fixture = api_module.load_fixture()
     for scenario in api_module.STRICT_SAFE_SCENARIOS:
-        api_module.FakeAdminApi(api_module.load_fixture(), scenario, strict=True, image_origin='http://127.0.0.1:8080')
+        if scenario in live_fixture['scenarios']:  # 後ろの3つは #47 の fixture の scenario
+            api_module.FakeAdminApi(live_fixture, scenario, strict=True, image_origin='http://127.0.0.1:8080')
     for scenario in ['summary-404', 'summary-401', 'summary-500', 'api-fallback', 'save-fail', 'delete-fail', 'status-fail', 'draft-fail']:
         try:
             api_module.FakeAdminApi(api_module.load_fixture(), scenario, strict=True)
@@ -158,6 +172,26 @@ def self_check():
         raise AssertionError('non-loopback bind must be refused')
     api = api_module.FakeAdminApi(api_module.load_fixture(), 'base', strict=True, image_origin='http://127.0.0.1:8080')
     assert 'img.example.test' not in json.dumps(api.site), 'absolute fixture images are served from the same origin'
+    # Issue #47: --fixture は repo の2つの fixture だけ。たまにする更新の fixture でも、手元配信は失敗を返す scenario を拒む。
+    occasional = resolve_fixture('test/fixtures/admin-occasional-states.json')
+    assert api_module.is_occasional(occasional) and not api_module.is_occasional(resolve_fixture())
+    for scenario in api_module.STRICT_SAFE_SCENARIOS:
+        if scenario in occasional['scenarios']:
+            api_module.FakeAdminApi(occasional, scenario, strict=True, image_origin='http://127.0.0.1:8080')
+    for scenario in ['api-fallback', 'save-fail', 'delete-fail']:
+        try:
+            api_module.FakeAdminApi(occasional, scenario, strict=True)
+        except ValueError:
+            continue
+        raise AssertionError(f'{scenario} (occasional fixture) must be refused by the hand-served build')
+    for bad in ['/etc/passwd', 'admin/config.js', '../outside.json', 'test/fixtures/home-states.json']:
+        try:
+            resolve_fixture(bad)
+        except ValueError:
+            continue
+        raise AssertionError(f'--fixture {bad} must be refused')
+    occasional_api = api_module.FakeAdminApi(occasional, 'base', strict=True, image_origin='http://127.0.0.1:8080')
+    assert len(occasional_api.site['news']) == 6 and 'img.example.test' not in json.dumps(occasional_api.site)
     print('fake_admin_server: OK（bindなし）')
 
 
@@ -166,12 +200,16 @@ def main():
     parser.add_argument('--port', type=int, default=8080)
     parser.add_argument('--host', default='127.0.0.1', help='127.0.0.1 のみ')
     parser.add_argument('--scenario', default='base', choices=api_module.STRICT_SAFE_SCENARIOS, help='架空のデータの種類（手元配信で使えるもの）')
+    parser.add_argument('--fixture', help='架空のデータの fixture（repo の test/fixtures/admin-live-states.json［既定］か admin-occasional-states.json）')
     parser.add_argument('--self-check', action='store_true', help='bindせずに契約だけ検査する')
     args = parser.parse_args()
     if args.self_check:
         self_check()
         return
-    server, _api = build_server(args.host, args.port, args.scenario)
+    try:
+        server, _api = build_server(args.host, args.port, args.scenario, args.fixture)
+    except (ValueError, KeyError) as error:
+        parser.error(f'{error}')
     print(f'架空のAPIの管理画面: http://127.0.0.1:{args.port}/admin/  （scenario: {args.scenario}。メモリだけを書き換える。Ctrl+Cで止めると元に戻る）', flush=True)
     print('入力の窓は出ない。本物の合言葉を入力しない。', flush=True)
     try:

@@ -36,6 +36,9 @@ test('Live is the initial primary tab and Tickets is not a global tab', () => {
   assert.match(primaryNav, /class="tab-btn active" data-tab="live"/);
   assert.doesNotMatch(primaryNav, /data-tab="tickets"/);
   assert.match(adminHtml, /id="live-tab"[^>]*class="tab-content active"|class="tab-content active"[^>]*id="live-tab"/);
+  // Issue #47: five global tabs (YouTube and Disco became Music); Live is still the one selected at the start
+  assert.deepEqual([...primaryNav.matchAll(/data-tab="([a-z]+)"[^>]*>([^<]+)</g)].map((match) => `${match[1]}:${match[2]}`), ['site:Site', 'news:News', 'live:Live', 'music:Music', 'profile:Profile']);
+  assert.doesNotMatch(primaryNav, /data-tab="(youtube|discography)"/);
 });
 
 test('Live workspace has semantic Liveページ and 予約管理 tabs', () => {
@@ -126,7 +129,7 @@ test('master-detail Live workspace contains list and empty editor panes with the
   assert.match(adminCss, /grid-template-columns:\s*320px\s+minmax\(0,\s*1fr\)/);
 });
 
-test('Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog', () => {
+test('Live edit workspace renders add and edit in the detail pane, and News is an edit surface too (no generic dialog)', () => {
   const app = loadAdminApp();
   app.setSiteData({
     news: [],
@@ -164,9 +167,12 @@ test('Live edit workspace renders add and edit in the detail pane while News kee
 
   app.setConfirm(() => true);
   assert.equal(app.closeLiveEditor(), true);
+  // Issue #47: News opens in its own edit surface (a list and an edit), not in the generic dialog.
   assert.equal(app.addNews(), true);
-  assert.equal(app.elements.get('modal').classList.contains('active'), true);
-  assert.match(app.elements.get('modal-body').innerHTML, /ニュースタイトル/);
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+  assert.equal(app.elements.get('modal-body').innerHTML, '');
+  assert.match(app.elements.get('news-editor-body').innerHTML, /ニュースタイトル/);
+  assert.equal(app.elements.get('news-editor-heading').textContent, '新しいお知らせ');
 });
 
 test('master-detail marks only the first upcoming card as Next Live', () => {
@@ -534,8 +540,7 @@ test('API fallback keeps every admin collection immutable while existing details
     'site-hero-image-select-btn',
     'news-add-btn',
     'youtube-channel-url',
-    'youtube-add-musicVideos-btn',
-    'discography-add-btn',
+    'music-add-btn',
     'profile-text',
     'profile-image-select-btn',
     'profile-link-0-name',
@@ -556,7 +561,7 @@ test('API fallback keeps every admin collection immutable while existing details
   const immutableSnapshot = JSON.stringify(app.getSiteData());
   const bandcamp = app.elements.get('site-link-bandcamp');
   bandcamp.value = 'https://example.com/mutated';
-  assert.equal(bandcamp.onchange(), false);
+  assert.equal(await bandcamp.dispatch('input'), false);
   assert.equal(bandcamp.value, 'https://example.com/original');
   assert.equal(app.addNews(), false);
   assert.equal(app.addYouTubeVideo('musicVideos'), false);
@@ -569,17 +574,33 @@ test('API fallback keeps every admin collection immutable while existing details
   assert.equal(app.deleteProfileLink(0), false);
   assert.equal(JSON.stringify(app.getSiteData()), immutableSnapshot);
   assert.equal(app.elements.get('modal').classList.contains('active'), false);
-  assert.match(adminReadme, /admin全体がread-only[\s\S]*既存のNews・YouTube・Disco・Profile[\s\S]*閲覧/);
+  assert.match(adminReadme, /admin全体がread-only[\s\S]*既存のNews・Music（作品・映像・Channel URL）・Site・Profile[\s\S]*閲覧/); // #47: the tabs are News / Music / Site / Profile (was News / YouTube / Disco / Profile)
 
-  const modalCases = [
-    ['News', (instance) => instance.editNews('news-readonly'), {
-      'edit-date': '2026.08.10',
-      'edit-title': 'News',
-      'edit-description': '',
-      'edit-image': '',
-      'edit-link': '',
-      'edit-linkText': '',
-    }],
+  // Issue #47: News is an edit surface, not a modal. Read-only: the item can be read; nothing in it can be changed, saved or deleted.
+  {
+    const instance = loadAdminApp();
+    instance.setSiteData(structuredClone(fallbackData));
+    instance.setApiFallbackReadOnly(true);
+    assert.equal(instance.editNews('news-readonly'), true, 'News detail remains viewable');
+    const before = JSON.stringify(instance.getSiteData());
+    assert.equal(instance.elements.get('modal').classList.contains('active'), false);
+    const canonical = { 'edit-date': '2026.08.10', 'edit-title': 'News', 'edit-description': '', 'edit-image': '', 'edit-link': '', 'edit-linkText': '' };
+    for (const id of [...Object.keys(canonical), 'news-save-btn', 'news-delete-btn']) {
+      assert.equal(instance.elements.get(id).disabled, true, `News keeps ${id} read-only`);
+    }
+    for (const id of Object.keys(canonical)) instance.elements.get(id).value = `MUTATED ${id}`;
+    assert.equal(await instance.saveOccPanel('item'), false);
+    assert.equal(await instance.deleteOccItem(), false);
+    assert.equal(JSON.stringify(instance.getSiteData()), before);
+    for (const [id, value] of Object.entries(canonical)) {
+      assert.equal(instance.elements.get(id).value, value, `News restores ${id}`);
+    }
+    assert.equal(instance.elements.get('news-editor-back').disabled, false, 'going back to the list stays possible');
+    assert.equal(instance.fetchCalls.length, 0);
+  }
+
+  // Issue #47: a work and a video are edit surfaces too (stage 3), read the same way as News above.
+  const surfaceCases = [
     ['YouTube', (instance) => instance.editYouTubeVideo('youtube-readonly', 'musicVideos'), {
       'edit-category': 'musicVideos',
       'edit-title': 'Video',
@@ -594,29 +615,28 @@ test('API fallback keeps every admin collection immutable while existing details
       'edit-link': '',
     }],
   ];
-  for (const [name, open, canonicalFields] of modalCases) {
+  for (const [name, open, canonicalFields] of surfaceCases) {
     const instance = loadAdminApp();
     instance.setSiteData(structuredClone(fallbackData));
     instance.setApiFallbackReadOnly(true);
     assert.equal(open(instance), true, `${name} detail remains viewable`);
     const before = JSON.stringify(instance.getSiteData());
-    const modalHtml = instance.elements.get('modal-body').innerHTML;
-    assert.equal(instance.elements.get('modal').classList.contains('active'), true);
+    assert.equal(instance.elements.get('modal').classList.contains('active'), false, `${name} opens no modal`);
     assert.equal(instance.elements.get('edit-title').disabled, true);
-    const focusedBeforeSave = instance.document.activeElement;
+    for (const id of ['music-save-btn', 'music-delete-btn']) {
+      assert.equal(instance.elements.get(id).disabled, true, `${name} keeps ${id} read-only`);
+    }
     for (const id of Object.keys(canonicalFields)) {
       instance.elements.get(id).value = `MUTATED ${id}`;
     }
-    assert.equal(await instance.saveModal(), false);
-    assert.equal(instance.deleteItem(), false);
+    assert.equal(await instance.saveOccPanel('item'), false);
+    assert.equal(await instance.deleteOccItem(), false);
     assert.equal(JSON.stringify(instance.getSiteData()), before);
-    assert.equal(instance.elements.get('modal-body').innerHTML, modalHtml);
-    assert.equal(instance.elements.get('modal').classList.contains('active'), true);
-    assert.equal(instance.document.activeElement, focusedBeforeSave, `${name} modal keeps focus`);
     for (const [id, value] of Object.entries(canonicalFields)) {
       assert.equal(instance.elements.get(id).value, value, `${name} restores ${id}`);
       assert.equal(instance.elements.get(id).disabled, true, `${name} keeps ${id} read-only`);
     }
+    assert.equal(instance.elements.get('music-editor-back').disabled, false, `${name}: going back to the list stays possible`);
     assert.equal(instance.fetchCalls.length, 0);
   }
 });
@@ -711,8 +731,8 @@ test('responsive Live workspace fixes overflow, focus, sticky actions, and actio
   assert.match(adminCss, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
 
   assert.match(adminHtml, /class="btn btn-primary live-primary-action live-add-button"[^>]*onclick="addLive\(\)"/);
-  assert.match(adminHtml, /href="style\.css\?v=20261120-46"/);
-  assert.match(adminHtml, /src="app\.js\?v=20261120-46"/);
+  assert.match(adminHtml, /href="style\.css\?v=20261121-47"/);
+  assert.match(adminHtml, /src="app\.js\?v=20261121-47"/);
 
   const app = loadAdminApp();
   app.setSiteData({ live: { upcoming: [{ id: 'hierarchy', date: '2026-08-20', venue: 'Venue', image: '' }], past: [] } });
@@ -815,12 +835,12 @@ test('production Live lock gives every workspace button a disabled affordance', 
 });
 
 test('admin build marker and operator docs match the merged Live UI assets', () => {
-  assert.match(adminHtml, /window\.ADMIN_BUILD_ID\s*=\s*'2026-11-20T\d{4}Z';/);
+  assert.match(adminHtml, /window\.ADMIN_BUILD_ID\s*=\s*'2026-11-21T\d{4}Z';/);
   const styleVersion = adminHtml.match(/style\.css\?v=([\w-]+)/)?.[1];
   const scriptVersion = adminHtml.match(/app\.js\?v=([\w-]+)/)?.[1];
   assert.ok(styleVersion);
-  assert.equal(styleVersion, '20261120-46');
-  assert.equal(scriptVersion, '20261120-46');
+  assert.equal(styleVersion, '20261121-47');
+  assert.equal(scriptVersion, '20261121-47');
   assert.equal(adminHtml.match(/music-data\.js\?v=([\w-]+)/)?.[1], scriptVersion);
   assert.match(adminReadme, /Live編集の`下書きを作る`/);
   assert.match(adminReadme, /10項目を一括置換/);
@@ -900,33 +920,47 @@ test('Live editor isolation guards dirty transition and prevents duplicate edit 
   app.elements.get('edit-title').value = 'LIVE UNSAVED';
   await app.elements.get('edit-title').dispatch('input');
 
-  assert.equal(app.addNews(), false);
+  // Issue #47: News opens in its edit surface (it was the generic modal). Like Live, it answers with a pending Promise while the
+  // confirmation surface is open (the modal's add answered false now and opened later); the Live guard is the same one.
+  const stayed = app.addNews();
+  assert.equal(typeof stayed.then, 'function');
   await answerLiveDialog(app, 'stay');
   await flushAsync();
+  assert.equal(await stayed, false);
+  assert.equal(app.getOccState().active, null, 'News did not open over the unsaved Live');
   assert.equal(app.elements.get('modal').classList.contains('active'), false);
   assert.equal(app.getModalState().currentEditId, 'live-owner');
   assert.match(app.elements.get('live-editor-body').innerHTML, /id="edit-title"/);
 
-  assert.equal(app.addNews(), false, 'the modal opens after the discard is confirmed, not at once');
+  const discarded = app.addNews();
+  assert.equal(typeof discarded.then, 'function', 'the News surface opens after the discard is confirmed, not at once');
+  assert.equal(app.getOccState().active, null);
   await answerLiveDialog(app, 'discard');
   await flushAsync();
+  assert.equal(await discarded, true);
   assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
-  assert.equal(app.elements.get('modal').classList.contains('active'), true);
-  assert.doesNotMatch(app.elements.get('modal-body').innerHTML, /LIVE UNSAVED/);
-  app.elements.get('edit-date').value = '2026-08-20';
-  app.elements.get('edit-title').value = 'NEWS ONLY';
-  app.elements.get('edit-description').value = 'NEWS DESCRIPTION';
-  app.elements.get('edit-image').value = '';
-  app.elements.get('edit-link').value = 'https://example.com/news';
-  app.elements.get('edit-linkText').value = 'read';
+  assert.equal(app.getOccState().active.isNew, true);
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
+  assert.doesNotMatch(app.elements.get('news-editor-body').innerHTML, /LIVE UNSAVED/);
+  for (const [id, value] of Object.entries({
+    'edit-date': '2026-08-20',
+    'edit-title': 'NEWS ONLY',
+    'edit-description': 'NEWS DESCRIPTION',
+    'edit-image': '',
+    'edit-link': 'https://example.com/news',
+    'edit-linkText': 'read',
+  })) {
+    app.elements.get(id).value = value;
+    await app.elements.get(id).dispatch('input');
+  }
 
-  await app.saveModal();
+  assert.equal(await app.saveOccPanel('item'), true);
 
   assert.equal(app.getSiteData().news[0].title, 'NEWS ONLY');
   assert.equal(app.getSiteData().news[0].description, 'NEWS DESCRIPTION');
   assert.equal(app.getSiteData().live.upcoming[0].title, 'LIVE TITLE');
   assert.match(app.elements.get('live-editor-body').innerHTML, /Liveを選択/);
-  assert.equal(app.getModalState().currentEditId, null);
+  assert.equal(app.getModalState().currentEditType, 'news', 'the News surface stays open on the item it saved');
 });
 
 test('Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending', async () => {
@@ -1038,10 +1072,14 @@ test('Live API save transaction rolls back failure, preserves form values, and c
   assert.equal(app.elements.get('live-editor-save-error').textContent, 'API保存に失敗しました', 'the reason is shown');
   assert.equal(app.elements.get('saveBtn').disabled, true);
 
-  assert.equal(app.addNews(), false, 'the failed Live is still unsaved, so the discard is asked first');
+  const adding = app.addNews();
+  assert.equal(typeof adding.then, 'function', 'the failed Live is still unsaved, so the discard is asked first');
   await answerLiveDialog(app, 'discard');
   await flushAsync();
-  assert.equal(app.elements.get('modal').classList.contains('active'), true);
+  assert.equal(await adding, true);
+  // Issue #47: News opens in its own edit surface (it was the generic modal)
+  assert.equal(app.getOccState().active.isNew, true);
+  assert.equal(app.elements.get('modal').classList.contains('active'), false);
   let persistedData = null;
   app.setSaveFunction(async () => {
     persistedData = structuredClone(app.getSiteData());
@@ -1136,7 +1174,7 @@ test('shared LiveOperations script is loaded before the admin application', () =
   const appIndex = adminHtml.indexOf('app.js');
   assert.ok(sharedIndex >= 0);
   assert.ok(sharedIndex < appIndex);
-  assert.match(adminHtml, /href="style\.css\?v=20261120-46"/);
+  assert.match(adminHtml, /href="style\.css\?v=20261121-47"/);
 });
 
 for (const provider of [undefined, 'openai', 'claude']) {
@@ -2429,31 +2467,6 @@ test('reservation status actions use escaped data attributes and delegated event
   assert.ok(app.fetchCalls.some((call) => call.path === `/api/admin/ticket-reservations/${encodeURIComponent(dangerousId)}/status`));
 });
 
-test('generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration', async () => {
-  assert.match(adminHtml, /id="modal"[^>]*role="dialog"/);
-  assert.match(adminHtml, /id="modal"[^>]*aria-modal="true"/);
-  assert.match(adminHtml, /id="modal"[^>]*aria-labelledby="modal-title"/);
-  assert.match(adminHtml, /class="modal-close"[^>]*aria-label="閉じる"/);
-
-  const app = loadAdminApp();
-  app.setSiteData({
-    news: [{ id: 'focus-news', date: '2026.08.10', title: 'Focus News', description: '', image: '', link: '', linkText: '' }],
-  });
-  const trigger = createElement('news-edit-trigger', app.document, 'button');
-  trigger.focus();
-  app.editNews('focus-news');
-  assert.equal(app.document.activeElement?.id, 'edit-date');
-  assert.equal(app.elements.get('modal').classList.contains('active'), true);
-
-  await app.dispatchDocument('keydown', { key: 'Escape' });
-  assert.equal(app.elements.get('modal').classList.contains('active'), false);
-  assert.equal(app.getModalState().currentEditId, null);
-  assert.equal(app.getModalState().currentEditType, null);
-  assert.equal(app.getModalState().isNewItem, false);
-  assert.equal(app.document.activeElement, trigger);
-  assert.equal(trigger.focusCount, 2);
-});
-
 test('saving a rendered Live keeps its editor and selected replacement trigger after a category move', async () => {
   const app = loadAdminApp();
   const liveId = `focus-live-\"'\\danger`;
@@ -2471,7 +2484,7 @@ test('saving a rendered Live keeps its editor and selected replacement trigger a
   await app.dispatchDocument('click', { target: originalTrigger, preventDefault() {} });
   assert.equal(app.document.activeElement?.id, 'edit-date');
   setLiveForm(app.elements, { isPast: true });
-  await app.saveModal();
+  await app.saveLiveWorkspace();
 
   const pastTriggers = app.elements.get('live-past-list').children;
   const replacementTrigger = pastTriggers.find((trigger) => trigger.dataset.liveId === liveId);
@@ -2527,6 +2540,18 @@ test('admin site-data save rejects cross-collection and same-collection duplicat
         app.setSiteData({ live });
         app.useAdminFetch(async () => jsonResponse({ ok: true }));
 
+        if (apiMode) {
+          // Issue #47 (D47-08): while the API is connected the header save (saveData) sends nothing at all. The duplicate Live ids are
+          // refused where a Live is saved: the scoped save every page uses (saveScoped), before anything reaches the API.
+          assert.equal(await app.saveData(), false);
+          assert.equal(app.fetchCalls.length, 0, 'the header save sends nothing while the API is connected');
+          await assert.rejects(
+            () => app.saveScoped(() => {}, { fallbackBase: app.getSiteData() }),
+            /Live ID.*重複.*duplicate-live/,
+          );
+          assert.equal(app.fetchCalls.length, 0, 'invalid data must not reach the admin API');
+          return;
+        }
         const saved = await app.saveData();
 
         assert.equal(saved, false);
@@ -2574,6 +2599,11 @@ test('Ticket settings remove legacy copy and keep completion, field editing and 
   assert.equal(saved.contact.formAction, 'https://example.com/contact');
 });
 
+// Issue #47 stage 3: the `music data fields …` observations (what a save sends, what clears a reference, when the date baseline moves, what a
+// failure keeps, that a retry does not duplicate) are kept; the entry changes. A work and a video are edited on an edit surface
+// (editDiscography / editYouTubeVideo / addDiscography open it, saveOccPanel('item') saves it, deleteOccItem asks and deletes on the spot),
+// and Site is saved by saveOccPanel('site'). Saving a change that does not alter any input sends nothing, so a test that saves "the same"
+// content first changes another input.
 function musicFixture() {
   return {site:{featuredReleaseId:'r',heroImage:'assets/images/synthetic.jpg'},discography:{digital:[{id:'r',title:'Synthetic "<& title',releaseDate:'2025.05.05',description:'Synthetic track list',image:'assets/images/synthetic-release.jpg',link:'https://example.test/release',releaseType:'Single',playbackVideoId:'v'}],demo:[{id:'s',title:'Synthetic demo',releaseDate:'2024.01.01'}]},youtube:{musicVideos:[{id:'v',title:'Synthetic "<& video',youtubeId:'abcdefghijk'}],liveMovies:[{id:'w',title:'Synthetic live',youtubeId:'abcdefghijk'}],demos:[{id:'x',title:'Synthetic demo',youtubeId:'abcdefghijk'}]}};
 }
@@ -2594,86 +2624,95 @@ function musicEdit(app,id='r',category='digital',values={}) {
   assert.equal(app.editDiscography(id,category),true);
   for(const [key,value] of Object.entries(values)) app.elements.get('edit-'+key).value=value;
 }
-test('music data fields Site and modal labels, choices, escaping and Local JSON roundtrip',async()=>{
+const saveItem=(app,options)=>app.saveOccPanel('item',options);
+async function removeItem(app) {
+  const pending=app.deleteOccItem();
+  await answerLiveDialog(app,'delete');
+  return pending;
+}
+const openItem=(app)=>app.getOccState().active;
+test('music data fields Site and edit-surface labels, choices, escaping and Local JSON roundtrip',async()=>{
   const app=await musicApp();
-  assert.match(adminHtml,/<h3>Home<\/h3>/);assert.match(adminHtml,/顔にする作品/);assert.match(adminHtml,/共有時の画像/);
-  assert.ok(adminHtml.indexOf('music-data.js?v=20261120-46')<adminHtml.indexOf('app.js?v=20261120-46'));
+  assert.match(adminHtml,/>Home<\/h3>/);assert.match(adminHtml,/顔にする作品/);assert.match(adminHtml,/共有時の画像/);
+  assert.ok(adminHtml.indexOf('music-data.js?v=20261121-47')<adminHtml.indexOf('app.js?v=20261121-47'));
   const select=app.elements.get('site-featured-release-id');assert.match(select.innerHTML,/自動（最新のリリース）/);assert.match(select.innerHTML,/Digital Release/);assert.match(select.innerHTML,/宅録Demo/);assert.match(select.innerHTML,/&quot;&lt;&amp;/);
-  select.value='s';select.onchange(); assert.equal(app.getSiteData().site.featuredReleaseId,'s');
+  select.value='s';assert.equal(await app.saveOccPanel('site'),true); assert.equal(app.getSiteData().site.featuredReleaseId,'s');
   musicEdit(app,'r','digital',{releaseType:'2nd Single',playbackVideoId:'w'});
-  assert.match(app.elements.get('modal-body').innerHTML,/種別/);assert.match(app.elements.get('modal-body').innerHTML,/placeholder="2nd Single"/);
+  assert.match(app.elements.get('music-editor-body').innerHTML,/種別/);assert.match(app.elements.get('music-editor-body').innerHTML,/placeholder="2nd Single"/);
   const videos=app.elements.get('edit-playbackVideoId'); assert.deepEqual(videos.optionValues,['','v','w','x']);assert.match(videos.innerHTML,/&quot;&lt;&amp;/);
-  assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().discography.digital[0].title,'Synthetic "<& title');assert.equal(app.getSiteData().discography.digital[0].description,'Synthetic track list');assert.equal(app.getSiteData().discography.digital[0].link,'https://example.test/release');
+  assert.equal(await saveItem(app),true);assert.equal(app.getSiteData().discography.digital[0].title,'Synthetic "<& title');assert.equal(app.getSiteData().discography.digital[0].description,'Synthetic track list');assert.equal(app.getSiteData().discography.digital[0].link,'https://example.test/release');
   assert.equal(await app.saveData(),true);const exported=JSON.parse(await app.objectUrls.at(-1).blob.text());assert.equal(exported.site.featuredReleaseId,'s');assert.equal(exported.discography.digital[0].playbackVideoId,'w');assert.equal(exported.discography.digital[0].releaseType,'2nd Single');assert.equal('data' in exported,false);
   const reload=await musicApp({data:exported});musicEdit(reload);assert.equal(reload.elements.get('edit-playbackVideoId').value,'w');assert.equal(reload.elements.get('edit-releaseType').value,'2nd Single');
-  reload.elements.get('edit-playbackVideoId').value='';reload.elements.get('edit-releaseType').value='';assert.equal(await reload.saveModal(),true);
-  const featured=reload.elements.get('site-featured-release-id');featured.value='';featured.onchange();assert.equal(reload.getSiteData().site.featuredReleaseId,'');
+  reload.elements.get('edit-playbackVideoId').value='';reload.elements.get('edit-releaseType').value='';assert.equal(await saveItem(reload),true);
+  const featured=reload.elements.get('site-featured-release-id');featured.value='';assert.equal(await reload.saveOccPanel('site'),true);assert.equal(reload.getSiteData().site.featuredReleaseId,'');
 });
-test('music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch',async()=>{
+test('music data fields invalid date keeps the edit surface, arrays, focus, draft and fetch',async()=>{
   const app=await musicApp({api:true});musicEdit(app,'r','digital',{releaseDate:'2025.05.05\n'});
   const before=JSON.stringify(app.getSiteData());const calls=app.fetchCalls.length;
-  assert.equal(app.saveDiscographyItem(),false);assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);assert.equal(app.getHasChanges(),false);assert.equal(app.fetchCalls.length,calls);
-  assert.equal(app.elements.get('modal').classList.contains('active'),true);const date=app.elements.get('edit-releaseDate');assert.equal(date.value,'2025.05.05\n');assert.equal(date.getAttribute('aria-invalid'),'true');assert.equal(date.getAttribute('aria-describedby'),'edit-releaseDate-error');assert.ok(date.focusCount>0);
-  assert.equal(app.elements.get('edit-releaseDate-error').textContent,'「2025.05.05」の形で入力してください。');assert.match(app.elements.get('modal-body').innerHTML,/id="edit-releaseDate"[^>]*>\s*<[^>]*id="edit-releaseDate-error"[^>]*role="alert"/);
-  date.value='2026.01.01';await date.dispatch('input');assert.equal(date.getAttribute('aria-invalid'),'false');assert.equal(app.elements.get('edit-releaseDate-error').textContent,'');assert.equal(await app.saveModal(),true);assert.equal(app.elements.get('modal').classList.contains('active'),false);
+  assert.equal(await saveItem(app),false);assert.equal(JSON.stringify(app.getSiteData()),before);assert.equal(app.getHasChanges(),false);assert.equal(app.fetchCalls.length,calls);
+  assert.equal(openItem(app).id,'r','the edit surface stays open');const date=app.elements.get('edit-releaseDate');assert.equal(date.value,'2025.05.05\n');assert.equal(date.getAttribute('aria-invalid'),'true');assert.equal(date.getAttribute('aria-describedby'),'edit-releaseDate-error');assert.ok(date.focusCount>0);
+  assert.equal(app.elements.get('edit-releaseDate-error').textContent,'「2025.05.05」の形で入力してください。');assert.match(app.elements.get('music-editor-body').innerHTML,/id="edit-releaseDate"[^>]*>\s*<[^>]*id="edit-releaseDate-error"[^>]*role="alert"/);
+  date.value='2026.01.01';await date.dispatch('input');assert.equal(date.getAttribute('aria-invalid'),'false');assert.equal(app.elements.get('edit-releaseDate-error').textContent,'');assert.equal(await saveItem(app),true);assert.equal(openItem(app).id,'r','a save stays on the same edit');
 });
-test('music data fields API failure keeps editor and baseline, structured errors bind only matching release',async()=>{
+test('music data fields API failure keeps the edit surface and baseline, structured errors bind only the matching release',async()=>{
   const app=await musicApp({api:true,putResponse:{ok:false,json:async()=>({error:'invalid releaseDate',fields:[{id:'r',field:'releaseDate',message:'「2025.05.05」の形で入力してください。'}]})}});
   musicEdit(app,'r','digital',{releaseDate:'2026.01.01',releaseType:'Draft'});
-  assert.equal(await app.saveModal(),false);assert.equal(app.elements.get('modal').classList.contains('active'),true);assert.equal(app.elements.get('edit-releaseType').value,'Draft');assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'true');assert.equal(app.getHasChanges(),true);
-  app.useAdminFetch(async()=>({ok:true,json:async()=>({ok:true})}));assert.equal(await app.saveModal(),true);await app.loadData();
+  assert.equal(await saveItem(app),false);assert.equal(openItem(app).id,'r');assert.equal(app.elements.get('edit-releaseType').value,'Draft');assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'true');
+  assert.equal(app.getSiteData().discography.digital[0].releaseType,'Single','the data in memory is as it was saved last (a failure changes nothing)');assert.equal(app.getHasChanges(),false);assert.equal(app.isOccDirty(),true,'what was typed is still unsaved');
+  app.useAdminFetch(async()=>({ok:true,json:async()=>({ok:true})}));assert.equal(await saveItem(app),true);await app.loadData();
 });
 for(const oldDate of ['2025.5.5','2025/05/05','2025.05','',undefined,42,null]) test('music data fields legacy date '+String(oldDate)+' stays on unrelated save and move',async()=>{
-  const data=musicFixture();data.discography.digital[0].releaseDate=oldDate;const app=await musicApp({data});musicEdit(app,'r','digital',{releaseType:'Demo',category:'demo'});assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().discography.demo[0].releaseDate,oldDate);assert.equal(await app.saveData(),true);
+  const data=musicFixture();data.discography.digital[0].releaseDate=oldDate;const app=await musicApp({data});musicEdit(app,'r','digital',{releaseType:'Demo',category:'demo'});assert.equal(await saveItem(app),true);assert.equal(app.getSiteData().discography.demo[0].releaseDate,oldDate);assert.equal(await app.saveData(),true);
 });
 test('music data fields new release empty or shaped date, header validation and baseline only after success',async()=>{
-  const app=await musicApp();app.addDiscography();app.elements.get('edit-releaseDate').value='2025/05/05';assert.equal(await app.saveModal(),false);app.elements.get('edit-releaseDate').value='';assert.equal(await app.saveModal(),true);assert.equal(await app.saveData(),true);
-  app.getSiteData().discography.digital[0].releaseDate='bad';assert.equal(await app.saveData(),false);assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'true');assert.equal(app.elements.get('modal').classList.contains('active'),true);
-  app.elements.get('edit-releaseDate').value='0000.99.99';assert.equal(await app.saveModal(),true);assert.equal(await app.saveData(),true);
+  const app=await musicApp();app.addDiscography();app.elements.get('edit-title').value='New release';app.elements.get('edit-releaseDate').value='2025/05/05';assert.equal(await saveItem(app),false);app.elements.get('edit-releaseDate').value='';assert.equal(await saveItem(app),true);assert.equal(await app.saveData(),true);
+  app.getSiteData().discography.digital[0].releaseDate='bad';assert.equal(await app.saveData(),false);assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'true');assert.ok(openItem(app),'the header save points at the work with the bad date');
+  app.elements.get('edit-releaseDate').value='0000.99.99';assert.equal(await saveItem(app),true);assert.equal(await app.saveData(),true);
 });
 test('music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject',async()=>{
-  const app=await musicApp({api:true});musicEdit(app,'r','digital',{releaseType:'Album',playbackVideoId:'x'});assert.equal(await app.saveModal(),true);const put=app.fetchCalls.find(x=>x.options.method==='PUT');assert.equal(JSON.parse(put.options.body).discography.digital[0].releaseType,'Album');await app.loadData();musicEdit(app);assert.equal(app.elements.get('edit-releaseType').value,'Album');
-  app.setApiFallbackReadOnly(true);app.elements.get('edit-releaseType').value='Tamper';app.elements.get('edit-playbackVideoId').value='w';assert.equal(await app.saveModal(),false);assert.equal(app.elements.get('edit-releaseType').value,'Album');assert.equal(app.elements.get('edit-playbackVideoId').value,'x');
-  const featured=app.elements.get('site-featured-release-id');featured.value='s';featured.onchange();assert.equal(featured.value,'r');assert.equal(app.getSiteData().site.featuredReleaseId,'r');
-  app.setApiFallbackReadOnly(false);app.setSaving(true);const before=JSON.stringify(app.getSiteData());musicEdit(app,'r','digital',{releaseType:'Busy'});assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);
+  const app=await musicApp({api:true});musicEdit(app,'r','digital',{releaseType:'Album',playbackVideoId:'x'});assert.equal(await saveItem(app),true);const put=app.fetchCalls.find(x=>x.options.method==='PUT');assert.equal(JSON.parse(put.options.body).discography.digital[0].releaseType,'Album');await app.loadData();app.closeOccEditor();musicEdit(app);assert.equal(app.elements.get('edit-releaseType').value,'Album');
+  app.setApiFallbackReadOnly(true);app.elements.get('edit-releaseType').value='Tamper';app.elements.get('edit-playbackVideoId').value='w';assert.equal(await saveItem(app),false);assert.equal(app.elements.get('edit-releaseType').value,'Album');assert.equal(app.elements.get('edit-playbackVideoId').value,'x');
+  const featured=app.elements.get('site-featured-release-id');featured.value='s';assert.equal(await featured.dispatch('input'),false);assert.equal(featured.value,'r');assert.equal(app.getSiteData().site.featuredReleaseId,'r');
+  app.setApiFallbackReadOnly(false);app.setSaving(true);const before=JSON.stringify(app.getSiteData());musicEdit(app,'r','digital',{releaseType:'Busy'});assert.equal(await saveItem(app),false);assert.equal(JSON.stringify(app.getSiteData()),before);
 });
 
 for(const api of [false,true]) test('music data fields deletion clears featured and shared video references through '+(api?'API':'Local JSON'),async()=>{
-  const data=musicFixture(); data.discography.demo[0].playbackVideoId='v'; const app=await musicApp({data,api});app.setConfirm(()=>true);
-  app.editYouTubeVideo('v','musicVideos');assert.equal(app.deleteItem(),true);assert.ok([...app.getSiteData().discography.digital,...app.getSiteData().discography.demo].every(x=>x.playbackVideoId===''));
-  musicEdit(app);assert.equal(app.elements.get('edit-playbackVideoId').optionValues.includes('v'),false);assert.equal(app.deleteItem(),true);assert.equal(app.getSiteData().site.featuredReleaseId,'');assert.equal(app.elements.get('site-featured-release-id').optionValues.includes('r'),false);
-  assert.equal(await app.saveData(),true);const out=api?JSON.parse(app.fetchCalls.filter(x=>x.options.method==='PUT').at(-1).options.body):JSON.parse(await app.objectUrls.at(-1).blob.text());assert.equal(out.site.featuredReleaseId,'');assert.equal(out.discography.digital.length,0);assert.equal(out.discography.demo[0].playbackVideoId,'');
+  const data=musicFixture(); data.discography.demo[0].playbackVideoId='v'; const app=await musicApp({data,api});
+  app.editYouTubeVideo('v','musicVideos');assert.equal(await removeItem(app),true);assert.ok([...app.getSiteData().discography.digital,...app.getSiteData().discography.demo].every(x=>x.playbackVideoId===''));
+  musicEdit(app);assert.equal(app.elements.get('edit-playbackVideoId').optionValues.includes('v'),false);assert.equal(await removeItem(app),true);assert.equal(app.getSiteData().site.featuredReleaseId,'');assert.equal(app.elements.get('site-featured-release-id').optionValues.includes('r'),false);
+  if(api){const sent=app.fetchCalls.filter(x=>x.options.method==='PUT').length;assert.equal(await app.saveData(),false);assert.equal(app.fetchCalls.filter(x=>x.options.method==='PUT').length,sent,'the header save sends nothing while the API is connected (#47: the deletes above were the saves)');}else assert.equal(await app.saveData(),true);const out=api?JSON.parse(app.fetchCalls.filter(x=>x.options.method==='PUT').at(-1).options.body):JSON.parse(await app.objectUrls.at(-1).blob.text());assert.equal(out.site.featuredReleaseId,'');assert.equal(out.discography.digital.length,0);assert.equal(out.discography.demo[0].playbackVideoId,'');
 });
-test('music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections',async()=>{
-  const app=await musicApp();musicEdit(app,'s','demo');const before=JSON.stringify(app.getSiteData());assert.equal(app.deleteItem(),false);assert.equal(JSON.stringify(app.getSiteData()),before);
-  app.setConfirm(()=>true);assert.equal(app.deleteItem(),true);assert.equal(app.getSiteData().site.featuredReleaseId,'r');assert.equal(app.getSiteData().discography.digital[0].playbackVideoId,'v');
-  app.editYouTubeVideo('v','musicVideos');app.setApiFallbackReadOnly(true);const readOnly=JSON.stringify(app.getSiteData());assert.equal(app.deleteItem(),false);assert.equal(JSON.stringify(app.getSiteData()),readOnly);
+test('music data fields unselected deletion, cancelled confirmation and read-only never clear surviving selections',async()=>{
+  const app=await musicApp();musicEdit(app,'s','demo');const before=JSON.stringify(app.getSiteData());
+  const cancelled=app.deleteOccItem();await answerLiveDialog(app,'cancel');assert.equal(await cancelled,false);assert.equal(JSON.stringify(app.getSiteData()),before);
+  assert.equal(await removeItem(app),true);assert.equal(app.getSiteData().site.featuredReleaseId,'r');assert.equal(app.getSiteData().discography.digital[0].playbackVideoId,'v');
+  app.editYouTubeVideo('v','musicVideos');app.setApiFallbackReadOnly(true);const readOnly=JSON.stringify(app.getSiteData());assert.equal(await app.deleteOccItem(),false);assert.equal(JSON.stringify(app.getSiteData()),readOnly);
 });
 test('music data fields release and video category moves preserve IDs and all selections',async()=>{
-  const app=await musicApp();musicEdit(app,'r','digital',{category:'demo'});assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().site.featuredReleaseId,'r');assert.equal(app.elements.get('site-featured-release-id').value,'r');
-  app.editYouTubeVideo('v','musicVideos');app.elements.get('edit-category').value='demos';assert.equal(await app.saveModal(),true);assert.equal(app.getSiteData().discography.demo[0].playbackVideoId,'v');musicEdit(app,'r','demo');assert.equal(app.elements.get('edit-playbackVideoId').value,'v');assert.equal(await app.saveData(),true);
+  const app=await musicApp();musicEdit(app,'r','digital',{category:'demo'});assert.equal(await saveItem(app),true);assert.equal(app.getSiteData().site.featuredReleaseId,'r');assert.equal(app.elements.get('site-featured-release-id').value,'r');
+  app.editYouTubeVideo('v','musicVideos');app.elements.get('edit-category').value='demos';assert.equal(await saveItem(app),true);assert.equal(app.getSiteData().discography.demo[0].playbackVideoId,'v');musicEdit(app,'r','demo');assert.equal(app.elements.get('edit-playbackVideoId').value,'v');assert.equal(await app.saveData(),true);
 });
 
 test('music data fields successful saves advance date baseline and failures retain the old baseline',async()=>{
   for(const api of [false,true]) {
     const data=musicFixture();data.discography.digital[0].releaseDate='2025.5.5';const app=await musicApp({data,api});
-    musicEdit(app,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await app.saveModal(),true);
+    musicEdit(app,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await saveItem(app),true);
     if(!api)assert.equal(await app.saveData(),true);
-    musicEdit(app,'r','digital',{releaseDate:'2025.5.5'});const before=JSON.stringify(app.getSiteData());assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);
+    musicEdit(app,'r','digital',{releaseDate:'2025.5.5'});const before=JSON.stringify(app.getSiteData());assert.equal(await saveItem(app),false);assert.equal(JSON.stringify(app.getSiteData()),before);
   }
   const data=musicFixture();data.discography.digital[0].releaseDate='2025.5.5';const failed=await musicApp({data,api:true,putResponse:{ok:false,json:async()=>({error:'synthetic failure'})}});
-  musicEdit(failed,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await failed.saveModal(),false);
-  const calls=failed.fetchCalls.length;failed.elements.get('edit-releaseDate').value='2025.5.5';assert.equal(await failed.saveModal(),false);assert.equal(failed.fetchCalls.length,calls+1);assert.equal(failed.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'false');
+  musicEdit(failed,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await saveItem(failed),false);
+  const calls=failed.fetchCalls.length;failed.elements.get('edit-releaseDate').value='2025.5.5';failed.elements.get('edit-releaseType').value='Retry';assert.equal(await saveItem(failed),false);assert.equal(failed.fetchCalls.length,calls+1);assert.equal(failed.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'false');
 });
 test('music data fields image upload blocks release mutation and JSON failure retains baseline',async()=>{
-  const app=await musicApp();musicEdit(app,'r','digital',{releaseType:'Busy upload'});const before=JSON.stringify(app.getSiteData());app.setSyntheticImageUpload(true);assert.equal(await app.saveModal(),false);assert.equal(JSON.stringify(app.getSiteData()),before);assert.equal(await app.saveData(),false);app.setSyntheticImageUpload(false);
-  const data=musicFixture();data.discography.digital[0].releaseDate='2025.5.5';const failed=await musicApp({data});musicEdit(failed,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await failed.saveModal(),true);
+  const app=await musicApp();musicEdit(app,'r','digital',{releaseType:'Busy upload'});const before=JSON.stringify(app.getSiteData());app.setSyntheticImageUpload(true);assert.equal(await saveItem(app),false);assert.equal(JSON.stringify(app.getSiteData()),before);assert.equal(await app.saveData(),false);app.setSyntheticImageUpload(false);
+  const data=musicFixture();data.discography.digital[0].releaseDate='2025.5.5';const failed=await musicApp({data});musicEdit(failed,'r','digital',{releaseDate:'2026.01.01'});assert.equal(await saveItem(failed),true);
   const count=failed.objectUrls.length;failed.setAnchorClickError(new Error('synthetic download failure'));assert.equal(await failed.saveData(),false);assert.equal(failed.objectUrls.length,count+1);
-  musicEdit(failed,'r','digital',{releaseDate:'2025.5.5'});assert.equal(await failed.saveModal(),true);
+  musicEdit(failed,'r','digital',{releaseDate:'2025.5.5'});assert.equal(await saveItem(failed),true);
 });
 test('music data fields structured API error for another release never marks the active release',async()=>{
   const app=await musicApp({api:true,putResponse:{ok:false,json:async()=>({error:'invalid releaseDate',fields:[{id:'s',field:'releaseDate',message:'Synthetic other error'}]})}});
-  musicEdit(app,'r','digital',{releaseType:'Draft'});assert.equal(await app.saveModal(),false);assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'false');assert.equal(app.elements.get('edit-releaseDate-error').textContent,'');
+  musicEdit(app,'r','digital',{releaseType:'Draft'});assert.equal(await saveItem(app),false);assert.equal(app.elements.get('edit-releaseDate').getAttribute('aria-invalid'),'false');assert.equal(app.elements.get('edit-releaseDate-error').textContent,'');
 });
 
 for (const retry of ['same category', 'original category', 'other field']) {
@@ -2688,16 +2727,16 @@ for (const retry of ['same category', 'original category', 'other field']) {
       return jsonResponse({ ok: true });
     });
     musicEdit(app, 'r', 'digital', { category: 'demo', releaseType: 'Draft' });
-    assert.equal(await app.saveModal(), false);
-    assert.equal(app.elements.get('modal').classList.contains('active'), true);
+    assert.equal(await saveItem(app), false);
+    assert.equal(openItem(app).id, 'r', 'the edit surface stays open');
     assert.equal(app.elements.get('edit-releaseType').value, 'Draft');
-    assert.equal(app.getHasChanges(), true);
+    assert.equal(app.getSiteData().discography.digital.some(item => item.id === 'r'), true, 'the move did not happen in memory (a failure changes nothing)');
     if (retry === 'original category') app.elements.get('edit-category').value = 'digital';
     if (retry === 'other field') app.elements.get('edit-title').value = 'Synthetic retry title';
-    assert.equal(await app.saveModal(), true);
+    assert.equal(await saveItem(app), true);
     assert.equal(attempts, 2);
-    assert.equal(app.elements.get('modal').classList.contains('active'), false);
-    assert.equal(app.getHasChanges(), false);
+    assert.equal(openItem(app).id, 'r', 'a save stays on the same edit');
+    assert.equal(app.getOccState().panels.item.dirty, false);
     for (const data of [app.getSiteData(), persisted]) {
       const releases = [...data.discography.digital, ...data.discography.demo];
       assert.equal(releases.filter(item => item.id === 'r').length, 1);
@@ -2712,18 +2751,19 @@ for (const retry of ['same category', 'original category', 'other field']) {
   });
 }
 
-test('music data fields RV41-01 failed move then delete removes the moved release and featured reference', async () => {
+test('music data fields RV41-01 failed move then delete removes the release and featured reference in one request', async () => {
   const app = await musicApp({ api: true, putResponse: jsonResponse({ error: 'synthetic failure' }, { ok: false, status: 500 }) });
   musicEdit(app, 'r', 'digital', { category: 'demo' });
-  assert.equal(await app.saveModal(), false);
-  app.setConfirm(() => true);
-  assert.equal(app.deleteItem(), true);
+  assert.equal(await saveItem(app), false);
   let persisted;
+  const puts = [];
   app.useAdminFetch(async (_path, options) => {
+    puts.push(options.body);
     persisted = JSON.parse(options.body);
     return jsonResponse({ ok: true });
   });
-  assert.equal(await app.saveData(), true);
+  assert.equal(await removeItem(app), true);
+  assert.equal(puts.length, 1, 'the references went back to empty in the same one request');
   for (const data of [app.getSiteData(), persisted]) {
     assert.equal([...data.discography.digital, ...data.discography.demo].some(item => item.id === 'r'), false);
     assert.equal(data.site.featuredReleaseId, '');
@@ -2731,43 +2771,42 @@ test('music data fields RV41-01 failed move then delete removes the moved releas
   }
 });
 
-test('music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases', async () => {
+test('music data fields RV41-01 Site save retries send the same snapshot without adding releases', async () => {
   const app = await musicApp({ api: true });
   const featured = app.elements.get('site-featured-release-id');
   featured.value = 's';
-  featured.onchange();
   const before = JSON.stringify(app.getSiteData());
   const payloads = [];
   app.useAdminFetch(async (_path, options) => {
     payloads.push(JSON.parse(options.body));
     return payloads.length === 1 ? jsonResponse({ error: 'synthetic failure' }, { ok: false, status: 500 }) : jsonResponse({ ok: true });
   });
-  assert.equal(await app.saveData(), false);
+  assert.equal(await app.saveOccPanel('site'), false);
   assert.equal(JSON.stringify(app.getSiteData()), before);
-  assert.equal(app.getHasChanges(), true);
-  assert.equal(await app.saveData(), true);
+  assert.equal(app.isOccDirty(), true, 'what was chosen is still unsaved');
+  assert.equal(featured.value, 's');
+  assert.equal(await app.saveOccPanel('site'), true);
   assert.deepEqual(payloads[0], payloads[1]);
   assert.equal(payloads[1].site.featuredReleaseId, 's');
   assert.equal([...payloads[1].discography.digital, ...payloads[1].discography.demo].length, 2);
 });
 
 for (const target of ['release', 'shared video']) {
-  test('music data fields RV41-01 ' + target + ' deletion survives header failure and retry', async () => {
+  test('music data fields RV41-01 ' + target + ' deletion survives a failed delete and its retry', async () => {
     const data = musicFixture();
     data.discography.demo[0].playbackVideoId = 'v';
     const app = await musicApp({ data, api: true });
-    app.setConfirm(() => true);
     if (target === 'release') musicEdit(app);
     else app.editYouTubeVideo('v', 'musicVideos');
-    assert.equal(app.deleteItem(), true);
-    assert.equal(app.elements.get('modal').classList.contains('active'), false);
     const payloads = [];
     app.useAdminFetch(async (_path, options) => {
       payloads.push(JSON.parse(options.body));
       return payloads.length === 1 ? jsonResponse({ error: 'synthetic failure' }, { ok: false }) : jsonResponse({ ok: true });
     });
-    assert.equal(await app.saveData(), false);
-    assert.equal(await app.saveData(), true);
+    assert.equal(await removeItem(app), false);
+    assert.ok(openItem(app), 'a failed delete leaves the edit surface open');
+    assert.equal(app.getSiteData().discography.demo[0].playbackVideoId, 'v', 'and the data as it was');
+    assert.equal(await removeItem(app), true);
     assert.deepEqual(payloads[0], payloads[1]);
     const releases = [...payloads[1].discography.digital, ...payloads[1].discography.demo];
     assert.equal(releases.filter(item => item.id === 's').length, 1);
@@ -2796,9 +2835,11 @@ test('music data fields RV41-01 new release retry keeps its generated ID after c
     persisted = JSON.parse(options.body);
     return jsonResponse({ ok: true });
   });
-  assert.equal(await app.saveModal(), false);
+  assert.equal(await saveItem(app), false);
+  assert.equal(openItem(app).isNew, true, 'it is still new: nothing was saved');
   app.elements.get('edit-category').value = 'demo';
-  assert.equal(await app.saveModal(), true);
+  assert.equal(await saveItem(app), true);
+  assert.equal(openItem(app).isNew, false);
   const releases = [...persisted.discography.digital, ...persisted.discography.demo];
   assert.equal(releases.filter(item => item.id === id).length, 1);
   assert.equal(persisted.discography.demo.find(item => item.id === id).title, 'Synthetic new release');
