@@ -1,0 +1,7 @@
+# stage3-4 GREEN: the same two files against the implementation
+# command: node --test test/admin-occasional-save.test.mjs test/admin-occasional-screens.test.mjs (Node v20.19.4)
+# exit: 0
+# tests 144
+# pass 144
+# fail 0
+# skipped 0

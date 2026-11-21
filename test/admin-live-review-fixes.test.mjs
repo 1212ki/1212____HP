@@ -108,7 +108,7 @@ test('T46-HEADER without a build mark there is no title; a connection that comes
   assert.equal(element(app, 'connectionBanner').hidden, true);
 });
 
-test('T46-HEADER the other tabs differ from the base commit only in this display: 保存 button, Local Mode and read-only band, six tabs, header markup', async () => {
+test('T46-HEADER the other tabs differ from the base commit only in this display: 保存 button, Local Mode and read-only band (the Header markup and the tabs are the Live master\'s since #47: T47-HEADER, T47-TABS)', async () => {
   const baseSource = gitShow('admin/app.js');
   const states = {
     local: (app) => app.renderModeBadge(),
@@ -129,11 +129,14 @@ test('T46-HEADER the other tabs differ from the base commit only in this display
     };
     assert.deepEqual(await snapshot(adminJs), await snapshot(baseSource), `${name}: 保存 button and band are as at the base commit`);
   }
+  // Issue #47 (R47-02, R47-16): the Header is one row (1212 Admin on the left, the connection on the right, 保存 hidden unless needed)
+  // and there are five tabs. These were "the base" before; the new markup is pinned here and in admin-occasional-screens.test.mjs.
   const block = (html, open, close) => html.slice(html.indexOf(open), html.indexOf(close, html.indexOf(open)) + close.length);
-  assert.equal(block(adminHtml, '<header class="header">', '</header>'), block(gitShow('admin/index.html'), '<header class="header">', '</header>'), 'the Header markup is the base');
+  const header = block(adminHtml, '<header class="header">', '</header>');
+  assert.notEqual(header, block(gitShow('admin/index.html'), '<header class="header">', '</header>'), 'the Header markup is no longer the base');
+  assert.match(header, /<h1 class="logo">1212 <span class="accent">Admin<\/span><\/h1>[\s\S]*id="modeBadge"[\s\S]*id="saveBtn"[^>]*\bhidden\b/);
   const nav = block(adminHtml, '<nav class="tab-nav">', '</nav>');
-  assert.equal(nav, block(gitShow('admin/index.html'), '<nav class="tab-nav">', '</nav>'), 'the tab navigation is the base');
-  assert.deepEqual([...nav.matchAll(/data-tab="([a-z]+)"[^>]*>([^<]+)</g)].map((match) => `${match[1]}:${match[2]}`), ['site:Site', 'news:News', 'live:Live', 'youtube:YouTube', 'discography:Disco', 'profile:Profile']);
+  assert.deepEqual([...nav.matchAll(/data-tab="([a-z]+)"[^>]*>([^<]+)</g)].map((match) => `${match[1]}:${match[2]}`), ['site:Site', 'news:News', 'live:Live', 'music:Music', 'profile:Profile']);
 });
 
 test('T46-HEADER a load error shows the band again with its message; the boot marker keeps the build out of the visible text', () => {

@@ -1,0 +1,273 @@
+# stage2 focused command (Code Generation Plan §4 段2). exit: 0
+# node --test test/admin-occasional-save.test.mjs test/admin-occasional-screens.test.mjs test/admin-occasional-pin.test.mjs test/admin-live-operations.test.mjs test/admin-live-review-fixes.test.mjs
+ok 1 - Live is the initial primary tab and Tickets is not a global tab
+ok 2 - Live workspace has semantic Liveページ and 予約管理 tabs
+ok 3 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 4 - Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 5 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 6 - Live workspace initial state is Liveページ and 開催予定
+ok 7 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 8 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 9 - Live edit workspace renders add and edit in the detail pane, and News is an edit surface too (no generic dialog)
+ok 10 - master-detail marks only the first upcoming card as Next Live
+ok 11 - Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 12 - new Live prioritizes source intake and gates post-save tasks until first save
+ok 13 - Live validation blocks missing date and venue before changing data or saving
+ok 14 - Live category mismatch warns but saves without automatically moving collection
+ok 15 - Live API save reports saving, saved, and failed states around the existing save route
+ok 16 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 17 - reselecting the active global Live tab is a no-op for a dirty editor
+ok 18 - reselecting the active global Live tab is also a no-op for a clean editor
+ok 19 - Live internal task switching preserves dirty input without discard confirmation
+ok 20 - API fallback is read-only while keeping Live navigation available
+ok 21 - API fallback keeps every admin collection immutable while existing details remain viewable
+ok 22 - API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 23 - beforeunload protects global changes and Live dirty or saving states
+ok 24 - explicit Local Mode labels the header action as JSON export
+ok 25 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+ok 26 - sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 27 - sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 28 - essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 29 - saved header action maintains white text contrast through hover and focus
+ok 30 - sticky Live task tabs and footer have no clipping workspace ancestor
+ok 31 - production Live lock gives every workspace button a disabled affordance
+ok 32 - admin build marker and operator docs match the merged Live UI assets
+ok 33 - Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 34 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 35 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 36 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 37 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 38 - Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 39 - global tabs re-enable and navigate normally after Live API publish succeeds
+ok 40 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 41 - shared LiveOperations script is loaded before the admin application
+ok 42 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 43 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 44 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 45 - AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 46 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 47 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 48 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+ok 49 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+ok 50 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 51 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 52 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 53 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 54 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 55 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 56 - AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 57 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 58 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 59 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+ok 60 - AIで整理 source intake never falls back from a custom API base to canonical production / openai
+ok 61 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 62 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 63 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 64 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 65 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 66 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 67 - AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 68 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 69 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 70 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+ok 71 - AIで整理 source intake never falls back from a custom API base to canonical production / claude
+ok 72 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 73 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 74 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 75 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+ok 76 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 77 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 78 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 79 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 80 - AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 81 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 82 - structured Live editor normalizes legacy date and saves independent detail fields
+ok 83 - unparsed legacy Live date is preserved until a valid replacement is entered
+ok 84 - saving a Live merges new fields into the original object without dropping unknown properties
+ok 85 - unified X announcement preview drives Intent and copy without save
+ok 86 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 87 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 88 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 89 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 90 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 91 - new Live requires an explicit save before X Intent or reservation operations
+ok 92 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 93 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 94 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 95 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 96 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 97 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 98 - reservation loading for a non-current Live cannot mutate the current modal
+ok 99 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 100 - cross-Live ledger response cannot mutate a disconnected replacement target
+ok 101 - cross-Live ledger response requires both current filters to match its snapshot
+ok 102 - cross-Live filters refresh without reloading when the effective selection remains valid
+ok 103 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 104 - reservation status actions use escaped data attributes and delegated event handling
+ok 105 - generic edit modal (Music, until stage 3 replaces it) remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 106 - saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 107 - saving a new past Live activates its visible destination category
+ok 108 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+ok 109 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 110 - music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+ok 111 - music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+ok 112 - music data fields API failure keeps editor and baseline, structured errors bind only matching release
+ok 113 - music data fields legacy date 2025.5.5 stays on unrelated save and move
+ok 114 - music data fields legacy date 2025/05/05 stays on unrelated save and move
+ok 115 - music data fields legacy date 2025.05 stays on unrelated save and move
+ok 116 - music data fields legacy date  stays on unrelated save and move
+ok 117 - music data fields legacy date undefined stays on unrelated save and move
+ok 118 - music data fields legacy date 42 stays on unrelated save and move
+ok 119 - music data fields legacy date null stays on unrelated save and move
+ok 120 - music data fields new release empty or shaped date, header validation and baseline only after success
+ok 121 - music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+ok 122 - music data fields deletion clears featured and shared video references through Local JSON
+ok 123 - music data fields deletion clears featured and shared video references through API
+ok 124 - music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+ok 125 - music data fields release and video category moves preserve IDs and all selections
+ok 126 - music data fields successful saves advance date baseline and failures retain the old baseline
+ok 127 - music data fields image upload blocks release mutation and JSON failure retains baseline
+ok 128 - music data fields structured API error for another release never marks the active release
+ok 129 - music data fields RV41-01 failed move retry with same category saves one release
+ok 130 - music data fields RV41-01 failed move retry with original category saves one release
+ok 131 - music data fields RV41-01 failed move retry with other field saves one release
+ok 132 - music data fields RV41-01 failed move then delete removes the moved release and featured reference
+ok 133 - music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases
+ok 134 - music data fields RV41-01 release deletion survives header failure and retry
+ok 135 - music data fields RV41-01 shared video deletion survives header failure and retry
+ok 136 - music data fields RV41-01 new release retry keeps its generated ID after category change
+ok 137 - T46-HEADER API connected: the Header says only 接続中, the band is not shown, and the build mark is the title, not text
+ok 138 - T46-HEADER API connection failed: the band says so, the Header stays 読み取り専用 and the 保存 button is off
+ok 139 - T46-HEADER Local Mode: the band says ローカルJSONモード, the Header says Local Mode, and the button exports JSON
+ok 140 - T46-HEADER without a build mark there is no title; a connection that comes back after a failure hides the band again
+ok 141 - T46-HEADER the other tabs differ from the base commit only in this display: 保存 button, Local Mode and read-only band (the Header markup and the tabs are the Live master's since \#47: T47-HEADER, T47-TABS)
+ok 142 - T46-HEADER a load error shows the band again with its message; the boot marker keeps the build out of the visible text
+ok 143 - T46-SUMMARY-BASE a summary read that fails (401) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 144 - T46-SUMMARY-BASE a summary read that fails (403) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 145 - T46-SUMMARY-BASE a summary read that fails (404) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 146 - T46-SUMMARY-BASE a summary read that fails (500) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 147 - T46-SUMMARY-BASE a summary read that fails (no connection) is only ever sent to the one base, keeps the base URL, and the save and reservation routes go on using it
+ok 148 - T46-SUMMARY-BASE the summary read asks adminFetch not to fall back, and the other reads and writes keep the default policy
+ok 149 - T46-SUMMARY-BASE the other reads still fall back to the canonical base as before (only the summary is exempt)
+ok 150 - T46-ERRORLINE (a) after a failed status change, drawing the same reservation again keeps the failure line (width change, ledger read, the view called again)
+ok 151 - T46-ERRORLINE (a) the same holds for the 予約管理 detail, and an authentication failure line is kept as well
+ok 152 - T46-ERRORLINE (b) another reservation, the list, and then the same reservation again start without the line
+ok 153 - T46-ERRORLINE (b) the 予約管理 detail: closing it and opening it again, or opening another one, starts without the line
+ok 154 - T46-ERRORLINE (c) a status change that succeeds leaves no line: the reservation closes and opens clean
+ok 155 - T47-PIN the pin tests read the app of the base commit (1f3a1cd), not the working tree
+ok 156 - T47-PIN the fixture is the base the expectations are built from
+ok 157 - T47-PIN (a) News 更新 (existing): the item is replaced in place by exactly the seven keys of the form, and the PUT is the whole data
+ok 158 - T47-PIN (a) News 更新 (new): a new item goes to the head with an id news-<time> and the default link text
+ok 159 - T47-PIN (a) a release 更新 (existing, same category): every key of the form is sent and the release moves to the head of its category
+ok 160 - T47-PIN (a) a release 更新 that moves the category: removed from the original, head of the destination, id and references kept
+ok 161 - T47-PIN (a) a release 更新 (new): head of the chosen category, id disc-<time>, an empty release date is allowed
+ok 162 - T47-PIN (a) a release date is checked only when it is new or changed; the Worker's 400 fields come back to the field
+ok 163 - T47-PIN (a) an old release date written another way is kept when another field is saved, and refused when it is changed to a bad shape
+ok 164 - T47-PIN (a) a video 更新 (existing): the URL becomes the 11-character id, three keys are sent, the video moves to the head
+ok 165 - T47-PIN (a) a video 更新 that moves the category, and a new video: head of the destination; id yt-<time>
+ok 166 - T47-PIN (a) an invalid YouTube URL / ID is refused with the toast; nothing is sent and the modal stays
+ok 167 - T47-PIN (a) when the PUT fails: a News/video 更新 reports success of the modal (closed, data kept, header marked); a release 更新 keeps the modal open
+ok 168 - T47-PIN (a) Local Mode: a modal 更新 never calls the API; it marks the data changed, and the header 保存 exports the JSON
+ok 169 - T47-PIN (b) deleting News: after the confirm nothing is sent; the header 保存 then sends the data without the item
+ok 170 - T47-PIN (b) deleting a release: the featured release and nothing else is cleared; the other values are sent as they were
+ok 171 - T47-PIN (b) deleting a video: the releases that play it get an empty playbackVideoId in the same PUT
+ok 172 - T47-PIN (b) deleting a video nothing plays, or a demo release that is not featured, clears nothing else
+ok 173 - T47-PIN (b) deleting in Local Mode exports the whole data after the references are cleared
+ok 174 - T47-PIN (c) Site inputs write the data at once (no PUT); the header 保存 then sends the whole data
+ok 175 - T47-PIN (c) Profile text and links, and the Channel URL, are in the same whole-data PUT
+ok 176 - T47-PIN (c) the header 保存 sends every unsaved input of every tab at once, and the PUT of nothing changed is the data as loaded
+ok 177 - T47-PIN (c) the header 保存: an upload in progress blocks it; a failure keeps the data and says so; a second click while saving sends nothing
+ok 178 - T47-PIN (c) the header 保存 refuses a duplicate Live id and a bad release date before sending
+ok 179 - T47-PIN (d) every News of the base data: opened and saved unchanged it is identical, free date included, in the same place
+ok 180 - T47-PIN (d) changing one News field changes only that field; double quotes, full-width characters and blank lines survive
+ok 181 - T47-PIN (d) old-format News: the form rebuilds exactly seven keys; a key the form does not know is dropped
+ok 182 - T47-PIN (d) every release and video of the base data: opened and saved unchanged the content is identical, and it moves to the head of its category
+ok 183 - T47-PIN (d) opening and closing without saving changes nothing and sends nothing
+ok 184 - T47-PIN (d) old-format releases: the form rebuilds the eight keys, an unedited odd date keeps its type, and an unknown key is dropped
+ok 185 - T47-PIN (d) old-format videos: three keys, an unknown key dropped, a URL-shaped stored id becomes the 11-character id
+ok 186 - T47-PIN (d) numeric-looking ids: the list opens an item by the id as a string; a numeric id is not found that way
+ok 187 - T47-PIN (d) long values and a long profile survive an unchanged open and save
+ok 188 - T47-PIN (e) the featured release and a release's video are kept while their target exists, whatever else is saved
+ok 189 - T47-PIN (e) every save runs the reconciliation: a reference with no target is sent as the empty string
+ok 190 - T47-PIN (e) the Site and release choices are rebuilt from the data after a deletion or a move
+ok 191 - T47-PIN (f) API Mode: a News image is uploaded at selection, the hidden input takes the URL, and the 更新 sends it
+ok 192 - T47-PIN (f) an upload in progress blocks the modal 更新; a failed upload restores the previous image and says so
+ok 193 - T47-PIN (f) removing a modal image sends an empty image; it does not mark the header 保存 by itself
+ok 194 - T47-PIN (f) Site hero and Profile images write the data at once; the header 保存 sends them (API)
+ok 195 - T47-PIN (f) Local Mode: the chosen file gets assets/images/<name>_<yyyymmdd>.<ext>, is kept for download, and the export carries the path
+ok 196 - T47-PIN (f) Local Mode: Site and Profile images go into the data at once and are exported
+ok 197 - T47-PIN empty lists: the empty states render and a new item still goes to the head of an empty list
+ok 198 - T47-PIN API fallback (read-only): a modal 更新, a deletion and the header 保存 send nothing and change nothing
+ok 199 - T47-EQ News: changing every field of one item sends the body the modal 更新 sent (same keys, order, values, position)
+ok 200 - T47-EQ News: changing one value keeps the other values, including a free-form date, a double quote and full-width characters
+ok 201 - T47-EQ News: opening an item and saving it without a change sends the same body (a save with nothing to save is forced here)
+ok 202 - T47-EQ News: a new item goes to the head with the same keys and the default link text
+ok 203 - T47-EQ News (intended difference): delete — the modal needed two steps (deleteItem, then the header 保存), the edit surface saves in one; the PUT body is the same
+ok 204 - T47-EQ News: an item of an older shape is rebuilt to the seven keys when one value is changed, and keys the form does not have are dropped
+ok 205 - T47-EQ News: long values, an empty description and an empty image are kept as they are
+ok 206 - T47-EQ News: an item whose id looks like a number opens from the list, and its id keeps its type in the body
+ok 207 - T47-SAVE the four states: 保存済み, 未保存, 保存しています…, 保存できませんでした; typing a value and putting it back is 保存済み again
+ok 208 - T47-SAVE a new item is 保存済み until something is typed, is not in the list until saved, and becomes the edit of the saved item
+ok 209 - T47-SAVE saving with nothing to save sends nothing and answers true
+ok 210 - T47-SAVE while saving, the inputs, the moves, delete and add are locked, and a second click sends one PUT
+ok 211 - T47-SAVE a failed save keeps the inputs and the surface, says why, leaves siteData and the saved baseline as they were, and the retry sends the same body
+ok 212 - T47-SAVE after a save, siteData and the baseline hold the saved item and the next save is built on it
+ok 213 - T47-SAVE in Local Mode a save reflects into memory and waits for the JSON export; no API call
+ok 214 - T47-SAVE an image that is still uploading is not saved: nothing is sent and the person is told
+ok 215 - T47-SCOPE a News save does not send another input's unsaved change, keeps everything else (live, ticket, \#41 references, hero image), and leaves that change waiting
+ok 216 - T47-SCOPE (intended difference from before \#47) the modal 更新 sent another input's unsaved change along with the News item; the edit surface does not
+ok 217 - T47-SCOPE a News delete sends the baseline without that item and nothing of another input's unsaved change
+ok 218 - T47-SCOPE the header 保存 still sends the whole data: the other change and the saved News item together
+ok 219 - T47-SCOPE a failed save does not move the saved baseline; a duplicate Live id is not sent
+ok 220 - T47-SCOPE the slice functions touch only the news list
+ok 221 - T47-GUARD unsaved + another item: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 222 - T47-GUARD unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 223 - T47-GUARD unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 224 - T47-GUARD unsaved + a global tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and drops the input
+ok 225 - T47-GUARD after 破棄して移動 the input is back to the saved content (the same item shown again is not the dropped text)
+ok 226 - T47-GUARD with nothing unsaved no surface opens and the move is made at once (synchronously)
+ok 227 - T47-GUARD a new item with something typed is unsaved too; typing and putting it back is not
+ok 228 - T47-GUARD the browser asks before leaving while something is unsaved, saving, or uploading; not otherwise
+ok 229 - T47-DELETE the confirmation names the item, says it also leaves the public page, and has やめる (focused) and 削除する
+ok 230 - T47-DELETE 削除する saves once, closes the surface to the list, and the list no longer has the item
+ok 231 - T47-DELETE a failed delete keeps the item in the list and the surface and the inputs; siteData is as before
+ok 232 - T47-DELETE in Local Mode the delete is made in memory and waits for the JSON export; a new item has no delete
+ok 233 - T47-IMAGE choosing a picture is unsaved while it uploads (save cannot be pressed) and after it, while it differs from the saved picture; then it is saved with the URL
+ok 234 - T47-IMAGE a failed upload says so with the reason, keeps the current picture, and the surface is not unsaved because of it
+ok 235 - T47-IMAGE 画像を外す empties the picture (unsaved) and the button says 画像を選ぶ; the same surface shown again after 破棄 has the saved picture back
+ok 236 - T47-IMAGE 破棄して移動 while a picture uploads releases the upload: it does not finish into the next item
+ok 237 - T47-IMAGE in Local Mode the picture gets a file name from the date and is part of the save; nothing is uploaded
+ok 238 - T47-HEADER the Header is one row: 1212 Admin on the left, the connection on the right, and no 保存 button by default
+ok 239 - T47-HEADER the heights are the Live master's: 46px / tabs 49px up to 899px wide, 62px / 53px from 900px
+ok 240 - T47-HEADER while the header button is shown the Header is 56px / 64px tall and the tabs and the Live sticky offsets follow it
+ok 241 - T47-HEADER the Live sticky offsets follow the variables (nothing in the Live group has the old 92px / 54px)
+ok 242 - T47-HEADER the connection label and the band are as before: 接続中 / API Fallback / Local Mode
+ok 243 - T47-HEADER while the API is connected the header 保存 is hidden; only a change still saved the old way shows it; Local Mode always has JSONを書き出す
+ok 244 - T47-TABS five tabs: Site, News, Live, Music, Profile — in this order, Live selected, no YouTube and no Disco
+ok 245 - T47-TABS every tab has its section; \#music-tab holds what the YouTube and Disco tabs held until stage 3 replaces it
+ok 246 - T47-TABS clicking a tab shows its section and hides the others; the Live editor and the News edit surface close behind it
+ok 247 - T47-NEWS the list rows are buttons with the date and the title; the first screen is only the list; nothing is selected
+ok 248 - T47-NEWS a click on a row (the way the browser delivers it) opens that item; the opened row is marked
+ok 249 - T47-NEWS the edit surface has every field with the same id and the values of the item, in the order Date, Title, Description, Image, Link URL, Link text
+ok 250 - T47-NEWS the fields are written as text: a double quote, a tag and a line break in the saved values arrive unchanged
+ok 251 - T47-NEWS an item of an older shape opens (the missing values are empty) and an id that looks like a number opens from its row
+ok 252 - T47-NEWS a new item is an empty edit surface (link text view...), titled 新しいお知らせ, with no delete and 保存済み
+ok 253 - T47-NEWS a list with no item says so and offers + 追加; the edit surface on a wide screen says what to do
+ok 254 - T47-NEWS a title that is empty is shown as （題なし） in the row and in the top bar
+ok 255 - T47-NEWS the 保存して公開 is on screen only while it can be used on a narrow screen, and always (dimmed when idle) on a wide one
+ok 256 - T47-NEWS leaving the edit surface with ‹ 一覧 (nothing unsaved) goes back to the list and clears the surface
+ok 257 - T47-NEWS the read-only state (API connection failed) lets the item be read but not changed, added or saved
+ok 258 - T47-IMAGE the picture form says 画像を選ぶ without a picture, and 画像を変える with 画像を外す with one; the path is shown and escaped
+ok 259 - T47-IMAGE the select and clear buttons keep the ids and handlers the upload code uses, in the form of every tab
+ok 260 - T47-STYLE-SPEC every rule of Occasional Updates belongs to an occ- class, and one that restyles a shared class sits under .occ-tab with a specificity of (0,2,0) or more
+ok 261 - T47-STYLE-SPEC the Occasional Updates group comes after the shared groups it restyles and before Safe Area
+ok 262 - T47-STYLE the buttons and rows the News surface uses are at least 44px tall
+ok 263 - T47-STYLE the narrow layout hides the page chrome while an edit is open and fixes 保存して公開 to the bottom; the wide layout puts the two panes side by side
+ok 264 - T47-STYLE a fixed 保存して公開 has no scrolling ancestor of its own (overflow / transform / filter) in the occ- rules
+# tests 310
+# suites 0
+# pass 310
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0

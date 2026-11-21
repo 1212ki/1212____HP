@@ -1,0 +1,646 @@
+# 段5 GREEN
+TAP version 13
+# Subtest: T47-GUARD a News item unsaved + another item: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 1 - T47-GUARD a News item unsaved + another item: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 50.141417
+  ...
+# Subtest: T47-GUARD a News item nothing unsaved + another item: no surface, the move is made at once
+ok 2 - T47-GUARD a News item nothing unsaved + another item: no surface, the move is made at once
+  ---
+  duration_ms: 3.777583
+  ...
+# Subtest: T47-GUARD a News item unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 3 - T47-GUARD a News item unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 10.001375
+  ...
+# Subtest: T47-GUARD a News item nothing unsaved + ‹ 一覧: no surface, the move is made at once
+ok 4 - T47-GUARD a News item nothing unsaved + ‹ 一覧: no surface, the move is made at once
+  ---
+  duration_ms: 8.660917
+  ...
+# Subtest: T47-GUARD a News item unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 5 - T47-GUARD a News item unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 9.413541
+  ...
+# Subtest: T47-GUARD a News item nothing unsaved + + 追加: no surface, the move is made at once
+ok 6 - T47-GUARD a News item nothing unsaved + + 追加: no surface, the move is made at once
+  ---
+  duration_ms: 6.866417
+  ...
+# Subtest: T47-GUARD a News item unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 7 - T47-GUARD a News item unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 17.497708
+  ...
+# Subtest: T47-GUARD a News item nothing unsaved + the site tab: no surface, the move is made at once
+ok 8 - T47-GUARD a News item nothing unsaved + the site tab: no surface, the move is made at once
+  ---
+  duration_ms: 6.136958
+  ...
+# Subtest: T47-GUARD a News item unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 9 - T47-GUARD a News item unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 9.294709
+  ...
+# Subtest: T47-GUARD a News item nothing unsaved + the live tab: no surface, the move is made at once
+ok 10 - T47-GUARD a News item nothing unsaved + the live tab: no surface, the move is made at once
+  ---
+  duration_ms: 6.228459
+  ...
+# Subtest: T47-GUARD a News item unsaved + the music tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 11 - T47-GUARD a News item unsaved + the music tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 10.277583
+  ...
+# Subtest: T47-GUARD a News item nothing unsaved + the music tab: no surface, the move is made at once
+ok 12 - T47-GUARD a News item nothing unsaved + the music tab: no surface, the move is made at once
+  ---
+  duration_ms: 8.476625
+  ...
+# Subtest: T47-GUARD a News item unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 13 - T47-GUARD a News item unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 12.904292
+  ...
+# Subtest: T47-GUARD a News item nothing unsaved + the profile tab: no surface, the move is made at once
+ok 14 - T47-GUARD a News item nothing unsaved + the profile tab: no surface, the move is made at once
+  ---
+  duration_ms: 2.74225
+  ...
+# Subtest: T47-GUARD a work unsaved + another work: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 15 - T47-GUARD a work unsaved + another work: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.035875
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + another work: no surface, the move is made at once
+ok 16 - T47-GUARD a work nothing unsaved + another work: no surface, the move is made at once
+  ---
+  duration_ms: 6.093917
+  ...
+# Subtest: T47-GUARD a work unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 17 - T47-GUARD a work unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.377708
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + ‹ 一覧: no surface, the move is made at once
+ok 18 - T47-GUARD a work nothing unsaved + ‹ 一覧: no surface, the move is made at once
+  ---
+  duration_ms: 5.873708
+  ...
+# Subtest: T47-GUARD a work unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 19 - T47-GUARD a work unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 24.15275
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + + 追加: no surface, the move is made at once
+ok 20 - T47-GUARD a work nothing unsaved + + 追加: no surface, the move is made at once
+  ---
+  duration_ms: 7.745584
+  ...
+# Subtest: T47-GUARD a work unsaved + 作品／映像 (映像へ): the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 21 - T47-GUARD a work unsaved + 作品／映像 (映像へ): the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 9.896667
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + 作品／映像 (映像へ): no surface, the move is made at once
+ok 22 - T47-GUARD a work nothing unsaved + 作品／映像 (映像へ): no surface, the move is made at once
+  ---
+  duration_ms: 3.645333
+  ...
+# Subtest: T47-GUARD a work unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 23 - T47-GUARD a work unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.89725
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + the site tab: no surface, the move is made at once
+ok 24 - T47-GUARD a work nothing unsaved + the site tab: no surface, the move is made at once
+  ---
+  duration_ms: 35.990333
+  ...
+# Subtest: T47-GUARD a work unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 25 - T47-GUARD a work unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 11.89575
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + the news tab: no surface, the move is made at once
+ok 26 - T47-GUARD a work nothing unsaved + the news tab: no surface, the move is made at once
+  ---
+  duration_ms: 5.006958
+  ...
+# Subtest: T47-GUARD a work unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 27 - T47-GUARD a work unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 9.9185
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + the live tab: no surface, the move is made at once
+ok 28 - T47-GUARD a work nothing unsaved + the live tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.877167
+  ...
+# Subtest: T47-GUARD a work unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 29 - T47-GUARD a work unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.492333
+  ...
+# Subtest: T47-GUARD a work nothing unsaved + the profile tab: no surface, the move is made at once
+ok 30 - T47-GUARD a work nothing unsaved + the profile tab: no surface, the move is made at once
+  ---
+  duration_ms: 8.3815
+  ...
+# Subtest: T47-GUARD a video unsaved + another video: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 31 - T47-GUARD a video unsaved + another video: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 6.649666
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + another video: no surface, the move is made at once
+ok 32 - T47-GUARD a video nothing unsaved + another video: no surface, the move is made at once
+  ---
+  duration_ms: 4.509291
+  ...
+# Subtest: T47-GUARD a video unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 33 - T47-GUARD a video unsaved + ‹ 一覧: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 4.731292
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + ‹ 一覧: no surface, the move is made at once
+ok 34 - T47-GUARD a video nothing unsaved + ‹ 一覧: no surface, the move is made at once
+  ---
+  duration_ms: 4.991917
+  ...
+# Subtest: T47-GUARD a video unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 35 - T47-GUARD a video unsaved + + 追加: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 8.436875
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + + 追加: no surface, the move is made at once
+ok 36 - T47-GUARD a video nothing unsaved + + 追加: no surface, the move is made at once
+  ---
+  duration_ms: 4.761292
+  ...
+# Subtest: T47-GUARD a video unsaved + 作品／映像 (作品へ): the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 37 - T47-GUARD a video unsaved + 作品／映像 (作品へ): the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 6.173916
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + 作品／映像 (作品へ): no surface, the move is made at once
+ok 38 - T47-GUARD a video nothing unsaved + 作品／映像 (作品へ): no surface, the move is made at once
+  ---
+  duration_ms: 4.707625
+  ...
+# Subtest: T47-GUARD a video unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 39 - T47-GUARD a video unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 6.640834
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + the site tab: no surface, the move is made at once
+ok 40 - T47-GUARD a video nothing unsaved + the site tab: no surface, the move is made at once
+  ---
+  duration_ms: 45.294542
+  ...
+# Subtest: T47-GUARD a video unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 41 - T47-GUARD a video unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 28.711792
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + the news tab: no surface, the move is made at once
+ok 42 - T47-GUARD a video nothing unsaved + the news tab: no surface, the move is made at once
+  ---
+  duration_ms: 5.112292
+  ...
+# Subtest: T47-GUARD a video unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 43 - T47-GUARD a video unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.230333
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + the live tab: no surface, the move is made at once
+ok 44 - T47-GUARD a video nothing unsaved + the live tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.952333
+  ...
+# Subtest: T47-GUARD a video unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 45 - T47-GUARD a video unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 9.127792
+  ...
+# Subtest: T47-GUARD a video nothing unsaved + the profile tab: no surface, the move is made at once
+ok 46 - T47-GUARD a video nothing unsaved + the profile tab: no surface, the move is made at once
+  ---
+  duration_ms: 8.015875
+  ...
+# Subtest: T47-GUARD the Channel URL unsaved + 作品／映像 (作品へ): the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 47 - T47-GUARD the Channel URL unsaved + 作品／映像 (作品へ): the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.509375
+  ...
+# Subtest: T47-GUARD the Channel URL nothing unsaved + 作品／映像 (作品へ): no surface, the move is made at once
+ok 48 - T47-GUARD the Channel URL nothing unsaved + 作品／映像 (作品へ): no surface, the move is made at once
+  ---
+  duration_ms: 5.436
+  ...
+# Subtest: T47-GUARD the Channel URL unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 49 - T47-GUARD the Channel URL unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 5.179583
+  ...
+# Subtest: T47-GUARD the Channel URL nothing unsaved + the site tab: no surface, the move is made at once
+ok 50 - T47-GUARD the Channel URL nothing unsaved + the site tab: no surface, the move is made at once
+  ---
+  duration_ms: 25.91175
+  ...
+# Subtest: T47-GUARD the Channel URL unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 51 - T47-GUARD the Channel URL unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 6.818708
+  ...
+# Subtest: T47-GUARD the Channel URL nothing unsaved + the news tab: no surface, the move is made at once
+ok 52 - T47-GUARD the Channel URL nothing unsaved + the news tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.224375
+  ...
+# Subtest: T47-GUARD the Channel URL unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 53 - T47-GUARD the Channel URL unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.324834
+  ...
+# Subtest: T47-GUARD the Channel URL nothing unsaved + the live tab: no surface, the move is made at once
+ok 54 - T47-GUARD the Channel URL nothing unsaved + the live tab: no surface, the move is made at once
+  ---
+  duration_ms: 2.53075
+  ...
+# Subtest: T47-GUARD the Channel URL unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 55 - T47-GUARD the Channel URL unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 8.951042
+  ...
+# Subtest: T47-GUARD the Channel URL nothing unsaved + the profile tab: no surface, the move is made at once
+ok 56 - T47-GUARD the Channel URL nothing unsaved + the profile tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.481083
+  ...
+# Subtest: T47-GUARD Site unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 57 - T47-GUARD Site unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 10.9715
+  ...
+# Subtest: T47-GUARD Site nothing unsaved + the news tab: no surface, the move is made at once
+ok 58 - T47-GUARD Site nothing unsaved + the news tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.628291
+  ...
+# Subtest: T47-GUARD Site unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 59 - T47-GUARD Site unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 8.010417
+  ...
+# Subtest: T47-GUARD Site nothing unsaved + the live tab: no surface, the move is made at once
+ok 60 - T47-GUARD Site nothing unsaved + the live tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.969958
+  ...
+# Subtest: T47-GUARD Site unsaved + the music tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 61 - T47-GUARD Site unsaved + the music tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.942542
+  ...
+# Subtest: T47-GUARD Site nothing unsaved + the music tab: no surface, the move is made at once
+ok 62 - T47-GUARD Site nothing unsaved + the music tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.589375
+  ...
+# Subtest: T47-GUARD Site unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 63 - T47-GUARD Site unsaved + the profile tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 6.348167
+  ...
+# Subtest: T47-GUARD Site nothing unsaved + the profile tab: no surface, the move is made at once
+ok 64 - T47-GUARD Site nothing unsaved + the profile tab: no surface, the move is made at once
+  ---
+  duration_ms: 2.327209
+  ...
+# Subtest: T47-GUARD Profile unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 65 - T47-GUARD Profile unsaved + the site tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 7.216542
+  ...
+# Subtest: T47-GUARD Profile nothing unsaved + the site tab: no surface, the move is made at once
+ok 66 - T47-GUARD Profile nothing unsaved + the site tab: no surface, the move is made at once
+  ---
+  duration_ms: 2.501834
+  ...
+# Subtest: T47-GUARD Profile unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 67 - T47-GUARD Profile unsaved + the news tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 35.613334
+  ...
+# Subtest: T47-GUARD Profile nothing unsaved + the news tab: no surface, the move is made at once
+ok 68 - T47-GUARD Profile nothing unsaved + the news tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.913291
+  ...
+# Subtest: T47-GUARD Profile unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 69 - T47-GUARD Profile unsaved + the live tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 9.253667
+  ...
+# Subtest: T47-GUARD Profile nothing unsaved + the live tab: no surface, the move is made at once
+ok 70 - T47-GUARD Profile nothing unsaved + the live tab: no surface, the move is made at once
+  ---
+  duration_ms: 2.982958
+  ...
+# Subtest: T47-GUARD Profile unsaved + the music tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+ok 71 - T47-GUARD Profile unsaved + the music tab: the confirmation surface opens with 編集を続ける focused; Stay, Escape and the backdrop change nothing; 破棄して移動 moves and the input goes back to what is saved
+  ---
+  duration_ms: 5.69125
+  ...
+# Subtest: T47-GUARD Profile nothing unsaved + the music tab: no surface, the move is made at once
+ok 72 - T47-GUARD Profile nothing unsaved + the music tab: no surface, the move is made at once
+  ---
+  duration_ms: 4.234209
+  ...
+# Subtest: T47-GUARD typing a value and putting it back is nothing unsaved: Site, Profile and the Channel URL leave without asking
+ok 73 - T47-GUARD typing a value and putting it back is nothing unsaved: Site, Profile and the Channel URL leave without asking
+  ---
+  duration_ms: 16.857334
+  ...
+# Subtest: T47-GUARD the Channel URL is not asked about when moving inside the list: another video, ‹ 一覧 and 作品／映像 within the video (scope: the open item)
+ok 74 - T47-GUARD the Channel URL is not asked about when moving inside the list: another video, ‹ 一覧 and 作品／映像 within the video (scope: the open item)
+  ---
+  duration_ms: 5.455125
+  ...
+# Subtest: T47-GUARD a picture still uploading is unsaved: every way out asks, and 破棄して移動 lets the upload go (Site, Profile, a News item, a work)
+ok 75 - T47-GUARD a picture still uploading is unsaved: every way out asks, and 破棄して移動 lets the upload go (Site, Profile, a News item, a work)
+  ---
+  duration_ms: 31.400916
+  ...
+# Subtest: T47-GUARD while a save is running nothing moves and nothing is asked: the tabs, the items, ‹ 一覧 and 作品／映像 wait
+ok 76 - T47-GUARD while a save is running nothing moves and nothing is asked: the tabs, the items, ‹ 一覧 and 作品／映像 wait
+  ---
+  duration_ms: 7.354583
+  ...
+# Subtest: T47-GUARD an unsaved Live holds the same surface when the way out is a new screen (the Music tab, a News item opened from Live)
+ok 77 - T47-GUARD an unsaved Live holds the same surface when the way out is a new screen (the Music tab, a News item opened from Live)
+  ---
+  duration_ms: 13.091875
+  ...
+# Subtest: T47-GUARD unsaved Ticket Page settings hold the same surface for the tabs; and an unsaved Site holds it for opening a Live
+ok 78 - T47-GUARD unsaved Ticket Page settings hold the same surface for the tabs; and an unsaved Site holds it for opening a Live
+  ---
+  duration_ms: 6.653875
+  ...
+# Subtest: T47-GUARD beforeunload a News item: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+ok 79 - T47-GUARD beforeunload a News item: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+  ---
+  duration_ms: 39.726334
+  ...
+# Subtest: T47-GUARD beforeunload a work: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+ok 80 - T47-GUARD beforeunload a work: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+  ---
+  duration_ms: 26.733958
+  ...
+# Subtest: T47-GUARD beforeunload a video: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+ok 81 - T47-GUARD beforeunload a video: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+  ---
+  duration_ms: 37.155834
+  ...
+# Subtest: T47-GUARD beforeunload the Channel URL: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+ok 82 - T47-GUARD beforeunload the Channel URL: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+  ---
+  duration_ms: 41.339125
+  ...
+# Subtest: T47-GUARD beforeunload Site: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+ok 83 - T47-GUARD beforeunload Site: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+  ---
+  duration_ms: 14.364458
+  ...
+# Subtest: T47-GUARD beforeunload Profile: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+ok 84 - T47-GUARD beforeunload Profile: asks while unsaved, saving, uploading and (Local Mode) waiting for the export; not when saved or put back
+  ---
+  duration_ms: 17.955833
+  ...
+# Subtest: T47-GUARD beforeunload also asks for an unsaved Live, and unsaved Ticket Page settings (the \#46 conditions are kept)
+ok 85 - T47-GUARD beforeunload also asks for an unsaved Live, and unsaved Ticket Page settings (the \#46 conditions are kept)
+  ---
+  duration_ms: 21.375833
+  ...
+# Subtest: T47-STATES S47-01 the save state of News, a work, a video, Site, Profile and the Channel URL: 保存済み, 未保存, 保存しています…, 保存できませんでした (with a reason), and in Local Mode JSON書き出し待ち
+ok 86 - T47-STATES S47-01 the save state of News, a work, a video, Site, Profile and the Channel URL: 保存済み, 未保存, 保存しています…, 保存できませんでした (with a reason), and in Local Mode JSON書き出し待ち
+  ---
+  duration_ms: 153.482041
+  ...
+# Subtest: T47-STATES S47-02 the surface for leaving an unsaved screen: its title, 破棄して移動, 編集を続ける (focused), and Escape / the backdrop choose 編集を続ける
+ok 87 - T47-STATES S47-02 the surface for leaving an unsaved screen: its title, 破棄して移動, 編集を続ける (focused), and Escape / the backdrop choose 編集を続ける
+  ---
+  duration_ms: 23.168458
+  ...
+# Subtest: T47-STATES S47-03 the delete confirmation: the title (or the untitled wording), 削除すると公開画面からも消えます。 and, only when it applies, one more line for the face of the site and for the videos works play
+ok 88 - T47-STATES S47-03 the delete confirmation: the title (or the untitled wording), 削除すると公開画面からも消えます。 and, only when it applies, one more line for the face of the site and for the videos works play
+  ---
+  duration_ms: 31.11325
+  ...
+# Subtest: T47-STATES S47-04 a picture chosen: アップロードしています… (unsaved, cannot be saved, the current picture stays); a failure says 画像をアップロードできませんでした with the reason and keeps the picture
+ok 89 - T47-STATES S47-04 a picture chosen: アップロードしています… (unsaved, cannot be saved, the current picture stays); a failure says 画像をアップロードできませんでした with the reason and keeps the picture
+  ---
+  duration_ms: 24.641083
+  ...
+# Subtest: T47-STATES S47-05 an empty list says まだ登録がありません。 with 「+ 追加」; Music has no category headings when empty
+ok 90 - T47-STATES S47-05 an empty list says まだ登録がありません。 with 「+ 追加」; Music has no category headings when empty
+  ---
+  duration_ms: 3.833791
+  ...
+# Subtest: T47-STATES S47-06 nothing selected (900px and wider): 一覧から選ぶか、「+ 追加」を押してください。 is in the page and shown by the screen until an item is open (has-occ-selection hides it)
+ok 91 - T47-STATES S47-06 nothing selected (900px and wider): 一覧から選ぶか、「+ 追加」を押してください。 is in the page and shown by the screen until an item is open (has-occ-selection hides it)
+  ---
+  duration_ms: 29.502625
+  ...
+# Subtest: T47-STATES S47-07 a new item: empty inputs (News link text view..., a work in Digital Release, a video in Music Video), 保存済み, not in the list, no delete
+ok 92 - T47-STATES S47-07 a new item: empty inputs (News link text view..., a work in Digital Release, a video in Music Video), 保存済み, not in the list, no delete
+  ---
+  duration_ms: 10.283917
+  ...
+# Subtest: T47-STATES S47-08 the release date: a new or changed date in the wrong shape is not saved and the line under the date says why; a date that was not touched saves
+ok 93 - T47-STATES S47-08 the release date: a new or changed date in the wrong shape is not saved and the line under the date says why; a date that was not touched saves
+  ---
+  duration_ms: 45.27525
+  ...
+# Subtest: T47-STATES S47-09 YouTube URL / ID that cannot be read: not saved, and the line under the field says YouTube URL / ID が不正です（IDは11文字）
+ok 94 - T47-STATES S47-09 YouTube URL / ID that cannot be read: not saved, and the line under the field says YouTube URL / ID が不正です（IDは11文字）
+  ---
+  duration_ms: 5.957541
+  ...
+# Subtest: T47-STATES S47-10 a save that worked: 保存済み, the same edit stays (a new item becomes the saved item with a delete), the toast says 保存しました (Local Mode: 編集内容を反映しました。…)
+ok 95 - T47-STATES S47-10 a save that worked: 保存済み, the same edit stays (a new item becomes the saved item with a delete), the toast says 保存しました (Local Mode: 編集内容を反映しました。…)
+  ---
+  duration_ms: 5.518541
+  ...
+# Subtest: T47-STATES S47-11 a save or a delete that failed: 保存できませんでした, the input and the surface stay, one line says why, siteData is as before; a failed delete puts the item back in the list
+ok 96 - T47-STATES S47-11 a save or a delete that failed: 保存できませんでした, the input and the surface stay, one line says why, siteData is as before; a failed delete puts the item back in the list
+  ---
+  duration_ms: 40.831084
+  ...
+# Subtest: T47-STATES S47-12 deleting the face of the site: the same one request empties site.featuredReleaseId, and Site then shows 自動（最新のリリース）
+ok 97 - T47-STATES S47-12 deleting the face of the site: the same one request empties site.featuredReleaseId, and Site then shows 自動（最新のリリース）
+  ---
+  duration_ms: 6.025292
+  ...
+# Subtest: T47-STATES S47-13 deleting a video that works play: the same one request sets their playbackVideoId to "" (選ばない)
+ok 98 - T47-STATES S47-13 deleting a video that works play: the same one request sets their playbackVideoId to "" (選ばない)
+  ---
+  duration_ms: 5.84625
+  ...
+# Subtest: T47-STATES S47-14 a save or a delete that the server refuses for the password: 認証できませんでした。 in the line next to it, input kept
+ok 99 - T47-STATES S47-14 a save or a delete that the server refuses for the password: 認証できませんでした。 in the line next to it, input kept
+  ---
+  duration_ms: 13.938333
+  ...
+# Subtest: T47-STATES S47-15 the API connection failed: the band says API接続失敗（ローカルJSONを読み取り専用で表示）, the header says API Fallback, nothing can be changed and everything can be read (the full list of controls is in T47-MODE)
+ok 100 - T47-STATES S47-15 the API connection failed: the band says API接続失敗（ローカルJSONを読み取り専用で表示）, the header says API Fallback, nothing can be changed and everything can be read (the full list of controls is in T47-MODE)
+  ---
+  duration_ms: 3.833333
+  ...
+# Subtest: T47-STATES S47-16 Local Mode: the band says ローカルJSONモード（従来運用）, the header says Local Mode with JSONを書き出す, and each save waits for the export
+ok 101 - T47-STATES S47-16 Local Mode: the band says ローカルJSONモード（従来運用）, the header says Local Mode with JSONを書き出す, and each save waits for the export
+  ---
+  duration_ms: 2.205958
+  ...
+# Subtest: T47-STATES S47-17 the Channel URL has the four states of its own and is saved apart from the open video
+ok 102 - T47-STATES S47-17 the Channel URL has the four states of its own and is saved apart from the open video
+  ---
+  duration_ms: 10.506417
+  ...
+# Subtest: T47-STATES S47-18 after a save or a delete the choices of 顔にする作品 and その場で再生する映像 are drawn again, and what is being typed there is kept (only a value that is no longer a choice goes back to empty)
+ok 103 - T47-STATES S47-18 after a save or a delete the choices of 顔にする作品 and その場で再生する映像 are drawn again, and what is being typed there is kept (only a value that is no longer a choice goes back to empty)
+  ---
+  duration_ms: 6.73275
+  ...
+# Subtest: T47-STATES S47-19 a duplicate Live id: nothing is sent (News, work, Site, Profile, Channel URL and the header export) and the line says Live IDが重複しています
+ok 104 - T47-STATES S47-19 a duplicate Live id: nothing is sent (News, work, Site, Profile, Channel URL and the header export) and the line says Live IDが重複しています
+  ---
+  duration_ms: 49.724792
+  ...
+# Subtest: T47-STATES S47-20 long titles, double quotes, full-width characters, new lines, an image that is missing: lists and edit surfaces draw them as text and keep every character
+ok 105 - T47-STATES S47-20 long titles, double quotes, full-width characters, new lines, an image that is missing: lists and edit surfaces draw them as text and keep every character
+  ---
+  duration_ms: 12.525792
+  ...
+# Subtest: T47-MODE the API connection failed (read-only): every input, save, delete, add and picture button is off; the lists and every item can still be read; no header 保存; nothing is sent
+ok 106 - T47-MODE the API connection failed (read-only): every input, save, delete, add and picture button is off; the lists and every item can still be read; no header 保存; nothing is sent
+  ---
+  duration_ms: 10.024833
+  ...
+# Subtest: T47-MODE Local Mode: the header says JSONを書き出す, every 保存して公開 reflects into memory and waits for the export, the export writes everything that was saved, and no request is made
+ok 107 - T47-MODE Local Mode: the header says JSONを書き出す, every 保存して公開 reflects into memory and waits for the export, the export writes everything that was saved, and no request is made
+  ---
+  duration_ms: 4.319959
+  ...
+# Subtest: T47-MODE while the API is connected the header button is hidden on every tab and the whole data is sent from nowhere: invokeSaveData sends nothing, whatever is unsaved
+ok 108 - T47-MODE while the API is connected the header button is hidden on every tab and the whole data is sent from nowhere: invokeSaveData sends nothing, whatever is unsaved
+  ---
+  duration_ms: 2.00425
+  ...
+# Subtest: T47-MODE the generic modal is gone: no markup, no function, nothing opens it (the working tree only; the base commit still has it)
+ok 109 - T47-MODE the generic modal is gone: no markup, no function, nothing opens it (the working tree only; the base commit still has it)
+  ---
+  duration_ms: 2.570459
+  ...
+# Subtest: T47-MODE the whole-data save is gone from the screen code: only saveScoped reaches the API, and saveData (Local Mode export) cannot send
+ok 110 - T47-MODE the whole-data save is gone from the screen code: only saveScoped reaches the API, and saveData (Local Mode export) cannot send
+  ---
+  duration_ms: 0.363084
+  ...
+# Subtest: T47-A11Y the rows of the lists are buttons; the edit surfaces are regions named by their heading; the statuses are announced (role=status, aria-live) and the reasons are alerts
+ok 111 - T47-A11Y the rows of the lists are buttons; the edit surfaces are regions named by their heading; the statuses are announced (role=status, aria-live) and the reasons are alerts
+  ---
+  duration_ms: 2.270916
+  ...
+# Subtest: T47-A11Y the confirmation surface is an alertdialog named by its title and described by its body; the delete confirmation focuses やめる, the unsaved one 編集を続ける
+ok 112 - T47-A11Y the confirmation surface is an alertdialog named by its title and described by its body; the delete confirmation focuses やめる, the unsaved one 編集を続ける
+  ---
+  duration_ms: 31.958417
+  ...
+# Subtest: T47-A11Y the focus goes back to the row that opened an item when ‹ 一覧 closes it, and the first input of an edit has the focus when it opens
+ok 113 - T47-A11Y the focus goes back to the row that opened an item when ‹ 一覧 closes it, and the first input of an edit has the focus when it opens
+  ---
+  duration_ms: 21.578542
+  ...
+# Subtest: T47-A11Y 作品／映像 is a tablist: the buttons are tabs with aria-selected / tabindex, ArrowLeft / ArrowRight / Home / End move and select, a click selects
+ok 114 - T47-A11Y 作品／映像 is a tablist: the buttons are tabs with aria-selected / tabindex, ArrowLeft / ArrowRight / Home / End move and select, a click selects
+  ---
+  duration_ms: 2.936083
+  ...
+# Subtest: T47-A11Y with an unsaved edit the arrow keys of 作品／映像 ask first and stay on the tab if the person stays
+ok 115 - T47-A11Y with an unsaved edit the arrow keys of 作品／映像 ask first and stay on the tab if the person stays
+  ---
+  duration_ms: 9.965292
+  ...
+# Subtest: T47-FIXTURE base: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+ok 116 - T47-FIXTURE base: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+  ---
+  duration_ms: 11.3805
+  ...
+# Subtest: T47-FIXTURE empty-lists: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+ok 117 - T47-FIXTURE empty-lists: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+  ---
+  duration_ms: 3.853584
+  ...
+# Subtest: T47-FIXTURE legacy-shapes: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+ok 118 - T47-FIXTURE legacy-shapes: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+  ---
+  duration_ms: 18.8575
+  ...
+# Subtest: T47-FIXTURE long-values: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+ok 119 - T47-FIXTURE long-values: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+  ---
+  duration_ms: 16.955083
+  ...
+# Subtest: T47-FIXTURE numeric-ids: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+ok 120 - T47-FIXTURE numeric-ids: the lists draw, every item opens with its values as they are, opening and closing changes nothing and sends nothing, one change saves and the item opens again
+  ---
+  duration_ms: 7.087875
+  ...
+# Subtest: T47-FIXTURE the base data: News, works and videos keep a double quote, full-width characters, new lines and blank lines exactly (opened and saved unchanged they are the same string)
+ok 121 - T47-FIXTURE the base data: News, works and videos keep a double quote, full-width characters, new lines and blank lines exactly (opened and saved unchanged they are the same string)
+  ---
+  duration_ms: 2.621
+  ...
+# Subtest: T47-FIXTURE an item whose id looks like a number opens from its row (the id is text in the row and a number in the data)
+ok 122 - T47-FIXTURE an item whose id looks like a number opens from its row (the id is text in the row and a number in the data)
+  ---
+  duration_ms: 17.689292
+  ...
+# Subtest: T47-FIXTURE api-fallback: the mode and the failure the fixture describes behave as the states say
+ok 123 - T47-FIXTURE api-fallback: the mode and the failure the fixture describes behave as the states say
+  ---
+  duration_ms: 2.167333
+  ...
+# Subtest: T47-FIXTURE local-mode: the mode and the failure the fixture describes behave as the states say
+ok 124 - T47-FIXTURE local-mode: the mode and the failure the fixture describes behave as the states say
+  ---
+  duration_ms: 3.492958
+  ...
+# Subtest: T47-FIXTURE save-fail: the mode and the failure the fixture describes behave as the states say
+ok 125 - T47-FIXTURE save-fail: the mode and the failure the fixture describes behave as the states say
+  ---
+  duration_ms: 6.865834
+  ...
+# Subtest: T47-FIXTURE delete-fail: the mode and the failure the fixture describes behave as the states say
+ok 126 - T47-FIXTURE delete-fail: the mode and the failure the fixture describes behave as the states say
+  ---
+  duration_ms: 6.990083
+  ...
+# Subtest: T47-FIXTURE the fixture itself has the shape of the production data (counts and shapes only), and every value is synthetic
+ok 127 - T47-FIXTURE the fixture itself has the shape of the production data (counts and shapes only), and every value is synthetic
+  ---
+  duration_ms: 2.095833
+  ...
+1..127
+# tests 127
+# suites 0
+# pass 127
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4159.19975

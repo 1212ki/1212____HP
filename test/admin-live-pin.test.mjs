@@ -271,9 +271,10 @@ test('T46-PIN (d) deleting a Live removes it from the data and the data that is 
   const puts = useRecordingFetch(app);
 
   assert.equal(await deleteLive(app, 'fx-live-past-1', 'past'), true);
-  await app.invokeSaveData({ silent: true });
+  // #47 (D47-08): the delete was saved on the spot (#46); the header save no longer exists while the API is connected and sends nothing more
+  assert.equal(await app.invokeSaveData({ silent: true }), false);
 
-  assert.ok(puts.length >= 1);
+  assert.equal(puts.length, 1, 'the delete itself is the one PUT');
   const body = puts[puts.length - 1];
   assert.deepEqual(body.live.past.map((live) => live.id), initial.live.past.filter((live) => live.id !== 'fx-live-past-1').map((live) => live.id));
   assert.deepEqual(body.live.upcoming, initial.live.upcoming);

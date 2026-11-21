@@ -1,0 +1,6 @@
+# node --test test/ (Node v20.19.4)
+# exit: 0
+# tests 1177
+# pass 1174
+# fail 0
+# skipped 3

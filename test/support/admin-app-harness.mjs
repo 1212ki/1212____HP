@@ -1,6 +1,7 @@
 // Shared admin app harness (moved verbatim from admin-live-operations.test.mjs for Issue #46).
 // It loads admin/app.js into a vm context with a minimal fake DOM. Behavior is unchanged by the move.
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -137,6 +138,8 @@ export function createDomHarness(options = {}) {
   const modalOrder = [];
   const modalOwnedElements = new Map();
   const liveEditorOwnedElements = new Map();
+  // Issue #47: the edit surfaces of News (and later Music) hold edit-* ids of their own.
+  const occEditorOwnedElements = new Map();
   const createdAnchors = [];
   const createdTextareas = [];
   const execCommandCalls = [];
@@ -174,6 +177,9 @@ export function createDomHarness(options = {}) {
       // that lookup order when duplicate edit-* IDs expose an ownership bug.
       if (liveEditorOwnedElements.has(id) && modalOwnedElements.has(id)) {
         return liveEditorOwnedElements.get(id);
+      }
+      if (occEditorOwnedElements.has(id) && modalOwnedElements.has(id)) {
+        return occEditorOwnedElements.get(id);
       }
       return elements.get(id) || null;
     },
@@ -287,6 +293,12 @@ export function createDomHarness(options = {}) {
             const body = root._html.match(new RegExp(`<textarea\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/textarea>`, 'i'))?.[1];
             element.value = decodeHtml(body || '');
           }
+          if (tagName.toLowerCase() === 'button') {
+            // Issue #47: a button shows the text it was rendered with (the app changes it later, e.g. 画像を選ぶ → 画像を変える).
+            const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const label = root._html.match(new RegExp(`<button\\b[^>]*id="${escapedId}"[^>]*>([\\s\\S]*?)<\\/button>`, 'i'))?.[1];
+            if (label !== undefined) element.textContent = decodeHtml(label.replace(/<[^>]*>/g, '').trim());
+          }
           if (tagName.toLowerCase() === 'select') {
             installSelectHtmlBehavior(element);
             const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -342,6 +354,7 @@ export function createDomHarness(options = {}) {
   addStatic('news-list');
   const newsAddButton = addStatic('news-add-btn', 'button');
   newsAddButton.dataset.adminMutation = '';
+  newsAddButton.textContent = '+ 追加';
   const siteGlobalTab = addStatic('global-tab-site', 'button');
   siteGlobalTab.dataset.tab = 'site';
   siteGlobalTab.classList.add('tab-btn');
@@ -357,6 +370,109 @@ export function createDomHarness(options = {}) {
   newsGlobalPanel.classList.add('tab-content');
   const siteGlobalPanel = addStatic('site-tab', 'section');
   siteGlobalPanel.classList.add('tab-content');
+  // Issue #47: five global tabs (Site / News / Live / Music / Profile).
+  const musicGlobalTab = addStatic('global-tab-music', 'button');
+  musicGlobalTab.dataset.tab = 'music';
+  musicGlobalTab.classList.add('tab-btn');
+  const profileGlobalTab = addStatic('global-tab-profile', 'button');
+  profileGlobalTab.dataset.tab = 'profile';
+  profileGlobalTab.classList.add('tab-btn');
+  const musicGlobalPanel = addStatic('music-tab', 'section');
+  musicGlobalPanel.classList.add('tab-content');
+  const profileGlobalPanel = addStatic('profile-tab', 'section');
+  profileGlobalPanel.classList.add('tab-content');
+  // Issue #47: News = a list and an edit surface (no modal). The ids are those of admin/index.html.
+  const newsMasterDetail = addStatic('news-master-detail');
+  newsMasterDetail.parentElement = newsGlobalPanel;
+  addStatic('news-list-pane').parentElement = newsMasterDetail;
+  const newsEditorPane = addStatic('news-editor-pane', 'section');
+  newsEditorPane.parentElement = newsMasterDetail;
+  const newsEditorBar = addStatic('news-editor-bar', 'header');
+  newsEditorBar.parentElement = newsEditorPane;
+  const newsEditorBack = addStatic('news-editor-back', 'button');
+  newsEditorBack.textContent = '‹ 一覧';
+  newsEditorBack.parentElement = newsEditorBar;
+  addStatic('news-editor-title', 'span').parentElement = newsEditorBar;
+  addStatic('news-editor-status', 'span').parentElement = newsEditorBar;
+  const newsEditorCard = addStatic('news-editor-card');
+  newsEditorCard.parentElement = newsEditorPane;
+  addStatic('news-editor-heading', 'h3').parentElement = newsEditorCard;
+  addStatic('news-editor-empty', 'p').parentElement = newsEditorPane;
+  const newsEditorActions = addStatic('news-editor-actions');
+  newsEditorActions.parentElement = newsEditorCard;
+  addStatic('news-editor-status-wide', 'span').parentElement = newsEditorActions;
+  addStatic('news-editor-error', 'p').parentElement = newsEditorActions;
+  const newsSaveButton = addStatic('news-save-btn', 'button');
+  newsSaveButton.dataset.adminMutation = '';
+  newsSaveButton.textContent = '保存して公開';
+  newsSaveButton.parentElement = newsEditorActions;
+  const newsEditorBody = addStatic('news-editor-body');
+  newsEditorBody.parentElement = newsEditorCard;
+  installOwnedHtmlBehavior(newsEditorBody, new Set(), [], occEditorOwnedElements);
+  // Issue #47 stage 3: Music = the switch, the Channel URL of the videos, a list and an edit surface (same shape as News).
+  const musicMasterDetail = addStatic('music-master-detail');
+  musicMasterDetail.parentElement = musicGlobalPanel;
+  addStatic('music-list-pane').parentElement = musicMasterDetail;
+  addStatic('music-list-title', 'h2').textContent = '作品';
+  const musicAddButton = addStatic('music-add-btn', 'button');
+  musicAddButton.dataset.adminMutation = '';
+  musicAddButton.textContent = '+ 追加';
+  addStatic('music-works-list');
+  addStatic('music-videos-list').hidden = true;
+  [['music-switch-works', 'works', '作品'], ['music-switch-videos', 'videos', '映像']].forEach(([id, view, label]) => {
+    const tab = addStatic(id, 'button');
+    tab.dataset.musicView = view;
+    tab.textContent = label;
+    tab.parentElement = musicGlobalPanel;
+  });
+  const musicEditorPane = addStatic('music-editor-pane', 'section');
+  musicEditorPane.parentElement = musicMasterDetail;
+  const musicEditorBar = addStatic('music-editor-bar', 'header');
+  musicEditorBar.parentElement = musicEditorPane;
+  const musicEditorBack = addStatic('music-editor-back', 'button');
+  musicEditorBack.textContent = '‹ 一覧';
+  musicEditorBack.parentElement = musicEditorBar;
+  addStatic('music-editor-title', 'span').parentElement = musicEditorBar;
+  addStatic('music-editor-status', 'span').parentElement = musicEditorBar;
+  const musicEditorCard = addStatic('music-editor-card');
+  musicEditorCard.parentElement = musicEditorPane;
+  addStatic('music-editor-heading', 'h3').parentElement = musicEditorCard;
+  addStatic('music-editor-empty', 'p').parentElement = musicEditorPane;
+  const musicEditorActions = addStatic('music-editor-actions');
+  musicEditorActions.parentElement = musicEditorCard;
+  addStatic('music-editor-status-wide', 'span').parentElement = musicEditorActions;
+  addStatic('music-editor-error', 'p').parentElement = musicEditorActions;
+  const musicSaveButton = addStatic('music-save-btn', 'button');
+  musicSaveButton.dataset.adminMutation = '';
+  musicSaveButton.textContent = '保存して公開';
+  musicSaveButton.parentElement = musicEditorActions;
+  const musicEditorBody = addStatic('music-editor-body');
+  musicEditorBody.parentElement = musicEditorCard;
+  installOwnedHtmlBehavior(musicEditorBody, new Set(), [], occEditorOwnedElements);
+  const musicChannelPanel = addStatic('music-channel-panel', 'section');
+  musicChannelPanel.parentElement = musicGlobalPanel;
+  musicChannelPanel.hidden = true;
+  addStatic('channel-editor-status', 'span').parentElement = musicChannelPanel;
+  addStatic('channel-editor-error', 'p').parentElement = musicChannelPanel;
+  const channelActions = addStatic('channel-editor-actions');
+  channelActions.parentElement = musicChannelPanel;
+  channelActions.hidden = true;
+  const channelSaveButton = addStatic('channel-save-btn', 'button');
+  channelSaveButton.dataset.adminMutation = '';
+  channelSaveButton.textContent = '保存して公開';
+  channelSaveButton.parentElement = channelActions;
+  // Issue #47 stage 4: Site and Profile are one screen each; the state, the reason of a failure and 保存して公開 of each.
+  [['site', siteGlobalPanel], ['profile', profileGlobalPanel]].forEach(([name, panel]) => {
+    addStatic(`${name}-editor-status`, 'span').parentElement = panel;
+    addStatic(`${name}-editor-error`, 'p').parentElement = panel;
+    const actions = addStatic(`${name}-editor-actions`);
+    actions.parentElement = panel;
+    actions.hidden = true;
+    const save = addStatic(`${name}-save-btn`, 'button');
+    save.dataset.adminMutation = '';
+    save.textContent = '保存して公開';
+    save.parentElement = actions;
+  });
   addStatic('tickets-list');
   const liveFilter = addStatic('tickets-live-filter', 'select');
   installSelectHtmlBehavior(liveFilter);
@@ -431,7 +547,7 @@ export function createDomHarness(options = {}) {
   // Issue #46: the confirmation surface and the Ticket Page settings status / actions.
   const liveDialogOverlay = addStatic('live-dialog-overlay');
   liveDialogOverlay.hidden = true;
-  appRoot.children = [liveGlobalPanel, newsGlobalPanel, siteGlobalPanel, globalSaveButton, liveDialogOverlay, elements.get('toast')];
+  appRoot.children = [liveGlobalPanel, newsGlobalPanel, siteGlobalPanel, musicGlobalPanel, profileGlobalPanel, globalSaveButton, liveDialogOverlay, elements.get('toast')];
   const liveDialogRoot = addStatic('live-dialog');
   liveDialogRoot.parentElement = liveDialogOverlay;
   installOwnedHtmlBehavior(liveDialogRoot, new Set(), [], new Map());
@@ -641,13 +757,15 @@ export function loadAdminApp(options = {}) {
   renderTicketsUi,
   renderLive,
   saveData,
-  saveModal,
-  saveDiscographyItem,
+  // Issue #47 stage 5: the generic modal's functions exist only in the app of the base commit (T47-PIN, T47-EQ read it); the working tree has none.
+  saveModal: typeof saveModal === 'function' ? saveModal : null,
+  saveDiscographyItem: typeof saveDiscographyItem === 'function' ? saveDiscographyItem : null,
   getHasChanges() { return hasChanges; },
   setSaving(value) { isSaving = value; },
   setSyntheticImageUpload(value) { if (value) activeImageUploads.add("synthetic-upload"); else activeImageUploads.clear(); },
   deleteItem,
-  closeModal,
+  closeModal: typeof closeModal === 'function' ? closeModal : null,
+  showModal: typeof showModal === 'function' ? showModal : null,
 	  setupLiveWorkspace: typeof setupLiveWorkspace === 'function' ? setupLiveWorkspace : null,
 	  setupTabs: typeof setupTabs === 'function' ? setupTabs : null,
 	  loadData: typeof loadData === 'function' ? loadData : null,
@@ -732,6 +850,45 @@ export function loadAdminApp(options = {}) {
       ? { draft: ticketSettingsDraft, baseline: ticketSettingsBaseline, saving: ticketSettingsSaving }
       : null;
   },
+  // Issue #47 stage 2: the edit surface of News and the unsaved judgement / save shared by the occasional updates.
+  renderNews: typeof renderNews === 'function' ? renderNews : null,
+  closeOccEditor: typeof closeOccEditor === 'function' ? closeOccEditor : null,
+  saveOccPanel: typeof saveOccPanel === 'function' ? saveOccPanel : null,
+  deleteOccItem: typeof deleteOccItem === 'function' ? deleteOccItem : null,
+  discardOccPanels: typeof discardOccPanels === 'function' ? discardOccPanels : null,
+  isOccDirty: typeof isOccDirty === 'function' ? isOccDirty : null,
+  applyNewsSlice: typeof applyNewsSlice === 'function' ? applyNewsSlice : null,
+  applyOccDeleteSlice: typeof applyOccDeleteSlice === 'function' ? applyOccDeleteSlice : null,
+  readNewsDraft: typeof readNewsDraft === 'function' ? readNewsDraft : null,
+  syncOccSaveActions: typeof syncOccSaveActions === 'function' ? syncOccSaveActions : null,
+  syncOccLayout: typeof syncOccLayout === 'function' ? syncOccLayout : null,
+  handleOccAction: typeof handleOccAction === 'function' ? handleOccAction : null,
+  getOccImageFormHtml: typeof getOccImageFormHtml === 'function' ? getOccImageFormHtml : null,
+  // Issue #47 stages 3-4: Music (works, videos, the Channel URL), Site and Profile on the same surfaces.
+  renderVideoList: typeof renderVideoList === 'function' ? renderVideoList : null,
+  setMusicView: typeof setMusicView === 'function' ? setMusicView : null,
+  getMusicView() { return typeof musicView === 'string' ? musicView : null; },
+  addMusicItem: typeof addMusicItem === 'function' ? addMusicItem : null,
+  applyReleaseSlice: typeof applyReleaseSlice === 'function' ? applyReleaseSlice : null,
+  applyVideoSlice: typeof applyVideoSlice === 'function' ? applyVideoSlice : null,
+  applySiteSlice: typeof applySiteSlice === 'function' ? applySiteSlice : null,
+  applyProfileSlice: typeof applyProfileSlice === 'function' ? applyProfileSlice : null,
+  applyChannelSlice: typeof applyChannelSlice === 'function' ? applyChannelSlice : null,
+  rebaseOccDrafts: typeof rebaseOccDrafts === 'function' ? rebaseOccDrafts : null,
+  onOccPageInput: typeof onOccPageInput === 'function' ? onOccPageInput : null,
+  readReleaseDraft: typeof readReleaseDraft === 'function' ? readReleaseDraft : null,
+  readVideoDraft: typeof readVideoDraft === 'function' ? readVideoDraft : null,
+  getImageFormHtml: typeof getImageFormHtml === 'function' ? getImageFormHtml : null,
+  renderModeLabel: typeof renderModeLabel === 'function' ? renderModeLabel : null,
+  getOccState() {
+    return typeof occPanels === 'object'
+      ? {
+          active: occActiveItem ? { ...occActiveItem } : null,
+          saving: Boolean(occSaveOperation),
+          panels: Object.fromEntries([...occPanels].map(([key, panel]) => [key, { dirty: Boolean(panel.dirty), saving: Boolean(panel.saving), baseline: panel.baseline }])),
+        }
+      : null;
+  },
 };`, context);
 
   return {
@@ -759,6 +916,70 @@ export function loadAdminApp(options = {}) {
       });
     },
   };
+}
+
+// Issue #47: the admin app as it was before #47 changed it (commit contents, never the working tree). "The same as before" is
+// checked by running the same operation on this app and on the current one and comparing what each sends (T47-PIN, T47-EQ).
+export const ADMIN_APP_BASE_COMMIT_47 = '1f3a1cdcdf9852b3f2cabaa2978352572e0b9d82';
+
+const baseAdminSources = new Map();
+
+export function readBaseAdminSource(commit = ADMIN_APP_BASE_COMMIT_47) {
+  if (!baseAdminSources.has(commit)) {
+    baseAdminSources.set(commit, execFileSync('git', ['show', `${commit}:admin/app.js`], { cwd: repoRoot, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }));
+  }
+  return baseAdminSources.get(commit);
+}
+
+export function loadBaseAdminApp(options = {}) {
+  return loadAdminApp({ ...options, adminSource: readBaseAdminSource() });
+}
+
+// Issue #47: the synthetic fixture (test/fixtures/admin-occasional-states.json), and an app that has been loaded the way
+// production loads it (loadData → renderAll) with an admin fetch that records every PUT. `base: true` loads the app of the
+// base commit instead of the working tree, so the same operation can be run on both and the bodies compared.
+export const OCCASIONAL_PUT_PATH = '/api/admin/site-data';
+const occasionalFixture = JSON.parse(readFileSync(join(repoRoot, 'test/fixtures/admin-occasional-states.json'), 'utf8'));
+const plainCopy = (value) => JSON.parse(JSON.stringify(value));
+
+export function occasionalData(variant = null) {
+  const data = plainCopy(occasionalFixture.data);
+  if (variant) Object.assign(data, plainCopy(occasionalFixture.variants[variant]));
+  return data;
+}
+
+export async function openOccasionalApp({
+  base = false,
+  variant = null,
+  api = true,
+  data = occasionalData(variant),
+  putStatus = 200,
+  putPayload = { ok: true },
+  putGate = null,
+  upload = null,
+  wide = false,
+  fileReader = null,
+} = {}) {
+  const options = { wide, networkFetch: async () => jsonResponse(plainCopy(data)) };
+  const app = base ? loadBaseAdminApp(options) : loadAdminApp(options);
+  app.setApiMode(api);
+  if (fileReader) app.setFileReader(fileReader);
+  const puts = [];
+  app.useAdminFetch(async (path, options = {}) => {
+    if (options.method === 'PUT') {
+      puts.push({ path, body: options.body, bodyType: typeof options.body });
+      if (putGate) await putGate.promise;
+      return putStatus === 200 ? jsonResponse(putPayload) : jsonResponse(putPayload, { ok: false, status: putStatus });
+    }
+    if (path === '/api/admin/upload-image' && options.method === 'POST') {
+      if (!upload) return jsonResponse({ error: 'no upload expected' }, { ok: false, status: 400 });
+      return upload(path, options);
+    }
+    return jsonResponse(path === OCCASIONAL_PUT_PATH ? { data: plainCopy(data) } : { tickets: [] });
+  });
+  await app.loadData();
+  app.renderAll();
+  return { app, puts, data };
 }
 
 export function setLiveForm(elements, values = {}) {

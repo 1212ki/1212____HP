@@ -58,7 +58,8 @@ IMAGE_HOST = fake.FAKE_IMAGE_HOST
 FIXTURE_IMAGE_HOSTS = {IMAGE_HOST, 'img.youtube.com'}
 FONT_HOSTS = {'fonts.googleapis.com', 'fonts.gstatic.com'}
 PRODUCTION_SUFFIXES = ('.workers.dev', '1212hp.com', 'openai.com', 'anthropic.com', 'twitter.com', 'x.com', 'cloudflare.com', 'github.com')
-SIX_TABS = ['Site', 'News', 'Live', 'YouTube', 'Disco', 'Profile']
+# Issue #47（R47-01）で外枠のタブは5つになった（#46 までは Site・News・Live・YouTube・Disco・Profile の6つ。YouTube と Disco は Music に統合）。
+FIVE_TABS = ['Site', 'News', 'Live', 'Music', 'Profile']
 WIDE = 900
 # 401・403・404・5xx を返すと管理画面は本番のAPIへ再送する。再送の試みが出てよいscenario（試みはabortされる）。
 RETRY_SCENARIOS = {'api-fallback'}  # 予約の数の読み取り（summary-*）は再送しない（review RV46-04）。試みが出たら期待外
@@ -628,7 +629,7 @@ def check_item(item, m, state, net):
     if m.get('covered'):
         findings.append('操作が別の要素に覆われて押せない（操作 ← 上にある要素）: ' + ', '.join(m['covered'][:6]))
     need(m['scrollWidth'] <= m['viewport']['width'] + 1, f'横スクロールが出る（scrollWidth {m["scrollWidth"]} > {m["viewport"]["width"]}）')
-    need(m['tabs'] == SIX_TABS, f'外枠のタブが6つの表記でない: {m["tabs"]}')
+    need(m['tabs'] == FIVE_TABS, f'外枠のタブが5つの表記でない: {m["tabs"]}')
     need(not m['unnamed'], '表示名のない操作: ' + json.dumps(m['unnamed'], ensure_ascii=False))
     for selector, info in taps.items():
         if selector in ('#live-add-btn',) and wide:
@@ -653,7 +654,7 @@ def check_item(item, m, state, net):
         need(chrome['header'] and chrome['tabNav'], f'幅{width}でグローバルのHeader・タブが出ていない: {chrome}')
     findings.extend(connection_findings(scenario, chrome, texts, m.get('badgeTitle', '')))
     if screen == 'chrome':
-        need(chrome['header'] and chrome['tabNav'], '外枠のHeaderと6つのタブが出る')
+        need(chrome['header'] and chrome['tabNav'], '外枠のHeaderと5つのタブが出る')
     # 保存して公開
     save = box['#live-editor-save-btn']
     editing = screen in EDITING_SCREENS and screen not in ('new-source', 'postsave')
@@ -810,8 +811,8 @@ def check_item(item, m, state, net):
         if name == 'date-warning':
             need('区分は自動変更しません。' in texts.get('#live-category-warning', ''), '日付と区分の警告')
         if name == 'read-only':
-            need(m['saveBtn']['text'] == '読み取り専用' and m['saveBtn']['disabled'] and (m['saveBtn']['visible'] or not wide),
-                 'API接続失敗は読み取り専用（header の保存は押せない。幅899px以下で開いている間は header ごと退くので画面には出ない）')
+            # Issue #47（R47-15・R47-16）: API接続失敗の時も header の「保存」を出さない（#46 までは「読み取り専用」の押せないボタンが出ていた）
+            need(not m['saveBtn']['visible'], 'API接続失敗は読み取り専用（header の「保存」を出さない）')
         if name == 'legacy':
             need(texts.get('#live-editor-heading', '').startswith('2025.5.5') or '2025' in texts.get('#live-editor-heading', ''), '旧形式のライブを開く')
         if name == 'broken-flyer':
@@ -985,7 +986,7 @@ def check_contract():
         fake.FakeAdminApi(copy.deepcopy(FIXTURE), scenario)
     # 合否の関数が、測っていない値でも例外にならない（撮影の途中で落ちない）
     empty = {'viewport': {'width': 390, 'height': 844}, 'scrollWidth': 390, 'bodyClasses': [], 'chrome': {k: False for k in ('header', 'tabNav', 'banner', 'sectionHeader', 'workspaceTabs', 'listToolbar')},
-             'tabs': SIX_TABS, 'badgeTitle': '', 'saveBtn': {'visible': False, 'text': '', 'disabled': False}, 'fullyVisibleInputs': 0, 'visibleInputs': 0, 'unnamed': [], 'lines': {}, 'boxes': {},
+             'tabs': FIVE_TABS, 'badgeTitle': '', 'saveBtn': {'visible': False, 'text': '', 'disabled': False}, 'fullyVisibleInputs': 0, 'visibleInputs': 0, 'unnamed': [], 'lines': {}, 'boxes': {},
              'taps': {}, 'texts': {}, 'counts': {k: 0 for k in ('rows', 'seats', 'pending', 'nextLive', 'reservationRows', 'cells', 'rowActions', 'chips', 'chipsSelected', 'errors')},
              'rowTexts': [], 'active': '', 'inert': {'liveTab': None, 'overlay': None}, 'dialogOpen': False, 'editorScreen': '', 'opened': [], 'images': []}
     net = {'blocked': [], 'production_attempts': [], 'other_blocked': [], 'denied_local': []}
@@ -996,6 +997,21 @@ def check_contract():
     covered['covered'] = ['#live-editor-delete-btn ← #live-editor-footer']
     assert any('覆われて押せない' in f for f in check_item(plan[0], covered, {'pressed': [], 'dialog_between': []}, net)), '覆われた操作が不合格にならない'
     assert not any('覆われて押せない' in f for f in check_item(plan[0], copy.deepcopy(empty), {'pressed': [], 'dialog_between': []}, net))
+    # Issue #47 が意図して変えた2点（外枠のタブが5つ・API接続失敗の時に header の「保存」が無い）。それ以外の検査は #46 のまま
+    five_ok = copy.deepcopy(empty)
+    assert not any('タブ' in f and '表記でない' in f for f in check_item(plan[0], five_ok, {'pressed': [], 'dialog_between': []}, net)), '5つのタブは合格'
+    for wrong_tabs in (['Site', 'News', 'Live', 'YouTube', 'Disco', 'Profile'], ['Site', 'News', 'Live', 'Music'], ['Site', 'News', 'Live', 'Profile', 'Music']):
+        six = copy.deepcopy(empty)
+        six['tabs'] = wrong_tabs
+        assert any('外枠のタブが5つの表記でない' in f for f in check_item(plan[0], six, {'pressed': [], 'dialog_between': []}, net)), f'{wrong_tabs} は不合格'
+    read_only = next(entry for entry in plan if entry['screen'] == 'open-public' and entry['state'] == 'read-only' and entry['width'] == 1440)
+    hidden_save = copy.deepcopy(empty)
+    hidden_save['viewport'] = {'width': 1440, 'height': 900}
+    hidden_save['saveBtn'] = {'visible': False, 'text': '読み取り専用', 'disabled': True}
+    assert not any('header の「保存」を出さない' in f for f in check_item(read_only, hidden_save, {'pressed': [], 'dialog_between': []}, net)), '接続失敗で header の「保存」が無ければ合格'
+    shown_save = copy.deepcopy(hidden_save)
+    shown_save['saveBtn'] = {'visible': True, 'text': '読み取り専用', 'disabled': True}
+    assert any('header の「保存」を出さない' in f for f in check_item(read_only, shown_save, {'pressed': [], 'dialog_between': []}, net)), '接続失敗で header の「保存」が出ていれば不合格'
     # 閉じた折りたたみ（details）の中身は描画されないので、覆いの検査で測らない（summary は測る）。測る前（scrollIntoView・elementFromPoint の前）で飛ばしていること。
     cover_block = METRICS_JS[METRICS_JS.index('out.covered = [];'):METRICS_JS.index('out.rowMainWidths')]
     skip = "const fold = e.closest('details');\n      if (fold && !fold.open && !e.closest('summary')) continue;"

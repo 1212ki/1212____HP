@@ -1,0 +1,505 @@
+{
+  "meta": {
+    "updatedAt": "2026-11-21T00:00:00Z",
+    "note": "Every value is synthetic (Issue #47). Titles are 架空の…, URLs use example.test, ids start with fx- or yt-. Only the counts and the shapes follow production; nothing is copied from it."
+  },
+  "data": {
+    "site": {
+      "featuredReleaseId": "fx-release-a",
+      "heroImage": "assets/images/fixture-hero.jpg",
+      "footerText": "架空のフッターです。",
+      "links": {
+        "bandcamp": "https://example.test/shop",
+        "youtube": "https://example.test/videos",
+        "x": "https://example.test/x",
+        "instagram": "https://example.test/photos",
+        "note": "https://example.test/notes"
+      }
+    },
+    "discography": {
+      "digital": [
+        {
+          "id": "fx-release-a",
+          "title": "架空の作品 A \"テスト\"",
+          "releaseDate": "2025.05.05",
+          "description": "1. 架空の曲 A\n2. 架空の曲 B",
+          "image": "assets/images/fixture-release-a.png",
+          "link": "https://example.test/release-a?ref=fx",
+          "releaseType": "1st Single",
+          "playbackVideoId": "yt-musicVideos-fixture-1"
+        },
+        {
+          "id": "fx-release-b",
+          "title": "架空の作品 B～全角！",
+          "releaseDate": "2025.03.01",
+          "description": "",
+          "image": "assets/images/fixture-release-b.PNG",
+          "link": "https://example.test/release-b",
+          "releaseType": "",
+          "playbackVideoId": ""
+        }
+      ],
+      "demo": [
+        {
+          "id": "fx-demo-a",
+          "title": "架空のデモ A",
+          "releaseDate": "2024.12.24",
+          "description": "短い説明",
+          "image": "assets/images/fixture-demo-a.jpg",
+          "link": "https://example.test/demo-a",
+          "releaseType": "",
+          "playbackVideoId": ""
+        },
+        {
+          "id": "fx-demo-b",
+          "title": "架空のデモ B",
+          "releaseDate": "2024.08.08",
+          "description": "",
+          "image": "assets/images/fixture-demo-b.png",
+          "link": "https://example.test/demo-b",
+          "releaseType": "",
+          "playbackVideoId": ""
+        }
+      ]
+    },
+    "youtube": {
+      "channelUrl": "https://example.test/@fixture-channel",
+      "musicVideos": [
+        {
+          "id": "yt-musicVideos-fixture-1",
+          "title": "架空のMV A",
+          "youtubeId": "fixtureAA01"
+        },
+        {
+          "id": "yt-musicVideos-fixture-2",
+          "title": "架空のMV B",
+          "youtubeId": "fixtureAA02"
+        }
+      ],
+      "liveMovies": [
+        {
+          "id": "yt-liveMovies-fixture-1",
+          "title": "架空のライブ A",
+          "youtubeId": "fixtureBB01"
+        },
+        {
+          "id": "yt-liveMovies-fixture-2",
+          "title": "架空のライブ B",
+          "youtubeId": "fixtureBB02"
+        }
+      ],
+      "demos": [
+        {
+          "id": "yt-demos-fixture-1",
+          "title": "架空のデモ映像",
+          "youtubeId": "fixtureCC01"
+        }
+      ]
+    },
+    "live": {
+      "ticketLink": "https://forms.example.test/shared-ticket?utm=fixture",
+      "upcoming": [
+        {
+          "id": "fx-live-up",
+          "date": "2026-12-20",
+          "title": "架空の公演 up",
+          "venue": "テスト会場A",
+          "openTime": "18:00",
+          "startTime": "18:30",
+          "ticket": "¥2,500 + 1D",
+          "notes": "再入場不可",
+          "performers": "架空の出演者A / 架空の出演者B",
+          "description": "",
+          "image": "assets/images/fixture-live-up.jpg",
+          "link": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        }
+      ],
+      "past": [
+        {
+          "id": "fx-live-past",
+          "date": "2026-10-10",
+          "title": "架空の公演 past",
+          "venue": "テスト会場A",
+          "openTime": "18:00",
+          "startTime": "18:30",
+          "ticket": "¥2,500 + 1D",
+          "notes": "再入場不可",
+          "performers": "架空の出演者A / 架空の出演者B",
+          "description": "",
+          "image": "assets/images/fixture-live-past.jpg",
+          "link": "",
+          "ticketUrl": "",
+          "reservationClosed": false
+        }
+      ]
+    },
+    "news": [
+      {
+        "id": "fx-news-1",
+        "date": "2026/11/20(Fri.) 19:00 架空の発売",
+        "title": "架空のお知らせ その1",
+        "description": "架空の本文です。",
+        "image": "assets/images/fixture-news-1.jpg",
+        "link": "https://example.test/news/1",
+        "linkText": "view..."
+      },
+      {
+        "id": "fx-news-2",
+        "date": "2026/11/12(Thu.) 架空の告知",
+        "title": "テスト \"引用符\" のお知らせ",
+        "description": "架空の説明 2",
+        "image": "assets/images/fixture-news-2.png",
+        "link": "https://example.test/news/2?ref=fx",
+        "linkText": "詳細を見る"
+      },
+      {
+        "id": "fx-news-3",
+        "date": "2026/10/30",
+        "title": "架空のお知らせ その3（全角！）",
+        "description": "",
+        "image": "assets/images/fixture-news-3.jpg",
+        "link": "https://example.test/news/3",
+        "linkText": "view..."
+      },
+      {
+        "id": "fx-news-4",
+        "date": "2026/10/9(Fri.) 架空のイベント",
+        "title": "架空のお知らせ その4",
+        "description": "架空の説明 4",
+        "image": "assets/images/fixture-news-4.png",
+        "link": "https://example.test/news/4",
+        "linkText": "詳細を見る"
+      },
+      {
+        "id": "fx-news-5",
+        "date": "2026/10/21(Wed.) 20:30 架空の配信",
+        "title": "架空のお知らせ その5",
+        "description": "架空の説明 5",
+        "image": "assets/images/fixture-news-5.jpg",
+        "link": "https://example.test/news/5",
+        "linkText": "view..."
+      },
+      {
+        "id": "fx-news-6",
+        "date": "2026/9/15(Tue.) 架空の語",
+        "title": "架空のお知らせ その6",
+        "description": "架空の説明 6",
+        "image": "assets/images/fixture-news-6.png",
+        "link": "https://example.test/news/6",
+        "linkText": "詳細を見る"
+      }
+    ],
+    "profile": {
+      "image": "assets/images/fixture-profile.JPG",
+      "text": "架空のプロフィールです。\n架空の経歴 1\n架空の経歴 2\n\n架空の活動　全角スペース（テスト）\n架空の趣味 ～ ＆ ！\n架空の連絡先について\n架空の一文\n架空の結び。",
+      "links": [
+        {
+          "name": "架空のSNS",
+          "url": "https://example.test/p/sns"
+        },
+        {
+          "name": "架空の動画",
+          "url": "https://example.test/p/video"
+        },
+        {
+          "name": "架空のショップ",
+          "url": "https://example.test/p/shop"
+        },
+        {
+          "name": "架空のメモ",
+          "url": "https://example.test/p/note"
+        }
+      ]
+    },
+    "ticket": {
+      "completeText": "架空の完了文です。",
+      "fields": {
+        "showQuantity": true,
+        "showMessage": true,
+        "labelQuantity": "枚数",
+        "labelMessage": "備考",
+        "placeholderMessage": "架空の入力例",
+        "submitLabel": "予約する"
+      }
+    },
+    "contact": {
+      "introText": "架空のお問い合わせの案内です。",
+      "formAction": "https://forms.example.test/contact"
+    }
+  },
+  "variants": {
+    "note": "A variant replaces the listed top-level keys of data; every other key is the base value. Values are synthetic (Issue #47).",
+    "emptyLists": {
+      "news": [],
+      "discography": {
+        "digital": [],
+        "demo": []
+      },
+      "youtube": {
+        "channelUrl": "https://example.test/@fixture-channel",
+        "musicVideos": [],
+        "liveMovies": [],
+        "demos": []
+      },
+      "site": {
+        "featuredReleaseId": "",
+        "heroImage": "assets/images/fixture-hero.jpg",
+        "footerText": "架空のフッターです。",
+        "links": {
+          "bandcamp": "https://example.test/shop",
+          "youtube": "https://example.test/videos",
+          "x": "https://example.test/x",
+          "instagram": "https://example.test/photos",
+          "note": "https://example.test/notes"
+        }
+      },
+      "profile": {
+        "image": "assets/images/fixture-profile.JPG",
+        "text": "架空のプロフィールです。\n架空の経歴 1\n架空の経歴 2\n\n架空の活動　全角スペース（テスト）\n架空の趣味 ～ ＆ ！\n架空の連絡先について\n架空の一文\n架空の結び。",
+        "links": []
+      }
+    },
+    "legacyShapes": {
+      "news": [
+        {
+          "id": "fx-news-old-3",
+          "date": "2025/4/1(Tue.)",
+          "title": "架空の旧形式 3キー"
+        },
+        {
+          "id": "fx-news-old-5",
+          "date": "2025/3/10",
+          "title": "架空の旧形式 5キー",
+          "description": "架空の説明",
+          "image": "assets/images/fixture-news-old.jpg"
+        },
+        {
+          "id": "fx-news-old-extra",
+          "date": "2025/2/1(Sat.) 架空の語",
+          "title": "架空の余分なキー",
+          "description": "",
+          "image": "",
+          "link": "https://example.test/news/old",
+          "linkText": "view...",
+          "futureKey": "kept-or-dropped"
+        }
+      ],
+      "discography": {
+        "digital": [
+          {
+            "id": "fx-release-old-5",
+            "title": "架空の旧形式リリース",
+            "releaseDate": "2025.5.5",
+            "description": "",
+            "image": "assets/images/fixture-old.png"
+          },
+          {
+            "id": "fx-release-old-slash",
+            "title": "架空のスラッシュ日付",
+            "releaseDate": "2025/05/05",
+            "description": "架空",
+            "image": "",
+            "link": "https://example.test/old",
+            "releaseType": "",
+            "playbackVideoId": ""
+          },
+          {
+            "id": "fx-release-old-extra",
+            "title": "架空の余分なキー",
+            "releaseDate": "2025.01.01",
+            "description": "",
+            "image": "",
+            "link": "",
+            "releaseType": "",
+            "playbackVideoId": "",
+            "futureKey": "kept-or-dropped"
+          }
+        ],
+        "demo": [
+          {
+            "id": "fx-demo-old-number",
+            "title": "架空の数値の日付",
+            "releaseDate": 42,
+            "description": "",
+            "image": "",
+            "link": "",
+            "releaseType": "",
+            "playbackVideoId": ""
+          },
+          {
+            "id": "fx-demo-old-missing",
+            "title": "架空の日付なし",
+            "description": "",
+            "image": "",
+            "link": ""
+          }
+        ]
+      },
+      "youtube": {
+        "channelUrl": "https://example.test/@fixture-channel",
+        "musicVideos": [
+          {
+            "id": "yt-old-extra",
+            "title": "架空の余分",
+            "youtubeId": "fixtureAA01",
+            "futureKey": "kept-or-dropped"
+          },
+          {
+            "id": "yt-old-url",
+            "title": "架空のURL形式",
+            "youtubeId": "https://youtu.be/fixtureAA09"
+          }
+        ],
+        "liveMovies": [],
+        "demos": []
+      },
+      "site": {
+        "featuredReleaseId": "fx-release-old-5",
+        "heroImage": "assets/images/fixture-hero.jpg",
+        "footerText": "架空のフッターです。",
+        "links": {
+          "bandcamp": "https://example.test/shop",
+          "youtube": "https://example.test/videos",
+          "x": "https://example.test/x",
+          "instagram": "https://example.test/photos",
+          "note": "https://example.test/notes"
+        }
+      }
+    },
+    "longValues": {
+      "news": [
+        {
+          "id": "fx-news-long",
+          "date": "2026/11/20(Fri.) 19:00 架空の長い語架空の長い語架空の長い語架空の長い語架空の長い語架空の長い語架空の長い語架空の長い語",
+          "title": "架空の長いお知らせの題架空の長いお知らせの題架空の長いお知らせの題架空の長いお知らせの題架空の長いお知らせの題架空の長いお知らせの題架空の長いお知らせの題架空の長いお知らせの題",
+          "description": "架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。架空の長い説明です。",
+          "image": "assets/images/fixture-long-fixture-long-fixture-long-fixture-long-fixture-long-fixture-long-news.jpg",
+          "link": "https://example.test/news/long/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/",
+          "linkText": "架空の長いリンクテキスト架空の長いリンクテキスト架空の長いリンクテキスト架空の長いリンクテキスト"
+        }
+      ],
+      "discography": {
+        "digital": [
+          {
+            "id": "fx-release-long",
+            "title": "架空の長い作品名架空の長い作品名架空の長い作品名架空の長い作品名架空の長い作品名架空の長い作品名架空の長い作品名架空の長い作品名",
+            "releaseDate": "2025.05.05",
+            "description": "1. 架空の長い曲名 1\n2. 架空の長い曲名 2\n3. 架空の長い曲名 3\n4. 架空の長い曲名 4\n5. 架空の長い曲名 5\n6. 架空の長い曲名 6\n7. 架空の長い曲名 7\n8. 架空の長い曲名 8\n9. 架空の長い曲名 9\n10. 架空の長い曲名 10\n11. 架空の長い曲名 11\n12. 架空の長い曲名 12\n13. 架空の長い曲名 13\n14. 架空の長い曲名 14\n15. 架空の長い曲名 15\n16. 架空の長い曲名 16\n17. 架空の長い曲名 17\n18. 架空の長い曲名 18\n19. 架空の長い曲名 19\n20. 架空の長い曲名 20\n21. 架空の長い曲名 21\n22. 架空の長い曲名 22\n23. 架空の長い曲名 23\n24. 架空の長い曲名 24\n25. 架空の長い曲名 25\n26. 架空の長い曲名 26\n27. 架空の長い曲名 27\n28. 架空の長い曲名 28\n29. 架空の長い曲名 29\n30. 架空の長い曲名 30",
+            "image": "assets/images/fixture-long-fixture-long-fixture-long-fixture-long-fixture-long-fixture-long-release.png",
+            "link": "https://example.test/release/long/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/segment/",
+            "releaseType": "架空の長い種別架空の長い種別架空の長い種別架空の長い種別",
+            "playbackVideoId": "yt-musicVideos-fixture-1"
+          }
+        ],
+        "demo": []
+      },
+      "site": {
+        "featuredReleaseId": "fx-release-long",
+        "heroImage": "assets/images/fixture-hero.jpg",
+        "footerText": "架空のフッターです。",
+        "links": {
+          "bandcamp": "https://example.test/shop",
+          "youtube": "https://example.test/videos",
+          "x": "https://example.test/x",
+          "instagram": "https://example.test/photos",
+          "note": "https://example.test/notes"
+        }
+      },
+      "profile": {
+        "image": "assets/images/fixture-profile.JPG",
+        "text": "架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。\n架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。架空のプロフィールの長い一文です。",
+        "links": [
+          {
+            "name": "架空のSNS",
+            "url": "https://example.test/p/sns"
+          },
+          {
+            "name": "架空の動画",
+            "url": "https://example.test/p/video"
+          },
+          {
+            "name": "架空のショップ",
+            "url": "https://example.test/p/shop"
+          },
+          {
+            "name": "架空のメモ",
+            "url": "https://example.test/p/note"
+          }
+        ]
+      }
+    },
+    "numericIds": {
+      "news": [
+        {
+          "id": 101,
+          "date": "2026/11/20(Fri.)",
+          "title": "架空の数値ID",
+          "description": "",
+          "image": "",
+          "link": "",
+          "linkText": "view..."
+        },
+        {
+          "id": "102",
+          "date": "2026/11/19(Thu.)",
+          "title": "架空の数字に見える文字列ID",
+          "description": "",
+          "image": "",
+          "link": "",
+          "linkText": "view..."
+        },
+        {
+          "id": 103,
+          "date": "2026/11/18(Wed.)",
+          "title": "架空の数値ID 2",
+          "description": "",
+          "image": "",
+          "link": "",
+          "linkText": "view..."
+        }
+      ]
+    }
+  },
+  "scenarios": {
+    "base": {
+      "variant": null,
+      "mode": "api"
+    },
+    "empty-lists": {
+      "variant": "emptyLists",
+      "mode": "api"
+    },
+    "legacy-shapes": {
+      "variant": "legacyShapes",
+      "mode": "api"
+    },
+    "long-values": {
+      "variant": "longValues",
+      "mode": "api"
+    },
+    "api-fallback": {
+      "variant": null,
+      "mode": "api-fallback"
+    },
+    "local-mode": {
+      "variant": null,
+      "mode": "local"
+    },
+    "save-fail": {
+      "variant": null,
+      "mode": "api",
+      "fail": "save"
+    },
+    "delete-fail": {
+      "variant": null,
+      "mode": "api",
+      "fail": "delete"
+    },
+    "numeric-ids": {
+      "variant": "numericIds",
+      "mode": "api"
+    }
+  }
+}

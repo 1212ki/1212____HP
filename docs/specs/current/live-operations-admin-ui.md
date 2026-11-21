@@ -2,11 +2,12 @@
 
 - Status: Approved
 - Owner: Itsuki Matsumoto
-- Last updated: 2026-11-20
+- Last updated: 2026-11-21
 - Related issues: #39, #40, #37, #35, #33, #29
 - Related implementation issues: #41, #46, #47（公開側の対応: #42, #43, #44, #45）、既存契約: #19, #20, #21, #22, #33, #35, #37
 - Implementation baseline: origin/main `00cdea5e69d5b341fc0a2b21a4eece9a53c8a2cd`（以下`00cdea5`）
-- Owner approval: Issue #46のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-20_issue-46_admin-live-ops/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Owner approval: Issue #47のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-21_issue-47_admin-occasional/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
+- Prior Owner approval（Issue #46）: Issue #46のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-20_issue-46_admin-live-ops/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #43）: Issue #43のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-19_issue-43_live-ticket/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #44）: Issue #44のgate 3（第2版の再承認）における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。close済みの`docs/records/aidlc-cycles/2026-11-18_issue-44_music/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
 - Prior Owner approval（Issue #42）: Issue #42のgate 3における、本ファイルのexact bytesを含むCode Generation PlanへのItsuki Matsumotoの本人回答`A`。active時は`aidlc-docs/approvals/03-code-generation-plan-approval.md`、close後は`docs/records/aidlc-cycles/2026-11-17_issue-42_home/_trace/aidlc-docs/approvals/03-code-generation-plan-approval.md`を参照する。
@@ -20,6 +21,7 @@
 - Prior design review: APPROVED（Issue #22 AC0〜AC9、Issue #29 owner-approved design）
 - Implementation gate: 本設計は実装の入力であり、Approvedはマスタの実装完了を意味しない。#40のgate 3承認後に同一bytesで昇格する。#41・#46・#47はそれぞれのformal cycleで実装を計画・承認する。確認1前の内容reviewと昇格後のbytes・記録reviewはFrontが手配する
 - Implementation gate（Issue #46）: Issue #46はgate 1〜3の承認と、承認済みCode Generation Planどおりの本ファイルの昇格（同じbytes）を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・Worker deploy・PRは別のOwner承認。本ファイルの§4.6（#46の保存契約）・§5.4・§10.2・§12.4・§13.4は実装の入力で、`00cdea5`の事実列と§15の実装状況は比較時点の記録として保持する。#46の実装・試験・独立reviewの成否は、active時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-20_issue-46_admin-live-ops/_trace/aidlc-docs/`内の同pathを参照する。本設計のApprovedだけで実装済みとはしない
+- Implementation gate（Issue #47）: Issue #47はgate 1〜3の承認と、承認済みCode Generation Planどおりの本ファイルの昇格（同じbytes）を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・PRは別のOwner承認で、Cloudflare Workerは変更せずdeployもない。本ファイルの§4.1・§4.5・§4.6（#47の保存契約）・§5.3・§6・§9・§10.3・§12.5・§13.5は実装の入力で、`00cdea5`の事実列と§15の実装状況は比較時点の記録として保持する。#47の実装・試験・独立reviewの成否は、active時の`aidlc-docs/construction/aidlc-integration/code/code-generation-summary.md`と`aidlc-docs/construction/build-and-test/build-and-test-summary.md`、close後の`docs/records/aidlc-cycles/2026-11-21_issue-47_admin-occasional/_trace/aidlc-docs/`内の同pathを参照する。本設計のApprovedだけで実装済みとはしない
 - Prior implementation gate（Issue #37）: Issue #37はgate 1〜3の承認と、承認済みCode Generation PlanどおりのDraft→Approved反映を確認してから実装する。独立reviewは実装後に設計と実装をまとめて1回行い、gate 4〜5で結果を確認する。merge・production deployは別のOwner承認。Apps Script作成・公開とsecret登録はOwnerが行い、本番のメール到達はdeploy後にOwnerが確認する
 - Prior implementation gate（Issue #35）: Issue #35のgate 1〜5、実装・検証・独立reviewの記録は`docs/records/aidlc-cycles/2026-11-16_issue-35_openai-reasoning-speed/`を参照する。本番の速度確認はdeploy後のOwner確認とする
 - Prior implementation gate（Issue #33）: Issue #33の本版確認済み。実装・全回帰・独立review-07を完了し、Code Generation Resultは本人回答`A`で承認済み（2026-11-16T14:29:00+09:00）。Build/Test Resultは書式修正後の新digestに対する本人回答`A`で再承認済み（2026-11-16T14:52:21+09:00）。cycle完了記録は`docs/records/aidlc-cycles/2026-11-16_issue-33_ai-provider-fallback/`。canonical確認原典: context rootの`_scratch/codex-work/20261116-114342_1212hp-ai-provider-fallback/canonical-owner-confirmation.md`（prompt: 2026-11-16T13:33:01+09:00）。本文中の実装未着手という時点記述は確認時点の記録として保持する。本番反映は別のOwner操作
@@ -104,7 +106,7 @@
 
 実装: #47。`00cdea5`: 6カテゴリが実装済みで、5カテゴリ化は未実装。公開側Musicは#44で扱う。
 
-最終形のグローバルカテゴリは`Site / News / Live / Music / Profile`。YouTubeとDiscoをMusicへまとめ、作品と映像を内側で切り替える。#46はLiveの改修を先に行い、#47まで既存6タブを保つ。
+最終形のグローバルカテゴリは`Site / News / Live / Music / Profile`。YouTubeとDiscoをMusicへまとめ、作品と映像を内側で切り替える。#46はLiveの改修を先に行い、#47で5タブにした。Musicの中は、作品／映像を幅いっぱいの2択（幅900px以上は中身に合わせた幅）で切り替え、Channel URLは映像の側に置く。上の帯（Header）は、Liveのマスタ（`44:492`・`47:582`）と同じ形（幅390pxは高さ46pxで左に「1212 Admin」・右に「接続中」、幅900px以上は高さ62px）にし、全タブで同じにする。保存のボタンはHeaderに置かない（Local Modeだけ、右の「Local Mode」の隣に「JSONを書き出す」を置く）。
 
 告知や予約は独立したグローバルカテゴリにせず、Liveの内側に置く。
 
@@ -154,7 +156,7 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 
 - 390pxを先に設計し、1440pxは同じ内容を広げる。幅900px以上は左に一覧、右に編集面を置き、幅900px未満は一覧→編集に切り替える。
 - Liveを開いたスマホの上の帯は「戻る・日付と会場・保存の状態」の1行と、公開内容／告知／予約の切り替えに絞る。右は保存の状態だけを出し（区分は一覧の見出しと公開内容の「区分」の切り替えで示す）、日付と会場は1行に収め、収まらない時は末尾を「…」で省く（#46のFigma整合案F46-01）。入力欄を囲む枠は1重、切り替えは3等分にする。
-- LiveだけでなくNews・作品・映像も汎用bottom-sheet modalをやめ、同じ一覧と編集の型に揃える。SiteとProfileも同じ見た目・保存状態にする。
+- LiveだけでなくNews・作品・映像も汎用bottom-sheet modalをやめ、同じ一覧と編集の型に揃える（#47で実装）。幅900px以上は左に幅320の一覧、右に編集面。幅899px以下は一覧→編集に切り替え、編集を開いている間はLiveと同じく、Header・タブを隠して上の帯を「‹ 一覧｜題｜保存の状態」の1行にする。News・作品・映像の編集面は同時に1つだけ開く。作品／映像の切り替えは、未保存なら確認を出す（§4.6）。SiteとProfileは一覧のない1画面で、同じ見た目・保存状態にする（幅900px以上は見出しの右に「保存して公開」と状態、幅899px以下は未保存の時だけ下に「保存して公開」）。
 - `予約管理`は全Liveのfilterと一覧。1440pxでは予約の行を押すと右に1件の備考・内部メモ・状態操作を開く。未対応の行には`対応済みにする`を置き、1件を開かずに状態を変えられる。390pxでは一覧から予約1件へ進む。取り置き追加は別の画面で行う。
 
 ### 4.6 保存と未保存状態
@@ -165,7 +167,7 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 - スマホのLiveの`保存して公開`は、未保存の変更がある時だけ下へ出す。公開内容だけでなく告知の「ひとこと」を変えた時も対象にし、変更がなければ出さない。幅1440pxでは見出しの右に置き、変更がない時は薄くして押せないようにする。保存中は押せず、失敗時は入力を残す。
 - `公開内容 / 告知 / 予約`の内部タブ切替では入力を保持する。
 - 未保存のまま別Live、Live一覧、グローバルタブへ移る場合は、`破棄して移動 / 編集を続ける`の確認を出す。
-- News・作品・映像も、更新時にその場で保存する型から`保存して公開`と未保存の確認に揃える。Site・Profileを含め、確認なしに変更を失わせない。
+- News・作品・映像も、更新時にその場で保存する型から`保存して公開`と未保存の確認に揃えた（#47）。Site・Profileを含め、確認なしに変更を失わせない。保存の単位・対象・削除・失敗の扱いは、本節末尾の「Issue #47の保存契約」に従う。
 - 新規Liveでは`告知 / 予約`をdisabledにし、初回保存後に利用可能にする。
 - 新規Liveの保存直後は、告知内容と`Xで告知する`・`あとで`を出す。`あとで`は一覧へ戻る。保存とXへの外部遷移は別操作で、自動送信しない。
 - Live削除は公開内容のいちばん下の文字に置く。確認後その場で保存し、公開画面からも消す。予約がある場合は確認に件数を出す。headerの別保存操作を待たせない。
@@ -179,11 +181,26 @@ AI取込は独立タブにせず、`公開内容` の入力支援として置く
 
 - 未保存の判定: Live編集面の入力（元情報・公開内容・告知のひとことを含む）を、開いた時の値と比べ、違う間だけ未保存とする。入力して元の値へ戻せば変更なしに戻る。新しいライブは、何も入力していない間は未保存としない。Ticket Page共通設定も、その画面の入力を開いた時の値と比べる。
 - 保存の状態: 「保存済み」「未保存」「保存しています…」「保存できませんでした」（§10.2）。幅390はHeaderの右、幅1440pxは編集の見出しに出す。保存中は入力・移動・削除・予約の操作を押せなくし、失敗したら入力と編集面をそのまま残し、理由を下の操作の上（幅1440pxは見出しの下）に1行出す。
-- 保存の対象の分離: Live・削除・Ticket Page共通設定の保存は、公開データ全体を送る既存の保存（`PUT /api/admin/site-data`。経路・形・認証は変えない）のまま、送る内容を「最後に読み込めた、または保存できた内容に、その操作の対象だけを重ねたもの」にする。Live・削除・Ticket共通設定は互いの未保存の入力を送らず、Site・News・YouTube・Disco・Profileの未保存の変更（headerの「保存」の待ち）も送らない。Site・News・YouTube・Disco・Profileの保存（headerの「保存」と各modalの更新）の動きは変えない。別の端末で行った保存を取り込む仕組みは持たない（今と同じく、最後に保存した側の内容になる。#47で保存全体を見直す時に扱う）。
+- 保存の対象の分離: Live・削除・Ticket Page共通設定の保存は、公開データ全体を送る既存の保存（`PUT /api/admin/site-data`。経路・形・認証は変えない）のまま、送る内容を「最後に読み込めた、または保存できた内容に、その操作の対象だけを重ねたもの」にする。Live・削除・Ticket共通設定は互いの未保存の入力を送らず、Site・News・YouTube・Disco・Profileの未保存の変更（headerの「保存」の待ち）も送らない。#46の時点では、Site・News・YouTube・Disco・Profileの保存（headerの「保存」と各modalの更新）は変えなかった。#47で、これらも同じ型（各タブの「保存して公開」）になり、headerの「保存」はAPI接続中には出さない（本節の「Issue #47の保存契約」）。別の端末で行った保存を取り込む仕組みは持たない（今と同じく、最後に保存した側の内容になる。#47でも扱わない。理由は「Issue #47の保存契約」）。
 - Local Mode: Live・削除・Ticket共通設定の保存はメモリ上の内容へ反映し、headerの「JSONを書き出す」で確定する（今のまま）。
 - 削除: 確認（§10.2）のあと、その場で上の保存を行う。成功したら一覧へ戻り（幅900px以上は編集面を空にし）、一覧・予約管理の絞り込み・集計を更新する。失敗したらライブを一覧に戻し、編集面と入力を残して失敗を示す。
 - 新規ライブの保存の直後は、告知の内容と「Xで告知する」「あとで」を出す。既存ライブの保存の直後は、公開内容のまま状態が「保存済み」になる。
 - 未保存のまま別のライブ・一覧・グローバルタブ・開催予定／公演終了・予約管理・Ticket Page共通設定へ移る時は、画面の中の確認（§10.2）を出す。ブラウザの再読込・戻る・タブを閉じる操作は、ブラウザ標準の確認（`beforeunload`）で止める。文言はブラウザ標準で、標準の確認を出さない環境（iOSのSafariなど）では止められない既知の制限とする。公開内容／告知／予約の内部の切り替えでは確認を出さず入力を保つ。
+
+#### Issue #47の保存契約
+
+実装: #47。本節はgate 3承認後の実装入力で、`00cdea5`の事実列は比較時点の記録として保持する。
+
+- 保存の単位: Siteはタブ全体（顔にする作品・共有時の画像・Home Links・フッター・Contactの導入文とForm Actionを1つの「保存して公開」で）。Profileはタブ全体（写真・文・linksを1つで）。News・作品・映像は、開いている1件。Channel URLは映像の側の専用の欄で、その欄の「保存して公開」（開いている映像とは別の保存）。理由: 1画面にある項目は件数が少なく同じ公開面の設定なのでタブ全体で足りる。News・作品・映像は1件ずつ開いて直すので、1件の保存が他の件を巻き込まないようにする。Channel URLは映像の1件と対象が違い、同時に押す理由がない。
+- 未保存の判定: 編集面の入力を、開いた時の値と比べ、違う間だけ未保存とする。入力して元の値へ戻せば変更なしに戻る。新しく追加する項目は、何も入力していない（初期値のまま）間は未保存としない。画像のアップロード中は未保存として扱う。News・作品・映像の編集面は同時に1つだけ開く。
+- 保存の状態と「保存して公開」の条件: 状態は§10.2と同じ4つ（「保存済み」「未保存」「保存しています…」「保存できませんでした」）。幅899px以下は、状態を編集の上の帯の右（SiteとProfileは見出しの行）に出し、「保存して公開」は未保存の変更がある時だけ画面の下に固定で出す。幅900px以上は、編集の見出しの右（SiteとProfileはタブの見出しの右）に置き、変更がない時は薄くして押せなくする。保存中は入力・移動・削除・追加を押せなくし、二重のclickは1回しか送らない。失敗したら入力と編集面をそのまま残し、理由を下の操作の上（幅900px以上は見出しの下）に1行出す。
+- 保存の対象の分離: 各保存は、#46と同じく（`saveScoped`）、最後に読み込めた、または保存できた内容に、その操作の対象だけを重ねて`PUT /api/admin/site-data`（経路・形・認証は変えない）へ送る。重ね方は、Siteは`site.featuredReleaseId`・`site.heroImage`・`site.links`の5つのkey・`site.footerText`・`contact.introText`・`contact.formAction`だけ、Profileは`profile.image`・`profile.text`・`profile.links`だけ、Newsは開いている1件（既存は同じ位置で置き換え、新規は先頭へ追加）、作品と映像は開いている1件（今のとおり、元のカテゴリから除いて保存先のカテゴリの先頭へ追加）、Channel URLは`youtube.channelUrl`だけ。保存の本文に、他の項目の未保存の入力は入らない。保存の本文は、保存の直前に`MusicData.clearDanglingMusicReferences`を通す（#41の契約のまま）。入力は編集面の中だけに持ち、保存が成功するまで公開データの内容（メモリ上の`siteData`）へ書かない。
+- 今の保存との同一性: 同じ内容を開いて何も変えずに保存した時、1項目だけ変えて保存した時、カテゴリを移した時、新規を追加した時の送る内容は、#47の前のheaderの「保存」・各modalの「更新」が送る内容と同じ（key・値の書き方・配列の並びを含む）にする。News・作品・映像の1件は、今と同じkeyだけで組む（Newsは7つ、作品は8つ、映像は3つ）。日付（Newsの自由な書き方）・改行と空行・選ぶ項目の空文字・画像のpathは、変換せずそのまま保つ。
+- 削除: 「このお知らせを削除」「この作品を削除」「この映像を削除」（文字）を押すと確認の面（§10.3。「やめる」「削除する」。初期のフォーカスは「やめる」）を出し、「削除する」でその場で保存する。保存の本文は、最後に保存できた内容から対象の1件を除き、`clearDanglingMusicReferences`を通したもの。顔にする作品・その場で再生する映像を選んでいた時は、同じ1回の保存で参照が空に戻る。確認の面には、参照が空に戻ることを示す（§10.3）。成功したら一覧へ戻り（幅900px以上は編集面を空にし）、一覧・Siteの作品の選択肢・作品の映像の選択肢を更新する。失敗したら項目を一覧に戻し、編集面と入力を残して失敗を示す。新規の項目には削除を出さない。保存の前の入力が他にある場合（Channel URLの未保存など）は、削除の保存に混ぜず、そのまま残す。
+- 未保存の確認の対象: 別の項目を開く・「‹ 一覧」・「+ 追加」・作品／映像の切り替え・グローバルタブ・SiteとProfileを含むタブ移動で、未保存の編集があれば、画面の中の確認（§10.2。`openLiveDialog`と同じ面）を出す。再読込・戻る・タブを閉じる操作は、ブラウザ標準の確認（`beforeunload`）で止める（iOSのSafariなど標準の確認を出さない環境では止められない既知の制限）。「破棄して移動」を選ぶと、編集面の入力は公開データの内容へ戻る（アップロード済みの画像ファイルは取り消さない）。
+- headerの「保存」: API接続中は出さない（全タブがその場の「保存して公開」を持つ）。Local Modeは今のとおり右に「JSONを書き出す」を置く。Local Modeの各「保存して公開」はメモリ上の内容へ反映して「JSON書き出し待ち」とし、「JSONを書き出す」で確定する。API接続失敗の読み取り専用では、すべての入力・保存・削除・追加を無効にする（一覧と各項目は読める）。
+- 別の端末の保存を取り込む仕組みは持たない（最後に保存した側が残る）。理由: 使うのは1人で、2台から同じ項目を同時に保存する頻度が低い。照合の仕組み（更新時刻の突き合わせ）は保存のAPIとWorkerの変更とdeployの順序を伴い、別のIssueで扱う。
+- Ticket Page共通設定の保存が`ticket`を完了文と6項目だけに置き換える点（#46の既知の制限）は、#47でも直さない（Liveの範囲で、旧keyは#37で削除済みのため実害がない）。Site・Profile・Channel URLは、上のとおり対象のkeyだけを重ねるので、他のkeyを置き換えない。
 
 ### 4.7 必須項目と開催状態
 
@@ -254,7 +271,7 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 | Music > 作品「種別」 | 作品ごとに文字を1つ。任意入力で、公開画面ではタイトルと分ける。 | 未実装。タイトル内の文字を自動で分解・移行する決定はしない。 |
 | Site > Home「共有時の画像」 | `site.heroImage`を保持する。#42以降のHomeは作品のジャケットを使い、この画像は表示しない。Live共有時の画像の予備としての働きは維持する。 | `site.heroImage`、WorkerのOG画像fallbackに使用。key名を変える決定ではない。 |
 | Siteの既存項目 | Home Links（Bandcamp、YouTube、X、Instagram、note）、フッター文言、Contact導入文とForm Actionを保持。 | `site.links / footerText`、`contact.introText / formAction`。Ticketの削除済み項目とは別。 |
-| News | 日付、タイトル、説明、画像、詳細リンクURL、リンクテキストを保持。 | `news`の既存項目。編集面・保存方式の統一は#47。 |
+| News | 日付、タイトル、説明、画像、詳細リンクURL、リンクテキストを保持。 | `news`の既存項目。編集面・保存方式の統一は#47（一覧と編集、「保存して公開」）。日付は自由な書き方の文字列のまま保ち、書き換えない。 |
 | Music 作品 | カテゴリ（Digital Release／宅録Demo）、タイトル、リリース日、説明（曲リスト等）、画像、リンクURLを保持。 | 作品の既存fieldsは`id / title / releaseDate / description / image / link`。 |
 | Music 映像 | Channel URL、カテゴリ（Music Video／Live Movie／Demo）、タイトル、YouTube URL / IDを保持。 | `youtube.channelUrl`と各映像collectionの既存fields。 |
 | Profile | 写真、プロフィールテキスト、SNSリンク（名前・URL）を保持。 | `profile.image / text / links`。本文は登録文をそのまま表示。 |
@@ -273,7 +290,7 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 | その場で再生する映像 | 各作品の`playbackVideoId`、映像の`id`を文字列で1つ。空は`""`。 | `youtube.musicVideos / liveMovies / demos`を合わせた登録済み映像。`youtubeId`自体は保存しない。 |
 | 種別 | 各作品の`releaseType`、任意の文字列。空は`""`。 | タイトルとは別の入力。タイトルを分解・移行しない。 |
 
-欠けた新規keyは読込時に空として扱う。通常の保存で新規keyを出力し、既存データの一括移行や読込による既存行の書換えはしない。作品・映像のカテゴリを移しても`id`が同じなら参照を保つ。削除された作品への`featuredReleaseId`と、削除された映像への全作品の`playbackVideoId`は空に戻す。adminの削除直後とWorkerの保存時に参照先を照合する。選択解除は既存の保存操作で永続化し、削除だけを即時保存する型への変更は#47に残す。
+欠けた新規keyは読込時に空として扱う。通常の保存で新規keyを出力し、既存データの一括移行や読込による既存行の書換えはしない。作品・映像のカテゴリを移しても`id`が同じなら参照を保つ。削除された作品への`featuredReleaseId`と、削除された映像への全作品の`playbackVideoId`は空に戻す。adminの削除直後とWorkerの保存時に参照先を照合する。選択解除は既存の保存操作で永続化し、削除だけを即時保存する型への変更は#47で行った（§4.6の「Issue #47の保存契約」。削除の保存が参照の照合も1回で行う）。
 
 日付を新しく保存する範囲は、新規作品と、既存作品の`releaseDate`を変更した時。日付を変えない他項目の保存や作品のカテゴリ移動では、既存の不揃い日付をそのまま保持する。空文字は引き続き任意入力として許可する。新規・変更後の空でない日付はASCII数字の`YYYY.MM.DD`（`^[0-9]{4}\.[0-9]{2}\.[0-9]{2}$`）に合うことをadminと保存APIの両方で検査する。これは形の検査で、実在日・未来日等の新しい制約は加えない。不正なら保存せず、adminでは`「2025.05.05」の形で入力してください。`を対象の直下に表示し、入力を保持する。
 
@@ -283,13 +300,13 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 
 #### Issue #42公開時の説明
 
-上の#41単独時の公開表示維持・deploy順序は#41の履歴である。#42はHomeで顔・種別・選択映像を使い始める。管理画面の共有時の画像はLive共有画像の予備で、Homeの帯を兼ねない。表示名・説明・READMEをこの実際の働きに揃える。key・画像操作・保存・Workerは変更しない。管理の6タブと作品modalは#47まで現状を保ち、公開ナビも#44まで6項目とする。#42はGitHub Pagesへの単独mergeで公開し、Worker deployは不要。失敗時は#42の静的変更と対応説明を同じrevertで戻し、#41の保存契約を維持する。
+上の#41単独時の公開表示維持・deploy順序は#41の履歴である。#42はHomeで顔・種別・選択映像を使い始める。管理画面の共有時の画像はLive共有画像の予備で、Homeの帯を兼ねない。表示名・説明・READMEをこの実際の働きに揃える。key・画像操作・保存・Workerは変更しない。管理の6タブと作品modalは#47まで現状を保ち（#42の時点の記録。#47で5タブと一覧・編集の型になった）、公開ナビも#44まで6項目とする。#42はGitHub Pagesへの単独mergeで公開し、Worker deployは不要。失敗時は#42の静的変更と対応説明を同じrevertで戻し、#41の保存契約を維持する。
 
 確認2の前にFrontがItsukiへ実際の1作品の種別・映像を選ぶ保存と、Siteの顔にその作品を選ぶ保存を頼む（保存済みなら入れ直さない）。#41の公開互換試験は3項目で現公開画面が変わらないことを保護するため、merge前に保存できる。確認2では本番公開データを直接読むbranchの新HomeをPC・スマホ用URLで出し、Itsukiが顔・種別・「聴く」の実音・「閉じる」を確認する。fixture撮影と分け、本番データをrepoへ保存しない。merge後はFrontがPages buildと公開Homeの新版配信をread-only確認し、差がある時だけItsukiへ返す。同じデータ・画面の2回目の本人確認は頼まない。保存した3項目はmerge見送り時もrollback時もそのまま保持する。
 
 #### Issue #44と公開側まとめ出し時の対応
 
-#44の公開Musicは`/music/`で作品と映像を統合する。管理の実タブは#47までSite / News / Live / YouTube / Disco / Profileを保つ。作品の種別・再生映像はDiscoで作品カードを押した「Discography編集」、映像とChannel URLはYouTubeから編集する。上の表のMusic > 作品/映像は最終形の設計上の名称であり、#47前の実タブ名ではない。`admin/README.md`の案内をこの実態へ揃え、タブ・入力・保存・key・Workerは#44で変更しない。
+（以下は#44の時点の記録。#47で管理も5タブになり、作品・映像・Channel URLはMusicの中で編集する。）#44の公開Musicは`/music/`で作品と映像を統合する。管理の実タブは#47までSite / News / Live / YouTube / Disco / Profileを保つ。作品の種別・再生映像はDiscoで作品カードを押した「Discography編集」、映像とChannel URLはYouTubeから編集する。上の表のMusic > 作品/映像は最終形の設計上の名称であり、#47前の実タブ名ではない。`admin/README.md`の案内をこの実態へ揃え、タブ・入力・保存・key・Workerは#44で変更しない。
 
 公開側#43・#44・#45はOwner決定（2026-11-18）により`feature/39-public-pages`へ集約してからmainへ1回で出す。#44のPR mergeでは本番も管理のタブも変わらない。公開ナビ5項目と管理6タブが併存する状態で文言と働きを照合する。#42の単独公開手順は履歴として保持する。#44の確認2前にはFrontが本番公開データでMusicの表示・再生を確認し、Itsukiの追加保存を不要とする。復旧は#44の公開差分と説明を同じ単位で戻し、保存済みデータは保持する。
 
@@ -336,7 +353,13 @@ Google側のPOST後302と最終応答は未観測で、stubは実到達を証明
 
 ### たまにする更新
 
-Site・News・Music・Profileは、一覧と編集、保存して公開、未保存の確認をLiveの型に揃える。保持する項目と公開先は§5.3、画面とマスタは§15を参照する。画面には実際に表示する文言だけを置き、設計の理由や新旧の区別を載せない。
+Site・News・Music・Profileは、一覧と編集、保存して公開、未保存の確認をLiveの型に揃える（#47）。保持する項目と公開先は§5.3、画面とマスタは§15を参照する。画面には実際に表示する文言だけを置き、設計の理由や新旧の区別を載せない。
+
+- 型は2つ。SiteとProfileは一覧のない1画面（白い面を縦に並べる）、NewsとMusicは一覧＋編集。どちらも保存は§4.6の「Issue #47の保存契約」、状態と文言は§10.3、受入条件は§12.5に従う。
+- NewsとMusicの一覧は、1行1件（Newsは日付と題、作品はジャケットと題とリリース日、映像は題）。Musicの一覧は、作品はDigital Release／宅録Demo、映像はMusic Video／Live Movie／Demoの見出しを持つ。一覧の下ではなく見出しの右の「+ 追加」で新しい1件を開く。開いている1件は、幅900px以上の一覧で薄い色の行にする。
+- Musicの作品の編集は、カテゴリ → タイトル → リリース日 → 説明（曲リスト等）→ 画像（ジャケット）→ リンクURL → 種別 → その場で再生する映像 → 「この作品を削除」の順。映像の編集は、カテゴリ → タイトル → YouTube URL / ID → 「この映像を削除」。映像の側の上に、Channel URLの欄（その欄の「保存して公開」を持つ）を置く。
+- Newsの編集は、日付 → タイトル → 説明 → 画像 → 詳細リンクURL → リンクテキスト → 「このお知らせを削除」の順。新しい項目のリンクテキストの初期値は今のとおり`view...`とする。
+- Siteは、Home（顔にする作品・共有時の画像）、Home Links、Footer、Contactの4つの面。Profileは、写真、プロフィールテキスト、SNSリンク（名前・URL。各行の「削除」、「+ リンク追加」）。
 
 ## 7. AI整理の位置づけ
 
@@ -465,6 +488,29 @@ Live
 - 主要actionと補助actionのサイズ・強さを分ける。
 - Liveの`予約`と`予約管理`の一覧では、行を押すと右に1件の内容（備考・内部メモ・状態操作）を開く。未対応の行には`対応済みにする`を置き、開かずに状態を変えられる。`予約管理`には全Liveのfilterも表示する。右に1件を開いた専用frameは未作成。
 
+### たまにする更新（Issue #47）
+
+```text
+幅900px以上（NewsとMusic）:
+[1212 Admin                                           接続中]
+[Site News Live Music Profile]
+Music    [作品|映像]
+┌ 一覧（幅320）────────┬ 編集 ───────────────────────────┐
+│ Digital Release [+追加]│ 題または「新しい作品」  保存済み [保存して公開]│
+│  ジャケット 題 日付    │ カテゴリ／タイトル／リリース日／説明          │
+│ 宅録Demo               │ 画像／リンクURL／種別／その場で再生する映像  │
+│  …                     │ この作品を削除                              │
+└────────────────────────┴─────────────────────────────────┘
+
+幅899px以下の編集中（NewsとMusic）:
+[‹ 一覧｜題（長い時は…）｜保存の状態]
+入力欄…
+[保存して公開]（未保存の変更がある時だけ下に固定）
+```
+
+- SiteとProfileは一覧がなく、幅900px以上は見出しの右に状態と「保存して公開」（変更がない時は薄い）、幅899px以下は未保存の時だけ下に「保存して公開」。
+- Channel URLは、映像の側の上に置き、その欄の右または下に自分の「保存して公開」と状態を持つ。
+
 ### Mobile
 
 ```text
@@ -553,6 +599,24 @@ OpenAI timeout→Claude成功は`200`、OpenAI timeout→Claude HTTPエラーな
 | API接続失敗 | 読み込み失敗（今のまま） | 「API接続失敗（ローカルJSONを読み取り専用で表示）」。編集・保存・下書き・予約の操作・CSVは使えず、一覧の予約の数は出さない |
 | Local Mode | 明示的なLocal Mode（今のまま） | 「ローカルJSONモード（従来運用）」。保存のボタンは「JSONを書き出す」。下書き・予約・CSVは使えず、一覧の予約の数は出さない |
 
+### 10.3 Issue #47の状態と文言
+
+実装: #47。画面に出す文言はこの表と§10.2だけ（説明の文は足さない）。マスタの状態`39:741`と、描かれていない状態の採用値（#47のFigma整合案F47-14〜20）に基づく。「保存の状態」「未保存のまま移る」「API接続失敗」「Local Mode」「管理用の合言葉」は§10.2と同じ文言を、Site・News・Music・Profileにも使う。
+
+| 状態 | 出す条件 | 文言・動き |
+|---|---|---|
+| 削除の確認 | 「このお知らせを削除」「この作品を削除」「この映像を削除」を押した時 | 見出し`「{題}」を削除しますか。`（題が空なら「このお知らせを削除しますか。」「この作品を削除しますか。」「この映像を削除しますか。」）。説明「削除すると公開画面からも消えます。」。ボタン「やめる」「削除する」（初期のフォーカスは「やめる」） |
+| 削除の確認（顔にする作品） | 削除する作品が、Siteの顔にする作品に選ばれている | 説明に1行足す: 「顔にする作品は「自動（最新のリリース）」に戻ります。」 |
+| 削除の確認（再生する映像） | 削除する映像を、N件の作品がその場で再生する映像に選んでいる | 説明に1行足す: 「再生する映像に選んでいる作品が{N}件あります。「選ばない」に戻り、公開画面では「聴く」が出なくなります。」 |
+| 一覧が空 | News・作品・映像が0件（作品・映像はカテゴリの見出しを出さない） | 「まだ登録がありません。」と「+ 追加」 |
+| 編集面が未選択 | 幅900px以上で、一覧から1件も選んでいない | 「一覧から選ぶか、「+ 追加」を押してください。」 |
+| 新しい項目 | 「+ 追加」を押した直後 | 編集面が空の入力で開く。何も入力していない間は「保存済み」。一覧には、保存するまで載らない。削除は出さない。News のリンクテキストの初期値は`view...` |
+| 画像を選んだあと | 画像を選んだ後 | 「アップロードしています…」。失敗は「画像をアップロードできませんでした」と理由を出し、今の画像は残す。アップロード中は未保存として扱い、保存は押せない |
+| リリース日の形が違う | 新規の作品、または日付を変えた作品の保存で形が違う | 保存せず、日付の直下に`「2025.05.05」の形で入力してください。`。入力は残す。日付を変えない保存はそのまま通る |
+| YouTube URL / IDが不正 | 映像の保存でIDが取り出せない | 保存せず、欄の直下に「YouTube URL / ID が不正です（IDは11文字）」 |
+| 保存の成功 | 保存が成功した | 状態は「保存済み」。同じ編集面に留まる（新規は保存した項目の編集に変わる）。API接続中は「保存しました」、Local Modeは「編集内容を反映しました。右上の「JSONを書き出す」で確定します」を一時的に示す |
+| 保存・削除の失敗 | 保存または削除のAPIが失敗した | 状態は「保存できませんでした」。入力と編集面は残り、理由を1行出す。削除の失敗は項目が一覧に戻る |
+
 ## 11. Issue境界
 
 - Issue #22はLive workspace、master-detail、内部タブ、progressive disclosure、保存状態、responsive構造を実装する。
@@ -588,7 +652,7 @@ OpenAI timeout→Claude成功は`200`、OpenAI timeout→Claude HTTPエラーな
 | #41 | 3項目、日付の形、削除した参照を空に戻す処理、共有時の画像の表示名。既存編集面へ足す。 | 未実装。§5.3。key名・保存形式は同IssueのCode Generation Plan。 |
 | #42〜#45 | Home・共通、Live・Ticket、Music・5項目ナビ、Profile・Contact。 | 既存公開ページはある。マスタの追加・変更は未実装。`public-site-ui.md`。 |
 | #46 | Liveのスマホの帯・フライヤー・保存と削除・保存直後・一覧集計（Workerに集計を返す処理を新設。§5.4）・予約1件と取り置き・共通設定の保存。 | Liveの型と受付機能は一部実装。マスタの変更分と一覧集計は未実装。外枠の6→5タブはここでは変えない。 |
-| #47 | 5タブ、News・作品・映像の一覧と編集、保存とguard、Site・Profileの見た目。 | 未実装。#41の項目、#44の公開Music、#46のLiveの型のあとに揃える。 |
+| #47 | 5タブ、News・作品・映像の一覧と編集、保存とguard、Site・Profileの見た目、上の帯（Header）をLiveのマスタの形にすること。 | `00cdea5`では未実装。#47のcycleで実装する（§4.6の「Issue #47の保存契約」、§10.3、§12.5）。#41の項目、#44の公開Music、#46のLiveの型のあとに揃える。実装の成否は#47のcycle記録を参照する。 |
 
 ## 12. Acceptance Criteria
 
@@ -664,7 +728,27 @@ ADM-40-05の#41分は既存入力の保持と共有画像の表示名、ADM-40-0
 | ADM-46-07 | ADM-40-07 | 未保存の変更が、別のライブ・一覧・タブ・区分・予約管理・共通設定への移動、再読込・戻る・閉じる、削除・保存の失敗のいずれでも、確認なしに消えない |
 | ADM-46-08 | #46の保護 | 保存・削除・予約の状態変更・取り置き・共通設定の保存が今と同じ形で動き、#41の3項目と他のタブのデータを落とさない |
 | ADM-46-09 | #46の保護 | 新しい管理画面と古いWorker、古い管理画面と新しいWorkerのどちらでも、保存・予約の操作が壊れない |
-| ADM-46-10 | #46の保護 | 公開側のページ・#47のタブ（Site・News・YouTube・Disco・Profile）の表示と保存の動きが変わらない |
+| ADM-46-10 | #46の保護 | 公開側のページ・#47のタブ（Site・News・YouTube・Disco・Profile）の表示と保存の動きが変わらない（#46の時点の条件。#47で、各タブは§12.5の条件に置き換わった） |
+
+### 12.5 Issue #47の受入条件（ADM-47系）
+
+実装: #47。ADM-40-05〜07の#47分と、要件メモ`39:838`「受入条件」の#47に当たる項目を、測り方まで固定する。#47のRequirements・Code Generation Planが同じIDを使う。
+
+| ID | 対応 | 合格にする観測 |
+|---|---|---|
+| ADM-47-01 | ADM-40-05 | 今の管理画面で編集できる項目・見られる情報が、#47のRequirementsの対応表のとおりすべて残る。同じ内容を開いて変えずに保存した時、1項目だけ変えて保存した時、カテゴリを移した時、新規を追加した時に送る内容が、#47の前の保存（headerの「保存」・各modalの「更新」）と同じ（key・値の書き方・並び） |
+| ADM-47-02 | ADM-40-07 | 未保存の編集が、別の項目・「‹ 一覧」・「+ 追加」・作品／映像の切り替え・グローバルタブ・再読込・戻る・閉じる・保存の失敗・削除の失敗のいずれでも、確認なしに消えない |
+| ADM-47-03 | 要件メモ「受入条件」・Issue本文 | News・作品・映像に新しい必須項目がない。空の項目のままで保存できる（映像のYouTube URL / IDと、日付を変えた作品のリリース日の形は今のとおり） |
+| ADM-47-04 | ADM-40-06 | 顔にする作品・その場で再生する映像・種別を空のままにしても今と同じ内容が保存される。参照先の作品・映像を削除すると、同じ1回の保存で参照が空に戻る（保存の本文で確かめる） |
+| ADM-47-05 | 要件メモ`39:842` | タブは5つ（Site・News・Live・Music・Profile）で、画面に「YouTube」「Disco」のタブ名がない。Musicの中で作品／映像を切り替え、Channel URLが映像の側にある |
+| ADM-47-06 | 要件メモ`39:833` | 「保存して公開」は、幅899px以下は未保存の時だけ下に出て、幅900px以上は見出しの右にあり変更がない間は薄く押せない。保存中は押せず、失敗は入力を残して理由を示す |
+| ADM-47-07 | #47の保護 | 1項目の保存・削除が、他の項目・他のタブの未保存の入力を送らない（送る内容は「最後に保存できた内容＋対象だけ」）。別の保存が進行中なら二重に送らない |
+| ADM-47-08 | #47の保護 | 削除は、確認のあとその場で保存する。失敗した時は項目が一覧に戻り、編集面と入力が残る |
+| ADM-47-09 | 要件メモ`39:833` | 幅390・360・1440と中間の幅（821・900・1011）で、横スクロールがなく、主要な操作は44px以上、入力欄・ボタンに表示名がある。幅900px以上は一覧と編集の2列、幅899px以下は一覧→編集 |
+| ADM-47-10 | #47の保護 | Liveのタブ（一覧・ライブを開いた画面・予約・予約管理・Ticket Page共通設定）の動きと、上の帯の下の見た目が変わらない。公開側のページ・Cloudflare Worker・データの形が変わらない |
+| ADM-47-11 | 本番データの形 | 本番と同じ形の架空の値（自由な書き方のNewsの日付、改行と空行を含む説明と文、空文字で持つ選ぶ項目、二重引用符を含む題、`site.links`と`profile.links`の形の違い）で、表示が崩れず、開いて保存しても値の書き方が変わらない |
+| ADM-47-12 | 状態 | API接続失敗は読み取り専用（入力・保存・削除・追加が無効で、一覧と各項目は読める）。Local Modeは「JSONを書き出す」だけがheaderにあり、各「保存して公開」はメモリ上へ反映して「JSON書き出し待ち」になる |
+| ADM-47-13 | Issue本文 | 上の帯（Header）が、幅390pxで高さ46px・右に「接続中」、幅900px以上で高さ62px。全タブで同じで、保存のボタンはない（Local Modeの「JSONを書き出す」を除く） |
 
 ## 13. 検証方法
 
@@ -724,6 +808,15 @@ Gap: 幅1440pxで予約の1件を右に開いた状態の専用frameは未作成
 - 出し方は、GitHub Pagesがmainから配信するため、merge前にPR最終版のtested revisionからWorkerをdeployし、本番の古い管理画面が今のまま動くことを確かめてからmergeする（新しい管理画面と古いWorkerの組み合わせを作らない）。mergeが管理画面の入れ替わりで、別の静的な反映の操作はない。merge・deploy・PRの承認はItsuki。
 - rollbackは、merge前はWorkerを直前のversionへ戻す。merge後は管理画面の差分を戻すrevertを先に行い、旧管理画面の配信を確かめる。集計の経路は追加だけなので、Workerは通常そのまま残してよい（Worker自体に不具合がある時だけ戻す）。D1・データ・予約は戻さない。詳細は#46のCode Generation Planの出し方の節に従う。
 
+### 13.5 Issue #47の検証・出し方・rollback
+
+実装・検証: #47。`00cdea5`: 未実施。
+
+- 振る舞いはNodeの決定論的な試験（APIは差し替え、networkへ出ない）で確かめる。実装の前に、headerの「保存」・各modalの「更新」が送る内容、削除、カテゴリの移動、画像の選択と保存、SiteとProfileの保存、開いて変えずに保存した時の値の書き方、#41の参照の照合の「今の動き」を固定する試験を置き、その試験を通したまま画面を変える。新しい保存が送る内容は、同じ操作を#47の前のコードで行った時の内容と同じであることを、同じ入力で比べて確かめる。
+- 見た目（幅390・360・1440と、中間の幅821・900・1011）とADM-47-09・13の実測は、架空のAPIだけを使う撮影で確かめる。共有のCSSを変えた時は、Liveの撮影を#46の画像と、上の帯を除いて比べる。
+- 出し方: GitHub Pagesがmainから配信するので、mergeした時点で本番の管理画面が入れ替わる。Cloudflare Workerは変更しない（保存の経路・形・認証・検査は#41・#46のまま）ので、deployはなく、mergeだけである。merge・PRの承認はItsuki。
+- rollbackは、mergeしたPRのrevert（管理画面だけ）。公開データの形・schemaは変えないので、revertで旧管理画面に戻っても保存済みの内容を読める。D1・データは戻さない。revert後は`?v=`と`ADMIN_BUILD_ID`で旧版の配信を確かめる。詳細は#47のCode Generation Planの出し方の節に従う。
+
 ## 14. Canonical file map
 
 今回の対応づけは#40、実装は#41・#46・#47（公開側#42〜#45）。`00cdea5`では公開UI設計と本版のマスタ対応は未登録で、以下の#40参照を追加する。既存契約の参照先は保持する。
@@ -750,6 +843,9 @@ Gap: 幅1440pxで予約の1件を右に開いた状態の専用frameは未作成
 - Issue #46 計画・承認・証拠: active時は`aidlc-docs/`、close後は`docs/records/aidlc-cycles/2026-11-20_issue-46_admin-live-ops/`（Requirements・Workflow Plan・Code Generation Plan・Figma整合案`figma-fix-requests.md`）
 - Issue #46 集計API: `cloudflare/worker/src/worker.js`の`GET /api/admin/ticket-reservation-summary`（§5.4）、`cloudflare/worker/README.md`
 - Issue #46 管理画面: `admin/index.html`・`admin/app.js`・`admin/style.css`・`admin/README.md`
+- Issue #47 計画・承認・証拠: active時は`aidlc-docs/`、close後は`docs/records/aidlc-cycles/2026-11-21_issue-47_admin-occasional/`（Requirements・Workflow Plan・Code Generation Plan・Figma整合案`figma-fix-requests.md`）
+- Issue #47 管理画面: `admin/index.html`・`admin/app.js`・`admin/style.css`・`admin/README.md`（5タブ、News・作品・映像の一覧と編集、各タブの「保存して公開」）
+- Issue #47 試験・撮影・手元配信: `test/admin-occasional-*.test.mjs`、`test/fixtures/admin-occasional-states.json`、`test/support/admin-preview/`（`capture-admin-occasional.py`、`fake_admin_api.py`、`fake_admin_server.py`）
 - 旧来の要件・仕様・ユースケース: `documents/`
 
 ## 15. 画面・Figmaマスタ・要件・実装の対応
@@ -772,12 +868,12 @@ Gap: 幅1440pxで予約の1件を右に開いた状態の専用frameは未作成
 | 取り置きを追加 | 専用frameなし。予約frameの追加入口と390pxを参照。 | [管理 取り置きを追加｜390 `44:786`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=44-786) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「管理用の合言葉がまだ入っていない時、違っている時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「よくする3つの流れ」「変わらない項目」「振る舞い」 | ADM-40-05 | #46 | 一部実装。手動追加の4項目とAPIはある。別の画面への分離は未実装。 |
 | 予約管理（全Live） | [管理 予約管理｜1440 `47:926`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=47-926) 行を押すと右に1件を開く。未対応の行は`対応済みにする`で開かず変更できる。 | [管理 予約管理｜390 `44:811`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=44-811) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「予約がまだない時」「APIに接続できない時」「Local Mode」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「よくする3つの流れ」「変わらない項目」「振る舞い」 | ADM-40-05 | #46 | 一部実装。`admin/index.html`のfilter・CSV、`app.js`に横断台帳あり。表示と詳細の開き方は未実装。 |
 | Ticket Page共通設定 | 専用frameなし（同メモに明記）。 | [管理 Ticket Page共通設定｜390 `50:664`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=50-664) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「保存の状態」「未保存のまま、別の項目・別のタブへ移ろうとした時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #46 | 一部実装。#37の項目削除は実装済み。`admin/index.html`の共通設定は上の保存待ちで、専用保存は未実装。 |
-| Site | [管理 Site｜1440 `38:274`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-274) | [管理 Site｜390 `38:350`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-350) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「顔にする作品｜選んでいた作品を削除した時」「画像を選んだあと」「保存の状態」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「新しく足す項目（3つ）」「変わらない項目」「振る舞い」 | ADM-40-05, 06, 07 | #41（項目）, #47（型） | 一部実装。Siteの既存fieldはあり、作品選択・表示名・全体guardと保存表示は未実装。 |
-| News一覧 | [管理 News｜1440 `38:425`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-425)の左一覧 | [管理 News 一覧｜390 `38:500`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-500) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「一覧が空の時」「APIに接続できない時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。`renderNews / editNews`に一覧あり。右編集／一覧から編集へ進む型は未実装。 |
-| News編集 | [管理 News｜1440 `38:425`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-425)の右編集 | [管理 News 編集｜390 `38:541`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-541) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「保存の状態」「削除しようとした時」「未保存のまま、別の項目・別のタブへ移ろうとした時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。`editNews / saveModal`のmodal内更新はあり、保存して公開とguardの型は未実装。 |
-| Music作品 | [管理 Music 作品｜1440 `39:366`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-366) | [管理 Music 一覧｜390 `39:533`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-533)（作品の一覧。編集の専用frameなし） | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「作品のリリース日の形が違う時」「その場で再生する映像｜選んでいた映像を削除した時」「保存の状態」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「新しく足す項目（3つ）」「変わらない項目」「振る舞い」 | ADM-40-05, 06, 07 | #41（項目）, #47（型） | 一部実装。`editDiscography / saveDiscographyItem`の既存fieldはあり、作品の2項目・日付検査・統合・保存とguardの型は未実装。 |
-| Music映像 | [管理 Music 映像｜1440 `39:461`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-461) | 映像一覧・編集の専用frameなし。[管理 Music 一覧｜390 `39:533`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-533)に作品／映像の切り替えあり。 | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「一覧が空の時」「保存の状態」「未保存のまま、別の項目・別のタブへ移ろうとした時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。`editYouTubeVideo / saveYouTubeItem`に既存fieldとURL検査あり。Music統合・編集面・保存とguardの型は未実装。 |
-| Profile | [管理 Profile｜1440 `39:589`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-589) | [管理 Profile｜390 `39:664`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-664) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「画像を選んだあと」「保存の状態」「未保存のまま、別の項目・別のタブへ移ろうとした時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。写真・本文・linksの編集はあり、マスタの見た目と全体guard・保存表示は未実装。 |
+| Site | [管理 Site｜1440 `38:274`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-274) | [管理 Site｜390 `38:350`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-350) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「顔にする作品｜選んでいた作品を削除した時」「画像を選んだあと」「保存の状態」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「新しく足す項目（3つ）」「変わらない項目」「振る舞い」 | ADM-40-05, 06, 07 | #41（項目）, #47（型） | 一部実装。Siteの既存fieldはあり、作品選択・表示名・全体guardと保存表示は未実装。【#47で実装。成否は#47のcycle記録】 |
+| News一覧 | [管理 News｜1440 `38:425`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-425)の左一覧 | [管理 News 一覧｜390 `38:500`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-500) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「一覧が空の時」「APIに接続できない時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。`renderNews / editNews`に一覧あり。右編集／一覧から編集へ進む型は未実装。【#47で実装。成否は#47のcycle記録】 |
+| News編集 | [管理 News｜1440 `38:425`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-425)の右編集 | [管理 News 編集｜390 `38:541`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=38-541) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「保存の状態」「削除しようとした時」「未保存のまま、別の項目・別のタブへ移ろうとした時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。`editNews / saveModal`のmodal内更新はあり、保存して公開とguardの型は未実装。【#47で実装。成否は#47のcycle記録】 |
+| Music作品 | [管理 Music 作品｜1440 `39:366`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-366) | [管理 Music 一覧｜390 `39:533`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-533)（作品の一覧。編集の専用frameなし） | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「作品のリリース日の形が違う時」「その場で再生する映像｜選んでいた映像を削除した時」「保存の状態」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「新しく足す項目（3つ）」「変わらない項目」「振る舞い」 | ADM-40-05, 06, 07 | #41（項目）, #47（型） | 一部実装。`editDiscography / saveDiscographyItem`の既存fieldはあり、作品の2項目・日付検査・統合・保存とguardの型は未実装。【#47で実装。成否は#47のcycle記録】 |
+| Music映像 | [管理 Music 映像｜1440 `39:461`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-461) | 映像一覧・編集の専用frameなし。[管理 Music 一覧｜390 `39:533`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-533)に作品／映像の切り替えあり。 | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「一覧が空の時」「保存の状態」「未保存のまま、別の項目・別のタブへ移ろうとした時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。`editYouTubeVideo / saveYouTubeItem`に既存fieldとURL検査あり。Music統合・編集面・保存とguardの型は未実装。【#47で実装。成否は#47のcycle記録】 |
+| Profile | [管理 Profile｜1440 `39:589`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-589) | [管理 Profile｜390 `39:664`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-664) | [管理｜状態 `39:741`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-741)「画像を選んだあと」「保存の状態」「未保存のまま、別の項目・別のタブへ移ろうとした時」 | [要件メモ｜管理画面 `39:817`](https://www.figma.com/design/82QH1c3hUrv1fKCd2AMULK/HP-itsukimatsumoto?node-id=39-817)「変わらない項目」「振る舞い」 | ADM-40-05, 07 | #47 | 一部実装。写真・本文・linksの編集はあり、マスタの見た目と全体guard・保存表示は未実装。【#47で実装。成否は#47のcycle記録】 |
 
 ### 15.1 base sourceの確認範囲とGap
 
@@ -787,4 +883,6 @@ Gap: 幅1440pxで予約の1件を右に開いた状態の専用frameは未作成
 - 本番の古いLive、リリース日の形、予約件数、実速度は未調査。snapshotはnode・文言・寸法の証拠であり、初期表示の入力欄数・1行表示・操作回数・本番動作の証明ではない。
 - #46の行（Live一覧〜Ticket Page共通設定）の実装状況は、#46のCode Generation Plan承認後の実装入力で、上の表の`00cdea5`の事実列は比較時点の記録として保持する。#46で足す一覧の集計は§5.4、保存の対象の分離は§4.6、状態と文言は§10.2、受入条件は§12.4に示す。実装・試験・独立reviewの結果は#46のcycle記録を参照する。
 - #46時点の本番の公開データの形（件数と形だけ。ライブ21件のうち時間・料金・予約のキーを持たない旧形式が10件超、タイトルが空のライブ、日付の書き方の混在など）は、#46のRequirementsに記録した。予約の件数の分布は未調査（予約は個人情報で取得しない）。
+- #47の行（Site・News一覧・News編集・Music作品・Music映像・Profile）の実装状況は、#47のCode Generation Plan承認後の実装入力で、上の表の`00cdea5`の事実列は比較時点の記録として保持する。#47の保存は§4.6、状態と文言は§10.3、受入条件は§12.5に示す。マスタのたまにする更新の10 frameと、Liveのframeとの食い違い、描かれていない画面と状態は、#47のFigma整合案（F47-01〜）に挙げた。実装・試験・独立reviewの結果は#47のcycle記録を参照する。
+- #47時点の本番の公開データの形（件数と形だけ。Newsは6件で日付は3通りの自由な書き方、作品は4件で改行を含む説明が2件・選ぶ項目の空文字が多い、映像は5件、Profileの文は空行を含む9行など）は、#47のRequirementsに記録した。画像の実在・動画IDの有効性・リンク先の到達は確かめていない。
 - 幅1440pxの下書き確認・保存のあと・予約先リンク・Ticket Page共通設定・予約1件を右に開いた状態・取り置き追加は、専用frameがない。#46は「同じ中身を広げた形」を採用値とし、撮影で目視する（#46のFigma整合案F46-12）。

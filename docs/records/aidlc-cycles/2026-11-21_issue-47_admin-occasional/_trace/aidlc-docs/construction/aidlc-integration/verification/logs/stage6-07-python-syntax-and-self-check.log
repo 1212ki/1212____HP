@@ -1,0 +1,18 @@
+$ python3 -B -c ast.parse x4
+exit=0
+$ capture-admin-occasional.py --self-check
+fake_admin_server: OK（bindなし）
+fake_admin_api: OK（#46 の fixture 14 scenario、#47 の fixture 9 scenario。bindなし・networkなし）
+契約OK: 357画像 / 9画面 / 7scenario（ブラウザ・bindなし）
+exit=0
+$ capture-admin-live.py --self-check
+fake_admin_server: OK（bindなし）
+fake_admin_api: OK（#46 の fixture 14 scenario、#47 の fixture 9 scenario。bindなし・networkなし）
+契約OK: 150画像 / 16画面 / 14scenario（ブラウザ・bindなし）
+exit=0
+$ fake_admin_server.py --self-check
+fake_admin_server: OK（bindなし）
+exit=0
+$ fake_admin_api.py
+fake_admin_api: OK（#46 の fixture 14 scenario、#47 の fixture 9 scenario。bindなし・networkなし）
+exit=0

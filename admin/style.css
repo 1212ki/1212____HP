@@ -32,8 +32,8 @@
   --shadow-lg: var(--shadow-card, 0 12px 30px rgba(0, 0, 0, 0.12));
   --radius: var(--radius-card, 16px);
   --radius-sm: var(--radius-button, 12px);
-  --admin-header-sticky-height: 92px;
-  --admin-tab-nav-sticky-height: 54px;
+  --admin-header-sticky-height: 46px;
+  --admin-tab-nav-sticky-height: 49px;
   --admin-global-chrome-sticky-offset: calc(var(--admin-header-sticky-height) + var(--admin-tab-nav-sticky-height));
 
   /* Status: avoid strong red/green fills; keep monochrome + accent hints */
@@ -43,6 +43,14 @@
   --status-handled-fg: var(--gray-700);
   --status-cancelled-bg: transparent;
   --status-cancelled-fg: var(--gray-500);
+}
+
+/* Issue #47: the upper band is the Live master's: 46px (tabs 49px) up to 899px wide, 62px (tabs 53px) from 900px. */
+@media (min-width: 900px) {
+  :root {
+    --admin-header-sticky-height: 62px;
+    --admin-tab-nav-sticky-height: 53px;
+  }
 }
 
 body {
@@ -59,10 +67,10 @@ body {
 }
 
 /* ----- Header ----- */
+/* Issue #47: one row (Figma 44:494 / 47:584). Left: 1212 Admin. Right: the connection (and, in Local Mode, the JSON export). */
 .header {
   background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
-  padding: 16px 20px;
+  padding: 12px 16px;
   height: var(--admin-header-sticky-height);
   position: sticky;
   top: 0;
@@ -70,34 +78,75 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
 .header-meta {
-  font-size: 0.78em;
-  color: var(--gray-500);
-  margin-top: 2px;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  white-space: nowrap;
 }
 
 .logo {
-  font-size: 1.4em;
-  font-weight: bold;
-  color: var(--gray-900);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
 }
 
 .logo .accent {
   color: var(--primary);
 }
 
+/* The header button is a small secondary button (Figma 223:928): JSONを書き出す in Local Mode, 保存 only while an old-style change waits. */
 .save-btn {
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  padding: 10px 20px;
+  position: relative;
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid var(--ink);
   border-radius: var(--radius-sm);
-  font-weight: bold;
-  font-size: 0.95em;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+/* the tap area is 44px tall even though the button is drawn 32px tall */
+.save-btn::before {
+  content: '';
+  position: absolute;
+  inset: -6px 0;
+}
+
+.save-btn[hidden] {
+  display: none;
+}
+
+/* the button stands to the left of the connection label (Figma 223:927) */
+.header-right .save-btn {
+  order: -1;
+}
+
+/* while the button is shown the Header is as tall as its content: 56px up to 899px, 64px from 900px (Figma 223:924 / 223:962) */
+body.has-header-action {
+  --admin-header-sticky-height: 56px;
+  --admin-global-chrome-sticky-offset: calc(var(--admin-header-sticky-height) + var(--admin-tab-nav-sticky-height));
 }
 
 .save-btn:hover {
@@ -132,43 +181,98 @@ body {
   border-left: 4px solid var(--primary);
 }
 
+@media (min-width: 900px) {
+  body.has-header-action {
+    --admin-header-sticky-height: 64px;
+  }
+
+  .header {
+    padding: 16px 32px;
+  }
+
+  .logo {
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0;
+  }
+}
+
 /* ----- Tab Navigation ----- */
+/* Issue #47: five tabs (Figma 44:497 / 47:587). Up to 899px they share the width (space-between, 49px); from 900px they sit on the left (gap 40, 53px). */
 .tab-nav {
   display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 0;
+  padding: 0 16px;
   background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--line);
   height: var(--admin-tab-nav-sticky-height);
   position: sticky;
   top: var(--admin-header-sticky-height);
   z-index: 99;
 }
 
-.tab-btn {
-  flex: 1;
-  padding: 14px 8px;
+/* .tab-nav .tab-btn: the width rule at the end of this file (max-width: 420px) restyles .tab-btn; this one does not depend on the order */
+.tab-nav .tab-btn {
+  flex: 0 0 auto;
+  min-width: 44px;
+  padding: 12px 4px 0;
   border: none;
   background: none;
-  font-size: 0.95em;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--gray-500);
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
   cursor: pointer;
   position: relative;
   transition: color 0.3s ease;
 }
 
-.tab-btn.active {
+.tab-nav .tab-btn.active {
   color: var(--primary);
 }
 
-.tab-btn.active::after {
+.tab-nav .tab-btn.active::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 20%;
-  width: 60%;
-  height: 3px;
+  left: 0;
+  width: 100%;
+  height: 2px;
   background: var(--primary);
-  border-radius: 2px 2px 0 0;
+  border-radius: 0;
+}
+
+.tab-nav .tab-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+@media (min-width: 900px) {
+  .tab-nav {
+    justify-content: flex-start;
+    gap: 40px;
+    padding: 0 32px;
+  }
+
+  /* The text sits where Figma puts it (the first tab's text starts at x=32, 40px between the texts, the underline is as wide as the text).
+     The 44px to press stays: a ::before (it moves nothing that is seen) reaches 44px wide and as tall as the bar. */
+  .tab-nav .tab-btn {
+    min-width: 0;
+    padding: 14px 0 0;
+  }
+
+  .tab-nav .tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: max(100%, 44px);
+    transform: translateX(-50%);
+  }
 }
 
 /* ----- Tab Content ----- */
@@ -3260,6 +3364,934 @@ body {
   color: var(--gray-500);
   text-align: center;
   word-break: break-all;
+}
+
+/* ----- Occasional Updates ----- */
+/* Issue #47: News (and, in the next stages, Music, Site and Profile). A list and an edit surface; 保存して公開 under the edit.
+   Every class here starts with occ-. A rule that restyles a shared class (.form-group, .text-input, .btn, ...) is written under .occ-tab,
+   so its specificity is (0,2,0) or more and does not depend on where it stands in this file. The values are the ones of the Figma
+   master (admin-occasional-layout-spec.md 10-12, 22-24) and of the Live frames (44:492, 47:582). */
+
+/* the body of a screen: padding 20 / 16 (content 358 at 390), 24 / 32 from 900px */
+.tab-content.occ-tab {
+  padding: 20px 16px;
+}
+
+.tab-content.occ-tab.occ-tab-split {
+  max-width: none;
+}
+
+.occ-master-detail {
+  display: block;
+}
+
+.occ-list-pane {
+  background: var(--white);
+  border-radius: var(--radius);
+}
+
+.occ-list-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.occ-list-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--ink);
+}
+
+.occ-tab .occ-add {
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.occ-tab .occ-add:disabled {
+  background: var(--white);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.occ-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.occ-tab .occ-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.occ-list > .occ-row:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.occ-row[aria-current="true"] {
+  background: var(--accent-soft);
+}
+
+.occ-tab .occ-row:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.occ-row-meta {
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+
+.occ-row-title {
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.occ-empty {
+  padding: 24px 16px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ink-muted);
+}
+
+/* edit surface */
+.occ-editor-pane {
+  display: none;
+}
+
+.occ-editor-bar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 47px;
+  padding: 0 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+
+.occ-tab .occ-back {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.occ-editor-bar-title {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.occ-status {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.occ-status-wide {
+  display: none;
+}
+
+.occ-editor-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 16px;
+  padding: 24px 16px;
+  background: var(--white);
+  border-radius: var(--radius);
+}
+
+.occ-editor-head {
+  display: block;
+}
+
+.occ-editor-heading {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.occ-editor-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.occ-editor-empty {
+  display: none;
+}
+
+/* 保存して公開. Up to 899px it is a bar fixed to the bottom of the screen, shown only while there is something to save (or saving, or failed). */
+.occ-save {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--white);
+  border-top: 1px solid var(--line);
+}
+
+.occ-save[hidden] {
+  display: none;
+}
+
+.occ-error {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--primary);
+  overflow-wrap: anywhere;
+}
+
+.occ-error:empty {
+  display: none;
+}
+
+/* The line under a field (the date of a work, the id of a video) takes room only while it says something; the shared .form-error keeps 1.6em + 8px. */
+.occ-tab .occ-field .form-error {
+  min-height: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.occ-tab .occ-field .form-error:not(:empty) {
+  margin-top: 6px;
+}
+
+/* The delete confirmation: each line is a paragraph of its own (the shared .live-dialog-body keeps 16px below every paragraph). */
+.occ-dialog-lines .live-dialog-body:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.occ-tab .occ-save-btn {
+  flex: none;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.occ-tab .occ-save-btn:disabled {
+  background: var(--primary);
+  color: var(--white);
+  opacity: 0.4;
+}
+
+/* fields */
+.occ-tab .occ-field {
+  margin: 0;
+}
+
+.occ-tab .occ-field label,
+.occ-tab .occ-field-label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.occ-tab .occ-field .text-input,
+.occ-tab .occ-field .textarea,
+.occ-tab .occ-field .select {
+  padding: 12px 16px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.occ-tab .occ-field .textarea {
+  min-height: 80px;
+}
+
+.occ-tab .occ-field .text-input:focus,
+.occ-tab .occ-field .textarea:focus,
+.occ-tab .occ-field .select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+/* picture: a 96 x 60 preview, 画像を選ぶ / 画像を変える and the text button 画像を外す in one row; the path and the upload state under it */
+.occ-tab .occ-image .image-upload-area {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.occ-tab .occ-image .image-preview-container {
+  flex: 0 0 auto;
+  width: 96px;
+  min-height: 60px;
+  margin: 0;
+}
+
+.occ-tab .occ-image .image-preview-large {
+  width: 96px;
+  height: 60px;
+  max-width: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.occ-tab .occ-image .image-placeholder {
+  width: 96px;
+  min-height: 60px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--gray-100);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.occ-tab .occ-image .image-actions {
+  flex: 1 1 0;
+  min-width: 0;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px 16px;
+}
+
+.occ-tab .occ-image .btn-image-select {
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.occ-tab .occ-image .btn-image-clear {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.occ-tab .occ-image .btn-image-clear[hidden] {
+  display: none;
+}
+
+.occ-tab .occ-image .image-path-display {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  text-align: left;
+}
+
+.occ-tab .occ-image .image-path-display:empty {
+  display: none;
+}
+
+.occ-image-status {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+
+.occ-image-status:empty {
+  display: none;
+}
+
+.occ-image-status.is-error {
+  color: var(--primary);
+}
+
+/* delete: the last text of the edit */
+.occ-editor-ops {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.occ-tab .occ-delete {
+  display: flex;
+  align-items: flex-start;
+  min-height: 44px;
+  padding: 8px 0 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.occ-tab .occ-delete:focus-visible,
+.occ-tab .occ-back:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ===== Music: the switch, the list with its headings, the Channel URL ===== */
+.occ-music-top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.occ-switch {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+}
+
+.occ-switch-btn {
+  flex: 1 1 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--radius-xs, 8px);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  cursor: pointer;
+}
+
+.occ-switch-btn.is-active {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.occ-switch-btn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.occ-switch-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.occ-list[hidden],
+.occ-panel[hidden] {
+  display: none;
+}
+
+.occ-group-title {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--gray-100);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.occ-tab .occ-row-release {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.occ-row-thumb {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.occ-row-text {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.occ-tab .occ-row-video {
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ===== Site and Profile: one screen of white panels ===== */
+.tab-content.occ-tab.occ-page {
+  max-width: none;
+}
+
+.occ-page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.occ-page-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--ink);
+}
+
+.occ-page-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.occ-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--white);
+  border-radius: var(--radius);
+}
+
+.occ-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.occ-panel-heading {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.occ-hero-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.occ-hero-field .occ-field-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.occ-tab .field-hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+/* the picture of a work is square, the photo of the profile is tall (Figma 39:446 72x72, 39:618 72x90) */
+.occ-tab .occ-image-square .image-preview-container {
+  width: 72px;
+  min-height: 72px;
+}
+
+.occ-tab .occ-image-square .image-preview-large,
+.occ-tab .occ-image-square .image-placeholder {
+  width: 72px;
+  height: 72px;
+  min-height: 72px;
+}
+
+.occ-tab .occ-image-portrait .image-preview-container {
+  width: 72px;
+  min-height: 90px;
+}
+
+.occ-tab .occ-image-portrait .image-preview-large,
+.occ-tab .occ-image-portrait .image-placeholder {
+  width: 72px;
+  height: 90px;
+  min-height: 90px;
+}
+
+/* SNS links: a row is 名前 | URL | 削除 (stacked up to 899px) */
+.occ-link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.occ-link-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: end;
+}
+
+.occ-tab .occ-link-delete {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.occ-tab .occ-link-delete:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.occ-empty-inline {
+  padding: 0;
+}
+
+.occ-field-error-line {
+  margin: 8px 0 0;
+}
+
+@media (max-width: 899px) {
+  .occ-master-detail.has-occ-selection .occ-list-pane {
+    display: none;
+  }
+
+  .occ-master-detail.has-occ-selection .occ-editor-pane {
+    display: block;
+  }
+
+  /* While an edit is open the page chrome steps aside: one row (‹ 一覧 | title | state) is all that stays above the fields (Figma 219:697) */
+  body.is-occ-editing .header,
+  body.is-occ-editing .connection-banner,
+  body.is-occ-editing .tab-nav {
+    display: none;
+  }
+
+  body.is-occ-editing {
+    background: var(--gray-100);
+  }
+
+  body.is-occ-editing .tab-content.occ-tab {
+    padding: 0;
+  }
+
+  /* Music: the switch (full width, two halves) and the Channel URL are the page chrome of the list: they step aside while a work or a video is open */
+  body.is-occ-editing .occ-music-top {
+    display: none;
+  }
+
+  /* Site and Profile: the fixed bar must not cover the end of the screen while it is there */
+  .tab-content.occ-tab.occ-page:has(.occ-save:not([hidden])) {
+    padding-bottom: 96px;
+  }
+
+  /* the Channel URL: no heading (the label says it), the state and 保存して公開 under the input */
+  .occ-channel .occ-panel-head .occ-panel-heading {
+    display: none;
+  }
+
+  .occ-channel {
+    gap: 8px;
+  }
+
+  .occ-channel .occ-panel-head {
+    order: 2;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .occ-tab .occ-channel .occ-save {
+    position: static;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .occ-tab .occ-channel .occ-save-btn {
+    width: 100%;
+  }
+
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .occ-save {
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+@media (min-width: 900px) {
+  .tab-content.occ-tab {
+    padding: 24px 32px;
+  }
+
+  .occ-master-detail {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .occ-master-detail .occ-editor-pane {
+    display: block;
+  }
+
+  .occ-editor-bar {
+    display: none;
+  }
+
+  .occ-editor-card {
+    margin: 0;
+    padding: 24px;
+  }
+
+  .occ-master-detail:not(.has-occ-selection) .occ-editor-card {
+    display: none;
+  }
+
+  .occ-master-detail:not(.has-occ-selection) .occ-editor-empty {
+    display: block;
+    padding: 24px;
+    border-radius: var(--radius);
+    background: var(--white);
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--ink);
+  }
+
+  /* the heading row: title, the state, 保存して公開 (Figma 38:469); the reason of a failure is a row under it */
+  .occ-editor-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "title status button"
+      "error error error";
+    align-items: center;
+    column-gap: 16px;
+    min-height: 46px;
+  }
+
+  .occ-editor-heading {
+    grid-area: title;
+  }
+
+  .occ-save {
+    position: static;
+    display: contents;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .occ-status-wide {
+    display: block;
+    grid-area: status;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0;
+  }
+
+  .occ-error {
+    grid-area: error;
+    margin-top: 8px;
+  }
+
+  .occ-tab .occ-save-btn {
+    grid-area: button;
+    width: auto;
+    min-width: 135px;
+  }
+
+  .occ-editor-body {
+    max-width: 984px;
+  }
+
+  /* Music */
+  .occ-music-top {
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .occ-switch {
+    align-self: flex-start;
+  }
+
+  .occ-switch-btn {
+    flex: 0 0 auto;
+    padding: 10px 16px;
+  }
+
+  .occ-channel {
+    gap: 16px;
+  }
+
+  /* heading rows with the state and 保存して公開 (Figma 38:469 / 216:701 / 220:715): title, state, button; the reason of a failure under them */
+  .occ-page-head,
+  .occ-panel-head:not(.occ-panel-head-plain) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "title status button"
+      "error error error";
+    align-items: center;
+    column-gap: 16px;
+    min-height: 46px;
+  }
+
+  .occ-page-head {
+    max-width: 880px;
+  }
+
+  .occ-page-title,
+  .occ-panel-head:not(.occ-panel-head-plain) .occ-panel-heading {
+    grid-area: title;
+  }
+
+  .occ-page-head > .occ-status,
+  .occ-panel-head > .occ-status {
+    grid-area: status;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0;
+  }
+
+  .occ-page-head .occ-save,
+  .occ-panel-head .occ-save {
+    position: static;
+    display: contents;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .occ-channel .occ-panel-head .occ-panel-heading {
+    display: block;
+  }
+
+  .occ-channel .occ-panel-head {
+    order: 0;
+  }
+
+  .occ-page-body {
+    max-width: 880px;
+  }
+
+  .occ-panel-head-plain {
+    min-height: 48px;
+  }
+
+  .occ-link-row {
+    grid-template-columns: 200px minmax(0, 1fr) auto;
+  }
+
+  .occ-tab .occ-link-delete {
+    justify-self: end;
+    padding-bottom: 12px;
+    align-self: end;
+  }
 }
 
 /* ----- Safe Area ----- */

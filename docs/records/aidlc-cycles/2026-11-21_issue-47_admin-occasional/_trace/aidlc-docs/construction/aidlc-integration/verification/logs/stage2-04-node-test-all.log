@@ -1,0 +1,8 @@
+# node --test test/  (whole site suite). exit: 0
+# tests 1099
+# suites 0
+# pass 1096
+# fail 0
+# cancelled 0
+# skipped 3
+# todo 0

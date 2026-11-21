@@ -1,0 +1,2 @@
+# git diff --stat 1f3a1cd -- cloudflare assets data DESIGN_RULES.md (expected: empty)
+# exit: 0

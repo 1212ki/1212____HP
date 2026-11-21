@@ -84,7 +84,6 @@ let hasChanges = false;
 let isSaving = false;
 let activeLiveSourceIntakeOperation = null;
 let modalGeneration = 0;
-let modalReturnFocus = null;
 let modalReturnFocusLive = null;
 let liveEditorGeneration = 0;
 let liveEditorReturnFocus = null;
@@ -121,6 +120,15 @@ let liveEditorStatusText = '';
 // Issue #46 stage 7: which global tab is open (the header 保存 is hidden on the Live tab while the API is connected).
 let activeGlobalTab = 'live';
 let liveLayoutListenerBound = false;
+// Issue #47: the edit surfaces of the occasional updates (News now; Music, Site and Profile follow). occPanels holds, per surface,
+// what the unsaved judgement needs: read() the inputs, the baseline they were opened (or last saved) with, dirty, saving.
+const occPanels = new Map();
+let occActiveItem = null;
+let occSaveOperation = null;
+let occSaveSequence = 0;
+let occReturnFocusId = '';
+let occLayoutListenerBound = false;
+let musicView = 'works';
 
 
 // 新規追加した画像を保存（{filename: base64data}）
@@ -135,7 +143,7 @@ const imageUploadSeriesByInput = new WeakMap();
 document.addEventListener('click', handleTicketStatusAction);
 document.addEventListener('click', handleLiveEditAction);
 document.addEventListener('click', handleReservationViewAction);
-document.addEventListener('keydown', handleModalKeydown);
+document.addEventListener('click', handleOccAction);
 
 // 初期化
 document.addEventListener('DOMContentLoaded', async () => {
@@ -189,17 +197,18 @@ function renderModeBadge() {
   syncGlobalSaveButton();
 }
 
-// Issue #46 stage 7: the header 保存 is what the other tabs use. While the API is connected, the Live tab saves from its own
-// screens, so the header 保存 is hidden there unless another tab left something unsaved (or the page is read-only / Local Mode).
+// Issue #47: every page saves from its own "保存して公開", so while the API is connected (also when the connection failed and the
+// screens are read-only) the header 保存 is never shown and saveData sends nothing. Local Mode keeps 「JSONを書き出す」 in the header.
 function shouldConcealGlobalSave() {
-  return Boolean(IS_API_MODE && !isApiFallbackReadOnly && activeGlobalTab === 'live' && !hasChanges);
+  return Boolean(IS_API_MODE);
 }
 
 function syncGlobalSaveButton() {
   const saveBtn = document.getElementById('saveBtn');
   if (!saveBtn) return false;
   const conceal = shouldConcealGlobalSave();
-  saveBtn.classList[conceal ? 'add' : 'remove']('is-live-concealed');
+  saveBtn.hidden = conceal;
+  document.body?.classList?.[conceal ? 'remove' : 'add']?.('has-header-action');
   return conceal;
 }
 
@@ -215,6 +224,17 @@ function setConnectionBanner(text, state = 'normal') {
 
 const API_FALLBACK_MUTATION_CONTROL_IDS = [
   'saveBtn',
+  'news-add-btn',
+  'news-save-btn',
+  'news-delete-btn',
+  'music-add-btn',
+  'music-save-btn',
+  'music-delete-btn',
+  'channel-save-btn',
+  'site-save-btn',
+  'profile-save-btn',
+  'profile-link-add-btn',
+  'youtube-channel-url',
   'live-add-btn',
   'ticket-complete-text',
   'ticket-field-quantity',
@@ -408,16 +428,6 @@ function getErrorMessage(payload, fallback) {
   return fallback;
 }
 
-function setImagePathForInputId(inputId, value) {
-  if (inputId === 'profile-image') {
-    siteData.profile.image = value || '';
-    return;
-  }
-  if (inputId === 'site-hero-image') {
-    siteData.site.heroImage = value || '';
-    return;
-  }
-}
 
 function ensureNoActiveImageUploads() {
   if (activeImageUploads.size === 0) return true;
@@ -431,6 +441,17 @@ function hasActiveImageUploadForCurrentLiveEditor() {
     owner.usesLiveEditor
     && owner.generation === liveEditorGeneration
     && owner.editId === currentEditId
+    && owner.editType === currentEditType
+  ));
+}
+
+// Issue #47: a picture still uploading into the open edit surface counts as unsaved.
+function hasActiveImageUploadForOccEditor() {
+  if (!occActiveItem) return false;
+  return Array.from(imageUploadOwners.values()).some((owner) => (
+    owner.ownerKind === 'occ-editor'
+    && owner.generation === modalGeneration
+    && String(owner.editId) === String(currentEditId)
     && owner.editType === currentEditType
   ));
 }
@@ -464,19 +485,24 @@ function isSameImageOperationOwner(left, right) {
 function resolveImageOperationOwner(inputId, inputElement) {
   const editorScoped = inputId === 'edit-image';
   const usesLiveEditor = editorScoped && currentEditType?.startsWith('live');
+  // Issue #47: the News edit surface (and, later, Music) has the same edit-* ids as the generic modal and the same ownership
+  // by modalGeneration / currentEditType / currentEditId; only its kind differs, so that its uploads count as unsaved.
+  const usesOccEditor = editorScoped && !usesLiveEditor && Boolean(occActiveItem);
   const ownerKind = usesLiveEditor
     ? 'live-editor'
-    : editorScoped
-      ? 'generic-modal'
-      : 'page';
+    : usesOccEditor
+      ? 'occ-editor'
+      : editorScoped
+        ? 'generic-modal'
+        : 'page';
   return {
     ownerKind,
     usesLiveEditor,
     generation: ownerKind === 'live-editor'
       ? liveEditorGeneration
-      : ownerKind === 'generic-modal'
-        ? modalGeneration
-        : 0,
+      : ownerKind === 'page'
+        ? 0
+        : modalGeneration,
     editId: ownerKind === 'page' ? null : currentEditId,
     editType: ownerKind === 'page' ? null : currentEditType,
     inputElement,
@@ -570,7 +596,7 @@ function releaseImageUploadsForLiveOwner(owner) {
 
 function releaseImageUploadsForModalGeneration(generation) {
   releaseImageOperations((owner) => (
-    owner.ownerKind === 'generic-modal'
+    (owner.ownerKind === 'generic-modal' || owner.ownerKind === 'occ-editor')
     && owner.generation === generation
   ));
 }
@@ -1088,10 +1114,12 @@ function setupTabs() {
   const tabBtns = document.querySelectorAll('.tab-btn');
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      if (liveWorkspaceSaveOperation || btn.disabled || btn.getAttribute('aria-disabled') === 'true') return;
-      if (btn.dataset.tab === 'live' && btn.classList.contains('active')) return;
+      if (liveWorkspaceSaveOperation || occSaveOperation || btn.disabled || btn.getAttribute('aria-disabled') === 'true') return;
+      if (btn.classList.contains('active')) return;
       const activate = () => {
         if (currentEditType?.startsWith('live')) closeLiveEditorImmediately();
+        // Issue #47: the edit surface of News is closed when its tab is left (its edit-* ids are the Live editor's, too).
+        if (occActiveItem) closeOccEditorImmediately();
         tabBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.querySelectorAll('.tab-content').forEach(content => {
@@ -1102,19 +1130,22 @@ function setupTabs() {
         syncGlobalSaveButton();
         return true;
       };
-      if (btn.dataset.tab === 'live') activate();
-      else requestLiveEditorTransition(activate);
+      requestLiveEditorTransition(activate);
     });
   });
 }
 
 // Issue #46: with nothing unsaved the action still runs synchronously (true/false). With an unsaved Live, an image still
 // uploading or unsaved Ticket Page settings it returns a Promise<boolean> that settles after the confirmation surface.
-function requestLiveEditorTransition(action) {
-  if (liveWorkspaceSaveOperation) return false;
+// Issue #47: an unsaved edit surface of the occasional updates (News now), or a picture still uploading into one, asks the same way.
+// `options.scope: 'item'` asks only about the open News / work / video: moving between the items of a list does not ask about the Channel URL.
+function requestLiveEditorTransition(action, options = {}) {
+  if (liveWorkspaceSaveOperation || occSaveOperation) return false;
   const hasPendingImage = hasActiveImageUploadForCurrentLiveEditor();
   const ticketDirty = isTicketSettingsDirty();
-  if (!(liveEditorDirty || hasPendingImage || ticketDirty)) return action() !== false;
+  const occScope = options.scope === 'item' ? 'item' : 'all';
+  const occDirty = isOccDirty(occScope);
+  if (!(liveEditorDirty || hasPendingImage || ticketDirty || occDirty)) return action() !== false;
   if (liveTransitionPending) return false;
   liveTransitionPending = true;
   return openLiveDialog({
@@ -1129,23 +1160,9 @@ function requestLiveEditorTransition(action) {
     if (hasPendingImage) releaseImageUploadsForLiveOwner(liveEditorOwner);
     if (liveEditorDirty || hasPendingImage) setLiveEditorDirty(false);
     if (ticketDirty) discardTicketSettingsDraft();
+    if (occDirty) discardOccPanels(occScope);
     return action() !== false;
   });
-}
-
-// The generic News/YouTube/Disco/Profile modals open synchronously. If a Live is unsaved the transition waits for the
-// confirmation surface: the caller returns false now and `resume` runs the same open again once the unsaved Live was
-// discarded (the editor is closed by then, so the second call takes the synchronous path).
-function prepareGenericEditorTransition(resume) {
-  const result = requestLiveEditorTransition(() => {
-    if (liveEditorOwner) closeLiveEditorImmediately();
-    return true;
-  });
-  if (typeof result?.then === 'function') {
-    if (typeof resume === 'function') result.then((ok) => { if (ok !== false) resume(); });
-    return false;
-  }
-  return result;
 }
 
 function afterLiveTransition(result, callback) {
@@ -1392,107 +1409,18 @@ function bindReleaseDateError() {
   });
 }
 
+
+
+// The JSON export of Local Mode refuses a work whose release date is not allowed (a new or changed date in the wrong shape) and shows the
+// work with the reason under its date. Every save checks this before it applies a date, so it is a safety net for the file that is written.
 function validateMusicBeforeSave() {
   const invalid = musicReleases(siteData).find(item => !releaseDateIsAllowed(item));
   if (!invalid) return true;
   const category = siteData.discography.digital.includes(invalid) ? 'digital' : 'demo';
-  if (currentEditId !== invalid.id || !currentEditType?.startsWith('discography') || !document.getElementById('modal').classList.contains('active')) editDiscography(invalid.id, category);
+  const alreadyOpen = occActiveItem?.kind === 'release' && String(occActiveItem.id) === String(invalid.id);
+  if (!alreadyOpen) editDiscography(invalid.id, category);
   showReleaseDateError();
   return false;
-}
-
-function renderSiteSettings() {
-  const featured = document.getElementById('site-featured-release-id');
-  if (featured) {
-    featured.innerHTML = musicOptions([['Digital Release', siteData.discography.digital], ['宅録Demo', siteData.discography.demo]], siteData.site.featuredReleaseId, '自動（最新のリリース）', true);
-    featured.value = siteData.site.featuredReleaseId || '';
-    featured.onchange = () => applyAdminFieldMutation(featured, siteData.site.featuredReleaseId || '', () => { siteData.site.featuredReleaseId = featured.value; });
-  }
-
-  const heroForm = document.getElementById('site-hero-image-form');
-  if (heroForm) {
-    heroForm.innerHTML = getImageFormHtml(siteData.site.heroImage || '', 'site-hero-image');
-    const previewContainer = document.getElementById('site-hero-image-preview-container');
-    if (previewContainer) {
-      previewContainer.setAttribute('data-admin-mutation', '');
-      previewContainer.onclick = () => document.getElementById('site-hero-image-file')?.click();
-    }
-  }
-
-  const bandcamp = document.getElementById('site-link-bandcamp');
-  const youtube = document.getElementById('site-link-youtube');
-  const x = document.getElementById('site-link-x');
-  const instagram = document.getElementById('site-link-instagram');
-  const note = document.getElementById('site-link-note');
-  const footer = document.getElementById('site-footer-text');
-  const contactIntro = document.getElementById('contact-intro-text');
-  const contactAction = document.getElementById('contact-form-action');
-
-  if (bandcamp) {
-    bandcamp.value = siteData.site.links.bandcamp || '';
-    bandcamp.onchange = () => applyAdminFieldMutation(
-      bandcamp,
-      siteData.site.links.bandcamp || '',
-      () => { siteData.site.links.bandcamp = bandcamp.value; }
-    );
-  }
-  if (youtube) {
-    youtube.value = siteData.site.links.youtube || '';
-    youtube.onchange = () => applyAdminFieldMutation(
-      youtube,
-      siteData.site.links.youtube || '',
-      () => { siteData.site.links.youtube = youtube.value; }
-    );
-  }
-  if (x) {
-    x.value = siteData.site.links.x || '';
-    x.onchange = () => applyAdminFieldMutation(
-      x,
-      siteData.site.links.x || '',
-      () => { siteData.site.links.x = x.value; }
-    );
-  }
-  if (instagram) {
-    instagram.value = siteData.site.links.instagram || '';
-    instagram.onchange = () => applyAdminFieldMutation(
-      instagram,
-      siteData.site.links.instagram || '',
-      () => { siteData.site.links.instagram = instagram.value; }
-    );
-  }
-  if (note) {
-    note.value = siteData.site.links.note || '';
-    note.onchange = () => applyAdminFieldMutation(
-      note,
-      siteData.site.links.note || '',
-      () => { siteData.site.links.note = note.value; }
-    );
-  }
-  if (footer) {
-    footer.value = siteData.site.footerText || '';
-    footer.onchange = () => applyAdminFieldMutation(
-      footer,
-      siteData.site.footerText || '',
-      () => { siteData.site.footerText = footer.value; }
-    );
-  }
-
-  if (contactIntro) {
-    contactIntro.value = siteData.contact.introText || '';
-    contactIntro.onchange = () => applyAdminFieldMutation(
-      contactIntro,
-      siteData.contact.introText || '',
-      () => { siteData.contact.introText = contactIntro.value; }
-    );
-  }
-  if (contactAction) {
-    contactAction.value = siteData.contact.formAction || '';
-    contactAction.onchange = () => applyAdminFieldMutation(
-      contactAction,
-      siteData.contact.formAction || '',
-      () => { siteData.contact.formAction = contactAction.value; }
-    );
-  }
 }
 
 function renderTicketSettings() {
@@ -1536,57 +1464,7 @@ function getYouTubeThumbUrl(id) {
   return `https://img.youtube.com/vi/${encodeURIComponent(safe)}/hqdefault.jpg`;
 }
 
-function renderYouTubeList(listEl, items, category) {
-  if (!listEl) return;
-  if (!Array.isArray(items) || items.length === 0) {
-    listEl.innerHTML = '<div class="empty-state"><p>アイテムがありません</p></div>';
-    return;
-  }
-  listEl.innerHTML = items.map(item => {
-    const vid = item.youtubeId || '';
-    const thumb = getYouTubeThumbUrl(vid);
-    const title = item.title || vid || '(no title)';
-    const meta = vid ? `ID: ${vid}` : '';
-    return `
-      <div class="item-card" onclick="editYouTubeVideo('${escapeHtml(item.id)}', '${escapeHtml(category)}')">
-        ${thumb ? `<img class="thumbnail" src="${escapeHtml(thumb)}" alt="" onerror="this.style.display='none'">` : ''}
-        <div class="info">
-          <div class="title">${escapeHtml(title)}</div>
-          <div class="meta">${escapeHtml(meta)}</div>
-        </div>
-        <span class="arrow">›</span>
-      </div>
-    `;
-  }).join('');
-}
 
-function renderYouTube() {
-  const channelInput = document.getElementById('youtube-channel-url');
-  if (channelInput) {
-    channelInput.value = siteData.youtube.channelUrl || '';
-    channelInput.onchange = () => applyAdminFieldMutation(
-      channelInput,
-      siteData.youtube.channelUrl || '',
-      () => { siteData.youtube.channelUrl = channelInput.value; }
-    );
-  }
-
-  renderYouTubeList(
-    document.getElementById('youtube-musicVideos-list'),
-    siteData.youtube.musicVideos,
-    'musicVideos'
-  );
-  renderYouTubeList(
-    document.getElementById('youtube-liveMovies-list'),
-    siteData.youtube.liveMovies,
-    'liveMovies'
-  );
-  renderYouTubeList(
-    document.getElementById('youtube-demos-list'),
-    siteData.youtube.demos,
-    'demos'
-  );
-}
 
 function renderTicketsUi() {
   const liveSelect = document.getElementById('tickets-live-filter');
@@ -1720,25 +1598,6 @@ function handleLiveEditAction(event) {
 }
 
 // News描画
-function renderNews() {
-  const list = document.getElementById('news-list');
-  if (siteData.news.length === 0) {
-    list.innerHTML = '<div class="empty-state"><div class="icon">📰</div><p>ニュースがありません</p></div>';
-    return;
-  }
-
-  list.innerHTML = siteData.news.map(item => `
-    <div class="item-card" onclick="editNews('${item.id}')">
-      <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
-      <div class="info">
-        <div class="title">${escapeHtml(item.title)}</div>
-        <div class="meta">${escapeHtml(item.date)}</div>
-      </div>
-      <span class="arrow">›</span>
-    </div>
-  `).join('');
-}
-
 // Live描画
 function renderLive() {
   const upcomingList = document.getElementById('live-upcoming-list');
@@ -1760,175 +1619,13 @@ function renderLive() {
   renderReservationSummaryNote();
 }
 
-// Discography描画
-function renderDiscography() {
-  const digitalList = document.getElementById('disc-digital-list');
-  const demoList = document.getElementById('disc-demo-list');
 
-  if (siteData.discography.digital.length === 0) {
-    digitalList.innerHTML = '<div class="empty-state"><p>リリースはありません</p></div>';
-  } else {
-    digitalList.innerHTML = siteData.discography.digital.map(item => `
-      <div class="item-card" onclick="editDiscography('${item.id}', 'digital')">
-        <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
-        <div class="info">
-          <div class="title">${escapeHtml(item.title)}</div>
-          <div class="meta">${escapeHtml(String(item.releaseDate ?? ''))}</div>
-        </div>
-        <span class="arrow">›</span>
-      </div>
-    `).join('');
-  }
 
-  if (siteData.discography.demo.length === 0) {
-    demoList.innerHTML = '<div class="empty-state"><p>デモはありません</p></div>';
-  } else {
-    demoList.innerHTML = siteData.discography.demo.map(item => `
-      <div class="item-card" onclick="editDiscography('${item.id}', 'demo')">
-        <img class="thumbnail" src="${getImageSrc(item.image)}" alt="" onerror="this.style.display='none'">
-        <div class="info">
-          <div class="title">${escapeHtml(item.title)}</div>
-          <div class="meta">${escapeHtml(String(item.releaseDate ?? ''))}</div>
-        </div>
-        <span class="arrow">›</span>
-      </div>
-    `).join('');
-  }
-}
 
-// Profile描画
-function renderProfile() {
-  const profileImageForm = document.getElementById('profile-image-form');
-  const profileText = document.getElementById('profile-text');
-  if (profileImageForm) {
-    profileImageForm.innerHTML = getImageFormHtml(siteData.profile.image || '', 'profile-image');
-    const previewContainer = document.getElementById('profile-image-preview-container');
-    if (previewContainer) {
-      previewContainer.setAttribute('data-admin-mutation', '');
-      previewContainer.onclick = () => document.getElementById('profile-image-file')?.click();
-    }
-  }
-  profileText.value = siteData.profile.text || '';
 
-  profileText.onchange = () => applyAdminFieldMutation(
-    profileText,
-    siteData.profile.text || '',
-    () => { siteData.profile.text = profileText.value; }
-  );
 
-  renderProfileLinks();
-}
 
-// プロフィールリンク描画
-function renderProfileLinks() {
-  const list = document.getElementById('profile-links-list');
-  if (!siteData.profile.links || siteData.profile.links.length === 0) {
-    list.innerHTML = '<div class="empty-state"><p>リンクがありません</p></div>';
-    return;
-  }
 
-  list.innerHTML = siteData.profile.links.map((link, index) => `
-    <div class="link-item">
-      <input type="text" id="profile-link-${index}-name" data-admin-mutation="" placeholder="名前" value="${escapeHtml(link.name)}"
-        onchange="updateProfileLink(${index}, 'name', this.value)">
-      <input type="url" id="profile-link-${index}-url" data-admin-mutation="" placeholder="URL" value="${escapeHtml(link.url)}"
-        onchange="updateProfileLink(${index}, 'url', this.value)">
-      <button class="delete-link-btn" id="profile-link-${index}-delete-btn" data-admin-mutation="" onclick="deleteProfileLink(${index})">×</button>
-    </div>
-  `).join('');
-}
-
-// プロフィールリンク更新
-function updateProfileLink(index, field, value) {
-  if (rejectApiFallbackMutation()) {
-    const control = document.getElementById(`profile-link-${index}-${field}`);
-    if (control) control.value = siteData.profile.links[index]?.[field] || '';
-    return false;
-  }
-  siteData.profile.links[index][field] = value;
-  markChanged();
-  return true;
-}
-
-// プロフィールリンク追加
-function addProfileLink() {
-  if (rejectApiFallbackMutation()) return false;
-  if (!siteData.profile.links) siteData.profile.links = [];
-  siteData.profile.links.push({ name: '', url: '' });
-  renderProfileLinks();
-  markChanged();
-  return true;
-}
-
-function addYouTubeVideo(category) {
-  if (rejectApiFallbackMutation()) return false;
-  if (!prepareGenericEditorTransition(() => addYouTubeVideo(category))) return false;
-  isNewItem = true;
-  currentEditType = `youtube-${category}`;
-  currentEditId = 'yt-' + Date.now();
-
-  showModal('YouTube追加', `
-    <div class="form-group">
-      <label>カテゴリ</label>
-      <select id="edit-category" class="select">
-        <option value="musicVideos" ${category === 'musicVideos' ? 'selected' : ''}>Music Video</option>
-        <option value="liveMovies" ${category === 'liveMovies' ? 'selected' : ''}>Live Movie</option>
-        <option value="demos" ${category === 'demos' ? 'selected' : ''}>Demo</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>タイトル</label>
-      <input type="text" id="edit-title" class="text-input" placeholder="例: - 月を待って -">
-    </div>
-    <div class="form-group">
-      <label>YouTube URL / ID</label>
-      <input type="text" id="edit-youtube" class="text-input" placeholder="https://youtu.be/... または 11文字のID">
-    </div>
-  `);
-  document.getElementById('delete-btn').style.display = 'none';
-  return true;
-}
-
-function editYouTubeVideo(id, category) {
-  const list = siteData.youtube[category] || [];
-  const item = list.find(v => v.id === id);
-  if (!item) return false;
-  if (!prepareGenericEditorTransition(() => editYouTubeVideo(id, category))) return false;
-
-  isNewItem = false;
-  currentEditType = `youtube-${category}`;
-  currentEditId = id;
-
-  showModal('YouTube編集', `
-    <div class="form-group">
-      <label>カテゴリ</label>
-      <select id="edit-category" class="select">
-        <option value="musicVideos" ${category === 'musicVideos' ? 'selected' : ''}>Music Video</option>
-        <option value="liveMovies" ${category === 'liveMovies' ? 'selected' : ''}>Live Movie</option>
-        <option value="demos" ${category === 'demos' ? 'selected' : ''}>Demo</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>タイトル</label>
-      <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title || '')}">
-    </div>
-    <div class="form-group">
-      <label>YouTube URL / ID</label>
-      <input type="text" id="edit-youtube" class="text-input" value="${escapeHtml(item.youtubeId || '')}">
-    </div>
-  `);
-  document.getElementById('delete-btn').style.display = 'block';
-  return true;
-}
-
-// プロフィールリンク削除
-function deleteProfileLink(index) {
-  if (rejectApiFallbackMutation()) return false;
-  siteData.profile.links.splice(index, 1);
-  renderProfileLinks();
-  markChanged();
-  return true;
-}
 
 const LIVE_FLYER_IMAGE_OPTIONS = {
   downloadablePreview: true,
@@ -1999,37 +1696,78 @@ function syncFlyerSelectLabel() {
   if (select) select.textContent = document.getElementById('edit-image')?.value ? LIVE_UI_TEXT.flyerChange : LIVE_UI_TEXT.flyerChoose;
 }
 
-// 画像選択フォームHTML生成
-function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
-  const previewSrc = currentImage ? getImageSrc(currentImage) : '';
+// Issue #47: the picture form of every page except the Live flyer: 画像を選ぶ (none) / 画像を変える and 画像を外す (a picture), the path
+// (パス: / URL:) under it and the state of the upload in its own line. Same ids and handlers as before (-file, -select-btn,
+// -clear-btn, -preview-container, -path); -status is new.
+function getOccImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
+  const image = currentImage ? String(currentImage) : '';
+  const previewSrc = image ? getImageSrc(image) : '';
   const showPath = options.showPath !== false;
   const downloadablePreview = options.downloadablePreview === true;
   const previewHtml = getImagePreviewHtml(inputId, previewSrc, {
     downloadablePreview,
-    imagePath: currentImage,
+    imagePath: image,
+    placeholderText: LIVE_UI_TEXT.flyerNone,
   });
   const pathHtml = showPath
-    ? `<p class="image-path-display" id="${inputId}-path">${currentImage ? `パス: ${escapeHtml(currentImage)}` : ''}</p>`
+    ? `<p class="image-path-display" id="${inputId}-path">${image ? `パス: ${escapeHtml(image)}` : ''}</p>`
     : '';
-  const liveMutationAttribute = inputId === 'edit-image' ? ' data-live-editor-mutation="true"' : '';
 
   return `
-    <div class="form-group">
-      <label>画像</label>
-      <div class="image-upload-area" id="image-upload-area">
+    <div class="form-group occ-field occ-image${options.variant ? ` occ-image-${options.variant}` : ''}">
+      ${options.omitLabel ? '' : `<p class="occ-field-label" id="${inputId}-label">${escapeHtml(options.label || '画像')}</p>`}
+      <div class="image-upload-area" id="${inputId}-area">
         <input type="file" id="${inputId}-file" data-admin-mutation="" accept="image/*" onchange="handleImageSelect(this, '${inputId}')" style="display:none">
-        <input type="hidden" id="${inputId}" data-admin-mutation="" value="${escapeHtml(currentImage || '')}">
+        <input type="hidden" id="${inputId}" data-admin-mutation="" value="${escapeHtml(image)}">
         <div class="image-preview-container" id="${inputId}-preview-container" data-downloadable-preview="${downloadablePreview ? 'true' : 'false'}">
           ${previewHtml}
         </div>
         <div class="image-actions">
-          <button type="button" class="btn-image-select" id="${inputId}-select-btn" data-admin-mutation=""${liveMutationAttribute} onclick="document.getElementById('${inputId}-file').click()">画像を選択</button>
-          ${currentImage ? `<button type="button" class="btn-image-clear" id="${inputId}-clear-btn" data-admin-mutation=""${liveMutationAttribute} onclick="clearImage('${inputId}')">削除</button>` : ''}
+          <button type="button" class="btn-image-select" id="${inputId}-select-btn" data-admin-mutation="" onclick="document.getElementById('${inputId}-file').click()">${image ? LIVE_UI_TEXT.flyerChange : LIVE_UI_TEXT.flyerChoose}</button>
+          <button type="button" class="btn-image-clear" id="${inputId}-clear-btn" data-admin-mutation="" onclick="clearImage('${inputId}')"${image ? '' : ' hidden'}>${LIVE_UI_TEXT.flyerRemove}</button>
         </div>
-        ${pathHtml}
       </div>
+      ${pathHtml}
+      <p class="occ-image-status" id="${inputId}-status" role="status" aria-live="polite"></p>
     </div>
   `;
+}
+
+// 画像選択フォームHTML生成 (every page except the Live flyer; kept under its name for Site, Profile and the Music modal)
+function getImageFormHtml(currentImage, inputId = 'edit-image', options = {}) {
+  return getOccImageFormHtml(currentImage, inputId, options);
+}
+
+// The select button says 画像を変える and 画像を外す is offered only while a picture is registered.
+function syncOccImageControls(inputId) {
+  const value = document.getElementById(inputId)?.value || '';
+  const select = document.getElementById(`${inputId}-select-btn`);
+  if (select) select.textContent = value ? LIVE_UI_TEXT.flyerChange : LIVE_UI_TEXT.flyerChoose;
+  const clear = document.getElementById(`${inputId}-clear-btn`);
+  if (clear) clear.hidden = !value;
+}
+
+// Puts a picture value (and what shows it) into a picture form: the saved picture again after the input was dropped.
+function setOccImageValue(inputId, value) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const image = value ? String(value) : '';
+  input.value = image;
+  const container = document.getElementById(`${inputId}-preview-container`);
+  if (container) {
+    renderImagePreview(inputId, image ? getImageSrc(image) : '', { imagePath: image, placeholderText: LIVE_UI_TEXT.flyerNone }, container);
+  }
+  const path = document.getElementById(`${inputId}-path`);
+  if (path) path.textContent = image ? `パス: ${image}` : '';
+  setOccImageStatus(inputId, '');
+  syncOccImageControls(inputId);
+}
+
+function setOccImageStatus(inputId, message, isError = false) {
+  const status = document.getElementById(`${inputId}-status`);
+  if (!status) return;
+  status.textContent = String(message || '');
+  status.classList[isError ? 'add' : 'remove']('is-error');
 }
 
 // 画像選択処理
@@ -2063,7 +1801,15 @@ function handleImageSelect(input, inputId) {
     && isSameImageOperationOwner(owner, uploadOwner)
   ), imageOperationToken);
   const isFlyer = inputId === 'edit-image' && Boolean(pathEl?.classList?.contains('live-flyer-status'));
-  if (pathEl) pathEl.textContent = IS_API_MODE ? (isFlyer ? LIVE_UI_TEXT.flyerUploading : 'アップロード中...') : '';
+  // Issue #47: a picture form with a -status line says what is happening there and leaves the path as it is.
+  const statusEl = document.getElementById(`${inputId}-status`);
+  // The picture of an edit surface (and of Site / Profile) is held by the screen: it counts as unsaved there, and nothing goes to siteData.
+  const occImageKey = OCC_PAGE_IMAGE_PANELS[inputId] || (uploadOwner.ownerKind === 'occ-editor' ? 'item' : '');
+  const ownerUsesOccEditor = Boolean(occImageKey);
+  const refreshOccState = () => { if (ownerUsesOccEditor) recomputeOccDirty(occImageKey); };
+  if (statusEl) setOccImageStatus(inputId, IS_API_MODE ? LIVE_UI_TEXT.flyerUploading : '');
+  else if (pathEl) pathEl.textContent = IS_API_MODE ? (isFlyer ? LIVE_UI_TEXT.flyerUploading : 'アップロード中...') : '';
+  refreshOccState();
 
   // FileReaderでBase64に変換
   const reader = new FileReader();
@@ -2100,9 +1846,11 @@ function handleImageSelect(input, inputId) {
       setImagePathForInputId(inputId, imagePath);
 
       if (isFlyer) syncFlyerSelectLabel();
+      if (statusEl) syncOccImageControls(inputId);
       if (ownerUsesLiveEditor) markLiveEditorDirty();
-      else markChanged();
+      else if (!ownerUsesOccEditor) markChanged();
       settleImageUpload(imageOperationToken, inputElement);
+      refreshOccState();
       return;
     }
 
@@ -2112,20 +1860,25 @@ function handleImageSelect(input, inputId) {
         if (!ownsCurrentInput() || !isLatestUpload()) return;
         inputElement.value = result.url;
         if (pathEl) pathEl.textContent = isFlyer ? '' : `URL: ${result.url}`;
+        if (statusEl) setOccImageStatus(inputId, '');
         renderImagePreview(inputId, base64, {
           href: result.url,
           imagePath: result.url,
         }, container);
         setImagePathForInputId(inputId, result.url);
         if (isFlyer) syncFlyerSelectLabel();
+        if (statusEl) syncOccImageControls(inputId);
         if (ownerUsesLiveEditor) markLiveEditorDirty();
-        else markChanged();
+        else if (!ownerUsesOccEditor) markChanged();
       })
       .catch((err) => {
         if (!ownsCurrentInput() || !isLatestUpload()) return;
         restoreImageUploadSeriesBaseline(imageUploadSeries);
         temporaryClearButton?.remove?.();
-        if (isFlyer) {
+        if (statusEl) {
+          syncOccImageControls(inputId);
+          setOccImageStatus(inputId, `${LIVE_UI_TEXT.flyerUploadFailed}（${err.message}）`, true);
+        } else if (isFlyer) {
           syncFlyerSelectLabel();
           if (pathEl) pathEl.textContent = `${LIVE_UI_TEXT.flyerUploadFailed}（${err.message}）`;
         } else {
@@ -2134,9 +1887,11 @@ function handleImageSelect(input, inputId) {
       })
       .finally(() => {
         settleImageUpload(imageOperationToken, inputElement);
+        refreshOccState();
       });
 
-    // クリアボタンを追加（なければ）
+    // クリアボタンを追加（なければ）。-status のあるフォームは、画像を外すボタンを最初から持つ。
+    if (statusEl) return;
     const actionsDiv = container.parentElement.querySelector('.image-actions');
     if (!actionsDiv.querySelector('.btn-image-clear')) {
       const clearBtn = document.createElement('button');
@@ -2155,9 +1910,14 @@ function handleImageSelect(input, inputId) {
     const isLatestUpload = latestImageUploadByInput.get(inputElement) === imageOperationToken;
     if (ownsCurrentInput() && isLatestUpload) {
       restoreImageUploadSeriesBaseline(imageUploadSeries);
+      if (statusEl) {
+        syncOccImageControls(inputId);
+        setOccImageStatus(inputId, '画像を読み込めませんでした', true);
+      }
       showToast('画像を読み込めませんでした', 'error');
     }
     settleImageUpload(imageOperationToken, inputElement);
+    refreshOccState();
   };
   try {
     reader.readAsDataURL(file);
@@ -2198,93 +1958,29 @@ function clearImage(inputId) {
   inputElement.value = '';
   const container = document.getElementById(`${inputId}-preview-container`);
   const isFlyer = inputId === 'edit-image' && container.classList?.contains?.('live-flyer-preview');
-  container.innerHTML = `<div class="image-placeholder" id="${inputId}-placeholder">${isFlyer ? LIVE_UI_TEXT.flyerNone : 'タップして画像を選択'}</div>`;
+  const hasStatusLine = Boolean(document.getElementById(`${inputId}-status`));
+  container.innerHTML = `<div class="image-placeholder" id="${inputId}-placeholder">${isFlyer || hasStatusLine ? LIVE_UI_TEXT.flyerNone : 'タップして画像を選択'}</div>`;
   const pathEl = document.getElementById(`${inputId}-path`);
   if (pathEl) pathEl.textContent = '';
   if (isFlyer) syncFlyerSelectLabel();
+  if (hasStatusLine) setOccImageStatus(inputId, '');
 
-  // クリアボタンを削除
-  const clearBtn = container.parentElement.querySelector('.btn-image-clear');
-  if (clearBtn) clearBtn.remove();
+  // クリアボタンを削除（-status のあるフォームは、画像を外すボタンを隠すだけ）
+  if (hasStatusLine) {
+    syncOccImageControls(inputId);
+  } else {
+    const clearBtn = container.parentElement.querySelector('.btn-image-clear');
+    if (clearBtn) clearBtn.remove();
+  }
 
   setImagePathForInputId(inputId, '');
   if (inputId === 'edit-image' && currentEditType?.startsWith('live')) {
     markLiveEditorDirty();
-  } else if (inputId === 'profile-image' || inputId === 'site-hero-image') {
-    markChanged();
+  } else if (inputId === 'edit-image' && occActiveItem) {
+    recomputeOccDirty('item');
+  } else if (OCC_PAGE_IMAGE_PANELS[inputId]) {
+    recomputeOccDirty(OCC_PAGE_IMAGE_PANELS[inputId]);
   }
-  return true;
-}
-
-// News追加
-function addNews() {
-  if (rejectApiFallbackMutation()) return false;
-  if (!prepareGenericEditorTransition(() => addNews())) return false;
-  isNewItem = true;
-  currentEditType = 'news';
-  currentEditId = 'news-' + Date.now();
-
-  showModal('新規News', `
-    <div class="form-group">
-      <label>日付</label>
-      <input type="text" id="edit-date" class="text-input" placeholder="2025/1/1(Mon.)">
-    </div>
-    <div class="form-group">
-      <label>タイトル</label>
-      <input type="text" id="edit-title" class="text-input" placeholder="ニュースタイトル">
-    </div>
-    <div class="form-group">
-      <label>説明</label>
-      <textarea id="edit-description" class="textarea" rows="3" placeholder="詳細説明"></textarea>
-    </div>
-    ${getImageFormHtml('')}
-    <div class="form-group">
-      <label>詳細リンクURL（instagramなど/任意）</label>
-      <input type="url" id="edit-link" class="text-input" placeholder="https://...">
-    </div>
-    <div class="form-group">
-      <label>リンクテキスト</label>
-      <input type="text" id="edit-linkText" class="text-input" placeholder="view..." value="view...">
-    </div>
-  `);
-  document.getElementById('delete-btn').style.display = 'none';
-  return true;
-}
-
-// News編集
-function editNews(id) {
-  const item = siteData.news.find(n => n.id === id);
-  if (!item) return false;
-  if (!prepareGenericEditorTransition(() => editNews(id))) return false;
-
-  isNewItem = false;
-  currentEditType = 'news';
-  currentEditId = id;
-
-  showModal('News編集', `
-    <div class="form-group">
-      <label>日付</label>
-      <input type="text" id="edit-date" class="text-input" value="${escapeHtml(item.date)}">
-    </div>
-    <div class="form-group">
-      <label>タイトル</label>
-      <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title)}">
-    </div>
-    <div class="form-group">
-      <label>説明</label>
-      <textarea id="edit-description" class="textarea" rows="3">${escapeHtml(item.description)}</textarea>
-    </div>
-    ${getImageFormHtml(item.image)}
-    <div class="form-group">
-      <label>リンクURL</label>
-      <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link)}">
-    </div>
-    <div class="form-group">
-      <label>リンクテキスト</label>
-      <input type="text" id="edit-linkText" class="text-input" value="${escapeHtml(item.linkText)}">
-    </div>
-  `);
-  document.getElementById('delete-btn').style.display = 'block';
   return true;
 }
 
@@ -2956,306 +2652,7 @@ function closeLiveEditorImmediately() {
   return true;
 }
 
-// Discography追加
-function addDiscography() {
-  if (rejectApiFallbackMutation()) return false;
-  if (!prepareGenericEditorTransition(() => addDiscography())) return false;
-  isNewItem = true;
-  currentEditType = 'discography-digital';
-  currentEditId = 'disc-' + Date.now();
 
-  showModal('新規Discography', `
-    <div class="form-group">
-      <label>タイトル</label>
-      <input type="text" id="edit-title" class="text-input" placeholder='1st.Single "xxx"'>
-    </div>
-    <div class="form-group">
-      <label>リリース日</label>
-      <input type="text" id="edit-releaseDate" class="text-input" placeholder="2025.05.05" aria-invalid="false" aria-describedby="edit-releaseDate-error">
-      <div id="edit-releaseDate-error" class="form-error" role="alert"></div>
-    </div>
-    <div class="form-group">
-      <label>説明（曲リスト等）</label>
-      <textarea id="edit-description" class="textarea" rows="4" placeholder="1. xxx&#10;2. yyy"></textarea>
-    </div>
-    ${getImageFormHtml('')}
-    <div class="form-group">
-      <label>リンクURL</label>
-      <input type="url" id="edit-link" class="text-input" placeholder="https://...">
-    </div>
-    ${musicReleaseFields()}
-    <div class="form-group">
-      <label>カテゴリ</label>
-      <select id="edit-category" class="select">
-        <option value="digital">Digital Release</option>
-        <option value="demo">宅録Demo</option>
-      </select>
-    </div>
-  `);
-  bindReleaseDateError();
-  document.getElementById('delete-btn').style.display = 'none';
-  return true;
-}
-
-// Discography編集
-function editDiscography(id, category) {
-  const list = category === 'digital' ? siteData.discography.digital : siteData.discography.demo;
-  const item = list.find(d => d.id === id);
-  if (!item) return false;
-  if (!prepareGenericEditorTransition(() => editDiscography(id, category))) return false;
-
-  isNewItem = false;
-  currentEditType = `discography-${category}`;
-  currentEditId = id;
-
-  showModal('Discography編集', `
-    <div class="form-group">
-      <label>タイトル</label>
-      <input type="text" id="edit-title" class="text-input" value="${escapeHtml(item.title)}">
-    </div>
-    <div class="form-group">
-      <label>リリース日</label>
-      <input type="text" id="edit-releaseDate" class="text-input" value="${escapeHtml(String(item.releaseDate ?? ''))}" placeholder="2025.05.05" aria-invalid="false" aria-describedby="edit-releaseDate-error">
-      <div id="edit-releaseDate-error" class="form-error" role="alert"></div>
-    </div>
-    <div class="form-group">
-      <label>説明（曲リスト等）</label>
-      <textarea id="edit-description" class="textarea" rows="4">${escapeHtml(item.description)}</textarea>
-    </div>
-    ${getImageFormHtml(item.image)}
-    <div class="form-group">
-      <label>リンクURL</label>
-      <input type="url" id="edit-link" class="text-input" value="${escapeHtml(item.link)}">
-    </div>
-    ${musicReleaseFields(item)}
-    <div class="form-group">
-      <label>カテゴリ</label>
-      <select id="edit-category" class="select">
-        <option value="digital" ${category === 'digital' ? 'selected' : ''}>Digital Release</option>
-        <option value="demo" ${category === 'demo' ? 'selected' : ''}>宅録Demo</option>
-      </select>
-    </div>
-  `);
-  bindReleaseDateError();
-  document.getElementById('delete-btn').style.display = 'block';
-  return true;
-}
-
-// モーダル表示
-function showModal(title, content) {
-  const modal = document.getElementById('modal');
-  const modalBody = document.getElementById('modal-body');
-  if (!modal.classList.contains('active')) {
-    modalReturnFocus = document.activeElement;
-    const liveId = String(modalReturnFocus?.dataset?.liveId || '');
-    const liveCategory = String(modalReturnFocus?.dataset?.liveCategory || '');
-    modalReturnFocusLive = liveId && ['upcoming', 'past'].includes(liveCategory)
-      ? { id: liveId, category: liveCategory }
-      : null;
-  }
-  releaseImageUploadsForModalGeneration(modalGeneration);
-  modalGeneration += 1;
-  document.getElementById('modal-title').textContent = title;
-  modalBody.innerHTML = content;
-  Array.from(modalBody.querySelectorAll?.('input, textarea, select, button') || []).forEach((control) => {
-    control.setAttribute('data-admin-mutation', '');
-  });
-  document.getElementById('modal-overlay').classList.add('active');
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  applyApiFallbackReadOnlyState();
-  const initialFocus = modalBody.querySelector(
-    'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled]), button:not([disabled])'
-  );
-  (initialFocus || modal).focus();
-}
-
-// モーダル閉じる
-function closeModal() {
-  const returnFocus = modalReturnFocus;
-  const returnFocusLive = modalReturnFocusLive;
-  modalReturnFocus = null;
-  modalReturnFocusLive = null;
-  releaseImageUploadsForModalGeneration(modalGeneration);
-  modalGeneration += 1;
-  document.getElementById('modal-overlay').classList.remove('active');
-  document.getElementById('modal').classList.remove('active');
-  document.body.style.overflow = '';
-  currentEditType = null;
-  currentEditId = null;
-  isNewItem = false;
-  const hasConnectedReturnFocus = (
-    returnFocus
-    && typeof returnFocus.focus === 'function'
-    && (typeof document.contains !== 'function' || document.contains(returnFocus))
-  );
-  if (hasConnectedReturnFocus) {
-    returnFocus.focus();
-    return;
-  }
-  if (!returnFocusLive) return;
-  const replacement = Array.from(document.querySelectorAll('[data-live-edit]')).find((trigger) => (
-    String(trigger.dataset?.liveId || '') === returnFocusLive.id
-    && String(trigger.dataset?.liveCategory || '') === returnFocusLive.category
-  ));
-  replacement?.focus?.();
-}
-
-function handleModalKeydown(event) {
-  if (event.key !== 'Escape') return;
-  const modal = document.getElementById('modal');
-  if (!modal?.classList.contains('active')) return;
-  event.preventDefault?.();
-  closeModal();
-}
-
-function setGenericModalCanonicalValues(values) {
-  Object.entries(values || {}).forEach(([id, value]) => {
-    const control = document.getElementById(id);
-    if (control) control.value = value == null ? '' : String(value);
-  });
-}
-
-function restoreGenericModalCanonicalValues() {
-  if (isNewItem || !currentEditId || !currentEditType) return false;
-
-  if (currentEditType === 'news') {
-    const item = siteData.news.find((candidate) => candidate.id === currentEditId);
-    if (!item) return false;
-    setGenericModalCanonicalValues({
-      'edit-date': item.date,
-      'edit-title': item.title,
-      'edit-description': item.description,
-      'edit-image': item.image,
-      'edit-link': item.link,
-      'edit-linkText': item.linkText,
-    });
-    return true;
-  }
-
-  if (currentEditType.startsWith('youtube-')) {
-    const category = currentEditType.slice('youtube-'.length);
-    const item = (siteData.youtube[category] || []).find((candidate) => candidate.id === currentEditId);
-    if (!item) return false;
-    setGenericModalCanonicalValues({
-      'edit-category': category,
-      'edit-title': item.title,
-      'edit-youtube': item.youtubeId,
-    });
-    return true;
-  }
-
-  if (currentEditType.startsWith('discography-')) {
-    const category = currentEditType.slice('discography-'.length);
-    const list = category === 'digital' ? siteData.discography.digital : siteData.discography.demo;
-    const item = list.find((candidate) => candidate.id === currentEditId);
-    if (!item) return false;
-    setGenericModalCanonicalValues({
-      'edit-category': category,
-      'edit-title': item.title,
-      'edit-releaseDate': item.releaseDate,
-      'edit-releaseType': item.releaseType,
-      'edit-playbackVideoId': item.playbackVideoId,
-      'edit-description': item.description,
-      'edit-image': item.image,
-      'edit-link': item.link,
-    });
-    return true;
-  }
-
-  return false;
-}
-
-// モーダル保存
-async function saveModal() {
-  if (rejectApiFallbackMutation()) {
-    restoreGenericModalCanonicalValues();
-    return false;
-  }
-  let ok = true;
-  if (isSaving) return false;
-  if (!ensureNoActiveImageUploads()) return false;
-  if (currentEditType?.startsWith('live')) return saveLiveWorkspace();
-  if (currentEditType === 'news') {
-    saveNewsItem();
-  } else if (currentEditType.startsWith('youtube')) {
-    ok = saveYouTubeItem();
-  } else if (currentEditType.startsWith('discography')) {
-    ok = saveDiscographyItem();
-  }
-
-  if (!ok) return false;
-  if (currentEditType.startsWith('discography')) {
-    markChanged();
-    if (IS_API_MODE && !await saveData({ silent: true })) return false;
-    closeModal();
-    showToast(IS_API_MODE ? '保存しました' : '編集内容を反映しました。右上の「保存」で確定します', 'success');
-    return true;
-  }
-  closeModal();
-  markChanged();
-  if (IS_API_MODE) {
-    const saved = await saveData({ silent: true });
-    if (saved) showToast('保存しました', 'success');
-  } else {
-    showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
-  }
-  return true;
-}
-
-function saveYouTubeItem() {
-  if (rejectApiFallbackMutation()) return false;
-  const newCategory = document.getElementById('edit-category').value;
-  const input = document.getElementById('edit-youtube').value;
-  const youtubeId = getYouTubeVideoId(input);
-  if (!youtubeId) {
-    showToast('YouTube URL / ID が不正です（IDは11文字）', 'error');
-    return false;
-  }
-  const item = {
-    id: currentEditId,
-    title: document.getElementById('edit-title').value,
-    youtubeId
-  };
-
-  const originalCategory = currentEditType.split('-')[1];
-  const originalList = siteData.youtube[originalCategory] || [];
-  const originalIndex = originalList.findIndex(v => v.id === currentEditId);
-  if (originalIndex !== -1) {
-    originalList.splice(originalIndex, 1);
-  }
-
-  if (!siteData.youtube[newCategory]) siteData.youtube[newCategory] = [];
-  siteData.youtube[newCategory].unshift(item);
-  siteData = window.MusicData.clearDanglingMusicReferences(siteData);
-  renderSiteSettings();
-  renderYouTube();
-  return true;
-}
-
-// News保存
-function saveNewsItem() {
-  if (rejectApiFallbackMutation()) return false;
-  const item = {
-    id: currentEditId,
-    date: document.getElementById('edit-date').value,
-    title: document.getElementById('edit-title').value,
-    description: document.getElementById('edit-description').value,
-    image: document.getElementById('edit-image').value,
-    link: document.getElementById('edit-link').value,
-    linkText: document.getElementById('edit-linkText').value
-  };
-
-  if (isNewItem) {
-    siteData.news.unshift(item);
-  } else {
-    const index = siteData.news.findIndex(n => n.id === currentEditId);
-    if (index !== -1) siteData.news[index] = item;
-  }
-
-  renderNews();
-  return true;
-}
 
 // Live保存
 function saveLiveItem() {
@@ -3530,79 +2927,12 @@ async function deleteLiveFromWorkspace() {
   return true;
 }
 
-// Discography保存
-function saveDiscographyItem() {
-  if (rejectApiFallbackMutation() || isSaving || !ensureNoActiveImageUploads()) return false;
-  const newCategory = document.getElementById('edit-category').value;
-  const item = {
-    id: currentEditId,
-    title: document.getElementById('edit-title').value,
-    releaseDate: document.getElementById('edit-releaseDate').value,
-    description: document.getElementById('edit-description').value,
-    image: document.getElementById('edit-image').value,
-    link: document.getElementById('edit-link').value,
-    releaseType: document.getElementById('edit-releaseType').value,
-    playbackVideoId: document.getElementById('edit-playbackVideoId').value
-  };
-
-  const previous = musicReleases(siteData).find(old => old.id === currentEditId);
-  if (previous && typeof previous.releaseDate !== 'string' && item.releaseDate === String(previous.releaseDate ?? '')) item.releaseDate = previous.releaseDate;
-  if (!releaseDateIsAllowed(item)) { showReleaseDateError(); return false; }
-
-  // 元のカテゴリから削除
-  const originalCategory = currentEditType.split('-')[1];
-  const originalList = originalCategory === 'digital' ? siteData.discography.digital : siteData.discography.demo;
-  const originalIndex = originalList.findIndex(d => d.id === currentEditId);
-  if (originalIndex !== -1) {
-    originalList.splice(originalIndex, 1);
-  }
-
-  // 新しいカテゴリに追加
-  if (newCategory === 'digital') {
-    siteData.discography.digital.unshift(item);
-  } else {
-    siteData.discography.demo.unshift(item);
-  }
-
-  // API失敗でモーダルが残っても、再保存・削除は移動後の所属を使う。
-  currentEditType = `discography-${newCategory}`;
-  siteData = window.MusicData.clearDanglingMusicReferences(siteData);
-  renderDiscography();
-  renderSiteSettings();
-  return true;
-}
-
-// アイテム削除
+// Issue #47: the generic edit modal is gone (News, works, videos, Site and Profile save from their own edit surfaces: saveOccPanel / deleteOccItem).
+// What stays is the Live delete, which this name has always forwarded to.
 function deleteItem() {
   if (rejectApiFallbackMutation()) return false;
   if (currentEditType?.startsWith('live')) return deleteLiveFromWorkspace();
-  if (!confirm('削除しますか？')) return false;
-
-  if (currentEditType === 'news') {
-    siteData.news = siteData.news.filter(n => n.id !== currentEditId);
-    renderNews();
-  } else if (currentEditType.startsWith('youtube')) {
-    const category = currentEditType.split('-')[1];
-    if (siteData.youtube[category]) {
-      siteData.youtube[category] = siteData.youtube[category].filter(v => v.id !== currentEditId);
-    }
-    renderYouTube();
-  } else if (currentEditType.startsWith('discography')) {
-    const category = currentEditType.split('-')[1];
-    if (category === 'digital') {
-      siteData.discography.digital = siteData.discography.digital.filter(d => d.id !== currentEditId);
-    } else {
-      siteData.discography.demo = siteData.discography.demo.filter(d => d.id !== currentEditId);
-    }
-    renderDiscography();
-  }
-
-  siteData = window.MusicData.clearDanglingMusicReferences(siteData);
-  renderSiteSettings();
-  closeModal();
-  markChanged();
-  showToast('編集内容を反映しました。右上の「保存」で確定します', 'success');
-  return true;
+  return false;
 }
 
 // 変更マーク
@@ -3621,6 +2951,9 @@ function markChanged() {
 
 function setSaveStateSaved(silent = false) {
   hasChanges = false;
+  // Issue #47: what a surface saved in Local Mode was waiting for is exported now
+  occPanels.forEach((panel) => { panel.localWaiting = false; });
+  recomputeOccDirty();
   const saveBtn = document.getElementById('saveBtn');
   if (saveBtn) {
     saveBtn.textContent = '保存済';
@@ -3636,6 +2969,8 @@ function setSaveStateSaved(silent = false) {
   }, 2000);
 }
 
+// Issue #47: the only caller is saveScoped, which always passes the slice it built. The default (siteData as it is) is kept for the
+// T46-PIN (h) test seam; no screen and no header button reaches it any more (saveData sends nothing while the API is connected).
 async function saveToApi(payloadOverride, options = {}) {
   if (rejectApiFallbackMutation()) return false;
   const snapshot = payloadOverride || window.MusicData.clearDanglingMusicReferences(siteData);
@@ -3656,9 +2991,10 @@ async function saveToApi(payloadOverride, options = {}) {
 }
 
 
-// データ保存
+// データ保存 — the header 保存 of Local Mode only (JSONを書き出す). While the API is connected every page saves from its own
+// 「保存して公開」 (saveOccPanel / saveLiveWorkspace / …); the whole of siteData is never sent, so this sends nothing and answers false.
 async function saveData(options = {}) {
-  if (rejectApiFallbackMutation('読み取り専用のため保存できません。')) return false;
+  if (IS_API_MODE) return false;
   if (isSaving) return false;
   if (!ensureNoActiveImageUploads()) return false;
   if (!validateMusicBeforeSave()) return false;
@@ -3672,15 +3008,6 @@ async function saveData(options = {}) {
   const pendingCount = Object.keys(pendingImages).length;
 
   try {
-    if (IS_API_MODE) {
-      if (pendingCount > 0 && !silent) {
-        showToast('画像ファイルは別途 assets/images に配置してください', 'error');
-      }
-      await saveToApi();
-      setSaveStateSaved(silent);
-      return true;
-    }
-
     if (pendingCount > 0) {
       if (confirm(`新規画像が${pendingCount}件あります。\n\nOK: JSONと画像をダウンロード\nキャンセル: JSONのみダウンロード`)) {
         downloadImages();
@@ -4335,6 +3662,16 @@ const LIVE_EDITOR_DIRTY_FIELD_IDS = [
 // openLiveDialog({ title, body, actions: [{ id, label, safe, tone }] }) resolves with the id of the chosen action.
 // While it is open everything behind it is inert (it cannot be reached by tap, click or Tab); closing it restores the page.
 // Escape and the backdrop choose the safe action (the one marked safe, else the first).
+// A text body is one paragraph (the Live dialogs). A list of lines is one paragraph each (the delete confirmation of #47 adds a line).
+function liveDialogBodyHtml(body) {
+  if (Array.isArray(body)) {
+    const lines = body.filter(Boolean);
+    if (lines.length === 0) return '';
+    return `<div id="live-dialog-body" class="occ-dialog-lines">${lines.map((line) => `<p class="live-dialog-body">${escapeHtml(line)}</p>`).join('')}</div>`;
+  }
+  return body ? `<p id="live-dialog-body" class="live-dialog-body">${escapeHtml(body)}</p>` : '';
+}
+
 function openLiveDialog({ title = '', body = '', actions = [] } = {}) {
   const overlay = document.getElementById('live-dialog-overlay');
   const dialog = document.getElementById('live-dialog');
@@ -4352,7 +3689,7 @@ function openLiveDialog({ title = '', body = '', actions = [] } = {}) {
     liveDialog = { resolve, safeId: safeAction.id, returnFocus, actionIds: actions.map((action) => action.id) };
     dialog.innerHTML = `
       <h3 id="live-dialog-title" class="live-dialog-title">${escapeHtml(title)}</h3>
-      ${body ? `<p id="live-dialog-body" class="live-dialog-body">${escapeHtml(body)}</p>` : ''}
+      ${liveDialogBodyHtml(body)}
       <div class="live-dialog-actions">
         ${actions.map((action) => {
           const tone = action.tone ? `btn-${action.tone}` : (action.danger ? 'btn-danger' : (action.safe ? 'btn-secondary' : 'btn-primary'));
@@ -4660,9 +3997,1521 @@ function setupTicketSettingsSave() {
 }
 
 
+// ===== Issue #47: the edit surfaces of the occasional updates (News, Music, Site, Profile) =====================================
+// A surface is a list and an edit (News, Music works and videos) or one screen (Site, Profile, the Channel URL of the videos). What is
+// typed lives in the inputs of the surface only; siteData is written when a save succeeds.
+// occPanels holds, per surface, what the unsaved judgement needs: read() the inputs, the baseline they were opened with (or last
+// saved with), dirty and saving. A save is a saveScoped(): the last saved content with only this surface's target layered on.
+//   key 'item'    the open News / work / video      (occActiveItem says which)
+//   key 'channel' the Channel URL of the videos
+//   key 'site'    the Site screen
+//   key 'profile' the Profile screen
+
+const OCC_UI = {
+  newsHeadingEdit: 'お知らせを編集',
+  newsHeadingNew: '新しいお知らせ',
+  releaseHeadingEdit: '作品を編集',
+  releaseHeadingNew: '新しい作品',
+  videoHeadingEdit: '映像を編集',
+  videoHeadingNew: '新しい映像',
+  untitled: '（題なし）',
+  emptyList: 'まだ登録がありません。',
+  deleteNews: 'このお知らせを削除',
+  deleteRelease: 'この作品を削除',
+  deleteVideo: 'この映像を削除',
+  deleteTitleNews: 'このお知らせを削除しますか。',
+  deleteTitleRelease: 'この作品を削除しますか。',
+  deleteTitleVideo: 'この映像を削除しますか。',
+  deleteBody: '削除すると公開画面からも消えます。',
+  featuredResets: '顔にする作品は「自動（最新のリリース）」に戻ります。',
+  playbackResets: (count) => `再生する映像に選んでいる作品が${count}件あります。「選ばない」に戻り、公開画面では「聴く」が出なくなります。`,
+  invalidYouTube: 'YouTube URL / ID が不正です（IDは11文字）',
+  localWaiting: 'JSON書き出し待ち',
+  localSaved: '編集内容を反映しました。右上の「JSONを書き出す」で確定します',
+  localDeleted: '削除内容を反映しました。右上の「JSONを書き出す」で確定します',
+  musicTitleWorks: '作品',
+  musicTitleVideos: '映像',
+  digital: 'Digital Release',
+  demo: '宅録Demo',
+  musicVideos: 'Music Video',
+  liveMovies: 'Live Movie',
+  demos: 'Demo',
+};
+
+const OCC_NEWS_FIELDS = ['date', 'title', 'description', 'image', 'link', 'linkText'];
+const OCC_RELEASE_FIELDS = ['category', 'title', 'releaseDate', 'description', 'image', 'link', 'releaseType', 'playbackVideoId'];
+const OCC_VIDEO_FIELDS = ['category', 'title', 'youtube'];
+const OCC_SITE_FIELDS = ['featuredReleaseId', 'heroImage', 'bandcamp', 'youtube', 'x', 'instagram', 'note', 'footerText', 'contactIntro', 'contactAction'];
+// Where each Site field lives in the data (the keys a Site save layers onto the baseline).
+const OCC_SITE_PATHS = {
+  featuredReleaseId: ['site', 'featuredReleaseId'],
+  heroImage: ['site', 'heroImage'],
+  bandcamp: ['site', 'links', 'bandcamp'],
+  youtube: ['site', 'links', 'youtube'],
+  x: ['site', 'links', 'x'],
+  instagram: ['site', 'links', 'instagram'],
+  note: ['site', 'links', 'note'],
+  footerText: ['site', 'footerText'],
+  contactIntro: ['contact', 'introText'],
+  contactAction: ['contact', 'formAction'],
+};
+// The input of each Site field.
+const OCC_SITE_INPUT_IDS = {
+  featuredReleaseId: 'site-featured-release-id',
+  heroImage: 'site-hero-image',
+  bandcamp: 'site-link-bandcamp',
+  youtube: 'site-link-youtube',
+  x: 'site-link-x',
+  instagram: 'site-link-instagram',
+  note: 'site-link-note',
+  footerText: 'site-footer-text',
+  contactIntro: 'contact-intro-text',
+  contactAction: 'contact-form-action',
+};
+// The pictures of the screens that are not item edits: the input that holds the path → the panel it belongs to.
+const OCC_PAGE_IMAGE_PANELS = { 'site-hero-image': 'site', 'profile-image': 'profile' };
+
+function occElement(id) {
+  return document.getElementById(id);
+}
+
+function occString(id) {
+  return String(occElement(id)?.value ?? '');
+}
+
+// The surface (its ids start with this) an item kind is edited on.
+function occPrefixOf(kind) {
+  return kind === 'news' ? 'news' : 'music';
+}
+
+function occItemPrefix() {
+  return occPrefixOf(occActiveItem?.kind || 'news');
+}
+
+// The prefix of the ids of a panel's status / error / actions / save button.
+function occPanelPrefix(key) {
+  return key === 'item' ? occItemPrefix() : key;
+}
+
+// --- slices: what a save layers onto the saved baseline -------------------------------------------------------------------
+// An existing item is replaced where it stands; an item the baseline does not have (a new one) goes to the head. Ids are compared
+// as text, because the list hands an id over as text and production's ids are not all strings.
+function applyNewsSlice(data, item) {
+  const id = String(item.id);
+  const index = data.news.findIndex((candidate) => String(candidate.id) === id);
+  if (index === -1) data.news.unshift(structuredClone(item));
+  else data.news[index] = structuredClone(item);
+  return data;
+}
+
+// A work / a video leaves the category it was edited from and goes to the head of the category it is saved to (also when that is the
+// same one: a save moves the item to the head, as it always has).
+function applyReleaseSlice(data, item, category, originalCategory) {
+  const id = String(item.id);
+  const original = originalCategory === 'digital' ? data.discography.digital : data.discography.demo;
+  const index = original.findIndex((candidate) => String(candidate.id) === id);
+  if (index !== -1) original.splice(index, 1);
+  (category === 'digital' ? data.discography.digital : data.discography.demo).unshift(structuredClone(item));
+  return data;
+}
+
+function applyVideoSlice(data, item, category, originalCategory) {
+  const id = String(item.id);
+  const original = data.youtube[originalCategory] || [];
+  const index = original.findIndex((candidate) => String(candidate.id) === id);
+  if (index !== -1) original.splice(index, 1);
+  if (!data.youtube[category]) data.youtube[category] = [];
+  data.youtube[category].unshift(structuredClone(item));
+  return data;
+}
+
+// A delete removes one item. For a work / a video the category it was opened from may be given (then only that list is touched, as the
+// old delete did); without it every list is.
+function applyOccDeleteSlice(data, kind, id, category = null) {
+  const target = String(id);
+  const keep = (candidate) => String(candidate.id) !== target;
+  if (kind === 'news') data.news = data.news.filter(keep);
+  if (kind === 'release') {
+    (category ? [category] : ['digital', 'demo']).forEach((name) => {
+      if (Array.isArray(data.discography[name])) data.discography[name] = data.discography[name].filter(keep);
+    });
+  }
+  if (kind === 'video') {
+    (category ? [category] : ['musicVideos', 'liveMovies', 'demos']).forEach((name) => {
+      if (Array.isArray(data.youtube[name])) data.youtube[name] = data.youtube[name].filter(keep);
+    });
+  }
+  return data;
+}
+
+function setOccPath(data, path, value) {
+  let target = data;
+  path.slice(0, -1).forEach((key) => {
+    if (!target[key] || typeof target[key] !== 'object') target[key] = {};
+    target = target[key];
+  });
+  target[path[path.length - 1]] = value;
+}
+
+// Site, Profile and the Channel URL layer only the fields that differ from what the screen was opened (or last saved) with: a field that
+// was not touched is not written (so a key the data never had is not added, and the order of the keys is the data's own).
+function applySiteSlice(data, draft) {
+  Object.entries(draft.changes).forEach(([field, value]) => setOccPath(data, OCC_SITE_PATHS[field], value));
+  return data;
+}
+
+function applyProfileSlice(data, draft) {
+  if (!data.profile || typeof data.profile !== 'object') data.profile = {};
+  Object.entries(draft.changes).forEach(([field, value]) => { data.profile[field] = structuredClone(value); });
+  return data;
+}
+
+function applyChannelSlice(data, draft) {
+  if (!data.youtube || typeof data.youtube !== 'object') data.youtube = {};
+  if (Object.prototype.hasOwnProperty.call(draft.changes, 'channelUrl')) data.youtube.channelUrl = draft.changes.channelUrl;
+  return data;
+}
+
+// --- News: the inputs ------------------------------------------------------------------------------------------------
+function readNewsFields() {
+  const read = (id) => String(occElement(`edit-${id}`)?.value ?? '');
+  return Object.fromEntries(OCC_NEWS_FIELDS.map((field) => [field, read(field)]));
+}
+
+// The body of a save: the seven keys of a News item, in the order they have always been saved in.
+function readNewsDraft() {
+  const fields = readNewsFields();
+  return {
+    id: occActiveItem.id,
+    date: fields.date,
+    title: fields.title,
+    description: fields.description,
+    image: fields.image,
+    link: fields.link,
+    linkText: fields.linkText,
+  };
+}
+
+function snapshotFields(order, fields) {
+  return JSON.stringify(order.map((field) => String(fields[field] ?? '')));
+}
+
+function snapshotNewsFields(fields) {
+  return snapshotFields(OCC_NEWS_FIELDS, fields);
+}
+
+function writeNewsFields(fields) {
+  ['date', 'title', 'description', 'link', 'linkText'].forEach((field) => {
+    const control = occElement(`edit-${field}`);
+    if (control) control.value = String(fields[field] ?? '');
+  });
+  setOccImageValue('edit-image', fields.image);
+}
+
+function buildNewsEditorHtml(item, isNew) {
+  const value = (raw) => escapeHtml(String(raw ?? ''));
+  return `
+    <div class="form-group occ-field">
+      <label for="edit-date">日付</label>
+      <input type="text" id="edit-date" class="text-input" data-admin-mutation="" value="${value(item.date)}" placeholder="2025/1/1(Mon.)">
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-title">タイトル</label>
+      <input type="text" id="edit-title" class="text-input" data-admin-mutation="" value="${value(item.title)}" placeholder="ニュースタイトル">
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-description">説明</label>
+      <textarea id="edit-description" class="textarea" data-admin-mutation="" rows="3" placeholder="詳細説明">${value(item.description)}</textarea>
+    </div>
+    ${getOccImageFormHtml(item.image || '', 'edit-image')}
+    <div class="form-group occ-field">
+      <label for="edit-link">詳細リンクURL</label>
+      <input type="url" id="edit-link" class="text-input" data-admin-mutation="" value="${value(item.link)}" placeholder="https://...">
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-linkText">リンクテキスト</label>
+      <input type="text" id="edit-linkText" class="text-input" data-admin-mutation="" value="${value(item.linkText)}" placeholder="view...">
+    </div>
+    ${isNew ? '' : `<div class="occ-editor-ops"><button type="button" class="occ-delete" id="news-delete-btn" data-admin-mutation="">${OCC_UI.deleteNews}</button></div>`}
+  `;
+}
+
+// --- Music: the inputs of a work and of a video -------------------------------------------------------------------------
+function readReleaseFields() {
+  return Object.fromEntries(OCC_RELEASE_FIELDS.map((field) => [field, occString(field === 'category' ? 'edit-category' : `edit-${field}`)]));
+}
+
+// The body of a save of a work: the eight keys it has always been saved with, in that order. A date that was not a text (or was missing)
+// and was not touched stays as it was (a work without a date is saved without the key, as before).
+function readReleaseDraft() {
+  const fields = readReleaseFields();
+  const item = {
+    id: occActiveItem.id,
+    title: fields.title,
+    releaseDate: fields.releaseDate,
+    description: fields.description,
+    image: fields.image,
+    link: fields.link,
+    releaseType: fields.releaseType,
+    playbackVideoId: fields.playbackVideoId,
+  };
+  const previous = musicReleases(siteData).find((old) => String(old.id) === String(item.id));
+  if (previous && typeof previous.releaseDate !== 'string' && item.releaseDate === String(previous.releaseDate ?? '')) item.releaseDate = previous.releaseDate;
+  return { item, category: fields.category === 'demo' ? 'demo' : 'digital', originalCategory: occActiveItem.category || 'digital' };
+}
+
+function readVideoFields() {
+  return Object.fromEntries(OCC_VIDEO_FIELDS.map((field) => [field, occString(field === 'category' ? 'edit-category' : `edit-${field}`)]));
+}
+
+// The body of a save of a video: id, title and the 11 characters of the YouTube id (a URL typed in is turned into it).
+function readVideoDraft() {
+  const fields = readVideoFields();
+  const category = ['musicVideos', 'liveMovies', 'demos'].includes(fields.category) ? fields.category : 'musicVideos';
+  return {
+    item: { id: occActiveItem.id, title: fields.title, youtubeId: getYouTubeVideoId(fields.youtube) },
+    category,
+    originalCategory: occActiveItem.category || 'musicVideos',
+  };
+}
+
+function writeReleaseFields(fields) {
+  ['category', 'title', 'releaseDate', 'description', 'link', 'releaseType'].forEach((field) => {
+    const control = occElement(field === 'category' ? 'edit-category' : `edit-${field}`);
+    if (control) control.value = String(fields[field] ?? '');
+  });
+  const playback = occElement('edit-playbackVideoId');
+  if (playback) playback.value = String(fields.playbackVideoId ?? '');
+  setOccImageValue('edit-image', fields.image);
+  clearReleaseDateError();
+}
+
+function writeVideoFields(fields) {
+  ['category', 'title'].forEach((field) => {
+    const control = occElement(field === 'category' ? 'edit-category' : `edit-${field}`);
+    if (control) control.value = String(fields[field] ?? '');
+  });
+  const youtube = occElement('edit-youtube');
+  if (youtube) youtube.value = String(fields.youtube ?? '');
+  clearVideoIdError();
+}
+
+function clearReleaseDateError() {
+  const field = occElement('edit-releaseDate');
+  const error = occElement('edit-releaseDate-error');
+  if (field) field.setAttribute('aria-invalid', 'false');
+  if (error) error.textContent = '';
+}
+
+function clearVideoIdError() {
+  const field = occElement('edit-youtube');
+  const error = occElement('edit-youtube-error');
+  if (field) field.setAttribute('aria-invalid', 'false');
+  if (error) error.textContent = '';
+}
+
+function showVideoIdError(message = OCC_UI.invalidYouTube) {
+  const field = occElement('edit-youtube');
+  const error = occElement('edit-youtube-error');
+  if (field) {
+    field.setAttribute('aria-invalid', 'true');
+    field.setAttribute('aria-describedby', 'edit-youtube-error');
+    field.focus?.();
+  }
+  if (error) error.textContent = message;
+}
+
+function occCategoryOptions(options, selected) {
+  return options.map(([value, label]) => `<option value="${value}"${value === selected ? ' selected' : ''}>${label}</option>`).join('');
+}
+
+function buildReleaseEditorHtml(item, category, isNew) {
+  const value = (raw) => escapeHtml(String(raw ?? ''));
+  const releaseDate = String(item.releaseDate ?? '');
+  return `
+    <div class="form-group occ-field">
+      <label for="edit-category">カテゴリ</label>
+      <select id="edit-category" class="select" data-admin-mutation="">${occCategoryOptions([['digital', OCC_UI.digital], ['demo', OCC_UI.demo]], category)}</select>
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-title">タイトル</label>
+      <input type="text" id="edit-title" class="text-input" data-admin-mutation="" value="${value(item.title)}" placeholder='1st.Single "xxx"'>
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-releaseDate">リリース日</label>
+      <input type="text" id="edit-releaseDate" class="text-input" data-admin-mutation="" value="${value(releaseDate)}" placeholder="2025.05.05" aria-invalid="false" aria-describedby="edit-releaseDate-error">
+      <div id="edit-releaseDate-error" class="form-error" role="alert"></div>
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-description">説明（曲リスト等）</label>
+      <textarea id="edit-description" class="textarea" data-admin-mutation="" rows="4" placeholder="1. xxx&#10;2. yyy">${value(item.description)}</textarea>
+    </div>
+    ${getOccImageFormHtml(item.image || '', 'edit-image', { label: '画像（ジャケット）', variant: 'square' })}
+    <div class="form-group occ-field">
+      <label for="edit-link">リンクURL</label>
+      <input type="url" id="edit-link" class="text-input" data-admin-mutation="" value="${value(item.link)}" placeholder="https://...">
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-releaseType">種別</label>
+      <input type="text" id="edit-releaseType" class="text-input" data-admin-mutation="" placeholder="2nd Single" value="${value(item.releaseType)}">
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-playbackVideoId">その場で再生する映像</label>
+      <select id="edit-playbackVideoId" class="select" data-admin-mutation="">${playbackVideoOptions(item.playbackVideoId || '')}</select>
+    </div>
+    ${isNew ? '' : `<div class="occ-editor-ops"><button type="button" class="occ-delete" id="music-delete-btn" data-admin-mutation="">${OCC_UI.deleteRelease}</button></div>`}
+  `;
+}
+
+function buildVideoEditorHtml(item, category, isNew) {
+  const value = (raw) => escapeHtml(String(raw ?? ''));
+  return `
+    <div class="form-group occ-field">
+      <label for="edit-category">カテゴリ</label>
+      <select id="edit-category" class="select" data-admin-mutation="">${occCategoryOptions([['musicVideos', OCC_UI.musicVideos], ['liveMovies', OCC_UI.liveMovies], ['demos', OCC_UI.demos]], category)}</select>
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-title">タイトル</label>
+      <input type="text" id="edit-title" class="text-input" data-admin-mutation="" value="${value(item.title)}" placeholder="例: - 月を待って -">
+    </div>
+    <div class="form-group occ-field">
+      <label for="edit-youtube">YouTube URL / ID</label>
+      <input type="text" id="edit-youtube" class="text-input" data-admin-mutation="" value="${value(item.youtubeId)}" placeholder="https://youtu.be/... または 11文字のID" aria-invalid="false" aria-describedby="edit-youtube-error">
+      <div id="edit-youtube-error" class="form-error" role="alert"></div>
+    </div>
+    ${isNew ? '' : `<div class="occ-editor-ops"><button type="button" class="occ-delete" id="music-delete-btn" data-admin-mutation="">${OCC_UI.deleteVideo}</button></div>`}
+  `;
+}
+
+// What each kind of item is: how its inputs are read and written, what a save of it layers onto the baseline, and what a successful save
+// leaves in siteData.
+const OCC_ITEM_KINDS = {
+  news: {
+    order: OCC_NEWS_FIELDS,
+    read: readNewsFields,
+    write: writeNewsFields,
+    draft: readNewsDraft,
+    slice: (data, draft) => applyNewsSlice(data, draft),
+    controlIds: ['edit-date', 'edit-title', 'edit-description', 'edit-link', 'edit-linkText'],
+    firstFocus: 'edit-date',
+    deleteId: 'news-delete-btn',
+  },
+  release: {
+    order: OCC_RELEASE_FIELDS,
+    read: readReleaseFields,
+    write: writeReleaseFields,
+    draft: readReleaseDraft,
+    slice: (data, draft) => applyReleaseSlice(data, draft.item, draft.category, draft.originalCategory),
+    controlIds: ['edit-category', 'edit-title', 'edit-releaseDate', 'edit-description', 'edit-link', 'edit-releaseType', 'edit-playbackVideoId'],
+    firstFocus: 'edit-category',
+    deleteId: 'music-delete-btn',
+    validate: (draft) => {
+      if (releaseDateIsAllowed(draft.item)) return true;
+      showReleaseDateError();
+      return false;
+    },
+  },
+  video: {
+    order: OCC_VIDEO_FIELDS,
+    read: readVideoFields,
+    write: writeVideoFields,
+    draft: readVideoDraft,
+    slice: (data, draft) => applyVideoSlice(data, draft.item, draft.category, draft.originalCategory),
+    controlIds: ['edit-category', 'edit-title', 'edit-youtube'],
+    firstFocus: 'edit-category',
+    deleteId: 'music-delete-btn',
+    validate: (draft) => {
+      if (draft.item.youtubeId) return true;
+      showVideoIdError();
+      return false;
+    },
+  },
+};
+
+function makeOccPanel(key, spec) {
+  const values = spec.read();
+  return {
+    key,
+    kind: spec.kind,
+    order: spec.order,
+    read: spec.read,
+    write: spec.write,
+    draft: spec.draft,
+    slice: spec.slice,
+    commit: spec.commit,
+    lockables: spec.lockables,
+    snapshot: () => spec.snapshot(spec.read()),
+    baselineValues: spec.clone ? spec.clone(values) : { ...values },
+    baseline: spec.snapshot(values),
+    clone: spec.clone,
+    snapshotOf: spec.snapshot,
+    dirty: false,
+    saving: false,
+    localWaiting: false,
+    imageInputIds: spec.imageInputIds || [],
+    extra: spec.extra || null,
+  };
+}
+
+function makeOccItemPanel(kind) {
+  const item = OCC_ITEM_KINDS[kind];
+  const lockables = () => {
+    const prefix = occPrefixOf(kind);
+    const body = occElement(`${prefix}-editor-body`);
+    return [
+      ...[`${prefix}-editor-back`, `${prefix}-add-btn`, `${prefix}-save-btn`].map(occElement).filter(Boolean),
+      ...Array.from(body?.querySelectorAll?.('button, input, textarea, select') || []),
+    ];
+  };
+  return makeOccPanel('item', {
+    kind,
+    order: item.order,
+    read: item.read,
+    write: item.write,
+    draft: item.draft,
+    slice: item.slice,
+    commit: (draft) => commitOccItemToSiteData(kind, draft),
+    snapshot: (fields) => snapshotFields(item.order, fields),
+    lockables,
+    imageInputIds: ['edit-image'],
+  });
+}
+
+// What a successful save of an item leaves behind: the saved item is in siteData (through the same reconciliation as every save).
+// siteData holds nothing of what was typed before this.
+function commitOccItemToSiteData(kind, draft) {
+  const next = structuredClone(siteData);
+  OCC_ITEM_KINDS[kind].slice(next, draft);
+  siteData = window.MusicData.clearDanglingMusicReferences(next);
+}
+
+function commitNewsToSiteData(draft) {
+  commitOccItemToSiteData('news', draft);
+}
+
+// --- Site, Profile and the Channel URL: one screen each --------------------------------------------------------------------
+let occProfileLinkSources = [];
+
+function readSiteFields() {
+  return Object.fromEntries(OCC_SITE_FIELDS.map((field) => [field, occString(OCC_SITE_INPUT_IDS[field])]));
+}
+
+function writeSiteFields(fields) {
+  OCC_SITE_FIELDS.forEach((field) => {
+    if (field === 'heroImage') return;
+    const control = occElement(OCC_SITE_INPUT_IDS[field]);
+    if (control) control.value = String(fields[field] ?? '');
+  });
+  setOccImageValue('site-hero-image', fields.heroImage);
+}
+
+// What differs from the values the screen was opened (or last saved) with, in the order of the fields. Only this is layered onto the baseline.
+function draftOfChangedFields(order, fields, baselineValues) {
+  const changes = {};
+  order.forEach((field) => {
+    if (String(fields[field] ?? '') !== String(baselineValues[field] ?? '')) changes[field] = String(fields[field] ?? '');
+  });
+  return { changes };
+}
+
+function makeSitePanel() {
+  const panel = makeOccPanel('site', {
+    kind: 'site',
+    order: OCC_SITE_FIELDS,
+    read: readSiteFields,
+    write: writeSiteFields,
+    snapshot: (fields) => snapshotFields(OCC_SITE_FIELDS, fields),
+    draft: (self) => draftOfChangedFields(OCC_SITE_FIELDS, readSiteFields(), self.baselineValues),
+    slice: (data, draft) => applySiteSlice(data, draft),
+    commit: (draft) => commitOccPageToSiteData('site', draft),
+    lockables: () => [
+      ...Object.values(OCC_SITE_INPUT_IDS).map(occElement).filter(Boolean),
+      occElement('site-save-btn'),
+      ...Array.from(occElement('site-hero-image-form')?.querySelectorAll?.('button, input, textarea, select') || []),
+    ].filter(Boolean),
+    imageInputIds: ['site-hero-image'],
+  });
+  return panel;
+}
+
+function readProfileFields() {
+  return {
+    text: occString('profile-text'),
+    image: occString('profile-image'),
+    links: occProfileLinkSources.map((source, index) => ({
+      name: occString(`profile-link-${index}-name`),
+      url: occString(`profile-link-${index}-url`),
+      source,
+    })),
+  };
+}
+
+function snapshotProfileFields(fields) {
+  return JSON.stringify([String(fields.text ?? ''), String(fields.image ?? ''), (fields.links || []).map((link) => [String(link.name ?? ''), String(link.url ?? '')])]);
+}
+
+function cloneProfileFields(fields) {
+  return { text: fields.text, image: fields.image, links: (fields.links || []).map((link) => ({ ...link })) };
+}
+
+function writeProfileFields(fields) {
+  const text = occElement('profile-text');
+  if (text) text.value = String(fields.text ?? '');
+  setOccImageValue('profile-image', fields.image);
+  const rows = (fields.links || []).map((link) => ({ ...link }));
+  const sameRows = rows.length === occProfileLinkSources.length && rows.every((row, index) => row.source === occProfileLinkSources[index]);
+  if (!sameRows) {
+    renderProfileLinkRows(rows);
+    return;
+  }
+  // the same rows: the inputs take the values, they are not drawn again
+  rows.forEach((row, index) => {
+    const name = occElement(`profile-link-${index}-name`);
+    const url = occElement(`profile-link-${index}-url`);
+    if (name) name.value = String(row.name ?? '');
+    if (url) url.value = String(row.url ?? '');
+  });
+}
+
+function makeProfilePanel() {
+  const panel = makeOccPanel('profile', {
+    kind: 'profile',
+    order: ['text', 'image', 'links'],
+    read: readProfileFields,
+    write: writeProfileFields,
+    snapshot: snapshotProfileFields,
+    clone: cloneProfileFields,
+    draft: (self) => {
+      const fields = readProfileFields();
+      const changes = {};
+      if (fields.text !== self.baselineValues.text) changes.text = fields.text;
+      if (fields.image !== self.baselineValues.image) changes.image = fields.image;
+      if (JSON.stringify(fields.links.map((link) => [link.name, link.url])) !== JSON.stringify(self.baselineValues.links.map((link) => [link.name, link.url]))) {
+        // A row that was there keeps the keys it had besides name and url; a new row is { name, url }.
+        changes.links = fields.links.map((link) => (link.source >= 0 && self.extra.sourceLinks[link.source]
+          ? { ...self.extra.sourceLinks[link.source], name: link.name, url: link.url }
+          : { name: link.name, url: link.url }));
+      }
+      return { changes };
+    },
+    slice: (data, draft) => applyProfileSlice(data, draft),
+    commit: (draft) => commitOccPageToSiteData('profile', draft),
+    lockables: () => [
+      occElement('profile-text'),
+      occElement('profile-link-add-btn'),
+      occElement('profile-save-btn'),
+      ...Array.from(occElement('profile-image-form')?.querySelectorAll?.('button, input, textarea, select') || []),
+      ...Array.from(occElement('profile-links-list')?.querySelectorAll?.('button, input, textarea, select') || []),
+    ].filter(Boolean),
+    imageInputIds: ['profile-image'],
+    extra: { sourceLinks: structuredClone(Array.isArray(siteData?.profile?.links) ? siteData.profile.links : []) },
+  });
+  return panel;
+}
+
+function makeChannelPanel() {
+  return makeOccPanel('channel', {
+    kind: 'channel',
+    order: ['channelUrl'],
+    read: () => ({ channelUrl: occString('youtube-channel-url') }),
+    write: (fields) => { const control = occElement('youtube-channel-url'); if (control) control.value = String(fields.channelUrl ?? ''); },
+    snapshot: (fields) => snapshotFields(['channelUrl'], fields),
+    draft: (self) => draftOfChangedFields(['channelUrl'], { channelUrl: occString('youtube-channel-url') }, self.baselineValues),
+    slice: (data, draft) => applyChannelSlice(data, draft),
+    commit: (draft) => commitOccPageToSiteData('channel', draft),
+    lockables: () => [occElement('youtube-channel-url'), occElement('channel-save-btn')].filter(Boolean),
+  });
+}
+
+const OCC_PAGE_SLICES = {
+  site: applySiteSlice,
+  profile: applyProfileSlice,
+  channel: applyChannelSlice,
+};
+
+function commitOccPageToSiteData(key, draft) {
+  const next = structuredClone(siteData);
+  OCC_PAGE_SLICES[key](next, draft);
+  siteData = window.MusicData.clearDanglingMusicReferences(next);
+}
+
+// A picture of Site or Profile is held by an input of the screen (hidden); nothing of it goes to siteData until the screen is saved.
+function setImagePathForInputId(inputId, value) {
+  const key = OCC_PAGE_IMAGE_PANELS[inputId];
+  if (key) recomputeOccDirty(key);
+}
+
+function renderProfileLinkRows(rows) {
+  const list = occElement('profile-links-list');
+  occProfileLinkSources = rows.map((row) => (Number.isInteger(row.source) ? row.source : -1));
+  if (!list) return;
+  if (rows.length === 0) {
+    list.innerHTML = '<p class="occ-empty occ-empty-inline">リンクがありません。</p>';
+    return;
+  }
+  list.innerHTML = rows.map((row, index) => `
+    <div class="occ-link-row">
+      <div class="form-group occ-field occ-link-name">
+        <label for="profile-link-${index}-name">名前</label>
+        <input type="text" id="profile-link-${index}-name" class="text-input" data-admin-mutation="" placeholder="名前" value="${escapeHtml(String(row.name ?? ''))}" oninput="onOccPageInput('profile')" onchange="onOccPageInput('profile')">
+      </div>
+      <div class="form-group occ-field occ-link-url">
+        <label for="profile-link-${index}-url">URL</label>
+        <input type="url" id="profile-link-${index}-url" class="text-input" data-admin-mutation="" placeholder="URL" value="${escapeHtml(String(row.url ?? ''))}" oninput="onOccPageInput('profile')" onchange="onOccPageInput('profile')">
+      </div>
+      <button type="button" class="occ-link-delete" id="profile-link-${index}-delete-btn" data-admin-mutation="" onclick="deleteProfileLink(${index})">削除</button>
+    </div>
+  `).join('');
+  applyApiFallbackReadOnlyState();
+}
+
+// プロフィールリンク更新: the row's input takes the value (the same as typing it); nothing reaches siteData before the save
+function updateProfileLink(index, field, value) {
+  if (rejectApiFallbackMutation()) {
+    const panel = occPanels.get('profile');
+    if (panel) panel.write(panel.baselineValues);
+    return false;
+  }
+  const control = occElement(`profile-link-${index}-${field}`);
+  if (!control) return false;
+  control.value = String(value ?? '');
+  return onOccPageInput('profile');
+}
+
+function addProfileLink() {
+  if (rejectApiFallbackMutation()) return false;
+  if (occSaveOperation) return false;
+  const fields = readProfileFields();
+  renderProfileLinkRows([...fields.links, { name: '', url: '', source: -1 }]);
+  recomputeOccDirty('profile');
+  occElement(`profile-link-${occProfileLinkSources.length - 1}-name`)?.focus?.();
+  return true;
+}
+
+function deleteProfileLink(index) {
+  if (rejectApiFallbackMutation()) return false;
+  if (occSaveOperation) return false;
+  const fields = readProfileFields();
+  renderProfileLinkRows(fields.links.filter((_, position) => position !== index));
+  recomputeOccDirty('profile');
+  return true;
+}
+
+// The input of a screen was typed in
+function onOccPageInput(key) {
+  if (occSaveOperation) return false;
+  const panel = occPanels.get(key);
+  if (!panel) return false;
+  if (isApiFallbackReadOnly) {
+    panel.write(panel.baselineValues);
+    return false;
+  }
+  setOccError('', key);
+  recomputeOccDirty(key);
+  return true;
+}
+
+function bindOccPageInputs(key, ids) {
+  ids.forEach((id) => {
+    const control = occElement(id);
+    if (!control || control.dataset.occBound === 'true') return;
+    control.dataset.occBound = 'true';
+    control.addEventListener('input', () => onOccPageInput(key));
+    control.addEventListener('change', () => onOccPageInput(key));
+  });
+}
+
+// --- unsaved judgement --------------------------------------------------------------------------------------------------
+function isOccPanelDirty(panel) {
+  return Boolean(panel) && panel.snapshot() !== panel.baseline;
+}
+
+// A picture still uploading into the screen counts as unsaved.
+function hasActiveImageUploadForOccPage(key) {
+  return Array.from(imageUploadOwners.values()).some((owner) => owner.ownerKind === 'page' && OCC_PAGE_IMAGE_PANELS[owner.inputElement?.id] === key);
+}
+
+function occPanelUploading(panel) {
+  if (!panel) return false;
+  return panel.key === 'item' ? hasActiveImageUploadForOccEditor() : hasActiveImageUploadForOccPage(panel.key);
+}
+
+// Something is unsaved while an input differs from the value the surface was opened (or last saved) with, and while a picture is
+// still uploading into it. `scope: 'item'` asks about the open News / work / video only.
+function isOccDirty(scope = 'all') {
+  if (scope === 'item') return isOccPanelDirty(occPanels.get('item')) || hasActiveImageUploadForOccEditor();
+  return [...occPanels.values()].some((panel) => isOccPanelDirty(panel)) || hasActiveImageUploadForOccEditor() || ['site', 'profile'].some(hasActiveImageUploadForOccPage);
+}
+
+function occStatusIds(key) {
+  const prefix = occPanelPrefix(key);
+  return [`${prefix}-editor-status`, `${prefix}-editor-status-wide`];
+}
+
+function setOccStatus(text, key = 'item') {
+  const message = String(text || '');
+  occStatusIds(key).forEach((id) => {
+    const target = occElement(id);
+    if (target) target.textContent = message;
+  });
+}
+
+function setOccError(message, key = 'item') {
+  const target = occElement(`${occPanelPrefix(key)}-editor-error`);
+  if (target) target.textContent = String(message || '');
+}
+
+function recomputeOccDirty(key) {
+  if (key === undefined) {
+    let any = false;
+    [...occPanels.keys()].forEach((panelKey) => { any = recomputeOccDirty(panelKey) || any; });
+    return any;
+  }
+  const panel = occPanels.get(key);
+  if (!panel) return false;
+  if (key === 'item' && !occActiveItem) return false;
+  const dirty = isOccPanelDirty(panel) || occPanelUploading(panel);
+  panel.dirty = dirty;
+  if (!occSaveOperation) {
+    setOccStatus(dirty ? LIVE_UI_TEXT.statusUnsaved : (panel.localWaiting ? OCC_UI.localWaiting : LIVE_UI_TEXT.statusSaved), key);
+  }
+  syncOccSaveActions(key);
+  return dirty;
+}
+
+function onOccInput() {
+  if (occSaveOperation) return false;
+  const panel = occPanels.get('item');
+  if (!panel) return false;
+  if (isApiFallbackReadOnly) {
+    panel.write(panel.baselineValues);
+    return false;
+  }
+  setOccError('');
+  recomputeOccDirty('item');
+  return true;
+}
+
+// 保存して公開. Width 899px and below: a bar at the bottom of the screen, only while there is something to save (unsaved, saving, or a
+// failure to show). Width 900px and above: always in the heading of the edit, dimmed and not pressable while nothing is unsaved.
+function syncOccSaveActions(key) {
+  if (key === undefined) {
+    ['news', 'music'].forEach((prefix) => syncOccActionsOf('item', prefix));
+    ['channel', 'site', 'profile'].forEach((panelKey) => syncOccActionsOf(panelKey, panelKey));
+    return;
+  }
+  syncOccActionsOf(key, occPanelPrefix(key));
+}
+
+function syncOccActionsOf(key, prefix) {
+  const actions = occElement(`${prefix}-editor-actions`);
+  if (!actions) return;
+  const panel = occPanels.get(key);
+  const open = key === 'item'
+    ? Boolean(occActiveItem && panel && occPrefixOf(occActiveItem.kind) === prefix)
+    : Boolean(panel);
+  const uploading = open && occPanelUploading(panel);
+  const dirty = open && (isOccPanelDirty(panel) || uploading);
+  const saving = Boolean(occSaveOperation && occSaveOperation.key === key);
+  const failed = Boolean(occElement(`${prefix}-editor-error`)?.textContent);
+  const wide = isWideLiveLayout();
+  actions.hidden = !open || (wide ? false : !(dirty || saving || failed));
+  const button = occElement(`${prefix}-save-btn`);
+  if (!button) return;
+  const disabled = !open || Boolean(occSaveOperation) || uploading || isApiFallbackReadOnly || (wide && !dirty);
+  button.disabled = disabled;
+  button.setAttribute('aria-disabled', String(disabled));
+}
+
+function syncOccEditingClasses() {
+  const editing = Boolean(occActiveItem);
+  document.body?.classList?.[editing ? 'add' : 'remove']?.('is-occ-editing');
+  const newsEditing = Boolean(occActiveItem && occActiveItem.kind === 'news');
+  const musicEditing = Boolean(occActiveItem && occActiveItem.kind !== 'news');
+  occElement('news-master-detail')?.classList?.[newsEditing ? 'add' : 'remove']?.('has-occ-selection');
+  occElement('music-master-detail')?.classList?.[musicEditing ? 'add' : 'remove']?.('has-occ-selection');
+}
+
+// The width crossed 900px: the other arrangement of the same surface (nothing is reset, nothing takes the focus).
+function syncOccLayout() {
+  syncOccEditingClasses();
+  syncOccSaveActions();
+  return isWideLiveLayout();
+}
+
+function bindOccLayoutListener() {
+  if (occLayoutListenerBound) return false;
+  const query = window.matchMedia?.(LIVE_WIDE_QUERY);
+  if (!query || typeof query.addEventListener !== 'function') return false;
+  occLayoutListenerBound = true;
+  query.addEventListener('change', syncOccLayout);
+  return true;
+}
+
+// The buttons that are always in the page (the edit surfaces are drawn into their bodies later; their own controls are bound then).
+function bindOccShell() {
+  const bindings = [
+    ['news-editor-back', () => closeOccEditor()],
+    ['news-save-btn', () => { void saveOccPanel('item'); }],
+    ['music-editor-back', () => closeOccEditor()],
+    ['music-save-btn', () => { void saveOccPanel('item'); }],
+    ['channel-save-btn', () => { void saveOccPanel('channel'); }],
+    ['site-save-btn', () => { void saveOccPanel('site'); }],
+    ['profile-save-btn', () => { void saveOccPanel('profile'); }],
+  ];
+  bindings.forEach(([id, handler]) => {
+    const button = occElement(id);
+    if (button && button.dataset.occBound !== 'true') {
+      button.dataset.occBound = 'true';
+      button.addEventListener('click', handler);
+    }
+  });
+  bindOccLayoutListener();
+}
+
+// --- the lists -----------------------------------------------------------------------------------------------------------
+function occRowSelected(kind, id) {
+  return Boolean(occActiveItem && occActiveItem.kind === kind && !occActiveItem.isNew && String(occActiveItem.id) === String(id));
+}
+
+function newsRowHtml(item) {
+  const selected = occRowSelected('news', item.id);
+  const title = String(item.title ?? '') || OCC_UI.untitled;
+  return `<button type="button" class="occ-row" data-occ-open="news" data-occ-id="${escapeHtml(String(item.id))}"${selected ? ' aria-current="true"' : ''}>`
+    + `<span class="occ-row-meta">${escapeHtml(String(item.date ?? ''))}</span>`
+    + `<span class="occ-row-title">${escapeHtml(title)}</span>`
+    + '</button>';
+}
+
+function renderNews() {
+  const list = occElement('news-list');
+  if (!list) return;
+  const items = Array.isArray(siteData?.news) ? siteData.news : [];
+  list.innerHTML = items.length === 0
+    ? `<p class="occ-empty">${OCC_UI.emptyList}</p>`
+    : items.map(newsRowHtml).join('');
+  bindOccShell();
+}
+
+// A work: its jacket, its title and its release date. A video: its title only.
+function releaseRowHtml(item, category) {
+  const title = String(item.title ?? '') || OCC_UI.untitled;
+  return `<button type="button" class="occ-row occ-row-release" data-occ-open="release" data-occ-id="${escapeHtml(String(item.id))}" data-occ-category="${category}"${occRowSelected('release', item.id) ? ' aria-current="true"' : ''}>`
+    + `<img class="occ-row-thumb" src="${escapeHtml(getImageSrc(String(item.image || '')))}" alt="" onerror="this.style.visibility='hidden'">`
+    + '<span class="occ-row-text">'
+    + `<span class="occ-row-title">${escapeHtml(title)}</span>`
+    + `<span class="occ-row-meta">${escapeHtml(String(item.releaseDate ?? ''))}</span>`
+    + '</span></button>';
+}
+
+function videoRowHtml(item, category) {
+  const title = String(item.title ?? '') || OCC_UI.untitled;
+  return `<button type="button" class="occ-row occ-row-video" data-occ-open="video" data-occ-id="${escapeHtml(String(item.id))}" data-occ-category="${category}"${occRowSelected('video', item.id) ? ' aria-current="true"' : ''}>`
+    + `<span class="occ-row-title">${escapeHtml(title)}</span></button>`;
+}
+
+// Groups with a heading each; a group with nothing in it is not drawn, and nothing at all shows the empty line (no headings).
+function groupedListHtml(groups, rowHtml) {
+  const filled = groups.filter(([, , items]) => Array.isArray(items) && items.length > 0);
+  if (filled.length === 0) return `<p class="occ-empty">${OCC_UI.emptyList}</p>`;
+  return filled.map(([category, label, items]) => `<p class="occ-group-title">${label}</p>${items.map((item) => rowHtml(item, category)).join('')}`).join('');
+}
+
+// 作品の一覧
+function renderDiscography() {
+  const list = occElement('music-works-list');
+  if (!list) return;
+  list.innerHTML = groupedListHtml([
+    ['digital', OCC_UI.digital, siteData?.discography?.digital],
+    ['demo', OCC_UI.demo, siteData?.discography?.demo],
+  ], releaseRowHtml);
+  bindOccShell();
+  bindMusicSwitch();
+  applyMusicView(musicView);
+}
+
+// 映像の一覧
+function renderVideoList() {
+  const list = occElement('music-videos-list');
+  if (!list) return;
+  list.innerHTML = groupedListHtml([
+    ['musicVideos', OCC_UI.musicVideos, siteData?.youtube?.musicVideos],
+    ['liveMovies', OCC_UI.liveMovies, siteData?.youtube?.liveMovies],
+    ['demos', OCC_UI.demos, siteData?.youtube?.demos],
+  ], videoRowHtml);
+  bindOccShell();
+}
+
+// The Channel URL of the videos: its input is held by its own screen, not by siteData.
+function renderChannelPanel() {
+  const input = occElement('youtube-channel-url');
+  if (input) input.value = String(siteData?.youtube?.channelUrl || '');
+  bindOccPageInputs('channel', ['youtube-channel-url']);
+  occPanels.set('channel', makeChannelPanel());
+  recomputeOccDirty('channel');
+}
+
+function renderYouTube() {
+  renderChannelPanel();
+  renderVideoList();
+}
+
+function renderOccLists(kind) {
+  if (kind === 'news') renderNews();
+  if (kind === 'release') renderDiscography();
+  if (kind === 'video') renderVideoList();
+}
+
+// A click on a row of a list (the rows carry what to open in data attributes).
+function handleOccAction(event) {
+  const trigger = event?.target?.closest?.('[data-occ-open]');
+  if (!trigger) return;
+  event.preventDefault?.();
+  const kind = trigger.dataset?.occOpen;
+  if (kind === 'news') editNews(trigger.dataset.occId);
+  if (kind === 'release') editDiscography(trigger.dataset.occId, trigger.dataset.occCategory);
+  if (kind === 'video') editYouTubeVideo(trigger.dataset.occId, trigger.dataset.occCategory);
+}
+
+function focusOccRow(id) {
+  if (!id) return;
+  const row = Array.from(document.querySelectorAll('[data-occ-open]')).find((candidate) => String(candidate.dataset?.occId || '') === String(id));
+  row?.focus?.();
+}
+
+// --- Music: 作品 / 映像 ------------------------------------------------------------------------------------------------------
+function applyMusicView(view) {
+  musicView = view === 'videos' ? 'videos' : 'works';
+  const videos = musicView === 'videos';
+  const tabs = [['music-switch-works', 'works'], ['music-switch-videos', 'videos']];
+  tabs.forEach(([id, name]) => {
+    const tab = occElement(id);
+    if (!tab) return;
+    const selected = name === musicView;
+    tab.setAttribute('aria-selected', String(selected));
+    tab.setAttribute('tabindex', selected ? '0' : '-1');
+    tab.classList[selected ? 'add' : 'remove']('is-active');
+  });
+  const works = occElement('music-works-list');
+  const videosList = occElement('music-videos-list');
+  if (works) works.hidden = videos;
+  if (videosList) videosList.hidden = !videos;
+  const channel = occElement('music-channel-panel');
+  if (channel) channel.hidden = !videos;
+  const title = occElement('music-list-title');
+  if (title) title.textContent = videos ? OCC_UI.musicTitleVideos : OCC_UI.musicTitleWorks;
+  return true;
+}
+
+// The switch asks first when something is unsaved (the open work or video, the Channel URL); the open item is closed behind it.
+function setMusicView(view) {
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  const target = view === 'videos' ? 'videos' : 'works';
+  if (target === musicView) return applyMusicView(target);
+  return requestLiveEditorTransition(() => {
+    if (occActiveItem) closeOccEditorImmediately();
+    return applyMusicView(target);
+  });
+}
+
+function bindMusicSwitch() {
+  const tabs = ['music-switch-works', 'music-switch-videos'].map(occElement).filter(Boolean);
+  if (tabs.length) bindLiveTablist(tabs, 'musicView', setMusicView);
+}
+
+// --- Site and Profile: what the screen shows -------------------------------------------------------------------------------
+function renderSiteSettings() {
+  const site = siteData.site || {};
+  const links = site.links || {};
+  const contact = siteData.contact || {};
+  const featured = occElement('site-featured-release-id');
+  if (featured) {
+    featured.innerHTML = musicOptions([[OCC_UI.digital, siteData.discography.digital], [OCC_UI.demo, siteData.discography.demo]], site.featuredReleaseId, '自動（最新のリリース）', true);
+    featured.value = site.featuredReleaseId || '';
+  }
+
+  const heroForm = occElement('site-hero-image-form');
+  if (heroForm) {
+    // the label and the explanation of 共有時の画像 are in the page itself (admin/index.html)
+    heroForm.innerHTML = getImageFormHtml(site.heroImage || '', 'site-hero-image', { omitLabel: true });
+    const previewContainer = occElement('site-hero-image-preview-container');
+    if (previewContainer) {
+      previewContainer.setAttribute('data-admin-mutation', '');
+      previewContainer.onclick = () => occElement('site-hero-image-file')?.click();
+    }
+  }
+
+  const values = {
+    'site-link-bandcamp': links.bandcamp,
+    'site-link-youtube': links.youtube,
+    'site-link-x': links.x,
+    'site-link-instagram': links.instagram,
+    'site-link-note': links.note,
+    'site-footer-text': site.footerText,
+    'contact-intro-text': contact.introText,
+    'contact-form-action': contact.formAction,
+  };
+  Object.entries(values).forEach(([id, value]) => {
+    const control = occElement(id);
+    if (control) control.value = value || '';
+  });
+  bindOccPageInputs('site', Object.values(OCC_SITE_INPUT_IDS).filter((id) => id !== 'site-hero-image'));
+  bindOccShell();
+  occPanels.set('site', makeSitePanel());
+  recomputeOccDirty('site');
+}
+
+function renderProfile() {
+  const profile = siteData.profile || {};
+  const imageForm = occElement('profile-image-form');
+  if (imageForm) {
+    imageForm.innerHTML = getImageFormHtml(profile.image || '', 'profile-image', { label: '写真', variant: 'portrait' });
+    const previewContainer = occElement('profile-image-preview-container');
+    if (previewContainer) {
+      previewContainer.setAttribute('data-admin-mutation', '');
+      previewContainer.onclick = () => occElement('profile-image-file')?.click();
+    }
+  }
+  const text = occElement('profile-text');
+  if (text) text.value = profile.text || '';
+  bindOccPageInputs('profile', ['profile-text']);
+  renderProfileLinks();
+  bindOccShell();
+  occPanels.set('profile', makeProfilePanel());
+  recomputeOccDirty('profile');
+}
+
+// SNSリンク: one row each, from the saved links
+function renderProfileLinks() {
+  const links = Array.isArray(siteData?.profile?.links) ? siteData.profile.links : [];
+  renderProfileLinkRows(links.map((link, index) => ({ name: link?.name, url: link?.url, source: index })));
+}
+
+// The options of 顔にする作品 (Site) and その場で再生する映像 (a work being edited) are drawn again from the saved data after a work or a
+// video was saved or deleted. What was chosen stays chosen; a choice that is no longer in the options (a work / a video that was
+// deleted) goes back to the empty one. The saved side of that choice follows the data (the saved reference is already empty).
+function rebaseOccDrafts() {
+  const site = occPanels.get('site');
+  const featured = occElement('site-featured-release-id');
+  if (featured && site) {
+    const wanted = String(featured.value || '');
+    const stays = wanted === '' || musicReleases(siteData).some((release) => String(release.id) === wanted);
+    featured.innerHTML = musicOptions([[OCC_UI.digital, siteData.discography.digital], [OCC_UI.demo, siteData.discography.demo]], stays ? wanted : '', '自動（最新のリリース）', true);
+    featured.value = stays ? wanted : '';
+    site.baselineValues.featuredReleaseId = String(siteData.site?.featuredReleaseId || '');
+    site.baseline = site.snapshotOf(site.baselineValues);
+  }
+  const item = occPanels.get('item');
+  const playback = occElement('edit-playbackVideoId');
+  if (item && item.kind === 'release' && playback) {
+    const wanted = String(playback.value || '');
+    const stays = wanted === '' || ['musicVideos', 'liveMovies', 'demos'].some((name) => (siteData.youtube?.[name] || []).some((video) => String(video.id) === wanted));
+    playback.innerHTML = playbackVideoOptions(stays ? wanted : '');
+    playback.value = stays ? wanted : '';
+    const saved = !occActiveItem.isNew ? musicReleases(siteData).find((release) => String(release.id) === String(occActiveItem.id)) : null;
+    if (saved) {
+      item.baselineValues.playbackVideoId = String(saved.playbackVideoId || '');
+      item.baseline = item.snapshotOf(item.baselineValues);
+    }
+  }
+  recomputeOccDirty();
+  return true;
+}
+
+// --- opening and closing an item -------------------------------------------------------------------------------------------------
+function buildOccEditorHtml(kind, item, isNew, category) {
+  if (kind === 'release') return buildReleaseEditorHtml(item, category, isNew);
+  if (kind === 'video') return buildVideoEditorHtml(item, category, isNew);
+  return buildNewsEditorHtml(item, isNew);
+}
+
+function occEditType(kind, category) {
+  if (kind === 'release') return `discography-${category}`;
+  if (kind === 'video') return `youtube-${category}`;
+  return 'news';
+}
+
+function occHeadings(kind) {
+  if (kind === 'release') return { edit: OCC_UI.releaseHeadingEdit, fresh: OCC_UI.releaseHeadingNew };
+  if (kind === 'video') return { edit: OCC_UI.videoHeadingEdit, fresh: OCC_UI.videoHeadingNew };
+  return { edit: OCC_UI.newsHeadingEdit, fresh: OCC_UI.newsHeadingNew };
+}
+
+function openOccItemEditorNow(kind, item, isNew, category = null) {
+  const prefix = occPrefixOf(kind);
+  const body = occElement(`${prefix}-editor-body`);
+  if (!body) return false;
+  // an edit of the other surface (News ↔ Music) is closed first; the unsaved one was already asked about
+  if (occActiveItem && occPrefixOf(occActiveItem.kind) !== prefix) closeOccEditorImmediately();
+  const active = document.activeElement;
+  occReturnFocusId = !isNew && active?.dataset?.occId ? String(active.dataset.occId) : '';
+
+  releaseImageUploadsForModalGeneration(modalGeneration);
+  modalGeneration += 1;
+  currentEditType = occEditType(kind, category);
+  currentEditId = item.id;
+  isNewItem = Boolean(isNew);
+  occActiveItem = { kind, id: item.id, category, isNew: Boolean(isNew) };
+
+  body.innerHTML = buildOccEditorHtml(kind, item, isNew, category);
+  occPanels.delete('item');
+  occPanels.set('item', makeOccItemPanel(kind));
+  bindOccEditorControls(kind);
+  const headings = occHeadings(kind);
+  setOccEditorHeading(isNew ? headings.fresh : headings.edit, isNew ? headings.fresh : (String(item.title ?? '') || OCC_UI.untitled));
+  setOccError('');
+  renderOccLists(kind);
+  syncOccEditingClasses();
+  recomputeOccDirty('item');
+  applyApiFallbackReadOnlyState();
+  occElement(OCC_ITEM_KINDS[kind].firstFocus)?.focus?.();
+  return true;
+}
+
+function openNewsEditorNow(item, isNew) {
+  return openOccItemEditorNow('news', item, isNew);
+}
+
+function bindOccEditorControls(kind = occActiveItem?.kind || 'news') {
+  const spec = OCC_ITEM_KINDS[kind];
+  spec.controlIds.forEach((id) => {
+    const control = occElement(id);
+    control?.addEventListener('input', onOccInput);
+    control?.addEventListener('change', onOccInput);
+  });
+  if (kind === 'release') bindReleaseDateError();
+  if (kind === 'video') occElement('edit-youtube')?.addEventListener('input', clearVideoIdError);
+  occElement(spec.deleteId)?.addEventListener('click', () => { void deleteOccItem(); });
+}
+
+function setOccEditorHeading(heading, title, prefix = occItemPrefix()) {
+  const headingElement = occElement(`${prefix}-editor-heading`);
+  if (headingElement) headingElement.textContent = heading;
+  const titleElement = occElement(`${prefix}-editor-title`);
+  if (titleElement) {
+    titleElement.textContent = title;
+    titleElement.setAttribute('title', title);
+  }
+}
+
+function addNews() {
+  if (rejectApiFallbackMutation()) return false;
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  return requestLiveEditorTransition(() => {
+    if (liveEditorOwner) closeLiveEditorImmediately();
+    return openNewsEditorNow({ id: 'news-' + Date.now(), date: '', title: '', description: '', image: '', link: '', linkText: 'view...' }, true);
+  }, { scope: 'item' });
+}
+
+function editNews(id) {
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  const item = (Array.isArray(siteData?.news) ? siteData.news : []).find((candidate) => String(candidate.id) === String(id));
+  if (!item) return false;
+  if (occActiveItem?.kind === 'news' && !occActiveItem.isNew && String(occActiveItem.id) === String(item.id)) return true;
+  return requestLiveEditorTransition(() => {
+    if (liveEditorOwner) closeLiveEditorImmediately();
+    return openNewsEditorNow(item, false);
+  }, { scope: 'item' });
+}
+
+// 作品を追加: an empty work (the category starts at Digital Release)
+function addDiscography() {
+  if (rejectApiFallbackMutation()) return false;
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  return requestLiveEditorTransition(() => {
+    if (liveEditorOwner) closeLiveEditorImmediately();
+    applyMusicView('works');
+    return openOccItemEditorNow('release', { id: 'disc-' + Date.now(), title: '', releaseDate: '', description: '', image: '', link: '', releaseType: '', playbackVideoId: '' }, true, 'digital');
+  }, { scope: 'item' });
+}
+
+function editDiscography(id, category) {
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  const list = category === 'digital' ? siteData.discography.digital : siteData.discography.demo;
+  const item = list.find((candidate) => String(candidate.id) === String(id));
+  if (!item) return false;
+  if (occActiveItem?.kind === 'release' && !occActiveItem.isNew && String(occActiveItem.id) === String(item.id)) return true;
+  return requestLiveEditorTransition(() => {
+    if (liveEditorOwner) closeLiveEditorImmediately();
+    applyMusicView('works');
+    return openOccItemEditorNow('release', item, false, category);
+  }, { scope: 'item' });
+}
+
+// 映像を追加: an empty video (the category starts at the one the add was pressed for)
+function addYouTubeVideo(category = 'musicVideos') {
+  if (rejectApiFallbackMutation()) return false;
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  return requestLiveEditorTransition(() => {
+    if (liveEditorOwner) closeLiveEditorImmediately();
+    applyMusicView('videos');
+    return openOccItemEditorNow('video', { id: 'yt-' + Date.now(), title: '', youtubeId: '' }, true, category);
+  }, { scope: 'item' });
+}
+
+function editYouTubeVideo(id, category) {
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  const item = (siteData.youtube[category] || []).find((candidate) => String(candidate.id) === String(id));
+  if (!item) return false;
+  if (occActiveItem?.kind === 'video' && !occActiveItem.isNew && String(occActiveItem.id) === String(item.id)) return true;
+  return requestLiveEditorTransition(() => {
+    if (liveEditorOwner) closeLiveEditorImmediately();
+    applyMusicView('videos');
+    return openOccItemEditorNow('video', item, false, category);
+  }, { scope: 'item' });
+}
+
+// + 追加 of the list that is shown
+function addMusicItem() {
+  return musicView === 'videos' ? addYouTubeVideo('musicVideos') : addDiscography();
+}
+
+function closeOccEditor() {
+  if (occSaveOperation) return false;
+  return requestLiveEditorTransition(closeOccEditorImmediately, { scope: 'item' });
+}
+
+function closeOccEditorImmediately() {
+  const closing = occActiveItem;
+  const prefix = occItemPrefix();
+  const returnFocusId = occReturnFocusId;
+  occReturnFocusId = '';
+  releaseImageUploadsForModalGeneration(modalGeneration);
+  modalGeneration += 1;
+  occPanels.delete('item');
+  occActiveItem = null;
+  const body = occElement(`${prefix}-editor-body`);
+  if (body) body.innerHTML = '';
+  setOccEditorHeading('', '', prefix);
+  setOccStatus('', 'item');
+  setOccError('', 'item');
+  if (closing && String(currentEditId) === String(closing.id) && (currentEditType === 'news' || /^(discography|youtube)-/.test(String(currentEditType)))) {
+    currentEditType = null;
+    currentEditId = null;
+    isNewItem = false;
+  }
+  if (closing) renderOccLists(closing.kind);
+  syncOccEditingClasses();
+  syncOccSaveActions();
+  focusOccRow(returnFocusId);
+  return true;
+}
+
+// 破棄して移動: what was typed goes back to what is saved, and a picture still uploading is let go. `scope: 'item'` is the open item only.
+function discardOccPanels(scope = 'all') {
+  releaseImageUploadsForModalGeneration(modalGeneration);
+  const keys = [...occPanels.keys()].filter((key) => scope !== 'item' || key === 'item');
+  if (keys.includes('item') && !occActiveItem) keys.splice(keys.indexOf('item'), 1);
+  releaseImageOperations((owner) => owner.ownerKind === 'page' && keys.includes(OCC_PAGE_IMAGE_PANELS[owner.inputElement?.id]));
+  if (keys.length === 0) return false;
+  keys.forEach((key) => {
+    const panel = occPanels.get(key);
+    panel.write(panel.baselineValues);
+    panel.dirty = false;
+    setOccError('', key);
+    setOccStatus(panel.localWaiting ? OCC_UI.localWaiting : LIVE_UI_TEXT.statusSaved, key);
+    syncOccSaveActions(key);
+  });
+  return true;
+}
+
+// --- saving and deleting --------------------------------------------------------------------------------------------------
+// While a save or a delete runs the inputs, the moves, the add and the delete are locked; the lock is released with what was there.
+function setOccInteractionLocked(locked, priorState = [], panel = occPanels.get('item')) {
+  const busyId = panel?.key === 'item' ? `${occItemPrefix()}-editor-pane` : (panel?.key === 'channel' ? 'music-channel-panel' : `${panel?.key}-tab`);
+  if (locked) {
+    const controls = [
+      ...(panel?.lockables?.() || []),
+      ...['music-switch-works', 'music-switch-videos'].map(occElement).filter(Boolean),
+      ...Array.from(document.querySelectorAll('.tab-btn')),
+    ];
+    const tracked = new Set(priorState.map(({ element }) => element));
+    [...new Set(controls)].forEach((element) => {
+      if (!tracked.has(element)) priorState.push({ element, disabled: Boolean(element.disabled) });
+      element.disabled = true;
+      element.setAttribute('aria-disabled', 'true');
+    });
+    occElement(busyId)?.setAttribute('aria-busy', 'true');
+    return priorState;
+  }
+  priorState.forEach(({ element, disabled }) => {
+    if (element?.isConnected === false) return;
+    element.disabled = disabled;
+    element.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+  });
+  occElement(busyId)?.setAttribute('aria-busy', 'false');
+  return [];
+}
+
+function beginOccOperation(panel) {
+  const operation = { token: ++occSaveSequence, key: panel.key, ownerId: panel.key === 'item' ? String(occActiveItem.id) : panel.key, generation: modalGeneration, lockedControls: [], panel };
+  occSaveOperation = operation;
+  panel.saving = true;
+  setOccError('', panel.key);
+  setOccStatus(LIVE_UI_TEXT.statusSaving, panel.key);
+  operation.lockedControls = setOccInteractionLocked(true, operation.lockedControls, panel);
+  syncOccSaveActions(panel.key);
+  return operation;
+}
+
+function endOccOperation(operation, panel) {
+  if (occSaveOperation !== operation) return false;
+  setOccInteractionLocked(false, operation.lockedControls, panel);
+  operation.lockedControls = [];
+  occSaveOperation = null;
+  if (panel) panel.saving = false;
+  return true;
+}
+
+// 保存して公開. The body is the last saved content with this surface's target layered on (saveScoped); siteData follows only when it
+// succeeded, so that a failure leaves the data, the surface and what was typed as they were.
+async function saveOccPanel(key = 'item', options = {}) {
+  if (occSaveOperation) return false;
+  const panel = occPanels.get(key);
+  if (!panel) return false;
+  if (key === 'item' && !occActiveItem) return false;
+  if (rejectApiFallbackMutation('読み取り専用のため保存できません。')) {
+    panel.write(panel.baselineValues);
+    return false;
+  }
+  if (!ensureNoActiveImageUploads()) return false;
+  // Nothing differs from what is saved: nothing to send. (`force` is for the comparison with the app before #47, which saved anyway.)
+  if (!options.force && !isOccPanelDirty(panel)) return true;
+
+  const draft = panel.draft(panel);
+  const itemKind = key === 'item' ? OCC_ITEM_KINDS[occActiveItem.kind] : null;
+  // The date of a work and the id of a video are checked before anything is sent; the reason is drawn right under the input.
+  if (itemKind?.validate && !itemKind.validate(draft)) return false;
+  const wasNew = key === 'item' ? occActiveItem.isNew : false;
+  const kind = key === 'item' ? occActiveItem.kind : null;
+  const operation = beginOccOperation(panel);
+  try {
+    if (IS_API_MODE) {
+      await saveScoped((data) => panel.slice(data, draft), { fallbackBase: siteData });
+    }
+    if (occSaveOperation !== operation) return false;
+    panel.commit(draft);
+    if (!IS_API_MODE) {
+      markChanged();
+      panel.localWaiting = true;
+    }
+  } catch (error) {
+    if (!endOccOperation(operation, panel)) return false;
+    setOccStatus(LIVE_UI_TEXT.statusFailed, key);
+    setOccError(error.message, key);
+    syncOccSaveActions(key);
+    showToast(`保存に失敗しました: ${error.message}`, 'error');
+    return false;
+  }
+
+  finishOccSave(panel, draft, { wasNew, kind });
+  endOccOperation(operation, panel);
+  setOccError('', key);
+  if (key === 'item') renderOccLists(kind);
+  rebaseOccDrafts();
+  recomputeOccDirty(key);
+  setOccStatus(IS_API_MODE ? LIVE_UI_TEXT.statusSaved : OCC_UI.localWaiting, key);
+  showToast(IS_API_MODE ? '保存しました' : OCC_UI.localSaved, 'success');
+  return true;
+}
+
+// What the surface looks like after its save went through: the saved values are the new baseline.
+function finishOccSave(panel, draft, { wasNew, kind }) {
+  if (panel.key === 'item') {
+    const item = draft.item || draft;
+    const category = draft.category || null;
+    occActiveItem.isNew = false;
+    isNewItem = false;
+    if (kind !== 'news') {
+      occActiveItem.category = category;
+      currentEditType = occEditType(kind, category);
+    }
+    if (wasNew) {
+      // The saved item can now be deleted: the edit is drawn again from what was saved (the inputs hold exactly that).
+      const body = occElement(`${occPrefixOf(kind)}-editor-body`);
+      if (body) body.innerHTML = buildOccEditorHtml(kind, item, false, category);
+      bindOccEditorControls(kind);
+      applyApiFallbackReadOnlyState();
+    }
+    const headings = occHeadings(kind);
+    setOccEditorHeading(headings.edit, String(item.title ?? '') || OCC_UI.untitled);
+  } else if (panel.key === 'profile' && draft.changes.links) {
+    panel.extra.sourceLinks = structuredClone(draft.changes.links);
+    occProfileLinkSources = draft.changes.links.map((_, index) => index);
+  }
+  panel.baselineValues = panel.clone ? panel.clone(panel.read()) : { ...panel.read() };
+  panel.baseline = panel.snapshotOf(panel.baselineValues);
+}
+
+// 削除. The confirmation says what else changes (a work that was the face of the site, videos that works play), the delete is then saved
+// on the spot: the baseline without the item, with the references to it back to empty in the same one request.
+async function deleteOccItem() {
+  if (occSaveOperation || liveWorkspaceSaveOperation) return false;
+  const active = occActiveItem;
+  if (!active || active.isNew) return false;
+  if (rejectApiFallbackMutation('読み取り専用のため削除できません。')) return false;
+  const saved = findSavedOccItem(active);
+  const title = String(saved?.title ?? '');
+  const fallbackTitle = active.kind === 'release' ? OCC_UI.deleteTitleRelease : (active.kind === 'video' ? OCC_UI.deleteTitleVideo : OCC_UI.deleteTitleNews);
+  const choice = await openLiveDialog({
+    title: title ? `「${title}」を削除しますか。` : fallbackTitle,
+    body: occDeleteDialogBody(active),
+    actions: [
+      { id: 'cancel', label: LIVE_UI_TEXT.deleteCancel, safe: true, tone: 'secondary' },
+      { id: 'delete', label: LIVE_UI_TEXT.deleteConfirm, tone: 'primary' },
+    ],
+  });
+  if (choice !== 'delete') return false;
+  if (occSaveOperation || occActiveItem !== active) return false;
+
+  const panel = occPanels.get('item');
+  const operation = beginOccOperation(panel);
+  try {
+    if (IS_API_MODE) {
+      await saveScoped((data) => applyOccDeleteSlice(data, active.kind, active.id, active.category), { fallbackBase: siteData });
+    }
+    if (occSaveOperation !== operation) return false;
+    const next = structuredClone(siteData);
+    applyOccDeleteSlice(next, active.kind, active.id, active.category);
+    siteData = window.MusicData.clearDanglingMusicReferences(next);
+    if (!IS_API_MODE) markChanged();
+  } catch (error) {
+    // Nothing was removed from siteData or from the list: the item, the surface and what was typed stay as they were.
+    if (!endOccOperation(operation, panel)) return false;
+    setOccStatus(LIVE_UI_TEXT.statusFailed);
+    setOccError(error.message);
+    syncOccSaveActions('item');
+    showToast(`削除に失敗しました: ${error.message}`, 'error');
+    return false;
+  }
+  endOccOperation(operation, panel);
+  closeOccEditorImmediately();
+  rebaseOccDrafts();
+  showToast(IS_API_MODE ? '削除しました' : OCC_UI.localDeleted, 'success');
+  return true;
+}
+
+function findSavedOccItem(active) {
+  const same = (candidate) => String(candidate.id) === String(active.id);
+  if (active.kind === 'news') return (Array.isArray(siteData?.news) ? siteData.news : []).find(same);
+  if (active.kind === 'release') return musicReleases(siteData).find(same);
+  return (siteData?.youtube?.[active.category] || []).find(same);
+}
+
+// What the confirmation adds to 「削除すると公開画面からも消えます。」: a reference that goes back to empty.
+function occDeleteDialogBody(active) {
+  const lines = [OCC_UI.deleteBody];
+  if (active.kind === 'release' && String(siteData?.site?.featuredReleaseId || '') === String(active.id)) lines.push(OCC_UI.featuredResets);
+  if (active.kind === 'video') {
+    const count = musicReleases(siteData).filter((release) => String(release.playbackVideoId || '') === String(active.id)).length;
+    if (count > 0) lines.push(OCC_UI.playbackResets(count));
+  }
+  return lines;
+}
+
 // ページ離脱時の警告
 window.addEventListener('beforeunload', (e) => {
-  if (hasChanges || liveEditorDirty || isTicketSettingsDirty() || ticketSettingsSaving || liveWorkspaceSaveOperation || activeImageUploads.size > 0) {
+  if (hasChanges || liveEditorDirty || isTicketSettingsDirty() || ticketSettingsSaving || liveWorkspaceSaveOperation || isOccDirty() || occSaveOperation || activeImageUploads.size > 0) {
     e.preventDefault();
     e.returnValue = '';
   }

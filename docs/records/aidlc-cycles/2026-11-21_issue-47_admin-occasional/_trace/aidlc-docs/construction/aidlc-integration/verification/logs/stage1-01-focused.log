@@ -1,0 +1,1518 @@
+TAP version 13
+# Subtest: Live is the initial primary tab and Tickets is not a global tab
+ok 1 - Live is the initial primary tab and Tickets is not a global tab
+  ---
+  duration_ms: 0.623667
+  ...
+# Subtest: Live workspace has semantic Liveページ and 予約管理 tabs
+ok 2 - Live workspace has semantic Liveページ and 予約管理 tabs
+  ---
+  duration_ms: 0.110708
+  ...
+# Subtest: Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+ok 3 - Live workspace Liveページ has semantic 開催予定 and 公演終了 filters
+  ---
+  duration_ms: 0.095167
+  ...
+# Subtest: Live workspace separates reservations and Ticket Page共通設定 from Live list details
+ok 4 - Live workspace separates reservations and Ticket Page共通設定 from Live list details
+  ---
+  duration_ms: 0.190125
+  ...
+# Subtest: Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+ok 5 - Live workspace Ticket Page settings moves focus and synchronizes disclosure state
+  ---
+  duration_ms: 11.961541
+  ...
+# Subtest: Live workspace initial state is Liveページ and 開催予定
+ok 6 - Live workspace initial state is Liveページ and 開催予定
+  ---
+  duration_ms: 0.232959
+  ...
+# Subtest: Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+ok 7 - Live workspace tablists support ArrowLeft ArrowRight Home and End movement
+  ---
+  duration_ms: 1.2375
+  ...
+# Subtest: master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+ok 8 - master-detail Live workspace contains list and empty editor panes with the adaptive desktop grid
+  ---
+  duration_ms: 0.144625
+  ...
+# Subtest: Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+ok 9 - Live edit workspace renders add and edit in the detail pane while News keeps the generic dialog
+  ---
+  duration_ms: 4.714667
+  ...
+# Subtest: master-detail marks only the first upcoming card as Next Live
+ok 10 - master-detail marks only the first upcoming card as Next Live
+  ---
+  duration_ms: 0.934834
+  ...
+# Subtest: Live task tabs are semantic, keyboard operable, and preserve mounted input
+ok 11 - Live task tabs are semantic, keyboard operable, and preserve mounted input
+  ---
+  duration_ms: 2.061875
+  ...
+# Subtest: new Live prioritizes source intake and gates post-save tasks until first save
+ok 12 - new Live prioritizes source intake and gates post-save tasks until first save
+  ---
+  duration_ms: 3.682833
+  ...
+# APIデータ読み込みエラー: Error: offline
+#     at Object.loadData (evalmachine.<anonymous>:1058:15)
+#     at async TestContext.<anonymous> (file:///Users/itsuki.matsumoto/claude-code/_worktrees/1212hp-47-admin-occasional/test/admin-live-operations.test.mjs:472:3)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: Live validation blocks missing date and venue before changing data or saving
+ok 13 - Live validation blocks missing date and venue before changing data or saving
+  ---
+  duration_ms: 1.260834
+  ...
+# Subtest: Live category mismatch warns but saves without automatically moving collection
+ok 14 - Live category mismatch warns but saves without automatically moving collection
+  ---
+  duration_ms: 2.176334
+  ...
+# Subtest: Live API save reports saving, saved, and failed states around the existing save route
+ok 15 - Live API save reports saving, saved, and failed states around the existing save route
+  ---
+  duration_ms: 10.534083
+  ...
+# Subtest: Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+ok 16 - Live dirty guard blocks and then discards navigation to another Live, list, and global tab
+  ---
+  duration_ms: 5.58425
+  ...
+# Subtest: reselecting the active global Live tab is a no-op for a dirty editor
+ok 17 - reselecting the active global Live tab is a no-op for a dirty editor
+  ---
+  duration_ms: 1.954083
+  ...
+# Subtest: reselecting the active global Live tab is also a no-op for a clean editor
+ok 18 - reselecting the active global Live tab is also a no-op for a clean editor
+  ---
+  duration_ms: 2.702167
+  ...
+# Subtest: Live internal task switching preserves dirty input without discard confirmation
+ok 19 - Live internal task switching preserves dirty input without discard confirmation
+  ---
+  duration_ms: 1.158333
+  ...
+# Subtest: API fallback is read-only while keeping Live navigation available
+ok 20 - API fallback is read-only while keeping Live navigation available
+  ---
+  duration_ms: 3.216125
+  ...
+# Subtest: API fallback keeps every admin collection immutable while existing details remain viewable
+ok 21 - API fallback keeps every admin collection immutable while existing details remain viewable
+  ---
+  duration_ms: 6.642417
+  ...
+# Subtest: API fallback blocks direct Live item and API save calls before mutation or PUT
+ok 22 - API fallback blocks direct Live item and API save calls before mutation or PUT
+  ---
+  duration_ms: 1.408417
+  ...
+# Subtest: beforeunload protects global changes and Live dirty or saving states
+ok 23 - beforeunload protects global changes and Live dirty or saving states
+  ---
+  duration_ms: 6.890917
+  ...
+# Subtest: explicit Local Mode labels the header action as JSON export
+ok 24 - explicit Local Mode labels the header action as JSON export
+  ---
+  duration_ms: 1.5065
+  ...
+# Subtest: responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+ok 25 - responsive Live workspace fixes overflow, focus, sticky actions, and action hierarchy deterministically
+  ---
+  duration_ms: 2.330834
+  ...
+# Subtest: sticky Live controls have no scrolling mechanism in the complete ancestor chain
+ok 26 - sticky Live controls have no scrolling mechanism in the complete ancestor chain
+  ---
+  duration_ms: 1.30175
+  ...
+# Subtest: sticky Live task tabs offset below the fixed global header and navigation chrome
+ok 27 - sticky Live task tabs offset below the fixed global header and navigation chrome
+  ---
+  duration_ms: 0.205458
+  ...
+# Subtest: essential mobile Live workspace list utility and back controls guarantee 44px targets
+ok 28 - essential mobile Live workspace list utility and back controls guarantee 44px targets
+  ---
+  duration_ms: 0.099916
+  ...
+# Subtest: saved header action maintains white text contrast through hover and focus
+ok 29 - saved header action maintains white text contrast through hover and focus
+  ---
+  duration_ms: 0.06775
+  ...
+# Subtest: sticky Live task tabs and footer have no clipping workspace ancestor
+ok 30 - sticky Live task tabs and footer have no clipping workspace ancestor
+  ---
+  duration_ms: 0.111
+  ...
+# Subtest: production Live lock gives every workspace button a disabled affordance
+ok 31 - production Live lock gives every workspace button a disabled affordance
+  ---
+  duration_ms: 0.165166
+  ...
+# Subtest: admin build marker and operator docs match the merged Live UI assets
+ok 32 - admin build marker and operator docs match the merged Live UI assets
+  ---
+  duration_ms: 0.156542
+  ...
+# Subtest: Live edit workspace saves a category move in place and routes Local Mode to JSON export
+ok 33 - Live edit workspace saves a category move in place and routes Local Mode to JSON export
+  ---
+  duration_ms: 2.866125
+  ...
+# Subtest: Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+ok 34 - Live edit workspace API save uses the existing save route and deletion keeps existing collection semantics
+  ---
+  duration_ms: 11.33925
+  ...
+# Subtest: Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+ok 35 - Live editor isolation guards dirty transition and prevents duplicate edit IDs from contaminating News save
+  ---
+  duration_ms: 2.004833
+  ...
+# Subtest: Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+ok 36 - Live API save transaction deduplicates clicks and locks mutations, navigation, back, and delete while pending
+  ---
+  duration_ms: 2.897708
+  ...
+# Subtest: Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+ok 37 - Live API save transaction rolls back failure, preserves form values, and cannot leak failed data through later header save
+  ---
+  duration_ms: 1.874584
+  ...
+# Subtest: Live API publish blocks global tab navigation and marks every global tab disabled while pending
+ok 38 - Live API publish blocks global tab navigation and marks every global tab disabled while pending
+  ---
+  duration_ms: 1.834875
+  ...
+# Subtest: global tabs re-enable and navigate normally after Live API publish succeeds
+ok 39 - global tabs re-enable and navigate normally after Live API publish succeeds
+  ---
+  duration_ms: 1.930417
+  ...
+# Subtest: global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+ok 40 - global tabs re-enable after Live API publish rollback while the failed Live form stays dirty
+  ---
+  duration_ms: 3.213583
+  ...
+# Subtest: shared LiveOperations script is loaded before the admin application
+ok 41 - shared LiveOperations script is loaded before the admin application
+  ---
+  duration_ms: 0.087542
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+ok 42 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / legacy
+  ---
+  duration_ms: 1.878292
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+ok 43 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / legacy
+  ---
+  duration_ms: 1.842125
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+ok 44 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / legacy
+  ---
+  duration_ms: 1.874084
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / legacy
+ok 45 - AIで整理 source intake discards a stale response when source text changes while pending / legacy
+  ---
+  duration_ms: 4.300584
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+ok 46 - AIで整理 source intake discards every AI field when one destination field changes while pending / legacy
+  ---
+  duration_ms: 1.54125
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+ok 47 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / legacy
+  ---
+  duration_ms: 2.250333
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 2.000125
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 2.002542
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 1.782833
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 1.199292
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 3.653042
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 0.998167
+      ...
+    1..6
+ok 48 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / legacy
+  ---
+  duration_ms: 12.196541
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 1.162791
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 0.977708
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 0.948042
+      ...
+    1..3
+ok 49 - AIで整理 source intake never falls back from a custom API base to canonical production / legacy
+  ---
+  duration_ms: 3.234667
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+ok 50 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / legacy
+  ---
+  duration_ms: 0.965
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+ok 51 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / legacy
+  ---
+  duration_ms: 1.478667
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+ok 52 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / legacy
+  ---
+  duration_ms: 1.153292
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+ok 53 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / openai
+  ---
+  duration_ms: 1.411916
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+ok 54 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / openai
+  ---
+  duration_ms: 1.264583
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+ok 55 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / openai
+  ---
+  duration_ms: 4.765792
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / openai
+ok 56 - AIで整理 source intake discards a stale response when source text changes while pending / openai
+  ---
+  duration_ms: 1.242584
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+ok 57 - AIで整理 source intake discards every AI field when one destination field changes while pending / openai
+  ---
+  duration_ms: 1.080208
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+ok 58 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / openai
+  ---
+  duration_ms: 1.899667
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 1.1075
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 1.156416
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 2.658583
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 3.650833
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 1.091833
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 0.984541
+      ...
+    1..6
+ok 59 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / openai
+  ---
+  duration_ms: 10.913
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / openai
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 0.981541
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 0.993167
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 0.953583
+      ...
+    1..3
+ok 60 - AIで整理 source intake never falls back from a custom API base to canonical production / openai
+  ---
+  duration_ms: 3.007417
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+ok 61 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / openai
+  ---
+  duration_ms: 0.997791
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+ok 62 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / openai
+  ---
+  duration_ms: 0.943167
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+ok 63 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / openai
+  ---
+  duration_ms: 0.891959
+  ...
+# Subtest: AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+ok 64 - AIで整理 source intake posts the exact source once, replaces all ten fields including empty strings, and never parses or saves / claude
+  ---
+  duration_ms: 1.336375
+  ...
+# Subtest: AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+ok 65 - AIで整理 source intake marks an applied AI draft dirty and routes saving to the editor / claude
+  ---
+  duration_ms: 4.159458
+  ...
+# Subtest: AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+ok 66 - AIで整理 source intake disables while pending, blocks duplicate submission, and always restores the button / claude
+  ---
+  duration_ms: 2.241375
+  ...
+# Subtest: AIで整理 source intake discards a stale response when source text changes while pending / claude
+ok 67 - AIで整理 source intake discards a stale response when source text changes while pending / claude
+  ---
+  duration_ms: 1.111416
+  ...
+# Subtest: AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+ok 68 - AIで整理 source intake discards every AI field when one destination field changes while pending / claude
+  ---
+  duration_ms: 1.03775
+  ...
+# Subtest: AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+ok 69 - AIで整理 source intake lets a replacement modal run while the stale request resolves in reverse order / claude
+  ---
+  duration_ms: 1.735583
+  ...
+# Subtest: AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+    # Subtest: HTTP
+    ok 1 - HTTP
+      ---
+      duration_ms: 1.675541
+      ...
+    # Subtest: network
+    ok 2 - network
+      ---
+      duration_ms: 1.701833
+      ...
+    # Subtest: JSON
+    ok 3 - JSON
+      ---
+      duration_ms: 4.028084
+      ...
+    # Subtest: missing draft key
+    ok 4 - missing draft key
+      ---
+      duration_ms: 1.277917
+      ...
+    # Subtest: extra draft key
+    ok 5 - extra draft key
+      ---
+      duration_ms: 1.267667
+      ...
+    # Subtest: non-string draft value
+    ok 6 - non-string draft value
+      ---
+      duration_ms: 1.101791
+      ...
+    1..6
+ok 70 - AIで整理 source intake keeps every field and preview unchanged for HTTP, network, JSON, or schema failure / claude
+  ---
+  duration_ms: 11.412792
+  ...
+# Subtest: AIで整理 source intake never falls back from a custom API base to canonical production / claude
+    # Subtest: 502
+    ok 1 - 502
+      ---
+      duration_ms: 0.992417
+      ...
+    # Subtest: 504
+    ok 2 - 504
+      ---
+      duration_ms: 0.989375
+      ...
+    # Subtest: network
+    ok 3 - network
+      ---
+      duration_ms: 0.967958
+      ...
+    1..3
+ok 71 - AIで整理 source intake never falls back from a custom API base to canonical production / claude
+  ---
+  duration_ms: 3.036875
+  ...
+# Subtest: AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+ok 72 - AIで整理 source intake fails atomically when one of the ten destination fields is missing / claude
+  ---
+  duration_ms: 0.861542
+  ...
+# Subtest: AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+ok 73 - AIで整理 source intake rolls back all fields and the unified preview when X preview generation fails / claude
+  ---
+  duration_ms: 0.959875
+  ...
+# Subtest: AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+ok 74 - AIで整理 source intake stays local-only in Local Mode without calling API, parser, preview, or save / claude
+  ---
+  duration_ms: 0.82925
+  ...
+# Subtest: AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+    # Subtest: invalid payload 0
+    ok 1 - invalid payload 0
+      ---
+      duration_ms: 1.5885
+      ...
+    # Subtest: invalid payload 1
+    ok 2 - invalid payload 1
+      ---
+      duration_ms: 5.71675
+      ...
+    # Subtest: invalid payload 2
+    ok 3 - invalid payload 2
+      ---
+      duration_ms: 1.129917
+      ...
+    # Subtest: invalid payload 3
+    ok 4 - invalid payload 3
+      ---
+      duration_ms: 1.100458
+      ...
+    # Subtest: invalid payload 4
+    ok 5 - invalid payload 4
+      ---
+      duration_ms: 0.906083
+      ...
+    # Subtest: invalid payload 5
+    ok 6 - invalid payload 5
+      ---
+      duration_ms: 0.967917
+      ...
+    # Subtest: invalid payload 6
+    ok 7 - invalid payload 6
+      ---
+      duration_ms: 0.90625
+      ...
+    # Subtest: invalid payload 7
+    ok 8 - invalid payload 7
+      ---
+      duration_ms: 1.183042
+      ...
+    # Subtest: invalid payload 8
+    ok 9 - invalid payload 8
+      ---
+      duration_ms: 1.290458
+      ...
+    # Subtest: invalid payload 9
+    ok 10 - invalid payload 9
+      ---
+      duration_ms: 3.398708
+      ...
+    # Subtest: invalid payload 10
+    ok 11 - invalid payload 10
+      ---
+      duration_ms: 1.320416
+      ...
+    # Subtest: invalid payload 11
+    ok 12 - invalid payload 11
+      ---
+      duration_ms: 1.033292
+      ...
+    # Subtest: invalid payload 12
+    ok 13 - invalid payload 12
+      ---
+      duration_ms: 1.050708
+      ...
+    # Subtest: invalid payload 13
+    ok 14 - invalid payload 13
+      ---
+      duration_ms: 1.847541
+      ...
+    # Subtest: invalid payload 14
+    ok 15 - invalid payload 14
+      ---
+      duration_ms: 1.731667
+      ...
+    1..15
+ok 75 - AIで整理 source intake rejects unknown provider values and extra top-level keys without applying or leaking details
+  ---
+  duration_ms: 25.975
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+ok 76 - AIで整理 source intake cannot apply an older provider result or start another intake during save / openai
+  ---
+  duration_ms: 13.661833
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+ok 77 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / openai
+  ---
+  duration_ms: 2.428417
+  ...
+# Subtest: AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+ok 78 - AIで整理 source intake cannot apply an older provider result or start another intake during save / claude
+  ---
+  duration_ms: 4.653958
+  ...
+# Subtest: AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+ok 79 - AIで整理 source intake clears previous provider status while pending, on failure and editor replacement / claude
+  ---
+  duration_ms: 1.563667
+  ...
+# Subtest: AIで整理 source intake uses the existing small status markup for desktop and mobile
+ok 80 - AIで整理 source intake uses the existing small status markup for desktop and mobile
+  ---
+  duration_ms: 0.14725
+  ...
+# Subtest: Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+ok 81 - Live editor exposes new fields and conservatively infers only a missing legacy ticketUrl
+  ---
+  duration_ms: 1.846791
+  ...
+# Subtest: structured Live editor normalizes legacy date and saves independent detail fields
+ok 82 - structured Live editor normalizes legacy date and saves independent detail fields
+  ---
+  duration_ms: 1.318083
+  ...
+# Subtest: unparsed legacy Live date is preserved until a valid replacement is entered
+ok 83 - unparsed legacy Live date is preserved until a valid replacement is entered
+  ---
+  duration_ms: 1.152625
+  ...
+# Subtest: saving a Live merges new fields into the original object without dropping unknown properties
+ok 84 - saving a Live merges new fields into the original object without dropping unknown properties
+  ---
+  duration_ms: 1.967583
+  ...
+# Subtest: unified X announcement preview drives Intent and copy without save
+ok 85 - unified X announcement preview drives Intent and copy without save
+  ---
+  duration_ms: 2.1215
+  ...
+# Subtest: Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+ok 86 - Issue \#29 live OGP share URL replaces canonical detail across preview, Intent, and link copy
+  ---
+  duration_ms: 3.670583
+  ...
+# Subtest: Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+ok 87 - Issue \#20 live link actions copy only the saved stable share URL and keep X actions save-free
+  ---
+  duration_ms: 1.232958
+  ...
+# Subtest: Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+ok 88 - Issue \#20 live link actions keep unsaved link copy disabled without clipboard, fallback, or save
+  ---
+  duration_ms: 0.961125
+  ...
+# Subtest: Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+ok 89 - Issue \#20 live link actions use the existing clipboard fallback and report both outcomes
+  ---
+  duration_ms: 1.957041
+  ...
+# Subtest: Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+ok 90 - Issue \#20 live link actions use an isolated compact row that wraps without narrow overflow
+  ---
+  duration_ms: 0.232709
+  ...
+# Subtest: new Live requires an explicit save before X Intent or reservation operations
+ok 91 - new Live requires an explicit save before X Intent or reservation operations
+  ---
+  duration_ms: 1.664959
+  ...
+# Subtest: saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+ok 92 - saved Live ledger shows Local Mode gate and API mode fetches one Live with active record and seat totals
+  ---
+  duration_ms: 1.713
+  ...
+# Subtest: manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+ok 93 - manual hold posts the exact client-controlled payload, clears inputs, and refreshes both ledgers
+  ---
+  duration_ms: 1.383708
+  ...
+# Subtest: active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+ok 94 - active totals exclude cancelled reservations and cross-Live rows expose source/contact/note
+  ---
+  duration_ms: 3.493666
+  ...
+# Subtest: CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+ok 95 - CSV export uses authenticated adminFetch, downloads a Blob, and always cleans temporary resources
+  ---
+  duration_ms: 1.377333
+  ...
+# Subtest: CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+ok 96 - CSV export surfaces non-OK errors and cleans an appended anchor even when click fails
+  ---
+  duration_ms: 1.47175
+  ...
+# Subtest: reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+ok 97 - reversed reservation responses cannot cross modal ownership or overwrite a newer same-Live request
+  ---
+  duration_ms: 7.804875
+  ...
+# Subtest: reservation loading for a non-current Live cannot mutate the current modal
+ok 98 - reservation loading for a non-current Live cannot mutate the current modal
+  ---
+  duration_ms: 1.745959
+  ...
+# Subtest: cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+ok 99 - cross-Live ledger ignores reversed stale success and error responses for older filter snapshots
+  ---
+  duration_ms: 1.603333
+  ...
+# Subtest: cross-Live ledger response cannot mutate a disconnected replacement target
+ok 100 - cross-Live ledger response cannot mutate a disconnected replacement target
+  ---
+  duration_ms: 0.728708
+  ...
+# Subtest: cross-Live ledger response requires both current filters to match its snapshot
+ok 101 - cross-Live ledger response requires both current filters to match its snapshot
+  ---
+  duration_ms: 4.267417
+  ...
+# Subtest: cross-Live filters refresh without reloading when the effective selection remains valid
+ok 102 - cross-Live filters refresh without reloading when the effective selection remains valid
+  ---
+  duration_ms: 1.314125
+  ...
+# Subtest: deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+ok 103 - deleting the selected Live falls back to all Lives and reloads the guarded ledger once
+  ---
+  duration_ms: 2.284
+  ...
+# Subtest: reservation status actions use escaped data attributes and delegated event handling
+ok 104 - reservation status actions use escaped data attributes and delegated event handling
+  ---
+  duration_ms: 0.893833
+  ...
+# Subtest: generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+ok 105 - generic edit modal remains an accessible dialog with Escape close, initial focus, and focus restoration
+  ---
+  duration_ms: 0.950666
+  ...
+# Subtest: saving a rendered Live keeps its editor and selected replacement trigger after a category move
+ok 106 - saving a rendered Live keeps its editor and selected replacement trigger after a category move
+  ---
+  duration_ms: 1.870584
+  ...
+# Subtest: saving a new past Live activates its visible destination category
+ok 107 - saving a new past Live activates its visible destination category
+  ---
+  duration_ms: 1.054583
+  ...
+# Subtest: admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+    # Subtest: cross-collection / API
+    ok 1 - cross-collection / API
+      ---
+      duration_ms: 0.763166
+      ...
+    # Subtest: cross-collection / Local
+    ok 2 - cross-collection / Local
+      ---
+      duration_ms: 0.658
+      ...
+    # Subtest: same-collection / API
+    ok 3 - same-collection / API
+      ---
+      duration_ms: 0.587209
+      ...
+    # Subtest: same-collection / Local
+    ok 4 - same-collection / Local
+      ---
+      duration_ms: 0.543958
+      ...
+    1..4
+ok 108 - admin site-data save rejects cross-collection and same-collection duplicate Live IDs in API and Local modes
+  ---
+  duration_ms: 2.725958
+  ...
+# Subtest: Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+ok 109 - Ticket settings remove legacy copy and keep completion, field editing and contact in saved data
+  ---
+  duration_ms: 3.912208
+  ...
+# Subtest: music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+ok 110 - music data fields Site and modal labels, choices, escaping and Local JSON roundtrip
+  ---
+  duration_ms: 3.3935
+  ...
+# Subtest: music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+ok 111 - music data fields invalid date preserves modal, arrays, focus, draft, changes and fetch
+  ---
+  duration_ms: 1.31225
+  ...
+# Subtest: music data fields API failure keeps editor and baseline, structured errors bind only matching release
+ok 112 - music data fields API failure keeps editor and baseline, structured errors bind only matching release
+  ---
+  duration_ms: 1.2625
+  ...
+# Subtest: music data fields legacy date 2025.5.5 stays on unrelated save and move
+ok 113 - music data fields legacy date 2025.5.5 stays on unrelated save and move
+  ---
+  duration_ms: 1.037708
+  ...
+# Subtest: music data fields legacy date 2025/05/05 stays on unrelated save and move
+ok 114 - music data fields legacy date 2025/05/05 stays on unrelated save and move
+  ---
+  duration_ms: 1.020458
+  ...
+# Subtest: music data fields legacy date 2025.05 stays on unrelated save and move
+ok 115 - music data fields legacy date 2025.05 stays on unrelated save and move
+  ---
+  duration_ms: 0.979333
+  ...
+# Subtest: music data fields legacy date  stays on unrelated save and move
+ok 116 - music data fields legacy date  stays on unrelated save and move
+  ---
+  duration_ms: 1.111917
+  ...
+# Subtest: music data fields legacy date undefined stays on unrelated save and move
+ok 117 - music data fields legacy date undefined stays on unrelated save and move
+  ---
+  duration_ms: 1.052291
+  ...
+# Subtest: music data fields legacy date 42 stays on unrelated save and move
+ok 118 - music data fields legacy date 42 stays on unrelated save and move
+  ---
+  duration_ms: 3.7415
+  ...
+# Subtest: music data fields legacy date null stays on unrelated save and move
+ok 119 - music data fields legacy date null stays on unrelated save and move
+  ---
+  duration_ms: 1.361292
+  ...
+# Subtest: music data fields new release empty or shaped date, header validation and baseline only after success
+ok 120 - music data fields new release empty or shaped date, header validation and baseline only after success
+  ---
+  duration_ms: 1.54075
+  ...
+# Subtest: music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+ok 121 - music data fields API PUT preserves three fields and reloads values; saving/upload and read-only guard reject
+  ---
+  duration_ms: 1.620083
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through Local JSON
+ok 122 - music data fields deletion clears featured and shared video references through Local JSON
+  ---
+  duration_ms: 1.413666
+  ...
+# Subtest: music data fields deletion clears featured and shared video references through API
+ok 123 - music data fields deletion clears featured and shared video references through API
+  ---
+  duration_ms: 1.616125
+  ...
+# Subtest: music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+ok 124 - music data fields unselected deletion, confirm cancellation and read-only never clear surviving selections
+  ---
+  duration_ms: 1.377042
+  ...
+# Subtest: music data fields release and video category moves preserve IDs and all selections
+ok 125 - music data fields release and video category moves preserve IDs and all selections
+  ---
+  duration_ms: 2.072792
+  ...
+# Subtest: music data fields successful saves advance date baseline and failures retain the old baseline
+ok 126 - music data fields successful saves advance date baseline and failures retain the old baseline
+  ---
+  duration_ms: 9.480417
+  ...
+# Subtest: music data fields image upload blocks release mutation and JSON failure retains baseline
+ok 127 - music data fields image upload blocks release mutation and JSON failure retains baseline
+  ---
+  duration_ms: 5.027208
+  ...
+# Subtest: music data fields structured API error for another release never marks the active release
+ok 128 - music data fields structured API error for another release never marks the active release
+  ---
+  duration_ms: 1.6775
+  ...
+# Subtest: music data fields RV41-01 failed move retry with same category saves one release
+ok 129 - music data fields RV41-01 failed move retry with same category saves one release
+  ---
+  duration_ms: 1.763583
+  ...
+# Subtest: music data fields RV41-01 failed move retry with original category saves one release
+ok 130 - music data fields RV41-01 failed move retry with original category saves one release
+  ---
+  duration_ms: 1.560458
+  ...
+# Subtest: music data fields RV41-01 failed move retry with other field saves one release
+ok 131 - music data fields RV41-01 failed move retry with other field saves one release
+  ---
+  duration_ms: 1.543042
+  ...
+# Subtest: music data fields RV41-01 failed move then delete removes the moved release and featured reference
+ok 132 - music data fields RV41-01 failed move then delete removes the moved release and featured reference
+  ---
+  duration_ms: 1.612584
+  ...
+# Subtest: music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases
+ok 133 - music data fields RV41-01 Site and header save retries replace the same snapshot without adding releases
+  ---
+  duration_ms: 1.341042
+  ...
+# Subtest: music data fields RV41-01 release deletion survives header failure and retry
+ok 134 - music data fields RV41-01 release deletion survives header failure and retry
+  ---
+  duration_ms: 4.638791
+  ...
+# Subtest: music data fields RV41-01 shared video deletion survives header failure and retry
+ok 135 - music data fields RV41-01 shared video deletion survives header failure and retry
+  ---
+  duration_ms: 1.594042
+  ...
+# Subtest: music data fields RV41-01 new release retry keeps its generated ID after category change
+ok 136 - music data fields RV41-01 new release retry keeps its generated ID after category change
+  ---
+  duration_ms: 1.790208
+  ...
+# Subtest: T46-STYLE every group of style.css except the Live group has the bytes of the base commit
+ok 137 - T46-STYLE every group of style.css except the Live group has the bytes of the base commit
+  ---
+  duration_ms: 16.004833
+  ...
+# Subtest: T46-STYLE every rule \#46 added is scoped to Live, reservation or settings classes, never to a shared class alone
+ok 138 - T46-STYLE every rule \#46 added is scoped to Live, reservation or settings classes, never to a shared class alone
+  ---
+  duration_ms: 16.297625
+  ...
+# Subtest: T46-STYLE the lines \#46 added use token variables only: no hex, rgb or hsl colors
+ok 139 - T46-STYLE the lines \#46 added use token variables only: no hex, rgb or hsl colors
+  ---
+  duration_ms: 15.002708
+  ...
+# Subtest: T46-STYLE the main controls are at least 44px to tap, at every width
+ok 140 - T46-STYLE the main controls are at least 44px to tap, at every width
+  ---
+  duration_ms: 2.772541
+  ...
+# Subtest: T46-STYLE the arrangement switches at 899px and 900px, and the page chrome steps aside only below 900px
+ok 141 - T46-STYLE the arrangement switches at 899px and 900px, and the page chrome steps aside only below 900px
+  ---
+  duration_ms: 0.92825
+  ...
+# Subtest: T46-STYLE at 900px and above the fields are 2 and 3 columns, one column less between 900px and 1179px
+ok 142 - T46-STYLE at 900px and above the fields are 2 and 3 columns, one column less between 900px and 1179px
+  ---
+  duration_ms: 1.048667
+  ...
+# Subtest: T46-STYLE wide: 保存して公開 sits at the right of the heading, dimmed while it cannot be pressed; the Live tab is not capped at 980px
+ok 143 - T46-STYLE wide: 保存して公開 sits at the right of the heading, dimmed while it cannot be pressed; the Live tab is not capped at 980px
+  ---
+  duration_ms: 0.466458
+  ...
+# Subtest: T46-STYLE the sticky bottom bars (an open Live, the settings screen) have no scrolling mechanism in their ancestors
+ok 144 - T46-STYLE the sticky bottom bars (an open Live, the settings screen) have no scrolling mechanism in their ancestors
+  ---
+  duration_ms: 1.620375
+  ...
+# Subtest: T46-STYLE the reservation table: six columns on a wide screen and a pane of 320px on its right
+ok 145 - T46-STYLE the reservation table: six columns on a wide screen and a pane of 320px on its right
+  ---
+  duration_ms: 0.631334
+  ...
+# Subtest: T46-STYLE wide: 保存して公開 is in the heading for every task, dimmed until something is unsaved, and a narrow screen keeps the bar hidden
+ok 146 - T46-STYLE wide: 保存して公開 is in the heading for every task, dimmed until something is unsaved, and a narrow screen keeps the bar hidden
+  ---
+  duration_ms: 30.143042
+  ...
+# Subtest: T46-STYLE wide: saving keeps the heading button dimmed while it runs and after it is saved; a failure makes it pressable again
+ok 147 - T46-STYLE wide: saving keeps the heading button dimmed while it runs and after it is saved; a failure makes it pressable again
+  ---
+  duration_ms: 14.383708
+  ...
+# Subtest: T46-STYLE wide: one reservation opens beside the list and the Header stays on the Live; narrow replaces the list and shows the reservation in the Header
+ok 148 - T46-STYLE wide: one reservation opens beside the list and the Header stays on the Live; narrow replaces the list and shows the reservation in the Header
+  ---
+  duration_ms: 13.2375
+  ...
+# Subtest: T46-STYLE wide: the 取り置き form opens on the right of the list; crossing 900px re-applies the arrangement without losing what is open
+ok 149 - T46-STYLE wide: the 取り置き form opens on the right of the list; crossing 900px re-applies the arrangement without losing what is open
+  ---
+  duration_ms: 2.951084
+  ...
+# Subtest: T46-STYLE the reservation rows carry the table cells, a pending row can be marked 対応済み in the row, and the status route is unchanged
+ok 150 - T46-STYLE the reservation rows carry the table cells, a pending row can be marked 対応済み in the row, and the status route is unchanged
+  ---
+  duration_ms: 3.51025
+  ...
+# Subtest: T46-STYLE the 予約管理 table opens one reservation on its right on a wide screen, and replaces the list on a narrow one
+ok 151 - T46-STYLE the 予約管理 table opens one reservation on its right on a wide screen, and replaces the list on a narrow one
+  ---
+  duration_ms: 3.914875
+  ...
+# Subtest: T46-STYLE the Ticket Page共通設定 screen: back, title and state in the Header, the seven inputs, and 保存して公開 only while unsaved (always, dimmed, when wide)
+ok 152 - T46-STYLE the Ticket Page共通設定 screen: back, title and state in the Header, the seven inputs, and 保存して公開 only while unsaved (always, dimmed, when wide)
+  ---
+  duration_ms: 3.6275
+  ...
+# Subtest: T46-STYLE the settings screen takes the place of the editor and marks the page, and a Live opened from the list closes it
+ok 153 - T46-STYLE the settings screen takes the place of the editor and marks the page, and a Live opened from the list closes it
+  ---
+  duration_ms: 4.083791
+  ...
+# Subtest: T46-STYLE a Live rule that must beat a shared class is scoped (.live-workspace …) so that it wins by specificity, not by file order
+ok 154 - T46-STYLE a Live rule that must beat a shared class is scoped (.live-workspace …) so that it wins by specificity, not by file order
+  ---
+  duration_ms: 3.095041
+  ...
+# Subtest: T46-STYLE the flyer is a 96px picture with 画像を変える and 画像を外す in one row beside it, and may not stretch to the pane
+ok 155 - T46-STYLE the flyer is a 96px picture with 画像を変える and 画像を外す in one row beside it, and may not stretch to the pane
+  ---
+  duration_ms: 2.149334
+  ...
+# Subtest: T46-STYLE a note or warning that is not shown keeps no height, so the fields sit 16px apart
+ok 156 - T46-STYLE a note or warning that is not shown keeps no height, so the fields sit 16px apart
+  ---
+  duration_ms: 2.653834
+  ...
+# Subtest: T46-STYLE the list switch, the settings entry and the Live switch are 44px to tap at every width (not only below 900px)
+ok 157 - T46-STYLE the list switch, the settings entry and the Live switch are 44px to tap at every width (not only below 900px)
+  ---
+  duration_ms: 0.714917
+  ...
+# Subtest: T46-STYLE the list of a narrow screen: the Live switch in two equal halves, a full width Primary 「+ 新しいライブ」 under it, a text row for 開催予定／公演終了 (Figma 44:492)
+ok 158 - T46-STYLE the list of a narrow screen: the Live switch in two equal halves, a full width Primary 「+ 新しいライブ」 under it, a text row for 開催予定／公演終了 (Figma 44:492)
+  ---
+  duration_ms: 0.709625
+  ...
+# Subtest: T46-STYLE while a Live (or the settings) is open on a narrow screen the page is full width on the gray page, and the bar with the Live switch is gone
+ok 159 - T46-STYLE while a Live (or the settings) is open on a narrow screen the page is full width on the gray page, and the bar with the Live switch is gone
+  ---
+  duration_ms: 0.282375
+  ...
+# Subtest: T46-STYLE on a narrow screen the reason a save failed stays in view above the bar of 保存して公開 (Figma 195:749), also when the bar is not shown
+ok 160 - T46-STYLE on a narrow screen the reason a save failed stays in view above the bar of 保存して公開 (Figma 195:749), also when the bar is not shown
+  ---
+  duration_ms: 0.328083
+  ...
+# Subtest: T46-STYLE wide (Figma 47:582 / 47:688): one white list card, tabs that fit their text, a gray 区分 beside its label, gray folds, a 420px post
+ok 161 - T46-STYLE wide (Figma 47:582 / 47:688): one white list card, tabs that fit their text, a gray 区分 beside its label, gray folds, a 420px post
+  ---
+  duration_ms: 0.610625
+  ...
+# Subtest: T46-STYLE the tab under the open tab and the 公演の中の切り替え are color/text, not the accent
+ok 162 - T46-STYLE the tab under the open tab and the 公演の中の切り替え are color/text, not the accent
+  ---
+  duration_ms: 0.215959
+  ...
+# Subtest: T46-STYLE the confirmation surface is a fixed layer over the page, 360px at most, with its two buttons side by side
+ok 163 - T46-STYLE the confirmation surface is a fixed layer over the page, 360px at most, with its two buttons side by side
+  ---
+  duration_ms: 0.499875
+  ...
+# Subtest: T46-STYLE while the confirmation surface is open the page behind is inert, and it is restored when the surface closes
+ok 164 - T46-STYLE while the confirmation surface is open the page behind is inert, and it is restored when the surface closes
+  ---
+  duration_ms: 4.986458
+  ...
+# Subtest: T46-MODE the header 保存 is hidden on the Live tab only while the API is connected and nothing else is unsaved
+ok 165 - T46-MODE the header 保存 is hidden on the Live tab only while the API is connected and nothing else is unsaved
+  ---
+  duration_ms: 1.622542
+  ...
+# Subtest: T46-MODE Local Mode and read-only keep the header button on the Live tab
+ok 166 - T46-MODE Local Mode and read-only keep the header button on the Live tab
+  ---
+  duration_ms: 2.5865
+  ...
+# Subtest: T46-MODE API connection failure is read-only: every new operation is off, nothing is sent, the list can still be read
+ok 167 - T46-MODE API connection failure is read-only: every new operation is off, nothing is sent, the list can still be read
+  ---
+  duration_ms: 7.055375
+  ...
+# Subtest: T46-MODE read-only: the reservation operations (row actions, status buttons, the form) cannot change anything
+ok 168 - T46-MODE read-only: the reservation operations (row actions, status buttons, the form) cannot change anything
+  ---
+  duration_ms: 2.146666
+  ...
+# Subtest: T46-MODE Local Mode: save is 反映 to memory and 書き出し待ち, settings save is the same, and the API-only parts stay off
+ok 169 - T46-MODE Local Mode: save is 反映 to memory and 書き出し待ち, settings save is the same, and the API-only parts stay off
+  ---
+  duration_ms: 3.188833
+  ...
+# Subtest: T46-MODE leaving an unsaved Live through the global tab still asks first (the header button being hidden changes nothing)
+ok 170 - T46-MODE leaving an unsaved Live through the global tab still asks first (the header button being hidden changes nothing)
+  ---
+  duration_ms: 2.301167
+  ...
+# Subtest: T46-COMPAT the public Live script has the bytes of the base commit
+ok 171 - T46-COMPAT the public Live script has the bytes of the base commit
+  ---
+  duration_ms: 13.470542
+  ...
+# Subtest: T46-COMPAT the functions \#46 promised not to touch have the bodies they had at the base commit
+ok 172 - T46-COMPAT the functions \#46 promised not to touch have the bodies they had at the base commit
+  ---
+  duration_ms: 17.112292
+  ...
+# Subtest: T46-COMPAT News, YouTube, Disco, Profile and Site print the same markup and form values as at the base commit
+ok 173 - T46-COMPAT News, YouTube, Disco, Profile and Site print the same markup and form values as at the base commit # SKIP
+  ---
+  duration_ms: 0.048166
+  ...
+# Subtest: T46-COMPAT the generic modals open with the same fields, and the picture wording of the other tabs is the base wording
+ok 174 - T46-COMPAT the generic modals open with the same fields, and the picture wording of the other tabs is the base wording # SKIP
+  ---
+  duration_ms: 0.029375
+  ...
+# Subtest: T46-COMPAT the header 保存 (saveData) sends the whole data, including a change made in another tab, exactly as at the base commit
+ok 175 - T46-COMPAT the header 保存 (saveData) sends the whole data, including a change made in another tab, exactly as at the base commit # SKIP
+  ---
+  duration_ms: 0.023292
+  ...
+# Subtest: T46-COMPAT the shared picture form keeps the other tabs wording; only the Live flyer has the new wording
+ok 176 - T46-COMPAT the shared picture form keeps the other tabs wording; only the Live flyer has the new wording
+  ---
+  duration_ms: 3.402583
+  ...
+# Subtest: T46-VERSION ADMIN_BUILD_ID and the ?v= of style.css, app.js and music-data.js are the build of this Issue and agree with each other and the README
+ok 177 - T46-VERSION ADMIN_BUILD_ID and the ?v= of style.css, app.js and music-data.js are the build of this Issue and agree with each other and the README
+  ---
+  duration_ms: 0.185458
+  ...
+# Subtest: T46-VERSION the operator docs describe the new flow, the commands that exist, and the order: Worker first, then merge
+ok 178 - T46-VERSION the operator docs describe the new flow, the commands that exist, and the order: Worker first, then merge
+  ---
+  duration_ms: 1.394125
+  ...
+# Subtest: T46-VERSION the Worker has the summary route and exports its rule (that the diff is additions only is checked at deploy time: git diff against the base)
+ok 179 - T46-VERSION the Worker has the summary route and exports its rule (that the diff is additions only is checked at deploy time: git diff against the base)
+  ---
+  duration_ms: 0.944792
+  ...
+# Subtest: T46-OVERLAP at 900px and above the 保存して公開 box is lifted into the heading and keeps no bottom, no safe-area padding and no hit area when hidden (it covered 削除 and 取り置きを追加 at 1440)
+ok 180 - T46-OVERLAP at 900px and above the 保存して公開 box is lifted into the heading and keeps no bottom, no safe-area padding and no hit area when hidden (it covered 削除 and 取り置きを追加 at 1440)
+  ---
+  duration_ms: 0.882958
+  ...
+# Subtest: T46-OVERLAP the footer has no box over the editor at 900px and above, in the app: shown only on the editing screen, as the button of the heading
+ok 181 - T46-OVERLAP the footer has no box over the editor at 900px and above, in the app: shown only on the editing screen, as the button of the heading
+  ---
+  duration_ms: 7.208667
+  ...
+# Subtest: T46-MANUAL the 取り置き form checks its input itself (novalidate), so an empty name gets the Japanese line instead of a browser bubble that stops the submit
+ok 182 - T46-MANUAL the 取り置き form checks its input itself (novalidate), so an empty name gets the Japanese line instead of a browser bubble that stops the submit
+  ---
+  duration_ms: 2.872833
+  ...
+# Subtest: T46-OVERLAP a failure line above the tabs is not covered: the tabs are pulled up by 24px, so the line keeps 40px under it (Figma: the reason sits under the heading at 900px and above)
+ok 183 - T46-OVERLAP a failure line above the tabs is not covered: the tabs are pulled up by 24px, so the line keeps 40px under it (Figma: the reason sits under the heading at 900px and above)
+  ---
+  duration_ms: 1.709
+  ...
+# Subtest: T46-STYLE at 900px and above the draft notice and the saved post are boxed in gray-100 (white on the white editor hid the card), and the post buttons fit their text
+ok 184 - T46-STYLE at 900px and above the draft notice and the saved post are boxed in gray-100 (white on the white editor hid the card), and the post buttons fit their text
+  ---
+  duration_ms: 0.339375
+  ...
+# Subtest: T46-STYLE the reservation rows of a Live: 6 columns from 1180px; between 900px and 1179px the two-line rows stay (the table squeezed names and contacts to nothing at 900px); 予約管理 keeps its table
+ok 185 - T46-STYLE the reservation rows of a Live: 6 columns from 1180px; between 900px and 1179px the two-line rows stay (the table squeezed names and contacts to nothing at 900px); 予約管理 keeps its table
+  ---
+  duration_ms: 0.3865
+  ...
+# Subtest: T46-STYLE wide reservations: the filter chips that are not chosen are gray-100 pills (Figma 47:757), the 取り置き form keeps its top padding, 予約管理 draws one frame for the open reservation and CSVで書き出す is the outlined button beside the filters
+ok 186 - T46-STYLE wide reservations: the filter chips that are not chosen are gray-100 pills (Figma 47:757), the 取り置き form keeps its top padding, 予約管理 draws one frame for the open reservation and CSVで書き出す is the outlined button beside the filters
+  ---
+  duration_ms: 0.413792
+  ...
+# Subtest: T47-PIN the pin tests read the app of the base commit (1f3a1cd), not the working tree
+ok 187 - T47-PIN the pin tests read the app of the base commit (1f3a1cd), not the working tree
+  ---
+  duration_ms: 19.177458
+  ...
+# Subtest: T47-PIN the fixture is the base the expectations are built from
+ok 188 - T47-PIN the fixture is the base the expectations are built from
+  ---
+  duration_ms: 0.71275
+  ...
+# Subtest: T47-PIN (a) News 更新 (existing): the item is replaced in place by exactly the seven keys of the form, and the PUT is the whole data
+ok 189 - T47-PIN (a) News 更新 (existing): the item is replaced in place by exactly the seven keys of the form, and the PUT is the whole data
+  ---
+  duration_ms: 15.292208
+  ...
+# Subtest: T47-PIN (a) News 更新 (new): a new item goes to the head with an id news-<time> and the default link text
+ok 190 - T47-PIN (a) News 更新 (new): a new item goes to the head with an id news-<time> and the default link text
+  ---
+  duration_ms: 2.4055
+  ...
+# Subtest: T47-PIN (a) a release 更新 (existing, same category): every key of the form is sent and the release moves to the head of its category
+ok 191 - T47-PIN (a) a release 更新 (existing, same category): every key of the form is sent and the release moves to the head of its category
+  ---
+  duration_ms: 2.06275
+  ...
+# Subtest: T47-PIN (a) a release 更新 that moves the category: removed from the original, head of the destination, id and references kept
+ok 192 - T47-PIN (a) a release 更新 that moves the category: removed from the original, head of the destination, id and references kept
+  ---
+  duration_ms: 2.666792
+  ...
+# Subtest: T47-PIN (a) a release 更新 (new): head of the chosen category, id disc-<time>, an empty release date is allowed
+ok 193 - T47-PIN (a) a release 更新 (new): head of the chosen category, id disc-<time>, an empty release date is allowed
+  ---
+  duration_ms: 2.100417
+  ...
+# Subtest: T47-PIN (a) a release date is checked only when it is new or changed; the Worker's 400 fields come back to the field
+ok 194 - T47-PIN (a) a release date is checked only when it is new or changed; the Worker's 400 fields come back to the field
+  ---
+  duration_ms: 6.287708
+  ...
+# Subtest: T47-PIN (a) an old release date written another way is kept when another field is saved, and refused when it is changed to a bad shape
+ok 195 - T47-PIN (a) an old release date written another way is kept when another field is saved, and refused when it is changed to a bad shape
+  ---
+  duration_ms: 3.240708
+  ...
+# Subtest: T47-PIN (a) a video 更新 (existing): the URL becomes the 11-character id, three keys are sent, the video moves to the head
+ok 196 - T47-PIN (a) a video 更新 (existing): the URL becomes the 11-character id, three keys are sent, the video moves to the head
+  ---
+  duration_ms: 2.115417
+  ...
+# Subtest: T47-PIN (a) a video 更新 that moves the category, and a new video: head of the destination; id yt-<time>
+ok 197 - T47-PIN (a) a video 更新 that moves the category, and a new video: head of the destination; id yt-<time>
+  ---
+  duration_ms: 3.19625
+  ...
+# Subtest: T47-PIN (a) an invalid YouTube URL / ID is refused with the toast; nothing is sent and the modal stays
+ok 198 - T47-PIN (a) an invalid YouTube URL / ID is refused with the toast; nothing is sent and the modal stays
+  ---
+  duration_ms: 1.45725
+  ...
+# Subtest: T47-PIN (a) when the PUT fails: a News/video 更新 reports success of the modal (closed, data kept, header marked); a release 更新 keeps the modal open
+ok 199 - T47-PIN (a) when the PUT fails: a News/video 更新 reports success of the modal (closed, data kept, header marked); a release 更新 keeps the modal open
+  ---
+  duration_ms: 6.538459
+  ...
+# Subtest: T47-PIN (a) Local Mode: a modal 更新 never calls the API; it marks the data changed, and the header 保存 exports the JSON
+ok 200 - T47-PIN (a) Local Mode: a modal 更新 never calls the API; it marks the data changed, and the header 保存 exports the JSON
+  ---
+  duration_ms: 2.069042
+  ...
+# Subtest: T47-PIN (b) deleting News: after the confirm nothing is sent; the header 保存 then sends the data without the item
+ok 201 - T47-PIN (b) deleting News: after the confirm nothing is sent; the header 保存 then sends the data without the item
+  ---
+  duration_ms: 1.598042
+  ...
+# Subtest: T47-PIN (b) deleting a release: the featured release and nothing else is cleared; the other values are sent as they were
+ok 202 - T47-PIN (b) deleting a release: the featured release and nothing else is cleared; the other values are sent as they were
+  ---
+  duration_ms: 2.638958
+  ...
+# Subtest: T47-PIN (b) deleting a video: the releases that play it get an empty playbackVideoId in the same PUT
+ok 203 - T47-PIN (b) deleting a video: the releases that play it get an empty playbackVideoId in the same PUT
+  ---
+  duration_ms: 1.441416
+  ...
+# Subtest: T47-PIN (b) deleting a video nothing plays, or a demo release that is not featured, clears nothing else
+ok 204 - T47-PIN (b) deleting a video nothing plays, or a demo release that is not featured, clears nothing else
+  ---
+  duration_ms: 2.749167
+  ...
+# Subtest: T47-PIN (b) deleting in Local Mode exports the whole data after the references are cleared
+ok 205 - T47-PIN (b) deleting in Local Mode exports the whole data after the references are cleared
+  ---
+  duration_ms: 5.171125
+  ...
+# Subtest: T47-PIN (c) Site inputs write the data at once (no PUT); the header 保存 then sends the whole data
+ok 206 - T47-PIN (c) Site inputs write the data at once (no PUT); the header 保存 then sends the whole data
+  ---
+  duration_ms: 3.745584
+  ...
+# Subtest: T47-PIN (c) Profile text and links, and the Channel URL, are in the same whole-data PUT
+ok 207 - T47-PIN (c) Profile text and links, and the Channel URL, are in the same whole-data PUT
+  ---
+  duration_ms: 1.530167
+  ...
+# Subtest: T47-PIN (c) the header 保存 sends every unsaved input of every tab at once, and the PUT of nothing changed is the data as loaded
+ok 208 - T47-PIN (c) the header 保存 sends every unsaved input of every tab at once, and the PUT of nothing changed is the data as loaded
+  ---
+  duration_ms: 2.362875
+  ...
+# Subtest: T47-PIN (c) the header 保存: an upload in progress blocks it; a failure keeps the data and says so; a second click while saving sends nothing
+ok 209 - T47-PIN (c) the header 保存: an upload in progress blocks it; a failure keeps the data and says so; a second click while saving sends nothing
+  ---
+  duration_ms: 3.040416
+  ...
+# Subtest: T47-PIN (c) the header 保存 refuses a duplicate Live id and a bad release date before sending
+ok 210 - T47-PIN (c) the header 保存 refuses a duplicate Live id and a bad release date before sending
+  ---
+  duration_ms: 2.270208
+  ...
+# Subtest: T47-PIN (d) every News of the base data: opened and saved unchanged it is identical, free date included, in the same place
+ok 211 - T47-PIN (d) every News of the base data: opened and saved unchanged it is identical, free date included, in the same place
+  ---
+  duration_ms: 10.598
+  ...
+# Subtest: T47-PIN (d) changing one News field changes only that field; double quotes, full-width characters and blank lines survive
+ok 212 - T47-PIN (d) changing one News field changes only that field; double quotes, full-width characters and blank lines survive
+  ---
+  duration_ms: 2.513625
+  ...
+# Subtest: T47-PIN (d) old-format News: the form rebuilds exactly seven keys; a key the form does not know is dropped
+ok 213 - T47-PIN (d) old-format News: the form rebuilds exactly seven keys; a key the form does not know is dropped
+  ---
+  duration_ms: 4.831125
+  ...
+# Subtest: T47-PIN (d) every release and video of the base data: opened and saved unchanged the content is identical, and it moves to the head of its category
+ok 214 - T47-PIN (d) every release and video of the base data: opened and saved unchanged the content is identical, and it moves to the head of its category
+  ---
+  duration_ms: 14.380208
+  ...
+# Subtest: T47-PIN (d) opening and closing without saving changes nothing and sends nothing
+ok 215 - T47-PIN (d) opening and closing without saving changes nothing and sends nothing
+  ---
+  duration_ms: 1.439583
+  ...
+# Subtest: T47-PIN (d) old-format releases: the form rebuilds the eight keys, an unedited odd date keeps its type, and an unknown key is dropped
+ok 216 - T47-PIN (d) old-format releases: the form rebuilds the eight keys, an unedited odd date keeps its type, and an unknown key is dropped
+  ---
+  duration_ms: 4.079334
+  ...
+# Subtest: T47-PIN (d) old-format videos: three keys, an unknown key dropped, a URL-shaped stored id becomes the 11-character id
+ok 217 - T47-PIN (d) old-format videos: three keys, an unknown key dropped, a URL-shaped stored id becomes the 11-character id
+  ---
+  duration_ms: 1.661541
+  ...
+# Subtest: T47-PIN (d) numeric-looking ids: the list opens an item by the id as a string; a numeric id is not found that way
+ok 218 - T47-PIN (d) numeric-looking ids: the list opens an item by the id as a string; a numeric id is not found that way
+  ---
+  duration_ms: 1.651
+  ...
+# Subtest: T47-PIN (d) long values and a long profile survive an unchanged open and save
+ok 219 - T47-PIN (d) long values and a long profile survive an unchanged open and save
+  ---
+  duration_ms: 1.685208
+  ...
+# Subtest: T47-PIN (e) the featured release and a release's video are kept while their target exists, whatever else is saved
+ok 220 - T47-PIN (e) the featured release and a release's video are kept while their target exists, whatever else is saved
+  ---
+  duration_ms: 1.323834
+  ...
+# Subtest: T47-PIN (e) every save runs the reconciliation: a reference with no target is sent as the empty string
+ok 221 - T47-PIN (e) every save runs the reconciliation: a reference with no target is sent as the empty string
+  ---
+  duration_ms: 1.2015
+  ...
+# Subtest: T47-PIN (e) the Site and release choices are rebuilt from the data after a deletion or a move
+ok 222 - T47-PIN (e) the Site and release choices are rebuilt from the data after a deletion or a move
+  ---
+  duration_ms: 3.160583
+  ...
+# Subtest: T47-PIN (f) API Mode: a News image is uploaded at selection, the hidden input takes the URL, and the 更新 sends it
+ok 223 - T47-PIN (f) API Mode: a News image is uploaded at selection, the hidden input takes the URL, and the 更新 sends it
+  ---
+  duration_ms: 8.076
+  ...
+# Subtest: T47-PIN (f) an upload in progress blocks the modal 更新; a failed upload restores the previous image and says so
+ok 224 - T47-PIN (f) an upload in progress blocks the modal 更新; a failed upload restores the previous image and says so
+  ---
+  duration_ms: 3.253083
+  ...
+# Subtest: T47-PIN (f) removing a modal image sends an empty image; it does not mark the header 保存 by itself
+ok 225 - T47-PIN (f) removing a modal image sends an empty image; it does not mark the header 保存 by itself
+  ---
+  duration_ms: 1.690292
+  ...
+# Subtest: T47-PIN (f) Site hero and Profile images write the data at once; the header 保存 sends them (API)
+ok 226 - T47-PIN (f) Site hero and Profile images write the data at once; the header 保存 sends them (API)
+  ---
+  duration_ms: 1.703292
+  ...
+# Subtest: T47-PIN (f) Local Mode: the chosen file gets assets/images/<name>_<yyyymmdd>.<ext>, is kept for download, and the export carries the path
+ok 227 - T47-PIN (f) Local Mode: the chosen file gets assets/images/<name>_<yyyymmdd>.<ext>, is kept for download, and the export carries the path
+  ---
+  duration_ms: 2.020125
+  ...
+# Subtest: T47-PIN (f) Local Mode: Site and Profile images go into the data at once and are exported
+ok 228 - T47-PIN (f) Local Mode: Site and Profile images go into the data at once and are exported
+  ---
+  duration_ms: 1.391916
+  ...
+# Subtest: T47-PIN empty lists: the empty states render and a new item still goes to the head of an empty list
+ok 229 - T47-PIN empty lists: the empty states render and a new item still goes to the head of an empty list
+  ---
+  duration_ms: 1.1265
+  ...
+# Subtest: T47-PIN API fallback (read-only): a modal 更新, a deletion and the header 保存 send nothing and change nothing
+ok 230 - T47-PIN API fallback (read-only): a modal 更新, a deletion and the header 保存 send nothing and change nothing
+  ---
+  duration_ms: 3.858583
+  ...
+# Subtest: T43-SHELL live/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 231 - T43-SHELL live/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 21.326208
+  ...
+# Subtest: T43-SHELL live/detail/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 232 - T43-SHELL live/detail/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 17.704458
+  ...
+# Subtest: T43-SHELL ticket/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 233 - T43-SHELL ticket/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 14.140833
+  ...
+# Subtest: T43-SHELL ticket/complete/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+ok 234 - T43-SHELL ticket/complete/index.html: header, nav and footer are the \#44 bytes; only body class, stylesheet link, main and scripts changed
+  ---
+  duration_ms: 16.37225
+  ...
+# Subtest: T43-SHELL new files carry the \#43 cache version and nothing else changes the shared versions
+ok 235 - T43-SHELL new files carry the \#43 cache version and nothing else changes the shared versions
+  ---
+  duration_ms: 0.718458
+  ...
+# Subtest: T43-COMPAT Home, Music, Profile, Contact, the two old pages and index.html are byte-identical to the base
+ok 236 - T43-COMPAT Home, Music, Profile, Contact, the two old pages and index.html are byte-identical to the base
+  ---
+  duration_ms: 210.109083
+  ...
+# Subtest: T43-COMPAT shared code, tokens, design rules, admin and the Worker are untouched
+ok 237 - T43-COMPAT shared code, tokens, design rules, admin and the Worker are untouched
+  ---
+  duration_ms: 91.762333
+  ...
+# Subtest: T43-COMPAT the Worker still answers a repeat send with the exact text the Ticket page checks
+ok 238 - T43-COMPAT the Worker still answers a repeat send with the exact text the Ticket page checks
+  ---
+  duration_ms: 0.6085
+  ...
+# Subtest: T43-COMPAT site-content.js differs from the base in exactly one line (the Home invalid-booking label), apart from the Issue \#45 block
+ok 239 - T43-COMPAT site-content.js differs from the base in exactly one line (the Home invalid-booking label), apart from the Issue \#45 block
+  ---
+  duration_ms: 11.543667
+  ...
+# Subtest: T43-COMPAT the shared query strings of the other pages did not move
+ok 240 - T43-COMPAT the shared query strings of the other pages did not move
+  ---
+  duration_ms: 0.268792
+  ...
+# Subtest: T43-COMPAT the only files changed by \#43 are the planned ones (no stray page, asset or script)
+ok 241 - T43-COMPAT the only files changed by \#43 are the planned ones (no stray page, asset or script)
+  ---
+  duration_ms: 47.9685
+  ...
+# Subtest: T43-STYLE every selector is under body.site-live or body.site-ticket
+ok 242 - T43-STYLE every selector is under body.site-live or body.site-ticket
+  ---
+  duration_ms: 0.185792
+  ...
+# Subtest: T43-STYLE no red anywhere: no accent variable, no brand red, no hex literals
+ok 243 - T43-STYLE no red anywhere: no accent variable, no brand red, no hex literals
+  ---
+  duration_ms: 0.1735
+  ...
+# Subtest: T43-STYLE nothing is cut off: no line clamp or ellipsis; long words wrap
+ok 244 - T43-STYLE nothing is cut off: no line clamp or ellipsis; long words wrap
+  ---
+  duration_ms: 0.195583
+  ...
+# Subtest: T43-STYLE hidden elements stay hidden even for .site-button; focus is dark; selection and scrollbars are not red
+ok 245 - T43-STYLE hidden elements stay hidden even for .site-button; focus is dark; selection and scrollbars are not red
+  ---
+  duration_ms: 0.101833
+  ...
+# Subtest: T43-STYLE the player is 480 wide on the desktop (at most the card), 16:9, never under 200px tall; full width on the phone
+ok 246 - T43-STYLE the player is 480 wide on the desktop (at most the card), 16:9, never under 200px tall; full width on the phone
+  ---
+  duration_ms: 0.134459
+  ...
+# Subtest: T43-STYLE layout numbers from the master: 980 frames, 420+56+504 detail, 560+56+364 ticket, one column under 820px
+ok 247 - T43-STYLE layout numbers from the master: 980 frames, 420+56+504 detail, 560+56+364 ticket, one column under 820px
+  ---
+  duration_ms: 0.237791
+  ...
+# Subtest: T43-STYLE RV43-01 the Ticket columns can shrink: no fixed-width pair, and the contents may shrink with them
+ok 248 - T43-STYLE RV43-01 the Ticket columns can shrink: no fixed-width pair, and the contents may shrink with them
+  ---
+  duration_ms: 0.264167
+  ...
+# Subtest: T43-STYLE RV43-02 on the phone a Live card without a flyer keeps its date on one line (no break inside the digits); desktop and detail faces are untouched
+ok 249 - T43-STYLE RV43-02 on the phone a Live card without a flyer keeps its date on one line (no break inside the digits); desktop and detail faces are untouched
+  ---
+  duration_ms: 0.144084
+  ...
+# Subtest: T43-STYLE RV43-03 on the phone the Live detail children fill the column width; the desktop grid keeps align-items: start
+ok 250 - T43-STYLE RV43-03 on the phone the Live detail children fill the column width; the desktop grid keeps align-items: start
+  ---
+  duration_ms: 0.144208
+  ...
+# Subtest: T43-STYLE the Ticket summary stays in view while typing (sticky below the header) and moves above the form on the phone
+ok 251 - T43-STYLE the Ticket summary stays in view while typing (sticky below the header) and moves above the form on the phone
+  ---
+  duration_ms: 0.0815
+  ...
+# Subtest: T43-STYLE cannot-click reservations and sending look the same: opacity .4, no pointer; errors and notices use ink, not red
+ok 252 - T43-STYLE cannot-click reservations and sending look the same: opacity .4, no pointer; errors and notices use ink, not red
+  ---
+  duration_ms: 0.086375
+  ...
+# Subtest: T43-STYLE the stylesheet is loaded by the four pages only, and uses tokens for colour and space
+ok 253 - T43-STYLE the stylesheet is loaded by the four pages only, and uses tokens for colour and space
+  ---
+  duration_ms: 0.88675
+  ...
+1..253
+# tests 299
+# suites 0
+# pass 296
+# fail 0
+# cancelled 0
+# skipped 3
+# todo 0
+# duration_ms 3618.438875

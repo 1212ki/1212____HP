@@ -1,0 +1,7 @@
+# stage4 focused (plan §4 stage 3-4)
+# command: node --test test/admin-occasional-save.test.mjs test/admin-occasional-screens.test.mjs test/admin-image-form.test.mjs test/admin-live-operations.test.mjs test/public-music-data-compatibility.test.mjs
+# exit: 0
+# tests 358
+# pass 358
+# fail 0
+# skipped 0

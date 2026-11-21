@@ -174,7 +174,7 @@ test('T44-COMPAT Home main changes only its music arrow href, cards and logo rem
 for(const [pathname,label] of [['/','Home'],['/index.html','Home'],['/music/','Music'],['/music/index.html','Music'],['/ticket/','Live'],['/ticket/complete/','Live'],['/live/detail/','Live'],['/discography/index.html','Music'],['/youtube/','Music'],['/profile/','Profile'],['/contact/','Contact']])test('T44-SHELL current mapping/aria '+pathname,()=>{
   const h=shell({pathname});const active=h.links.filter(link=>link.classList.contains('active'));assert.equal(active.length,1);assert.equal(active[0].getAttribute('aria-current'),'page');assert.equal(h.links.indexOf(active[0]),['Home','Live','Music','Profile','Contact'].indexOf(label));assert.equal(h.links.filter(link=>link.getAttribute('aria-current')==='page').length,1);
 });
-test('T44-ADMIN public Music maps to existing six admin tabs, feature state and save paths remain',()=>{
+test('T44-ADMIN public Music maps to the five admin tabs (#47 merged YouTube and Disco into Music), feature state and save paths remain',()=>{
   const doc=read('admin/README.md');assert.doesNotMatch(doc,/Musicへの適用とTicket完了の案内は後続|公開画面と同じカテゴリから編集対象/);assert.match(doc,/Music.*#44/);assert.match(doc,/Ticket完了.*#43/);assert.match(doc,/Disco/);assert.match(doc,/YouTube/);assert.match(doc,/#47/);assert.match(doc,/#42の公開反映（履歴）/);assert.match(doc,/feature\/39-public-pages/);
-  assert.equal((read('admin/index.html').match(/class="tab-btn/g)||[]).length,6);
+  assert.equal((read('admin/index.html').match(/class="tab-btn/g)||[]).length,5);
 });

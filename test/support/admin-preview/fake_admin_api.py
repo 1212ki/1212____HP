@@ -3,6 +3,10 @@
 標準ライブラリだけ。ネットワークもbindも使わない純粋な応答関数で、メモリ上の架空のデータ（test/fixtures/admin-live-states.json）にだけ読み書きする。
 本番のAPI・D1・予約・AIのproviderには一切つながらない。fixtureの値はすべて架空。
 
+Issue #47: `fixture` に test/fixtures/admin-occasional-states.json（たまにする更新）も受ける（`variants` を持つ形）。その scenario は
+`{variant, mode: api|api-fallback|local, fail?: save|delete}`。API接続失敗（api-fallback）は、管理画面が本番のAPIへ再送しない400で表す
+（401・403・404・5xxを返すと adminFetch が本番のAPIへ切り替えて再送してしまうため）。#46 の fixture の scenario と応答は変えていない。
+
 管理画面が呼ぶ経路（admin/app.js）:
   GET  /api/admin/site-data                     -> {data, meta}
   PUT  /api/admin/site-data                     -> {ok: true}
@@ -30,6 +34,7 @@ sys.dont_write_bytecode = True  # verification/ に __pycache__ を作らない
 
 ROOT = Path(__file__).resolve().parents[3]
 FIXTURE_PATH = ROOT / 'test/fixtures/admin-live-states.json'
+OCCASIONAL_FIXTURE_PATH = ROOT / 'test/fixtures/admin-occasional-states.json'  # Issue #47（--fixture で選ぶ）
 API_ORIGIN = 'https://api.fixture.test'      # 撮影の架空のAPI host。実在しない
 FAKE_TOKEN = 'fixture-admin-token-0000'      # 架空の合言葉。本物ではない
 FAKE_IMAGE_HOST = 'img.example.test'         # fixtureの絶対URLの画像（架空）
@@ -39,7 +44,8 @@ CORS_HEADERS = {
     'Access-Control-Allow-Headers': 'Authorization, Content-Type, X-Admin-Token',
 }
 # 手元配信で使ってよいscenario（管理画面が呼ぶ経路に401・404・5xxを返さないもの）
-STRICT_SAFE_SCENARIOS = ['base', 'legacy-only', 'no-reservations', 'many-reservations', 'empty-lists', 'local-mode']
+STRICT_SAFE_SCENARIOS = ['base', 'legacy-only', 'no-reservations', 'many-reservations', 'empty-lists', 'local-mode',
+                         'legacy-shapes', 'long-values', 'numeric-ids']  # 後ろの3つは #47 の fixture（失敗を返さない）
 
 
 def load_fixture(path=None):
@@ -53,9 +59,17 @@ def scenario_spec(fixture, name):
     return copy.deepcopy(spec)
 
 
+def is_occasional(fixture):
+    """Issue #47 の fixture（`variants` を持つ形）か。"""
+    return 'variants' in fixture
+
+
 def site_data_for(fixture, spec):
-    """scenarioが名前で指す全体データ。`data` か、`sites` の live を差し替えたもの。"""
+    """scenarioが名前で指す全体データ。`data` か、`sites` の live を差し替えたもの。#47 の fixture は `variants.<name>` が data のそのキーを置き換える。"""
     data = copy.deepcopy(fixture['data'])
+    variant = spec.get('variant')
+    if variant:
+        data.update(copy.deepcopy(fixture['variants'][variant]))
     site = spec.get('site', 'data')
     if site != 'data':
         data['live'] = copy.deepcopy(fixture['sites'][site]['live'])
@@ -85,7 +99,7 @@ def reservations_for(fixture, kind):
     """liveId -> rows。'base' はfixtureの行、'many' は二桁の行を足したもの、'none' は空。"""
     if kind == 'none':
         return {}
-    grouped = copy.deepcopy(fixture['reservations'])
+    grouped = copy.deepcopy(fixture.get('reservations', {}))
     if kind == 'many':
         grouped[fixture['reservationsMany']['liveId']] = many_rows(fixture)
     return grouped
@@ -124,6 +138,7 @@ class FakeAdminApi:
 
     def __init__(self, fixture=None, scenario='base', strict=False, extra_fail=(), summary_override=None, image_origin=''):
         self.fixture = fixture or load_fixture()
+        self.occasional = is_occasional(self.fixture)
         self.scenario_name = scenario
         self.spec = scenario_spec(self.fixture, scenario)
         self.strict = strict
@@ -182,7 +197,8 @@ class FakeAdminApi:
         if path == '/api/admin/site-data':
             if method == 'GET':
                 if self.mode == 'api-fallback':
-                    return _json(503, {'error': 'unavailable (scenario api-fallback)'})
+                    # #47 の撮影は本番のAPIへの再送の試みを0件にする（400は adminFetch が再送しない）。#46 の応答は変えない。
+                    return _json(400 if self.occasional else 503, {'error': 'unavailable (scenario api-fallback)'})
                 return _json(200, {'data': self.site, 'meta': {'updatedAt': self.fixture['meta']['updatedAt']}})
             if method == 'PUT':
                 return self._put_site(body)
@@ -204,6 +220,8 @@ class FakeAdminApi:
         if path == '/api/admin/live-source-intake' and method == 'POST':
             return self._intake(body)
         if path == '/api/admin/upload-image' and method == 'POST':
+            if 'upload' in self.fail:  # 画像のアップロードの失敗の画面のため（撮影が extra_fail で指す。400 は adminFetch が本番へ再送しない）
+                return _json(400, {'error': 'テスト用のアップロードエラー'})
             self.uploads += 1
             return _json(200, {'url': f'{self.image_origin or API_ORIGIN}/fake-images/uploaded-{self.uploads}.jpg'})
         return _json(400, {'error': 'fake api: this route is not served'})
@@ -214,7 +232,12 @@ class FakeAdminApi:
         if 'save' in self.fail:
             return _json(400, {'error': 'テスト用の保存エラー'})
         live_ids = lambda data: {item['id'] for group in ('upcoming', 'past') for item in data.get('live', {}).get(group, [])}  # noqa: E731
-        if 'delete' in self.fail and live_ids(self.site) - live_ids(incoming):
+        # #47: 削除は Live だけでなく News・作品・映像の項目の取り除きも数える（項目のidはcategoryを移しても保たれる）
+        item_ids = lambda data: live_ids(data) | {str(item.get('id')) for key in ('news',) for item in data.get(key, [])} | {  # noqa: E731
+            str(item.get('id')) for key in ('digital', 'demo') for item in data.get('discography', {}).get(key, [])} | {
+            str(item.get('id')) for key in ('musicVideos', 'liveMovies', 'demos') for item in data.get('youtube', {}).get(key, [])}
+        removed_ids = item_ids if self.occasional else live_ids
+        if 'delete' in self.fail and removed_ids(self.site) - removed_ids(incoming):
             return _json(400, {'error': 'テスト用の削除エラー'})
         if not isinstance(incoming.get('live'), dict):
             return _json(400, {'error': 'live is missing'})
@@ -324,7 +347,59 @@ def self_check():
             assert status not in (401, 403, 404) and status < 500, (name, path, status)
     text = FIXTURE_PATH.read_text(encoding='utf-8')
     assert not re.search(r'1212hp|workers\.dev|itsuki|matsumoto', text, re.I), 'fixtureに本番の値がある'
-    print(f'fake_admin_api: OK（{len(fixture["scenarios"])} scenario。bindなし・networkなし）')
+    occasional_count = self_check_occasional()
+    print(f'fake_admin_api: OK（#46 の fixture {len(fixture["scenarios"])} scenario、#47 の fixture {occasional_count} scenario。bindなし・networkなし）')
+
+
+def self_check_occasional():
+    """Issue #47 の fixture（--fixture test/fixtures/admin-occasional-states.json）: 全scenarioが応え、API接続失敗は本番へ再送されない400、保存・削除の失敗は意図どおり。"""
+    fixture = load_fixture(OCCASIONAL_FIXTURE_PATH)
+    assert is_occasional(fixture) and not is_occasional(load_fixture())
+    assert list(fixture['scenarios']) == ['base', 'empty-lists', 'legacy-shapes', 'long-values', 'api-fallback', 'local-mode', 'save-fail', 'delete-fail', 'numeric-ids']
+    refetch = (401, 403, 404)  # adminFetch が本番のAPIへ切り替えて再送する status（500以上も）
+    for name in fixture['scenarios']:
+        api = FakeAdminApi(fixture, name)
+        status, _, body = api.handle('GET', '/api/admin/site-data')
+        assert status == (400 if name == 'api-fallback' else 200), (name, status)
+        assert status not in refetch and status < 500, (name, status, 'adminFetch would retry against the production API')
+        payload = json.loads(body)
+        if name != 'api-fallback':
+            assert set(payload['data']) == {'news', 'live', 'discography', 'profile', 'youtube', 'site', 'ticket', 'contact'}, name
+        status, _, _ = api.handle('GET', '/api/admin/ticket-reservation-summary')
+        assert status == 200, (name, status)
+    assert FakeAdminApi(fixture, 'empty-lists').site['news'] == []
+    assert [item['id'] for item in FakeAdminApi(fixture, 'numeric-ids').site['news']] == [101, '102', 103]
+    assert len(FakeAdminApi(fixture, 'base').site['news']) == 6 and FakeAdminApi(fixture, 'base').mode == 'api'
+    assert FakeAdminApi(fixture, 'local-mode').mode == 'local' and FakeAdminApi(fixture, 'api-fallback').mode == 'api-fallback'
+    # 保存の失敗は 400（保存だけが失敗する）。削除の失敗は、項目が取り除かれた時だけ。
+    failing = FakeAdminApi(fixture, 'save-fail')
+    assert failing.handle('PUT', '/api/admin/site-data', body=json.dumps(failing.site).encode())[0] == 400
+    deleting = FakeAdminApi(fixture, 'delete-fail')
+    assert deleting.handle('PUT', '/api/admin/site-data', body=json.dumps(deleting.site).encode())[0] == 200, 'unchanged: saved'
+    removed = copy.deepcopy(deleting.site)
+    removed['news'] = removed['news'][1:]
+    assert deleting.handle('PUT', '/api/admin/site-data', body=json.dumps(removed).encode())[0] == 400, 'a News item removed: the delete fails'
+    removed = copy.deepcopy(deleting.site)
+    removed['youtube']['musicVideos'] = removed['youtube']['musicVideos'][1:]
+    assert deleting.handle('PUT', '/api/admin/site-data', body=json.dumps(removed).encode())[0] == 400, 'a video removed: the delete fails'
+    # 手元配信で使ってよいのは失敗を返さないscenarioだけ。応答はどの経路も 401・403・404・5xx を返さない。
+    for name in fixture['scenarios']:
+        try:
+            api = FakeAdminApi(fixture, name, strict=True)
+        except ValueError:
+            assert name not in STRICT_SAFE_SCENARIOS, name
+            continue
+        for method, path, payload in [('GET', '/api/admin/site-data', b''), ('PUT', '/api/admin/site-data', json.dumps(api.site).encode()),
+                                      ('GET', '/api/admin/ticket-reservation-summary', b''), ('GET', '/api/admin/ticket-reservations?limit=200', b''),
+                                      ('POST', '/api/admin/upload-image', b''), ('GET', '/api/admin/unknown', b'')]:
+            status, _, _ = api.handle(method, path, body=payload)
+            assert status not in refetch and status < 500, (name, path, status)
+    assert {'base', 'empty-lists', 'local-mode', 'legacy-shapes', 'long-values', 'numeric-ids'} <= set(STRICT_SAFE_SCENARIOS)
+    text = OCCASIONAL_FIXTURE_PATH.read_text(encoding='utf-8')
+    assert not re.search(r'1212hp|workers\.dev|itsuki|matsumoto', text, re.I), 'fixtureに本番の値がある'
+    # 架空のURLだけ（映像のURL入力の見本 youtu.be/fixture… の動画IDは架空。取得はしない）
+    assert not re.search(r'https?://(?!(?:[\w.-]+\.)?example\.test|youtu\.be/fixture)', text), 'fixtureに架空でないURLがある'
+    return len(fixture['scenarios'])
 
 
 if __name__ == '__main__':
